@@ -21,11 +21,11 @@
     ]
   },
   "mixins": [
-    "mixins/mathaxlegacy.mixins.json",
-    "mixins/mathaxlegacy-canvas.mixins.json",
-    "mixins/mathaxlegacy-sodium.mixins.json",
-    "mixins/mathaxlegacy-indigo.mixins.json",
-    "mixins/mathaxlegacy-baritone.mixins.json"
+    "mathaxlegacy.mixins.json",
+    "mathaxlegacy-canvas.mixins.json",
+    "mathaxlegacy-sodium.mixins.json",
+    "mathaxlegacy-indigo.mixins.json",
+    "mathaxlegacy-baritone.mixins.json"
   ],
   "accessWidener": "mathaxlegacy.accesswidener",
   "custom": {
