@@ -72,8 +72,8 @@ public class MultiplayerScreenMixin extends Screen {
         float y = 3;
 
         // Logged in as
-        textRenderer.drawWithShadow(matrices, loggedInAs + getDeveloper(), x, y, textColor1);
-        textRenderer.drawWithShadow(matrices, Modules.get().get(NameProtect.class).getName(client.getSession().getUsername()), x + loggedInAsLength, y, textColor2);
+        textRenderer.drawWithShadow(matrices, loggedInAs, x, y, textColor1);
+        textRenderer.drawWithShadow(matrices, Modules.get().get(NameProtect.class).getName(client.getSession().getUsername()) + getDeveloper(), x + loggedInAsLength, y, textColor2);
 
         y += textRenderer.fontHeight + 2;
 
@@ -88,6 +88,7 @@ public class MultiplayerScreenMixin extends Screen {
     }
 
     private String getDeveloper() {
+        if (Modules.get() == null) return "";
         if (Modules.get().isActive(NameProtect.class)) return "";
         if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return Formatting.WHITE + " [Developer]";
         else return "";

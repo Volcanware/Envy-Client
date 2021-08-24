@@ -102,7 +102,7 @@ public class TitleScreenMixin extends Screen {
 
         textRightDownButtonWebsite = "MatHax Website";
 
-        textLeftUpLength = textRenderer.getWidth(textLeftUp + getDeveloper());
+        textLeftUpLength = textRenderer.getWidth(textLeftUp);
 
         textRightUp1Length = textRenderer.getWidth(textRightUp1);
         textRightUp2Length = textRenderer.getWidth(textRightUp2);
@@ -157,8 +157,8 @@ public class TitleScreenMixin extends Screen {
             });
         }
 
-        textRenderer.drawWithShadow(matrices, textLeftUp + getDeveloper(), 3, 3, WHITE);
-        textRenderer.drawWithShadow(matrices, Modules.get().get(NameProtect.class).getName(client.getSession().getUsername()), 3 + textLeftUpLength, 3, GRAY);
+        textRenderer.drawWithShadow(matrices, textLeftUp, 3, 3, WHITE);
+        textRenderer.drawWithShadow(matrices, Modules.get().get(NameProtect.class).getName(client.getSession().getUsername()) + getDeveloper(), 3 + textLeftUpLength, 3, GRAY);
 
         prevWidthRightUp = 0;
         textRenderer.drawWithShadow(matrices, textRightUp1, width - fullLengthRightUp - 3, 3, MatHaxClientLegacy.INSTANCE.MATHAX_COLOR);
@@ -184,6 +184,7 @@ public class TitleScreenMixin extends Screen {
     }
 
     private String getDeveloper() {
+        if (Modules.get() == null) return "";
         if (Modules.get().isActive(NameProtect.class)) return "";
         if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return Formatting.WHITE + " [Developer]";
         else return "";
