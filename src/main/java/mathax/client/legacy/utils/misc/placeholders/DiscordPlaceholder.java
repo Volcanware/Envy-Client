@@ -162,7 +162,9 @@ public class DiscordPlaceholder {
 
         String s = sb.toString().trim();
 
-        if (s.equals("Tps Sync")) {
+        if (s.equals("Anti Afk")) {
+            return "Anti AFK";
+        } else if (s.equals("Tps Sync")) {
             return "TPS Sync";
         } else if (s.equals("Auto Ez")) {
             return "Auto EZ";

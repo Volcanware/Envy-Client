@@ -143,7 +143,7 @@ public class AntiAFK extends Module {
     private float prevYaw;
 
     public AntiAFK() {
-        super(Categories.Player, "anti-afk", "Performs different actions to prevent getting kicked for AFK reasons.");
+        super(Categories.Player, "anti-AFK", "Performs different actions to prevent getting kicked for AFK reasons.");
     }
 
     @Override
