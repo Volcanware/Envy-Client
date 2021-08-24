@@ -18,6 +18,8 @@ import java.util.List;
 public class TextRadarHud extends HudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     public final Setting<SettingColor> playerNameColor = sgGeneral.add(new ColorSetting.Builder()
         .name("player-name-color")
         .description("Color of player names.")

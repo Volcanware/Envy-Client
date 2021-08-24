@@ -5,7 +5,12 @@ import mathax.client.legacy.utils.Utils;
 
 public class ServerBrandHud extends TripleTextHudElement {
     public ServerBrandHud(HUD hud) {
-        super(hud, "server-brand", "Displays the brand of the server you're currently in.", "Server Brand: ");
+        super(hud, "server-brand", "Displays the brand of the server you're currently in.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "Server Brand: ";
     }
 
     @Override

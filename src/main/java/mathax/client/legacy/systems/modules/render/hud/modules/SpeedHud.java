@@ -7,7 +7,12 @@ import mathax.client.legacy.utils.Utils;
 
 public class SpeedHud extends TripleTextHudElement {
     public SpeedHud(HUD hud) {
-        super(hud, "speed", "Displays your horizontal speed.", "Speed: ");
+        super(hud, "speed", "Displays your horizontal speed.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "Speed: ";
     }
 
     @Override

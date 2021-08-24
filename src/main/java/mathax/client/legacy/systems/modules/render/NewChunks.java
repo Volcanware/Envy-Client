@@ -1,17 +1,10 @@
 package mathax.client.legacy.systems.modules.render;
 
-import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.events.packets.PacketEvent;
-import mathax.client.legacy.events.render.Render3DEvent;
-import mathax.client.legacy.renderer.Renderer3D;
-import mathax.client.legacy.renderer.ShapeMode;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Categories;
-import mathax.client.legacy.systems.modules.Modules;
-import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.SettingColor;
-import mathax.client.legacy.utils.world.Dir;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;

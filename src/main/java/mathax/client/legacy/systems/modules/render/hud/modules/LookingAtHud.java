@@ -14,6 +14,8 @@ import net.minecraft.util.math.Vec3d;
 public class LookingAtHud extends TripleTextHudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Boolean> blockPosition = sgGeneral.add(new BoolSetting.Builder()
         .name("block-position")
         .description("Displays block's position.")
@@ -36,7 +38,12 @@ public class LookingAtHud extends TripleTextHudElement {
     );
 
     public LookingAtHud(HUD hud) {
-        super(hud, "looking-at", "Displays what entity or block you are looking at.", "Looking At: ");
+        super(hud, "looking-at", "Displays what entity or block you are looking at.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "Looking at: ";
     }
 
     @Override

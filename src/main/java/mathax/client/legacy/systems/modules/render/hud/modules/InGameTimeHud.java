@@ -9,6 +9,8 @@ import mathax.client.legacy.utils.Utils;
 public class InGameTimeHud extends TripleTextHudElement {
     /*private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     public final Setting<Boolean> euFormat = sgGeneral.add(new BoolSetting.Builder()
         .name("eu-format")
         .description("Changes the time to Europian format.")
@@ -18,7 +20,12 @@ public class InGameTimeHud extends TripleTextHudElement {
     //TODO: Change default to AM & PM. Add EU format setting 12:00.
 
     public InGameTimeHud(HUD hud) {
-        super(hud, "in-game-time", "Displays the in-game time.", "In-Game Time: ");
+        super(hud, "in-game-time", "Displays the in-game time.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "In-Game Time: ";
     }
 
     @Override

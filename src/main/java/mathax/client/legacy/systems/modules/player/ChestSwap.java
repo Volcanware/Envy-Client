@@ -14,13 +14,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
 public class ChestSwap extends Module {
-    public enum Chestplate {
-        Diamond,
-        Netherite,
-        PreferDiamond,
-        PreferNetherite
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Chestplate> chestplate = sgGeneral.add(new EnumSetting.Builder<Chestplate>()
@@ -128,5 +121,12 @@ public class ChestSwap extends Module {
     public void sendToggledMsg() {
         if (stayOn.get()) super.sendToggledMsg();
         else if (Config.get().chatCommandsInfo) info("Triggered (highlight)%s(default).", title);
+    }
+
+    public enum Chestplate {
+        Diamond,
+        Netherite,
+        PreferDiamond,
+        PreferNetherite
     }
 }

@@ -14,7 +14,12 @@ public class WatermarkHud extends TripleTextHudElement {
     private String newUpdateString = "";
 
     public WatermarkHud(HUD hud) {
-        super(hud, "watermark", "Displays a MatHax Client Legacy watermark.", "MatHax Client Legacy ");
+        super(hud, "watermark", "Displays a MatHax Client Legacy watermark.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "MatHax Client Legacy ";
     }
 
     @Override

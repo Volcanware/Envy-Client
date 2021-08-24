@@ -5,7 +5,12 @@ import net.minecraft.client.network.PlayerListEntry;
 
 public class PingHud extends TripleTextHudElement {
     public PingHud(HUD hud) {
-        super(hud, "ping", "Displays your ping.", "Ping: ");
+        super(hud, "ping", "Displays your ping.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "Ping: ";
     }
 
     @Override

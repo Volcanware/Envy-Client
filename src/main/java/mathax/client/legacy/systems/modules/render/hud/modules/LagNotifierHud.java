@@ -10,8 +10,9 @@ import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.utils.world.TickRate;
 
 public class LagNotifierHud extends TripleTextHudElement {
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    // General
 
     private final Setting<SettingColor> badColor = sgGeneral.add(new ColorSetting.Builder()
         .name("bad-color")
@@ -28,7 +29,12 @@ public class LagNotifierHud extends TripleTextHudElement {
     );
 
     public LagNotifierHud(HUD hud) {
-        super(hud, "lag-notifier", "Displays if the server is lagging in seconds.", "Server is lagging ");
+        super(hud, "lag-notifier", "Displays if the server is lagging in seconds.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "Server is lagging ";
     }
 
     @Override

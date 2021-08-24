@@ -11,19 +11,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
 public class ArmorHud extends HudElement {
-    public enum Durability {
-        None,
-        Default,
-        Numbers,
-        Percentage
-    }
-
-    public enum Orientation {
-        Horizontal,
-        Vertical
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    // General
 
     private final Setting<Boolean> flipOrder = sgGeneral.add(new BoolSetting.Builder()
         .name("flip-order")
@@ -140,5 +130,17 @@ public class ArmorHud extends HudElement {
         }
 
         return mc.player.getInventory().getArmorStack(i);
+    }
+
+    public enum Durability {
+        None,
+        Default,
+        Numbers,
+        Percentage
+    }
+
+    public enum Orientation {
+        Horizontal,
+        Vertical
     }
 }

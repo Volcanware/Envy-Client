@@ -10,6 +10,8 @@ import net.minecraft.util.math.MathHelper;
 public class CompassHud extends HudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("type")
         .description("Which type of axis to show.")

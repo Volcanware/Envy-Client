@@ -7,7 +7,7 @@ import mathax.client.legacy.systems.modules.render.hud.HudRenderer;
 import mathax.client.legacy.utils.player.PlayerUtils;
 
 public class PositionHud extends HudElement {
-    private final String left1 = "Pos: ";
+    private final String left1 = "";
     private double left1Width;
     private String right1;
 
@@ -40,11 +40,11 @@ public class PositionHud extends HudElement {
 
         switch (PlayerUtils.getDimension()) {
             case Overworld -> {
-                left2 = "Nether Pos: ";
+                left2 = "Nether: ";
                 right2 = String.format("%.1f %.1f %.1f", x1 / 8.0, y1, z1 / 8.0);
             }
             case Nether -> {
-                left2 = "Overworld Pos: ";
+                left2 = "Overworld: ";
                 right2 = String.format("%.1f %.1f %.1f", x1 * 8.0, y1, z1 * 8.0);
             }
         }

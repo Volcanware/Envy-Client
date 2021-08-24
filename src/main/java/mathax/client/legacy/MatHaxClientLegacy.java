@@ -77,7 +77,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
 
     public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 68;
+    public static Integer devBuildNumber = 1;
 
     public static String devBuild() {
         if (devBuildNumber == 0) {
@@ -103,7 +103,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         mc.execute(this::updateImage);
         EVENT_BUS.registerLambdaFactory("mathax.client.legacy", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
         List<MatHaxClientLegacyPlus> addons = new ArrayList<>();
-        for (EntrypointContainer<MatHaxClientLegacyPlus> entrypoint : FabricLoader.getInstance().getEntrypointContainers("mathaxlegacyplus", MatHaxClientLegacyPlus.class)) {
+        for (EntrypointContainer<MatHaxClientLegacyPlus> entrypoint : FabricLoader.getInstance().getEntrypointContainers("mathaxlegacy", MatHaxClientLegacyPlus.class)) {
             addons.add(entrypoint.getEntrypoint());
         }
 

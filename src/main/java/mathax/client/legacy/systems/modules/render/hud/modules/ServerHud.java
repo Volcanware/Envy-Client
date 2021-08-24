@@ -5,7 +5,12 @@ import mathax.client.legacy.utils.Utils;
 
 public class ServerHud extends TripleTextHudElement {
     public ServerHud(HUD hud) {
-        super(hud, "server", "Displays the server you're currently in.", "Server: ");
+        super(hud, "server", "Displays the server you're currently in.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "Server: ";
     }
 
     @Override

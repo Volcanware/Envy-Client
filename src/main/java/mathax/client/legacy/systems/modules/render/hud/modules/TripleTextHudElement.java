@@ -15,14 +15,14 @@ public abstract class TripleTextHudElement extends HudElement {
     private double leftWidth;
     private double rightWidth;
 
-    public TripleTextHudElement(HUD hud, String name, String description, String left) {
+    public TripleTextHudElement(HUD hud, String name, String description) {
         super(hud, name, description);
         this.rightColor = hud.secondaryColor.get();
-        this.left = left;
     }
 
     @Override
     public void update(HudRenderer renderer) {
+        left = getLeft();
         right = getRight();
         end = getEnd();
         leftWidth = renderer.textWidth(left);
@@ -50,6 +50,7 @@ public abstract class TripleTextHudElement extends HudElement {
         this.leftWidth = 0;
     }
 
+    protected abstract String getLeft();
     protected abstract String getRight();
     protected abstract String getEnd();
 }

@@ -14,6 +14,8 @@ import java.util.List;
 public class ModuleInfoHud extends HudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<List<Module>> modules = sgGeneral.add(new ModuleListSetting.Builder()
         .name("modules")
         .description("Which modules to display")

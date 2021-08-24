@@ -5,7 +5,12 @@ import mathax.client.legacy.utils.world.TickRate;
 
 public class TpsHud extends TripleTextHudElement {
     public TpsHud(HUD hud) {
-        super(hud, "tps", "Displays the server's TPS.", "TPS: ");
+        super(hud, "tps", "Displays the server's TPS.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "TPS: ";
     }
 
     @Override

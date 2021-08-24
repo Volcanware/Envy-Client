@@ -11,6 +11,8 @@ import java.util.Calendar;
 public class DateHud extends TripleTextHudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     public final Setting<Boolean> euDate = sgGeneral.add(new BoolSetting.Builder()
         .name("EU-date")
         .description("Changes the date to Europian format.")
@@ -19,7 +21,12 @@ public class DateHud extends TripleTextHudElement {
     );
 
     public DateHud(HUD hud) {
-        super(hud, "date", "Displays current date.", "Date: ");
+        super(hud, "date", "Displays current date.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "Date: ";
     }
 
     @Override

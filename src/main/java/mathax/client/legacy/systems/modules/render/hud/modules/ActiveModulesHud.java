@@ -13,19 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActiveModulesHud extends HudElement {
-    public enum Sort {
-        Biggest,
-        Smallest
-    }
-
-    public enum ColorMode {
-        Category,
-        Flat,
-        Random,
-        Rainbow
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    // General
 
     private final Setting<Sort> sort = sgGeneral.add(new EnumSetting.Builder<Sort>()
         .name("sort")
@@ -201,5 +191,17 @@ public class ActiveModulesHud extends HudElement {
         }
 
         return width;
+    }
+
+    public enum Sort {
+        Biggest,
+        Smallest
+    }
+
+    public enum ColorMode {
+        Category,
+        Flat,
+        Random,
+        Rainbow
     }
 }

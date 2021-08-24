@@ -4,7 +4,12 @@ import mathax.client.legacy.systems.modules.render.hud.HUD;
 
 public class RotationHud extends TripleTextHudElement {
     public RotationHud(HUD hud) {
-        super(hud, "rotation", "Displays your rotation.", "");
+        super(hud, "rotation", "Displays your rotation.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "";
     }
 
     @Override

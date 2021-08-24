@@ -12,6 +12,8 @@ import java.time.format.FormatStyle;
 public class RealTimeHud extends TripleTextHudElement {
     /*private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     public final Setting<Boolean> euFormat = sgGeneral.add(new BoolSetting.Builder()
         .name("eu-format")
         .description("Changes the time to Europian format.")
@@ -21,7 +23,12 @@ public class RealTimeHud extends TripleTextHudElement {
     //TODO: Change default to AM & PM. Add EU format setting 12:00.
 
     public RealTimeHud(HUD hud) {
-        super(hud, "real-time", "Displays real world time.", "Time: ");
+        super(hud, "real-time", "Displays real world time.");
+    }
+
+    @Override
+    protected String getLeft() {
+        return "Time: ";
     }
 
     @Override
