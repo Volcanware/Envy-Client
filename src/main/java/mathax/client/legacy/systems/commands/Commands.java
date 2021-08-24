@@ -33,6 +33,7 @@ public class Commands extends System<Commands> {
         add(new BaritoneCommand());
         add(new VClipCommand());
         add(new HClipCommand());
+        add(new CapesCommand());
         add(new ClearChatCommand());
         add(new DismountCommand());
         add(new DamageCommand());
@@ -51,7 +52,6 @@ public class Commands extends System<Commands> {
         add(new PluginsCommand());
         add(new ProfilesCommand());
         add(new ReloadCommand());
-        add(new CapesCommand());
         add(new ResetCommand());
         add(new SayCommand());
         add(new ServerCommand());
@@ -64,6 +64,7 @@ public class Commands extends System<Commands> {
         add(new SaveCommand());
         add(new SaveMapCommand());
         add(new ModulesCommand());
+        add(new MatHaxLegacyCommand());
         add(new BindsCommand());
         add(new GiveCommand());
         add(new NameHistoryCommand());

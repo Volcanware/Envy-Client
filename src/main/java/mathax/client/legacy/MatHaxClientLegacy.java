@@ -77,7 +77,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
 
     public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 8;
+    public static Integer devBuildNumber = 68;
 
     public static String devBuild() {
         if (devBuildNumber == 0) {
