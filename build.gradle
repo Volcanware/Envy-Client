@@ -1,0 +1,125 @@
+plugins {
+    id 'fabric-loom' version '0.8-SNAPSHOT'
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+}
+
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version + (System.getenv("CIRCLE_BUILD_NUM") != null ? ("-" + System.getenv("CIRCLE_BUILD_NUM")) : "")
+group = project.maven_group
+
+minecraft {
+    accessWidener "src/main/resources/mathaxlegacy.accesswidener"
+}
+
+repositories {
+    maven {
+        name = "jitpack"
+        url = 'https://jitpack.io'
+    }
+    jcenter()
+
+    // For Canvas
+    maven {
+        name = "dblsaiko"
+        url = "https://maven.dblsaiko.net/"
+    }
+}
+
+dependencies {
+    def dependency = { id ->
+        implementation id
+        shadow id
+    }
+
+    // Minecraft
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_version}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    // Fabric API Indigo Renderer (only used in mixins)
+    modCompileOnly fabricApi.module("fabric-renderer-indigo", project.api_version)
+
+    // For XRay compatibility
+    //modImplementation "com.github.CaffeineMC:sodium-fabric:${project.sodium_version}"
+    modCompileOnly "com.github.MeteorDevelopment:sodium-fabric:${project.sodium_version}"
+
+    // Canvas for compatibility
+    modCompileOnly("grondag:canvas-mc117-1.17:1.0.+") { transitive = false }
+
+    // Baritone (the fork is standalone baritone and the only change is a setting to build it as fabric mod instead of forge one)
+    modImplementation "com.github.MeteorDevelopment:baritone:${project.baritone_version}"
+    include "com.github.MeteorDevelopment:baritone:${project.baritone_version}"
+
+    // Dependencies
+    dependency "com.github.Vatuu:discord-rpc:${project.discord_version}"
+}
+
+shadowJar {
+    configurations = [ project.configurations.shadow ]
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    duplicatesStrategy = DuplicatesStrategy.WARN
+
+    from(sourceSets.main.resources.srcDirs) {
+        include "fabric.mod.json"
+        expand "version": project.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "fabric.mod.json"
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
+    it.options.release = 16
+}
+
+jar {
+    from "LICENSE"
+
+    manifest {
+        attributes("Main-Class": "mathax.client.legacy.main.Main")
+    }
+}
+
+remapJar {
+    dependsOn shadowJar
+    input.set(shadowJar.archiveFile)
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveClassifier.set("sources")
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier.set("javadoc")
+    from javadoc
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact(remapJar) {
+                builtBy remapJar
+            }
+
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+
+            artifact(javadocJar) {
+                builtBy javadocJar
+            }
+        }
+    }
+}
+
+apply from: "scripts/packetutils.gradle"

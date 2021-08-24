@@ -1,0 +1,11 @@
+{
+  "required": false,
+  "package": "mathax.client.legacy.mixin.canvas",
+  "compatibilityLevel": "JAVA_16",
+  "client": [
+    "CanvasWorldRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
