@@ -97,7 +97,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
             return;
         }
 
-        LOG.info(logprefix + "Initializing MatHax Client Legacy" + clientVersionWithV + "...");
+        LOG.info(logprefix + "Initializing MatHax Client Legacy " + clientVersionWithV + "...");
         Utils.mc = MinecraftClient.getInstance();
         mc.execute(this::titleLoading);
         mc.execute(this::updateImage);

@@ -15,12 +15,15 @@ import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static mathax.client.legacy.utils.Utils.mc;
 
 @Mixin(MultiplayerScreen.class)
 public class MultiplayerScreenMixin extends Screen {
@@ -69,7 +72,7 @@ public class MultiplayerScreenMixin extends Screen {
         float y = 3;
 
         // Logged in as
-        textRenderer.drawWithShadow(matrices, loggedInAs, x, y, textColor1);
+        textRenderer.drawWithShadow(matrices, loggedInAs + getDeveloper(), x, y, textColor1);
         textRenderer.drawWithShadow(matrices, Modules.get().get(NameProtect.class).getName(client.getSession().getUsername()), x + loggedInAsLength, y, textColor2);
 
         y += textRenderer.fontHeight + 2;
@@ -82,6 +85,12 @@ public class MultiplayerScreenMixin extends Screen {
 
         textRenderer.drawWithShadow(matrices, left, x, y, textColor1);
         if (right != null) textRenderer.drawWithShadow(matrices, right, x + textRenderer.getWidth(left), y, textColor2);
+    }
+
+    private String getDeveloper() {
+        if (Modules.get().isActive(NameProtect.class)) return "";
+        if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return Formatting.WHITE + " [Developer]";
+        else return "";
     }
 
     @Inject(at = {@At("HEAD")},

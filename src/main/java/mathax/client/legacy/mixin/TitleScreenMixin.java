@@ -16,14 +16,14 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static mathax.client.legacy.utils.Utils.mc;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin extends Screen {
@@ -54,12 +54,9 @@ public class TitleScreenMixin extends Screen {
     private int fullLengthRightDown;
     private int prevWidthRightDown;
 
-    private String textLeftUpButtonAnarchy;
-
     private String textRightDownButtonDiscord;
 
     private String textRightDownButtonWebsite;
-
 
     public TitleScreenMixin(Text title) {
         super(title);
@@ -83,8 +80,10 @@ public class TitleScreenMixin extends Screen {
                     newUpdateString = MatHaxClientLegacy.clientVersionWithV;
                 }
             }
+        } else {
+            newUpdateString = MatHaxClientLegacy.clientVersionWithV;
         }
-        return newUpdateString = MatHaxClientLegacy.clientVersionWithV;
+        return newUpdateString;
     }
 
     @Inject(method = "init", at = @At("TAIL"))
@@ -103,7 +102,7 @@ public class TitleScreenMixin extends Screen {
 
         textRightDownButtonWebsite = "MatHax Website";
 
-        textLeftUpLength = textRenderer.getWidth(textLeftUp);
+        textLeftUpLength = textRenderer.getWidth(textLeftUp + getDeveloper());
 
         textRightUp1Length = textRenderer.getWidth(textRightUp1);
         textRightUp2Length = textRenderer.getWidth(textRightUp2);
@@ -158,7 +157,7 @@ public class TitleScreenMixin extends Screen {
             });
         }
 
-        textRenderer.drawWithShadow(matrices, textLeftUp, 3, 3, WHITE);
+        textRenderer.drawWithShadow(matrices, textLeftUp + getDeveloper(), 3, 3, WHITE);
         textRenderer.drawWithShadow(matrices, Modules.get().get(NameProtect.class).getName(client.getSession().getUsername()), 3 + textLeftUpLength, 3, GRAY);
 
         prevWidthRightUp = 0;
@@ -182,6 +181,11 @@ public class TitleScreenMixin extends Screen {
         addDrawableChild(new ButtonWidget(this.width - 103, this.height - 58, 100, 20, new LiteralText(textRightDownButtonWebsite), button -> {
             Util.getOperatingSystem().open("https://mathaxclient.xyz/");
         }));
+    }
 
+    private String getDeveloper() {
+        if (Modules.get().isActive(NameProtect.class)) return "";
+        if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return Formatting.WHITE + " [Developer]";
+        else return "";
     }
 }

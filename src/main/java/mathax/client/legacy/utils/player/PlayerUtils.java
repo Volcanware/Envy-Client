@@ -261,6 +261,7 @@ public class PlayerUtils {
     }
 
     public static double distanceTo(double x, double y, double z) {
+        if (mc.player == null) return 0;
         float f = (float) (mc.player.getX() - x);
         float g = (float) (mc.player.getY() - y);
         float h = (float) (mc.player.getZ() - z);

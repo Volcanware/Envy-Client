@@ -41,18 +41,18 @@ public class WelcomeHud extends TripleTextHudElement {
     protected String getLeft() {
         switch (message.get()) {
             case Welcome -> {
-                if (mc.player == null) return "Welcome to MatHax Client Legacy, ";
-                if (mc.player.getUuid().toString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return "Welcome to MatHax Client Legacy, Developer ";
+                if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Client Legacy, ";
+                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return "Welcome to MatHax Client Legacy, Developer ";
                 else return "Welcome to MatHax Client Legacy, ";
             }
             case Using -> {
-                if (mc.player == null) return "You are using MatHax Client Legacy, ";
-                if (mc.player.getUuid().toString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return "You are using MatHax Client Legacy, Developer";
+                if (Modules.get().isActive(NameProtect.class)) return "You are using MatHax Client Legacy, ";
+                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return "You are using MatHax Client Legacy, Developer";
                 else return "You are using MatHax Client Legacy, ";
             }
             default -> {
-                if (mc.player == null) return "Welcome to MatHax Client Legacy, ";
-                if (mc.player.getUuid().toString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return "Welcome to MatHax Client Legacy, Developer ";
+                if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Client Legacy, ";
+                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return "Welcome to MatHax Client Legacy, Developer ";
                 else return "Welcome to MatHax Client Legacy, ";
             }
         }
