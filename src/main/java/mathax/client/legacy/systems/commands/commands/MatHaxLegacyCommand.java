@@ -40,7 +40,17 @@ public class MatHaxLegacyCommand extends Command {
                 ChatUtils.info("You dont own a MatHax Cape! :(");
             }
             return SINGLE_SUCCESS;
-        }));
+        })
+            .then(argument("reload", StringArgumentType.word())
+                .executes(context -> {
+                    ChatUtils.info("Reloading capes...");
+                    Capes.init();
+
+                    ChatUtils.info("Capes reload complete!");
+                    return SINGLE_SUCCESS;
+                })
+            )
+        );
 
         builder.then(literal("reload").executes(context -> {
                 ChatUtils.info("Reloading...");
