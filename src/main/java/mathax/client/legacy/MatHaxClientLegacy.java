@@ -77,7 +77,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
 
     public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 1;
+    public static Integer devBuildNumber = 2;
 
     public static String devBuild() {
         if (devBuildNumber == 0) {
@@ -102,8 +102,8 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         mc.execute(this::titleLoading);
         mc.execute(this::updateImage);
         EVENT_BUS.registerLambdaFactory("mathax.client.legacy", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
-        List<MatHaxClientLegacyPlus> addons = new ArrayList<>();
-        for (EntrypointContainer<MatHaxClientLegacyPlus> entrypoint : FabricLoader.getInstance().getEntrypointContainers("mathaxlegacy", MatHaxClientLegacyPlus.class)) {
+        List<MatHaxClientLegacyPlusRegisterer> addons = new ArrayList<>();
+        for (EntrypointContainer<MatHaxClientLegacyPlusRegisterer> entrypoint : FabricLoader.getInstance().getEntrypointContainers("mathaxlegacy", MatHaxClientLegacyPlusRegisterer.class)) {
             addons.add(entrypoint.getEntrypoint());
         }
 
@@ -148,7 +148,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         // Register categories
         Modules.REGISTERING_CATEGORIES = true;
         Categories.register();
-        addons.forEach(MatHaxClientLegacyPlus::onRegisterCategories);
+        addons.forEach(MatHaxClientLegacyPlusRegisterer::onRegisterCategories);
         Modules.REGISTERING_CATEGORIES = false;
 
         LOG.info(logprefix + "80% initialized!");
@@ -168,7 +168,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         Capes.init();
         EVENT_BUS.subscribe(this);
         EVENT_BUS.post(new ClientInitialisedEvent()); // TODO: This is there just for compatibility
-        addons.forEach(MatHaxClientLegacyPlus::onInitialize);
+        addons.forEach(MatHaxClientLegacyPlusRegisterer::onInitialize);
         Modules.get().sortModules();
         Systems.load();
 
