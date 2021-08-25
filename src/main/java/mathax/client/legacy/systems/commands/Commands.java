@@ -31,6 +31,8 @@ public class Commands extends System<Commands> {
     @Override
     public void init() {
         add(new BaritoneCommand());
+        add(new BindsCommand());
+        add(new BookDupeCommand());
         add(new VClipCommand());
         add(new HClipCommand());
         add(new CapesCommand());
@@ -65,7 +67,6 @@ public class Commands extends System<Commands> {
         add(new SaveMapCommand());
         add(new ModulesCommand());
         add(new MatHaxLegacyCommand());
-        add(new BindsCommand());
         add(new GiveCommand());
         add(new NameHistoryCommand());
 
