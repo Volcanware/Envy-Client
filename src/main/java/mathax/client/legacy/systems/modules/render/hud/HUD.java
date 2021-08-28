@@ -127,7 +127,6 @@ public class HUD extends Module {
 
     public HUD() {
         super(Categories.Render, "HUD", "In game overlay.");
-        //TODO MAKE NEW POSITIONS
 
         // MAIN INFO
         mainInfo = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 2, 2);
@@ -172,7 +171,7 @@ public class HUD extends Module {
         modules.add(new ActiveModulesHud(this));
 
         // ENEMY
-        enemy = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Center, 2, -150);
+        enemy = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Center, 2, -100);
         // Modules
         enemy.add(new CombatHud(this));
 
