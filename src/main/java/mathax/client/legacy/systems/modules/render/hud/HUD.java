@@ -1,6 +1,5 @@
 package mathax.client.legacy.systems.modules.render.hud;
 
-import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.events.render.Render2DEvent;
 import mathax.client.legacy.gui.GuiTheme;
 import mathax.client.legacy.gui.screens.HudElementScreen;
@@ -9,6 +8,7 @@ import mathax.client.legacy.gui.widgets.WWidget;
 import mathax.client.legacy.gui.widgets.containers.WHorizontalList;
 import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.settings.*;
+import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.render.hud.modules.*;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
@@ -25,13 +25,12 @@ import net.minecraft.util.registry.RegistryKey;
 import java.util.ArrayList;
 import java.util.List;
 
-import static mathax.client.legacy.utils.Utils.mc;
-
 public class HUD extends Module {
     private static final HudRenderer RENDERER = new HudRenderer();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgEditor = settings.createGroup("Editor");
+    private final SettingGroup sgVanilla = settings.createGroup("Vanilla HUD");
 
     // General
 
@@ -70,7 +69,7 @@ public class HUD extends Module {
 
     // Improve vanilla HUD
 
-    public final Setting<Boolean> mountHud = sgGeneral.add(new BoolSetting.Builder()
+    public final Setting<Boolean> mountHud = sgVanilla.add(new BoolSetting.Builder()
         .name("mount-hud")
         .description("Display xp bar and hunger when riding.")
         .defaultValue(true)
@@ -79,12 +78,41 @@ public class HUD extends Module {
 
     public final List<HudElement> elements = new ArrayList<>();
 
-    private final HudElementLayer topLeft, topCenter, topRight, bottomLeft, bottomCenter, bottomRight;
+    private final HudElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, enemy, invPot, radar, crosshair, crosshair2, crosshair3, crosshair4;
 
     public final Runnable reset = () -> {
         align();
         elements.forEach(element -> {
-            element.active = element.defaultActive;
+            Modules.get().get(HUD.class).elements.get(0).toggle(false);                            // WATERMARK
+            Modules.get().get(HUD.class).elements.get(1).toggle(false);                            // WELCOME
+            Modules.get().get(HUD.class).elements.get(2).toggle(false);                            // FPS
+            Modules.get().get(HUD.class).elements.get(3).toggle(false);                            // PING
+            Modules.get().get(HUD.class).elements.get(4).toggle(false);                            // TPS
+            Modules.get().get(HUD.class).elements.get(5).toggle(false);                            // SPEED
+            Modules.get().get(HUD.class).elements.get(6).toggle(false);                            // SERVER
+            Modules.get().get(HUD.class).elements.get(7).toggle(false);                            // SERVER BRAND
+            Modules.get().get(HUD.class).elements.get(8).toggle(false);                            // DURABILITY
+            //Modules.get().get(HUD.class).elements.get(9).toggle(false);                            // BIOME
+            Modules.get().get(HUD.class).elements.get(10).toggle(false);                            // PLAYER MODEL
+            Modules.get().get(HUD.class).elements.get(11).toggle(false);                            // MODULE INFO
+            Modules.get().get(HUD.class).elements.get(12).toggle(false);                            // LOOKING AT
+            Modules.get().get(HUD.class).elements.get(13).toggle(false);                            // BREAKING
+            Modules.get().get(HUD.class).elements.get(14).toggle(false);                            // POSITION
+            //Modules.get().get(HUD.class).elements.get(15).toggle(false);                            // ROTATION
+            Modules.get().get(HUD.class).elements.get(16).toggle(false);                            // LAG NOTIFIER
+            Modules.get().get(HUD.class).elements.get(17).toggle(false);                            // ACTIVE MODULES
+            Modules.get().get(HUD.class).elements.get(18).toggle(false);                            // COMBAT HUD
+            Modules.get().get(HUD.class).elements.get(19).toggle(false);                            // INVENTORY VIEWER
+            Modules.get().get(HUD.class).elements.get(20).toggle(false);                            // CONTAINER VIEWER
+            Modules.get().get(HUD.class).elements.get(21).toggle(false);                            // POTION
+            Modules.get().get(HUD.class).elements.get(22).toggle(false);                            // DATE
+            Modules.get().get(HUD.class).elements.get(23).toggle(false);                            // REAL TIME
+            Modules.get().get(HUD.class).elements.get(24).toggle(false);                            // IN-GAME TIME
+            Modules.get().get(HUD.class).elements.get(25).toggle(false);                            // TEXT RADAR
+            Modules.get().get(HUD.class).elements.get(26).toggle(false);                            // TOTEM
+            Modules.get().get(HUD.class).elements.get(27).toggle(false);                            // HOLE
+            Modules.get().get(HUD.class).elements.get(28).toggle(false);                            // COMPASS
+            Modules.get().get(HUD.class).elements.get(29).toggle(false);                            // ARMOR
             element.settings.forEach(group -> group.forEach(Setting::reset));
         });
     };
@@ -99,55 +127,89 @@ public class HUD extends Module {
 
     public HUD() {
         super(Categories.Render, "HUD", "In game overlay.");
+        //TODO MAKE NEW POSITIONS
 
-        // Top Left
-        topLeft = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 2, 2);
-        topLeft.add(new WatermarkHud(this));
-        topLeft.add(new WelcomeHud(this));
-        topLeft.add(new FpsHud(this));
-        topLeft.add(new PingHud(this));
-        topLeft.add(new TpsHud(this));
-        topLeft.add(new SpeedHud(this));
-        topLeft.add(new ServerHud(this));
-        topLeft.add(new ServerBrandHud(this));
-        topLeft.add(new BiomeHud(this));
-        topLeft.add(new DurabilityHud(this));
-        topLeft.add(new BreakingBlockHud(this));
-        topLeft.add(new LookingAtHud(this));
-        topLeft.add(new ModuleInfoHud(this));
-        topLeft.add(new TextRadarHud(this));
+        // MAIN INFO
+        mainInfo = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 2, 2);
+        // Modules
+        mainInfo.add(new WatermarkHud(this));
+        mainInfo.add(new WelcomeHud(this));
+        mainInfo.add(new FpsHud(this));
+        mainInfo.add(new PingHud(this));
+        mainInfo.add(new TpsHud(this));
+        mainInfo.add(new SpeedHud(this));
+        mainInfo.add(new ServerHud(this));
+        mainInfo.add(new ServerBrandHud(this));
+        mainInfo.add(new DurabilityHud(this));
+        mainInfo.add(new BiomeHud(this));
+        mainInfo.add(new PlayerModelHud(this));
 
-        // Top Center
-        topCenter = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Top, 0, 2);
-        topCenter.add(new LagNotifierHud(this));
+        // MODULE INFO
+        moduleInfo = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 225);
+        // Modules
+        moduleInfo.add(new ModuleInfoHud(this));
 
-        // Top Right
-        topRight = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Top, 2, 2);
-        topRight.add(new InventoryViewerHud(this));
-        topRight.add(new PotionTimersHud(this));
-        topRight.add(new HoleHud(this));
-        topRight.add(new CombatHud(this));
+        // LOOKING AT & BREAKING
+        breakingLooking = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Bottom, -3, -215);
+        // Modules
+        breakingLooking.add(new LookingAtHud(this));
+        breakingLooking.add(new BreakingBlockHud(this));
 
+        // COORDS
+        coords = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Bottom, 2, 2);
+        // Modules
+        coords.add(new PositionHud(this));
+        coords.add(new RotationHud(this));
 
-        // Bottom Left
-        bottomLeft = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Bottom, 2, 2);
-        bottomLeft.add(new RotationHud(this));
-        bottomLeft.add(new PositionHud(this));
+        // LAG
+        lag = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Top, 0, 2);
+        // Modules
+        lag.add(new LagNotifierHud(this));
 
-        // Bottom Center
-        bottomCenter = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Bottom, 48, 64);
-        bottomCenter.add(new DateHud(this));
-        bottomCenter.add(new RealTimeHud(this));
-        bottomCenter.add(new InGameTimeHud(this));
-        bottomCenter.add(new PlayerModelHud(this));
-        bottomCenter.add(new ArmorHud(this));
-        bottomCenter.add(new CompassHud(this));
-        bottomCenter.add(new ContainerViewerHud(this));
-        bottomCenter.add(new TotemHud(this));
+        // MODULES
+        modules = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Bottom, 2, 2);
+        // Modules
+        modules.add(new ActiveModulesHud(this));
 
-        // Bottom Right
-        bottomRight = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Bottom, 2, 2);
-        bottomRight.add(new ActiveModulesHud(this));
+        // ENEMY
+        enemy = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Center, 2, -150);
+        // Modules
+        enemy.add(new CombatHud(this));
+
+        // INVPOT
+        invPot = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Top, 2, 2);
+        // Modules
+        invPot.add(new InventoryViewerHud(this));
+        invPot.add(new ContainerViewerHud(this));
+        invPot.add(new PotionTimersHud(this));
+        invPot.add(new DateHud(this));
+        invPot.add(new RealTimeHud(this));
+        invPot.add(new InGameTimeHud(this));
+
+        // TEXT RADAR
+        radar = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Center, 2, 100);
+        // Modules
+        radar.add(new TextRadarHud(this));
+
+        // CROSSHAIR
+        crosshair = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
+        // Modules
+        crosshair.add(new TotemHud(this));
+
+        // CROSSHAIR 2
+        crosshair2 = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
+        // Modules
+        crosshair2.add(new HoleHud(this));
+
+        // CROSSHAIR 3
+        crosshair3 = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
+        // Modules
+        crosshair3.add(new CompassHud(this));
+
+        // CROSSHAIR 4
+        crosshair4 = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 65);
+        // Modules
+        crosshair4.add(new ArmorHud(this));
 
         align();
     }
@@ -155,12 +217,19 @@ public class HUD extends Module {
     private void align() {
         RENDERER.begin(scale.get(), 0, true);
 
-        topLeft.align();
-        topCenter.align();
-        topRight.align();
-        bottomLeft.align();
-        bottomCenter.align();
-        bottomRight.align();
+        mainInfo.align();
+        moduleInfo.align();
+        breakingLooking.align();
+        coords.align();
+        lag.align();
+        modules.align();
+        enemy.align();
+        invPot.align();
+        radar.align();
+        crosshair.align();
+        crosshair2.align();
+        crosshair3.align();
+        crosshair4.align();
 
         RENDERER.end();
     }

@@ -1,4 +1,4 @@
-package mathax.client.legacy.main;
+package mathax.client.legacy;
 
 import mathax.client.legacy.MatHaxClientLegacy;
 
@@ -20,7 +20,7 @@ public class Main {
         int option = JOptionPane.showOptionDialog(
             null,
             "To install MatHax Client Legacy you need to put it in your mods folder and run Fabric for Minecraft version 1.17.1.",
-            "MatHax Client Legacy 1.2.7 | Fabric 1.17.1",
+            "MatHax Client Legacy 1.2.8 | Fabric 1.17.1",
             JOptionPane.YES_NO_CANCEL_OPTION,
             JOptionPane.ERROR_MESSAGE,
             null,

@@ -36,7 +36,7 @@ public class InstaAutoCity extends Module {
     private boolean mining;
     private BlockPos mineTarget;
     private PlayerEntity target;
-    static final boolean $assertionsDisabled = !InstaAutoCity.class.desiredAssertionStatus();
+    static final boolean assertionsDisabled = !InstaAutoCity.class.desiredAssertionStatus();
     private Direction direction;
     private int count;
     private BlockPos targetBlockPos;
@@ -170,7 +170,7 @@ public class InstaAutoCity extends Module {
         target = CityUtils.getPlayerTarget(range.get() + 1.0);
         if (target != null && CityUtils.getTargetBlock(target) != null) {
             Vec3d vec3d = new Vec3d(mc.player.getPos().x, mc.player.getPos().y + 1.0, mc.player.getPos().z);
-            Vec3d vec3d1 = new Vec3d((double)CityUtils.getTargetBlock(target).getX(), CityUtils.getTargetBlock(target).getY(), CityUtils.getTargetBlock(target).getZ());
+            Vec3d vec3d1 = new Vec3d(CityUtils.getTargetBlock(target).getX(), CityUtils.getTargetBlock(target).getY(), CityUtils.getTargetBlock(target).getZ());
             if (vec3d.distanceTo(vec3d1) <= range.get()) {
                 mineTarget = CityUtils.getTargetBlock(target);
             }
@@ -265,7 +265,7 @@ public class InstaAutoCity extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre pre) {
-        if (!$assertionsDisabled && mc.world == null) {
+        if (!assertionsDisabled && mc.world == null) {
             throw new AssertionError();
         }
         if (autoToggle.get()) {

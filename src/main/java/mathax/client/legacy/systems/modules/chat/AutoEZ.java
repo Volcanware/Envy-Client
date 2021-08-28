@@ -127,7 +127,7 @@ public class AutoEZ extends Module {
     }
 
     public String getMessage() {
-        int randomNumber = Utils.random(0, 5);
+        int randomNumber = Utils.random(1, 6);
         if (randomNumber == 1) {
             return "haha %killedperson% is a noob! MatHax Legacy on top!";
         } else if (randomNumber == 2) {
@@ -144,7 +144,7 @@ public class AutoEZ extends Module {
     }
 
     public String getGgMessage() {
-        int randomNumber = Utils.random(0, 3);
+        int randomNumber = Utils.random(1, 4);
         if (randomNumber == 1) {
             return "Close fight %killedperson%, but MatHax Legacy helped me to win!";
         } else if (randomNumber == 2) {
@@ -157,7 +157,7 @@ public class AutoEZ extends Module {
     }
 
     public String getCrystalMessage() {
-        int randomNumber = Utils.random(0, 6);
+        int randomNumber = Utils.random(1, 7);
         if (randomNumber == 1) {
             return "My crystal aura is too fast for %killedperson%! MatHax Legacy on top!";
         } else if (randomNumber == 2) {
@@ -176,7 +176,7 @@ public class AutoEZ extends Module {
     }
 
     public String getGgCrystalMessage() {
-        int randomNumber = Utils.random(0, 3);
+        int randomNumber = Utils.random(1, 4);
         if (randomNumber == 1) {
             return "Close fight %killedperson%, but MatHax Legacy crystal aura won!";
         } else if (randomNumber == 2) {
@@ -189,7 +189,7 @@ public class AutoEZ extends Module {
     }
 
     public String getBedMessage() {
-        int randomNumber = Utils.random(0, 6);
+        int randomNumber = Utils.random(1, 7);
         if (randomNumber == 1) {
             return "My bed aura is too fast for %killedperson%! MatHax Legacy on top!";
         } else if (randomNumber == 2) {
@@ -208,7 +208,7 @@ public class AutoEZ extends Module {
     }
 
     public String getGgBedMessage() {
-        int randomNumber = Utils.random(0, 3);
+        int randomNumber = Utils.random(1, 4);
         if (randomNumber == 1) {
             return "Close fight %killedperson%, but MatHax Legacy bed aura won!";
         } else if (randomNumber == 2) {

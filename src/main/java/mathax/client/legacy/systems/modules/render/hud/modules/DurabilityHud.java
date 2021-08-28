@@ -1,6 +1,7 @@
 package mathax.client.legacy.systems.modules.render.hud.modules;
 
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.TripleTextHudElement;
 
 public class DurabilityHud extends TripleTextHudElement {
     public DurabilityHud(HUD hud) {

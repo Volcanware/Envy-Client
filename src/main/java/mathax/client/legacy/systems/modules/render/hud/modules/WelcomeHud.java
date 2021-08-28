@@ -1,16 +1,13 @@
 package mathax.client.legacy.systems.modules.render.hud.modules;
 
-import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.settings.ColorSetting;
 import mathax.client.legacy.settings.EnumSetting;
 import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Modules;
-import mathax.client.legacy.systems.modules.chat.AutoEZ;
 import mathax.client.legacy.systems.modules.misc.NameProtect;
-import mathax.client.legacy.systems.modules.player.ChestSwap;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
-import mathax.client.legacy.utils.Utils;
+import mathax.client.legacy.systems.modules.render.hud.TripleTextHudElement;
 import mathax.client.legacy.utils.render.color.SettingColor;
 
 public class WelcomeHud extends TripleTextHudElement {

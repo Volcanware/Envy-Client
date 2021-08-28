@@ -4,6 +4,7 @@ import mathax.client.legacy.renderer.GL;
 import mathax.client.legacy.renderer.Renderer2D;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.HudElement;
 import mathax.client.legacy.systems.modules.render.hud.HudRenderer;
 import mathax.client.legacy.utils.render.RenderUtils;
 import mathax.client.legacy.utils.render.color.SettingColor;
@@ -12,8 +13,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class InventoryViewerHud extends HudElement {
-    private static final Identifier TEXTURE = new Identifier("mathaxlegacy", "textures/container.png");
-    private static final Identifier TEXTURE_TRANSPARENT = new Identifier("mathaxlegacy", "textures/container-transparent.png");
+    private static final Identifier TEXTURE = new Identifier("mathaxlegacy", "textures/container/container.png");
+    private static final Identifier TEXTURE_TRANSPARENT = new Identifier("mathaxlegacy", "textures/container/container-transparent.png");
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -38,7 +39,7 @@ public class InventoryViewerHud extends HudElement {
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
         .name("background-color")
         .description("Color of the background.")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(255, 255, 255))
         .visible(() -> background.get() != Background.None)
         .build()
     );

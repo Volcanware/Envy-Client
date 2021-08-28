@@ -1,7 +1,7 @@
 package mathax.client.legacy.mixin;
 
 import mathax.client.legacy.systems.modules.Modules;
-import mathax.client.legacy.systems.modules.fun.BetterTab;
+import mathax.client.legacy.systems.modules.misc.BetterTab;
 import mathax.client.legacy.utils.Utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -38,7 +38,7 @@ public class PlayerListHudMixin {
     private int modifyWidth(int width) {
         BetterTab module = Modules.get().get(BetterTab.class);
 
-        return module.isActive() && module.accurateLatency.get() ? width + 30 : width;
+        return module.isActive() && module.accurateLatency.get() ? width + 50 : width;
     }
 
     @Shadow
@@ -52,7 +52,7 @@ public class PlayerListHudMixin {
             MinecraftClient mc = MinecraftClient.getInstance();
             TextRenderer textRenderer = mc.textRenderer;
 
-            int latency = Utils.clamp(entry.getLatency(), 0, 9999);
+            int latency = Utils.clamp(entry.getLatency(), 0, 99999);
             int color = latency < 150 ? 0x00E970 : latency < 300 ? 0xE7D020 : 0xD74238;
             String text = latency + "ms";
             textRenderer.drawWithShadow(matrices, text, (float) x + width - textRenderer.getWidth(text), (float) y, color);

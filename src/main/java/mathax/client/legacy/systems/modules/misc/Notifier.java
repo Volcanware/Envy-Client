@@ -153,40 +153,8 @@ public class Notifier extends Module {
             text.append(entityPos);
             text.append(new LiteralText(".").formatted(Formatting.GRAY));
             info(text);
-            //TODO: Always not supported?
-            /*if (SystemTray.isSupported()) {
-                Notifier.displayVisualRangeSpawnTray();
-            } else {
-                MatHaxClientLegacy.LOG.info(MatHaxClientLegacy.logprefix + "System tray not supported!");
-            }*/
         }
     }
-
-    /*private static void displayVisualRangeTray() throws AWTException {
-        SystemTray tray = SystemTray.getSystemTray();
-
-        Image image = Toolkit.getDefaultToolkit().createImage("assets/icons/trays/icon128.png");
-
-        TrayIcon trayIcon = new TrayIcon(image, "MatHax Client Legacy v" + MatHaxClientLegacy.clientversion);
-        trayIcon.setImageAutoSize(true);
-        trayIcon.setToolTip("MatHax Client Legacy v" + MatHaxClientLegacy.clientversion);
-        tray.add(trayIcon);
-
-        trayIcon.displayMessage("MatHax Client Legacy v" + MatHaxClientLegacy.clientversion, entityName + " has entered your visual range!", TrayIcon.MessageType.INFO);
-    }
-
-    private static void displayVisualRangeSpawnTray() throws AWTException {
-        SystemTray tray = SystemTray.getSystemTray();
-
-        Image image = Toolkit.getDefaultToolkit().createImage("assets/icons/trays/icon128.png");
-
-        TrayIcon trayIcon = new TrayIcon(image, "MatHax Client Legacy v" + MatHaxClientLegacy.clientversion);
-        trayIcon.setImageAutoSize(true);
-        trayIcon.setToolTip("MatHax Client Legacy v" + MatHaxClientLegacy.clientversion);
-        tray.add(trayIcon);
-
-        trayIcon.displayMessage("MatHax Client Legacy v" + MatHaxClientLegacy.clientversion, entityName + " has spawned at " + entityPos, TrayIcon.MessageType.INFO);
-    }*/
 
     @EventHandler
     private void onEntityRemoved(EntityRemovedEvent event) {

@@ -13,6 +13,7 @@ import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.entity.EntityUtils;
 import mathax.client.legacy.utils.misc.text.TextUtils;
+import mathax.client.legacy.utils.world.BlockUtils;
 import mathax.client.legacy.utils.world.Dimension;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -26,11 +27,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.RaycastContext;
 
@@ -38,10 +38,55 @@ import static mathax.client.legacy.utils.Utils.WHITE;
 import static mathax.client.legacy.utils.Utils.mc;
 
 public class PlayerUtils {
+    private static final Vec3d hitPos = new Vec3d(0.0, 0.0, 0.0);
     private static final double diagonal = 1 / Math.sqrt(2);
     private static final Vec3d horizontalVelocity = new Vec3d(0, 0, 0);
 
     private static final Color color = new Color();
+
+    public static boolean placeBlock(BlockPos blockPos, Hand hand, boolean bl) {
+        return PlayerUtils.placeBlock(blockPos, hand, true, bl);
+    }
+
+    public static boolean placeBlock(BlockPos blockPos, int n, Hand hand, boolean bl) {
+        if (n == -1) {
+            return false;
+        }
+        int n2 = mc.player.getInventory().selectedSlot;
+        mc.player.getInventory().selectedSlot = n;
+        boolean bl2 = placeBlock(blockPos, hand, true, bl);
+        mc.player.getInventory().selectedSlot = n2;
+        return bl2;
+    }
+
+    public static boolean placeBlock(BlockPos blockPos, Hand hand, boolean bl, boolean bl2) {
+        if (!BlockUtils.canPlace(blockPos)) {
+            return false;
+        }
+        for (Direction direction : Direction.values()) {
+            BlockPos blockPos1 = blockPos.offset(direction);
+            Direction direction1 = direction.getOpposite();
+            if (mc.world.getBlockState(blockPos1).isAir() || BlockUtils.isClickable(mc.world.getBlockState(blockPos1).getBlock())) continue;
+            ((IVec3d)hitPos).set(blockPos1.getX() + 0.5 + direction1.getVector().getX() * 0.5, blockPos1.getY() + 0.5 + direction1.getVector().getY() * 0.5, blockPos1.getZ() + 0.5 + direction1.getVector().getZ() * 0.5);
+            boolean bl3 = mc.player.input.sneaking;
+            mc.player.input.sneaking = false;
+            mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(hitPos, direction1, blockPos1, false));
+            if (bl) {
+                mc.player.swingHand(hand);
+            }
+            mc.player.input.sneaking = bl3;
+            return true;
+        }
+        if (!bl2) {
+            return false;
+        }
+        ((IVec3d)hitPos).set(blockPos);
+        mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(hitPos, Direction.UP, blockPos, false));
+        if (bl) {
+            mc.player.swingHand(hand);
+        }
+        return true;
+    }
 
     public static Color getPlayerColor(PlayerEntity entity, Color defaultColor) {
         if (Friends.get().isFriend(entity)) return color.set(Friends.get().color).a(defaultColor.a);

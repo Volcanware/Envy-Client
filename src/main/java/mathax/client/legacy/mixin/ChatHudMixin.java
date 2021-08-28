@@ -15,6 +15,7 @@ import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.option.ChatVisibility;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.*;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.*;
@@ -32,8 +33,8 @@ public abstract class ChatHudMixin implements IChatHud {
 
     private static final Pattern MATHAXLEGACY_PREFIX_REGEX = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[MatHax Legacy\\]");
     private static final Pattern BARITONE_PREFIX_REGEX = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[Baritone\\]");
-    private static final Identifier MATHAXLEGACY_CHAT_ICON = new Identifier("mathaxlegacy", "icons/chat/mathaxlegacy.png");
-    private static final Identifier BARITONE_CHAT_ICON = new Identifier("mathaxlegacy", "icons/chat/baritone.png");
+    private static final Identifier MATHAXLEGACY_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/chat/mathaxlegacy.png");
+    private static final Identifier BARITONE_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/chat/baritone.png");
 
     @Shadow
     @Final

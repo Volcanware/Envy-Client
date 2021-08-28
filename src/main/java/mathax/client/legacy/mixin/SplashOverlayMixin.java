@@ -1,5 +1,6 @@
 package mathax.client.legacy.mixin;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.legacy.utils.splash.PreviewSplashOverlay;
 import mathax.client.legacy.utils.splash.SplashUtils;
 import net.minecraft.client.MinecraftClient;
@@ -45,7 +46,7 @@ public abstract class SplashOverlayMixin {
         SplashUtils.reset();
         SplashUtils.init();
         client.getTextureManager().registerTexture(LOGO, new SplashUtils(MATHAX_LOGO));
-        // TODO: Fix
+        //TODO: Fix
         //client.getTextureManager().registerTexture(LOGO, new ResourceTexture(new Identifier("mathaxlegacy", "splash/splash.png")));
         callbackInfo.cancel();
     }

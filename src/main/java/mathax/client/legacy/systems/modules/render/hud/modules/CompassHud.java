@@ -2,8 +2,8 @@ package mathax.client.legacy.systems.modules.render.hud.modules;
 
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.HudElement;
 import mathax.client.legacy.systems.modules.render.hud.HudRenderer;
-import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.util.math.MathHelper;
 
@@ -15,7 +15,7 @@ public class CompassHud extends HudElement {
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("type")
         .description("Which type of axis to show.")
-        .defaultValue(Mode.Pole)
+        .defaultValue(Mode.Axis)
         .build()
     );
 
@@ -29,9 +29,10 @@ public class CompassHud extends HudElement {
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
         .name("scale")
         .description("The scale.")
-        .defaultValue(1)
+        .defaultValue(2)
         .min(1)
-        .sliderMin(1).sliderMax(5)
+        .sliderMin(1)
+        .sliderMax(5)
         .build()
     );
 

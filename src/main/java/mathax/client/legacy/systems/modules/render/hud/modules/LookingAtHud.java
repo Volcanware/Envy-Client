@@ -4,6 +4,7 @@ import mathax.client.legacy.settings.BoolSetting;
 import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.TripleTextHudElement;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;

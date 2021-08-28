@@ -20,7 +20,7 @@ import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.screen.slot.SlotActionType;
 
 public class AutoTotem extends Module {
-    static final boolean $assertionsDisabled = !AutoTotem.class.desiredAssertionStatus();
+    static final boolean assertionsDisabled = !AutoTotem.class.desiredAssertionStatus();
     public int delayTake;
     public int totemCount;
     public int delayPlace;
@@ -197,7 +197,7 @@ public class AutoTotem extends Module {
         totemCount = 0;
         totemSlot = -1;
         for (int i = 0; i < 44; ++i) {
-            if (!$assertionsDisabled && mc.player == null) {
+            if (!assertionsDisabled && mc.player == null) {
                 throw new AssertionError();
             }
             if (mc.player.getInventory().getStack(i).getItem() != Items.TOTEM_OF_UNDYING) continue;

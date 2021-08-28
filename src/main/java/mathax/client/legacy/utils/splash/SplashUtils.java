@@ -63,7 +63,7 @@ public class SplashUtils extends ResourceTexture {
                 splashFile = new File(LOGO_FOLDER, "Splash_MatHax.png");
                 splashFile.getParentFile().mkdirs();
 
-                InputStream in = MatHaxClientLegacy.class.getResourceAsStream("/assets/mathaxlegacy/splash/splash.png");
+                InputStream in = MatHaxClientLegacy.class.getResourceAsStream("/assets/mathaxlegacy/textures/splash/splash.png");
                 OutputStream out = new FileOutputStream(splashFile);
 
                 byte[] bytes = new byte[255];

@@ -370,13 +370,13 @@ public class Modules extends System<Modules> {
         add(new AutoWeapon());
         add(new AutoWeb());
         add(new BedAura());
-        //add(new BedAuraTwo());
+        //add(new BedAuraPlus());
         add(new BowAimbot());
         add(new BowSpam());
         add(new Burrow());
         add(new Criticals());
         add(new CrystalAura());
-        //add(new CrystalAuraTwo());
+        //add(new CrystalAuraPlus());
         //add(new CEVBreaker());
         add(new Hitboxes());
         add(new HoleFiller());
@@ -529,6 +529,8 @@ public class Modules extends System<Modules> {
     private void initChat() {
         add(new Announcer());
         add(new AutoEZ());
+        add(new BetterChat());
+        add(new ChatBot());
         add(new MessageAura());
         add(new Spam());
     }
@@ -549,7 +551,6 @@ public class Modules extends System<Modules> {
         add(new AutoMountBypassDupe());
         add(new AutoReconnect());
         add(new AutoRespawn());
-        add(new BetterChat());
         add(new BetterTab());
         add(new MiddleClickExtra());
         add(new MiddleClickFriend());

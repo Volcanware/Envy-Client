@@ -2,6 +2,7 @@ package mathax.client.legacy.systems.modules.render.hud.modules;
 
 import mathax.client.legacy.mixin.ClientPlayerInteractionManagerAccessor;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.TripleTextHudElement;
 
 public class BreakingBlockHud extends TripleTextHudElement {
     public BreakingBlockHud(HUD hud) {

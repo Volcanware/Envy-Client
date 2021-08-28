@@ -1,11 +1,10 @@
 package mathax.client.legacy.systems.modules.render.hud.modules;
 
-import mathax.client.legacy.settings.BoolSetting;
 import mathax.client.legacy.settings.ColorSetting;
 import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
-import mathax.client.legacy.utils.render.color.Color;
+import mathax.client.legacy.systems.modules.render.hud.TripleTextHudElement;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.utils.world.TickRate;
 

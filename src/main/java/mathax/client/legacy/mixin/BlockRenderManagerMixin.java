@@ -21,5 +21,4 @@ public class BlockRenderManagerMixin {
     private void renderDamage(BlockState state, BlockPos pos, BlockRenderView world, MatrixStack matrix, VertexConsumer vertexConsumer, CallbackInfo info) {
         if (Modules.get().isActive(BreakIndicators.class) || Modules.get().get(NoRender.class).noBlockBreakOverlay()) info.cancel();
     }
-
 }

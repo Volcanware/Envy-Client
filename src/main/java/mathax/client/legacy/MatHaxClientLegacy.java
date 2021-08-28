@@ -39,7 +39,6 @@ import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.utils.Utils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
@@ -51,7 +50,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 
 import static mathax.client.legacy.utils.Utils.mc;
 
@@ -76,7 +74,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
 
     public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 6;
+    public static Integer devBuildNumber = 0;
 
     public static String devBuild() {
         if (devBuildNumber == 0) {
@@ -105,9 +103,10 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         LOG.info(logprefix + "10% initialized!");
         Systems.addPreLoadTask(() -> {
             if (!Modules.get().getFile().exists()) {
-                Modules.get().get(Background.class).toggle(false);
-                Modules.get().get(HUD.class).toggle(false);
-                Modules.get().get(mathax.client.legacy.systems.modules.fun.Capes.class).toggle(false);
+                Modules.get().get(mathax.client.legacy.systems.modules.fun.Capes.class).toggle(false); // CAPES
+                Modules.get().get(Background.class).toggle(false);                                     // BACKGROUND
+                Modules.get().get(HUD.class).toggle(false);                                            // HUD
+                Modules.get().get(HUD.class).reset.run();
             }
         });
 
@@ -173,7 +172,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
     public void updateImage() {
         final Window window = MinecraftClient.getInstance().getWindow();
-        window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/icons/window/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/icons/window/icon128.png"));
+        window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon128.png"));
     }
 
     public void titleLoading() {
@@ -264,4 +263,16 @@ public class MatHaxClientLegacy implements ClientModInitializer {
             event.cancel();
         }
     }
+
+    //TODO
+
+    // Add big-text logo to all settings etc screens.
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
 }

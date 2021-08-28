@@ -1,4 +1,4 @@
-package mathax.client.legacy.systems.modules.fun;
+package mathax.client.legacy.systems.modules.misc;
 
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.enemies.Enemies;
@@ -66,7 +66,7 @@ public class BetterTab extends Module {
     );
 
     public BetterTab() {
-        super(Categories.Fun, "better-tab", "Various improvements to the tab list.");
+        super(Categories.Misc, "better-tab", "Various improvements to the tab list.");
     }
 
     public Text getPlayerName(PlayerListEntry playerListEntry) {

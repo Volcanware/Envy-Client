@@ -27,11 +27,11 @@ public class EnhancedInvUtils {
         moveQueue = new ArrayDeque<Long>();
     }
 
-    private static boolean lambda$findItemInAll$1(ItemStack itemStack) {
+    private static boolean findItemInAll1(ItemStack itemStack) {
         return true;
     }
 
-    private static boolean lambda$findItemInMain$3(ItemStack itemStack) {
+    private static boolean findItemInMain3(ItemStack itemStack) {
         return true;
     }
 
@@ -105,14 +105,14 @@ public class EnhancedInvUtils {
     }
 
     public static int findItemInHotbar(Item item) {
-        return findItemInHotbar(item, EnhancedInvUtils::lambda$findItemInHotbar$2);
+        return findItemInHotbar(item, EnhancedInvUtils::findItemInHotbar2);
     }
 
     public static int findItemInHotbar(Item item, Predicate<ItemStack> predicate) {
         return findItem(item, predicate, 9);
     }
 
-    private static boolean lambda$findItemInHotbar$2(ItemStack itemStack) {
+    private static boolean findItemInHotbar2(ItemStack itemStack) {
         return true;
     }
 

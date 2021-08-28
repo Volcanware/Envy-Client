@@ -54,6 +54,8 @@ public class TitleScreenMixin extends Screen {
     private int fullLengthRightDown;
     private int prevWidthRightDown;
 
+    private String textRightDownButtonGuiScale;
+
     private String textRightDownButtonDiscord;
 
     private String textRightDownButtonWebsite;
@@ -174,11 +176,11 @@ public class TitleScreenMixin extends Screen {
         prevWidthRightDown += textRightDown2Length;
         textRenderer.drawWithShadow(matrices, textRightDown3, width - fullLengthRightDown + prevWidthRightDown - 3, 15, GRAY);
 
-        addDrawableChild(new ButtonWidget(this.width - 103, this.height - 35, 100, 20, new LiteralText(textRightDownButtonDiscord), button -> {
+        addDrawableChild(new ButtonWidget(width - 103, height - 35, 100, 20, new LiteralText(textRightDownButtonDiscord), button -> {
             Util.getOperatingSystem().open("https://mathaxclient.xyz/Discord");
         }));
 
-        addDrawableChild(new ButtonWidget(this.width - 103, this.height - 58, 100, 20, new LiteralText(textRightDownButtonWebsite), button -> {
+        addDrawableChild(new ButtonWidget(width - 103, height - 58, 100, 20, new LiteralText(textRightDownButtonWebsite), button -> {
             Util.getOperatingSystem().open("https://mathaxclient.xyz/");
         }));
     }

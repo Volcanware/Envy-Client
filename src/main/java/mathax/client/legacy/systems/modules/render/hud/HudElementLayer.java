@@ -1,6 +1,5 @@
 package mathax.client.legacy.systems.modules.render.hud;
 
-import mathax.client.legacy.systems.modules.render.hud.modules.HudElement;
 import mathax.client.legacy.utils.render.AlignmentX;
 import mathax.client.legacy.utils.render.AlignmentY;
 

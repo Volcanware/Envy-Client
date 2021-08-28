@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 
 public class ContainerTooltipComponent implements TooltipComponent, MatHaxTooltipData {
-    private static final Identifier TEXTURE_CONTAINER_BACKGROUND = new Identifier("mathaxlegacy", "textures/container.png");
+    private static final Identifier TEXTURE_CONTAINER_BACKGROUND = new Identifier("mathaxlegacy", "textures/container/container.png");
 
     private final DefaultedList<ItemStack> items;
     private final Color color;

@@ -1,6 +1,5 @@
 package mathax.client.legacy.systems.modules.render;
 
-import com.google.common.util.concurrent.Monitor;
 import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.events.game.WindowResizedEvent;
 import mathax.client.legacy.events.render.RenderAfterWorldEvent;
@@ -10,25 +9,16 @@ import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.listeners.ConsumerListener;
-import mathax.client.legacy.systems.modules.render.hud.HudRenderer;
-import mathax.client.legacy.systems.modules.render.hud.modules.InventoryViewerHud;
-import mathax.client.legacy.utils.Utils;
-import mathax.client.legacy.utils.render.color.Color;
-import mathax.client.legacy.utils.render.color.SettingColor;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.util.Identifier;
-
-import java.lang.management.MonitorInfo;
 
 public class Background extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgBlur = settings.createGroup("Blur");
     private final SettingGroup sgScreens = settings.createGroup("Screens");
-    private final SettingGroup sgColors = settings.createGroup("Colors");
+    //private final SettingGroup sgColors = settings.createGroup("Colors");
 
     // General
 
@@ -99,12 +89,12 @@ public class Background extends Module {
 
     // Colors
 
-    private final Setting<SettingColor> color = sgColors.add(new ColorSetting.Builder()
+    /*private final Setting<SettingColor> color = sgColors.add(new ColorSetting.Builder()
         .name("background-color")
         .description("Color of the background.")
         .defaultValue(new SettingColor(255, 255, 255))
         .build()
-    );
+    );*/
 
     private Shader shader;
     private Framebuffer fbo1, fbo2;
@@ -149,8 +139,8 @@ public class Background extends Module {
 
         if (!enabled) return;
 
-        // Initialize shader and framebuffer if running for the first time
         if (backgroundMode.get() == BackgroundMode.Blur) {
+            // Initialize shader and framebuffer if running for the first time
             if (shader == null) {
                 shader = new Shader("background/blur.vert", "background/blur.frag");
                 fbo1 = new Framebuffer();

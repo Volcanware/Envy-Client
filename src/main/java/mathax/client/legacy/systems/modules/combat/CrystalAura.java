@@ -14,6 +14,8 @@ import mathax.client.legacy.mixininterface.IVec3d;
 import mathax.client.legacy.renderer.text.TextRenderer;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.renderer.ShapeMode;
+import mathax.client.legacy.systems.modules.Modules;
+import mathax.client.legacy.systems.modules.render.Xray;
 import mathax.client.legacy.utils.player.*;
 import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.systems.modules.Categories;
@@ -24,6 +26,7 @@ import mathax.client.legacy.utils.entity.fakeplayer.FakePlayerManager;
 import mathax.client.legacy.utils.misc.Keybind;
 import mathax.client.legacy.utils.misc.Vec3;
 import mathax.client.legacy.utils.render.NametagUtils;
+import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.utils.world.BlockIterator;
 import mathax.client.legacy.utils.world.BlockUtils;
@@ -415,6 +418,33 @@ public class CrystalAura extends Module {
         .build()
     );
 
+    private final Setting<ColorMode> textColorMode = sgRender.add(new EnumSetting.Builder<ColorMode>()
+        .name("text-color-mode")
+        .description("Determines the color mode of the text.")
+        .defaultValue(ColorMode.Damage)
+        .build()
+    );
+
+    private final Setting<Integer> textColorDamageA = sgRender.add(new IntSetting.Builder()
+        .name("text-color-alpha")
+        .description("The alpha channel value of damage text of the block overlay.")
+        .defaultValue(255)
+        .min(0)
+        .max(255)
+        .sliderMin(0)
+        .sliderMax(255)
+        .visible(() -> textColorMode.get() == ColorMode.Damage)
+        .build()
+    );
+
+    private final Setting<SettingColor> textColor = sgRender.add(new ColorSetting.Builder()
+        .name("text-color")
+        .description("The text color of the block overlay.")
+        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .visible(() -> textColorMode.get() == ColorMode.Static)
+        .build()
+    );
+
     private final Setting<Boolean> renderDamageText = sgRender.add(new BoolSetting.Builder()
         .name("damage")
         .description("Renders crystal damage text in the block overlay.")
@@ -498,9 +528,9 @@ public class CrystalAura extends Module {
 
     @Override
     public void onActivate() {
-        /*if (Modules.get().isActive(CrystalAuraTwo.class)) {
-            ChatUtils.info("Crystal Aura", "Disabled " + Formatting.WHITE + "Crystal Aura Two" + Formatting.GRAY + "...");
-            Modules.get().get(CrystalAuraTwo.class).toggle();
+        /*if (Modules.get().isActive(CrystalAuraPlus.class)) {
+            ChatUtils.error("Crystal Aura+", "Crystal Aura+ was enabled while enabling Crystal Aura, disabling Crystal Aura+...");
+            Modules.get().get(CrystalAuraPlus.class).toggle();
         }*/
 
         breakTimer = 0;
@@ -537,14 +567,6 @@ public class CrystalAura extends Module {
         removed.clear();
 
         bestTarget = null;
-    }
-
-    @EventHandler
-    private void onTick(TickEvent.Post event) {
-        /*if (Modules.get().isActive(CrystalAuraTwo.class)) {
-            ChatUtils.info("Crystal Aura", "Disabled because " + Formatting.WHITE + "Crystal Aura Two" + Formatting.GRAY + " is active...");
-            toggle();
-        }*/
     }
 
     private int getLastRotationStopDelay() {
@@ -1006,7 +1028,7 @@ public class CrystalAura extends Module {
                         if (facePlaceArmor.get()) return true;
                     }
                     else {
-                        if ((double) (itemStack.getMaxDamage() - itemStack.getDamage()) / itemStack.getMaxDamage() * 100 <= facePlaceDurability.get()) return true;
+                        if ( (itemStack.getMaxDamage() - itemStack.getDamage()) / itemStack.getMaxDamage() * 100 <= facePlaceDurability.get()) return true;
                     }
                 }
             }
@@ -1164,16 +1186,38 @@ public class CrystalAura extends Module {
 
             String text = String.format("%.1f", renderDamage);
             double w = TextRenderer.get().getWidth(text) / 2;
-            TextRenderer.get().render(text, -w, 0, lineColor.get(), true);
+            TextRenderer.get().render(text, -w, 0, getTextColor(renderDamage), true);
 
             TextRenderer.get().end();
             NametagUtils.end();
         }
     }
 
+    private Color getTextColor(double renderDamage) {
+        Color RED = new Color(255, 0, 0, textColorDamageA.get());
+        Color GREEN = new Color(0, 255, 0, textColorDamageA.get());
+        Color YELLOW = new Color(255, 255, 0, textColorDamageA.get());
+        if (textColorMode.get() == ColorMode.Damage) {
+            if (renderDamage < 6) {
+                return RED;
+            } else if (renderDamage < 15) {
+                return YELLOW;
+            } else {
+                return GREEN;
+            }
+        } else {
+            return textColor.get();
+        }
+    }
+
+    public enum ColorMode {
+        Damage,
+        Static
+    }
+
     public enum YawStepMode {
         Break,
-        All,
+        All
     }
 
     public enum AutoSwitchMode {

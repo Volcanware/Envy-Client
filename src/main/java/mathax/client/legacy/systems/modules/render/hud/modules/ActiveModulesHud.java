@@ -5,6 +5,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.HudElement;
 import mathax.client.legacy.systems.modules.render.hud.HudRenderer;
 import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.SettingColor;

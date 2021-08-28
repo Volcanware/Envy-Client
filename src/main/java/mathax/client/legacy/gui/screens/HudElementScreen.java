@@ -9,7 +9,7 @@ import mathax.client.legacy.gui.widgets.containers.WHorizontalList;
 import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.gui.widgets.pressable.WCheckbox;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
-import mathax.client.legacy.systems.modules.render.hud.modules.HudElement;
+import mathax.client.legacy.systems.modules.render.hud.HudElement;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.utils.Utils;
 

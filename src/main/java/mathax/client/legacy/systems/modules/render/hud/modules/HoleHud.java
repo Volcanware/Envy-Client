@@ -7,6 +7,7 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.mixin.WorldRendererAccessor;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.HudElement;
 import mathax.client.legacy.systems.modules.render.hud.HudRenderer;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.render.RenderUtils;

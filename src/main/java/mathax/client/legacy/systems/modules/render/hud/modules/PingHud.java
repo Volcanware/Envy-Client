@@ -1,6 +1,7 @@
 package mathax.client.legacy.systems.modules.render.hud.modules;
 
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.TripleTextHudElement;
 import net.minecraft.client.network.PlayerListEntry;
 
 public class PingHud extends TripleTextHudElement {

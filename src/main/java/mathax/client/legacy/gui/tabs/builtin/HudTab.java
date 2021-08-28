@@ -10,7 +10,7 @@ import mathax.client.legacy.gui.tabs.WindowTabScreen;
 import mathax.client.legacy.renderer.Renderer2D;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
-import mathax.client.legacy.systems.modules.render.hud.modules.HudElement;
+import mathax.client.legacy.systems.modules.render.hud.HudElement;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.render.color.Color;
 import net.minecraft.client.gui.screen.Screen;

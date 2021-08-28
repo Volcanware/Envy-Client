@@ -33,7 +33,7 @@ public class CEVBreaker extends Module {
     int pause;
     boolean firtDone;
     boolean isDone;
-    static final boolean $assertionsDisabled = !CEVBreaker.class.desiredAssertionStatus();
+    static final boolean assertionsDisabled = !CEVBreaker.class.desiredAssertionStatus();
     private final BlockPos.Mutable blockPos;
     BlockPos pos;
 
@@ -81,7 +81,7 @@ public class CEVBreaker extends Module {
                 if (target != null) {
                     BlockPos blockPos;
                     BlockPos blockPos1 = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 2, target.getBlockPos().getZ());
-                    if ((double)mc.player.distanceTo((Entity)target) <= range.get() && mc.world.getBlockState(blockPos = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 1, target.getBlockPos().getZ())).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK) {
+                    if (mc.player.distanceTo(target) <= range.get() && mc.world.getBlockState(blockPos = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 1, target.getBlockPos().getZ())).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK) {
                         BlockPos blockPos2 = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 3, target.getBlockPos().getZ());
                         if (mc.world.getBlockState(blockPos1).isAir() || mc.world.getBlockState(blockPos1).getBlock() == Blocks.OBSIDIAN) {
                             int n = EnhancedInvUtils.findItemInHotbar(Items.IRON_PICKAXE);
@@ -138,7 +138,7 @@ public class CEVBreaker extends Module {
         if (!BlockUtils.canPlace(blockPos1, true)) {
             return false;
         }
-        if (!$assertionsDisabled && mc.world == null) {
+        if (!assertionsDisabled && mc.world == null) {
             throw new AssertionError();
         }
         if (!mc.world.getBlockState(blockPos1).isAir()) {
@@ -185,17 +185,17 @@ public class CEVBreaker extends Module {
         if (!BlockUtils.canPlace(blockPos, true)) {
             return false;
         }
-        if (!$assertionsDisabled && mc.player == null) {
+        if (!assertionsDisabled && mc.player == null) {
             throw new AssertionError();
         }
         int n2 = mc.player.getInventory().selectedSlot;
         EnhancedInvUtils.swap(n);
         if (bl) {
             Vec3d rotationPos = new Vec3d(0.0, 0.0, 0.0);
-            ((IVec3d)rotationPos).set((double)blockPos.getY() + 0.5, (double)blockPos.getY() + 0.5, (double)blockPos.getZ() + 0.5);
+            ((IVec3d)rotationPos).set(blockPos.getY() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
             Rotations.rotate(Rotations.getYaw(rotationPos), Rotations.getPitch(rotationPos));
         }
-        if (!$assertionsDisabled && mc.interactionManager == null) {
+        if (!assertionsDisabled && mc.interactionManager == null) {
             throw new AssertionError();
         }
         mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), Direction.UP, blockPos, true));
@@ -212,19 +212,19 @@ public class CEVBreaker extends Module {
     }
 
     public void attackEntity(EndCrystalEntity endCrystalEntity) {
-        if (!$assertionsDisabled && mc.interactionManager == null) {
+        if (!assertionsDisabled && mc.interactionManager == null) {
             throw new AssertionError();
         }
-        mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack((Entity) endCrystalEntity, mc.player.isSneaking()));
+        mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack( endCrystalEntity, mc.player.isSneaking()));
     }
 
     public void interact(BlockPos blockPos, int n, Direction direction) {
-        if (!$assertionsDisabled && mc.player == null) {
+        if (!assertionsDisabled && mc.player == null) {
             throw new AssertionError();
         }
         int n2 = mc.player.getInventory().selectedSlot;
         EnhancedInvUtils.swap(n);
-        if (!$assertionsDisabled && mc.interactionManager == null) {
+        if (!assertionsDisabled && mc.interactionManager == null) {
             throw new AssertionError();
         }
         mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), direction, blockPos, true));

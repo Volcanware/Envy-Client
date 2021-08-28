@@ -13,7 +13,7 @@
     "discord": "https://mathaxclient.xyz/Discord"
   },
   "license": "GPL-3.0",
-  "icon": "assets/mathaxlegacy/icons/icon.png",
+  "icon": "assets/mathaxlegacy/textures/icons/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [

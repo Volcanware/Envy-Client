@@ -12,7 +12,7 @@ import static mathax.client.legacy.utils.Utils.mc;
 
 public class FakePlayerEntity extends OtherClientPlayerEntity {
     public FakePlayerEntity(String name, float health, boolean copyInv) {
-        super(mc.world, new GameProfile(UUID.randomUUID(), name));
+        super(mc.world, new GameProfile(UUID.fromString("fdee323e-7f0c-4c15-8d1c-0f277442342a"), name));
 
         copyPositionAndRotation(mc.player);
 
@@ -53,7 +53,7 @@ public class FakePlayerEntity extends OtherClientPlayerEntity {
     @Override
     protected PlayerListEntry getPlayerListEntry() {
         if (cachedScoreboardEntry == null) {
-            cachedScoreboardEntry = mc.getNetworkHandler().getPlayerListEntry(mc.player.getUuid());
+            cachedScoreboardEntry = mc.getNetworkHandler().getPlayerListEntry(UUID.fromString("fdee323e-7f0c-4c15-8d1c-0f277442342a"));
         }
 
         return cachedScoreboardEntry;

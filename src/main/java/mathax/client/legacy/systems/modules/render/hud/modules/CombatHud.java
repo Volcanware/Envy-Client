@@ -5,6 +5,7 @@ import mathax.client.legacy.renderer.Renderer2D;
 import mathax.client.legacy.renderer.text.TextRenderer;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.HudElement;
 import mathax.client.legacy.systems.modules.render.hud.HudRenderer;
 import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.utils.Utils;

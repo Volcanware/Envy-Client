@@ -13,6 +13,9 @@ import mathax.client.legacy.bus.EventHandler;
 
 public class Zoom extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgScroll = settings.createGroup("Scroll");
+
+    // General
 
     private final Setting<Double> zoom = sgGeneral.add(new DoubleSetting.Builder()
         .name("zoom")
@@ -22,18 +25,27 @@ public class Zoom extends Module {
         .build()
     );
 
-    private final Setting<Double> scrollSensitivity = sgGeneral.add(new DoubleSetting.Builder()
-        .name("scroll-sensitivity")
-        .description("Allows you to change zoom value using scroll wheel. 0 to disable.")
-        .defaultValue(0)
-        .min(0)
-        .build()
-    );
-
     private final Setting<Boolean> cinematic = sgGeneral.add(new BoolSetting.Builder()
         .name("cinematic")
         .description("Enables cinematic camera.")
         .defaultValue(true)
+        .build()
+    );
+
+    // Scroll
+
+    private final Setting<Boolean> scroll = sgScroll.add(new BoolSetting.Builder()
+        .name("scroll")
+        .description("Allows you to change zoom value using scroll wheel.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> scrollSensitivity = sgScroll.add(new DoubleSetting.Builder()
+        .name("scroll-sensitivity")
+        .description("The speed of zoom scrolling.")
+        .defaultValue(0)
+        .min(0)
         .build()
     );
 
@@ -73,7 +85,7 @@ public class Zoom extends Module {
 
     @EventHandler
     private void onMouseScroll(MouseScrollEvent event) {
-        if (scrollSensitivity.get() > 0) {
+        if (scroll.get()) {
             value += event.value * 0.25 * (scrollSensitivity.get() * value);
             if (value < 1) value = 1;
 

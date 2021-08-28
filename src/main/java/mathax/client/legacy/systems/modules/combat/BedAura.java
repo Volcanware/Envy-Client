@@ -201,9 +201,9 @@ public class BedAura extends Module {
 
     @Override
     public void onActivate() {
-        /*if (Modules.get().isActive(BedAuraTwo.class)) {
-            ChatUtils.info("Bed Aura", "Disabled " + Formatting.WHITE + "Bed Aura Two" + Formatting.GRAY + "...");
-            Modules.get().get(BedAuraTwo.class).toggle();
+        /*if (Modules.get().isActive(BedAuraPlus.class)) {
+            ChatUtils.error("Bed Aura", "Bed Aura+ was enabled while enabling Bed Aura, disabling Bed Aura+...");
+            Modules.get().get(BedAuraPlus.class).toggle();
         }*/
 
         timer = delay.get();
@@ -212,10 +212,6 @@ public class BedAura extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        /*if (Modules.get().isActive(BedAuraTwo.class)) {
-            ChatUtils.info("Bed Aura", "Disabled because " + Formatting.WHITE + "Bed Aura Two" + Formatting.GRAY + " is active...");
-            toggle();
-        }*/
         // Check if beds can explode here
         if (mc.world.getDimension().isBedWorking()) {
             ChatUtils.error("Bed Aura", "You can't blow up beds in this dimension, disabling...");

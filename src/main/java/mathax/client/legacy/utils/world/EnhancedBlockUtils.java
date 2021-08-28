@@ -51,7 +51,7 @@ public class EnhancedBlockUtils {
         }
         if (bl) {
             Direction direction1 = direction;
-            Rotations.rotate(Rotations.getYaw(vec3d), Rotations.getPitch(vec3d), n2, () -> EnhancedBlockUtils.lambda$place$1(n, vec3d, hand, direction1, blockPos1, bl2, bl4, bl5));
+            Rotations.rotate(Rotations.getYaw(vec3d), Rotations.getPitch(vec3d), n2, () -> EnhancedBlockUtils.place2(n, vec3d, hand, direction1, blockPos1, bl2, bl4, bl5));
         } else {
             EnhancedBlockUtils.place(n, vec3d, hand, direction, blockPos1, bl2, bl4, bl5);
         }
@@ -271,7 +271,7 @@ public class EnhancedBlockUtils {
         return !mc.world.getBlockState(livingEntity.getBlockPos()).isAir();
     }
 
-    private static void lambda$place$1(int n, Vec3d vec3d, Hand hand, Direction direction, BlockPos blockPos, boolean bl, boolean bl2, boolean bl3) {
+    private static void place2(int n, Vec3d vec3d, Hand hand, Direction direction, BlockPos blockPos, boolean bl, boolean bl2, boolean bl3) {
         EnhancedBlockUtils.place(n, vec3d, hand, direction, blockPos, bl, bl2, bl3);
     }
 

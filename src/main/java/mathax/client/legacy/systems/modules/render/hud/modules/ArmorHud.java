@@ -3,6 +3,7 @@ package mathax.client.legacy.systems.modules.render.hud.modules;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.HudElement;
 import mathax.client.legacy.systems.modules.render.hud.HudRenderer;
 import mathax.client.legacy.utils.render.RenderUtils;
 import mathax.client.legacy.utils.render.color.SettingColor;

@@ -4,6 +4,7 @@ import mathax.client.legacy.settings.BoolSetting;
 import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
+import mathax.client.legacy.systems.modules.render.hud.TripleTextHudElement;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
