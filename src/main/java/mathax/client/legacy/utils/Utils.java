@@ -311,9 +311,9 @@ public class Utils {
                 name = name.replace(":", "_");
             }
             if (DiscordPresenceTab.serverVisibility.get()) {
-                return "Playing on " + name + MatHaxClientLegacy.getQueuePosition();
+                return "Playing on " + name;
             } else {
-                return "Playing on a server" + MatHaxClientLegacy.getQueuePosition();
+                return "Playing on a server";
             }
         }
 

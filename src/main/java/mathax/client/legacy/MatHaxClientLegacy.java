@@ -1,6 +1,5 @@
 package mathax.client.legacy;
 
-import mathax.client.legacy.discord.MatHaxDiscordRPC;
 import mathax.client.legacy.events.game.GameJoinedEvent;
 import mathax.client.legacy.events.game.GameLeftEvent;
 import mathax.client.legacy.events.game.ReceiveMessageEvent;
@@ -24,6 +23,8 @@ import mathax.client.legacy.utils.misc.FakeClientPlayer;
 import mathax.client.legacy.utils.misc.Names;
 import mathax.client.legacy.utils.misc.input.KeyAction;
 import mathax.client.legacy.utils.misc.input.KeyBinds;
+import mathax.client.legacy.utils.misc.placeholders.DiscordPlaceholder;
+import mathax.client.legacy.utils.misc.placeholders.Placeholders;
 import mathax.client.legacy.utils.network.Capes;
 import mathax.client.legacy.utils.network.MatHaxExecutor;
 import mathax.client.legacy.utils.player.DamageUtils;
@@ -37,6 +38,8 @@ import mathax.client.legacy.utils.world.BlockUtils;
 import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.utils.Utils;
+import net.arikia.dev.drpc.DiscordEventHandlers;
+import net.arikia.dev.drpc.DiscordRichPresence;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
@@ -74,7 +77,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
 
     public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 0;
+    public static Integer devBuildNumber = 1;
 
     public static String devBuild() {
         if (devBuildNumber == 0) {
@@ -112,7 +115,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
         LOG.info(logprefix + "20% initialized!");
         Tabs.init();
-        MatHaxDiscordRPC.init();
+        DiscordRPC.init();
         GL.init();
         Shaders.init();
         Renderer2D.init();
@@ -149,9 +152,9 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         mc.execute(this::titleLoaded);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            MatHaxDiscordRPC.disable();
             Systems.save();
             GuiThemes.save();
+            DiscordRPC.disable();
         }));
 
         LOG.info(logprefix + "90% initialized!");
@@ -223,28 +226,6 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         }
     }
 
-    private static String queuePos = "";
-
-    @EventHandler
-    private static void onMessageRecieve(ReceiveMessageEvent event) {
-        if (DiscordPresenceTab.queuePosition.get()) {
-            if (event.message.getString().contains("[MatHax Legacy] ")) return;
-            String messageString = event.message.getString();
-            if (messageString.contains("Position in queue: ")) {
-                String queue = messageString.replace("Position in queue: ", "");
-                queuePos = " (Position: " + queue + ")";
-            } else {
-                queuePos = "";
-            }
-        }
-    }
-
-    public static String getQueuePosition() {
-        if (mc.isInSingleplayer()) return "";
-        else if (mc.world == null) return "";
-        else return queuePos;
-    }
-
     @EventHandler
     private void onKey(KeyEvent event) {
         // Click GUI
@@ -262,6 +243,101 @@ public class MatHaxClientLegacy implements ClientModInitializer {
             mc.openScreen(new ChatScreen(Config.get().prefix));
             event.cancel();
         }
+    }
+
+    public class DiscordRPC {
+        private static final String APP_ID = "878967665501306920";
+        private static final String STEAM_ID = "";
+
+        private static final DiscordRichPresence rpc = new DiscordRichPresence();
+        private static final DiscordEventHandlers handlers = new DiscordEventHandlers();
+        public static int delay = 0;
+        public static int number = 1;
+
+        public static void init() {
+            if (DiscordPresenceTab.enabled.get()) {
+                LOG.info(logprefix + "Enabling Discord Rich Presence...");
+                net.arikia.dev.drpc.DiscordRPC.discordInitialize(APP_ID, handlers, true, STEAM_ID);
+                rpc.startTimestamp = System.currentTimeMillis() / 1000;
+                rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
+                rpc.state = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
+                rpc.largeImageKey = "logo";
+                rpc.largeImageText = "MatHax Legacy " + discordVersion;
+                applySmallImage();
+                rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
+                rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
+                rpc.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
+                rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
+                rpc.partyMax = 1;
+                net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
+                new Thread(() -> {
+                    while (!Thread.currentThread().isInterrupted()) {
+                        net.arikia.dev.drpc.DiscordRPC.discordRunCallbacks();
+                        try {
+                            rpc.details = DiscordPlaceholder.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
+                            rpc.state = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
+                            rpc.largeImageKey = "logo";
+                            rpc.largeImageText = "MatHax Legacy " + discordVersion;
+                            applySmallImage();
+                            rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
+                            rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
+                            rpc.partyMax = 1;
+                            net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
+                        } catch (Exception e2) {
+                            e2.printStackTrace();
+                        }
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException ex) {
+                        }
+                    }
+                }, "RPC-Callback-Handler").start();
+                LOG.info(logprefix + "Discord Rich Presence enabled!");
+            }
+        }
+
+        public static void disable() {
+            LOG.info(logprefix + "Disabling Discord Rich Presence...");
+            net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
+            net.arikia.dev.drpc.DiscordRPC.discordShutdown();
+            LOG.info(logprefix + "Discord Rich Presence disabled!");
+        }
+
+        private static void applySmallImage() {
+            if (delay == 5) {
+                if (number == 16) number = 1;
+                if (DiscordPresenceTab.smallImageMode.get() == DiscordPresenceTab.SmallImageMode.Dogs) rpc.smallImageKey = "dog-" + number;
+                else rpc.smallImageKey = "cat-" + number;
+                ++number;
+                delay = 0;
+            } else {
+                ++delay;
+            }
+        }
+    }
+
+    private static String queuePos = "";
+
+    @EventHandler
+    private static void onMessageRecieve(ReceiveMessageEvent event) {
+        if (DiscordPresenceTab.queuePosition.get()) {
+            if (event.message.getString().contains("[MatHax Legacy] ")) return;
+            String messageString = event.message.getString();
+            if (messageString.contains("Position in queue: ")) {
+                String queue = messageString.replace("Position in queue: ", "");
+                queuePos = " (Position: " + queue + ")";
+            } else {
+                queuePos = "";
+            }
+        } else {
+            queuePos = "";
+        }
+    }
+
+    public static String getQueuePosition() {
+        if (mc.isInSingleplayer()) return "";
+        else if (mc.world == null) return "";
+        else return queuePos;
     }
 
     //TODO

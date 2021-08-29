@@ -1,6 +1,6 @@
 package mathax.client.legacy.gui.tabs.builtin;
 
-import mathax.client.legacy.discord.MatHaxDiscordRPC;
+import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.gui.GuiTheme;
 import mathax.client.legacy.gui.tabs.Tab;
 import mathax.client.legacy.gui.tabs.TabScreen;
@@ -20,9 +20,9 @@ public class DiscordPresenceTab extends Tab {
         .defaultValue(true)
         .onChanged(status -> {
             if (status) {
-                MatHaxDiscordRPC.init();
+                MatHaxClientLegacy.DiscordRPC.init();
             } else {
-                MatHaxDiscordRPC.disable();
+                MatHaxClientLegacy.DiscordRPC.disable();
             }
         })
         .build()

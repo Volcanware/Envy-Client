@@ -146,7 +146,7 @@ public class TextRadarHud extends HudElement {
             if (ping.get()) {
                 x += renderer.textWidth(text + " ");
 
-                text = String.format("[%sm]", Math.round(EntityUtils.getPing(entity)));
+                text = String.format("[%sms]", Math.round(EntityUtils.getPing(entity)));
                 color = BLUE;
 
                 renderer.text(text, x, y, color);

@@ -40,7 +40,7 @@ public class ArmorHud extends HudElement {
     private final Setting<SettingColor> textColor = sgGeneral.add(new ColorSetting.Builder()
         .name("text-color")
         .description("The color of durability")
-        .defaultValue(new SettingColor(255, 0, 250))
+        .defaultValue(new SettingColor(230, 75, 100))
         .build()
     );
 
