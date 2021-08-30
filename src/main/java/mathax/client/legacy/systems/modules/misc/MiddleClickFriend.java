@@ -10,7 +10,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.friends.Friend;
 import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.systems.modules.Categories;
-import mathax.client.legacy.utils.misc.placeholders.Placeholders;
+import mathax.client.legacy.utils.placeholders.Placeholders;
 import mathax.client.legacy.utils.misc.input.KeyAction;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.utils.player.ChatUtils;

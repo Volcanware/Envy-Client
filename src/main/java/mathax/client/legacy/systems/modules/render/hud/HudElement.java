@@ -15,7 +15,6 @@ public abstract class HudElement implements ISerializable<HudElement> {
     public final String description;
 
     public boolean active;
-    public final boolean defaultActive;
 
     protected final HUD hud;
 
@@ -24,12 +23,11 @@ public abstract class HudElement implements ISerializable<HudElement> {
 
     protected final MinecraftClient mc;
 
-    public HudElement(HUD hud, String name, String description, boolean defaultActive) {
+    public HudElement(HUD hud, String name, String description, boolean nothing) {
         this.hud = hud;
         this.name = name;
         this.title = Utils.nameToTitle(name);
         this.description = description;
-        this.defaultActive = defaultActive;
         this.mc = MinecraftClient.getInstance();
     }
 
@@ -38,7 +36,6 @@ public abstract class HudElement implements ISerializable<HudElement> {
         this.name = name;
         this.title = Utils.nameToTitle(name);
         this.description = description;
-        this.defaultActive = true;
         this.mc = MinecraftClient.getInstance();
     }
 
@@ -84,7 +81,7 @@ public abstract class HudElement implements ISerializable<HudElement> {
 
     @Override
     public HudElement fromTag(NbtCompound tag) {
-        active = tag.contains("active") ? tag.getBoolean("active") : defaultActive;
+        active = tag.contains("active");
         if (tag.contains("settings")) settings.fromTag(tag.getCompound("settings"));
         box.fromTag(tag.getCompound("box"));
 

@@ -82,37 +82,37 @@ public class HUD extends Module {
 
     public final Runnable reset = () -> {
         align();
+        Modules.get().get(HUD.class).elements.get(0).toggle(false);                            // WATERMARK
+        Modules.get().get(HUD.class).elements.get(1).toggle(false);                            // WELCOME
+        Modules.get().get(HUD.class).elements.get(2).toggle(false);                            // FPS
+        Modules.get().get(HUD.class).elements.get(3).toggle(false);                            // PING
+        Modules.get().get(HUD.class).elements.get(4).toggle(false);                            // TPS
+        Modules.get().get(HUD.class).elements.get(5).toggle(false);                            // SPEED
+        Modules.get().get(HUD.class).elements.get(6).toggle(false);                            // SERVER
+        Modules.get().get(HUD.class).elements.get(7).toggle(false);                            // SERVER BRAND
+        Modules.get().get(HUD.class).elements.get(8).toggle(false);                            // DURABILITY
+        //Modules.get().get(HUD.class).elements.get(9).toggle(false);                            // BIOME
+        Modules.get().get(HUD.class).elements.get(10).toggle(false);                            // PLAYER MODEL
+        Modules.get().get(HUD.class).elements.get(11).toggle(false);                            // MODULE INFO
+        Modules.get().get(HUD.class).elements.get(12).toggle(false);                            // LOOKING AT
+        Modules.get().get(HUD.class).elements.get(13).toggle(false);                            // BREAKING
+        Modules.get().get(HUD.class).elements.get(14).toggle(false);                            // POSITION
+        //Modules.get().get(HUD.class).elements.get(15).toggle(false);                            // ROTATION
+        Modules.get().get(HUD.class).elements.get(16).toggle(false);                            // LAG NOTIFIER
+        Modules.get().get(HUD.class).elements.get(17).toggle(false);                            // ACTIVE MODULES
+        Modules.get().get(HUD.class).elements.get(18).toggle(false);                            // COMBAT HUD
+        Modules.get().get(HUD.class).elements.get(19).toggle(false);                            // INVENTORY VIEWER
+        Modules.get().get(HUD.class).elements.get(20).toggle(false);                            // CONTAINER VIEWER
+        Modules.get().get(HUD.class).elements.get(21).toggle(false);                            // POTION
+        Modules.get().get(HUD.class).elements.get(22).toggle(false);                            // DATE
+        Modules.get().get(HUD.class).elements.get(23).toggle(false);                            // REAL TIME
+        Modules.get().get(HUD.class).elements.get(24).toggle(false);                            // IN-GAME TIME
+        Modules.get().get(HUD.class).elements.get(25).toggle(false);                            // TEXT RADAR
+        Modules.get().get(HUD.class).elements.get(26).toggle(false);                            // TOTEM
+        Modules.get().get(HUD.class).elements.get(27).toggle(false);                            // HOLE
+        Modules.get().get(HUD.class).elements.get(28).toggle(false);                            // COMPASS
+        Modules.get().get(HUD.class).elements.get(29).toggle(false);                            // ARMOR
         elements.forEach(element -> {
-            Modules.get().get(HUD.class).elements.get(0).toggle(false);                            // WATERMARK
-            Modules.get().get(HUD.class).elements.get(1).toggle(false);                            // WELCOME
-            Modules.get().get(HUD.class).elements.get(2).toggle(false);                            // FPS
-            Modules.get().get(HUD.class).elements.get(3).toggle(false);                            // PING
-            Modules.get().get(HUD.class).elements.get(4).toggle(false);                            // TPS
-            Modules.get().get(HUD.class).elements.get(5).toggle(false);                            // SPEED
-            Modules.get().get(HUD.class).elements.get(6).toggle(false);                            // SERVER
-            Modules.get().get(HUD.class).elements.get(7).toggle(false);                            // SERVER BRAND
-            Modules.get().get(HUD.class).elements.get(8).toggle(false);                            // DURABILITY
-            //Modules.get().get(HUD.class).elements.get(9).toggle(false);                            // BIOME
-            Modules.get().get(HUD.class).elements.get(10).toggle(false);                            // PLAYER MODEL
-            Modules.get().get(HUD.class).elements.get(11).toggle(false);                            // MODULE INFO
-            Modules.get().get(HUD.class).elements.get(12).toggle(false);                            // LOOKING AT
-            Modules.get().get(HUD.class).elements.get(13).toggle(false);                            // BREAKING
-            Modules.get().get(HUD.class).elements.get(14).toggle(false);                            // POSITION
-            //Modules.get().get(HUD.class).elements.get(15).toggle(false);                            // ROTATION
-            Modules.get().get(HUD.class).elements.get(16).toggle(false);                            // LAG NOTIFIER
-            Modules.get().get(HUD.class).elements.get(17).toggle(false);                            // ACTIVE MODULES
-            Modules.get().get(HUD.class).elements.get(18).toggle(false);                            // COMBAT HUD
-            Modules.get().get(HUD.class).elements.get(19).toggle(false);                            // INVENTORY VIEWER
-            Modules.get().get(HUD.class).elements.get(20).toggle(false);                            // CONTAINER VIEWER
-            Modules.get().get(HUD.class).elements.get(21).toggle(false);                            // POTION
-            Modules.get().get(HUD.class).elements.get(22).toggle(false);                            // DATE
-            Modules.get().get(HUD.class).elements.get(23).toggle(false);                            // REAL TIME
-            Modules.get().get(HUD.class).elements.get(24).toggle(false);                            // IN-GAME TIME
-            Modules.get().get(HUD.class).elements.get(25).toggle(false);                            // TEXT RADAR
-            Modules.get().get(HUD.class).elements.get(26).toggle(false);                            // TOTEM
-            Modules.get().get(HUD.class).elements.get(27).toggle(false);                            // HOLE
-            Modules.get().get(HUD.class).elements.get(28).toggle(false);                            // COMPASS
-            Modules.get().get(HUD.class).elements.get(29).toggle(false);                            // ARMOR
             element.settings.forEach(group -> group.forEach(Setting::reset));
         });
     };

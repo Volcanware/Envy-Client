@@ -47,6 +47,16 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
         MatHaxClientLegacy.INSTANCE.onInitializeClient();
     }
 
+    @Inject(method = "openScreen", at = @At("HEAD"), cancellable = true)
+    public void setScreen(Screen screen, CallbackInfo info) {
+        OpenScreenEvent.getOpenedScreen event = new OpenScreenEvent.getOpenedScreen(screen);
+        MatHaxClientLegacy.EVENT_BUS.post(event);
+
+        if (event.isCancelled()) {
+            info.cancel();
+        }
+    }
+
     @Inject(at = @At("HEAD"), method = "tick")
     private void onPreTick(CallbackInfo info) {
         doItemUseCalled = false;

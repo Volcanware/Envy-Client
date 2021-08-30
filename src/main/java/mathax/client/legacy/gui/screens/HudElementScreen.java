@@ -46,7 +46,7 @@ public class HudElementScreen extends WindowScreen {
 
         WButton reset = bottomList.add(theme.button(GuiRenderer.RESET)).expandCellX().right().widget();
         reset.action = () -> {
-            if (element.active != element.defaultActive) element.active = active.checked = element.defaultActive;
+            Modules.get().get(HUD.class).reset.run();
         };
     }
 

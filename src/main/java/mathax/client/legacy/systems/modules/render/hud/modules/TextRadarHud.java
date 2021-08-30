@@ -24,7 +24,7 @@ public class TextRadarHud extends HudElement {
     public final Setting<SettingColor> playerNameColor = sgGeneral.add(new ColorSetting.Builder()
         .name("player-name-color")
         .description("Color of player names.")
-        .defaultValue(new SettingColor(255, 0, 150))
+        .defaultValue(new SettingColor(230, 75, 100))
         .build()
     );
 
@@ -68,7 +68,7 @@ public class TextRadarHud extends HudElement {
     private final List<AbstractClientPlayerEntity> players = new ArrayList<>();
 
     public TextRadarHud(HUD hud) {
-        super(hud, "player-info", "Displays players in your visual range.", false);
+        super(hud, "player-info", "Displays players in your visual range.");
     }
 
     @Override
@@ -86,10 +86,10 @@ public class TextRadarHud extends HudElement {
             if (!friends.get() && Friends.get().isFriend(entity)) continue;
 
             String text = entity.getEntityName();
-            if (health.get() || ping.get() || distance.get()) text += String.format("-");
-            if (health.get()) text += String.format("%s", Math.round(entity.getHealth() + entity.getAbsorptionAmount()));
-            if (ping.get()) text += String.format("[%sms]", Math.round(EntityUtils.getPing(entity)));
-            if (distance.get()) text += String.format("(%sm)", Math.round(mc.getCameraEntity().distanceTo(entity)));
+            if (health.get() || ping.get() || distance.get()) text += String.format(" -");
+            if (health.get()) text += String.format(" %s", Math.round(entity.getHealth() + entity.getAbsorptionAmount()));
+            if (ping.get()) text += String.format(" [%sms]", Math.round(EntityUtils.getPing(entity)));
+            if (distance.get()) text += String.format(" (%sm)", Math.round(mc.getCameraEntity().distanceTo(entity)));
 
             width = Math.max(width, renderer.textWidth(text));
             height += renderer.textHeight() + 2;
@@ -98,6 +98,7 @@ public class TextRadarHud extends HudElement {
         box.setSize(width, height);
     }
 
+    private final Color NOTHING = new Color(0, 0, 0, 0);
     private final Color RED = new Color(255, 25, 25);
     private final Color AMBER = new Color(255, 105, 25);
     private final Color GREEN = new Color(25, 252, 25);
@@ -128,7 +129,7 @@ public class TextRadarHud extends HudElement {
                 x += renderer.textWidth(text + " ");
 
                 text = String.format("-");
-                color = hud.secondaryColor.get();
+                color = NOTHING;
 
                 renderer.text(text, x, y, color);
             }

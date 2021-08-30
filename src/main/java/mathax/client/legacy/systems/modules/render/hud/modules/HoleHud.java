@@ -45,7 +45,7 @@ public class HoleHud extends HudElement {
     private final Color OL_COLOR = new Color(255, 25, 25, 255);
 
     public HoleHud(HUD hud) {
-        super(hud, "hole", "Displays information about the hole you are standing in.", false);
+        super(hud, "hole", "Displays information about the hole you are standing in.");
     }
 
     @Override

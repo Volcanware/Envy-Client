@@ -10,7 +10,7 @@ import mathax.client.legacy.systems.enemies.Enemies;
 import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Categories;
-import mathax.client.legacy.utils.misc.placeholders.Placeholders;
+import mathax.client.legacy.utils.placeholders.Placeholders;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class MessageAura extends Module {

@@ -482,7 +482,6 @@ public class Modules extends System<Modules> {
         add(new LightOverlay());
         add(new LogoutSpots());
         add(new Nametags());
-        //add(new NewChunks());
         add(new NoBob());
         add(new NoRender());
         add(new Search());

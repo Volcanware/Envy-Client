@@ -2,7 +2,10 @@ package mathax.client.legacy.systems.enemies;
 
 import mathax.client.legacy.systems.System;
 import mathax.client.legacy.systems.Systems;
+import mathax.client.legacy.systems.friends.Friend;
+import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.utils.misc.NbtUtils;
+import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.render.color.RainbowColors;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,8 +17,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static mathax.client.legacy.utils.Utils.mc;
+
 public class Enemies extends System<Enemies> implements Iterable<Enemy> {
-    private List<Enemy> Enemies = new ArrayList<>();
+    private List<Enemy> enemies = new ArrayList<>();
 
     public final SettingColor color = new SettingColor(255, 0, 0);
     public boolean attack = false;
@@ -33,12 +38,14 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
         RainbowColors.add(color);
     }
 
-    //TODO: Remove from friends on add.
     public boolean add(Enemy enemy) {
         if (enemy.name.isEmpty()) return false;
+        if (enemy.name.equals(mc.getSession().getUsername())) {
+            ChatUtils.error("Enemies", "You can't add yourself to enemies!");
+        }
 
-        if (!Enemies.contains(enemy)) {
-            Enemies.add(enemy);
+        if (!enemies.contains(enemy)) {
+            enemies.add(enemy);
             save();
 
             return true;
@@ -48,7 +55,7 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
     }
 
     public boolean remove(Enemy enemy) {
-        if (Enemies.remove(enemy)) {
+        if (enemies.remove(enemy)) {
             save();
             return true;
         }
@@ -57,7 +64,7 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
     }
 
     public Enemy get(String name) {
-        for (Enemy Enemy : Enemies) {
+        for (Enemy Enemy : enemies) {
             if (Enemy.name.equals(name)) {
                 return Enemy;
             }
@@ -74,17 +81,13 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
         return get(player) != null;
     }
 
-    public boolean shouldAttack(PlayerEntity player) {
-        return !isEnemy(player) || attack;
-    }
-
     public int count() {
-        return Enemies.size();
+        return enemies.size();
     }
 
     @Override
     public @NotNull Iterator<Enemy> iterator() {
-        return Enemies.iterator();
+        return enemies.iterator();
     }
 
     @Override
@@ -92,7 +95,7 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
         NbtCompound tag = new NbtCompound();
         NbtList EnemiesTag = new NbtList();
 
-        for (Enemy Enemy : Enemies) EnemiesTag.add(Enemy.toTag());
+        for (Enemy Enemy : enemies) EnemiesTag.add(Enemy.toTag());
         tag.put("Enemies", EnemiesTag);
         tag.put("color", color.toTag());
         tag.putBoolean("attack", attack);
@@ -102,7 +105,7 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
 
     @Override
     public Enemies fromTag(NbtCompound tag) {
-        Enemies = NbtUtils.listFromTag(tag.getList("Enemies", 10), tag1 -> new Enemy((NbtCompound) tag1));
+        enemies = NbtUtils.listFromTag(tag.getList("Enemies", 10), tag1 -> new Enemy((NbtCompound) tag1));
         if (tag.contains("color")) color.fromTag(tag.getCompound("color"));
         attack = tag.contains("attack") && tag.getBoolean("attack");
         return this;

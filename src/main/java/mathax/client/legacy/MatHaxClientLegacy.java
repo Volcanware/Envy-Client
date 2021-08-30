@@ -23,8 +23,8 @@ import mathax.client.legacy.utils.misc.FakeClientPlayer;
 import mathax.client.legacy.utils.misc.Names;
 import mathax.client.legacy.utils.misc.input.KeyAction;
 import mathax.client.legacy.utils.misc.input.KeyBinds;
-import mathax.client.legacy.utils.misc.placeholders.DiscordPlaceholder;
-import mathax.client.legacy.utils.misc.placeholders.Placeholders;
+import mathax.client.legacy.utils.placeholders.DiscordPlaceholder;
+import mathax.client.legacy.utils.placeholders.Placeholders;
 import mathax.client.legacy.utils.network.Capes;
 import mathax.client.legacy.utils.network.MatHaxExecutor;
 import mathax.client.legacy.utils.player.DamageUtils;
@@ -56,6 +56,12 @@ import java.lang.invoke.MethodHandles;
 
 import static mathax.client.legacy.utils.Utils.mc;
 
+/*/
+ * THIS CLIENT IS AN RECODED VERSION OF METEOR CLIENT BY MINEGAME159 & SEASNAIL
+ * https://meteorclient.com
+ * https://github.com/MeteorDevelopment/meteor-client
+/*/
+
 public class MatHaxClientLegacy implements ClientModInitializer {
     public static MatHaxClientLegacy INSTANCE;
     public static final IEventBus EVENT_BUS = new EventBus();
@@ -64,7 +70,8 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     public static final File FOLDER = new File(FabricLoader.getInstance().getGameDir().toString(), "MatHax/Legacy");
     public static final File VERSION_FOLDER = new File(FOLDER + "/" + getMinecraftVersion());
 
-    public final int MATHAX_COLOR = Color.fromRGBA(230, 75, 100, 255);
+    public final Color MATHAX_COLOR = new Color(230, 75, 100);
+    public final int MATHAX_COLOR_INT = Color.fromRGBA(230, 75, 100, 255);
 
     public static final Logger LOG = LogManager.getLogger();
 
@@ -77,7 +84,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
 
     public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 1;
+    public static Integer devBuildNumber = 2;
 
     public static String devBuild() {
         if (devBuildNumber == 0) {
@@ -99,8 +106,8 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
         LOG.info(logprefix + "Initializing MatHax Client Legacy " + clientVersionWithV + "...");
         Utils.mc = MinecraftClient.getInstance();
-        mc.execute(this::titleLoading);
         mc.execute(this::updateImage);
+        mc.execute(this::titleLoading);
         EVENT_BUS.registerLambdaFactory("mathax.client.legacy", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
         LOG.info(logprefix + "10% initialized!");
@@ -109,7 +116,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
                 Modules.get().get(mathax.client.legacy.systems.modules.fun.Capes.class).toggle(false); // CAPES
                 Modules.get().get(Background.class).toggle(false);                                     // BACKGROUND
                 Modules.get().get(HUD.class).toggle(false);                                            // HUD
-                Modules.get().get(HUD.class).reset.run();
+                Modules.get().get(HUD.class).reset.run();                                                      // HUD Positions & Default Actives
             }
         });
 
@@ -197,12 +204,14 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         Tabs.get().get(0).openScreen(GuiThemes.get());
     }
 
-    static String getMinecraftVersion(){
+    public static String getMinecraftVersion(){
         return SharedConstants.getGameVersion().getName();
     }
 
     @EventHandler
     private void onGameJoined(GameJoinedEvent event) {
+        //TODO: Unwated servers.
+
         Utils.didntCheckForLatestVersion = true;
     }
 

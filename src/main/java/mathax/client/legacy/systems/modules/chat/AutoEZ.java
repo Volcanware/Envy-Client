@@ -1,7 +1,6 @@
 
 package mathax.client.legacy.systems.modules.chat;
 
-import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.events.packets.PacketEvent;
 import mathax.client.legacy.settings.BoolSetting;
@@ -17,7 +16,7 @@ import mathax.client.legacy.systems.modules.combat.CrystalAura;
 import mathax.client.legacy.systems.modules.combat.CEVBreaker;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.entity.EntityUtils;
-import mathax.client.legacy.utils.misc.placeholders.Placeholders;
+import mathax.client.legacy.utils.placeholders.Placeholders;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 

@@ -9,7 +9,7 @@ import mathax.client.legacy.settings.StringSetting;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
-import mathax.client.legacy.utils.misc.placeholders.Placeholders;
+import mathax.client.legacy.utils.placeholders.Placeholders;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.gui.screen.ingame.SignEditScreen;
 import net.minecraft.network.packet.c2s.play.UpdateSignC2SPacket;

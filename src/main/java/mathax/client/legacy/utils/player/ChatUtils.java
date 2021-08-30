@@ -1,5 +1,7 @@
 package mathax.client.legacy.utils.player;
 
+import mathax.client.legacy.MatHaxClientLegacy;
+import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.RainbowColor;
 import mathax.client.legacy.utils.render.color.RainbowColors;
 import mathax.client.legacy.mixin.ChatHudAccessor;
@@ -118,7 +120,7 @@ public class ChatUtils {
             mathax.append(new LiteralText("y").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
         } else {
             mathax = new LiteralText("MatHax Legacy");
-            mathax.setStyle(mathax.getStyle().withFormatting(Formatting.RED));
+            mathax.setStyle(mathax.getStyle().withColor(MatHaxClientLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
         }
 
         prefix.setStyle(prefix.getStyle().withFormatting(Formatting.GRAY));

@@ -54,8 +54,6 @@ public class TitleScreenMixin extends Screen {
     private int fullLengthRightDown;
     private int prevWidthRightDown;
 
-    private String textRightDownButtonGuiScale;
-
     private String textRightDownButtonDiscord;
 
     private String textRightDownButtonWebsite;
@@ -126,9 +124,8 @@ public class TitleScreenMixin extends Screen {
 
     @Inject(method = "render", at = @At("TAIL"))
     private void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
-
-        if (Utils.firstTimeTitleScreen) {
-            Utils.firstTimeTitleScreen = false;
+        if (Utils.didntCheckForLatestVersion) {
+            Utils.didntCheckForLatestVersion = false;
             MatHaxClientLegacy.LOG.info(MatHaxClientLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
 
             MatHaxExecutor.execute(() -> {
@@ -163,7 +160,7 @@ public class TitleScreenMixin extends Screen {
         textRenderer.drawWithShadow(matrices, Modules.get().get(NameProtect.class).getName(client.getSession().getUsername()) + getDeveloper(), 3 + textLeftUpLength, 3, GRAY);
 
         prevWidthRightUp = 0;
-        textRenderer.drawWithShadow(matrices, textRightUp1, width - fullLengthRightUp - 3, 3, MatHaxClientLegacy.INSTANCE.MATHAX_COLOR);
+        textRenderer.drawWithShadow(matrices, textRightUp1, width - fullLengthRightUp - 3, 3, MatHaxClientLegacy.INSTANCE.MATHAX_COLOR_INT);
         prevWidthRightUp += textRightUp1Length;
         textRenderer.drawWithShadow(matrices, textRightUp2, width - fullLengthRightUp + prevWidthRightUp - 3, 3, WHITE);
         prevWidthRightUp += textRightUp2Length;

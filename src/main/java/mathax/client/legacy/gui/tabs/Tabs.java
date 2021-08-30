@@ -12,13 +12,13 @@ public class Tabs {
     public static void init() {
         add(new ModulesTab());
         add(new ConfigTab());
+        add(new DiscordPresenceTab());
         add(new GuiTab());
         add(new HudTab());
-        add(new DiscordPresenceTab());
-        add(new FriendsTab());
-        add(new EnemiesTab());
         add(new MacrosTab());
         add(new ProfilesTab());
+        add(new FriendsTab());
+        add(new EnemiesTab());
         add(new BaritoneTab());
     }
 

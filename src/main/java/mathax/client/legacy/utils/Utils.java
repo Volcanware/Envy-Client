@@ -13,7 +13,7 @@ import mathax.client.legacy.mixininterface.IMinecraftClient;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.render.BetterTooltips;
 import mathax.client.legacy.systems.modules.world.Timer;
-import mathax.client.legacy.utils.misc.placeholders.Placeholders;
+import mathax.client.legacy.utils.placeholders.Placeholders;
 import mathax.client.legacy.utils.network.Http;
 import mathax.client.legacy.utils.player.EChestMemory;
 import mathax.client.legacy.utils.render.PeekScreen;
@@ -64,7 +64,6 @@ public class Utils {
     private static final Random random = new Random();
     private static final DecimalFormat df;
     public static MinecraftClient mc;
-    public static boolean firstTimeTitleScreen = true;
     public static boolean didntCheckForLatestVersion = true;
     public static boolean isReleasingTrident;
     public static final Color WHITE = new Color(255, 255, 255);
@@ -294,6 +293,7 @@ public class Utils {
     }
 
     public static String getActivity() {
+        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Could not get server/world";
 
         if (mc.isInSingleplayer()) {
             // Singleplayer
@@ -321,6 +321,8 @@ public class Utils {
     }
 
     public static String getNakedActivity() {
+        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Unknown";
+
         if (mc.isInSingleplayer()) {
             // Singleplayer
             File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());

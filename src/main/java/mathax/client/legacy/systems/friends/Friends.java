@@ -2,7 +2,10 @@ package mathax.client.legacy.systems.friends;
 
 import mathax.client.legacy.systems.System;
 import mathax.client.legacy.systems.Systems;
+import mathax.client.legacy.systems.enemies.Enemies;
+import mathax.client.legacy.systems.enemies.Enemy;
 import mathax.client.legacy.utils.misc.NbtUtils;
+import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.render.color.RainbowColors;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static mathax.client.legacy.utils.Utils.mc;
 
 public class Friends extends System<Friends> implements Iterable<Friend> {
     private List<Friend> friends = new ArrayList<>();
@@ -33,9 +38,11 @@ public class Friends extends System<Friends> implements Iterable<Friend> {
         RainbowColors.add(color);
     }
 
-    //TODO: Remove from enemies on add.
     public boolean add(Friend friend) {
         if (friend.name.isEmpty()) return false;
+        if (friend.name.equals(mc.getSession().getUsername())) {
+            ChatUtils.error("Friends", "You can't add yourself to friends!");
+        }
 
         if (!friends.contains(friend)) {
             friends.add(friend);
