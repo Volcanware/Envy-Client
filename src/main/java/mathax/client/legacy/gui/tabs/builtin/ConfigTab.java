@@ -131,6 +131,13 @@ public class ConfigTab extends Tab {
             .build()
     );
 
+    public static final Setting<Boolean> viewMatHaxLegacyUsers = sgGeneral.add(new BoolSetting.Builder()
+        .name("mathax-legacy-users")
+        .description("Shows MatHax logo next to MatHax Legacy users. [Currently just works for devs :(]")
+        .defaultValue(true)
+        .build()
+    );
+
     public static ConfigScreen currentScreen;
 
     public ConfigTab() {

@@ -10,7 +10,10 @@ import mathax.client.legacy.systems.accounts.types.TheAlteningAccount;
 public class AddAlteningAccountScreen extends WindowScreen {
     public AddAlteningAccountScreen(GuiTheme theme) {
         super(theme, "Add The Altening Account");
+    }
 
+    @Override
+    public void initWidgets() {
         WTable t = add(theme.table()).widget();
 
         // Token

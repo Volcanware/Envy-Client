@@ -7,6 +7,7 @@ import mathax.client.legacy.gui.tabs.builtin.*;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.network.Http;
 import mathax.client.legacy.utils.render.PeekScreen;
+import mathax.client.legacy.utils.render.PromptBuilder;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.*;
@@ -118,10 +119,6 @@ public class DiscordPlaceholder {
                     return "Adding cracked account";
                 } else if (mc.currentScreen instanceof AddPremiumAccountScreen) {
                     return "Adding premium account";
-                } else if (mc.currentScreen instanceof NewUpdateScreen) {
-                    return "In update screen | " + getNewUpdate();
-                } else if (mc.currentScreen instanceof NotebotHelpScreen) {
-                    return "Viewing notebot help";
                 } else if (mc.currentScreen instanceof ProxiesScreen) {
                     return "Editing proxies";
                 } else {

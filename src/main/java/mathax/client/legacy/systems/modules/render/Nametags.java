@@ -3,9 +3,11 @@ package mathax.client.legacy.systems.modules.render;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.client.legacy.events.render.Render2DEvent;
 import mathax.client.legacy.events.world.TickEvent;
+import mathax.client.legacy.renderer.GL;
 import mathax.client.legacy.renderer.Renderer2D;
 import mathax.client.legacy.renderer.text.TextRenderer;
 import mathax.client.legacy.settings.*;
+import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Modules;
@@ -26,6 +28,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
@@ -33,6 +36,10 @@ import net.minecraft.world.GameMode;
 import java.util.*;
 
 public class Nametags extends Module {
+    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/logo/logo.png");
+
+    private Color textureColor = new Color(255, 255, 255, 255);
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgPlayers = settings.createGroup("Players");
     private final SettingGroup sgItems = settings.createGroup("Items");
@@ -340,6 +347,12 @@ public class Nametags extends Module {
         if (player == mc.player) name = Modules.get().get(NameProtect.class).getName(player.getEntityName());
         else name = player.getEntityName();
 
+        if (Config.get().viewMatHaxLegacyUsers) {
+            if (player.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || player.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) {
+                name = "     " + player.getEntityName();
+            }
+        }
+
         // Health
         float absorption = player.getAbsorptionAmount();
         int health = Math.round(player.getHealth() + absorption);
@@ -493,6 +506,16 @@ public class Nametags extends Module {
             }
         } else if (displayItemEnchants.get()) displayItemEnchants.set(false);
 
+        if (Config.get().viewMatHaxLegacyUsers) {
+            if (player.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || player.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) {
+                GL.bindTexture(mathaxLogo);
+                Renderer2D.TEXTURE.begin();
+                double textHeight = text.getHeight() / 2;
+                Renderer2D.TEXTURE.texQuad(-width / 2 + 2, -textHeight * 2, 16, 16, textureColor);
+                Renderer2D.TEXTURE.render(null);
+            }
+        }
+
         NametagUtils.end();
     }
 
@@ -545,7 +568,6 @@ public class Nametags extends Module {
         else healthColor = GREEN;
 
         double nameWidth = text.getWidth(nameText, true);
-        double healthWidth = text.getWidth(healthText, true);
         double heightDown = text.getHeight(true);
 
         double width = nameWidth;

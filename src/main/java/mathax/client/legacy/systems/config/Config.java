@@ -32,6 +32,8 @@ public class Config extends System<Config> {
 
     public boolean useTeamColor = ConfigTab.useTeamColor.get();
 
+    public boolean viewMatHaxLegacyUsers = ConfigTab.viewMatHaxLegacyUsers.get();
+
     public List<String> dontShowAgainPrompts = new ArrayList<>();
 
     public Config() {
@@ -67,6 +69,8 @@ public class Config extends System<Config> {
 
         tag.putBoolean("useTeamColor", useTeamColor);
 
+        tag.putBoolean("viewMatHaxLegacyUsers", viewMatHaxLegacyUsers);
+
         tag.put("dontShowAgainPrompts", listToNbt(dontShowAgainPrompts));
         return tag;
     }
@@ -84,6 +88,8 @@ public class Config extends System<Config> {
         //popUpCommandsInfo = getBoolean(tag, "popUpCommandsInfo", ConfigTab.popUpCommandsInfo);
         chatCommandsInfo = getBoolean(tag, "chatCommandsInfo", ConfigTab.chatCommandsInfo);
         deleteChatCommandsInfo = getBoolean(tag, "deleteChatCommandsInfo", ConfigTab.deleteChatCommandsInfo);
+
+        useTeamColor = getBoolean(tag, "viewMatHaxLegacyUsers", ConfigTab.viewMatHaxLegacyUsers);
 
         useTeamColor = getBoolean(tag, "useTeamColor", ConfigTab.useTeamColor);
 

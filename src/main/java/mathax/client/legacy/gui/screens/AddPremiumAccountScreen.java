@@ -11,7 +11,10 @@ import mathax.client.legacy.systems.accounts.types.PremiumAccount;
 public class AddPremiumAccountScreen extends WindowScreen {
     public AddPremiumAccountScreen(GuiTheme theme) {
         super(theme, "Add Premium Account");
+    }
 
+    @Override
+    public void initWidgets() {
         WTable t = add(theme.table()).widget();
 
         // Email

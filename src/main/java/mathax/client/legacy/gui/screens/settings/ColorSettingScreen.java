@@ -11,12 +11,12 @@ import mathax.client.legacy.gui.widgets.input.WIntEdit;
 import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.gui.widgets.pressable.WCheckbox;
 import mathax.client.legacy.settings.Setting;
+import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.SettingColor;
-import mathax.client.legacy.utils.Utils;
 
 public class ColorSettingScreen extends WindowScreen {
-    private static final Color[] HUE_COLORS = { new Color(225, 0 , 0), new Color(255, 255, 0), new Color(0, 255, 0), new Color(0, 255, 255), new Color(0, 0, 255), new Color(255, 0, 255), new Color(255, 0, 0) };
+    private static final Color[] HUE_COLORS = { new Color(255, 0, 0), new Color(255, 255, 0), new Color(0, 255, 0), new Color(0, 255, 255), new Color(0, 0, 255), new Color(255, 0, 255), new Color(255, 0, 0) };
     private static final Color WHITE = new Color(255, 255, 255);
     private static final Color BLACK = new Color(0, 0, 0);
 
@@ -24,18 +24,22 @@ public class ColorSettingScreen extends WindowScreen {
 
     private final Setting<SettingColor> setting;
 
-    private final WQuad displayQuad;
+    private WQuad displayQuad;
 
-    private final WBrightnessQuad brightnessQuad;
-    private final WHueQuad hueQuad;
+    private WBrightnessQuad brightnessQuad;
+    private WHueQuad hueQuad;
 
-    private final WIntEdit rItb, gItb, bItb, aItb;
-    private final WCheckbox rainbow;
+    private WIntEdit rItb, gItb, bItb, aItb;
+    private WCheckbox rainbow;
 
     public ColorSettingScreen(GuiTheme theme, Setting<SettingColor> setting) {
         super(theme, "Select Color");
-        this.setting = setting;
 
+        this.setting = setting;
+    }
+
+    @Override
+    public void initWidgets() {
         // Top
         displayQuad = add(theme.quad(setting.get())).expandX().widget();
 
@@ -174,38 +178,36 @@ public class ColorSettingScreen extends WindowScreen {
             t = brightnessQuad.value * (1.0 - (brightnessQuad.saturation * (1.0 - ff)));
 
             switch (i) {
-                case 0:
+                case 0 -> {
                     r = brightnessQuad.value;
                     g = t;
                     b = p;
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     r = q;
                     g = brightnessQuad.value;
                     b = p;
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     r = p;
                     g = brightnessQuad.value;
                     b = t;
-                    break;
-
-                case 3:
+                }
+                case 3 -> {
                     r = p;
                     g = q;
                     b = brightnessQuad.value;
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     r = t;
                     g = p;
                     b = brightnessQuad.value;
-                    break;
-                case 5:
-                default:
+                }
+                default -> {
                     r = brightnessQuad.value;
                     g = p;
                     b = q;
-                    break;
+                }
             }
         }
 
@@ -449,38 +451,37 @@ public class ColorSettingScreen extends WindowScreen {
             double g;
             double b;
 
-            switch(i) {
-                case 0:
+            switch (i) {
+                case 0 -> {
                     r = 1;
                     g = t;
                     b = p;
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     r = q;
                     g = 1;
                     b = p;
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     r = p;
                     g = 1;
                     b = t;
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     r = p;
                     g = q;
                     b = 1;
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     r = t;
                     g = p;
                     b = 1;
-                    break;
-                case 5:
-                default:
+                }
+                default -> {
                     r = 1;
                     g = p;
                     b = q;
-                    break;
+                }
             }
 
             color.r = (int) (r * 255);

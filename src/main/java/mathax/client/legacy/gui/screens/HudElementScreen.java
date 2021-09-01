@@ -21,8 +21,12 @@ public class HudElementScreen extends WindowScreen {
 
     public HudElementScreen(GuiTheme theme, HudElement element) {
         super(theme, element.title);
-        this.element = element;
 
+        this.element = element;
+    }
+
+    @Override
+    public void initWidgets() {
         // Description
         add(theme.label(element.description, getWindowWidth() / 2.0));
 
@@ -46,7 +50,7 @@ public class HudElementScreen extends WindowScreen {
 
         WButton reset = bottomList.add(theme.button(GuiRenderer.RESET)).expandCellX().right().widget();
         reset.action = () -> {
-            Modules.get().get(HUD.class).reset.run();
+            if (element.active != element.defaultActive) element.active = active.checked = element.defaultActive;
         };
     }
 
@@ -54,9 +58,9 @@ public class HudElementScreen extends WindowScreen {
     public void tick() {
         super.tick();
 
-        if (settings == null) return;
-
-        element.settings.tick(settings, theme);
+        if (settings != null) {
+            element.settings.tick(settings, theme);
+        }
     }
 
     @Override

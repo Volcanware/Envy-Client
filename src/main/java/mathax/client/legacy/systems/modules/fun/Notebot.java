@@ -4,7 +4,6 @@ import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.events.render.Render3DEvent;
 import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.gui.GuiTheme;
-import mathax.client.legacy.gui.screens.NotebotHelpScreen;
 import mathax.client.legacy.gui.widgets.WLabel;
 import mathax.client.legacy.gui.widgets.WWidget;
 import mathax.client.legacy.gui.widgets.containers.WTable;
@@ -269,12 +268,6 @@ public class Notebot extends Module {
         }  catch (IOException e) {
             table.add(theme.label("Missing \"Notebot\" folder.")).expandCellX();
             table.row();
-        }
-        if (noSongsFound) {
-            table.add(theme.label("No songs found.")).expandCellX();
-            table.row();
-            WButton help = table.add(theme.button("Help")).expandCellX().widget();
-            help.action = () -> mc.setScreen(new NotebotHelpScreen(theme));
         }
         return table;
     }

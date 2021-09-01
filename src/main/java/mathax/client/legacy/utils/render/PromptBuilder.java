@@ -22,7 +22,7 @@ public class PromptBuilder {
     private final List<String> messages = new ArrayList<>();
     private Runnable onYes = () -> {};
     private Runnable onNo = () -> {};
-    private String promptId = null;
+    public String promptId = null;
 
     public PromptBuilder() {
         this(GuiThemes.get(), mc.currentScreen);
@@ -83,11 +83,15 @@ public class PromptBuilder {
         }
     }
 
-    private class PromptScreen extends WindowScreen {
+    public class PromptScreen extends WindowScreen {
         public PromptScreen(GuiTheme theme) {
             super(theme, PromptBuilder.this.title);
-            this.parent = PromptBuilder.this.parent;
 
+            this.parent = PromptBuilder.this.parent;
+        }
+
+        @Override
+        public void initWidgets() {
             for (String line : messages) {
                 add(theme.label(line)).expandX();
             }

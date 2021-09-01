@@ -23,17 +23,17 @@ public class ArmorHud extends HudElement {
         .build()
     );
 
-    private final Setting<ArmorHud.Orientation> orientation = sgGeneral.add(new EnumSetting.Builder<Orientation>()
+    private final Setting<Orientation> orientation = sgGeneral.add(new EnumSetting.Builder<Orientation>()
         .name("orientation")
         .description("How to display armor.")
-        .defaultValue(ArmorHud.Orientation.Horizontal)
+        .defaultValue(Orientation.Horizontal)
         .build()
     );
 
-    private final Setting<ArmorHud.Durability> durability = sgGeneral.add(new EnumSetting.Builder<ArmorHud.Durability>()
+    private final Setting<Durability> durability = sgGeneral.add(new EnumSetting.Builder<Durability>()
         .name("durability")
         .description("How to display armor durability.")
-        .defaultValue(ArmorHud.Durability.Default)
+        .defaultValue(Durability.Percentage)
         .build()
     );
 

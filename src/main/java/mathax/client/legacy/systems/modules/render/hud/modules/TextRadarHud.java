@@ -1,6 +1,9 @@
 package mathax.client.legacy.systems.modules.render.hud.modules;
 
+import mathax.client.legacy.renderer.GL;
+import mathax.client.legacy.renderer.Renderer2D;
 import mathax.client.legacy.settings.*;
+import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
 import mathax.client.legacy.systems.modules.render.hud.HudElement;
@@ -11,12 +14,17 @@ import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class TextRadarHud extends HudElement {
+    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/logo/logo.png");
+
+    private Color textureColor = new Color(255, 255, 255, 255);
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
@@ -24,7 +32,7 @@ public class TextRadarHud extends HudElement {
     public final Setting<SettingColor> playerNameColor = sgGeneral.add(new ColorSetting.Builder()
         .name("player-name-color")
         .description("Color of player names.")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(230, 25, 60))
         .build()
     );
 
@@ -40,21 +48,21 @@ public class TextRadarHud extends HudElement {
     private final Setting<Boolean> health = sgGeneral.add(new BoolSetting.Builder()
         .name("health")
         .description("Shows the health of player next to their name.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> ping = sgGeneral.add(new BoolSetting.Builder()
         .name("ping")
         .description("Shows the ping of player next to their name.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> distance = sgGeneral.add(new BoolSetting.Builder()
         .name("distance")
         .description("Shows the distance to the player next to their name.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 
@@ -85,7 +93,12 @@ public class TextRadarHud extends HudElement {
             if (entity.equals(mc.player)) continue;
             if (!friends.get() && Friends.get().isFriend(entity)) continue;
 
-            String text = entity.getEntityName();
+            String text = "";
+            if ((entity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || entity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers)
+                text += "     " + entity.getEntityName();
+            else
+                text += entity.getEntityName();
+
             if (health.get() || ping.get() || distance.get()) text += String.format(" -");
             if (health.get()) text += String.format(" %s", Math.round(entity.getHealth() + entity.getAbsorptionAmount()));
             if (ping.get()) text += String.format(" [%sms]", Math.round(EntityUtils.getPing(entity)));
@@ -120,7 +133,19 @@ public class TextRadarHud extends HudElement {
             x = box.getX();
             y += renderer.textHeight() + 2;
 
-            String text = entity.getEntityName();
+            String text = "";
+
+            if ((entity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || entity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers) {
+                GL.bindTexture(mathaxLogo);
+                Renderer2D.TEXTURE.begin();
+                Renderer2D.TEXTURE.texQuad(x - renderer.textWidth(text) + 2, y, 16, 16, textureColor);
+                Renderer2D.TEXTURE.render(null);
+            }
+
+            if ((entity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || entity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers)
+                text += "     " + entity.getEntityName();
+            else
+                text += entity.getEntityName();
             Color color = PlayerUtils.getPlayerColor(entity, playerNameColor.get());
 
             renderer.text(text, x, y, color);

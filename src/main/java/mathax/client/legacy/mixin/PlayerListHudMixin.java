@@ -1,14 +1,22 @@
 package mathax.client.legacy.mixin;
 
+import mathax.client.legacy.renderer.GL;
+import mathax.client.legacy.renderer.Renderer2D;
+import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.misc.BetterTab;
 import mathax.client.legacy.utils.Utils;
+import mathax.client.legacy.utils.render.color.Color;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.PlayerListHud;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,8 +25,17 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.List;
+
 @Mixin(PlayerListHud.class)
 public class PlayerListHudMixin {
+    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/logo/logo.png");
+
+    private Color textureColor = new Color(255, 255, 255, 255);
+
+    private int x = 0;
+    private int y = 0;
+    private PlayerListEntry playerListEntry = null;
 
     @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Ljava/lang/Math;min(II)I", ordinal = 0), index = 1)
     private int modifyCount(int count) {
@@ -38,7 +55,7 @@ public class PlayerListHudMixin {
     private int modifyWidth(int width) {
         BetterTab module = Modules.get().get(BetterTab.class);
 
-        return module.isActive() && module.accurateLatency.get() ? width + 50 : width;
+        return module.isActive() && module.accurateLatency.get() ? width + 32 : width;
     }
 
     @Shadow
@@ -57,8 +74,10 @@ public class PlayerListHudMixin {
             String text = latency + "ms";
             textRenderer.drawWithShadow(matrices, text, (float) x + width - textRenderer.getWidth(text), (float) y, color);
         } else {
+            /*if ((entry.getProfile().getId().toString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || entry.getProfile().getId().toString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && betterTab.isActive() && Config.get().viewMatHaxLegacyUsers) {
+
+            }*/
             renderLatencyIcon(matrices, width, x, y, entry);
         }
     }
-
 }

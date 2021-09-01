@@ -9,6 +9,8 @@ import mathax.client.legacy.gui.widgets.containers.WHorizontalList;
 import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.systems.accounts.Account;
 import mathax.client.legacy.systems.accounts.Accounts;
+import mathax.client.legacy.systems.accounts.MicrosoftLogin;
+import mathax.client.legacy.systems.accounts.types.MicrosoftAccount;
 import mathax.client.legacy.utils.network.MatHaxExecutor;
 
 import static mathax.client.legacy.utils.Utils.mc;
@@ -19,21 +21,11 @@ public class AccountsScreen extends WindowScreen {
     }
 
     @Override
-    protected void init() {
-        super.init();
-
-        clear();
-        initWidgets();
-    }
-
-    private void initWidgets() {
+    public void initWidgets() {
         // Accounts
         for (Account<?> account : Accounts.get()) {
             WAccount wAccount = add(theme.account(this, account)).expandX().widget();
-            wAccount.refreshScreenAction = () -> {
-                clear();
-                initWidgets();
-            };
+            wAccount.refreshScreenAction = this::reload;
         }
 
         // Add account
@@ -41,6 +33,18 @@ public class AccountsScreen extends WindowScreen {
 
         addButton(l, "Cracked", () -> mc.setScreen(new AddCrackedAccountScreen(theme)));
         addButton(l, "Premium", () -> mc.setScreen(new AddPremiumAccountScreen(theme)));
+        addButton(l, "Microsoft", () -> {
+            locked = true;
+
+            MicrosoftLogin.getRefreshToken(refreshToken -> {
+                locked = false;
+
+                if (refreshToken != null) {
+                    MicrosoftAccount account = new MicrosoftAccount(refreshToken);
+                    addAccount(null, this, account);
+                }
+            });
+        });
         addButton(l, "The Altening", () -> mc.setScreen(new AddAlteningAccountScreen(theme)));
     }
 
@@ -50,17 +54,21 @@ public class AccountsScreen extends WindowScreen {
     }
 
     public static void addAccount(WButton add, WidgetScreen screen, Account<?> account) {
-        add.set("...");
+        if (add != null) add.set("...");
         screen.locked = true;
 
         MatHaxExecutor.execute(() -> {
             if (account.fetchInfo() && account.fetchHead()) {
                 Accounts.get().add(account);
                 screen.locked = false;
-                screen.onClose();
+
+                if (add != null) screen.onClose();
+                else if (screen instanceof AccountsScreen s) {
+                    s.reload();
+                }
             }
 
-            add.set("Add");
+            if (add != null) add.set("Add");
             screen.locked = false;
         });
     }

@@ -7,7 +7,6 @@ import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.events.packets.PacketEvent;
 import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.gui.GuiThemes;
-import mathax.client.legacy.gui.screens.NotebotHelpScreen;
 import mathax.client.legacy.systems.commands.Command;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.fun.Notebot;
@@ -38,10 +37,6 @@ public class NotebotCommand extends Command {
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(literal("help").executes(ctx -> {
-            MatHaxClientLegacy.screenToOpen = new NotebotHelpScreen(GuiThemes.get());
-            return SINGLE_SUCCESS;
-        }));
         builder.then(literal("status").executes(ctx -> {
             Notebot notebot = Modules.get().get(Notebot.class);
             notebot.printStatus();

@@ -8,9 +8,20 @@ import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.block.Block;
 
 public class SBlockDataScreen extends WindowScreen {
+    private final SBlockData blockData;
+    private final Block block;
+    private final BlockDataSetting<SBlockData> setting;
+
     public SBlockDataScreen(GuiTheme theme, SBlockData blockData, Block block, BlockDataSetting<SBlockData> setting) {
         super(theme, "Configure Block");
 
+        this.blockData = blockData;
+        this.block = block;
+        this.setting = setting;
+    }
+
+    @Override
+    public void initWidgets() {
         Settings settings = new Settings();
         SettingGroup sgGeneral = settings.getDefaultGroup();
         SettingGroup sgTracer = settings.createGroup("Tracer");
@@ -21,9 +32,9 @@ public class SBlockDataScreen extends WindowScreen {
             .defaultValue(ShapeMode.Lines)
             .onModuleActivated(shapeModeSetting -> shapeModeSetting.set(blockData.shapeMode))
             .onChanged(shapeMode -> {
-                    blockData.shapeMode = shapeMode;
-                    changed(blockData, block, setting);
-                })
+                blockData.shapeMode = shapeMode;
+                changed(blockData, block, setting);
+            })
             .build()
         );
 
@@ -33,9 +44,9 @@ public class SBlockDataScreen extends WindowScreen {
             .defaultValue(new SettingColor(0, 255, 200))
             .onModuleActivated(settingColorSetting -> settingColorSetting.set(blockData.lineColor))
             .onChanged(settingColor -> {
-                    blockData.lineColor.set(settingColor);
-                    changed(blockData, block, setting);
-                })
+                blockData.lineColor.set(settingColor);
+                changed(blockData, block, setting);
+            })
             .build()
         );
 
@@ -45,9 +56,9 @@ public class SBlockDataScreen extends WindowScreen {
             .defaultValue(new SettingColor(0, 255, 200, 25))
             .onModuleActivated(settingColorSetting -> settingColorSetting.set(blockData.sideColor))
             .onChanged(settingColor -> {
-                    blockData.sideColor.set(settingColor);
-                    changed(blockData, block, setting);
-                })
+                blockData.sideColor.set(settingColor);
+                changed(blockData, block, setting);
+            })
             .build()
         );
 
@@ -57,9 +68,9 @@ public class SBlockDataScreen extends WindowScreen {
             .defaultValue(true)
             .onModuleActivated(booleanSetting -> booleanSetting.set(blockData.tracer))
             .onChanged(aBoolean -> {
-                    blockData.tracer = aBoolean;
-                    changed(blockData, block, setting);
-                })
+                blockData.tracer = aBoolean;
+                changed(blockData, block, setting);
+            })
             .build()
         );
 
@@ -69,9 +80,9 @@ public class SBlockDataScreen extends WindowScreen {
             .defaultValue(new SettingColor(0, 255, 200, 125))
             .onModuleActivated(settingColorSetting -> settingColorSetting.set(blockData.tracerColor))
             .onChanged(settingColor -> {
-                    blockData.tracerColor = settingColor;
-                    changed(blockData, block, setting);
-                })
+                blockData.tracerColor = settingColor;
+                changed(blockData, block, setting);
+            })
             .build()
         );
 

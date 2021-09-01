@@ -11,7 +11,10 @@ import mathax.client.legacy.systems.accounts.types.CrackedAccount;
 public class AddCrackedAccountScreen extends WindowScreen {
     public AddCrackedAccountScreen(GuiTheme theme) {
         super(theme, "Add Cracked Account");
+    }
 
+    @Override
+    public void initWidgets() {
         WTable t = add(theme.table()).widget();
 
         // Name
