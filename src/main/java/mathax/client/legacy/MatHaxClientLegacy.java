@@ -84,7 +84,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
 
     public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 17;
+    public static Integer devBuildNumber = 1;
 
     public static String devBuild() {
         if (devBuildNumber == 0) {
@@ -116,7 +116,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
                 Modules.get().get(mathax.client.legacy.systems.modules.fun.Capes.class).toggle(false); // CAPES
                 Modules.get().get(Background.class).toggle(false);                                     // BACKGROUND
                 Modules.get().get(HUD.class).toggle(false);                                            // HUD
-                Modules.get().get(HUD.class).reset.run();                                                      // HUD Positions & Default Actives
+                Modules.get().get(HUD.class).reset.run();                                                      // DEFAULT HUD LOCATIONS AND TOGGLES
             }
         });
 

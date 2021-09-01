@@ -41,7 +41,7 @@ public class ContainerViewerHud extends HudElement {
     private final ItemStack[] inventory = new ItemStack[9 * 3];
 
     public ContainerViewerHud(HUD hud) {
-        super(hud, "container-viewer", "Displays held containers.");
+        super(hud, "container-viewer", "Displays held containers.", false);
     }
 
     @Override

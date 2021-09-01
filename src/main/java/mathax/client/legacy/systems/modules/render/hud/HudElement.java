@@ -1,6 +1,5 @@
 package mathax.client.legacy.systems.modules.render.hud;
 
-import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.gui.screens.HudElementScreen;
 import mathax.client.legacy.gui.tabs.builtin.HudTab;
 import mathax.client.legacy.settings.Settings;
@@ -14,6 +13,7 @@ public abstract class HudElement implements ISerializable<HudElement> {
     public final String description;
 
     public boolean active;
+    public final boolean defaultActive;
 
     protected final HUD hud;
 
@@ -22,40 +22,17 @@ public abstract class HudElement implements ISerializable<HudElement> {
 
     protected final MinecraftClient mc;
 
-    public HudElement(HUD hud, String name, String description, boolean nothing) {
+    public HudElement(HUD hud, String name, String description, boolean defaultActive) {
         this.hud = hud;
         this.name = name;
         this.title = Utils.nameToTitle(name);
         this.description = description;
+        this.defaultActive = defaultActive;
         this.mc = MinecraftClient.getInstance();
-    }
-
-    public HudElement(HUD hud, String name, String description) {
-        this.hud = hud;
-        this.name = name;
-        this.title = Utils.nameToTitle(name);
-        this.description = description;
-        this.mc = MinecraftClient.getInstance();
-    }
-
-    public void toggle(boolean onToggle) {
-        if (!active) {
-            active = true;
-
-            if (onToggle) {
-                MatHaxClientLegacy.EVENT_BUS.subscribe(this);
-            }
-        }
-        else {
-            if (onToggle) {
-                MatHaxClientLegacy.EVENT_BUS.unsubscribe(this);
-            }
-            active = false;
-        }
     }
 
     public void toggle() {
-        toggle(true);
+        active = !active;
     }
 
     public abstract void update(HudRenderer renderer);

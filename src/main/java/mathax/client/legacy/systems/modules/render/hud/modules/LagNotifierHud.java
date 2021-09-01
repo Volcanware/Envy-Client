@@ -28,7 +28,7 @@ public class LagNotifierHud extends TripleTextHudElement {
     );
 
     public LagNotifierHud(HUD hud) {
-        super(hud, "lag-notifier", "Displays if the server is lagging in seconds.");
+        super(hud, "lag-notifier", "Displays if the server is lagging in seconds.", true);
     }
 
     @Override

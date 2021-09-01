@@ -168,7 +168,7 @@ public class CombatHud extends HudElement {
     private PlayerEntity playerEntity;
 
     public CombatHud(HUD hud) {
-        super(hud, "combat-info", "Displays information about your combat target.");
+        super(hud, "combat-info", "Displays information about your combat target.", true);
     }
 
     @Override

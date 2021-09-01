@@ -18,7 +18,7 @@ public class InGameTimeHud extends TripleTextHudElement {
     //TODO: Change default to AM & PM. Add EU format setting 12:00.
 
     public InGameTimeHud(HUD hud) {
-        super(hud, "in-game-time", "Displays the in-game time.");
+        super(hud, "in-game-time", "Displays the in-game time.", true);
     }
 
     @Override

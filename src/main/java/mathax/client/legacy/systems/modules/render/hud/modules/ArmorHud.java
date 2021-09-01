@@ -47,14 +47,15 @@ public class ArmorHud extends HudElement {
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
         .name("scale")
         .description("The scale.")
-        .defaultValue(2)
+        .defaultValue(2.75)
         .min(1)
-        .sliderMin(1).sliderMax(5)
+        .sliderMin(1)
+        .sliderMax(5)
         .build()
     );
 
     public ArmorHud(HUD hud) {
-        super(hud, "armor", "Displays information about your armor.");
+        super(hud, "armor", "Displays information about your armor.", true);
     }
 
     @Override

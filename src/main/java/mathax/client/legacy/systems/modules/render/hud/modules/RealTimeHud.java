@@ -21,7 +21,7 @@ public class RealTimeHud extends TripleTextHudElement {
     //TODO: Change default to AM & PM. Add EU format setting 12:00.
 
     public RealTimeHud(HUD hud) {
-        super(hud, "real-time", "Displays real world time.");
+        super(hud, "real-time", "Displays real world time.", true);
     }
 
     @Override

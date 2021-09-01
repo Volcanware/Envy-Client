@@ -39,7 +39,7 @@ public class CompassHud extends HudElement {
     private double yaw, pitch;
 
     public CompassHud(HUD hud) {
-        super(hud, "compass", "Displays a compass.");
+        super(hud, "compass", "Displays a compass.", true);
     }
 
     @Override

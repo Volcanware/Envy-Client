@@ -13,7 +13,7 @@ public class PotionTimersHud extends HudElement {
     private final Color color = new Color();
 
     public PotionTimersHud(HUD hud) {
-        super(hud, "potion-timers", "Displays active potion effects with timers.");
+        super(hud, "potion-timers", "Displays active potion effects with timers.", true);
     }
 
     @Override

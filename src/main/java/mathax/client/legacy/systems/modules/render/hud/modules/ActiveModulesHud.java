@@ -73,7 +73,7 @@ public class ActiveModulesHud extends HudElement {
     private double rainbowHue1, rainbowHue2;
 
     public ActiveModulesHud(HUD hud) {
-        super(hud, "active-modules", "Displays your active modules.");
+        super(hud, "active-modules", "Displays your active modules.", true);
     }
 
     @Override

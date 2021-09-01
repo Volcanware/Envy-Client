@@ -89,9 +89,9 @@ public class HighwayBuilder extends Module {
         .description("Height of the highway.")
         .defaultValue(3)
         .min(2)
-        .max(5)
+        .max(6)
         .sliderMin(2)
-        .sliderMax(5)
+        .sliderMax(6)
         .build()
     );
 
@@ -101,6 +101,14 @@ public class HighwayBuilder extends Module {
         .defaultValue(Floor.Replace)
         .build()
     );
+
+    //TODO: Place the block under the side first, like my surround fix. Some servers blocks sides without it.
+    /*private final Setting<Boolean> underSides = sgGeneral.add(new BoolSetting.Builder()
+        .name("under-sides")
+        .description("Places blocks under the side blocks. [Some servers blocks sides without it]")
+        .defaultValue(true)
+        .build()
+    );*/
 
     private final Setting<Boolean> railings = sgGeneral.add(new BoolSetting.Builder()
         .name("railings")
@@ -179,14 +187,14 @@ public class HighwayBuilder extends Module {
     private final Setting<SettingColor> renderMineSideColor = sgRenderMine.add(new ColorSetting.Builder()
         .name("blocks-to-mine-side-color")
         .description("Color of blocks to be mined.")
-        .defaultValue(new SettingColor(225, 25, 25, 25))
+        .defaultValue(new SettingColor(230, 75, 100, 75))
         .build()
     );
 
     private final Setting<SettingColor> renderMineLineColor = sgRenderMine.add(new ColorSetting.Builder()
         .name("blocks-to-mine-line-color")
         .description("Color of blocks to be mined.")
-        .defaultValue(new SettingColor(225, 25, 25))
+        .defaultValue(new SettingColor(230, 75, 100))
         .build()
     );
 
@@ -209,14 +217,14 @@ public class HighwayBuilder extends Module {
     private final Setting<SettingColor> renderPlaceSideColor = sgRenderPlace.add(new ColorSetting.Builder()
         .name("blocks-to-place-side-color")
         .description("Color of blocks to be placed.")
-        .defaultValue(new SettingColor(25, 25, 225, 25))
+        .defaultValue(new SettingColor(230, 75, 100, 75))
         .build()
     );
 
     private final Setting<SettingColor> renderPlaceLineColor = sgRenderPlace.add(new ColorSetting.Builder()
         .name("blocks-to-place-line-color")
         .description("Color of blocks to be placed.")
-        .defaultValue(new SettingColor(25, 25, 225))
+        .defaultValue(new SettingColor(230, 75, 100))
         .build()
     );
 
@@ -292,7 +300,7 @@ public class HighwayBuilder extends Module {
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (width.get() < 3 && dir.diagonal) {
-            errorEarly("Diagonal highways with width less than 3 are not supported.");
+            errorEarly("Highway Builder", "Diagonal highways with width less than 3 are not supported.");
             return;
         }
 

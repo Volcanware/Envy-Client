@@ -30,7 +30,7 @@ public class WatermarkHud extends TripleTextHudElement {
     );
 
     public WatermarkHud(HUD hud) {
-        super(hud, "watermark", "Displays a MatHax Client Legacy watermark.");
+        super(hud, "watermark", "Displays a MatHax Client Legacy watermark.", true);
     }
 
     protected String getLeft() {
@@ -58,7 +58,7 @@ public class WatermarkHud extends TripleTextHudElement {
         } else {
             double width = 1392 / 6;
             double height = 128 / 6;
-            double height2 = height / 4;
+            double height2 = height / 4.5;
             double textWidth = 4 + renderer.textWidth(getRight()) + renderer.textWidth(getEnd());
             box.setSize(width + textWidth,  height);
             double x = box.getX() + width;

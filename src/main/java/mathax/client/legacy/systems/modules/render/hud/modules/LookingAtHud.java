@@ -39,7 +39,7 @@ public class LookingAtHud extends TripleTextHudElement {
     );
 
     public LookingAtHud(HUD hud) {
-        super(hud, "looking-at", "Displays what entity or block you are looking at.");
+        super(hud, "looking-at", "Displays what entity or block you are looking at.", true);
     }
 
     @Override

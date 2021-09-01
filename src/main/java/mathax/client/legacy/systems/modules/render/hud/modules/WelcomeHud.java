@@ -30,7 +30,7 @@ public class WelcomeHud extends TripleTextHudElement {
     );
 
     public WelcomeHud(HUD hud) {
-        super(hud, "welcome", "Displays a welcome message.");
+        super(hud, "welcome", "Displays a welcome message.", true);
         rightColor = usernameColor.get();
     }
 

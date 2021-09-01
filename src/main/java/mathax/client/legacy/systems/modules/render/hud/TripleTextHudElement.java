@@ -16,8 +16,8 @@ public abstract class TripleTextHudElement extends HudElement {
     private double leftWidth;
     private double rightWidth;
 
-    public TripleTextHudElement(HUD hud, String name, String description) {
-        super(hud, name, description);
+    public TripleTextHudElement(HUD hud, String name, String description, boolean defaultActive) {
+        super(hud, name, description, defaultActive);
         this.rightColor = hud.secondaryColor.get();
     }
 

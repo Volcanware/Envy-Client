@@ -19,7 +19,7 @@ public class Breadcrumbs extends Module {
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
         .name("color")
         .description("The color of the Breadcrumbs trail.")
-        .defaultValue(new SettingColor(225, 25, 25))
+        .defaultValue(new SettingColor(230, 75, 100))
         .build()
     );
 

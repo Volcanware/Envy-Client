@@ -32,14 +32,14 @@ public class CityESP extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The side color of the rendering.")
-        .defaultValue(new SettingColor(225, 0, 0, 75))
+        .defaultValue(new SettingColor(230, 75, 100, 75))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The line color of the rendering.")
-        .defaultValue(new SettingColor(225, 0, 0, 255))
+        .defaultValue(new SettingColor(230, 75, 100, 255))
         .build()
     );
 

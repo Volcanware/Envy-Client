@@ -115,17 +115,52 @@ public abstract class GameRendererMixin {
         return MathHelper.lerp(delta, first, second);
     }
 
-    // Freecam
+// Freecam
 
-    private final boolean freecamSet = false;
+    private boolean freecamSet = false;
 
     @Inject(method = "updateTargetedEntity", at = @At("INVOKE"), cancellable = true)
     private void updateTargetedEntityInvoke(float tickDelta, CallbackInfo info) {
         Freecam freecam = Modules.get().get(Freecam.class);
         boolean highwayBuilder = Modules.get().isActive(HighwayBuilder.class);
 
-        if ((freecam.isActive() || highwayBuilder) && client.getCameraEntity() != null && !freecamSet) {
+        if (freecam.isActive() && client.getCameraEntity() != null && !freecamSet) {
             info.cancel();
+            Entity camera = client.getCameraEntity();
+
+            double x = camera.getX();
+            double y = camera.getY();
+            double z = camera.getZ();
+            double prevX = camera.prevX;
+            double prevY = camera.prevY;
+            double prevZ = camera.prevZ;
+            float yaw = camera.getYaw();
+            float pitch = camera.getPitch();
+            float prevYaw = camera.prevYaw;
+            float prevPitch = camera.prevPitch;
+
+            ((IVec3d) camera.getPos()).set(freecam.pos.x, freecam.pos.y - camera.getEyeHeight(camera.getPose()), freecam.pos.z);
+            camera.prevX = freecam.prevPos.x;
+            camera.prevY = freecam.prevPos.y - camera.getEyeHeight(camera.getPose());
+            camera.prevZ = freecam.prevPos.z;
+            camera.setYaw(freecam.yaw);
+            camera.setPitch(freecam.pitch);
+            camera.prevYaw = freecam.prevYaw;
+            camera.prevPitch = freecam.prevPitch;
+
+            freecamSet = true;
+            updateTargetedEntity(tickDelta);
+            freecamSet = false;
+
+            ((IVec3d) camera.getPos()).set(x, y, z);
+            camera.prevX = prevX;
+            camera.prevY = prevY;
+            camera.prevZ = prevZ;
+            camera.setYaw(yaw);
+            camera.setPitch(pitch);
+            camera.prevYaw = prevYaw;
+            camera.prevPitch = prevPitch;
+        } else if (highwayBuilder && client.getCameraEntity() != null && !freecamSet) {
             Entity cameraE = client.getCameraEntity();
 
             double x = cameraE.getX();

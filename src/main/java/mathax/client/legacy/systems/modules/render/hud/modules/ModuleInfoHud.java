@@ -46,7 +46,7 @@ public class ModuleInfoHud extends HudElement {
     );
 
     public ModuleInfoHud(HUD hud) {
-        super(hud, "module-info", "Displays if selected modules are enabled or disabled.");
+        super(hud, "module-info", "Displays if selected modules are enabled or disabled.", true);
     }
 
     @Override
