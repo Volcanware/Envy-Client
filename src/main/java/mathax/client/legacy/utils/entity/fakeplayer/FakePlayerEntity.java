@@ -36,9 +36,9 @@ public class FakePlayerEntity extends OtherClientPlayerEntity {
         }
 
         if (copyInv) getInventory().clone(mc.player.getInventory());
-
         spawn();
     }
+
     private void spawn() {
         unsetRemoved();
         mc.world.addEntity(getId(), this);

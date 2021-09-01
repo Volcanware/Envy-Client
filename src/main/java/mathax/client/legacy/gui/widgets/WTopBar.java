@@ -51,7 +51,7 @@ public abstract class WTopBar extends WHorizontalList {
                 double mouseX = mc.mouse.getX();
                 double mouseY = mc.mouse.getY();
 
-                tab.OpenScreen(theme);
+                tab.openScreen(theme);
                 glfwSetCursorPos(mc.getWindow().getHandle(), mouseX, mouseY);
             }
         }

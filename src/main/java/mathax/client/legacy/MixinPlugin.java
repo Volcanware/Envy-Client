@@ -3,15 +3,17 @@ package mathax.client.legacy;
 import mathax.client.legacy.asm.Asm;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+
+import java.util.List;
+import java.util.Set;
+
+import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.transformer.FabricMixinTransformerProxy;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
     private boolean isResourceLoaderPresent = false;

@@ -5,7 +5,7 @@ import net.minecraft.client.network.ServerInfo;
 
 public interface IMultiplayerScreen
 {
-    MultiplayerServerListWidget getServerListSelector();
+    public MultiplayerServerListWidget getServerListSelector();
 
-    void connectToServer(ServerInfo server);
+    public void connectToServer(ServerInfo server);
 }

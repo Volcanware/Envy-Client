@@ -91,7 +91,7 @@ public class CEVBreaker extends Module {
                                 n = EnhancedInvUtils.findItemInHotbar(Items.DIAMOND_PICKAXE);
                             }
                             if (n == -1) {
-                                ChatUtils.error("Head Crystal", "Can't find any pickaxe in hotbar, disabling...");
+                                ChatUtils.error("Head Crystal", "Can't find any pickaxe in hotbar, disabling...", new Object[0]);
                                 toggle();
                             } else {
                                 if (mc.world.getBlockState(blockPos1).getBlock() != Blocks.OBSIDIAN) {
@@ -145,7 +145,7 @@ public class CEVBreaker extends Module {
         }
         int n = EnhancedInvUtils.findItemInHotbar(Items.END_CRYSTAL);
         if (n == -1) {
-            ChatUtils.error("Head Crystal", "Can't find crystals in your hotbar, disabling...");
+            ChatUtils.error("Head Crystal", "Can't find crystals in your hotbar, disabling...", new Object[0]);
             toggle();
             return false;
         }

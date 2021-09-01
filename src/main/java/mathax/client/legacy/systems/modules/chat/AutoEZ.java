@@ -11,7 +11,6 @@ import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Modules;
-import mathax.client.legacy.systems.modules.combat.AnchorAura;
 import mathax.client.legacy.systems.modules.combat.BedAura;
 import mathax.client.legacy.systems.modules.combat.CrystalAura;
 import mathax.client.legacy.systems.modules.combat.CEVBreaker;
@@ -90,30 +89,18 @@ public class AutoEZ extends Module {
                         }
                     }
                 }
-            } else {
+            } else if (msg.contains("[Intentional Game Design]")) {
                 for (PlayerEntity player : mc.world.getPlayers()) {
                     if (player == mc.player)
                         continue;
                     if (msg.contains(player.getName().getString())) {
-                        if (msg.contains("bed") || msg.contains("[Intentional Game Design]")) {
-                            if (Modules.get().isActive(BedAura.class)) {
-                                if (mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get()) {
-                                    String message = getBedMessageStyle();
-                                    String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
-                                    if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
-                                    if (EntityUtils.getGameMode(player).isCreative()) return;
-                                    mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
-                                }
-                            }
-                        } else if (msg.contains("anchor") || msg.contains("[Intentional Game Design]")) {
-                            if (Modules.get().isActive(AnchorAura.class)) {
-                                if (mc.player.distanceTo(player) < Modules.get().get(AnchorAura.class).targetRange.get()) {
-                                    String message = getAnchorMessage();
-                                    String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
-                                    if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
-                                    if (EntityUtils.getGameMode(player).isCreative()) return;
-                                    mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
-                                }
+                        if (Modules.get().isActive(BedAura.class)) {
+                            if (mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get()) {
+                                String message = getBedMessageStyle();
+                                String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
+                                if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                if (EntityUtils.getGameMode(player).isCreative()) return;
+                                mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
                             }
                         }
                     }
@@ -148,16 +135,6 @@ public class AutoEZ extends Module {
             case EZ -> msg = getBedMessage();
             case GG -> msg = getGgBedMessage();
             //case TROLL -> msg = getTrollBedMessage();
-        }
-        return msg;
-    }
-
-    public String getAnchorMessageStyle() {
-        String msg = "";
-        switch (mode.get()) {
-            case EZ -> msg = getAnchorMessage();
-            case GG -> msg = getGgAnchorMessage();
-            //case TROLL -> msg = getTrollAnchorMessage();
         }
         return msg;
     }
@@ -242,34 +219,6 @@ public class AutoEZ extends Module {
             case 2: msg = "Good fight, %killedperson%! MatHax Legacy bed aura helped me!";
             case 3: msg = "GG %killedperson%! MatHax Legacy bed aura on top!";
             case 4: msg = "Nice fight %killedperson%! MatHax Legacy bed aura is so good!";
-        }
-        return msg;
-    }
-
-    public String getAnchorMessage() {
-        String msg = "Take the L nerd %killedperson%! You just got ended by MatHax Legacy anchor aura!";
-        int randomNumber = Utils.random(1, 8);
-        switch (randomNumber) {
-            case 1: msg = "My anchor aura is too fast for %killedperson%! MatHax Legacy on top!";
-            case 2: msg = "I just EZZz'd %killedperson% using MatHax Legacy anchor aura!";
-            case 3: msg = "I just fucked %killedperson% using MatHax Legacy anchor aura!";
-            case 4: msg = "haha %killedperson% is a noob! MatHax Legacy anchor aura on top!";
-            case 5: msg = "I just nae nae'd %killedperson% using MatHax Legacy anchor aura!";
-            case 6: msg = "Take the L nerd %killedperson%! You just got ended by MatHax Legacy anchor aura!";
-            case 7: msg = "%killedperson% just got raped by MatHax Legacy anchor aura!";
-            case 8: msg = "%killedperson% just got ended by MatHax Legacy anchor aura!";
-        }
-        return msg;
-    }
-
-    public String getGgAnchorMessage() {
-        String msg = "Nice fight %killedperson%! MatHax Legacy anchor aura is so good!";
-        int randomNumber = Utils.random(1, 4);
-        switch (randomNumber) {
-            case 1: msg = "Close fight %killedperson%, but MatHax Legacy anchor aura won!";
-            case 2: msg = "Good fight, %killedperson%! MatHax Legacy anchor aura helped me!";
-            case 3: msg = "GG %killedperson%! MatHax Legacy anchor aura on top!";
-            case 4: msg = "Nice fight %killedperson%! MatHax Legacy anchor aura is so good!";
         }
         return msg;
     }

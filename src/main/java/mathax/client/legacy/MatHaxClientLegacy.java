@@ -84,7 +84,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
 
     public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 11;
+    public static Integer devBuildNumber = 17;
 
     public static String devBuild() {
         if (devBuildNumber == 0) {
@@ -106,7 +106,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
         LOG.info(logprefix + "Initializing MatHax Client Legacy " + clientVersionWithV + "...");
         Utils.mc = MinecraftClient.getInstance();
-        mc.execute(this::setIcon);
+        mc.execute(this::updateImage);
         mc.execute(this::titleLoading);
         EVENT_BUS.registerLambdaFactory("mathax.client.legacy", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
@@ -180,7 +180,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         LOG.info(logprefix + "MatHax Client Legacy " + clientVersionWithV + " initialized!");
     }
 
-    public void setIcon() {
+    public void updateImage() {
         final Window window = MinecraftClient.getInstance().getWindow();
         window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon128.png"));
     }
@@ -201,7 +201,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     }
 
     private void openClickGui() {
-        Tabs.get().get(0).OpenScreen(GuiThemes.get());
+        Tabs.get().get(0).openScreen(GuiThemes.get());
     }
 
     public static String getMinecraftVersion(){
@@ -210,6 +210,8 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
     @EventHandler
     private void onGameJoined(GameJoinedEvent event) {
+        //TODO: Unwated servers.
+
         Utils.didntCheckForLatestVersion = true;
     }
 

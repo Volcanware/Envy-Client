@@ -136,7 +136,7 @@ public class TitleScreenMixin extends Screen {
                 Version latestVer = new Version(processedApiLatestVer);
 
                 if (latestVer.isHigherThan(Config.get().version)) {
-                    MatHaxClientLegacy.LOG.info(MatHaxClientLegacy.logprefix + "There is a new version of MatHax Legacy, v" + latestVer + "! You are using v" + Config.get().version.toString() + "!");
+                    MatHaxClientLegacy.LOG.info(MatHaxClientLegacy.logprefix + "There is a new version of MatHax Legacy, v" + latestVer.toString() + "! You are using v" + Config.get().version.toString() + "!");
                     new PromptBuilder()
                         .title("New Update")
                         .message("A new version of MatHax Legacy has been released.")

@@ -38,7 +38,7 @@ public class GuiTab extends Tab {
                 GuiThemes.select(themeW.get());
 
                 mc.setScreen(null);
-                tab.OpenScreen(GuiThemes.get());
+                tab.openScreen(GuiThemes.get());
             };
 
             theme.settings.onActivated();

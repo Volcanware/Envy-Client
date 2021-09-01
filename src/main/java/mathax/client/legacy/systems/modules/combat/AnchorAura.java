@@ -32,7 +32,7 @@ public class AnchorAura extends Module {
 
     // General
 
-    public final Setting<Double> targetRange = sgGeneral.add(new DoubleSetting.Builder()
+    private final Setting<Double> targetRange = sgGeneral.add(new DoubleSetting.Builder()
         .name("target-range")
         .description("The radius in which players get targeted.")
         .defaultValue(4)

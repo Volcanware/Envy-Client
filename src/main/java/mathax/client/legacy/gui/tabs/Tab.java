@@ -12,7 +12,7 @@ public abstract class Tab {
         this.name = name;
     }
 
-    public void OpenScreen(GuiTheme theme) {
+    public void openScreen(GuiTheme theme) {
         TabScreen screen = this.createScreen(theme);
         screen.addDirect(theme.topBar()).top().centerX();
         mc.setScreen(screen);

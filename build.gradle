@@ -69,9 +69,9 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         include "fabric.mod.json"
         expand "version": project.version
-    }
 
-    filter { line -> line.replace("@mc_version@", project.minecraft_version) }
+        filter { line -> line.replace("@mc_version@", project.minecraft_version) }
+    }
 
     from(sourceSets.main.resources.srcDirs) {
         exclude "fabric.mod.json"

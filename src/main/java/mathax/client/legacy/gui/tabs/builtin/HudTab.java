@@ -32,7 +32,7 @@ public class HudTab extends Tab {
     }
 
     @Override
-    public void OpenScreen(GuiTheme theme) {
+    public void openScreen(GuiTheme theme) {
         mc.setScreen(createScreen(theme));
     }
 
