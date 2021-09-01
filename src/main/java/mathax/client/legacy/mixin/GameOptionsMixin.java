@@ -1,16 +1,12 @@
 package mathax.client.legacy.mixin;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.events.game.ChangePerspectiveEvent;
 import mathax.client.legacy.utils.misc.input.KeyBinds;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.option.Perspective;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

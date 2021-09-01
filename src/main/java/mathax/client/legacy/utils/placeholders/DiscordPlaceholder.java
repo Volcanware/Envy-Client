@@ -5,7 +5,6 @@ import mathax.client.legacy.gui.screens.*;
 import mathax.client.legacy.gui.screens.settings.ColorSettingScreen;
 import mathax.client.legacy.gui.tabs.builtin.*;
 import mathax.client.legacy.utils.Utils;
-import mathax.client.legacy.utils.misc.LastServerInfo;
 import mathax.client.legacy.utils.network.Http;
 import mathax.client.legacy.utils.render.PeekScreen;
 import net.minecraft.client.gui.screen.*;
@@ -41,12 +40,20 @@ public class DiscordPlaceholder {
             case "%activity%":
                 if (mc.getOverlay() instanceof SplashOverlay) {
                     return "The game is loading...";
-                } /*else if (mc.currentScreen instanceof mathax.client.legacy.gui.screens.TitleScreen) {
-                    return "In main menu";
-                } */else if (mc.currentScreen instanceof TitleScreen) {
+                } else if (mc.currentScreen instanceof TitleScreen) {
                     return "In main menu";
                 } else if (mc.currentScreen instanceof MultiplayerScreen) {
                     return "In server selection";
+                } else if (mc.currentScreen instanceof ConnectScreen) {
+                    return "Connecting to " + Utils.getNakedActivity();
+                } else if (mc.currentScreen instanceof DisconnectedScreen) {
+                    return "Got disconnected from " + Utils.getNakedActivity();
+                } else if (mc.currentScreen instanceof GameMenuScreen) {
+                    return "Game paused on " + Utils.getNakedActivity();
+                } else if (mc.currentScreen instanceof PeekScreen) {
+                    return "Using .peek on " + Utils.getNakedActivity();
+                } else if (mc.currentScreen instanceof StatsScreen) {
+                    return "Viewing stats";
                 } else if (mc.currentScreen instanceof OptionsScreen) {
                     return "Changing Minecraft settings";
                 } else if (mc.currentScreen instanceof AccessibilityOptionsScreen) {
@@ -75,6 +82,8 @@ public class DiscordPlaceholder {
                     return "Creating a new world";
                 } else if (mc.currentScreen instanceof AddServerScreen) {
                     return "Adding a server";
+                } else if (mc.currentScreen instanceof DirectConnectScreen) {
+                    return "In direct connect";
                 } else if (mc.currentScreen instanceof ModuleScreen) {
                     return "Editing module " + getModule();
                 } else if (mc.currentScreen instanceof BaritoneTab.BaritoneScreen) {
@@ -115,27 +124,11 @@ public class DiscordPlaceholder {
                     return "Viewing notebot help";
                 } else if (mc.currentScreen instanceof ProxiesScreen) {
                     return "Editing proxies";
-                } else if (mc.currentScreen instanceof DisconnectedScreen) {
-                    if (DiscordPresenceTab.serverVisibility.get()) {
-                        return "Got disconnected from " + LastServerInfo.getLastServer().address;
-                    } else {
-                        return "Got disconnected from a server";
-                    }
-                }  else if (mc.currentScreen instanceof GameMenuScreen) {
-                    return "Game paused on " + Utils.getNakedActivity();
-                }  else if (mc.currentScreen instanceof PeekScreen) {
-                    return "Using .peek on " + Utils.getNakedActivity();
-                } else if (mc.currentScreen instanceof ConnectScreen) {
-                    if (DiscordPresenceTab.serverVisibility.get()) {
-                        return "Connecting to " + Utils.getNakedActivity();
-                    } else {
-                        return "Connecting to a server";
-                    }
                 } else {
-                    if (mc.world == null) {
-                        return "In " + mc.currentScreen.getTitle().toString();
-                    } else {
+                    if (!(mc.world == null)) {
                         return Utils.getActivity();
+                    } else {
+                        return "In " + mc.currentScreen.getTitle().toString();
                     }
                 }
             case "%version%":      return MatHaxClientLegacy.clientVersionWithV;

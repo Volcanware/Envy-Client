@@ -211,7 +211,7 @@ public class ConfigTab extends Tab {
     private static boolean isUsedKey() {
         if (!Config.get().openChatOnPrefix) return false;
 
-        String prefixKeybindTranslation = String.format("key.keyboard.%s",  Config.get().prefix.toLowerCase().substring(0,1));
+        String prefixKeybindTranslation = String.format("key.keyboard.%s",  Config.get().prefix.toLowerCase().charAt(0));
         for (KeyBinding key: mc.options.keysAll) {
             if (key.getBoundKeyTranslationKey().equals(prefixKeybindTranslation)) return true;
         }

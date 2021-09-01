@@ -1,12 +1,7 @@
 package mathax.client.legacy.systems.modules.combat;
 
-import mathax.client.legacy.bus.EventHandler;
-import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
-import mathax.client.legacy.systems.modules.Modules;
-import mathax.client.legacy.utils.player.ChatUtils;
-import net.minecraft.util.Formatting;
 
 public class BedAuraPlus extends Module {
 

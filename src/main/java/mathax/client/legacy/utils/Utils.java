@@ -155,7 +155,7 @@ public class Utils {
         if (hasItems(itemStack) || itemStack.getItem() == Items.ENDER_CHEST) {
             Utils.getItemsInContainerItem(itemStack, contents);
             if (pause) MatHaxClientLegacy.screenToOpen = new PeekScreen(itemStack, contents);
-            else mc.openScreen(new PeekScreen(itemStack, contents));
+            else mc.setScreen(new PeekScreen(itemStack, contents));
             return true;
         }
 
@@ -171,7 +171,7 @@ public class Utils {
         }
 
         Arrays.fill(items, ItemStack.EMPTY);
-        NbtCompound nbt = itemStack.getTag();
+        NbtCompound nbt = itemStack.getNbt();
 
         if (nbt != null && nbt.contains("BlockEntityTag")) {
             NbtCompound nbt2 = nbt.getCompound("BlockEntityTag");
@@ -197,7 +197,7 @@ public class Utils {
     }
 
     public static boolean hasItems(ItemStack itemStack) {
-        NbtCompound compoundTag = itemStack.getSubTag("BlockEntityTag");
+        NbtCompound compoundTag = itemStack.getSubNbt("BlockEntityTag");
         return compoundTag != null && compoundTag.contains("Items", 9);
     }
 
@@ -293,16 +293,6 @@ public class Utils {
     }
 
     public static String getActivity() {
-        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Could not get server/world";
-
-        if (mc.isInSingleplayer()) {
-            // Singleplayer
-            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
-            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) {
-                folder = folder.getParentFile();
-            }
-            return "Playing singleplayer (" + folder.getName() + ")";
-        }
 
         if (mc.getCurrentServerEntry() != null) {
             // Multiplayer
@@ -317,11 +307,8 @@ public class Utils {
             }
         }
 
-        return "";
-    }
-
-    public static String getNakedActivity() {
-        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Unknown";
+        if ((mc.getServer()) == null) return "Could not get server/world";
+        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Could not get server/world";
 
         if (mc.isInSingleplayer()) {
             // Singleplayer
@@ -329,8 +316,13 @@ public class Utils {
             if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) {
                 folder = folder.getParentFile();
             }
-            return "singleplayer (" + folder.getName() + ")";
+            return "Playing singleplayer (" + folder.getName() + ")";
         }
+
+        return "Could not get server/world";
+    }
+
+    public static String getNakedActivity() {
 
         if (mc.getCurrentServerEntry() != null) {
             // Multiplayer
@@ -345,7 +337,19 @@ public class Utils {
             }
         }
 
-        return "";
+        if ((mc.getServer()) == null) return "Unknown";
+        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Unknown";
+
+        if (mc.isInSingleplayer()) {
+            // Singleplayer
+            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
+            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) {
+                folder = folder.getParentFile();
+            }
+            return "singleplayer (" + folder.getName() + ")";
+        }
+
+        return "Unknown";
     }
 
     public static String getDiscordPlayerHealth() {
@@ -530,7 +534,7 @@ public class Utils {
     }
 
     public static void addEnchantment(ItemStack itemStack, Enchantment enchantment, int level) {
-        NbtCompound tag = itemStack.getOrCreateTag();
+        NbtCompound tag = itemStack.getOrCreateNbt();
         NbtList listTag;
 
         // Get list tag

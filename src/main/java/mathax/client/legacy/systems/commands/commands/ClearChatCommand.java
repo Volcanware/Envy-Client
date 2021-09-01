@@ -2,7 +2,6 @@ package mathax.client.legacy.systems.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.client.legacy.systems.commands.Command;
-import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.utils.player.ChatUtils;
 import net.minecraft.command.CommandSource;
 

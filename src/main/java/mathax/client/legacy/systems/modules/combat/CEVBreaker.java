@@ -16,7 +16,6 @@ import mathax.client.legacy.utils.entity.TargetUtils;
 import mathax.client.legacy.utils.player.*;
 import mathax.client.legacy.utils.world.BlockUtils;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
@@ -92,7 +91,7 @@ public class CEVBreaker extends Module {
                                 n = EnhancedInvUtils.findItemInHotbar(Items.DIAMOND_PICKAXE);
                             }
                             if (n == -1) {
-                                ChatUtils.error("Head Crystal", "Can't find any pickaxe in hotbar, disabling...", new Object[0]);
+                                ChatUtils.error("Head Crystal", "Can't find any pickaxe in hotbar, disabling...");
                                 toggle();
                             } else {
                                 if (mc.world.getBlockState(blockPos1).getBlock() != Blocks.OBSIDIAN) {
@@ -146,7 +145,7 @@ public class CEVBreaker extends Module {
         }
         int n = EnhancedInvUtils.findItemInHotbar(Items.END_CRYSTAL);
         if (n == -1) {
-            ChatUtils.error("Head Crystal", "Can't find crystals in your hotbar, disabling...", new Object[0]);
+            ChatUtils.error("Head Crystal", "Can't find crystals in your hotbar, disabling...");
             toggle();
             return false;
         }

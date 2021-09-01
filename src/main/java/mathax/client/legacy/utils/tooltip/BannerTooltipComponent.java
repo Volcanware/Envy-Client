@@ -14,6 +14,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
 
+import static mathax.client.legacy.utils.Utils.mc;
+
 public class BannerTooltipComponent implements MatHaxTooltipData, TooltipComponent {
     private final ItemStack banner;
     private final ModelPart bannerField;

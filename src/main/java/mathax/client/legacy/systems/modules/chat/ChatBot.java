@@ -87,6 +87,7 @@ public class ChatBot extends Module {
         }
 
         if (!toSendMsg.equals("")) {
+            if (msg.contains("whispers")) return;
             sendMessage(toSendMsg);
         }
     }

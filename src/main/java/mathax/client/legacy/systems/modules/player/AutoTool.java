@@ -9,6 +9,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.player.InvUtils;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.bus.EventPriority;
+import mathax.client.legacy.utils.world.BlockUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -16,6 +17,8 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShearsItem;
 import net.minecraft.item.ToolItem;
+
+import java.util.function.Predicate;
 
 public class AutoTool extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -96,7 +99,7 @@ public class AutoTool extends Module {
     private void onStartBreakingBlock(StartBreakingBlockEvent event) {
         // Get blockState
         BlockState blockState = mc.world.getBlockState(event.blockPos);
-        if (blockState.getHardness(mc.world, event.blockPos) < 0 || blockState.isAir()) return;
+        if (!BlockUtils.canBreak(event.blockPos, blockState)) return;
 
         // Check if we should switch to a better tool
         ItemStack currentStack = mc.player.getMainHandStack();
@@ -105,7 +108,7 @@ public class AutoTool extends Module {
         bestSlot = -1;
 
         for (int i = 0; i < 9; i++) {
-            double score = getScore(mc.player.getInventory().getStack(i), blockState);
+            double score = getScore(mc.player.getInventory().getStack(i), blockState, silkTouchForEnderChest.get(), prefer.get(), itemStack -> !shouldStopUsing(itemStack));
             if (score < 0) continue;
 
             if (score > bestScore) {
@@ -114,10 +117,10 @@ public class AutoTool extends Module {
             }
         }
 
-        if ((bestSlot != -1 && (bestScore > getScore(currentStack, blockState)) || shouldStopUsing(currentStack) || !isTool(currentStack))) {
+        if ((bestSlot != -1 && (bestScore > getScore(currentStack, blockState, silkTouchForEnderChest.get(), prefer.get(), itemStack -> !shouldStopUsing(itemStack))) || shouldStopUsing(currentStack) || !isTool(currentStack))) {
             ticks = switchDelay.get();
 
-            if (ticks == 0) InvUtils.swapBack();
+            if (ticks == 0) InvUtils.swap(bestSlot, true);
             else shouldSwitch = true;
         }
 
@@ -130,10 +133,14 @@ public class AutoTool extends Module {
         }
     }
 
-    private double getScore(ItemStack itemStack, BlockState state) {
-        if (shouldStopUsing(itemStack) || !isTool(itemStack)) return -1;
+    private boolean shouldStopUsing(ItemStack itemStack) {
+        return antiBreak.get() && itemStack.getMaxDamage() - itemStack.getDamage() < breakDurability.get();
+    }
 
-        if (silkTouchForEnderChest.get()
+    public static double getScore(ItemStack itemStack, BlockState state, boolean silkTouchEnderChest, EnchantPreference enchantPreference, Predicate<ItemStack> good) {
+        if (!good.test(itemStack) || !isTool(itemStack)) return -1;
+
+        if (silkTouchEnderChest
             && state.getBlock() == Blocks.ENDER_CHEST
             && EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, itemStack) == 0) {
             return -1;
@@ -146,17 +153,13 @@ public class AutoTool extends Module {
         score += EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, itemStack);
         score += EnchantmentHelper.getLevel(Enchantments.MENDING, itemStack);
 
-        if (prefer.get() == EnchantPreference.Fortune) score += EnchantmentHelper.getLevel(Enchantments.FORTUNE, itemStack);
-        if (prefer.get() == EnchantPreference.SilkTouch) score += EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, itemStack);
+        if (enchantPreference == EnchantPreference.Fortune) score += EnchantmentHelper.getLevel(Enchantments.FORTUNE, itemStack);
+        if (enchantPreference == EnchantPreference.SilkTouch) score += EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, itemStack);
 
         return score;
     }
 
-    private boolean shouldStopUsing(ItemStack itemStack) {
-        return antiBreak.get() && itemStack.getMaxDamage() - itemStack.getDamage() < breakDurability.get();
-    }
-
-    private boolean isTool(ItemStack itemStack) {
+    public static boolean isTool(ItemStack itemStack) {
         return itemStack.getItem() instanceof ToolItem || itemStack.getItem() instanceof ShearsItem;
     }
 

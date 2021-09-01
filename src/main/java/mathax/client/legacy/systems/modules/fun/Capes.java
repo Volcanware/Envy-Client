@@ -1,7 +1,6 @@
 package mathax.client.legacy.systems.modules.fun;
 
 import mathax.client.legacy.bus.EventHandler;
-import mathax.client.legacy.bus.EventPriority;
 import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.gui.GuiTheme;
 import mathax.client.legacy.gui.widgets.WWidget;
@@ -12,8 +11,6 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
-import mathax.client.legacy.systems.modules.movement.AutoWalk;
-import mathax.client.legacy.utils.entity.fakeplayer.FakePlayerManager;
 
 public class Capes extends Module {
     private int timer = 0;

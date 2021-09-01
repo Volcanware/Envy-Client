@@ -6,7 +6,7 @@ import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.movement.Anchor;
 import mathax.client.legacy.systems.modules.movement.speed.SpeedMode;
 import mathax.client.legacy.systems.modules.movement.speed.SpeedModes;
-import mathax.client.legacy.utils.misc.Vector2;
+import mathax.client.legacy.utils.misc.Vec2;
 import mathax.client.legacy.utils.player.PlayerUtils;
 
 public class Strafe extends SpeedMode {
@@ -51,7 +51,7 @@ public class Strafe extends SpeedMode {
             speed = Math.min(speed, System.currentTimeMillis() - timer > 1250L ? 0.44D : 0.43D);
         }
 
-        Vector2 change = transformStrafe(speed);
+        Vec2 change = transformStrafe(speed);
 
         double velX = change.x;
         double velZ = change.y;
@@ -65,14 +65,14 @@ public class Strafe extends SpeedMode {
         ((IVec3d) event.movement).setXZ(velX, velZ);
     }
 
-    private Vector2 transformStrafe(double speed) {
+    private Vec2 transformStrafe(double speed) {
         float forward = mc.player.input.movementForward;
         float side = mc.player.input.movementSideways;
         float yaw = mc.player.prevYaw + (mc.player.getYaw() - mc.player.prevYaw) * mc.getTickDelta();
 
         double velX, velZ;
 
-        if (forward == 0.0f && side == 0.0f) return new Vector2(0, 0);
+        if (forward == 0.0f && side == 0.0f) return new Vec2(0, 0);
 
         else if (forward != 0.0f) {
             if (side >= 1.0f) {
@@ -96,7 +96,7 @@ public class Strafe extends SpeedMode {
         velX = (double) forward * speed * mx + (double) side * speed * mz;
         velZ = (double) forward * speed * mz - (double) side * speed * mx;
 
-        return new Vector2(velX, velZ);
+        return new Vec2(velX, velZ);
     }
 
     @Override

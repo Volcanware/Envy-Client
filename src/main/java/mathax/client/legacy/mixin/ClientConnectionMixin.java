@@ -6,9 +6,14 @@ import mathax.client.legacy.events.packets.PacketEvent;
 import mathax.client.legacy.events.world.ConnectToServerEvent;
 import mathax.client.legacy.systems.modules.misc.AntiPacketKick;
 import mathax.client.legacy.systems.modules.Modules;
+import mathax.client.legacy.systems.modules.world.HighwayBuilder;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.PacketListener;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,6 +28,16 @@ public class ClientConnectionMixin {
     @Inject(method = "handlePacket", at = @At("HEAD"), cancellable = true)
     private static <T extends PacketListener> void onHandlePacket(Packet<T> packet, PacketListener listener, CallbackInfo info) {
         if (MatHaxClientLegacy.EVENT_BUS.post(PacketEvent.Receive.get(packet)).isCancelled()) info.cancel();
+    }
+
+    @Inject(method = "disconnect", at = @At("HEAD"))
+    private void disconnect(Text disconnectReason, CallbackInfo ci) {
+        if (Modules.get().get(HighwayBuilder.class).isActive()) {
+            MutableText text = new LiteralText(String.format("\n\n%s[%sHighway Builder%s] Statistics:", Formatting.GRAY, Formatting.BLUE, Formatting.GRAY)).append("\n");
+            text.append(Modules.get().get(HighwayBuilder.class).getStatsText());
+
+            ((MutableText) disconnectReason).append(text);
+        }
     }
 
     @Inject(method = "connect", at = @At("HEAD"))

@@ -3,7 +3,6 @@ package mathax.client.legacy.utils.player;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.utils.Utils;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.SlotActionType;
@@ -123,7 +122,7 @@ public class EnhancedInvUtils {
             return;
         }
         if (!mc.player.getInventory().isEmpty() && mc.currentScreen == null && mc.player.getInventory().size() == 46) {
-            int n = findItemWithCount((Item) mc.player.getMainHandStack().getItem()).slot;
+            int n = findItemWithCount(mc.player.getMainHandStack().getItem()).slot;
             if (n == -1) {
                 n = mc.player.getInventory().selectedSlot;
             }
@@ -140,7 +139,7 @@ public class EnhancedInvUtils {
     }
 
     public static void clickSlot(int n, int n2, SlotActionType slotActionType) {
-        mc.interactionManager.clickSlot(mc.player.getInventory().selectedSlot, n, n2, slotActionType, (PlayerEntity) mc.player);
+        mc.interactionManager.clickSlot(mc.player.getInventory().selectedSlot, n, n2, slotActionType, mc.player);
     }
 
     private static int unpackLongPrio(long l) {

@@ -1,7 +1,6 @@
 package mathax.client.legacy.utils.player;
 
 import mathax.client.legacy.MatHaxClientLegacy;
-import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.RainbowColor;
 import mathax.client.legacy.utils.render.color.RainbowColors;
 import mathax.client.legacy.mixin.ChatHudAccessor;

@@ -9,7 +9,6 @@ import mathax.client.legacy.systems.modules.movement.NoSlow;
 import mathax.client.legacy.systems.modules.movement.Velocity;
 import mathax.client.legacy.systems.modules.render.ESP;
 import mathax.client.legacy.systems.modules.render.NoRender;
-import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.render.Outlines;
 import mathax.client.legacy.systems.modules.Modules;
 import net.minecraft.block.Block;

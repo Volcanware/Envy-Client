@@ -7,7 +7,6 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
-import mathax.client.legacy.systems.modules.combat.Offhand;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.player.InvUtils;

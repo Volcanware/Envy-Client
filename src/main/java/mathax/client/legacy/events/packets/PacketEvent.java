@@ -1,6 +1,5 @@
 package mathax.client.legacy.events.packets;
 
-import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.events.Cancellable;
 import net.minecraft.network.Packet;
 

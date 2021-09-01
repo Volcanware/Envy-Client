@@ -12,6 +12,7 @@ import mathax.client.legacy.systems.modules.player.Reach;
 import mathax.client.legacy.systems.modules.render.Freecam;
 import mathax.client.legacy.systems.modules.render.NoBob;
 import mathax.client.legacy.systems.modules.render.NoRender;
+import mathax.client.legacy.systems.modules.world.HighwayBuilder;
 import mathax.client.legacy.utils.render.NametagUtils;
 import mathax.client.legacy.utils.render.RenderUtils;
 import mathax.client.legacy.systems.modules.Modules;
@@ -42,6 +43,7 @@ public abstract class GameRendererMixin {
 
     @Shadow public abstract void reset();
 
+    @Shadow @Final private Camera camera;
     @Unique private Renderer3D renderer;
 
     @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
@@ -115,48 +117,42 @@ public abstract class GameRendererMixin {
 
     // Freecam
 
-    private boolean freecamSet = false;
+    private final boolean freecamSet = false;
 
     @Inject(method = "updateTargetedEntity", at = @At("INVOKE"), cancellable = true)
     private void updateTargetedEntityInvoke(float tickDelta, CallbackInfo info) {
         Freecam freecam = Modules.get().get(Freecam.class);
+        boolean highwayBuilder = Modules.get().isActive(HighwayBuilder.class);
 
-        if (freecam.isActive() && client.getCameraEntity() != null && !freecamSet) {
+        if ((freecam.isActive() || highwayBuilder) && client.getCameraEntity() != null && !freecamSet) {
             info.cancel();
-            Entity camera = client.getCameraEntity();
+            Entity cameraE = client.getCameraEntity();
 
-            double x = camera.getX();
-            double y = camera.getY();
-            double z = camera.getZ();
-            double prevX = camera.prevX;
-            double prevY = camera.prevY;
-            double prevZ = camera.prevZ;
-            float yaw = camera.getYaw();
-            float pitch = camera.getPitch();
-            float prevYaw = camera.prevYaw;
-            float prevPitch = camera.prevPitch;
+            double x = cameraE.getX();
+            double y = cameraE.getY();
+            double z = cameraE.getZ();
+            double prevX = cameraE.prevX;
+            double prevY = cameraE.prevY;
+            double prevZ = cameraE.prevZ;
+            float yaw = cameraE.getYaw();
+            float pitch = cameraE.getPitch();
+            float prevYaw = cameraE.prevYaw;
+            float prevPitch = cameraE.prevPitch;
 
-            ((IVec3d) camera.getPos()).set(freecam.pos.x, freecam.pos.y - camera.getEyeHeight(camera.getPose()), freecam.pos.z);
-            camera.prevX = freecam.prevPos.x;
-            camera.prevY = freecam.prevPos.y - camera.getEyeHeight(camera.getPose());
-            camera.prevZ = freecam.prevPos.z;
-            camera.setYaw(freecam.yaw);
-            camera.setPitch(freecam.pitch);
-            camera.prevYaw = freecam.prevYaw;
-            camera.prevPitch = freecam.prevPitch;
-
-            freecamSet = true;
-            updateTargetedEntity(tickDelta);
-            freecamSet = false;
-
-            ((IVec3d) camera.getPos()).set(x, y, z);
-            camera.prevX = prevX;
-            camera.prevY = prevY;
-            camera.prevZ = prevZ;
-            camera.setYaw(yaw);
-            camera.setPitch(pitch);
-            camera.prevYaw = prevYaw;
-            camera.prevPitch = prevPitch;
+            if (highwayBuilder) {
+                cameraE.setYaw(camera.getYaw());
+                cameraE.setPitch(camera.getPitch());
+            }
+            else {
+                ((IVec3d) cameraE.getPos()).set(x, y, z);
+                cameraE.prevX = prevX;
+                cameraE.prevY = prevY;
+                cameraE.prevZ = prevZ;
+                cameraE.setYaw(yaw);
+                cameraE.setPitch(pitch);
+                cameraE.prevYaw = prevYaw;
+                cameraE.prevPitch = prevPitch;
+            }
         }
     }
 

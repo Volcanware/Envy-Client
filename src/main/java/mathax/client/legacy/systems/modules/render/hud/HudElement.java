@@ -4,7 +4,6 @@ import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.gui.screens.HudElementScreen;
 import mathax.client.legacy.gui.tabs.builtin.HudTab;
 import mathax.client.legacy.settings.Settings;
-import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.misc.ISerializable;
 import net.minecraft.client.MinecraftClient;

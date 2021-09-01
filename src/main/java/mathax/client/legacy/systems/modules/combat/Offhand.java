@@ -41,13 +41,6 @@ public class Offhand extends Module {
         .build()
     );
 
-    /*private final Setting<Boolean> crystalGap = sgGeneral.add(new BoolSetting.Builder()
-        .name("crystal-gap")
-        .description("Holds an Enchanted Golden Apple when you are holding a crystal.")
-        .defaultValue(true)
-        .build()
-    );*/
-
     private final Setting<Boolean> swordGap = sgGeneral.add(new BoolSetting.Builder()
         .name("sword-gap")
         .description("Holds an Enchanted Golden Apple when you are holding a sword.")
@@ -88,14 +81,11 @@ public class Offhand extends Module {
     private void onTick(TickEvent.Pre event) {
         AutoTotem autoTotem = Modules.get().get(AutoTotem.class);
 
-        // Crystal Gap
-        /*if (mc.player.getItemsHand().equals(Item.Crystal) && crystalGap.get()) currentItem = Item.EGap;*/
-
         // Sword Gap
         if ((mc.player.getMainHandStack().getItem() instanceof SwordItem
             || mc.player.getMainHandStack().getItem() instanceof AxeItem) && swordGap.get()) currentItem = Item.EGap;
 
-        // Ca and mining
+            // Ca and mining
         else if ((Modules.get().isActive(CrystalAura.class) && crystalCa.get())
             || mc.interactionManager.isBreakingBlock() && crystalMine.get()) currentItem = Item.Crystal;
 
@@ -156,6 +146,8 @@ public class Offhand extends Module {
         EGap(Items.ENCHANTED_GOLDEN_APPLE),
         Gap(Items.GOLDEN_APPLE),
         Crystal(Items.END_CRYSTAL),
+        //TODO: All types
+        Bed(Items.RED_BED),
         Shield(Items.SHIELD);
 
         net.minecraft.item.Item item;

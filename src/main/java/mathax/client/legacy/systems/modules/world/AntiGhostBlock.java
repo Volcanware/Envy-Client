@@ -11,7 +11,6 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
-import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +22,7 @@ import java.util.List;
 
 public class AntiGhostBlock extends Module {
     private long lastRequest;
-    private boolean lock;
+    private final boolean lock;
     private final HashMap<BlockPos, Long> blocks;
 
     SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -50,7 +49,7 @@ public class AntiGhostBlock extends Module {
 
     private void lambda$onTick$0(List list, long l, BlockPos blockPos, Long l2) {
         if (list.isEmpty() && l - l2 >= (long)requestDelay.get().intValue()) {
-            mc.getNetworkHandler().sendPacket((Packet<?>) new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, Direction.UP));
+            mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, Direction.UP));
             list.add(blockPos.asLong());
             lastRequest = l;
         }

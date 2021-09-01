@@ -10,8 +10,8 @@ public class PlayerMoveC2SPacketMixin implements IPlayerMoveC2SPacket {
     @Unique private int tag;
 
     @Override
-    public void setTag(int tag) { this.tag = tag; }
+    public void setNbt(int tag) { this.tag = tag; }
 
     @Override
-    public int getTag() { return this.tag; }
+    public int getNbt() { return this.tag; }
 }

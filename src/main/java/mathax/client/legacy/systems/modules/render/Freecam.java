@@ -14,7 +14,6 @@ import mathax.client.legacy.utils.misc.input.Input;
 import mathax.client.legacy.utils.misc.input.KeyAction;
 import mathax.client.legacy.utils.player.Rotations;
 import mathax.client.legacy.bus.EventHandler;
-import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;

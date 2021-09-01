@@ -24,7 +24,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.Formatting;
@@ -210,7 +209,7 @@ public class InstaAutoCity extends Module {
                 return;
             }
             if (support.get()) {
-                int n2 = InvUtils.findInHotbar((Item[]) new Item[]{Items.OBSIDIAN}).getSlot();
+                int n2 = InvUtils.findInHotbar(new Item[]{Items.OBSIDIAN}).getSlot();
                 BlockPos blockPos = mineTarget.down(1);
                 if (!BlockUtils.canPlace(blockPos) && mc.world.getBlockState(blockPos).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK && chatInfo.get()) {
                     ChatUtils.info("Insta Auto City", "Couldn't place support block, mining anyway.");

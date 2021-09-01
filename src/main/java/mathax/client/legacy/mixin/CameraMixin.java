@@ -1,8 +1,11 @@
 package mathax.client.legacy.mixin;
 
+import mathax.client.legacy.mixininterface.ICamera;
 import mathax.client.legacy.systems.modules.render.CameraTweaks;
 import mathax.client.legacy.systems.modules.render.FreeLook;
 import mathax.client.legacy.systems.modules.render.Freecam;
+import mathax.client.legacy.systems.modules.world.HighwayBuilder;
+import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.systems.modules.Modules;
 import net.minecraft.client.render.Camera;
 import net.minecraft.entity.Entity;
@@ -18,10 +21,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(Camera.class)
-public abstract class CameraMixin {
+public abstract class CameraMixin implements ICamera {
     @Shadow private boolean thirdPerson;
 
     @Shadow protected abstract double clipToSpace(double desiredCameraDistance);
+
+    @Shadow private float yaw;
+    @Shadow private float pitch;
+
+    @Shadow protected abstract void setRotation(float yaw, float pitch);
 
     @Unique private float tickDelta;
 
@@ -70,9 +78,18 @@ public abstract class CameraMixin {
             args.set(1, (float) freecam.getPitch(tickDelta));
         }
 
-        if (freeLook.isActive()) {
+        else if (Modules.get().isActive(HighwayBuilder.class)) {
+            args.set(0, yaw);
+            args.set(1, pitch);
+        }
+        else if (freeLook.isActive()) {
             args.set(0, freeLook.cameraYaw);
             args.set(1, freeLook.cameraPitch);
         }
+    }
+
+    @Override
+    public void setRot(double yaw, double pitch) {
+        setRotation((float) yaw, (float) Utils.clamp(pitch, -90, 90));
     }
 }

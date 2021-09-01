@@ -56,11 +56,11 @@ import java.lang.invoke.MethodHandles;
 
 import static mathax.client.legacy.utils.Utils.mc;
 
-/*/
- * THIS CLIENT IS AN RECODED VERSION OF METEOR CLIENT BY MINEGAME159 & SEASNAIL
- * https://meteorclient.com
- * https://github.com/MeteorDevelopment/meteor-client
-/*/
+/*/                                                                              /*/
+/*/ THIS CLIENT IS AN RECODED VERSION OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/
+/*/ https://meteorclient.com                                                     /*/
+/*/ https://github.com/MeteorDevelopment/meteor-client                           /*/
+/*/                                                                              /*/
 
 public class MatHaxClientLegacy implements ClientModInitializer {
     public static MatHaxClientLegacy INSTANCE;
@@ -84,7 +84,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
 
     public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 2;
+    public static Integer devBuildNumber = 11;
 
     public static String devBuild() {
         if (devBuildNumber == 0) {
@@ -106,7 +106,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
         LOG.info(logprefix + "Initializing MatHax Client Legacy " + clientVersionWithV + "...");
         Utils.mc = MinecraftClient.getInstance();
-        mc.execute(this::updateImage);
+        mc.execute(this::setIcon);
         mc.execute(this::titleLoading);
         EVENT_BUS.registerLambdaFactory("mathax.client.legacy", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
@@ -180,7 +180,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         LOG.info(logprefix + "MatHax Client Legacy " + clientVersionWithV + " initialized!");
     }
 
-    public void updateImage() {
+    public void setIcon() {
         final Window window = MinecraftClient.getInstance().getWindow();
         window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon128.png"));
     }
@@ -201,7 +201,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     }
 
     private void openClickGui() {
-        Tabs.get().get(0).openScreen(GuiThemes.get());
+        Tabs.get().get(0).OpenScreen(GuiThemes.get());
     }
 
     public static String getMinecraftVersion(){
@@ -210,8 +210,6 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
     @EventHandler
     private void onGameJoined(GameJoinedEvent event) {
-        //TODO: Unwated servers.
-
         Utils.didntCheckForLatestVersion = true;
     }
 
@@ -226,7 +224,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         Capes.tick();
 
         if (screenToOpen != null && mc.currentScreen == null) {
-            mc.openScreen(screenToOpen);
+            mc.setScreen(screenToOpen);
             screenToOpen = null;
         }
 
@@ -249,7 +247,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         if (!Config.get().openChatOnPrefix) return;
 
         if (event.c == Config.get().prefix.charAt(0)) {
-            mc.openScreen(new ChatScreen(Config.get().prefix));
+            mc.setScreen(new ChatScreen(Config.get().prefix));
             event.cancel();
         }
     }

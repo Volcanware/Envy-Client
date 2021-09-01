@@ -5,9 +5,9 @@ import mathax.client.legacy.utils.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 
-import java.util.Deque;
 import java.util.function.Predicate;
 
 import static mathax.client.legacy.utils.Utils.mc;
@@ -125,6 +125,10 @@ public class InvUtils {
         ACTION.type = SlotActionType.THROW;
         ACTION.data = 1;
         return ACTION;
+    }
+
+    public static void dropHand() {
+        if (!mc.player.currentScreenHandler.getCursorStack().isEmpty()) mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, ScreenHandler.EMPTY_SPACE_SLOT_INDEX, 0, SlotActionType.PICKUP, mc.player);
     }
 
     public static class Action {

@@ -1,6 +1,5 @@
 package mathax.client.legacy.gui.tabs;
 
-import mathax.client.legacy.gui.tabs.builtin.EnemiesTab;
 import mathax.client.legacy.gui.tabs.builtin.*;
 
 import java.util.ArrayList;

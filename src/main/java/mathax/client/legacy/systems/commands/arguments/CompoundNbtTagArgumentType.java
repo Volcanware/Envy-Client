@@ -45,7 +45,7 @@ public class CompoundNbtTagArgumentType implements ArgumentType<NbtCompound> {
         );
     }
 
-    public static NbtCompound getTag(final CommandContext<?> context, String name) {
+    public static NbtCompound getNbt(final CommandContext<?> context, String name) {
         return context.getArgument(name, NbtCompound.class);
     }
 

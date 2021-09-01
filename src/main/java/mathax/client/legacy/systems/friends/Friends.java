@@ -2,8 +2,6 @@ package mathax.client.legacy.systems.friends;
 
 import mathax.client.legacy.systems.System;
 import mathax.client.legacy.systems.Systems;
-import mathax.client.legacy.systems.enemies.Enemies;
-import mathax.client.legacy.systems.enemies.Enemy;
 import mathax.client.legacy.utils.misc.NbtUtils;
 import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.render.color.RainbowColors;

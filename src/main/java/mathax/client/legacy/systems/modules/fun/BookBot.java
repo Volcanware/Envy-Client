@@ -11,7 +11,6 @@ import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.mixin.TextHandlerAccessor;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Module;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.player.FindItemResult;
 import mathax.client.legacy.utils.player.InvUtils;
 import mathax.client.legacy.systems.modules.Categories;
@@ -36,6 +35,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.PrimitiveIterator;
 import java.util.Random;
 
@@ -52,7 +52,7 @@ public class BookBot extends Module {
     private final Setting<String> name = sgGeneral.add(new StringSetting.Builder()
         .name("name")
         .description("The name you want to give your books.")
-        .defaultValue("MatHax on top!")
+        .defaultValue("Meteor on Crack!")
         .build()
     );
 
@@ -97,7 +97,7 @@ public class BookBot extends Module {
     private Random random;
 
     public BookBot() {
-        super(Categories.Fun, "book-bot", "Automatically writes in books.");
+        super(Categories.Misc, "book-bot", "Automatically writes in books.");
 
         if (!file.exists()) {
             file = null;
@@ -188,8 +188,8 @@ public class BookBot extends Module {
             writeBook(
                 // Generate a random load of ints to use as random characters
                 random.ints(origin, bound)
-                .filter(i -> !Character.isWhitespace(i) && i != '\r' && i != '\n')
-                .iterator()
+                    .filter(i -> !Character.isWhitespace(i) && i != '\r' && i != '\n')
+                    .iterator()
             );
         } else if (mode.get() == Mode.File) {
             // Ignore if somehow the file got deleted
@@ -204,9 +204,9 @@ public class BookBot extends Module {
                 MutableText message = new LiteralText("");
                 message.append(new LiteralText("The bookbot file is empty! ").formatted(Formatting.RED));
                 message.append(new LiteralText("Click here to edit it.")
-                .setStyle(Style.EMPTY
-                    .withFormatting(Formatting.UNDERLINE, Formatting.RED)
-                    .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath()))
+                    .setStyle(Style.EMPTY
+                        .withFormatting(Formatting.UNDERLINE, Formatting.RED)
+                        .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath()))
                     )
                 );
                 info(message);
@@ -228,16 +228,15 @@ public class BookBot extends Module {
                 // Write the file string to a book
                 writeBook(file.toString().chars().iterator());
             } catch (IOException ignored) {
-                ChatUtils.error("Book Bot", "Failed to read the file.");
+                error("Failed to read the file.");
             }
         }
     }
 
     private void writeBook(PrimitiveIterator.OfInt chars) {
-        NbtList pageList = new NbtList();
-        ArrayList<String> pagesList = new ArrayList<>();
+        ArrayList<String> pages = new ArrayList<>();
 
-        for (int pageI = 0; pageI < (mode.get() == Mode.File ? 100 : pages.get()); pageI++) {
+        for (int pageI = 0; pageI < (mode.get() == Mode.File ? 100 : this.pages.get()); pageI++) {
             // Check if the stream is empty before creating a new page
             if (!chars.hasNext()) break;
 
@@ -257,7 +256,7 @@ public class BookBot extends Module {
                     // Get the next character
                     int nextChar = chars.nextInt();
 
-                    // Ingore newline chars when writing lines, should already be organised
+                    // Ignore newline chars when writing lines, should already be organised
                     if (nextChar == '\r' || nextChar == '\n') break;
 
                     // Make sure the character will fit on the line
@@ -273,20 +272,25 @@ public class BookBot extends Module {
                 page.append(line).append('\n');
             }
 
-            pagesList.add(page.toString());
-            // Add the page to the pages nbt tag
-            pageList.addElement(pageI, NbtString.of(page.toString()));
+            // Append page to the page list
+            pages.add(page.toString());
         }
 
         // Get the title with count
         String title = name.get();
         if (count.get() && bookCount != 0) title += " #" + bookCount;
 
-        // Write the pages to the book and sign it
-        mc.player.getMainHandStack().putSubTag("title", NbtString.of(title));
-        mc.player.getMainHandStack().putSubTag("author", NbtString.of(mc.player.getGameProfile().getName()));
-        mc.player.getMainHandStack().putSubTag("pages", pageList);
-        mc.player.networkHandler.sendPacket(new BookUpdateC2SPacket(mc.player.getInventory().selectedSlot, pagesList, java.util.Optional.of(title)));
+        // Write data to book
+        mc.player.getMainHandStack().setSubNbt("title", NbtString.of(title));
+        mc.player.getMainHandStack().setSubNbt("author", NbtString.of(mc.player.getGameProfile().getName()));
+
+        // Write pages NBT
+        NbtList pageNbt = new NbtList();
+        pages.stream().map(NbtString::of).forEach(pageNbt::add);
+        if (!pages.isEmpty()) mc.player.getMainHandStack().setSubNbt("pages", pageNbt);
+
+        // Send book update to server
+        mc.player.networkHandler.sendPacket(new BookUpdateC2SPacket(mc.player.getInventory().selectedSlot, pages, Optional.of(title)));
 
         bookCount++;
     }

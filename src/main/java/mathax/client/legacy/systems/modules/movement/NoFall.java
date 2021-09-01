@@ -81,7 +81,7 @@ public class NoFall extends Module {
         if (mc.player.getAbilities().creativeMode
             || !(event.packet instanceof PlayerMoveC2SPacket)
             || mode.get() != Mode.Packet
-            || ((IPlayerMoveC2SPacket) event.packet).getTag() == 1337) return;
+            || ((IPlayerMoveC2SPacket) event.packet).getNbt() == 1337) return;
 
 
         if ((mc.player.isFallFlying() || Modules.get().isActive(Flight.class)) && mc.player.getVelocity().y < 1) {

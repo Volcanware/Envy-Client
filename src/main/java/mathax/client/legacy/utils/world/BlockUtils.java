@@ -87,7 +87,6 @@ public class BlockUtils {
 
         if (rotate) {
             Rotations.rotate(Rotations.getYaw(hitPos), Rotations.getPitch(hitPos), rotationPriority, () -> {
-                int prevSlot = Utils.mc.player.getInventory().selectedSlot;
                 InvUtils.swap(slot, swapBack);
 
                 place(new BlockHitResult(hitPos, s, neighbour, false), hand, swingHand);
@@ -95,7 +94,6 @@ public class BlockUtils {
                 if (swapBack) InvUtils.swapBack();
             });
         } else {
-            int prevSlot = Utils.mc.player.getInventory().selectedSlot;
             InvUtils.swap(slot, swapBack);
 
             place(new BlockHitResult(hitPos, s, neighbour, false), hand, swingHand);
@@ -108,17 +106,17 @@ public class BlockUtils {
     }
 
     private static void place(BlockHitResult blockHitResult, Hand hand, boolean swing) {
-        boolean wasSneaking = Utils.mc.player.input.sneaking;
-        Utils.mc.player.input.sneaking = false;
+        boolean wasSneaking = mc.player.input.sneaking;
+        mc.player.input.sneaking = false;
 
-        ActionResult result = Utils.mc.interactionManager.interactBlock(Utils.mc.player, Utils.mc.world, hand, blockHitResult);
+        ActionResult result = mc.interactionManager.interactBlock(mc.player, mc.world, hand, blockHitResult);
 
         if (result.shouldSwingHand()) {
-            if (swing) Utils.mc.player.swingHand(hand);
-            else Utils.mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(hand));
+            if (swing) mc.player.swingHand(hand);
+            else mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(hand));
         }
 
-        Utils.mc.player.input.sneaking = wasSneaking;
+        mc.player.input.sneaking = wasSneaking;
     }
 
     public static boolean canPlace(BlockPos blockPos, boolean checkEntities) {
@@ -128,10 +126,10 @@ public class BlockUtils {
         if (!World.isValid(blockPos)) return false;
 
         // Check if current block is replaceable
-        if (!Utils.mc.world.getBlockState(blockPos).getMaterial().isReplaceable()) return false;
+        if (!mc.world.getBlockState(blockPos).getMaterial().isReplaceable()) return false;
 
         // Check if intersects entities
-        return !checkEntities || Utils.mc.world.canPlace(Blocks.STONE.getDefaultState(), blockPos, ShapeContext.absent());
+        return !checkEntities || mc.world.canPlace(mc.world.getBlockState(blockPos), blockPos, ShapeContext.absent());
     }
 
     public static boolean canPlace(BlockPos blockPos) {
@@ -143,7 +141,7 @@ public class BlockUtils {
             BlockPos neighbor = blockPos.offset(side);
             Direction side2 = side.getOpposite();
 
-            BlockState state = Utils.mc.world.getBlockState(neighbor);
+            BlockState state = mc.world.getBlockState(neighbor);
 
             // Check if neighbour isn't empty
             if (state.isAir() || isClickable(state.getBlock())) continue;
@@ -168,12 +166,14 @@ public class BlockUtils {
     private static void onTickPost(TickEvent.Post event) {
         if (!breakingThisTick && breaking) {
             breaking = false;
-            mc.interactionManager.cancelBlockBreaking();
+            if (mc.interactionManager != null) mc.interactionManager.cancelBlockBreaking();
         }
     }
 
     /** Needs to be used in {@link TickEvent.Pre} */
-    public static void breakBlock(BlockPos blockPos, boolean swing) {
+    public static boolean breakBlock(BlockPos blockPos, boolean swing) {
+        if (!canBreak(blockPos, mc.world.getBlockState(blockPos))) return false;
+
         // Creating new instance of block pos because minecraft assigns the parameter to a field and we don't want it to change when it has been stored in a field somewhere
         BlockPos pos = blockPos instanceof BlockPos.Mutable ? new BlockPos(blockPos) : blockPos;
 
@@ -185,6 +185,23 @@ public class BlockUtils {
 
         breaking = true;
         breakingThisTick = true;
+
+        return true;
+    }
+
+    public static boolean canBreak(BlockPos blockPos, BlockState state) {
+        if (!mc.player.isCreative() && state.getHardness(mc.world, blockPos) < 0) return false;
+        return state.getOutlineShape(mc.world, blockPos) != VoxelShapes.empty();
+    }
+    public static boolean canBreak(BlockPos blockPos) {
+        return canBreak(blockPos, mc.world.getBlockState(blockPos));
+    }
+
+    public static boolean canInstaBreak(BlockPos blockPos, BlockState state) {
+        return mc.player.isCreative() || state.calcBlockBreakingDelta(mc.player, mc.world, blockPos) >= 1;
+    }
+    public static boolean canInstaBreak(BlockPos blockPos) {
+        return canInstaBreak(blockPos, mc.world.getBlockState(blockPos));
     }
 
     // Other
@@ -206,13 +223,13 @@ public class BlockUtils {
         if (!(mc.world.getBlockState(blockPos).getBlock() instanceof AirBlock) ||
             mc.world.getBlockState(blockPos.down()).getBlock() == Blocks.BEDROCK) return MobSpawn.Never;
 
-        if (!topSurface(Utils.mc.world.getBlockState(blockPos.down()))) {
-            if (Utils.mc.world.getBlockState(blockPos.down()).getCollisionShape(Utils.mc.world, blockPos.down()) != VoxelShapes.fullCube()) return MobSpawn.Never;
-            if (Utils.mc.world.getBlockState(blockPos.down()).isTranslucent(Utils.mc.world, blockPos.down())) return MobSpawn.Never;
+        if (!topSurface(mc.world.getBlockState(blockPos.down()))) {
+            if (mc.world.getBlockState(blockPos.down()).getCollisionShape(mc.world, blockPos.down()) != VoxelShapes.fullCube()) return MobSpawn.Never;
+            if (mc.world.getBlockState(blockPos.down()).isTranslucent(mc.world, blockPos.down())) return MobSpawn.Never;
         }
 
-        if (Utils.mc.world.getLightLevel(blockPos, 0) <= 7) return MobSpawn.Potential;
-        else if (Utils.mc.world.getLightLevel(LightType.BLOCK, blockPos) <= 7) return MobSpawn.Always;
+        if (mc.world.getLightLevel(blockPos, 0) <= 7) return MobSpawn.Potential;
+        else if (mc.world.getLightLevel(LightType.BLOCK, blockPos) <= 7) return MobSpawn.Always;
 
         return MobSpawn.Never;
     }

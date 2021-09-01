@@ -121,7 +121,7 @@ public class Criticals extends Module {
         double z = mc.player.getZ();
 
         PlayerMoveC2SPacket packet = new PlayerMoveC2SPacket.PositionAndOnGround(x, y + height, z, false);
-        ((IPlayerMoveC2SPacket) packet).setTag(1337);
+        ((IPlayerMoveC2SPacket) packet).setNbt(1337);
 
         mc.player.networkHandler.sendPacket(packet);
     }

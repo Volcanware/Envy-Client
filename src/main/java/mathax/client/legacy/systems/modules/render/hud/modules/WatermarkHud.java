@@ -4,7 +4,6 @@ import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.renderer.GL;
 import mathax.client.legacy.renderer.Renderer2D;
 import mathax.client.legacy.settings.*;
-import mathax.client.legacy.systems.modules.render.hud.BoundingBox;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
 import mathax.client.legacy.systems.modules.render.hud.HudRenderer;
 import mathax.client.legacy.systems.modules.render.hud.TripleTextHudElement;
@@ -79,7 +78,7 @@ public class WatermarkHud extends TripleTextHudElement {
         }
     }
 
-    private Color textureColor = new Color(255, 255, 255, 255);
+    private final Color textureColor = new Color(255, 255, 255, 255);
 
     private void drawBackground(int x, int textWidth, int y) {
         int w = (int) box.width - textWidth;

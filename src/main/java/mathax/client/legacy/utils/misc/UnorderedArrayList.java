@@ -107,8 +107,8 @@ public class UnorderedArrayList<T> extends AbstractList<T> {
 
     public void ensureCapacity(int minCapacity) {
         if (minCapacity > items.length
-                && !(items == DEFAULTCAPACITY_EMPTY_ELEMENTDATA
-                && minCapacity <= DEFAULT_CAPACITY)) {
+            && !(items == DEFAULTCAPACITY_EMPTY_ELEMENTDATA
+            && minCapacity <= DEFAULT_CAPACITY)) {
             modCount++;
             grow(minCapacity);
         }
@@ -130,8 +130,8 @@ public class UnorderedArrayList<T> extends AbstractList<T> {
             return minCapacity;
         }
         return (newCapacity - MAX_ARRAY_SIZE <= 0)
-                ? newCapacity
-                : hugeCapacity(minCapacity);
+            ? newCapacity
+            : hugeCapacity(minCapacity);
     }
 
     private static int hugeCapacity(int minCapacity) {

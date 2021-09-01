@@ -14,18 +14,12 @@ import mathax.client.legacy.gui.widgets.containers.WTable;
 import mathax.client.legacy.gui.widgets.containers.WVerticalList;
 import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.gui.widgets.pressable.WMinus;
-import mathax.client.legacy.renderer.GL;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.bus.EventHandler;
-import net.minecraft.SharedConstants;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.toast.Toast;
-import net.minecraft.client.toast.ToastManager;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
 
 import java.io.*;
@@ -178,7 +172,7 @@ public class StashFinder extends Module {
             table.add(theme.label("Total: " + chunk.getTotal()));
 
             WButton open = table.add(theme.button("Open")).widget();
-            open.action = () -> mc.openScreen(new ChunkScreen(theme, chunk));
+            open.action = () -> mc.setScreen(new ChunkScreen(theme, chunk));
 
             WButton gotoBtn = table.add(theme.button("Goto")).widget();
             gotoBtn.action = () -> BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath(new GoalXZ(chunk.x, chunk.z));
