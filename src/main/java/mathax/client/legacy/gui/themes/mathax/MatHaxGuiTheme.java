@@ -96,9 +96,9 @@ public class MatHaxGuiTheme extends GuiTheme {
     public final ThreeStateColorSetting backgroundColor = new ThreeStateColorSetting(
             sgBackgroundColors,
             "background",
-            new SettingColor(35, 35, 35, 200),
-            new SettingColor(55, 55, 55, 200),
-            new SettingColor(75, 75, 75, 200)
+            new SettingColor(35, 35, 35, 100),
+            new SettingColor(55, 55, 55, 100),
+            new SettingColor(75, 75, 75, 100)
     );
 
     public final Setting<SettingColor> moduleBackground = color(sgBackgroundColors, "module-background", "Color of module background when active.", new SettingColor(50, 50, 50));
