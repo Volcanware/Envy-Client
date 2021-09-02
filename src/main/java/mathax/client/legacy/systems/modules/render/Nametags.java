@@ -56,7 +56,7 @@ public class Nametags extends Module {
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
         .name("scale")
         .description("The scale of the nametag.")
-        .defaultValue(1.5)
+        .defaultValue(1)
         .min(0.1)
         .build()
     );
