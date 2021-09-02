@@ -6,6 +6,7 @@ import mathax.client.legacy.gui.widgets.containers.WWindow;
 
 public abstract class WindowScreen extends WidgetScreen {
     private final WWindow window;
+    private boolean firstInit = true;
 
     public WindowScreen(GuiTheme theme, String title) {
         super(theme, title);
@@ -18,7 +19,10 @@ public abstract class WindowScreen extends WidgetScreen {
     protected void init() {
         super.init();
 
-        initWidgets();
+        if (firstInit) {
+            firstInit = false;
+            initWidgets();
+        }
     }
 
     public abstract void initWidgets();

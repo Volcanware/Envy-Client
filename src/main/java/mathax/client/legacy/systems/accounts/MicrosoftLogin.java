@@ -36,6 +36,7 @@ public class MicrosoftLogin {
         }
     }
 
+    //TODO: Make MatHax's own Client ID.
     private static final String CLIENT_ID = "4673b348-3efa-4f6a-bbb6-34e141cdc638";
     private static final int PORT = 9675;
 

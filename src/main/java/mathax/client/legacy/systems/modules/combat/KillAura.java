@@ -24,6 +24,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
+import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.SwordItem;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
@@ -43,7 +44,7 @@ public class KillAura extends Module {
     private final Setting<Weapon> weapon = sgGeneral.add(new EnumSetting.Builder<Weapon>()
         .name("weapon")
         .description("Only attacks an entity when a specified item is in your hand.")
-        .defaultValue(Weapon.Both)
+        .defaultValue(Weapon.SwordAndAxe)
         .build()
     );
 
@@ -259,9 +260,11 @@ public class KillAura extends Module {
                 Item item = itemStack.getItem();
 
                 return switch (weapon.get()) {
-                    case Axe -> item instanceof AxeItem;
                     case Sword -> item instanceof SwordItem;
-                    case Both -> item instanceof AxeItem || item instanceof SwordItem;
+                    case Axe -> item instanceof AxeItem;
+                    case Hoe -> item instanceof HoeItem;
+                    case SwordAndAxe -> item instanceof SwordItem || item instanceof AxeItem;
+                    case AllThree -> item instanceof SwordItem || item instanceof AxeItem || item instanceof HoeItem;
                     default -> true;
                 };
             });
@@ -350,9 +353,11 @@ public class KillAura extends Module {
 
     private boolean itemInHand() {
         return switch (weapon.get()) {
-            case Axe -> mc.player.getMainHandStack().getItem() instanceof AxeItem;
             case Sword -> mc.player.getMainHandStack().getItem() instanceof SwordItem;
-            case Both -> mc.player.getMainHandStack().getItem() instanceof AxeItem || mc.player.getMainHandStack().getItem() instanceof SwordItem;
+            case Axe -> mc.player.getMainHandStack().getItem() instanceof AxeItem;
+            case Hoe -> mc.player.getMainHandStack().getItem() instanceof HoeItem;
+            case SwordAndAxe -> mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem;
+            case AllThree -> mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem || mc.player.getMainHandStack().getItem() instanceof HoeItem;
             default -> true;
         };
     }
@@ -371,7 +376,9 @@ public class KillAura extends Module {
     public enum Weapon {
         Sword,
         Axe,
-        Both,
+        Hoe,
+        SwordAndAxe,
+        AllThree,
         Any
     }
 
