@@ -60,11 +60,11 @@ public class AutoEZ extends Module {
     public void onPacketReadMessage(PacketEvent.Receive event) {
         if (event.packet instanceof GameMessageS2CPacket) {
             String msg = ((GameMessageS2CPacket) event.packet).getMessage().getString();
-            if (msg.contains("by " + mc.getSession().getUsername()) || msg.contains("whilst fighting " + mc.getSession().getUsername()) || msg.contains(mc.getSession().getUsername() + " sniped") || msg.contains(mc.getSession().getUsername() + " annaly fucked") || msg.contains(mc.getSession().getUsername() + " destroyed") || msg.contains(mc.getSession().getUsername() + " killed") || msg.contains(mc.getSession().getUsername() + " fucked") || msg.contains(mc.getSession().getUsername() + " separated") || msg.contains(mc.getSession().getUsername() + " punched") || msg.contains(mc.getSession().getUsername() + " shoved")) {
-                for (PlayerEntity player : mc.world.getPlayers()) {
-                    if (player == mc.player)
-                        continue;
-                    if (msg.contains(player.getName().getString())) {
+            for (PlayerEntity player : mc.world.getPlayers()) {
+                if (player == mc.player)
+                    continue;
+                if (msg.contains(player.getName().getString())) {
+                    if (msg.contains("by " + mc.getSession().getUsername()) || msg.contains("whilst fighting " + mc.getSession().getUsername()) || msg.contains(mc.getSession().getUsername() + " sniped") || msg.contains(mc.getSession().getUsername() + " annaly fucked") || msg.contains(mc.getSession().getUsername() + " destroyed") || msg.contains(mc.getSession().getUsername() + " killed") || msg.contains(mc.getSession().getUsername() + " fucked") || msg.contains(mc.getSession().getUsername() + " separated") || msg.contains(mc.getSession().getUsername() + " punched") || msg.contains(mc.getSession().getUsername() + " shoved")) {
                         if (msg.contains("end crystal") || msg.contains("end-crystal")) {
                             if (Modules.get().isActive(CrystalAura.class)) {
                                 if (!Modules.get().isActive(CEVBreaker.class)) {
@@ -102,13 +102,7 @@ public class AutoEZ extends Module {
                                 mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
                             }
                         }
-                    }
-                }
-            } else {
-                for (PlayerEntity player : mc.world.getPlayers()) {
-                    if (player == mc.player)
-                        continue;
-                    if (msg.contains(player.getName().getString())) {
+                    } else {
                         if (msg.contains("bed") || msg.contains("[Intentional Game Design]") && Modules.get().isActive(BedAura.class)) {
                             if (mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get()) {
                                 String message = getBedMessageStyle();
