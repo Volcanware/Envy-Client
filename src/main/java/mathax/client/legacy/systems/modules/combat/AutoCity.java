@@ -73,14 +73,14 @@ public class AutoCity extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(225, 75, 100, 10))
+        .defaultValue(new SettingColor(230, 75, 100, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(225, 75, 100, 255))
+        .defaultValue(new SettingColor(230, 75, 100, 255))
         .build()
     );
 

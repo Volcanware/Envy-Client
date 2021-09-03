@@ -96,28 +96,28 @@ public class AutoTrap extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The side color of the target block rendering.")
-        .defaultValue(new SettingColor(197, 137, 232, 10))
+        .defaultValue(new SettingColor(230, 75, 100, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The line color of the target block rendering.")
-        .defaultValue(new SettingColor(197, 137, 232))
+        .defaultValue(new SettingColor(230, 75, 100))
         .build()
     );
 
     private final Setting<SettingColor> nextSideColor = sgRender.add(new ColorSetting.Builder()
         .name("next-side-color")
         .description("The side color of the next block to be placed.")
-        .defaultValue(new SettingColor(227, 196, 245, 10))
+        .defaultValue(new SettingColor(150, 150, 75, 50))
         .build()
     );
 
     private final Setting<SettingColor> nextLineColor = sgRender.add(new ColorSetting.Builder()
         .name("next-line-color")
         .description("The line color of the next block to be placed.")
-        .defaultValue(new SettingColor(227, 196, 245))
+        .defaultValue(new SettingColor(150, 150, 75))
         .build()
     );
     private final List<BlockPos> placePositions = new ArrayList<>();
