@@ -164,8 +164,7 @@ public class AutoCity extends Module {
 
     @EventHandler
     private void onRender(Render3DEvent event) {
-        if (!render.get()) return;
-        if (mineTarget == null) return;
+        if (!render.get() || mineTarget == null) return;
         event.renderer.box(mineTarget, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
     }
 }

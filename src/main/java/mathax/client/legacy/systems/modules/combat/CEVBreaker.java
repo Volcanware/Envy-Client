@@ -2,18 +2,17 @@ package mathax.client.legacy.systems.modules.combat;
 
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.events.packets.PacketEvent;
+import mathax.client.legacy.events.render.Render3DEvent;
 import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.mixininterface.IVec3d;
-import mathax.client.legacy.settings.BoolSetting;
-import mathax.client.legacy.settings.DoubleSetting;
-import mathax.client.legacy.settings.IntSetting;
-import mathax.client.legacy.settings.Setting;
-import mathax.client.legacy.settings.SettingGroup;
+import mathax.client.legacy.renderer.ShapeMode;
+import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.entity.SortPriority;
 import mathax.client.legacy.utils.entity.TargetUtils;
 import mathax.client.legacy.utils.player.*;
+import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.utils.world.BlockUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.decoration.EndCrystalEntity;
@@ -37,6 +36,9 @@ public class CEVBreaker extends Module {
     BlockPos pos;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgRender = settings.createGroup("Render");
+
+    // General
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
         .name("delay")
@@ -63,6 +65,35 @@ public class CEVBreaker extends Module {
         .build()
     );
 
+    // Render
+
+    private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
+        .name("render")
+        .description("Renders a block overlay where the obsidian will be placed.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
+        .name("shape-mode")
+        .description("How the shapes are rendered.")
+        .defaultValue(ShapeMode.Both)
+        .build()
+    );
+
+    private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
+        .name("side-color")
+        .description("The color of the sides of the blocks being rendered.")
+        .defaultValue(new SettingColor(230, 75, 100, 50))
+        .build()
+    );
+
+    private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
+        .name("line-color")
+        .description("The color of the lines of the blocks being rendered.")
+        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .build()
+    );
     public CEVBreaker() {
         super(Categories.Combat, "CEV-breaker", "Places obsidian on top of people and explodes crystals on top of their heads after destroying the obsidian.");
         blockPos = new BlockPos.Mutable();
@@ -91,12 +122,10 @@ public class CEVBreaker extends Module {
                                 n = EnhancedInvUtils.findItemInHotbar(Items.DIAMOND_PICKAXE);
                             }
                             if (n == -1) {
-                                ChatUtils.error("Head Crystal", "Can't find any pickaxe in hotbar, disabling...", new Object[0]);
+                                ChatUtils.error("CEV Breaker", "Can't find any pickaxe in hotbar, disabling...", new Object[0]);
                                 toggle();
                             } else {
-                                if (mc.world.getBlockState(blockPos1).getBlock() != Blocks.OBSIDIAN) {
-                                    BlockPlace(blockPos1, EnhancedInvUtils.findItemInHotbar(Items.OBSIDIAN), rotate.get());
-                                }
+                                if (mc.world.getBlockState(blockPos1).getBlock() != Blocks.OBSIDIAN) placeBlock(blockPos1, EnhancedInvUtils.findItemInHotbar(Items.OBSIDIAN), rotate.get());
                                 if (!equalsBlockPos(pos, blockPos1)) {
                                     pos = blockPos1;
                                     EnhancedInvUtils.swap(n);
@@ -177,7 +206,7 @@ public class CEVBreaker extends Module {
         }
     }
 
-    public boolean BlockPlace(BlockPos blockPos, int n, boolean bl) {
+    public boolean placeBlock(BlockPos blockPos, int n, boolean bl) {
         if (n == -1) {
             return false;
         }
@@ -228,5 +257,11 @@ public class CEVBreaker extends Module {
         }
         mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), direction, blockPos, true));
         EnhancedInvUtils.swap(n2);
+    }
+
+    @EventHandler
+    private void onRender(Render3DEvent event) {
+        if (!render.get() || pos == null) return;
+        event.renderer.box(pos, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
     }
 }
