@@ -75,26 +75,32 @@ public class AutoEZ extends Module {
                                         if (EntityUtils.getGameMode(player).isCreative()) return;
                                         mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
                                     }
-                                } else if (mc.player.distanceTo(player) < 6) {
+                                } else {
+                                    if (mc.player.distanceTo(player) < 6) {
+                                        String message = getMessageStyle();
+                                        String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
+                                        if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                        if (EntityUtils.getGameMode(player).isCreative()) return;
+                                        mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
+                                    }
+                                }
+                            } else {
+                                if (mc.player.distanceTo(player) < 8) {
                                     String message = getMessageStyle();
                                     String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
                                     if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
                                     if (EntityUtils.getGameMode(player).isCreative()) return;
                                     mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
                                 }
-                            } else if (mc.player.distanceTo(player) < 8) {
+                            }
+                        } else {
+                            if (mc.player.distanceTo(player) < 6) {
                                 String message = getMessageStyle();
                                 String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
                                 if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
                                 if (EntityUtils.getGameMode(player).isCreative()) return;
                                 mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
                             }
-                        } else if (mc.player.distanceTo(player) < 6) {
-                            String message = getMessageStyle();
-                            String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
-                            if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
-                            if (EntityUtils.getGameMode(player).isCreative()) return;
-                            mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
                         }
                     }
                 }
