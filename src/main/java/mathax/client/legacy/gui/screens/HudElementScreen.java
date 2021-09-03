@@ -9,17 +9,17 @@ import mathax.client.legacy.gui.widgets.containers.WHorizontalList;
 import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.gui.widgets.pressable.WCheckbox;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
-import mathax.client.legacy.systems.modules.render.hud.HudElement;
+import mathax.client.legacy.systems.modules.render.hud.HUDElement;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.utils.Utils;
 
 import static mathax.client.legacy.utils.Utils.getWindowWidth;
 
 public class HudElementScreen extends WindowScreen {
-    private final HudElement element;
+    private final HUDElement element;
     private WContainer settings;
 
-    public HudElementScreen(GuiTheme theme, HudElement element) {
+    public HudElementScreen(GuiTheme theme, HUDElement element) {
         super(theme, element.title);
 
         this.element = element;

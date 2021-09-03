@@ -8,7 +8,6 @@ import mathax.client.legacy.gui.widgets.WWidget;
 import mathax.client.legacy.gui.widgets.containers.WHorizontalList;
 import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.settings.*;
-import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.render.hud.modules.*;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HUD extends Module {
-    private static final HudRenderer RENDERER = new HudRenderer();
+    private static final HUDRenderer RENDERER = new HUDRenderer();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgEditor = settings.createGroup("Editor");
@@ -76,9 +75,9 @@ public class HUD extends Module {
         .build()
     );
 
-    public final List<HudElement> elements = new ArrayList<>();
+    public final List<HUDElement> elements = new ArrayList<>();
 
-    private final HudElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, timeEnemy, radar, crosshair, crosshair2, crosshair3, crosshair4;
+    private final HUDElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, timeEnemy, radar, crosshair, crosshair2, crosshair3, crosshair4;
 
     public final Runnable reset = () -> {
         align();
@@ -88,11 +87,11 @@ public class HUD extends Module {
         });
     };
 
-    public HudElement get(RegistryKey<HudElement> key) {
+    public HUDElement get(RegistryKey<HUDElement> key) {
         return null;
     }
 
-    public HudElement get(Identifier id) {
+    public HUDElement get(Identifier id) {
         return null;
     }
 
@@ -100,86 +99,86 @@ public class HUD extends Module {
         super(Categories.Render, "HUD", "In game overlay.");
 
         // MAIN INFO
-        mainInfo = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 2, 2);
+        mainInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 2, 2);
         // Modules
-        mainInfo.add(new WatermarkHud(this));
-        mainInfo.add(new WelcomeHud(this));
-        mainInfo.add(new FpsHud(this));
-        mainInfo.add(new PingHud(this));
-        mainInfo.add(new TpsHud(this));
-        mainInfo.add(new SpeedHud(this));
-        mainInfo.add(new ServerHud(this));
-        mainInfo.add(new ServerBrandHud(this));
-        mainInfo.add(new DurabilityHud(this));
-        mainInfo.add(new BiomeHud(this));
-        mainInfo.add(new PlayerModelHud(this));
+        mainInfo.add(new WatermarkHUD(this));
+        mainInfo.add(new WelcomeHUD(this));
+        mainInfo.add(new FPSHUD(this));
+        mainInfo.add(new PingHUD(this));
+        mainInfo.add(new TPSHUD(this));
+        mainInfo.add(new SpeedHUD(this));
+        mainInfo.add(new ServerHUD(this));
+        mainInfo.add(new ServerBrandHUD(this));
+        mainInfo.add(new DurabilityHUD(this));
+        mainInfo.add(new BiomeHUD(this));
+        mainInfo.add(new PlayerModelHUD(this));
 
         // MODULE INFO
-        moduleInfo = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 225);
+        moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 225);
         // Modules
-        moduleInfo.add(new ModuleInfoHud(this));
+        moduleInfo.add(new ModuleInfoHUD(this));
 
         // LOOKING AT & BREAKING
-        breakingLooking = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Bottom, -3, -215);
+        breakingLooking = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Bottom, -3, -215);
         // Modules
-        breakingLooking.add(new LookingAtHud(this));
-        breakingLooking.add(new BreakingBlockHud(this));
+        breakingLooking.add(new LookingAtHUD(this));
+        breakingLooking.add(new BreakingBlockHUD(this));
 
         // COORDS
-        coords = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Bottom, 2, 2);
+        coords = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Bottom, 2, 2);
         // Modules
-        coords.add(new PositionHud(this));
-        coords.add(new RotationHud(this));
+        coords.add(new PositionHUD(this));
+        coords.add(new RotationHUD(this));
 
         // LAG
-        lag = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Top, 0, 2);
+        lag = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Top, 0, 2);
         // Modules
-        lag.add(new LagNotifierHud(this));
+        lag.add(new LagNotifierHUD(this));
 
         // MODULES
-        modules = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Bottom, 2, 2);
+        modules = new HUDElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Bottom, 2, 2);
         // Modules
-        modules.add(new ActiveModulesHud(this));
+        modules.add(new ActiveModulesHUD(this));
 
         // INVPOT
-        invPot = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Top, 2, 2);
+        invPot = new HUDElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Top, 2, 2);
         // Modules
-        invPot.add(new InventoryViewerHud(this));
-        invPot.add(new ContainerViewerHud(this));
-        invPot.add(new PotionTimersHud(this));
+        invPot.add(new InventoryViewerHUD(this));
+        invPot.add(new ContainerViewerHUD(this));
+        invPot.add(new PotionTimersHUD(this));
 
         // TIME & ENEMY
-        timeEnemy = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Bottom, 2, 15);
+        timeEnemy = new HUDElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Bottom, 2, 15);
         // Modules
-        timeEnemy.add(new DateHud(this));
-        timeEnemy.add(new RealTimeHud(this));
-        timeEnemy.add(new InGameTimeHud(this));
-        timeEnemy.add(new CombatHud(this));
+        timeEnemy.add(new DateHUD(this));
+        timeEnemy.add(new RealTimeHUD(this));
+        timeEnemy.add(new InGameTimeHUD(this));
+        timeEnemy.add(new CombatHUD(this));
 
         // TEXT RADAR
-        radar = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Center, 2, 100);
+        radar = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Center, 2, 100);
         // Modules
-        radar.add(new TextRadarHud(this));
+        radar.add(new TextRadarHUD(this));
 
         // CROSSHAIR
-        crosshair = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
+        crosshair = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
         // Modules
-        crosshair.add(new TotemHud(this));
+        crosshair.add(new TotemHUD(this));
 
         // CROSSHAIR 2
-        crosshair2 = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
+        crosshair2 = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
         // Modules
-        crosshair2.add(new HoleHud(this));
+        crosshair2.add(new HoleHUD(this));
 
         // CROSSHAIR 3
-        crosshair3 = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
+        crosshair3 = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
         // Modules
-        crosshair3.add(new CompassHud(this));
+        crosshair3.add(new CompassHUD(this));
 
         // CROSSHAIR 4
-        crosshair4 = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 65);
+        crosshair4 = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 65);
         // Modules
-        crosshair4.add(new ArmorHud(this));
+        crosshair4.add(new ArmorHUD(this));
 
         align();
     }
@@ -210,7 +209,7 @@ public class HUD extends Module {
 
         RENDERER.begin(scale.get(), event.tickDelta, false);
 
-        for (HudElement element : elements) {
+        for (HUDElement element : elements) {
             if (element.active || HudTab.INSTANCE.isScreen(mc.currentScreen) || mc.currentScreen instanceof HudElementScreen) {
                 element.update(RENDERER);
                 element.render(RENDERER);
@@ -240,7 +239,7 @@ public class HUD extends Module {
         NbtCompound tag = super.toTag();
 
         NbtList modulesTag = new NbtList();
-        for (HudElement module : elements) modulesTag.add(module.toTag());
+        for (HUDElement module : elements) modulesTag.add(module.toTag());
         tag.put("modules", modulesTag);
 
         return tag;
@@ -254,7 +253,7 @@ public class HUD extends Module {
             for (NbtElement t : modulesTag) {
                 NbtCompound moduleTag = (NbtCompound) t;
 
-                HudElement module = getModule(moduleTag.getString("name"));
+                HUDElement module = getModule(moduleTag.getString("name"));
                 if (module != null) module.fromTag(moduleTag);
             }
         }
@@ -262,8 +261,8 @@ public class HUD extends Module {
         return super.fromTag(tag);
     }
 
-    private HudElement getModule(String name) {
-        for (HudElement module : elements) {
+    private HUDElement getModule(String name) {
+        for (HUDElement module : elements) {
             if (module.name.equals(name)) return module;
         }
 
