@@ -103,25 +103,21 @@ public class AutoEZ extends Module {
                     if (player == mc.player)
                         continue;
                     if (msg.contains(player.getName().getString())) {
-                        if (msg.contains("bed") || msg.contains("[Intentional Game Design]")) {
-                            if (Modules.get().isActive(BedAura.class)) {
-                                if (mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get()) {
-                                    String message = getBedMessageStyle();
-                                    String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
-                                    if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
-                                    if (EntityUtils.getGameMode(player).isCreative()) return;
-                                    mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
-                                }
+                        if (msg.contains("bed") || msg.contains("[Intentional Game Design]") && Modules.get().isActive(BedAura.class)) {
+                            if (mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get()) {
+                                String message = getBedMessageStyle();
+                                String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
+                                if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                if (EntityUtils.getGameMode(player).isCreative()) return;
+                                mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
                             }
-                        } else if (msg.contains("anchor") || msg.contains("[Intentional Game Design]")) {
-                            if (Modules.get().isActive(AnchorAura.class)) {
-                                if (mc.player.distanceTo(player) < Modules.get().get(AnchorAura.class).targetRange.get()) {
-                                    String message = getAnchorMessageStyle();
-                                    String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
-                                    if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
-                                    if (EntityUtils.getGameMode(player).isCreative()) return;
-                                    mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
-                                }
+                        } else if (msg.contains("anchor") || msg.contains("[Intentional Game Design]") && Modules.get().isActive(AnchorAura.class)) {
+                            if (mc.player.distanceTo(player) < Modules.get().get(AnchorAura.class).targetRange.get()) {
+                                String message = getAnchorMessageStyle();
+                                String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
+                                if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                if (EntityUtils.getGameMode(player).isCreative()) return;
+                                mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
                             }
                         }
                     }
