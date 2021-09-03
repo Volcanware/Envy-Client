@@ -1,5 +1,6 @@
 package mathax.client.legacy.systems.modules.render.hud.modules;
 
+import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.settings.ColorSetting;
 import mathax.client.legacy.settings.EnumSetting;
 import mathax.client.legacy.settings.Setting;
@@ -54,7 +55,7 @@ public class WelcomeHUD extends TripleTextHUDElement {
             }
             case RetardedTime -> {
                 if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") && !Modules.get().isActive(NameProtect.class)) return getRetardedTime() + ", Developer";
-                else return getTime() + ", ";
+                else return getRetardedTime() + ", ";
             }
             case Sussy -> {
                 if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") && !Modules.get().isActive(NameProtect.class)) return getRetardedTime() + ", Developer";
@@ -78,8 +79,8 @@ public class WelcomeHUD extends TripleTextHUDElement {
     }
 
     private String getTime() {
-        final String date = new SimpleDateFormat("k").format(new Date());
-        final int hour = Integer.valueOf(date);
+        final String hourDate = new SimpleDateFormat("k").format(new Date());
+        final int hour = Integer.valueOf(hourDate);
         if (hour < 6) {
             return "Good Night";
         }
@@ -96,16 +97,22 @@ public class WelcomeHUD extends TripleTextHUDElement {
     }
 
     private String getRetardedTime() {
-        final String date = new SimpleDateFormat("k").format(new Date());
-        final int hour = Integer.valueOf(date);
+        final String hourDate = new SimpleDateFormat("k").format(new Date());
+        final int hour = Integer.valueOf(hourDate);
+        if (hour < 3) {
+            return "Why are you killing newfags at this hour retard";
+        }
         if (hour < 6) {
             return "You really need get some sleep retard";
         }
         if (hour < 12) {
             return "Ur awake already? Pretty retarded";
         }
-        if (hour < 17) {
+        if (hour < 14) {
             return "Go eat lunch retard";
+        }
+        if (hour < 17) {
+            return "Retard playing minecraft";
         }
         if (hour < 20) {
             return "Time to sleep retard";
