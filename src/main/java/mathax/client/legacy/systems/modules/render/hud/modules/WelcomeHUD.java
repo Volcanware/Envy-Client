@@ -52,6 +52,14 @@ public class WelcomeHUD extends TripleTextHUDElement {
                 if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") && !Modules.get().isActive(NameProtect.class)) return getTime() + ", Developer";
                 else return getTime() + ", ";
             }
+            case RetardedTime -> {
+                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") && !Modules.get().isActive(NameProtect.class)) return getRetardedTime() + ", Developer";
+                else return getTime() + ", ";
+            }
+            case Sussy -> {
+                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") && !Modules.get().isActive(NameProtect.class)) return getRetardedTime() + ", Developer";
+                else return "You are a sussy baka, ";
+            }
             default -> {
                 if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") && !Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Client Legacy, Developer ";
                 else return "Welcome to MatHax Client Legacy, ";
@@ -87,9 +95,29 @@ public class WelcomeHUD extends TripleTextHUDElement {
         return "Good Night";
     }
 
+    private String getRetardedTime() {
+        final String date = new SimpleDateFormat("k").format(new Date());
+        final int hour = Integer.valueOf(date);
+        if (hour < 6) {
+            return "You really need get some sleep retard";
+        }
+        if (hour < 12) {
+            return "Ur awake already? Pretty retarded";
+        }
+        if (hour < 17) {
+            return "Go eat lunch retard";
+        }
+        if (hour < 20) {
+            return "Time to sleep retard";
+        }
+        return "Time to sleep retard";
+    }
+
     public enum Message {
         Welcome,
         Using,
-        Time
+        Time,
+        RetardedTime,
+        Sussy
     }
 }
