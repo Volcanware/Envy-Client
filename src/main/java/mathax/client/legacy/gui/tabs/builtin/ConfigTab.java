@@ -18,6 +18,9 @@ public class ConfigTab extends Tab {
     private static final Settings settings = new Settings();
     private static final SettingGroup sgGeneral = settings.getDefaultGroup();
     private static final SettingGroup sgChat = settings.createGroup("Chat");
+    private static final SettingGroup sgToasts = settings.createGroup("Toasts");
+
+    // General
 
     public static final Setting<Boolean> customFont = sgGeneral.add(new BoolSetting.Builder()
             .name("custom-font")
@@ -67,6 +70,24 @@ public class ConfigTab extends Tab {
             .build()
     );
 
+    public static final Setting<Boolean> useTeamColor = sgGeneral.add(new BoolSetting.Builder()
+        .name("use-team-color")
+        .description("Uses player's team color for rendering things like esp and tracers.")
+        .defaultValue(true)
+        .onChanged(aBoolean -> Config.get().useTeamColor = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().useTeamColor))
+        .build()
+    );
+
+    public static final Setting<Boolean> viewMatHaxLegacyUsers = sgGeneral.add(new BoolSetting.Builder()
+        .name("mathax-legacy-users")
+        .description("Shows MatHax logo next to MatHax Legacy users. [Currently just works for devs :(]")
+        .defaultValue(true)
+        .build()
+    );
+
+    // Chat
+
     public static final Setting<String> prefix = sgChat.add(new StringSetting.Builder()
             .name("prefix")
             .description("Prefix.")
@@ -113,28 +134,32 @@ public class ConfigTab extends Tab {
             .build()
     );
 
-    /*public static final Setting<Boolean> popUpCommandsInfo = sgChat.add(new BoolSetting.Builder()
-        .name("popUp-commands-info")
-        .description("Sends a chat message when you use chat commands (eg toggling module, changing a setting, etc).")
-        .defaultValue(true)
-        .onChanged(aBoolean -> Config.get().popUpCommandsInfo = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().popUpCommandsInfo))
-        .build()
-    );*/
+    // Toasts
 
-    public static final Setting<Boolean> useTeamColor = sgGeneral.add(new BoolSetting.Builder()
-            .name("use-team-color")
-            .description("Uses player's team color for rendering things like esp and tracers.")
-            .defaultValue(true)
-            .onChanged(aBoolean -> Config.get().useTeamColor = aBoolean)
-            .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().useTeamColor))
-            .build()
+    public static final Setting<Boolean> chatCommandsToast = sgToasts.add(new BoolSetting.Builder()
+        .name("chat-commands-toast")
+        .description("Sends a toast when you use chat commands (eg changing a setting, etc).")
+        .defaultValue(true)
+        .onChanged(aBoolean -> Config.get().chatCommandsToast = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().chatCommandsToast))
+        .build()
     );
 
-    public static final Setting<Boolean> viewMatHaxLegacyUsers = sgGeneral.add(new BoolSetting.Builder()
-        .name("mathax-legacy-users")
-        .description("Shows MatHax logo next to MatHax Legacy users. [Currently just works for devs :(]")
+    public static final Setting<Boolean> moduleToggleToast = sgToasts.add(new BoolSetting.Builder()
+        .name("module-toggle")
+        .description("Sends a toast when you toggle a module.")
         .defaultValue(true)
+        .onChanged(aBoolean -> Config.get().moduleToggleToast = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().moduleToggleToast))
+        .build()
+    );
+
+    public static final Setting<Boolean> playSoundToast = sgToasts.add(new BoolSetting.Builder()
+        .name("play-sound")
+        .description("Plays a sound when a toast appears.")
+        .defaultValue(true)
+        .onChanged(aBoolean -> Config.get().playSoundToast = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().playSoundToast))
         .build()
     );
 

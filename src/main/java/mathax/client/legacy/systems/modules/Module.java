@@ -9,8 +9,11 @@ import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.misc.ISerializable;
 import mathax.client.legacy.utils.misc.Keybind;
 import mathax.client.legacy.utils.player.ChatUtils;
+import mathax.client.legacy.utils.render.MatHaxToast;
 import mathax.client.legacy.utils.render.color.Color;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtIo;
@@ -86,8 +89,25 @@ public abstract class Module implements ISerializable<Module> {
         toggle(true);
     }
 
-    public void sendToggledMsg() {
-        if (Config.get().chatCommandsInfo) ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY,  "[" + Formatting.DARK_RED + "Modules" + Formatting.GRAY + "] Toggled module (highlight)%s(default) %s(default).", title, isActive() ? Formatting.GREEN + "on" : Formatting.RED + "off");
+    public void sendToggledMsg(String title, Module module) {
+        if (Config.get().chatCommandsInfo) ChatUtils.info("Modules", "Toggled " + Formatting.WHITE + title + Formatting.GRAY + " " + getOnOff(module) + Formatting.GRAY + ".");
+    }
+
+    public void sendToggledToast(String title, Module module) {
+        switch (module.category.name) {
+            case "Combat" -> mc.getToastManager().add(new MatHaxToast(Items.END_CRYSTAL, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
+            case "Player" -> mc.getToastManager().add(new MatHaxToast(Items.ARMOR_STAND, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
+            case "Movement" -> mc.getToastManager().add(new MatHaxToast(Items.DIAMOND_BOOTS, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
+            case "Render" -> mc.getToastManager().add(new MatHaxToast(Items.TINTED_GLASS, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
+            case "World" -> mc.getToastManager().add(new MatHaxToast(Items.GRASS_BLOCK, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
+            case "Chat" -> mc.getToastManager().add(new MatHaxToast(Items.BEACON, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
+            case "Fun" -> mc.getToastManager().add(new MatHaxToast(Items.NOTE_BLOCK, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
+            case "Misc" -> mc.getToastManager().add(new MatHaxToast(Items.NETHER_STAR, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
+        }
+    }
+
+    private String getOnOff(Module module) {
+        return module.active ? Formatting.GREEN + "on" : Formatting.RED + "off";
     }
 
     public void info(Text message) {

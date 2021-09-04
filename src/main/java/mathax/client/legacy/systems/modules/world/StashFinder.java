@@ -19,18 +19,16 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.bus.EventHandler;
+import mathax.client.legacy.utils.render.MatHaxToast;
 import net.minecraft.block.entity.*;
+import net.minecraft.item.Items;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.ChunkPos;
 
 import java.io.*;
 import java.util.*;
 
 public class StashFinder extends Module {
-    public enum Mode {
-        Chat,
-        Toast
-    }
-
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -59,20 +57,20 @@ public class StashFinder extends Module {
         .build()
     );
 
-    private final Setting<Boolean> sendNotifications = sgGeneral.add(new BoolSetting.Builder()
-        .name("send-notifications")
+    private final Setting<Boolean> notifications = sgGeneral.add(new BoolSetting.Builder()
+        .name("notifications")
         .description("Sends Minecraft notifications when new stashes are found.")
         .defaultValue(true)
         .build()
     );
 
-    /*private final Setting<StashFinder.Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+    private final Setting<Mode> notificationMode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("notification-mode")
         .description("The mode to use for notifications.")
-        .defaultValue(Mode.Toast)
-        .visible(sendNotifications::get)
+        .defaultValue(Mode.Both)
+        .visible(notifications::get)
         .build()
-    );*/
+    );
 
     public List<Chunk> chunks = new ArrayList<>();
 
@@ -116,28 +114,15 @@ public class StashFinder extends Module {
             saveJson();
             saveCsv();
 
-
-            if (sendNotifications.get() && (!chunk.equals(prevChunk) || !chunk.countsEqual(prevChunk))) {
-                /*if (mode.get() == Mode.Toast) {
-                    mc.getToastManager().add(new Toast() {
-                        private long timer;
-                        private long lastTime = -1;
-
-                        @Override
-                        public Visibility draw(MatrixStack matrices, ToastManager manager, long currentTime) {
-                            if (lastTime == -1) lastTime = currentTime;
-                            else timer += currentTime - lastTime;
-
-                            GL.bindTexture(new Identifier("textures/gui/toasts.png"));
-                            manager.drawTexture(matrices, 0, 0, 0, 32, 160, 32);
-
-                            manager.getGame().textRenderer.draw(matrices, "StashRecorder found stash.", 12.0F, 12.0F, -11534256);
-
-                            return timer >= 32000 ? Visibility.HIDE : Visibility.SHOW;
-                        }
-                    });
-                } else*/
-                    info("(highlight)Found stash.");
+            if (notifications.get() && (!chunk.equals(prevChunk) || !chunk.countsEqual(prevChunk))) {
+                switch (notificationMode.get()) {
+                    case Chat -> info("Found stash at (highlight)%s(default), (highlight)%s(default).", chunk.x, chunk.z);
+                    case Toast -> mc.getToastManager().add(new MatHaxToast(Items.CHEST, Formatting.DARK_RED + title, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!"));
+                    case Both -> {
+                        info("Found stash at (highlight)%s(default), (highlight)%s(default).", chunk.x, chunk.z);
+                        mc.getToastManager().add(new MatHaxToast(Items.CHEST, Formatting.DARK_RED + title, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!"));
+                    }
+                }
             }
         }
     }
@@ -372,5 +357,11 @@ public class StashFinder extends Module {
             t.add(theme.label("Hoppers:"));
             t.add(theme.label(chunk.hoppers + ""));
         }
+    }
+
+    public enum Mode {
+        Chat,
+        Toast,
+        Both
     }
 }

@@ -29,7 +29,7 @@ public class AutoEZ extends Module {
     private int totemsPopped = 0;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgTotemPops = settings.createGroup("Totem Pops");
+    //private final SettingGroup sgTotemPops = settings.createGroup("Totem Pops");
 
     //General
 
@@ -49,7 +49,7 @@ public class AutoEZ extends Module {
 
     //Totem Pops
 
-    private final Setting<Boolean> totemsEnabled = sgTotemPops.add(new BoolSetting.Builder()
+    /*private final Setting<Boolean> totemsEnabled = sgTotemPops.add(new BoolSetting.Builder()
         .name("enabled")
         .description("Toggles totem pop messages.")
         .defaultValue(false)
@@ -71,7 +71,7 @@ public class AutoEZ extends Module {
         .description("Ignores friends.")
         .defaultValue(true)
         .build()
-    );
+    );*/
 
     public AutoEZ() {
         super(Categories.Chat, "auto-EZ", "Announces when you kill someone.");
@@ -100,7 +100,7 @@ public class AutoEZ extends Module {
                                         mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
                                     }
                                 } else {
-                                    if (mc.player.distanceTo(player) < 6) {
+                                    if (mc.player.distanceTo(player) < 5) {
                                         String message = getMessageStyle();
                                         String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
                                         if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
@@ -138,14 +138,6 @@ public class AutoEZ extends Module {
                         } else if (msg.contains("anchor") || msg.contains("[Intentional Game Design]") && Modules.get().isActive(AnchorAura.class)) {
                             if (mc.player.distanceTo(player) < Modules.get().get(AnchorAura.class).targetRange.get()) {
                                 String message = getAnchorMessageStyle();
-                                String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
-                                if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
-                                if (EntityUtils.getGameMode(player).isCreative()) return;
-                                mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
-                            }
-                        } else {
-                            if (mc.player.distanceTo(player) < 8) {
-                                String message = getMessageStyle();
                                 String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
                                 if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
                                 if (EntityUtils.getGameMode(player).isCreative()) return;
@@ -320,28 +312,43 @@ public class AutoEZ extends Module {
 
     @EventHandler
     private void onTotemPop(PacketEvent.Receive event) {
-        // TODO
-        // Take from Notifier when home
-        if (totemsPopped == totemsSendDelay.get() || totemsPopped == 0) {
+        /*if (!totemsEnabled.get()) return;
+        if (!(event.packet instanceof EntityStatusS2CPacket)) return;
 
+        EntityStatusS2CPacket packet = (EntityStatusS2CPacket) event.packet;
+        if (packet.getStatus() != 35) return;
+
+        Entity entity = packet.getEntity(mc.world);
+
+        if (!(entity instanceof PlayerEntity)) return;
+
+        if (!(Friends.get().isFriend(((PlayerEntity) entity)) && totemsIgnoreFriends.get())) return;
+
+        if (totemsPopped > Math.round(totemsSendDelay.get())) totemsPopped = 0;
+        if (totemsPopped == Math.round(totemsSendDelay.get()) || totemsPopped == 0) {
+            if (mc.player.distanceTo(entity) < 8) {
+                String message = getTotemMessage();
+                String toSendMessage = Placeholders.apply(message).replace("%poppedperson%", entity.getName().getString());
+                mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
+            }
             totemsPopped = 1;
         } else {
             ++totemsPopped;
-        }
+        }*/
     }
 
     public String getTotemMessage() {
-        String msg = "%killedperson%'s totem just got ended by MatHax Legacy!";
+        String msg = "%poppedperson%'s totem just got ended by MatHax Legacy!";
         int randomNumber = Utils.random(1, 8);
         switch (randomNumber) {
-            case 1: msg = "I am too good for %killedperson%, pop more! MatHax Legacy on top!";
-            case 2: msg = "haha %killedperson% is a noob, easy pops! MatHax Legacy on top!";
-            case 3: msg = "I just EZZz'd %killedperson%'s totem using MatHax Legacy!";
-            case 4: msg = "I just fucked %killedperson%'S totem using MatHax Legacy!";
-            case 5: msg = "I just nae nae'd %killedperson%'s totem using MatHax Legacy!";
-            case 6: msg = "Take the L nerd %killedperson%! Your totem just got ended by MatHax Legacy!";
-            case 7: msg = "%killedperson%'s totem just got raped by MatHax Legacy!";
-            case 8: msg = "%killedperson% just got popped by MatHax Legacy!";
+            case 1: msg = "I am too good for %poppedperson%, pop more! MatHax Legacy on top!";
+            case 2: msg = "haha %poppedperson% is a noob, easy pop! MatHax Legacy on top!";
+            case 3: msg = "I just EZZz'd %poppedperson%'s totem using MatHax Legacy!";
+            case 4: msg = "I just fucked %poppedperson%'S totem using MatHax Legacy!";
+            case 5: msg = "I just nae nae'd %poppedperson%'s totem using MatHax Legacy!";
+            case 6: msg = "Take the L nerd %poppedperson%! Your totem just got ended by MatHax Legacy!";
+            case 7: msg = "%poppedperson%'s totem just got raped by MatHax Legacy!";
+            case 8: msg = "%poppedperson% just got popped by MatHax Legacy!";
         }
         return msg;
     }

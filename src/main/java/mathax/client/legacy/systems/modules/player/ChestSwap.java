@@ -118,9 +118,15 @@ public class ChestSwap extends Module {
     }
 
     @Override
-    public void sendToggledMsg() {
-        if (stayOn.get()) super.sendToggledMsg();
+    public void sendToggledMsg(String title, Module module) {
+        if (stayOn.get()) super.sendToggledMsg(title, module);
         else if (Config.get().chatCommandsInfo) info("Triggered (highlight)%s(default).", title);
+    }
+
+    @Override
+    public void sendToggledToast(String title, Module module) {
+        if (stayOn.get()) super.sendToggledToast(title, module);
+        else if (Config.get().chatCommandsInfo) return; //TODO toast
     }
 
     public enum Chestplate {

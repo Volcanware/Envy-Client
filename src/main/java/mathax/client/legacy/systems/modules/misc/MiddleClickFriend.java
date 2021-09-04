@@ -5,6 +5,7 @@ import mathax.client.legacy.settings.BoolSetting;
 import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.settings.StringSetting;
+import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.enemies.Enemies;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.friends.Friend;
@@ -14,9 +15,12 @@ import mathax.client.legacy.utils.placeholders.Placeholders;
 import mathax.client.legacy.utils.misc.input.KeyAction;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.utils.player.ChatUtils;
+import mathax.client.legacy.utils.render.MatHaxToast;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.Formatting;
 
+import static mathax.client.legacy.utils.Utils.mc;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_MIDDLE;
 
 public class MiddleClickFriend extends Module {
@@ -62,7 +66,8 @@ public class MiddleClickFriend extends Module {
         if (event.action == KeyAction.Press && event.button == GLFW_MOUSE_BUTTON_MIDDLE && mc.currentScreen == null && mc.targetedEntity != null && mc.targetedEntity instanceof PlayerEntity) {
             if (!Friends.get().isFriend((PlayerEntity) mc.targetedEntity)) {
                 if (Enemies.get().isEnemy((PlayerEntity) mc.targetedEntity)) {
-                    ChatUtils.info("Friends", Formatting.RED + "Could not add to friends because this person is on your Enemy list.");
+                    ChatUtils.error("Friends", "Could not add to friends because this person is on your Enemy list.");
+                    if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Friends", Formatting.RED + "Could not add to friends because this person is on your Enemy list."));
                 } else {
                     Friends.get().add(new Friend((PlayerEntity) mc.targetedEntity));
                     if (friendAddMessage.get()) {

@@ -2,13 +2,17 @@ package mathax.client.legacy.systems.enemies;
 
 import mathax.client.legacy.systems.System;
 import mathax.client.legacy.systems.Systems;
+import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.utils.misc.NbtUtils;
 import mathax.client.legacy.utils.player.ChatUtils;
+import mathax.client.legacy.utils.render.MatHaxToast;
 import mathax.client.legacy.utils.render.color.RainbowColors;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -40,6 +44,8 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
         if (enemy.name.isEmpty()) return false;
         if (enemy.name.equals(mc.getSession().getUsername())) {
             ChatUtils.error("Enemies", "You can't add yourself to enemies!");
+            if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Formatting.DARK_RED + "Enemies", Formatting.RED + "You can't add yourself!"));
+            return false;
         }
 
         if (!enemies.contains(enemy)) {

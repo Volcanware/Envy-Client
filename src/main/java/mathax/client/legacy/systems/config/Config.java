@@ -26,13 +26,15 @@ public class Config extends System<Config> {
     public String prefix = ConfigTab.prefix.get();
     public boolean rainbowPrefix = ConfigTab.rainbowPrefix.get();
     public boolean openChatOnPrefix = ConfigTab.openChatOnPrefix.get();
-    //public boolean popUpCommandsInfo = ConfigTab.chatCommandsInfo.get();
     public boolean chatCommandsInfo = ConfigTab.chatCommandsInfo.get();
     public boolean deleteChatCommandsInfo = ConfigTab.deleteChatCommandsInfo.get();
-
-    public boolean useTeamColor = ConfigTab.useTeamColor.get();
+    public boolean chatCommandsToast = ConfigTab.chatCommandsToast.get();
+    public boolean moduleToggleToast = ConfigTab.moduleToggleToast.get();
+    public boolean playSoundToast = ConfigTab.playSoundToast.get();
 
     public boolean viewMatHaxLegacyUsers = ConfigTab.viewMatHaxLegacyUsers.get();
+
+    public boolean useTeamColor = ConfigTab.useTeamColor.get();
 
     public List<String> dontShowAgainPrompts = new ArrayList<>();
 
@@ -63,13 +65,15 @@ public class Config extends System<Config> {
         tag.putBoolean("rainbowPrefix", rainbowPrefix);
         tag.putString("prefix", prefix);
         tag.putBoolean("openChatOnPrefix", openChatOnPrefix);
-        //tag.putBoolean("popUpCommandsInfo", popUpCommandsInfo);
         tag.putBoolean("chatCommandsInfo", chatCommandsInfo);
         tag.putBoolean("deleteChatCommandsInfo", deleteChatCommandsInfo);
-
-        tag.putBoolean("useTeamColor", useTeamColor);
+        tag.putBoolean("chatCommandsToast", chatCommandsToast);
+        tag.putBoolean("moduleToggleToast", moduleToggleToast);
+        tag.putBoolean("playSoundToast", playSoundToast);
 
         tag.putBoolean("viewMatHaxLegacyUsers", viewMatHaxLegacyUsers);
+
+        tag.putBoolean("useTeamColor", useTeamColor);
 
         tag.put("dontShowAgainPrompts", listToNbt(dontShowAgainPrompts));
         return tag;
@@ -85,11 +89,13 @@ public class Config extends System<Config> {
         prefix = getString(tag, "prefix", ConfigTab.prefix);
         rainbowPrefix = getBoolean(tag, "rainbowPrefix", ConfigTab.rainbowPrefix);
         openChatOnPrefix = getBoolean(tag, "openChatOnPrefix", ConfigTab.openChatOnPrefix);
-        //popUpCommandsInfo = getBoolean(tag, "popUpCommandsInfo", ConfigTab.popUpCommandsInfo);
         chatCommandsInfo = getBoolean(tag, "chatCommandsInfo", ConfigTab.chatCommandsInfo);
         deleteChatCommandsInfo = getBoolean(tag, "deleteChatCommandsInfo", ConfigTab.deleteChatCommandsInfo);
+        chatCommandsToast = getBoolean(tag, "chatCommandsToast", ConfigTab.chatCommandsToast);
+        moduleToggleToast = getBoolean(tag, "moduleToggleToast", ConfigTab.moduleToggleToast);
+        playSoundToast = getBoolean(tag, "playSoundToast", ConfigTab.playSoundToast);
 
-        useTeamColor = getBoolean(tag, "viewMatHaxLegacyUsers", ConfigTab.viewMatHaxLegacyUsers);
+        viewMatHaxLegacyUsers = getBoolean(tag, "viewMatHaxLegacyUsers", ConfigTab.viewMatHaxLegacyUsers);
 
         useTeamColor = getBoolean(tag, "useTeamColor", ConfigTab.useTeamColor);
 

@@ -15,6 +15,7 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.System;
 import mathax.client.legacy.systems.Systems;
+import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.modules.chat.*;
 import mathax.client.legacy.systems.modules.combat.*;
 import mathax.client.legacy.systems.modules.fun.*;
@@ -33,9 +34,12 @@ import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.misc.input.Input;
 import mathax.client.legacy.utils.misc.input.KeyAction;
 import mathax.client.legacy.utils.player.ChatUtils;
+import mathax.client.legacy.utils.render.MatHaxToast;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
@@ -45,6 +49,8 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static mathax.client.legacy.utils.Utils.mc;
 
 public class Modules extends System<Modules> {
     public static final ModuleRegistry REGISTRY = new ModuleRegistry();
@@ -216,6 +222,18 @@ public class Modules extends System<Modules> {
             if (value != GLFW.GLFW_KEY_ESCAPE) {
                 moduleToBind.keybind.set(isKey, value);
                 ChatUtils.info("KeyBinds", "Module (highlight)%s (default)bound to (highlight)%s(default).", moduleToBind.title, moduleToBind.keybind);
+                if (Config.get().chatCommandsToast && Config.get().moduleToggleToast) {
+                    switch (moduleToBind.category.name) {
+                        case "Combat" -> mc.getToastManager().add(new MatHaxToast(Items.END_CRYSTAL, Formatting.DARK_RED + "KeyBinds", Formatting.GRAY + "Module " + Formatting.WHITE + moduleToBind.name + Formatting.GRAY + " bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                        case "Player" -> mc.getToastManager().add(new MatHaxToast(Items.ARMOR_STAND, Formatting.DARK_RED + "KeyBinds", Formatting.GRAY + "Module " + Formatting.WHITE + moduleToBind.name + Formatting.GRAY + " bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                        case "Movement" -> mc.getToastManager().add(new MatHaxToast(Items.DIAMOND_BOOTS, Formatting.DARK_RED + "KeyBinds", Formatting.GRAY + "Module " + Formatting.WHITE + moduleToBind.name + Formatting.GRAY + " bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                        case "Render" -> mc.getToastManager().add(new MatHaxToast(Items.TINTED_GLASS, Formatting.DARK_RED + "KeyBinds", Formatting.GRAY + "Module " + Formatting.WHITE + moduleToBind.name + Formatting.GRAY + " bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                        case "World" -> mc.getToastManager().add(new MatHaxToast(Items.GRASS_BLOCK, Formatting.DARK_RED + "KeyBinds", Formatting.GRAY + "Module " + Formatting.WHITE + moduleToBind.name + Formatting.GRAY + " bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                        case "Chat" -> mc.getToastManager().add(new MatHaxToast(Items.BEACON, Formatting.DARK_RED + "KeyBinds", Formatting.GRAY + "Module " + Formatting.WHITE + moduleToBind.name + Formatting.GRAY + " bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                        case "Fun" -> mc.getToastManager().add(new MatHaxToast(Items.NOTE_BLOCK, Formatting.DARK_RED + "KeyBinds", Formatting.GRAY + "Module " + Formatting.WHITE + moduleToBind.name + Formatting.GRAY + " bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                        case "Misc" -> mc.getToastManager().add(new MatHaxToast(Items.NETHER_STAR, Formatting.DARK_RED + "KeyBinds", Formatting.GRAY + "Module " + Formatting.WHITE + moduleToBind.name + Formatting.GRAY + " bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                    }
+                }
             }
 
             MatHaxClientLegacy.EVENT_BUS.post(ModuleBindChangedEvent.get(moduleToBind));
@@ -243,7 +261,8 @@ public class Modules extends System<Modules> {
             for (Module module : moduleInstances.values()) {
                 if (module.keybind.matches(isKey, value) && (isPress || module.toggleOnBindRelease)) {
                     module.toggle();
-                    module.sendToggledMsg();
+                    module.sendToggledMsg(module.title, module);
+                    module.sendToggledToast(module.title, module);
                 }
             }
         }
@@ -258,7 +277,8 @@ public class Modules extends System<Modules> {
         for (Module module : moduleInstances.values()) {
             if (module.toggleOnBindRelease && module.isActive()) {
                 module.toggle();
-                module.sendToggledMsg();
+                module.sendToggledMsg(module.title, module);
+                module.sendToggledToast(module.title, module);
             }
         }
     }

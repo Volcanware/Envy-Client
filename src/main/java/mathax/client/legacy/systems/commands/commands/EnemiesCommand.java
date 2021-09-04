@@ -8,10 +8,14 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import mathax.client.legacy.systems.commands.Command;
+import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.enemies.Enemies;
 import mathax.client.legacy.systems.enemies.Enemy;
 import mathax.client.legacy.utils.player.ChatUtils;
+import mathax.client.legacy.utils.render.MatHaxToast;
 import net.minecraft.command.CommandSource;
+import net.minecraft.item.Items;
+import net.minecraft.util.Formatting;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,8 +38,14 @@ public class EnemiesCommand extends Command {
                         .executes(context -> {
                             Enemy enemy = EnemyArgumentType.getEnemy(context, "enemy");
 
-                            if (Enemies.get().add(enemy)) info("Added (highlight)%s (default)to enemies.", enemy.name);
-                            else error("That person is already your enemy.");
+                            if (Enemies.get().add(enemy)) {
+                                if (Config.get().chatCommandsInfo) ChatUtils.info("Enemies", Formatting.GRAY + "Added " + Formatting.WHITE + enemy.name + Formatting.GRAY + " to enemies.");
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Enemies", Formatting.GRAY + "Added " + Formatting.WHITE + enemy.name + Formatting.GRAY + " to enemies."));
+                            }
+                            else {
+                                if (Config.get().chatCommandsInfo) ChatUtils.error("Enemies", Formatting.WHITE + enemy.name + Formatting.RED + " is already your enemy.");
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Enemies", Formatting.WHITE + enemy.name + Formatting.RED + " is already your enemy."));
+                            }
 
                             return SINGLE_SUCCESS;
                         })
@@ -46,8 +56,14 @@ public class EnemiesCommand extends Command {
                         .executes(context -> {
                             Enemy enemy = EnemyArgumentType.getEnemy(context, "enemy");
 
-                            if (Enemies.get().remove(enemy)) info("Removed (highlight)%s (default)from enemies.", enemy.name);
-                            else error("That person is not your enemy.");
+                            if (Enemies.get().add(enemy)) {
+                                if (Config.get().chatCommandsInfo) ChatUtils.info("Enemies", Formatting.GRAY + "Removed " + Formatting.WHITE + enemy.name + Formatting.GRAY + " from enemies.");
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Enemies", Formatting.GRAY + "Removed " + Formatting.WHITE + enemy.name + Formatting.GRAY + " from enemies."));
+                            }
+                            else {
+                                if (Config.get().chatCommandsInfo) ChatUtils.error("Enemies", Formatting.WHITE + enemy.name + Formatting.RED + " is not your enemy.");
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Enemies", Formatting.WHITE + enemy.name + Formatting.RED + " is not your enemy."));
+                            }
 
                             return SINGLE_SUCCESS;
                         })

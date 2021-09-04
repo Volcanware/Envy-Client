@@ -2,13 +2,17 @@ package mathax.client.legacy.systems.friends;
 
 import mathax.client.legacy.systems.System;
 import mathax.client.legacy.systems.Systems;
+import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.utils.misc.NbtUtils;
 import mathax.client.legacy.utils.player.ChatUtils;
+import mathax.client.legacy.utils.render.MatHaxToast;
 import mathax.client.legacy.utils.render.color.RainbowColors;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -40,6 +44,8 @@ public class Friends extends System<Friends> implements Iterable<Friend> {
         if (friend.name.isEmpty()) return false;
         if (friend.name.equals(mc.getSession().getUsername())) {
             ChatUtils.error("Friends", "You can't add yourself to friends!");
+            if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Friends", Formatting.RED + "You can't add yourself!"));
+            return false;
         }
 
         if (!friends.contains(friend)) {
