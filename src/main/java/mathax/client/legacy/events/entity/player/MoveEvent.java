@@ -29,6 +29,4 @@ public class MoveEvent extends Event {
     public void setVec(Vec3d vec) {
         this.vec = vec;
     }
-
-
 }

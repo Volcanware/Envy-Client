@@ -83,13 +83,6 @@ public class Notifier extends Module {
         .build()
     );
 
-    private final Setting<Boolean> visualRangeNotifier = sgVisualRange.add(new BoolSetting.Builder()
-        .name("visual-range-notifier")
-        .description("Notifies you in desktop when an entity enters your render distance.")
-        .defaultValue(false)
-        .build()
-    );
-
     private final Setting<Event> event = sgVisualRange.add(new EnumSetting.Builder<Event>()
         .name("event")
         .description("When to log the entities.")
@@ -137,12 +130,6 @@ public class Notifier extends Module {
             if ((!visualRangeIgnoreFriends.get() || !Friends.get().isFriend(((PlayerEntity) event.entity))) && (!visualRangeIgnoreFakes.get() || !(event.entity instanceof FakePlayerEntity))) {
                 entityName = event.entity.getEntityName();
                 ChatUtils.sendMsg(event.entity.getId() + 100, Formatting.GRAY, "(highlight)%s(default) has entered your visual range!", entityName);
-                //TODO: Always not supported?
-                /*if (SystemTray.isSupported()) {
-                    Notifier.displayVisualRangeTray();
-                } else {
-                    MatHaxClientLegacy.LOG.info(MatHaxClientLegacy.logprefix + "System tray not supported!");
-                }*/
             }
         }
         else {

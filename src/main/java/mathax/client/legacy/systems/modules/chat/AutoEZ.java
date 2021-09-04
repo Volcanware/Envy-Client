@@ -2,11 +2,12 @@
 package mathax.client.legacy.systems.modules.chat;
 
 import mathax.client.legacy.bus.EventHandler;
+import mathax.client.legacy.events.game.GameJoinedEvent;
+import mathax.client.legacy.events.game.GameLeftEvent;
 import mathax.client.legacy.events.packets.PacketEvent;
-import mathax.client.legacy.settings.BoolSetting;
-import mathax.client.legacy.settings.EnumSetting;
-import mathax.client.legacy.settings.Setting;
-import mathax.client.legacy.settings.SettingGroup;
+import mathax.client.legacy.events.world.ParticleEvent;
+import mathax.client.legacy.gui.tabs.builtin.DiscordPresenceTab;
+import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
@@ -18,12 +19,17 @@ import mathax.client.legacy.systems.modules.combat.CEVBreaker;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.entity.EntityUtils;
 import mathax.client.legacy.utils.placeholders.Placeholders;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
+import net.minecraft.item.Items;
+import net.minecraft.network.packet.s2c.play.*;
 
 public class AutoEZ extends Module {
+    private int totemsPopped = 0;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    //private final SettingGroup sgTotemPops = settings.createGroup("Totem Pops");
+    private final SettingGroup sgTotemPops = settings.createGroup("Totem Pops");
 
     //General
 
@@ -43,12 +49,29 @@ public class AutoEZ extends Module {
 
     //Totem Pops
 
-    /*private final Setting<Boolean> ignoreFriendsTotem = sgTotemPops.add(new BoolSetting.Builder()
+    private final Setting<Boolean> totemsEnabled = sgTotemPops.add(new BoolSetting.Builder()
+        .name("enabled")
+        .description("Toggles totem pop messages.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Double> totemsSendDelay = sgTotemPops.add(new DoubleSetting.Builder()
+        .name("send-delay")
+        .description("Amount of pops between messages.")
+        .defaultValue(2)
+        .min(2)
+        .sliderMin(2)
+        .sliderMax(100)
+        .build()
+    );
+
+    private final Setting<Boolean> totemsIgnoreFriends = sgTotemPops.add(new BoolSetting.Builder()
         .name("ignore-friends")
         .description("Ignores friends.")
         .defaultValue(true)
         .build()
-    );*/
+    );
 
     public AutoEZ() {
         super(Categories.Chat, "auto-EZ", "Announces when you kill someone.");
@@ -63,6 +86,7 @@ public class AutoEZ extends Module {
             for (PlayerEntity player : mc.world.getPlayers()) {
                 if (player == mc.player)
                     continue;
+                if (player.getName().getString().equals(mc.getSession().getUsername())) return;
                 if (msg.contains(player.getName().getString())) {
                     if (msg.contains("by " + mc.getSession().getUsername()) || msg.contains("whilst fighting " + mc.getSession().getUsername()) || msg.contains(mc.getSession().getUsername() + " sniped") || msg.contains(mc.getSession().getUsername() + " annaly fucked") || msg.contains(mc.getSession().getUsername() + " destroyed") || msg.contains(mc.getSession().getUsername() + " killed") || msg.contains(mc.getSession().getUsername() + " fucked") || msg.contains(mc.getSession().getUsername() + " separated") || msg.contains(mc.getSession().getUsername() + " punched") || msg.contains(mc.getSession().getUsername() + " shoved")) {
                         if (msg.contains("end crystal") || msg.contains("end-crystal")) {
@@ -85,7 +109,7 @@ public class AutoEZ extends Module {
                                     }
                                 }
                             } else {
-                                if (mc.player.distanceTo(player) < 8) {
+                                if (mc.player.distanceTo(player) < 7) {
                                     String message = getMessageStyle();
                                     String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
                                     if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
@@ -94,7 +118,7 @@ public class AutoEZ extends Module {
                                 }
                             }
                         } else {
-                            if (mc.player.distanceTo(player) < 6) {
+                            if (mc.player.distanceTo(player) < 8) {
                                 String message = getMessageStyle();
                                 String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
                                 if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
@@ -114,6 +138,14 @@ public class AutoEZ extends Module {
                         } else if (msg.contains("anchor") || msg.contains("[Intentional Game Design]") && Modules.get().isActive(AnchorAura.class)) {
                             if (mc.player.distanceTo(player) < Modules.get().get(AnchorAura.class).targetRange.get()) {
                                 String message = getAnchorMessageStyle();
+                                String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
+                                if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                if (EntityUtils.getGameMode(player).isCreative()) return;
+                                mc.player.sendChatMessage(toSendMessage.replace(Utils.getCoper(), Utils.getCoperReplacement()));
+                            }
+                        } else {
+                            if (mc.player.distanceTo(player) < 8) {
+                                String message = getMessageStyle();
                                 String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
                                 if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
                                 if (EntityUtils.getGameMode(player).isCreative()) return;
@@ -284,11 +316,18 @@ public class AutoEZ extends Module {
         TROLL*/
     }
 
-    // TOTEM POP
-/*
+    // TOTEM POPS
+
     @EventHandler
-    private void onTotemPop() {
-        //TODO: Totem pop detection
+    private void onTotemPop(PacketEvent.Receive event) {
+        // TODO
+        // Take from Notifier when home
+        if (totemsPopped == totemsSendDelay.get() || totemsPopped == 0) {
+
+            totemsPopped = 1;
+        } else {
+            ++totemsPopped;
+        }
     }
 
     public String getTotemMessage() {
@@ -305,5 +344,17 @@ public class AutoEZ extends Module {
             case 8: msg = "%killedperson% just got popped by MatHax Legacy!";
         }
         return msg;
-    }*/
+    }
+
+    @EventHandler
+    public void onActivate() {
+        // TOTEM POPS
+        totemsPopped = 0;
+    }
+
+    @EventHandler
+    private void onGameJoin(GameJoinedEvent event) {
+        // TOTEM POPS
+        totemsPopped = 0;
+    }
 }
