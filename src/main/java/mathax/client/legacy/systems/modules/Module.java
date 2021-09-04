@@ -96,16 +96,7 @@ public abstract class Module implements ISerializable<Module> {
 
     public void sendToggledToast(String title, Module module) {
         if (module.name.equals("zoom") && !Config.get().zoomToggleToast) return;
-        switch (module.category.name) {
-            case "Combat" -> mc.getToastManager().add(new MatHaxToast(Items.END_CRYSTAL, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
-            case "Player" -> mc.getToastManager().add(new MatHaxToast(Items.ARMOR_STAND, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
-            case "Movement" -> mc.getToastManager().add(new MatHaxToast(Items.DIAMOND_BOOTS, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
-            case "Render" -> mc.getToastManager().add(new MatHaxToast(Items.TINTED_GLASS, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
-            case "World" -> mc.getToastManager().add(new MatHaxToast(Items.GRASS_BLOCK, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
-            case "Chat" -> mc.getToastManager().add(new MatHaxToast(Items.BEACON, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
-            case "Fun" -> mc.getToastManager().add(new MatHaxToast(Items.NOTE_BLOCK, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
-            case "Misc" -> mc.getToastManager().add(new MatHaxToast(Items.NETHER_STAR, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
-        }
+        mc.getToastManager().add(new MatHaxToast(module.category.icon.getItem(), Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
     }
 
     private String getOnOff(Module module) {
