@@ -185,7 +185,7 @@ public class TitleScreenMixin extends Screen {
     private String getDeveloper() {
         if (Modules.get() == null) return "";
         if (Modules.get().isActive(NameProtect.class)) return "";
-        if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47")) return Formatting.WHITE + " [Developer]";
+        if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || mc.getSession().getUuid().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) return Formatting.WHITE + " [Developer]";
         else return "";
     }
 }
