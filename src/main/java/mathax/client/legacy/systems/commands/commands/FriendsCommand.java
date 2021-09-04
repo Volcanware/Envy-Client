@@ -8,10 +8,14 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import mathax.client.legacy.systems.commands.Command;
+import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.friends.Friend;
 import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.utils.player.ChatUtils;
+import mathax.client.legacy.utils.render.MatHaxToast;
 import net.minecraft.command.CommandSource;
+import net.minecraft.item.Items;
+import net.minecraft.util.Formatting;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,8 +38,14 @@ public class FriendsCommand extends Command {
                         .executes(context -> {
                             Friend friend = FriendArgumentType.getFriend(context, "friend");
 
-                            if (Friends.get().add(friend)) info("Added (highlight)%s (default)to friends.", friend.name);
-                            else error("That person is already your friend.");
+                            if (Friends.get().add(friend)) {
+                                if (Config.get().chatCommandsInfo) info("Added (highlight)%s (default)to friends.", friend.name);
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Formatting.DARK_RED + "Friends", Formatting.GRAY + "Added " + Formatting.WHITE + friend.name + Formatting.GRAY + " to friends."));
+                            }
+                            else {
+                                if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is already your friend.", friend.name);
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Formatting.DARK_RED + "Friends", Formatting.WHITE + friend.name + Formatting.RED + " is already your friend."));
+                            }
 
                             return SINGLE_SUCCESS;
                         })
@@ -46,8 +56,14 @@ public class FriendsCommand extends Command {
                         .executes(context -> {
                             Friend friend = FriendArgumentType.getFriend(context, "friend");
 
-                            if (Friends.get().remove(friend)) info("Removed (highlight)%s (default)from friends.", friend.name);
-                            else error("That person is not your friend.");
+                            if (Friends.get().add(friend)) {
+                                if (Config.get().chatCommandsInfo) info("Removed (highlight)%s (default)from friends.", friend.name);
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Formatting.DARK_RED + "Friends", Formatting.GRAY + "Removed " + Formatting.WHITE + friend.name + Formatting.GRAY + " from friends."));
+                            }
+                            else {
+                                if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is not your friend.", friend.name);
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Formatting.DARK_RED + "Friends", Formatting.WHITE + friend.name + Formatting.RED + " is not your friend."));
+                            }
 
                             return SINGLE_SUCCESS;
                         })

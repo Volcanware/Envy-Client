@@ -39,12 +39,12 @@ public class EnemiesCommand extends Command {
                             Enemy enemy = EnemyArgumentType.getEnemy(context, "enemy");
 
                             if (Enemies.get().add(enemy)) {
-                                if (Config.get().chatCommandsInfo) ChatUtils.info("Enemies", Formatting.GRAY + "Added " + Formatting.WHITE + enemy.name + Formatting.GRAY + " to enemies.");
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Enemies", Formatting.GRAY + "Added " + Formatting.WHITE + enemy.name + Formatting.GRAY + " to enemies."));
+                                if (Config.get().chatCommandsInfo) info("Added (highlight)%s (default)to enemies.", enemy.name);
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Formatting.DARK_RED + "Enemies", Formatting.GRAY + "Added " + Formatting.WHITE + enemy.name + Formatting.GRAY + " to enemies."));
                             }
                             else {
-                                if (Config.get().chatCommandsInfo) ChatUtils.error("Enemies", Formatting.WHITE + enemy.name + Formatting.RED + " is already your enemy.");
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Enemies", Formatting.WHITE + enemy.name + Formatting.RED + " is already your enemy."));
+                                if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is already your enemy.", enemy.name);
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Formatting.DARK_RED + "Enemies", Formatting.WHITE + enemy.name + Formatting.RED + " is already your enemy."));
                             }
 
                             return SINGLE_SUCCESS;
@@ -57,12 +57,12 @@ public class EnemiesCommand extends Command {
                             Enemy enemy = EnemyArgumentType.getEnemy(context, "enemy");
 
                             if (Enemies.get().add(enemy)) {
-                                if (Config.get().chatCommandsInfo) ChatUtils.info("Enemies", Formatting.GRAY + "Removed " + Formatting.WHITE + enemy.name + Formatting.GRAY + " from enemies.");
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Enemies", Formatting.GRAY + "Removed " + Formatting.WHITE + enemy.name + Formatting.GRAY + " from enemies."));
+                                if (Config.get().chatCommandsInfo) info("Removed (highlight)%s (default)from enemies.", enemy.name);
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Formatting.DARK_RED + "Enemies", Formatting.GRAY + "Removed " + Formatting.WHITE + enemy.name + Formatting.GRAY + " from enemies."));
                             }
                             else {
-                                if (Config.get().chatCommandsInfo) ChatUtils.error("Enemies", Formatting.WHITE + enemy.name + Formatting.RED + " is not your enemy.");
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Enemies", Formatting.WHITE + enemy.name + Formatting.RED + " is not your enemy."));
+                                if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is not your enemy.", enemy.name);
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Formatting.DARK_RED + "Enemies", Formatting.WHITE + enemy.name + Formatting.RED + " is not your enemy."));
                             }
 
                             return SINGLE_SUCCESS;

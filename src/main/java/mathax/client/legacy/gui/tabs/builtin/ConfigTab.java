@@ -124,6 +124,15 @@ public class ConfigTab extends Tab {
             .build()
     );
 
+    public static final Setting<Boolean> zoomToggleMessage = sgChat.add(new BoolSetting.Builder()
+        .name("zoom-toggle")
+        .description("Sends a chat message when you toggle zoom module.")
+        .defaultValue(false)
+        .onChanged(aBoolean -> Config.get().zoomToggleMessage = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().zoomToggleMessage))
+        .build()
+    );
+
     public static final Setting<Boolean> deleteChatCommandsInfo = sgChat.add(new BoolSetting.Builder()
             .name("delete-chat-commands-info")
             .description("Delete previous chat messages.")
@@ -151,6 +160,15 @@ public class ConfigTab extends Tab {
         .defaultValue(true)
         .onChanged(aBoolean -> Config.get().moduleToggleToast = aBoolean)
         .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().moduleToggleToast))
+        .build()
+    );
+
+    public static final Setting<Boolean> zoomToggleToast = sgToasts.add(new BoolSetting.Builder()
+        .name("zoom-toggle")
+        .description("Sends a toast when you toggle zoom module.")
+        .defaultValue(false)
+        .onChanged(aBoolean -> Config.get().zoomToggleToast = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().zoomToggleToast))
         .build()
     );
 

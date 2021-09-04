@@ -90,10 +90,12 @@ public abstract class Module implements ISerializable<Module> {
     }
 
     public void sendToggledMsg(String title, Module module) {
-        if (Config.get().chatCommandsInfo) ChatUtils.info("Modules", "Toggled " + Formatting.WHITE + title + Formatting.GRAY + " " + getOnOff(module) + Formatting.GRAY + ".");
+        if (module.name.equals("zoom") && !Config.get().zoomToggleMessage) return;
+        if (Config.get().chatCommandsInfo) ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY,  "[" + Formatting.DARK_RED + "Modules" + Formatting.GRAY + "] Toggled (highlight)%s(default) %s(default).", title, isActive() ? Formatting.GREEN + "on" : Formatting.RED + "off");
     }
 
     public void sendToggledToast(String title, Module module) {
+        if (module.name.equals("zoom") && !Config.get().zoomToggleToast) return;
         switch (module.category.name) {
             case "Combat" -> mc.getToastManager().add(new MatHaxToast(Items.END_CRYSTAL, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
             case "Player" -> mc.getToastManager().add(new MatHaxToast(Items.ARMOR_STAND, Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
