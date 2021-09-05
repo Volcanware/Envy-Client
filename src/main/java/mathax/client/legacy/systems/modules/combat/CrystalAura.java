@@ -81,7 +81,7 @@ public class CrystalAura extends Module {
         .defaultValue(true)
         .build()
     );
-    
+
     private final Setting<Double> minDamage = sgGeneral.add(new DoubleSetting.Builder()
         .name("min-damage")
         .description("Minimum damage the crystal needs to deal to your target.")
