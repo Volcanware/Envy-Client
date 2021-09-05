@@ -1,5 +1,6 @@
 package mathax.client.legacy.systems.modules.render.hud.modules;
 
+import mathax.client.legacy.renderer.Renderer2D;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
@@ -21,7 +22,7 @@ public class ActiveModulesHUD extends HUDElement {
     private final Setting<Sort> sort = sgGeneral.add(new EnumSetting.Builder<Sort>()
         .name("sort")
         .description("How to sort active modules.")
-        .defaultValue(ActiveModulesHUD.Sort.Biggest)
+        .defaultValue(Sort.Biggest)
         .build()
     );
 
@@ -44,6 +45,23 @@ public class ActiveModulesHUD extends HUDElement {
         .description("Color for flat color mode.")
         .defaultValue(new SettingColor(225, 25, 25))
         .visible(() -> colorMode.get() == ColorMode.Flat)
+        .build()
+    );
+
+    private final Setting<Boolean> outlines = sgGeneral.add(new BoolSetting.Builder()
+        .name("outlines")
+        .description("Whether or not to render outlines")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Integer> outlineWidth = sgGeneral.add(new IntSetting.Builder()
+        .name("outline-width")
+        .description("Outline width")
+        .defaultValue(4)
+        .min(1)
+        .sliderMin(1).sliderMax(10)
+        .visible(outlines::get)
         .build()
     );
 
@@ -71,6 +89,10 @@ public class ActiveModulesHUD extends HUDElement {
 
     private final Color rainbow = new Color(255, 255, 255);
     private double rainbowHue1, rainbowHue2;
+
+    private double prevX, prevY;
+    private double prevTextLength;
+    private Color prevColor = new Color();
 
     public ActiveModulesHUD(HUD hud) {
         super(hud, "active-modules", "Displays your active modules.", true);
@@ -134,14 +156,22 @@ public class ActiveModulesHUD extends HUDElement {
 
         rainbowHue2 = rainbowHue1;
 
-        for (Module module : modules) {
-            renderModule(renderer, module, x + box.alignX(getModuleWidth(renderer, module)), y);
+        prevX = x;
+        prevY = y;
+        Renderer2D.COLOR.begin();
+        for (int i = 0; i < modules.size(); i++) {
+            renderModule(renderer, modules, i, x + box.alignX(getModuleWidth(renderer, modules.get(i))), y);
+
+            prevX = x + box.alignX(getModuleWidth(renderer, modules.get(i)));
+            prevY = y;
 
             y += 2 + renderer.textHeight();
         }
+        Renderer2D.COLOR.render(null);
     }
 
-    private void renderModule(HUDRenderer renderer, Module module, double x, double y) {
+    private void renderModule(HUDRenderer renderer, List<Module> modules, int index, double x, double y) {
+        Module module = modules.get(index);
         Color color = flatColor.get();
 
         ColorMode colorMode = this.colorMode.get();
@@ -156,6 +186,7 @@ public class ActiveModulesHUD extends HUDElement {
 
             color = rainbow;
         }
+
         else if (colorMode == ColorMode.Category) {
             Color COMBAT_CATEGORY_COLOR = new Color(Categories.COMBAT_COLOR);
             if (module.category.equals(Categories.Combat)) color = COMBAT_CATEGORY_COLOR;
@@ -177,10 +208,50 @@ public class ActiveModulesHUD extends HUDElement {
 
         renderer.text(module.title, x, y, color);
 
+        double textLength = renderer.textWidth(module.title);
+
         if (activeInfo.get()) {
             String info = module.getInfoString();
-            if (info != null) renderer.text(info, x + renderer.textWidth(module.title) + renderer.textWidth(" "), y, hud.secondaryColor.get());
+            if (info != null) {
+                renderer.text(info, x + renderer.textWidth(module.title) + renderer.textWidth(" "), y, hud.secondaryColor.get());
+                textLength += renderer.textWidth(" ") + renderer.textWidth(info);
+            }
         }
+
+        if (outlines.get()) {
+            if (index == 0) {
+                Renderer2D.COLOR.quad(x - 2 - outlineWidth.get(), y - 2, outlineWidth.get(), renderer.textHeight() + 4, prevColor, prevColor, color, color); // Left quad
+                Renderer2D.COLOR.quad(x + textLength + 2, y - 2, outlineWidth.get(), renderer.textHeight() + 4, prevColor, prevColor, color, color); // Right quad
+
+                Renderer2D.COLOR.quad(x - 2 - outlineWidth.get(), y - 2 - outlineWidth.get(), textLength + 4 + (outlineWidth.get() * 2), outlineWidth.get(), prevColor, prevColor, color, color); // Top quad
+
+            } else if (index == modules.size() - 1) {
+                Renderer2D.COLOR.quad(x - 2 - outlineWidth.get(), y, outlineWidth.get(), renderer.textHeight() + 2 + outlineWidth.get(), prevColor, prevColor, color, color); // Left quad
+                Renderer2D.COLOR.quad(x + textLength + 2, y, outlineWidth.get(), renderer.textHeight() + 2 + outlineWidth.get(), prevColor, prevColor, color, color); // Right quad
+
+                Renderer2D.COLOR.quad(x - 2 - outlineWidth.get(), y + renderer.textHeight() + 2, textLength + 4 + (outlineWidth.get() * 2), outlineWidth.get(), prevColor, prevColor, color, color); // Bottom quad
+            }
+
+            if (index > 0) {
+                if (index < modules.size() - 1) {
+
+                    Renderer2D.COLOR.quad(x - 2 - outlineWidth.get(), y, outlineWidth.get(), renderer.textHeight() + 2, prevColor, prevColor, color, color); // Left quad
+                    Renderer2D.COLOR.quad(x + textLength + 2, y, outlineWidth.get(), renderer.textHeight() + 2, prevColor, prevColor, color, color); // Right quad
+
+                }
+
+                Renderer2D.COLOR.quad(Math.min(prevX, x) - 2 - outlineWidth.get(), Math.max(prevX, x) == x ? y : y - outlineWidth.get(),
+                    (Math.max(prevX, x) - 2) - (Math.min(prevX, x) - 2 - outlineWidth.get()), outlineWidth.get(),
+                    prevColor, prevColor, color, color); // Left inbetween quad
+
+                Renderer2D.COLOR.quad(Math.min(prevX + prevTextLength, x + textLength) + 2, Math.min(prevX + prevTextLength, x + textLength) == x + textLength ? y : y - outlineWidth.get(),
+                    (Math.max(prevX + prevTextLength, x + textLength) + 2 + outlineWidth.get()) - (Math.min(prevX + prevTextLength, x + textLength) + 2), outlineWidth.get(),
+                    prevColor, prevColor, color, color); // Right inbetween quad
+            }
+        }
+
+        prevTextLength = textLength;
+        prevColor = color;
     }
 
     private double getModuleWidth(HUDRenderer renderer, Module module) {

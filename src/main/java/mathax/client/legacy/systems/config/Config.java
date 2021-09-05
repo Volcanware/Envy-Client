@@ -22,6 +22,8 @@ public class Config extends System<Config> {
     public String font = ConfigTab.font.get();
     public boolean customFont = ConfigTab.customFont.get();
     public int rotationHoldTicks = ConfigTab.rotationHoldTicks.get();
+    public boolean useTeamColor = ConfigTab.useTeamColor.get();
+    public boolean viewMatHaxLegacyUsers = ConfigTab.viewMatHaxLegacyUsers.get();
 
     public String prefix = ConfigTab.prefix.get();
     public boolean rainbowPrefix = ConfigTab.rainbowPrefix.get();
@@ -33,10 +35,6 @@ public class Config extends System<Config> {
     public boolean moduleToggleToast = ConfigTab.moduleToggleToast.get();
     public boolean zoomToggleToast = ConfigTab.zoomToggleToast.get();
     public boolean playSoundToast = ConfigTab.playSoundToast.get();
-
-    public boolean viewMatHaxLegacyUsers = ConfigTab.viewMatHaxLegacyUsers.get();
-
-    public boolean useTeamColor = ConfigTab.useTeamColor.get();
 
     public List<String> dontShowAgainPrompts = new ArrayList<>();
 
@@ -64,6 +62,8 @@ public class Config extends System<Config> {
         tag.putBoolean("customFont", customFont);
         tag.putDouble("rainbowSpeed", RainbowColors.GLOBAL.getSpeed());
         tag.putInt("rotationHoldTicks", rotationHoldTicks);
+        tag.putBoolean("useTeamColor", useTeamColor);
+        tag.putBoolean("viewMatHaxLegacyUsers", viewMatHaxLegacyUsers);
         tag.putBoolean("rainbowPrefix", rainbowPrefix);
         tag.putString("prefix", prefix);
         tag.putBoolean("openChatOnPrefix", openChatOnPrefix);
@@ -75,10 +75,6 @@ public class Config extends System<Config> {
         tag.putBoolean("zoomToggleToast", zoomToggleToast);
         tag.putBoolean("playSoundToast", playSoundToast);
 
-        tag.putBoolean("viewMatHaxLegacyUsers", viewMatHaxLegacyUsers);
-
-        tag.putBoolean("useTeamColor", useTeamColor);
-
         tag.put("dontShowAgainPrompts", listToNbt(dontShowAgainPrompts));
         return tag;
     }
@@ -89,6 +85,8 @@ public class Config extends System<Config> {
         customFont = getBoolean(tag, "customFont", ConfigTab.customFont);
         RainbowColors.GLOBAL.setSpeed(tag.contains("rainbowSpeed") ? tag.getDouble("rainbowSpeed") : ConfigTab.rainbowSpeed.getDefaultValue() / 100);
         rotationHoldTicks = getInt(tag, "rotationHoldTicks", ConfigTab.rotationHoldTicks);
+        useTeamColor = getBoolean(tag, "useTeamColor", ConfigTab.useTeamColor);
+        viewMatHaxLegacyUsers = getBoolean(tag, "viewMatHaxLegacyUsers", ConfigTab.viewMatHaxLegacyUsers);
 
         prefix = getString(tag, "prefix", ConfigTab.prefix);
         rainbowPrefix = getBoolean(tag, "rainbowPrefix", ConfigTab.rainbowPrefix);
@@ -100,10 +98,6 @@ public class Config extends System<Config> {
         moduleToggleToast = getBoolean(tag, "moduleToggleToast", ConfigTab.moduleToggleToast);
         zoomToggleToast = getBoolean(tag, "zoomToggleToast", ConfigTab.zoomToggleToast);
         playSoundToast = getBoolean(tag, "playSoundToast", ConfigTab.playSoundToast);
-
-        viewMatHaxLegacyUsers = getBoolean(tag, "viewMatHaxLegacyUsers", ConfigTab.viewMatHaxLegacyUsers);
-
-        useTeamColor = getBoolean(tag, "useTeamColor", ConfigTab.useTeamColor);
 
         dontShowAgainPrompts.clear();
         for (NbtElement item : tag.getList("dontShowAgainPrompts", NbtElement.STRING_TYPE)) {

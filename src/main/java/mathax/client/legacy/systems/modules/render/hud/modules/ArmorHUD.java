@@ -62,7 +62,7 @@ public class ArmorHUD extends HUDElement {
     public void update(HUDRenderer renderer) {
         switch (orientation.get()) {
             case Horizontal -> box.setSize(16 * scale.get() * 4 + 2 * 4, 16 * scale.get());
-            case Vertical   -> box.setSize(16 * scale.get(), 16 * scale.get() * 4 + 2 * 4);
+            case Vertical -> box.setSize(16 * scale.get(), 16 * scale.get() * 4 + 2 * 4);
         }
     }
 
@@ -91,14 +91,14 @@ public class ArmorHUD extends HUDElement {
                 armorY = y / scale.get();
             }
 
-            RenderUtils.drawItem(itemStack, (int) armorX, (int) armorY, (itemStack.isDamageable() && durability.get() == Durability.Default));
+            RenderUtils.drawItem(itemStack, (int) armorX, (int) armorY, (itemStack.isDamageable() && durability.get() == Durability.Bar));
 
-            if (itemStack.isDamageable() && !isInEditor() && durability.get() != Durability.Default && durability.get() != Durability.None) {
+            if (itemStack.isDamageable() && !isInEditor() && durability.get() != Durability.Bar && durability.get() != Durability.None) {
                 String percentage = Integer.toString(Math.round(((itemStack.getMaxDamage() - itemStack.getDamage()) * 100f) / (float) itemStack.getMaxDamage()));
                 String message = switch (durability.get()) {
-                    case Numbers    -> Integer.toString(itemStack.getMaxDamage() - itemStack.getDamage());
+                    case Total -> Integer.toString(itemStack.getMaxDamage() - itemStack.getDamage());
                     case Percentage -> percentage + "%";
-                    default         -> "err";
+                    default -> "err";
                 };
 
                 double messageWidth = renderer.textWidth(message);
@@ -125,9 +125,9 @@ public class ArmorHUD extends HUDElement {
         if (isInEditor()) {
             return switch (i) {
                 default -> Items.NETHERITE_BOOTS.getDefaultStack();
-                case 1  -> Items.NETHERITE_LEGGINGS.getDefaultStack();
-                case 2  -> Items.NETHERITE_CHESTPLATE.getDefaultStack();
-                case 3  -> Items.NETHERITE_HELMET.getDefaultStack();
+                case 1 -> Items.NETHERITE_LEGGINGS.getDefaultStack();
+                case 2 -> Items.NETHERITE_CHESTPLATE.getDefaultStack();
+                case 3 -> Items.NETHERITE_HELMET.getDefaultStack();
             };
         }
 
@@ -136,8 +136,8 @@ public class ArmorHUD extends HUDElement {
 
     public enum Durability {
         None,
-        Default,
-        Numbers,
+        Bar,
+        Total,
         Percentage
     }
 

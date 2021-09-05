@@ -14,7 +14,7 @@ public class CompassHUD extends HUDElement {
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("type")
-        .description("Which type of axis to show.")
+        .description("Which type of direction information to show.")
         .defaultValue(Mode.Axis)
         .build()
     );
@@ -44,19 +44,7 @@ public class CompassHUD extends HUDElement {
 
     @Override
     public void update(HUDRenderer renderer) {
-        if (!isInEditor()) pitch = mc.player.getPitch();
-        else pitch = 90;
-
-        pitch = MathHelper.clamp(pitch + 30, -90, 90);
-        pitch = Math.toRadians(pitch);
-
-        if (!isInEditor()) yaw = mc.player.getYaw();
-        else yaw = 180;
-
-        yaw = MathHelper.wrapDegrees(yaw);
-        yaw = Math.toRadians(yaw);
-
-        box.setSize(100 *  scale.get(), 100 *  scale.get());
+        box.setSize(100 * scale.get(), 100 * scale.get());
     }
 
     @Override
@@ -64,23 +52,33 @@ public class CompassHUD extends HUDElement {
         double x = box.getX() + (box.width / 2);
         double y = box.getY() + (box.height / 2);
 
-        for (Direction dir : Direction.values()) {
-            String axis = mode.get() == Mode.Axis ? dir.getAlternate() : dir.name();
+        double pitch = isInEditor() ? 120 : MathHelper.clamp(mc.player.getPitch() + 30, -90, 90);
+        pitch = Math.toRadians(pitch);
 
-            renderer.text(axis, (x + getX(dir)) - (renderer.textWidth(axis) / 2), (y + getY(dir)) - (renderer.textHeight() / 2), dir == Direction.N ? northColor.get() : hud.primaryColor.get());
+        double yaw = isInEditor() ? 180 : MathHelper.wrapDegrees(mc.player.getYaw());
+        yaw = Math.toRadians(yaw);
+
+        for (Direction direction : Direction.values()) {
+            String axis = mode.get() == Mode.Axis ? direction.getAxis() : direction.name();
+
+            renderer.text(
+                axis,
+                (x + getX(direction, yaw)) - (renderer.textWidth(axis) / 2),
+                (y + getY(direction, yaw, pitch)) - (renderer.textHeight() / 2),
+                direction == Direction.N ? northColor.get() : hud.primaryColor.get());
         }
     }
 
-    private double getX(Direction dir) {
-        return Math.sin(getPosOnCompass(dir)) * scale.get() * 40;
+    private double getX(Direction direction, double yaw) {
+        return Math.sin(getPos(direction, yaw)) * scale.get() * 40;
     }
 
-    private double getY(Direction dir) {
-        return Math.cos(getPosOnCompass(dir)) * Math.sin(pitch) * scale.get() * 40;
+    private double getY(Direction direction, double yaw, double pitch) {
+        return Math.cos(getPos(direction, yaw)) * Math.sin(pitch) * scale.get() * 40;
     }
 
-    private double getPosOnCompass(Direction dir) {
-        return yaw + dir.ordinal() * Math.PI / 2;
+    private double getPos(Direction direction, double yaw) {
+        return yaw + direction.ordinal() * Math.PI / 2;
     }
 
     private enum Direction {
@@ -89,18 +87,19 @@ public class CompassHUD extends HUDElement {
         S("Z+"),
         E("X+");
 
-        String alternate;
+        private final String axis;
 
-        Direction(String alternate) {
-            this.alternate = alternate;
+        Direction(String axis) {
+            this.axis = axis;
         }
 
-        public String getAlternate() {
-            return alternate;
+        public String getAxis() {
+            return axis;
         }
     }
 
     public enum Mode {
-        Axis, Pole
+        Direction,
+        Axis
     }
 }

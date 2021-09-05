@@ -4,12 +4,12 @@ import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.renderer.Texture;
 import mathax.client.legacy.utils.misc.ISerializable;
 import mathax.client.legacy.utils.misc.NbtException;
+import mathax.client.legacy.utils.network.Http;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.net.URL;
 
 import static mathax.client.legacy.utils.Utils.mc;
 
@@ -29,9 +29,12 @@ public class AccountCache implements ISerializable<AccountCache> {
             byte[] head = new byte[8 * 8 * 3];
             int[] pixel = new int[4];
 
-            if (skinUrl.equals("steve"))
+            if (skinUrl.equals("steve")) {
                 skin = ImageIO.read(mc.getResourceManager().getResource(new Identifier("mathaxlegacy", "textures/steve.png")).getInputStream());
-            else skin = ImageIO.read(new URL(skinUrl));
+            }
+            else {
+                skin = ImageIO.read(Http.get(skinUrl).sendInputStream());
+            }
 
             // Whole picture
             // TODO: Find a better way to do it
@@ -50,7 +53,8 @@ public class AccountCache implements ISerializable<AccountCache> {
             headTexture = new Texture(8, 8, head, Texture.Format.RGB, Texture.Filter.Nearest, Texture.Filter.Nearest);
             return true;
         } catch (Exception e) {
-            MatHaxClientLegacy.LOG.error(MatHaxClientLegacy.logprefix + "Failed to read skin url. (" + skinUrl + ")");
+            MatHaxClientLegacy.LOG.error(MatHaxClientLegacy.logprefix + "Failed to read skin url (" + skinUrl + ")");
+            e.printStackTrace();
             return false;
         }
     }

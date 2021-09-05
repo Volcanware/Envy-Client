@@ -17,10 +17,11 @@ public class DurabilityHUD extends TripleTextHUDElement {
     protected String getRight() {
         if (isInEditor()) return "69";
 
-        Integer amount = null;
-        if (!mc.player.getMainHandStack().isEmpty() && mc.player.getMainHandStack().isDamageable()) amount = mc.player.getMainHandStack().getMaxDamage() - mc.player.getMainHandStack().getDamage();
+        if (!mc.player.getMainHandStack().isEmpty() && mc.player.getMainHandStack().isDamageable()) {
+            return String.valueOf(mc.player.getMainHandStack().getMaxDamage() - mc.player.getMainHandStack().getDamage());
+        }
 
-        return amount == null ? "Infinite" : amount.toString();
+        return "Infinite";
     }
 
     @Override

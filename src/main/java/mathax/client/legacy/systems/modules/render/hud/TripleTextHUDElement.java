@@ -6,9 +6,7 @@ public abstract class TripleTextHUDElement extends HUDElement {
     protected Color rightColor;
     protected boolean visible = true;
 
-    private String left;
-    private String right;
-    private String end;
+    private String left, right, end;
 
     private double leftWidth;
     private double rightWidth;

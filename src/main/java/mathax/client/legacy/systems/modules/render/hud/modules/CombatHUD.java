@@ -201,11 +201,11 @@ public class CombatHUD extends HUDElement {
 
             // Player Model
             InventoryScreen.drawEntity(
-                    (int) (x + (25 * scale.get())),
-                    (int) (y + (66 * scale.get())),
-                    (int) (30 * scale.get()),
-                    -MathHelper.wrapDegrees(playerEntity.prevYaw + (playerEntity.getYaw() - playerEntity.prevYaw) * mc.getTickDelta()),
-                    -playerEntity.getPitch(), playerEntity
+                (int) (x + (25 * scale.get())),
+                (int) (y + (66 * scale.get())),
+                (int) (30 * scale.get()),
+                -MathHelper.wrapDegrees(playerEntity.prevYaw + (playerEntity.getYaw() - playerEntity.prevYaw) * mc.getTickDelta()),
+                -playerEntity.getPitch(), playerEntity
             );
 
             // Moving pos to past player model
@@ -218,14 +218,14 @@ public class CombatHUD extends HUDElement {
             // Name
             String nameText = "";
 
-            if ((playerEntity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || playerEntity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers) {
+            if (mc.getSession().getUsername().equals("Matejko06") && Config.get().viewMatHaxLegacyUsers) {
                 GL.bindTexture(mathaxLogo);
                 Renderer2D.TEXTURE.begin();
                 Renderer2D.TEXTURE.texQuad(x - renderer.textWidth(nameText) + 2, y, 16, 16, textureColor);
                 Renderer2D.TEXTURE.render(null);
             }
 
-            if ((playerEntity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || playerEntity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers)
+            if (mc.getSession().getUsername().equals("Matejko06") && Config.get().viewMatHaxLegacyUsers)
                 nameText += "     " + playerEntity.getEntityName();
             else
                 nameText += playerEntity.getEntityName();
@@ -279,9 +279,9 @@ public class CombatHUD extends HUDElement {
                         ItemStack itemStack = getItem(position);
 
                         if (itemStack.getItem() instanceof SwordItem
-                                || itemStack.getItem() == Items.END_CRYSTAL
-                                || itemStack.getItem() == Items.RESPAWN_ANCHOR
-                                || itemStack.getItem() instanceof BedItem) threat = true;
+                            || itemStack.getItem() == Items.END_CRYSTAL
+                            || itemStack.getItem() == Items.RESPAWN_ANCHOR
+                            || itemStack.getItem() instanceof BedItem) threat = true;
                     }
 
                     if (threat) {
@@ -350,7 +350,9 @@ public class CombatHUD extends HUDElement {
                 Map<Enchantment, Integer> enchantmentsToShow = new HashMap<>();
 
                 for (Enchantment enchantment : displayedEnchantments.get()) {
-                    if (enchantments.containsKey(enchantment)) enchantmentsToShow.put(enchantment, enchantments.get(enchantment));
+                    if (enchantments.containsKey(enchantment)) {
+                        enchantmentsToShow.put(enchantment, enchantments.get(enchantment));
+                    }
                 }
 
                 for (Enchantment enchantment : enchantmentsToShow.keySet()) {
@@ -358,7 +360,7 @@ public class CombatHUD extends HUDElement {
 
                     double enchX = (armorX + 8) - (TextRenderer.get().getWidth(enchantName) / 2);
 
-                    TextRenderer.get().render(enchantName, enchX, armorY, enchantment.isCursed() ? RED :  enchantmentTextColor.get());
+                    TextRenderer.get().render(enchantName, enchX, armorY, enchantment.isCursed() ? RED : enchantmentTextColor.get());
                     armorY += TextRenderer.get().getHeight();
                 }
                 slot--;
@@ -411,26 +413,32 @@ public class CombatHUD extends HUDElement {
 
     private ItemStack getItem(int i) {
         if (isInEditor()) {
-            switch (i) {
-                case 0:  return Items.END_CRYSTAL.getDefaultStack();
-                case 1:  return Items.NETHERITE_BOOTS.getDefaultStack();
-                case 2:  return Items.NETHERITE_LEGGINGS.getDefaultStack();
-                case 3:  return Items.NETHERITE_CHESTPLATE.getDefaultStack();
-                case 4:  return Items.NETHERITE_HELMET.getDefaultStack();
-                case 5:  return Items.TOTEM_OF_UNDYING.getDefaultStack();
-            }
+            return switch (i) {
+                case 0 -> Items.END_CRYSTAL.getDefaultStack();
+                case 1 -> Items.NETHERITE_BOOTS.getDefaultStack();
+                case 2 -> Items.NETHERITE_LEGGINGS.getDefaultStack();
+                case 3 -> Items.NETHERITE_CHESTPLATE.getDefaultStack();
+                case 4 -> Items.NETHERITE_HELMET.getDefaultStack();
+                case 5 -> Items.TOTEM_OF_UNDYING.getDefaultStack();
+                default -> ItemStack.EMPTY;
+            };
         }
 
         if (playerEntity == null) return ItemStack.EMPTY;
 
-        if (i == 5) return playerEntity.getMainHandStack();
-        else if (i == 4) return playerEntity.getOffHandStack();
-        return playerEntity.getInventory().getArmorStack(i);
+        return switch (i) {
+            case 4 -> playerEntity.getOffHandStack();
+            case 5 -> playerEntity.getMainHandStack();
+            default -> playerEntity.getInventory().getArmorStack(i);
+        };
     }
 
     public static List<Enchantment> getDefaultEnchantments() {
-        List<Enchantment> ench = new ArrayList<>();
-        for (Enchantment enchantment : Registry.ENCHANTMENT) ench.add(enchantment);
-        return ench;
+        List<Enchantment> enchantments = new ArrayList<>();
+        for (Enchantment enchantment : Registry.ENCHANTMENT) {
+            enchantments.add(enchantment);
+        }
+
+        return enchantments;
     }
 }

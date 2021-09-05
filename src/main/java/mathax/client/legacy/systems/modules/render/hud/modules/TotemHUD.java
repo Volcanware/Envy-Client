@@ -41,7 +41,8 @@ public class TotemHUD extends HUDElement {
 
         if (isInEditor()) {
             RenderUtils.drawItem(Items.TOTEM_OF_UNDYING.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        } else if (InvUtils.find(Items.TOTEM_OF_UNDYING).getCount() > 0) {
+        }
+        else if (InvUtils.find(Items.TOTEM_OF_UNDYING).getCount() > 0) {
             RenderUtils.drawItem(new ItemStack(Items.TOTEM_OF_UNDYING, InvUtils.find(Items.TOTEM_OF_UNDYING).getCount()), (int) x, (int) y, scale.get(), true);
         }
     }

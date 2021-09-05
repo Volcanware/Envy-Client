@@ -74,7 +74,7 @@ public class PlayerListHudMixin {
             String text = latency + "ms";
             textRenderer.drawWithShadow(matrices, text, (float) x + width - textRenderer.getWidth(text), (float) y, color);
         } else {
-            /*if ((entry.getProfile().getId().toString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || entry.getProfile().getId().toString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && betterTab.isActive() && Config.get().viewMatHaxLegacyUsers) {
+            /*if ((mc.getSession().getUsername().equals("Matejko06"))) && betterTab.isActive() && Config.get().viewMatHaxLegacyUsers) {
 
             }*/
             renderLatencyIcon(matrices, width, x, y, entry);

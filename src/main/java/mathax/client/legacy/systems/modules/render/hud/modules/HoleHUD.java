@@ -17,7 +17,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class HoleHUD extends HUDElement {
@@ -37,7 +36,7 @@ public class HoleHUD extends HUDElement {
     public final Setting<List<Block>> safe = sgGeneral.add(new BlockListSetting.Builder()
         .name("safe-blocks")
         .description("Which blocks to consider safe.")
-        .defaultValue(Arrays.asList(Blocks.OBSIDIAN, Blocks.BEDROCK, Blocks.CRYING_OBSIDIAN, Blocks.NETHERITE_BLOCK))
+        .defaultValue(List.of(Blocks.OBSIDIAN, Blocks.BEDROCK, Blocks.CRYING_OBSIDIAN, Blocks.NETHERITE_BLOCK))
         .build()
     );
 
@@ -77,7 +76,7 @@ public class HoleHUD extends HUDElement {
         Block block = dir == Direction.DOWN ? Blocks.OBSIDIAN : mc.world.getBlockState(mc.player.getBlockPos().offset(dir)).getBlock();
         if (!safe.get().contains(block)) return;
 
-        RenderUtils.drawItem(block.asItem().getDefaultStack(), (int) x, (int) y, scale.get(),false);
+        RenderUtils.drawItem(block.asItem().getDefaultStack(), (int) x, (int) y, scale.get(), false);
 
         if (dir == Direction.DOWN) return;
 
@@ -92,7 +91,7 @@ public class HoleHUD extends HUDElement {
         Renderer2D.COLOR.quad(x, y, (16 * percent) * scale.get(), 16 * scale.get(), BG_COLOR);
         Renderer2D.COLOR.quad(x, y, 16 * scale.get(), 1 * scale.get(), OL_COLOR);
         Renderer2D.COLOR.quad(x, y + 15 * scale.get(), 16 * scale.get(), 1 * scale.get(), OL_COLOR);
-        Renderer2D.COLOR.quad(x, y, 1 * scale.get(), 16 * scale.get(),OL_COLOR);
+        Renderer2D.COLOR.quad(x, y, 1 * scale.get(), 16 * scale.get(), OL_COLOR);
         Renderer2D.COLOR.quad(x + 15 * scale.get(), y, 1 * scale.get(), 16 * scale.get(), OL_COLOR);
     }
 

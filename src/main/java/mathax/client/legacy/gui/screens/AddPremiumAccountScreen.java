@@ -8,9 +8,9 @@ import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.systems.accounts.Accounts;
 import mathax.client.legacy.systems.accounts.types.PremiumAccount;
 
-public class AddPremiumAccountScreen extends WindowScreen {
-    public AddPremiumAccountScreen(GuiTheme theme) {
-        super(theme, "Add Premium Account");
+public class AddPremiumAccountScreen extends AddAccountScreen {
+    public AddPremiumAccountScreen(GuiTheme theme, AccountsScreen parent) {
+        super(theme, "Add Premium Account", parent);
     }
 
     @Override
@@ -29,11 +29,11 @@ public class AddPremiumAccountScreen extends WindowScreen {
         t.row();
 
         // Add
-        WButton add = t.add(theme.button("Add")).expandX().widget();
+        add = t.add(theme.button("Add")).expandX().widget();
         add.action = () -> {
             PremiumAccount account = new PremiumAccount(email.get(), password.get());
             if (!email.get().isEmpty() && !password.get().isEmpty() && email.get().contains("@") && !Accounts.get().exists(account)) {
-                AccountsScreen.addAccount(add, this, account);
+                AccountsScreen.addAccount(this, account);
             }
         };
 

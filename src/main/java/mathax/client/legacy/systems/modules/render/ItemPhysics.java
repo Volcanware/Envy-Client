@@ -42,7 +42,7 @@ public class ItemPhysics extends Module {
         IItemEntity rotator = (IItemEntity) event.itemEntity;
         boolean renderBlockFlat = false;
 
-        if ( event.itemEntity.getStack().getItem() instanceof BlockItem && !(event.itemEntity.getStack().getItem() instanceof AliasedBlockItem)) {
+        if (event.itemEntity.getStack().getItem() instanceof BlockItem && !(event.itemEntity.getStack().getItem() instanceof AliasedBlockItem)) {
             Block b = ((BlockItem) event.itemEntity.getStack().getItem()).getBlock();
             VoxelShape shape = b.getOutlineShape(b.getDefaultState(), event.itemEntity.world, event.itemEntity.getBlockPos(), ShapeContext.absent());
 

@@ -82,7 +82,7 @@ public class BetterTab extends Module {
 
         name = playerListEntry.getDisplayName();
         if (name == null) {
-            /*if ((playerListEntry.getProfile().getId().toString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || playerListEntry.getProfile().getId().toString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers)
+            /*if (mc.getSession().getUsername().equals("Matejko06") && Config.get().viewMatHaxLegacyUsers)
                 name = new LiteralText("   " + playerListEntry.getProfile().getName());
             else*/
                 name = new LiteralText(playerListEntry.getProfile().getName());

@@ -7,9 +7,9 @@ import mathax.client.legacy.gui.widgets.input.WTextBox;
 import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.systems.accounts.types.TheAlteningAccount;
 
-public class AddAlteningAccountScreen extends WindowScreen {
-    public AddAlteningAccountScreen(GuiTheme theme) {
-        super(theme, "Add The Altening Account");
+public class AddAlteningAccountScreen extends AddAccountScreen {
+    public AddAlteningAccountScreen(GuiTheme theme, AccountsScreen parent) {
+        super(theme, "Add The Altening Account", parent);
     }
 
     @Override
@@ -23,10 +23,10 @@ public class AddAlteningAccountScreen extends WindowScreen {
         t.row();
 
         // Add
-        WButton add = t.add(theme.button("Add")).expandX().widget();
+        add = t.add(theme.button("Add")).expandX().widget();
         add.action = () -> {
             if (!token.get().isEmpty()) {
-                AccountsScreen.addAccount(add, this, new TheAlteningAccount(token.get()));
+                AccountsScreen.addAccount(this, new TheAlteningAccount(token.get()));
             }
         };
 

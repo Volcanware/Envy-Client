@@ -14,6 +14,8 @@ import mathax.client.legacy.utils.render.color.SettingColor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static mathax.client.legacy.utils.Utils.mc;
+
 public class WelcomeHUD extends TripleTextHUDElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -43,32 +45,32 @@ public class WelcomeHUD extends TripleTextHUDElement {
         switch (message.get()) {
             case Welcome -> {
                 if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Client Legacy, ";
-                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || mc.getSession().getUuid().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) return "Welcome to MatHax Client Legacy, Developer ";
+                if (mc.getSession().getUsername().equals("Matejko06")) return "Welcome to MatHax Client Legacy, Developer ";
                 else return "Welcome to MatHax Client Legacy, ";
             }
             case Using -> {
                 if (Modules.get().isActive(NameProtect.class)) return "You are using MatHax Client Legacy, ";
-                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || mc.getSession().getUuid().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) return "You are using MatHax Client Legacy, Developer";
+                if (mc.getSession().getUsername().equals("Matejko06")) return "You are using MatHax Client Legacy, Developer";
                 else return "You are using MatHax Client Legacy, ";
             }
             case Time -> {
                 if (Modules.get().isActive(NameProtect.class)) return getTime() + ", ";
-                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || mc.getSession().getUuid().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) return getTime() + ", Developer";
+                if (mc.getSession().getUsername().equals("Matejko06")) return getTime() + ", Developer";
                 else return getTime() + ", ";
             }
             case RetardedTime -> {
                 if (Modules.get().isActive(NameProtect.class)) return getRetardedTime() + ", ";
-                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || mc.getSession().getUuid().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) return getRetardedTime() + ", Developer";
+                if (mc.getSession().getUsername().equals("Matejko06")) return getRetardedTime() + ", Developer";
                 else return getRetardedTime() + ", ";
             }
             case Sussy -> {
                 if (Modules.get().isActive(NameProtect.class)) return "You are a sussy baka, ";
-                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || mc.getSession().getUuid().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) return getRetardedTime() + ", Developer";
+                if (mc.getSession().getUsername().equals("Matejko06")) return getRetardedTime() + ", Developer";
                 else return "You are a sussy baka, ";
             }
             default -> {
                 if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Client Legacy, ";
-                if (mc.getSession().getUuid().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || mc.getSession().getUuid().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) return "Welcome to MatHax Client Legacy, Developer ";
+                if (mc.getSession().getUsername().equals("Matejko06")) return "Welcome to MatHax Client Legacy, Developer ";
                 else return "Welcome to MatHax Client Legacy, ";
             }
         }

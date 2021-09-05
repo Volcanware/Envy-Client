@@ -94,7 +94,7 @@ public class TextRadarHUD extends HUDElement {
             if (!friends.get() && Friends.get().isFriend(entity)) continue;
 
             String text = "";
-            if ((entity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || entity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers)
+            if (mc.getSession().getUsername().equals("Matejko06") && Config.get().viewMatHaxLegacyUsers)
                 text += "     " + entity.getEntityName();
             else
                 text += entity.getEntityName();
@@ -135,14 +135,14 @@ public class TextRadarHUD extends HUDElement {
 
             String text = "";
 
-            if ((entity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || entity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers) {
+            if (mc.getSession().getUsername().equals("Matejko06") && Config.get().viewMatHaxLegacyUsers) {
                 GL.bindTexture(mathaxLogo);
                 Renderer2D.TEXTURE.begin();
                 Renderer2D.TEXTURE.texQuad(x - renderer.textWidth(text) + 2, y, 16, 16, textureColor);
                 Renderer2D.TEXTURE.render(null);
             }
 
-            if ((entity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || entity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers)
+            if (mc.getSession().getUsername().equals("Matejko06") && Config.get().viewMatHaxLegacyUsers)
                 text += "     " + entity.getEntityName();
             else
                 text += entity.getEntityName();

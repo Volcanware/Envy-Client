@@ -1,7 +1,6 @@
 package mathax.client.legacy.gui.screens;
 
 import mathax.client.legacy.gui.GuiTheme;
-import mathax.client.legacy.gui.WidgetScreen;
 import mathax.client.legacy.gui.WindowScreen;
 import mathax.client.legacy.gui.widgets.WAccount;
 import mathax.client.legacy.gui.widgets.containers.WContainer;
@@ -12,6 +11,7 @@ import mathax.client.legacy.systems.accounts.Accounts;
 import mathax.client.legacy.systems.accounts.MicrosoftLogin;
 import mathax.client.legacy.systems.accounts.types.MicrosoftAccount;
 import mathax.client.legacy.utils.network.MatHaxExecutor;
+import org.jetbrains.annotations.Nullable;
 
 import static mathax.client.legacy.utils.Utils.mc;
 
@@ -31,8 +31,8 @@ public class AccountsScreen extends WindowScreen {
         // Add account
         WHorizontalList l = add(theme.horizontalList()).expandX().widget();
 
-        addButton(l, "Cracked", () -> mc.setScreen(new AddCrackedAccountScreen(theme)));
-        addButton(l, "Premium", () -> mc.setScreen(new AddPremiumAccountScreen(theme)));
+        addButton(l, "Cracked", () -> mc.setScreen(new AddCrackedAccountScreen(theme, this)));
+        addButton(l, "Premium", () -> mc.setScreen(new AddPremiumAccountScreen(theme, this)));
         addButton(l, "Microsoft", () -> {
             locked = true;
 
@@ -41,11 +41,11 @@ public class AccountsScreen extends WindowScreen {
 
                 if (refreshToken != null) {
                     MicrosoftAccount account = new MicrosoftAccount(refreshToken);
-                    addAccount(null, this, account);
+                    addAccount(null, account);
                 }
             });
         });
-        addButton(l, "The Altening", () -> mc.setScreen(new AddAlteningAccountScreen(theme)));
+        addButton(l, "The Altening", () -> mc.setScreen(new AddAlteningAccountScreen(theme, this)));
     }
 
     private void addButton(WContainer c, String text, Runnable action) {
@@ -53,23 +53,30 @@ public class AccountsScreen extends WindowScreen {
         button.action = action;
     }
 
-    public static void addAccount(WButton add, WidgetScreen screen, Account<?> account) {
-        if (add != null) add.set("...");
-        screen.locked = true;
+    public static void addAccount(@Nullable AddAccountScreen screen, Account<?> account) {
+        if (screen != null) {
+            screen.add.set("...");
+            screen.locked = true;
+        }
 
         MatHaxExecutor.execute(() -> {
             if (account.fetchInfo() && account.fetchHead()) {
                 Accounts.get().add(account);
-                screen.locked = false;
+                if (account.login()) Accounts.get().save();
 
-                if (add != null) screen.onClose();
-                else if (screen instanceof AccountsScreen s) {
-                    s.reload();
+                if (screen != null) {
+                    screen.locked = false;
+                    screen.onClose();
+                    screen.parent.reload();
                 }
+
+                return;
             }
 
-            if (add != null) add.set("Add");
-            screen.locked = false;
+            if (screen != null) {
+                screen.add.set("Add");
+                screen.locked = false;
+            }
         });
     }
 }
