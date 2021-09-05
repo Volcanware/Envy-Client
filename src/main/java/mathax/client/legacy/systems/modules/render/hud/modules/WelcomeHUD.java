@@ -113,8 +113,11 @@ public class WelcomeHUD extends TripleTextHUDElement {
         if (hour < 6) {
             return "You really need get some sleep retard";
         }
+        if (hour < 9) {
+            return "Ur awake already? such a retard";
+        }
         if (hour < 12) {
-            return "Ur awake already? Pretty retarded";
+            return "retard moment";
         }
         if (hour < 14) {
             return "Go eat lunch retard";
