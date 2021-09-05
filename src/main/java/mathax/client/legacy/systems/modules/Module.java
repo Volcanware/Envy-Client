@@ -95,8 +95,8 @@ public abstract class Module implements ISerializable<Module> {
     }
 
     public void sendToggledToast(String title, Module module) {
-        if (module.name.equals("zoom") && !Config.get().zoomToggleToast) return;
-        mc.getToastManager().add(new MatHaxToast(module.category.icon.getItem(), Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
+        if (module.name.equals("zoom") && Config.get().zoomToggleToast) return;
+        if (Config.get().moduleToggleToast) mc.getToastManager().add(new MatHaxToast(module.category.icon.getItem(), Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
     }
 
     private String getOnOff(Module module) {

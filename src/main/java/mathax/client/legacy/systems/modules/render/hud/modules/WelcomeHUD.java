@@ -65,7 +65,7 @@ public class WelcomeHUD extends TripleTextHUDElement {
             }
             case Sussy -> {
                 if (Modules.get().isActive(NameProtect.class)) return "You are a sussy baka, ";
-                if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return getRetardedTime() + "You are a sussy baka, Developer ";
+                if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return "You are a sussy baka, Developer ";
                 else return "You are a sussy baka, ";
             }
             default -> {
