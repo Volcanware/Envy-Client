@@ -218,18 +218,14 @@ public class CombatHUD extends HUDElement {
             // Name
             String nameText = "";
 
-            if ((playerEntity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || playerEntity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers)
-                nameText += "     " + playerEntity.getEntityName();
-            else
-                nameText += playerEntity.getEntityName();
-
-
             if ((playerEntity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || playerEntity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers) {
+                nameText += "     " + playerEntity.getEntityName();
                 GL.bindTexture(mathaxLogo);
                 Renderer2D.TEXTURE.begin();
                 Renderer2D.TEXTURE.texQuad(x - renderer.textWidth(nameText) + 2, y, 16, 16, textureColor);
                 Renderer2D.TEXTURE.render(null);
-            }
+            } else
+                nameText += playerEntity.getEntityName();
 
             Color nameColor = PlayerUtils.getPlayerColor(playerEntity, hud.primaryColor.get());
 

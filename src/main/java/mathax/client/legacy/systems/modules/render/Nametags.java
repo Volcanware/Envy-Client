@@ -347,10 +347,8 @@ public class Nametags extends Module {
         if (player == mc.player) name = Modules.get().get(NameProtect.class).getName(player.getEntityName());
         else name = player.getEntityName();
 
-        if (Config.get().viewMatHaxLegacyUsers) {
-            if ((player.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || player.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e"))) {
-                name = "     " + player.getEntityName();
-            }
+        if ((player.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || player.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers) {
+            name = "     " + player.getEntityName();
         }
 
         // Health
@@ -506,14 +504,12 @@ public class Nametags extends Module {
             }
         } else if (displayItemEnchants.get()) displayItemEnchants.set(false);
 
-        if (Config.get().viewMatHaxLegacyUsers) {
-            if (player.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || player.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) {
-                GL.bindTexture(mathaxLogo);
-                Renderer2D.TEXTURE.begin();
-                double textHeight = text.getHeight() / 2;
-                Renderer2D.TEXTURE.texQuad(-width / 2 + 2, -textHeight * 2, 16, 16, textureColor);
-                Renderer2D.TEXTURE.render(null);
-            }
+        if (player.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || player.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e") &&Config.get().viewMatHaxLegacyUsers) {
+            GL.bindTexture(mathaxLogo);
+            Renderer2D.TEXTURE.begin();
+            double textHeight = text.getHeight() / 2;
+            Renderer2D.TEXTURE.texQuad(-width / 2 + 2, -textHeight * 2, 16, 16, textureColor);
+            Renderer2D.TEXTURE.render(null);
         }
 
         NametagUtils.end();
