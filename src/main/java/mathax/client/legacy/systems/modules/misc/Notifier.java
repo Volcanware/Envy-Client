@@ -19,6 +19,7 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
@@ -117,7 +118,7 @@ public class Notifier extends Module {
     private final Random random = new Random();
 
     public Notifier() {
-        super(Categories.Misc, "notifier", "Notifies you of different events.");
+        super(Categories.Misc, Items.PAPER, "notifier", "Notifies you of different events.");
     }
 
     // Visual Range

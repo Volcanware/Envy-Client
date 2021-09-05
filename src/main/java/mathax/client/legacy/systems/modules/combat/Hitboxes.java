@@ -10,6 +10,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.Items;
 
 public class Hitboxes extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -29,7 +30,7 @@ public class Hitboxes extends Module {
     );
 
     public Hitboxes() {
-        super(Categories.Combat, "hitboxes", "Expands an entity's hitboxes.");
+        super(Categories.Combat, Items.GLASS, "hitboxes", "Expands an entity's hitboxes.");
     }
 
     public double getEntityValue(Entity entity) {

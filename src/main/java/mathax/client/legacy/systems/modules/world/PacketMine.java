@@ -1,4 +1,4 @@
-package mathax.client.legacy.systems.modules.player;
+package mathax.client.legacy.systems.modules.world;
 
 import mathax.client.legacy.events.entity.player.StartBreakingBlockEvent;
 import mathax.client.legacy.events.render.Render3DEvent;
@@ -21,6 +21,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
@@ -89,28 +90,28 @@ public class PacketMine extends Module {
     private final Setting<SettingColor> readySideColor = sgRender.add(new ColorSetting.Builder()
         .name("ready-side-color")
         .description("The color of the sides of the blocks that can be broken.")
-        .defaultValue(new SettingColor(0, 204, 0, 10))
+        .defaultValue(new SettingColor(0, 230, 0, 50))
         .build()
     );
 
     private final Setting<SettingColor> readyLineColor = sgRender.add(new ColorSetting.Builder()
         .name("ready-line-color")
         .description("The color of the lines of the blocks that can be broken.")
-        .defaultValue(new SettingColor(0, 204, 0, 255))
+        .defaultValue(new SettingColor(0, 230, 0, 255))
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(204, 0, 0, 10))
+        .defaultValue(new SettingColor(230, 0, 100, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(204, 0, 0, 255))
+        .defaultValue(new SettingColor(230, 75, 100, 255))
         .build()
     );
 
@@ -120,7 +121,7 @@ public class PacketMine extends Module {
     private boolean swapped, shouldUpdateSlot;
 
     public PacketMine() {
-        super(Categories.World, "packet-mine", "Sends packets to mine blocks without the mining animation.");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "packet-mine", "Sends packets to mine blocks without the mining animation.");
     }
 
     @Override

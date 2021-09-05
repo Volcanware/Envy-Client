@@ -8,6 +8,7 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
+import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 
@@ -33,7 +34,7 @@ public class Trail extends Module {
 
 
     public Trail() {
-        super(Categories.Render, "trail", "Renders a customizable trail behind your player.");
+        super(Categories.Render, Items.BLUE_STAINED_GLASS, "trail", "Renders a customizable trail behind your player.");
     }
 
     @EventHandler

@@ -15,6 +15,7 @@ import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.BlockBreakingInfo;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.shape.VoxelShape;
@@ -34,7 +35,7 @@ public class BreakIndicators extends Module {
     private final Setting<SettingColor> startColor = sgGeneral.add(new ColorSetting.Builder()
         .name("start-color")
         .description("The color for the non-broken block.")
-        .defaultValue(new SettingColor(25, 252, 25, 150))
+        .defaultValue(new SettingColor(25, 250, 25, 150))
         .build()
     );
 
@@ -49,7 +50,7 @@ public class BreakIndicators extends Module {
     private final Color cLines = new Color();
 
     public BreakIndicators() {
-        super(Categories.Render, "break-indicators", "Renders the progress of a block being broken.");
+        super(Categories.Render, Items.IRON_PICKAXE, "break-indicators", "Renders the progress of a block being broken.");
     }
 
     @EventHandler

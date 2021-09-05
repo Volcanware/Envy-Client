@@ -8,6 +8,7 @@ import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.misc.input.Input;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.client.option.Perspective;
+import net.minecraft.item.Items;
 import org.lwjgl.glfw.GLFW;
 
 public class FreeLook extends Module {
@@ -67,7 +68,7 @@ public class FreeLook extends Module {
     private Perspective prePers;
 
     public FreeLook() {
-        super(Categories.Render, "free-look", "Allows more rotation options in third person.");
+        super(Categories.Render, Items.PLAYER_HEAD, "free-look", "Allows more rotation options in third person.");
     }
 
     @Override

@@ -8,6 +8,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.player.PlayerUtils;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.item.Items;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +33,7 @@ public class PotionSaver extends Module {
     );
 
     public PotionSaver() {
-        super(Categories.Player, "potion-saver", "Stops potion effects ticking when you stand still.");
+        super(Categories.Player, Items.SPLASH_POTION, "potion-saver", "Stops potion effects ticking when you stand still.");
     }
 
     public boolean shouldFreeze(StatusEffect effect) {

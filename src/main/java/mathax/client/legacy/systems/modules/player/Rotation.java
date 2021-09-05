@@ -8,6 +8,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 
 public class Rotation extends Module {
     public enum LockMode {
@@ -58,7 +59,7 @@ public class Rotation extends Module {
     );
 
     public Rotation() {
-        super(Categories.Player, "rotation", "Changes/locks your yaw and pitch.");
+        super(Categories.Player, Items.COMMAND_BLOCK, "rotation", "Changes/locks your yaw and pitch.");
     }
 
     @Override

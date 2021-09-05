@@ -10,6 +10,7 @@ import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
@@ -71,7 +72,7 @@ public class Anchor extends Module {
     public double deltaX, deltaZ;
 
     public Anchor() {
-        super(Categories.Movement, "anchor", "Helps you get into holes by stopping your movement completely over a hole.");
+        super(Categories.Movement, Items.ANVIL, "anchor", "Helps you get into holes by stopping your movement completely over a hole.");
     }
 
     @Override

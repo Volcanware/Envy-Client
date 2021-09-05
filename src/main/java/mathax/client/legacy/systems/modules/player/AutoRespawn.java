@@ -1,4 +1,4 @@
-package mathax.client.legacy.systems.modules.misc;
+package mathax.client.legacy.systems.modules.player;
 
 import mathax.client.legacy.events.game.OpenScreenEvent;
 import mathax.client.legacy.systems.modules.render.WaypointsModule;
@@ -8,10 +8,11 @@ import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.bus.EventPriority;
 import net.minecraft.client.gui.screen.DeathScreen;
+import net.minecraft.item.Items;
 
 public class AutoRespawn extends Module {
     public AutoRespawn() {
-        super(Categories.Player, "auto-respawn", "Automatically respawns after death.");
+        super(Categories.Player, Items.COMMAND_BLOCK, "auto-respawn", "Automatically respawns after death.");
     }
 
     @EventHandler(priority = EventPriority.HIGH)

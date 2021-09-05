@@ -17,6 +17,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Modules;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
@@ -155,7 +156,7 @@ public class HoleESP extends Module {
     private final byte NULL = 0;
 
     public HoleESP() {
-        super(Categories.Render, "hole-ESP", "Displays holes that you will take less damage in. Usefull in cpvp.");
+        super(Categories.Render, Items.LIME_STAINED_GLASS, "hole-ESP", "Displays holes that you will take less damage in. Usefull in cpvp.");
     }
 
     @EventHandler

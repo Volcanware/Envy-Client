@@ -29,7 +29,7 @@ public class ReloadCommand extends Command {
             ChatUtils.info("Reloading capes...");
             Capes.init();
 
-            ChatUtils.info("Capes reload complete!");
+            ChatUtils.info("CapesModule reload complete!");
             return SINGLE_SUCCESS;
         }));
     }

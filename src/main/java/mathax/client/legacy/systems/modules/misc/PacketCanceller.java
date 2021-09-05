@@ -10,6 +10,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.utils.network.PacketUtils;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.bus.EventPriority;
+import net.minecraft.item.Items;
 import net.minecraft.network.Packet;
 
 import java.util.Set;
@@ -34,7 +35,7 @@ public class PacketCanceller extends Module {
     );
 
     public PacketCanceller() {
-        super(Categories.Misc, "packet-canceller", "Allows you to cancel certain packets.");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "packet-canceller", "Allows you to cancel certain packets.");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST + 1)

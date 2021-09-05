@@ -14,6 +14,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.utils.placeholders.Placeholders;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -80,7 +81,7 @@ public class Spam extends Module {
     private String newText = "";
 
     public Spam() {
-        super(Categories.Chat, "spam", "Spams specified messages in chat.");
+        super(Categories.Chat, Items.BELL, "spam", "Spams specified messages in chat.");
     }
 
     @Override

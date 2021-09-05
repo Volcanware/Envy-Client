@@ -15,6 +15,7 @@ import mathax.client.legacy.utils.misc.input.KeyAction;
 import mathax.client.legacy.utils.player.Rotations;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.client.option.Perspective;
+import net.minecraft.item.Items;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -86,7 +87,7 @@ public class Freecam extends Module {
     private boolean forward, backward, right, left, up, down;
 
     public Freecam() {
-        super(Categories.Render, "freecam", "Allows the camera to move away from the player.");
+        super(Categories.Render, Items.PLAYER_HEAD, "freecam", "Allows the camera to move away from the player.");
     }
 
     @Override

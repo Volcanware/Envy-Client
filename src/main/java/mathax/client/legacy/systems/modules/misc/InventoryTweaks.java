@@ -21,6 +21,7 @@ import mathax.client.legacy.utils.player.InventorySorter;
 import mathax.client.legacy.systems.modules.Categories;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
@@ -154,7 +155,7 @@ public class InventoryTweaks extends Module {
     private boolean invOpened;
 
     public InventoryTweaks() {
-        super(Categories.Misc, "inventory-tweaks", "Various inventory related utilities.");
+        super(Categories.Misc, Items.CHEST, "inventory-tweaks", "Various inventory related utilities.");
     }
 
     @Override

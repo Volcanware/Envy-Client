@@ -11,6 +11,7 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
+import net.minecraft.item.Items;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
@@ -62,7 +63,7 @@ public class AntiGhostBlock extends Module {
     }
 
     public AntiGhostBlock() {
-        super(Categories.World, "anti-ghost-block", "Automatically removes ghost blocks.");
+        super(Categories.World, Items.BARRIER, "anti-ghost-block", "Automatically removes ghost blocks.");
         blocks = new HashMap();
         lock = false;
         lastRequest = 0L;

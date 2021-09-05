@@ -7,6 +7,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
 public class FastClimb extends Module {
@@ -21,7 +22,7 @@ public class FastClimb extends Module {
     );
 
     public FastClimb() {
-        super(Categories.Movement, "fast-climb", "Allows you to climb faster.");
+        super(Categories.Movement, Items.LADDER, "fast-climb", "Allows you to climb faster.");
     }
 
     @EventHandler

@@ -22,6 +22,7 @@ import net.minecraft.entity.passive.HorseBaseEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.Items;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class EntityOwner extends Module {
     private final Map<UUID, String> uuidToName = new HashMap<>();
 
     public EntityOwner() {
-        super(Categories.Render, "entity-owner", "Displays the name of the player who owns the entity you're looking at.");
+        super(Categories.Render, Items.NAME_TAG, "entity-owner", "Displays the name of the player who owns the entity you're looking at.");
     }
 
     @Override

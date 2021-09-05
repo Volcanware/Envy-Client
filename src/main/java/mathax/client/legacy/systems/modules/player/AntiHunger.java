@@ -9,6 +9,7 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
@@ -34,7 +35,7 @@ public class AntiHunger extends Module {
     private boolean ignorePacket;
 
     public AntiHunger() {
-        super(Categories.Player, "anti-hunger", "Reduces (does NOT remove) hunger consumption.");
+        super(Categories.Player, Items.COOKED_BEEF, "anti-hunger", "Reduces (does NOT remove) hunger consumption.");
     }
 
     @Override

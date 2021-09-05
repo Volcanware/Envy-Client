@@ -5,6 +5,7 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
+import net.minecraft.item.Items;
 
 public class Reach extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -19,7 +20,7 @@ public class Reach extends Module {
     );
 
     public Reach() {
-        super(Categories.Player, "reach", "Gives you super long arms.");
+        super(Categories.Player, Items.COMMAND_BLOCK, "reach", "Gives you super long arms.");
     }
 
     public float getReach() {

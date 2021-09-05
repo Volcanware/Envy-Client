@@ -15,6 +15,7 @@ import mathax.client.legacy.utils.player.ChatUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShapes;
@@ -73,7 +74,7 @@ public class Xray extends Module {
     );
 
     public Xray() {
-        super(Categories.Render, "xray", "Only renders specified blocks. Good for mining.");
+        super(Categories.Render, Items.BARRIER, "xray", "Only renders specified blocks. Good for mining.");
     }
 
     @Override

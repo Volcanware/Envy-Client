@@ -31,7 +31,7 @@ public class ChestSwap extends Module {
     );
 
     public ChestSwap() {
-        super(Categories.Player, "chest-swap", "Automatically swaps between a chestplate and an elytra.");
+        super(Categories.Player, Items.DIAMOND_CHESTPLATE, "chest-swap", "Automatically swaps between a chestplate and an elytra.");
     }
 
     @Override

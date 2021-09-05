@@ -12,10 +12,12 @@ import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.render.MatHaxToast;
 import mathax.client.legacy.utils.render.color.Color;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
 
 import java.io.ByteArrayInputStream;
@@ -29,6 +31,7 @@ public abstract class Module implements ISerializable<Module> {
     protected final MinecraftClient mc;
 
     public final Category category;
+    public final Item icon;
     public final String name;
     public final String title;
     public final String description;
@@ -36,6 +39,7 @@ public abstract class Module implements ISerializable<Module> {
 
     public final Settings settings = new Settings();
 
+    private boolean toggleToast = true;
     private boolean active;
     private boolean visible = true;
 
@@ -44,9 +48,10 @@ public abstract class Module implements ISerializable<Module> {
     public final Keybind keybind = Keybind.none();
     public boolean toggleOnBindRelease = false;
 
-    public Module(Category category, String name, String description) {
+    public Module(Category category, Item icon, String name, String description) {
         this.mc = MinecraftClient.getInstance();
         this.category = category;
+        this.icon = icon;
         this.name = name;
         this.title = Utils.nameToTitle(name);
         this.description = description;
@@ -93,8 +98,8 @@ public abstract class Module implements ISerializable<Module> {
     }
 
     public void sendToggledToast(String title, Module module) {
-        if (module.name.equals("zoom") && !Config.get().zoomToggleToast) return;
-        if (Config.get().moduleToggleToast) mc.getToastManager().add(new MatHaxToast(module.category.icon.getItem(), Formatting.DARK_RED + "Modules", Formatting.GRAY + "Toggled " + Formatting.WHITE + title + " " + getOnOff(module) + Formatting.GRAY + "."));
+        if (!module.isToastEnabled()) return;
+        mc.getToastManager().add(new MatHaxToast(module.icon, module.category.color, title, Formatting.GRAY + "Toggled " + getOnOff(module) + Formatting.GRAY + "."));
     }
 
     private String getOnOff(Module module) {
@@ -125,6 +130,14 @@ public abstract class Module implements ISerializable<Module> {
         return visible;
     }
 
+    public void toggleToast(boolean toggleToast) {
+        this.toggleToast = toggleToast;
+    }
+
+    public boolean isToastEnabled() {
+        return toggleToast;
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -143,6 +156,7 @@ public abstract class Module implements ISerializable<Module> {
         tag.putBoolean("toggleOnKeyRelease", toggleOnBindRelease);
         tag.put("settings", settings.toTag());
 
+        tag.putBoolean("toggleToast", toggleToast);
         tag.putBoolean("active", active);
         tag.putBoolean("visible", visible);
 
@@ -161,6 +175,7 @@ public abstract class Module implements ISerializable<Module> {
         NbtElement settingsTag = tag.get("settings");
         if (settingsTag instanceof NbtCompound) settings.fromTag((NbtCompound) settingsTag);
 
+        toggleToast(tag.getBoolean("toggleToast"));
         boolean active = tag.getBoolean("active");
         if (active != isActive()) toggle(Utils.canUpdate());
         setVisible(tag.getBoolean("visible"));

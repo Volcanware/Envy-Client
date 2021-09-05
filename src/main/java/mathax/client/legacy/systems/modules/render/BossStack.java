@@ -9,6 +9,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.client.gui.hud.ClientBossBar;
+import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class BossStack extends Module {
     public static final WeakHashMap<ClientBossBar, Integer> barMap = new WeakHashMap<>();
 
     public BossStack() {
-        super(Categories.Render, "boss-stack", "Stacks boss bars to make your HUD less cluttered.");
+        super(Categories.Render, Items.NETHER_STAR, "boss-stack", "Stacks boss bars to make your HUD less cluttered.");
     }
 
     @EventHandler

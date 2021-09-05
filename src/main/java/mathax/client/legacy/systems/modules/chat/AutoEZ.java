@@ -17,6 +17,7 @@ import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.entity.EntityUtils;
 import mathax.client.legacy.utils.placeholders.Placeholders;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.*;
 
 public class AutoEZ extends Module {
@@ -68,7 +69,7 @@ public class AutoEZ extends Module {
     );*/
 
     public AutoEZ() {
-        super(Categories.Chat, "auto-EZ", "Announces when you kill someone.");
+        super(Categories.Chat, Items.LIGHTNING_ROD, "auto-EZ", "Announces when you kill someone.");
     }
 
     // KILL

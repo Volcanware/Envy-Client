@@ -220,7 +220,7 @@ public class Modules extends System<Modules> {
             if (value != GLFW.GLFW_KEY_ESCAPE) {
                 moduleToBind.keybind.set(isKey, value);
                 ChatUtils.info("KeyBinds", "Module (highlight)%s (default)bound to (highlight)%s(default).", moduleToBind.title, moduleToBind.keybind);
-                mc.getToastManager().add(new MatHaxToast(moduleToBind.category.icon.getItem(), Formatting.DARK_RED + "KeyBinds", Formatting.GRAY + "Module " + Formatting.WHITE + moduleToBind.name + Formatting.GRAY + " bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                mc.getToastManager().add(new MatHaxToast(moduleToBind.category.icon.getItem(), moduleToBind.category.color, moduleToBind.name, Formatting.GRAY + "Bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
             }
 
             MatHaxClientLegacy.EVENT_BUS.post(ModuleBindChangedEvent.get(moduleToBind));
@@ -377,13 +377,11 @@ public class Modules extends System<Modules> {
         add(new AutoWeapon());
         add(new AutoWeb());
         add(new BedAura());
-        //add(new BedAuraPlus());
         add(new BowAimbot());
         add(new BowSpam());
         add(new Burrow());
         add(new Criticals());
         add(new CrystalAura());
-        //add(new CrystalAuraPlus());
         //add(new CEVBreaker());
         add(new Hitboxes());
         add(new HoleFiller());
@@ -544,7 +542,7 @@ public class Modules extends System<Modules> {
 
     private void initFun() {
         add(new BookBot());
-        add(new Capes());
+        add(new CapesModule());
         add(new Notebot());
         //add(new PenisESP());
         add(new SpinBot());

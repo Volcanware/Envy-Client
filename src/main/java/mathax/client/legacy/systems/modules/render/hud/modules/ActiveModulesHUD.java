@@ -43,7 +43,7 @@ public class ActiveModulesHUD extends HUDElement {
     private final Setting<SettingColor> flatColor = sgGeneral.add(new ColorSetting.Builder()
         .name("flat-color")
         .description("Color for flat color mode.")
-        .defaultValue(new SettingColor(225, 25, 25))
+        .defaultValue(new SettingColor(230, 75, 100))
         .visible(() -> colorMode.get() == ColorMode.Flat)
         .build()
     );
@@ -187,24 +187,7 @@ public class ActiveModulesHUD extends HUDElement {
             color = rainbow;
         }
 
-        else if (colorMode == ColorMode.Category) {
-            Color COMBAT_CATEGORY_COLOR = new Color(Categories.COMBAT_COLOR);
-            if (module.category.equals(Categories.Combat)) color = COMBAT_CATEGORY_COLOR;
-            Color PLAYER_CATEGORY_COLOR = new Color(Categories.PLAYER_COLOR);
-            if (module.category.equals(Categories.Player)) color = PLAYER_CATEGORY_COLOR;
-            Color MOVEMENT_CATEGORY_COLOR = new Color(Categories.MOVEMENT_COLOR);
-            if (module.category.equals(Categories.Movement)) color = MOVEMENT_CATEGORY_COLOR;
-            Color RENDER_CATEGORY_COLOR = new Color(Categories.RENDER_COLOR);
-            if (module.category.equals(Categories.Render)) color = RENDER_CATEGORY_COLOR;
-            Color WORLD_CATEGORY_COLOR = new Color(Categories.WORLD_COLOR);
-            if (module.category.equals(Categories.World)) color = WORLD_CATEGORY_COLOR;
-            Color CHAT_CATEGORY_COLOR = new Color(Categories.CHAT_COLOR);
-            if (module.category.equals(Categories.Chat)) color = CHAT_CATEGORY_COLOR;
-            Color FUN_CATEGORY_COLOR = new Color(Categories.FUN_COLOR);
-            if (module.category.equals(Categories.Fun)) color = FUN_CATEGORY_COLOR;
-            Color MISC_CATEGORY_COLOR = new Color(Categories.MISC_COLOR);
-            if (module.category.equals(Categories.Misc)) color = MISC_CATEGORY_COLOR;
-        }
+        else if (colorMode == ColorMode.Category) color = new Color(module.category.color);
 
         renderer.text(module.title, x, y, color);
 

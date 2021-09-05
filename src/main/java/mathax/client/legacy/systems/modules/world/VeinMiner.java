@@ -18,6 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -114,7 +115,7 @@ public class VeinMiner extends Module {
     private final List<BlockPos> foundBlockPositions = new ArrayList<>();
 
     public VeinMiner() {
-        super(Categories.World, "vein-miner", "Mines all nearby blocks with this type");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "vein-miner", "Mines all nearby blocks with this type");
     }
 
     @Override

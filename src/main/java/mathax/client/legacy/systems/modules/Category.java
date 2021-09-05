@@ -1,19 +1,23 @@
 package mathax.client.legacy.systems.modules;
 
+import mathax.client.legacy.utils.render.color.Color;
 import net.minecraft.item.ItemStack;
 
 public class Category {
     public final String name;
     public final ItemStack icon;
+    public final int color;
     private final int nameHash;
 
-    public Category(String name, ItemStack icon) {
+    public Category(String name, ItemStack icon, int color) {
         this.name = name;
         this.nameHash = name.hashCode();
         this.icon = icon;
+        this.color = color;
     }
-    public Category(String name) {
-        this(name, null);
+
+    public Category(String name, int color) {
+        this(name, null, color);
     }
 
     @Override

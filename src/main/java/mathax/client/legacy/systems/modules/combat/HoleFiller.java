@@ -21,6 +21,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
@@ -131,7 +132,7 @@ public class HoleFiller extends Module {
     private int timer;
 
     public HoleFiller() {
-        super(Categories.Combat, "hole-filler", "Fills holes with specified blocks.");
+        super(Categories.Combat, Items.OBSIDIAN, "hole-filler", "Fills holes with specified blocks.");
     }
 
     @Override

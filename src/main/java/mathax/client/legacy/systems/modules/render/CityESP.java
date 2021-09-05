@@ -15,6 +15,7 @@ import mathax.client.legacy.utils.entity.TargetUtils;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 
 public class CityESP extends Module {
@@ -46,7 +47,7 @@ public class CityESP extends Module {
     private BlockPos target;
 
     public CityESP() {
-        super(Categories.Render, "city-ESP", "Displays blocks that can be broken in order to city another player.");
+        super(Categories.Render, Items.RED_STAINED_GLASS, "city-ESP", "Displays blocks that can be broken in order to city another player.");
     }
 
     @EventHandler

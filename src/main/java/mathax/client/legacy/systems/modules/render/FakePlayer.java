@@ -8,6 +8,7 @@ import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.entity.fakeplayer.FakePlayerManager;
+import net.minecraft.item.Items;
 
 public class FakePlayer extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -36,7 +37,7 @@ public class FakePlayer extends Module {
     );
 
     public FakePlayer() {
-        super(Categories.Render, "fake-player", "Spawns a client-side fake player for testing usages.");
+        super(Categories.Render, Items.ARMOR_STAND, "fake-player", "Spawns a client-side fake player for testing usages.");
     }
 
     @Override

@@ -9,6 +9,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.client.network.ServerInfo;
+import net.minecraft.item.Items;
 
 public class AutoReconnect extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -25,7 +26,7 @@ public class AutoReconnect extends Module {
     public ServerInfo lastServerInfo;
 
     public AutoReconnect() {
-        super(Categories.Misc, "auto-reconnect", "Automatically reconnects when disconnected from a server.");
+        super(Categories.Misc, Items.REPEATER, "auto-reconnect", "Automatically reconnects when disconnected from a server.");
         MatHaxClientLegacy.EVENT_BUS.subscribe(new StaticListener());
     }
 

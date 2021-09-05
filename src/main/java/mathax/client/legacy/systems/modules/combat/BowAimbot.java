@@ -23,6 +23,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
 public class BowAimbot extends Module {
@@ -78,7 +79,7 @@ public class BowAimbot extends Module {
     private Entity target;
 
     public BowAimbot() {
-        super(Categories.Combat, "bow-aimbot", "Automatically aims your bow for you.");
+        super(Categories.Combat, Items.BOW, "bow-aimbot", "Automatically aims your bow for you.");
     }
 
     @Override

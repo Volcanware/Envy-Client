@@ -10,6 +10,7 @@ import mathax.client.legacy.utils.entity.Target;
 import mathax.client.legacy.utils.player.Rotations;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.EndermanEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
 public class EndermanLook extends Module {
@@ -28,7 +29,7 @@ public class EndermanLook extends Module {
     );
 
     public EndermanLook() {
-        super(Categories.World, "enderman-look", "Either looks at all Endermen or prevents you from looking at Endermen.");
+        super(Categories.World, Items.ENDER_EYE, "enderman-look", "Either looks at all Endermen or prevents you from looking at Endermen.");
     }
 
 

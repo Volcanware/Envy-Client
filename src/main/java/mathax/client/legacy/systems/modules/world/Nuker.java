@@ -10,6 +10,7 @@ import mathax.client.legacy.utils.world.BlockIterator;
 import mathax.client.legacy.utils.world.BlockUtils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.Block;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShapes;
 
@@ -98,7 +99,7 @@ public class Nuker extends Module {
     private int noBlockTimer;
 
     public Nuker() {
-        super(Categories.World, "nuker", "Breaks blocks around you.");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "nuker", "Breaks blocks around you.");
     }
 
     @Override

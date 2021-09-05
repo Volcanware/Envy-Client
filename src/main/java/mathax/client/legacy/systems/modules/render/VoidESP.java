@@ -14,6 +14,7 @@ import mathax.client.legacy.utils.world.Dir;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.chunk.Chunk;
@@ -91,7 +92,7 @@ public class VoidESP extends Module {
     private final List<Void> voidHoles = new ArrayList<>();
 
     public VoidESP() {
-        super(Categories.Render, "void-ESP", "Renders holes in bedrock layers that lead to the void.");
+        super(Categories.Render, Items.RED_STAINED_GLASS, "void-ESP", "Renders holes in bedrock layers that lead to the void.");
     }
 
     private boolean isBlockWrong(BlockPos blockPos) {

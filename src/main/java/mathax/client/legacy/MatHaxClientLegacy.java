@@ -17,6 +17,7 @@ import mathax.client.legacy.gui.tabs.builtin.DiscordPresenceTab;
 import mathax.client.legacy.renderer.*;
 import mathax.client.legacy.systems.Systems;
 import mathax.client.legacy.systems.modules.Categories;
+import mathax.client.legacy.systems.modules.fun.CapesModule;
 import mathax.client.legacy.systems.modules.render.Background;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
 import mathax.client.legacy.utils.misc.FakeClientPlayer;
@@ -87,7 +88,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
 
     public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 3;
+    public static Integer devBuildNumber = 0;
 
     public static String devBuild() {
         if (devBuildNumber == 0) {
@@ -116,7 +117,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         LOG.info(logprefix + "10% initialized!");
         Systems.addPreLoadTask(() -> {
             if (!Modules.get().getFile().exists()) {
-                Modules.get().get(mathax.client.legacy.systems.modules.fun.Capes.class).toggle(false); // CAPES
+                Modules.get().get(CapesModule.class).toggle(false); // CAPES
                 Modules.get().get(Background.class).toggle(false);                                     // BACKGROUND
                 Modules.get().get(HUD.class).toggle(false);                                            // HUD
                 Modules.get().get(HUD.class).reset.run();                                                      // DEFAULT HUD LOCATIONS AND TOGGLES

@@ -101,14 +101,14 @@ public class SelfTrap extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(204, 0, 0, 10))
+        .defaultValue(new SettingColor(230, 75, 100, 10))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(204, 0, 0, 255))
+        .defaultValue(new SettingColor(230, 75, 100, 255))
         .build()
     );
 
@@ -117,7 +117,7 @@ public class SelfTrap extends Module {
     private int delay;
 
     public SelfTrap(){
-        super(Categories.Combat, "self-trap", "Places obsidian above your head.");
+        super(Categories.Combat, Items.OBSIDIAN, "self-trap", "Places obsidian above your head.");
     }
 
     @Override

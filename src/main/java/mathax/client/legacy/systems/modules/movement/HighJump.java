@@ -7,6 +7,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 
 public class HighJump extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -20,7 +21,7 @@ public class HighJump extends Module {
     );
 
     public HighJump() {
-        super(Categories.Movement, "high-jump", "Makes you jump higher than normal.");
+        super(Categories.Movement, Items.RABBIT, "high-jump", "Makes you jump higher than normal.");
     }
 
     @EventHandler

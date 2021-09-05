@@ -7,6 +7,7 @@ import mathax.client.legacy.mixin.PlayerMoveC2SPacketAccessor;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.util.math.Vec3d;
@@ -79,7 +80,7 @@ public class Flight extends Module {
     );
 
     public Flight() {
-        super(Categories.Movement, "flight", "FLYYYyy! No Fall is recommended with this module.");
+        super(Categories.Movement, Items.COMMAND_BLOCK, "flight", "FLYYYyy! No Fall is recommended with this module.");
     }
 
     private int delayLeft = delay.get();

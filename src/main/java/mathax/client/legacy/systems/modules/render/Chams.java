@@ -8,6 +8,7 @@ import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class Chams extends Module {
@@ -183,7 +184,7 @@ public class Chams extends Module {
     public static final Identifier BLANK = new Identifier("mathaxlegacy", "textures/blank.png");
 
     public Chams() {
-        super(Categories.Render, "chams", "Tweaks rendering of entities.");
+        super(Categories.Render, Items.GREEN_STAINED_GLASS, "chams", "Tweaks rendering of entities.");
     }
 
     public boolean shouldRender(Entity entity) {

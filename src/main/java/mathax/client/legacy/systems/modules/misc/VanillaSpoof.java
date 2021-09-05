@@ -7,6 +7,7 @@ import mathax.client.legacy.mixin.CustomPayloadC2SPacketAccessor;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
 import net.minecraft.util.Identifier;
@@ -16,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 
 public class VanillaSpoof extends Module {
     public VanillaSpoof() {
-        super(Categories.Misc, "vanilla-spoof", "When connecting to a server it spoofs the client name to be 'vanilla'.");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "vanilla-spoof", "When connecting to a server it spoofs the client name to be 'vanilla'.");
 
         MatHaxClientLegacy.EVENT_BUS.subscribe(new Listener());
     }

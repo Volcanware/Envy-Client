@@ -9,19 +9,9 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 
 public class AutoJump extends Module {
-    public enum JumpWhen {
-        Sprinting,
-        Walking,
-        Always
-    }
-
-    public enum Mode {
-        Jump,
-        LowHop
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -48,7 +38,7 @@ public class AutoJump extends Module {
     );
 
     public AutoJump() {
-        super(Categories.Movement, "auto-jump", "Automatically jumps.");
+        super(Categories.Movement, Items.BARRIER, "auto-jump", "Automatically jumps.");
     }
 
     private boolean jump() {
@@ -66,5 +56,16 @@ public class AutoJump extends Module {
 
         if (mode.get() == Mode.Jump) mc.player.jump();
         else ((IVec3d) mc.player.getVelocity()).setY(velocityHeight.get());
+    }
+
+    public enum JumpWhen {
+        Sprinting,
+        Walking,
+        Always
+    }
+
+    public enum Mode {
+        Jump,
+        LowHop
     }
 }

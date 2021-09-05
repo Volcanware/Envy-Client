@@ -10,6 +10,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 
@@ -285,7 +286,7 @@ public class NoRender extends Module {
 
 
     public NoRender() {
-        super(Categories.Render, "no-render", "Disables certain animations or overlays from rendering.");
+        super(Categories.Render, Items.BARRIER, "no-render", "Disables certain animations or overlays from rendering.");
     }
 
     // Overlay

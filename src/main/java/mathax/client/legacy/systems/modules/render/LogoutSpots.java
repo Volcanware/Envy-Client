@@ -20,6 +20,8 @@ import mathax.client.legacy.systems.modules.Categories;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -95,7 +97,7 @@ public class LogoutSpots extends Module {
     private Dimension lastDimension;
 
     public LogoutSpots() {
-        super(Categories.Render, "logout-spots", "Displays a box where another player has logged out at.");
+        super(Categories.Render, Items.LIME_STAINED_GLASS, "logout-spots", "Displays a box where another player has logged out at.");
         lineColor.changed();
     }
 

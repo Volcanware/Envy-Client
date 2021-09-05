@@ -17,6 +17,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.Box;
 
 public class ESP extends Module {
@@ -137,7 +138,7 @@ public class ESP extends Module {
     private int count;
 
     public ESP() {
-        super(Categories.Render, "ESP", "Renders entities through walls.");
+        super(Categories.Render, Items.RED_STAINED_GLASS, "ESP", "Renders entities through walls.");
     }
 
     private void render(Render3DEvent event, Entity entity) {

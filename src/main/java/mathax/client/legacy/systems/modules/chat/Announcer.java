@@ -14,6 +14,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 
 public class Announcer extends Module {
     private static final double TICK = 1.0 / 20.0;
@@ -28,7 +29,7 @@ public class Announcer extends Module {
     };
 
     public Announcer() {
-        super(Categories.Chat, "announcer", "Announces specified actions into chat.");
+        super(Categories.Chat, Items.BELL, "announcer", "Announces specified actions into chat.");
     }
 
     @Override

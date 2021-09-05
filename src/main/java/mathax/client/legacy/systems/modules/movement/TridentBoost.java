@@ -6,6 +6,7 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
+import net.minecraft.item.Items;
 
 public class TridentBoost extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -27,7 +28,7 @@ public class TridentBoost extends Module {
     );
 
     public TridentBoost() {
-        super(Categories.Movement, "trident-boost", "Boosts you when using riptide with a trident.");
+        super(Categories.Movement, Items.TRIDENT, "trident-boost", "Boosts you when using riptide with a trident.");
     }
 
     public double getMultiplier() {

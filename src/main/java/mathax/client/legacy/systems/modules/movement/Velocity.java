@@ -11,6 +11,7 @@ import mathax.client.legacy.mixin.EntityVelocityUpdateS2CPacketAccessor;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 
 public class Velocity extends Module {
@@ -122,7 +123,7 @@ public class Velocity extends Module {
     );
 
     public Velocity() {
-        super(Categories.Movement, "velocity", "Prevents you from being moved by external forces.");
+        super(Categories.Movement, Items.COMMAND_BLOCK, "velocity", "Prevents you from being moved by external forces.");
     }
 
     @EventHandler

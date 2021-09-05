@@ -23,10 +23,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.world.GameMode;
@@ -210,7 +207,7 @@ public class KillAura extends Module {
     private boolean wasPathing;
 
     public KillAura() {
-        super(Categories.Combat, "kill-aura", "Attacks specified entities around you.");
+        super(Categories.Combat, Items.DIAMOND_SWORD, "kill-aura", "Attacks specified entities around you.");
     }
 
     @Override

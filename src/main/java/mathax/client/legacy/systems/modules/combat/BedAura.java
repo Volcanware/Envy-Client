@@ -23,6 +23,7 @@ import net.minecraft.block.entity.BedBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BedItem;
+import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -196,16 +197,11 @@ public class BedAura extends Module {
     private int timer;
 
     public BedAura() {
-        super(Categories.Combat, "bed-aura", "Automatically places and explodes beds in the Nether and End.");
+        super(Categories.Combat, Items.RED_BED, "bed-aura", "Automatically places and explodes beds in the Nether and End.");
     }
 
     @Override
     public void onActivate() {
-        /*if (Modules.get().isActive(BedAuraPlus.class)) {
-            ChatUtils.error("Bed Aura", "Bed Aura+ was enabled while enabling Bed Aura, disabling Bed Aura+...");
-            Modules.get().get(BedAuraPlus.class).toggle();
-        }*/
-
         timer = delay.get();
         direction = CardinalDirection.North;
     }

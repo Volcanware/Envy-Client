@@ -5,6 +5,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.settings.StringSetting;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
+import net.minecraft.item.Items;
 
 public class NameProtect extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -19,7 +20,7 @@ public class NameProtect extends Module {
     private String username = "If you see this, something is wrong.";
 
     public NameProtect() {
-        super(Categories.Misc, "name-protect", "Hides your name client-side.");
+        super(Categories.Misc, Items.TINTED_GLASS, "name-protect", "Hides your name client-side.");
     }
 
     @Override

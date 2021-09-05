@@ -103,7 +103,7 @@ public class AutoTotem extends Module {
     private int totems, ticks;
 
     public AutoTotem() {
-        super(Categories.Combat, "auto-totem", "Automatically equips a totem in your offhand.");
+        super(Categories.Combat, Items.TOTEM_OF_UNDYING, "auto-totem", "Automatically equips a totem in your offhand.");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

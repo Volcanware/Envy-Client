@@ -12,6 +12,7 @@ import mathax.client.legacy.bus.listeners.ConsumerListener;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.item.Items;
 
 public class Background extends Module {
 
@@ -103,7 +104,7 @@ public class Background extends Module {
     private long fadeEndAt;
 
     public Background() {
-        super(Categories.Render, "background", "Custom background when in GUI screens.");
+        super(Categories.Render, Items.TINTED_GLASS, "background", "Custom background when in GUI screens.");
 
         // The listeners need to run even when the module is not enabled
         MatHaxClientLegacy.EVENT_BUS.subscribe(new ConsumerListener<>(WindowResizedEvent.class, event -> {

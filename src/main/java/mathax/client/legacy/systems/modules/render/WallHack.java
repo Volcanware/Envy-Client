@@ -8,6 +8,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.utils.player.ChatUtils;
 import net.minecraft.block.Block;
+import net.minecraft.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class WallHack extends Module {
     );
 
     public WallHack() {
-        super(Categories.Render, "wall-hack", "Makes blocks translucent.");
+        super(Categories.Render, Items.BARRIER, "wall-hack", "Makes blocks translucent.");
     }
 
     @Override

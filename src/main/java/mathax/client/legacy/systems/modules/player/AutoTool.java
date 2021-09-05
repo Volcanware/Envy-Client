@@ -15,6 +15,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.ShearsItem;
 import net.minecraft.item.ToolItem;
 
@@ -74,7 +75,7 @@ public class AutoTool extends Module {
     private int bestSlot;
 
     public AutoTool() {
-        super(Categories.Player, "auto-tool", "Automatically switches to the most effective tool when performing an action.");
+        super(Categories.Player, Items.DIAMOND_HOE, "auto-tool", "Automatically switches to the most effective tool when performing an action.");
     }
 
     @EventHandler

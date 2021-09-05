@@ -11,6 +11,7 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.item.FishingRodItem;
+import net.minecraft.item.Items;
 
 public class AutoFish extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -79,7 +80,7 @@ public class AutoFish extends Module {
     private int autoCastCheckTimer;
 
     public AutoFish() {
-        super(Categories.Player, "auto-fish", "Automatically fishes for you.");
+        super(Categories.Player, Items.FISHING_ROD, "auto-fish", "Automatically fishes for you.");
     }
 
     @Override

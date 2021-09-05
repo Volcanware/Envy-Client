@@ -63,7 +63,7 @@ public class AutoMountBypassDupe extends Module {
     private int timer;
 
     public AutoMountBypassDupe() {
-        super(Categories.Misc, "auto-mount-bypass-dupe", "Automatically does the mount bypass dupe.");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "auto-mount-bypass-dupe", "Automatically does the mount bypass dupe.");
     }
 
     @Override

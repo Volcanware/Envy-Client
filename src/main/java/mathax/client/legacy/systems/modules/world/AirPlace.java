@@ -10,6 +10,7 @@ import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.utils.world.BlockUtils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 
@@ -45,7 +46,7 @@ public class AirPlace extends Module {
     );
 
     public AirPlace() {
-        super(Categories.Player, "air-place", "Places a block where your crosshair is pointing at.");
+        super(Categories.World, Items.BARRIER, "air-place", "Places a block where your crosshair is pointing at.");
     }
 
     @EventHandler

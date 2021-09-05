@@ -46,7 +46,7 @@ public class AutoShearer extends Module {
     private boolean offHand;
 
     public AutoShearer() {
-        super(Categories.World, "auto-shearer", "Automatically shears sheep.");
+        super(Categories.World, Items.SHEARS, "auto-shearer", "Automatically shears sheep.");
     }
 
     @Override

@@ -5,11 +5,12 @@ import mathax.client.legacy.mixin.PlayerPositionLookS2CPacketAccessor;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
 public class NoRotate extends Module {
     public NoRotate() {
-        super(Categories.Player, "no-rotate", "Attempts to block rotations sent from server to client.");
+        super(Categories.Player, Items.ARMOR_STAND, "no-rotate", "Attempts to block rotations sent from server to client.");
     }
 
     @EventHandler

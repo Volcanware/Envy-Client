@@ -67,7 +67,7 @@ public class MiddleClickExtra extends Module {
     private boolean isUsing;
 
     public MiddleClickExtra() {
-        super(Categories.Misc, "middle-click-extra", "Lets you use items when you middle click.");
+        super(Categories.Misc, Items.STONE_BUTTON, "middle-click-extra", "Lets you use items when you middle click.");
     }
 
     @Override

@@ -9,6 +9,7 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -68,7 +69,7 @@ public class ArrowDodge extends Module {
     );
 
     public ArrowDodge() {
-        super(Categories.Combat, "arrow-dodge", "Tries to dodge arrows coming at you.");
+        super(Categories.Combat, Items.ARROW, "arrow-dodge", "Tries to dodge arrows coming at you.");
     }
 
     @EventHandler

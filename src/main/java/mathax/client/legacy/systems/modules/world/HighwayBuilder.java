@@ -245,7 +245,7 @@ public class HighwayBuilder extends Module {
     private final MBlockPos posRender3 = new MBlockPos();
 
     public HighwayBuilder() {
-        super(Categories.World, "highway-builder", "Automatically builds highways.");
+        super(Categories.World, Items.OBSIDIAN, "highway-builder", "Automatically builds highways.");
     }
 
     @Override

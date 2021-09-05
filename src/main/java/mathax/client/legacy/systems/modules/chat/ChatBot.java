@@ -9,6 +9,7 @@ import mathax.client.legacy.settings.StringSetting;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.world.TickRate;
+import net.minecraft.item.Items;
 
 public class ChatBot extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -64,7 +65,7 @@ public class ChatBot extends Module {
     );
 
     public ChatBot() {
-        super(Categories.Chat, "chat-bot", "Bot which automatically responds to commands.");
+        super(Categories.Chat, Items.OBSERVER, "chat-bot", "Bot which automatically responds to commands.");
     }
 
     @EventHandler

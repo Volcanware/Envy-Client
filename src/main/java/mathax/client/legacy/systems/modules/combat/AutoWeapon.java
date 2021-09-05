@@ -9,6 +9,7 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.item.AxeItem;
+import net.minecraft.item.Items;
 import net.minecraft.item.SwordItem;
 
 public class AutoWeapon extends Module {
@@ -36,7 +37,7 @@ public class AutoWeapon extends Module {
     );
 
     public AutoWeapon() {
-        super(Categories.Combat, "auto-weapon", "Finds the best weapon to use in your hotbar.");
+        super(Categories.Combat, Items.DIAMOND_SWORD, "auto-weapon", "Finds the best weapon to use in your hotbar.");
     }
 
     @EventHandler

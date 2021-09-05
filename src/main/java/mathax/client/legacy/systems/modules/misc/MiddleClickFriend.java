@@ -57,7 +57,7 @@ public class MiddleClickFriend extends Module {
     );
 
     public MiddleClickFriend() {
-        super(Categories.Misc, "middle-click-friend", "Adds or removes a player as a friend using middle click.");
+        super(Categories.Misc, Items.STONE_BUTTON, "middle-click-friend", "Adds or removes a player as a friend using middle click.");
     }
 
     @EventHandler
@@ -66,7 +66,7 @@ public class MiddleClickFriend extends Module {
             if (!Friends.get().isFriend((PlayerEntity) mc.targetedEntity)) {
                 if (Enemies.get().isEnemy((PlayerEntity) mc.targetedEntity)) {
                     ChatUtils.error("Friends", "Could not add to friends because this person is on your Enemy list.");
-                    if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Friends", Formatting.RED + "Could not add to friends because this person is on your Enemy list."));
+                    if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, color.getPacked(), "Friends", Formatting.RED + "Could not add to friends because this person is on your Enemy list."));
                 } else {
                     Friends.get().add(new Friend((PlayerEntity) mc.targetedEntity));
                     if (friendAddMessage.get()) {

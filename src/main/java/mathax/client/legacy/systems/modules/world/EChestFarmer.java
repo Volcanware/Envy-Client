@@ -3,7 +3,6 @@ package mathax.client.legacy.systems.modules.world;
 import mathax.client.legacy.events.render.Render3DEvent;
 import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.settings.*;
-import mathax.client.legacy.systems.modules.player.PacketMine;
 import mathax.client.legacy.renderer.ShapeMode;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
@@ -100,7 +99,7 @@ public class EChestFarmer extends Module {
     private int startCount, prevSlot;
 
     public EChestFarmer() {
-        super(Categories.World, "EChest-farmer", "Places and breaks EChests to farm obsidian.");
+        super(Categories.World, Items.ENDER_CHEST, "EChest-farmer", "Places and breaks EChests to farm obsidian.");
     }
 
     @Override

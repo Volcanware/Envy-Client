@@ -18,7 +18,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 public class InstaMine extends Module {
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -64,14 +63,14 @@ public class InstaMine extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(225, 75, 100, 10))
+        .defaultValue(new SettingColor(230, 75, 100, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(225, 75, 100, 255))
+        .defaultValue(new SettingColor(230, 75, 100, 255))
         .build()
     );
 
@@ -81,7 +80,7 @@ public class InstaMine extends Module {
     private Direction direction;
 
     public InstaMine() {
-        super(Categories.Player, "insta-mine", "Attempts to instantly mine blocks.");
+        super(Categories.Player, Items.DIAMOND_PICKAXE, "insta-mine", "Attempts to instantly mine blocks.");
     }
 
     @Override

@@ -51,15 +51,6 @@ import java.util.List;
 
 
 public class Notebot extends Module {
-
-    private enum Stage {
-        None,
-        SetUp,
-        Tune,
-        Playing,
-        Preview
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render",false);
 
@@ -130,7 +121,7 @@ public class Notebot extends Module {
     private WLabel status;
 
     public Notebot() {
-        super(Categories.Fun, "notebot","Plays noteblock nicely.");
+        super(Categories.Fun, Items.NOTE_BLOCK, "notebot","Plays noteblock nicely.");
 
         for (int y = -5; y < 5; y++) {
             for (int x = -5; x < 5; x++) {
@@ -637,5 +628,13 @@ public class Notebot extends Module {
         if (pos.getY() > eyesPos.y) return Direction.DOWN;
 
         return Direction.UP;
+    }
+
+    private enum Stage {
+        None,
+        SetUp,
+        Tune,
+        Playing,
+        Preview
     }
 }

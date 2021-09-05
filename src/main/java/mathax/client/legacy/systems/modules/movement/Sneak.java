@@ -7,6 +7,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.render.Freecam;
+import net.minecraft.item.Items;
 
 public class Sneak extends Module {
     public enum Mode {
@@ -23,7 +24,7 @@ public class Sneak extends Module {
     );
 
     public Sneak() {
-        super (Categories.Movement, "sneak", "Sneaks for you.");
+        super(Categories.Movement, Items.LEATHER_BOOTS, "sneak", "Sneaks for you.");
     }
 
     public boolean doPacket() {

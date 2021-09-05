@@ -13,6 +13,7 @@ import net.minecraft.entity.mob.SkeletonHorseEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.entity.vehicle.MinecartEntity;
+import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.Hand;
 
@@ -95,7 +96,7 @@ public class AutoMount extends Module {
     );
 
     public AutoMount() {
-        super(Categories.World, "auto-mount", "Automatically mounts entities.");
+        super(Categories.World, Items.SADDLE, "auto-mount", "Automatically mounts entities.");
     }
 
     @EventHandler

@@ -71,7 +71,7 @@ public class AutoEat extends Module {
     private boolean wasBaritone;
 
     public AutoEat() {
-        super(Categories.Player, "auto-eat", "Automatically eats food.");
+        super(Categories.Player, Items.APPLE, "auto-eat", "Automatically eats food.");
     }
 
     @Override

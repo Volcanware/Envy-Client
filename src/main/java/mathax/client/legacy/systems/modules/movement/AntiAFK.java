@@ -13,6 +13,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.player.Rotations;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -143,7 +144,7 @@ public class AntiAFK extends Module {
     private float prevYaw;
 
     public AntiAFK() {
-        super(Categories.Player, "anti-AFK", "Performs different actions to prevent getting kicked for AFK reasons.");
+        super(Categories.Movement, Items.COMMAND_BLOCK, "anti-AFK", "Performs different actions to prevent getting kicked for AFK reasons.");
     }
 
     @Override

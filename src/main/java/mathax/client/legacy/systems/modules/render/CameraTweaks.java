@@ -8,6 +8,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.utils.misc.Keybind;
 import net.minecraft.client.option.Perspective;
+import net.minecraft.item.Items;
 
 public class CameraTweaks extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -60,7 +61,7 @@ public class CameraTweaks extends Module {
     public double distance;
 
     public CameraTweaks() {
-        super(Categories.Render, "camera-tweaks", "Allows modification of the third person camera.");
+        super(Categories.Render, Items.COMMAND_BLOCK, "camera-tweaks", "Allows modification of the third person camera.");
     }
 
     @Override

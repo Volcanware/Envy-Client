@@ -150,7 +150,7 @@ public class InstaAutoCity extends Module {
     }
 
     public InstaAutoCity() {
-        super(Categories.Combat, "insta-auto-city", "Automatically instamines the closest city block.");
+        super(Categories.Combat, Items.DIAMOND_PICKAXE, "insta-auto-city", "Automatically instamines the closest city block.");
     }
 
     @Override

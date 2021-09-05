@@ -12,6 +12,7 @@ import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.utils.placeholders.Placeholders;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.gui.screen.ingame.SignEditScreen;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.UpdateSignC2SPacket;
 
 import java.text.SimpleDateFormat;
@@ -19,10 +20,6 @@ import java.util.Calendar;
 
 public class AutoSign extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-
-    public AutoSign() {
-        super(Categories.World, "auto-sign", "Automatically writes signs.");
-    }
 
     private final Setting<String> lineone = sgGeneral.add(new StringSetting.Builder()
         .name("line-one")
@@ -58,6 +55,10 @@ public class AutoSign extends Module {
         .defaultValue(false)
         .build()
     );
+
+    public AutoSign() {
+        super(Categories.World, Items.OAK_SIGN, "auto-sign", "Automatically writes signs.");
+    }
 
     private String getDate() {
         if (euDate.get()) {

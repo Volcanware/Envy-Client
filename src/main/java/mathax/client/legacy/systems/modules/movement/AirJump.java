@@ -11,6 +11,7 @@ import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.render.Freecam;
 import mathax.client.legacy.utils.misc.input.KeyAction;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 
 public class AirJump extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -25,7 +26,7 @@ public class AirJump extends Module {
     private int level;
 
     public AirJump() {
-        super(Categories.Movement, "air-jump", "Lets you jump in the air.");
+        super(Categories.Movement, Items.BARRIER, "air-jump", "Lets you jump in the air.");
     }
 
     @Override

@@ -55,7 +55,7 @@ public class ProfilesTab extends Tab {
 
             WTable table = add(theme.table()).expandX().minWidth(300).widget();
 
-            // Waypoints
+            // WaypointsModule
             for (Profile profile : Profiles.get()) {
                 // Name
                 table.add(theme.label(profile.name)).expandCellX();
@@ -170,8 +170,8 @@ public class ProfilesTab extends Tab {
             modulesBool.action = () -> newProfile.modules = modulesBool.checked;
             table.row();
 
-            // Waypoints
-            table.add(theme.label("Waypoints:"));
+            // WaypointsModule
+            table.add(theme.label("WaypointsModule:"));
             WCheckbox waypointsBool = table.add(theme.checkbox(ogProfile.waypoints)).widget();
             waypointsBool.action = () -> newProfile.waypoints = waypointsBool.checked;
             table.row();

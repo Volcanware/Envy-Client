@@ -8,6 +8,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Items;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -53,7 +54,7 @@ public class BlockSelection extends Module {
     );
 
     public BlockSelection() {
-        super(Categories.Render, "block-selection", "Modifies how your block selection is rendered.");
+        super(Categories.Render, Items.WHITE_STAINED_GLASS, "block-selection", "Modifies how your block selection is rendered.");
     }
 
     @EventHandler

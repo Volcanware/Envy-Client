@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Items;
 
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class LiquidFiller extends Module {
     private int timer;
 
     public LiquidFiller(){
-        super(Categories.World, "liquid-filler", "Places blocks inside of liquid source blocks within range of you.");
+        super(Categories.World, Items.WATER_BUCKET, "liquid-filler", "Places blocks inside of liquid source blocks within range of you.");
     }
 
     @Override

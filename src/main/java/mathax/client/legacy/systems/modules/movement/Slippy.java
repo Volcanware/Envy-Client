@@ -7,6 +7,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import net.minecraft.block.Block;
+import net.minecraft.item.Items;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +33,6 @@ public class Slippy extends Module {
     );
 
     public Slippy() {
-        super(Categories.Movement, "slippy", "Makes blocks slippery like ice.");
+        super(Categories.Movement, Items.BLUE_ICE, "slippy", "Makes blocks slippery like ice.");
     }
 }

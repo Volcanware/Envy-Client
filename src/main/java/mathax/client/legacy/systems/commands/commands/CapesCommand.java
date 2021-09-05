@@ -10,7 +10,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class CapesCommand extends Command {
     public CapesCommand() {
-        super("capes", "MatHax Capes.", "cape");
+        super("capes", "MatHax CapesModule.", "cape");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class CapesCommand extends Command {
             ChatUtils.info("Reloading capes...");
             Capes.init();
 
-            ChatUtils.info("Capes reload complete!");
+            ChatUtils.info("CapesModule reload complete!");
             return SINGLE_SUCCESS;
         }));
     }

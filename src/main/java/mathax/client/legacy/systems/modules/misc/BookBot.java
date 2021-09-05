@@ -1,4 +1,4 @@
-package mathax.client.legacy.systems.modules.fun;
+package mathax.client.legacy.systems.modules.misc;
 
 import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.events.world.TickEvent;
@@ -97,7 +97,7 @@ public class BookBot extends Module {
     private Random random;
 
     public BookBot() {
-        super(Categories.Misc, "book-bot", "Automatically writes in books.");
+        super(Categories.Misc, Items.WRITABLE_BOOK, "book-bot", "Automatically writes in books.");
 
         if (!file.exists()) {
             file = null;

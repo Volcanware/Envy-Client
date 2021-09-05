@@ -11,6 +11,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.player.PlayerUtils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
 public class EntitySpeed extends Module {
@@ -40,7 +41,7 @@ public class EntitySpeed extends Module {
     );
 
     public EntitySpeed() {
-        super(Categories.Movement, "entity-speed", "Makes you go faster when riding entities.");
+        super(Categories.Movement, Items.DIAMOND_HORSE_ARMOR, "entity-speed", "Makes you go faster when riding entities.");
     }
 
     @EventHandler

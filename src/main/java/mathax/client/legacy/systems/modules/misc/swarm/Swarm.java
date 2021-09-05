@@ -12,6 +12,7 @@ import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.util.Util;
 
 public class Swarm extends Module {
@@ -49,7 +50,7 @@ public class Swarm extends Module {
     public SwarmWorker worker;
 
     public Swarm() {
-        super(Categories.Misc, "Swarm", "Allows you to control multiple instances of MatHax from one central host.");
+        super(Categories.Misc, Items.BEEHIVE, "Swarm", "Allows you to control multiple instances of MatHax from one central host.");
     }
 
     @Override

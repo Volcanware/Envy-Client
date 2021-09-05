@@ -7,6 +7,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 
 public class Sprint extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -19,7 +20,7 @@ public class Sprint extends Module {
     );
 
     public Sprint() {
-        super(Categories.Movement, "sprint", "Automatically sprints.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "sprint", "Automatically sprints.");
     }
 
     @Override

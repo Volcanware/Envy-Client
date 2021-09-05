@@ -12,6 +12,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.utils.placeholders.Placeholders;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 
 public class MessageAura extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -38,7 +39,7 @@ public class MessageAura extends Module {
     );
 
     public MessageAura() {
-        super(Categories.Chat, "message-aura", "Sends a specified message to any player that enters render distance.");
+        super(Categories.Chat, Items.DISPENSER, "message-aura", "Sends a specified message to any player that enters render distance.");
     }
 
     @EventHandler

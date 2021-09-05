@@ -10,7 +10,7 @@ import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Module;
-import mathax.client.legacy.systems.modules.misc.AutoLog;
+import mathax.client.legacy.systems.modules.combat.AutoLog;
 import mathax.client.legacy.systems.modules.movement.GUIMove;
 import mathax.client.legacy.systems.modules.movement.Jesus;
 import mathax.client.legacy.systems.modules.movement.NoFall;
@@ -23,6 +23,7 @@ import mathax.client.legacy.systems.modules.player.AntiHunger;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
+import net.minecraft.item.Items;
 import net.minecraft.item.ToolItem;
 import net.minecraft.network.packet.s2c.play.DisconnectS2CPacket;
 import net.minecraft.text.LiteralText;
@@ -100,7 +101,7 @@ public class InfinityMiner extends Module {
     private volatile Boolean BLOCKER = false;
 
     public InfinityMiner() {
-        super(Categories.World, "infinity-miner", "Allows you to essentially mine forever.");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever.");
     }
 
     private boolean filter(Block block) {

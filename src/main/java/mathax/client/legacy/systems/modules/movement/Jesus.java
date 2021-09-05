@@ -16,6 +16,7 @@ import net.minecraft.block.Material;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.Items;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.tag.FluidTags;
@@ -141,7 +142,7 @@ public class Jesus extends Module {
     private boolean preBaritoneAssumeWalkOnLava;
 
     public Jesus() {
-        super(Categories.Movement, "jesus", "Walk on liquids and powder snow like Jesus.");
+        super(Categories.Movement, Items.WATER_BUCKET, "jesus", "Walk on liquids and powder snow like Jesus.");
     }
 
     @Override

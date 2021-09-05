@@ -7,6 +7,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.Quaternion;
 
 public class HandView extends Module {
@@ -121,7 +122,7 @@ public class HandView extends Module {
     );
 
     public HandView() {
-        super(Categories.Render, "hand-view", "Alters the way items are rendered in your hands.");
+        super(Categories.Render, Items.LIME_STAINED_GLASS_PANE, "hand-view", "Alters the way items are rendered in your hands.");
     }
 
     public void transform(MatrixStack matrices) {

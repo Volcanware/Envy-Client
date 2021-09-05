@@ -10,10 +10,11 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.screen.ingame.AnvilScreen;
+import net.minecraft.item.Items;
 
 public class SelfAnvil extends Module {
     public SelfAnvil() {
-        super(Categories.Combat, "self-anvil", "Automatically places an anvil on you to prevent other players from going into your hole.");
+        super(Categories.Combat, Items.ANVIL, "self-anvil", "Automatically places an anvil on you to prevent other players from going into your hole.");
     }
 
     @EventHandler

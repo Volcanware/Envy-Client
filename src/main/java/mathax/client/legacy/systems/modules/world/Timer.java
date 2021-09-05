@@ -11,6 +11,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.misc.TPSSync;
+import net.minecraft.item.Items;
 
 public class Timer extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -28,7 +29,7 @@ public class Timer extends Module {
     private double override = 1;
 
     public Timer() {
-        super(Categories.World, "timer", "Changes the speed of everything in your game.");
+        super(Categories.World, Items.CLOCK, "timer", "Changes the speed of everything in your game.");
     }
 
     public double getMultiplier() {

@@ -1,4 +1,4 @@
-package mathax.client.legacy.systems.modules.misc;
+package mathax.client.legacy.systems.modules.combat;
 
 import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.events.world.TickEvent;
@@ -16,6 +16,7 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.DisconnectS2CPacket;
 import net.minecraft.text.LiteralText;
 
@@ -86,7 +87,7 @@ public class AutoLog extends Module {
     );
 
     public AutoLog() {
-        super(Categories.Combat, "auto-log", "Automatically disconnects you when certain requirements are met.");
+        super(Categories.Combat, Items.REDSTONE, "auto-log", "Automatically disconnects you when certain requirements are met.");
     }
 
     @EventHandler

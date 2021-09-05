@@ -9,6 +9,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 
 public class AutoClicker extends Module {
     public enum Mode {
@@ -49,7 +50,7 @@ public class AutoClicker extends Module {
     private int timer;
 
     public AutoClicker() {
-        super(Categories.Player, "auto-clicker", "Automatically clicks.");
+        super(Categories.Misc, Items.STONE_BUTTON, "auto-clicker", "Automatically clicks.");
     }
 
     @Override

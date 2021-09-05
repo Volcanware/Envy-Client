@@ -9,6 +9,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class ItemHighlight extends Module {
     );
 
     public ItemHighlight() {
-        super(Categories.Render, "item-highlight", "Highlights selected items when in guis");
+        super(Categories.Render, Items.PURPLE_STAINED_GLASS_PANE, "item-highlight", "Highlights selected items when in guis");
     }
 
     public int getColor(ItemStack stack) {

@@ -13,6 +13,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class AutoMend extends Module {
     private boolean didMove;
 
     public AutoMend() {
-        super(Categories.Player, "auto-mend", "Automatically replaces items in your offhand with mending when fully repaired.");
+        super(Categories.Player, Items.EXPERIENCE_BOTTLE, "auto-mend", "Automatically replaces items in your offhand with mending when fully repaired.");
     }
 
     @Override

@@ -10,6 +10,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.item.Items;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
@@ -70,7 +71,7 @@ public class BetterTab extends Module {
     );
 
     public BetterTab() {
-        super(Categories.Misc, "better-tab", "Various improvements to the tab list.");
+        super(Categories.Misc, Items.PAPER, "better-tab", "Various improvements to the tab list.");
     }
 
     public Text getPlayerName(PlayerListEntry playerListEntry) {

@@ -29,6 +29,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -240,7 +241,7 @@ public class Nametags extends Module {
     private final List<Entity> entityList = new ArrayList<>();
 
     public Nametags() {
-        super(Categories.Render, "nametags", "Displays customizable nametags above players.");
+        super(Categories.Render, Items.CYAN_STAINED_GLASS, "nametags", "Displays customizable nametags above players.");
     }
 
     private static String ticksToTime(int ticks) {

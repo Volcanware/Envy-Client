@@ -19,6 +19,7 @@ import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.screen.ingame.AnvilScreen;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 
 public class AutoAnvil extends Module {
@@ -92,7 +93,7 @@ public class AutoAnvil extends Module {
     private int timer;
 
     public AutoAnvil() {
-        super(Categories.Combat, "auto-anvil", "Automatically places anvils above players to destroy helmets.");
+        super(Categories.Combat, Items.ANVIL, "auto-anvil", "Automatically places anvils above players to destroy helmets.");
     }
 
     @Override

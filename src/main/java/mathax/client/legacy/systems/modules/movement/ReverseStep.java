@@ -9,6 +9,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.BedBlock;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 
 public class ReverseStep extends Module {
@@ -33,7 +34,7 @@ public class ReverseStep extends Module {
     );
 
     public ReverseStep() {
-        super(Categories.Movement, "reverse-step", "Allows you to fall down blocks at a greater speed.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "reverse-step", "Allows you to fall down blocks at a greater speed.");
     }
 
     @EventHandler

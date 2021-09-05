@@ -5,6 +5,7 @@ import mathax.client.legacy.gui.GuiTheme;
 import mathax.client.legacy.gui.WindowScreen;
 import mathax.client.legacy.gui.utils.Cell;
 import mathax.client.legacy.gui.widgets.WKeybind;
+import mathax.client.legacy.gui.widgets.WVerticalSeparator;
 import mathax.client.legacy.gui.widgets.WWidget;
 import mathax.client.legacy.gui.widgets.containers.WContainer;
 import mathax.client.legacy.gui.widgets.containers.WHorizontalList;
@@ -61,7 +62,8 @@ public class ModuleScreen extends WindowScreen {
         WCheckbox tobrC = tobr.add(theme.checkbox(module.toggleOnBindRelease)).widget();
         tobrC.action = () -> module.toggleOnBindRelease = tobrC.checked;
 
-        add(theme.horizontalSeparator()).expandX();
+        // Module
+        WSection moduleSection = add(theme.section("Module", true)).expandX().widget();
 
         // Bottom
         WHorizontalList bottom = add(theme.horizontalList()).expandX().widget();
@@ -73,9 +75,20 @@ public class ModuleScreen extends WindowScreen {
             if (module.isActive() != active.checked) module.toggle(Utils.canUpdate());
         };
 
+        WHorizontalList bottom2 = add(theme.horizontalList()).expandX().widget();
+
+        // Toasts
+        bottom2.add(theme.label("Toggle toast: "));
+        WCheckbox toastToggle = bottom2.add(theme.checkbox(module.isToastEnabled())).widget();
+        toastToggle.action = () -> {
+            if (module.isToastEnabled() != toastToggle.checked) module.toggleToast(toastToggle.checked);
+        };
+
+        WHorizontalList bottom3 = add(theme.horizontalList()).expandX().widget();
+
         //   Visible
-        bottom.add(theme.label("Visible: "));
-        WCheckbox visible = bottom.add(theme.checkbox(module.isVisible())).widget();
+        bottom3.add(theme.label("Visible: "));
+        WCheckbox visible = bottom3.add(theme.checkbox(module.isVisible())).widget();
         visible.action = () -> {
             if (module.isVisible() != visible.checked) module.setVisible(visible.checked);
         };

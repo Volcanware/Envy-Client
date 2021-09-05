@@ -16,6 +16,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.entity.*;
 import net.minecraft.block.enums.ChestType;
+import net.minecraft.item.Items;
 
 import java.util.Arrays;
 import java.util.List;
@@ -101,7 +102,7 @@ public class StorageESP extends Module {
     private int count;
 
     public StorageESP() {
-        super(Categories.Render, "storage-ESP", "Renders all specified storage blocks.");
+        super(Categories.Render, Items.SHULKER_BOX, "storage-ESP", "Renders all specified storage blocks.");
     }
 
     private void getTileEntityColor(BlockEntity blockEntity) {

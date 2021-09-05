@@ -19,6 +19,7 @@ import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.utils.world.Dimension;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.Block;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
@@ -71,7 +72,7 @@ public class Search extends Module {
     private Dimension lastDimension;
 
     public Search() {
-        super(Categories.Render, "search", "Searches for specified blocks.");
+        super(Categories.Render, Items.COMMAND_BLOCK, "search", "Searches for specified blocks.");
 
         RainbowColors.register(this::onTickRainbow);
     }

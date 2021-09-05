@@ -10,17 +10,12 @@ import mathax.client.legacy.utils.player.DamageUtils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
+import net.minecraft.item.Items;
 
 import java.util.Comparator;
 import java.util.Optional;
 
 public class Step extends Module {
-    public enum ActiveWhen {
-        Always,
-        Sneaking,
-        NotSneaking
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Double> height = sgGeneral.add(new DoubleSetting.Builder()
@@ -59,7 +54,7 @@ public class Step extends Module {
     private boolean prevBaritoneAssumeStep;
 
     public Step() {
-        super(Categories.Movement, "step", "Allows you to walk up full blocks instantly.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "step", "Allows you to walk up full blocks instantly.");
     }
 
     @Override
@@ -103,5 +98,11 @@ public class Step extends Module {
             .max(Comparator.comparingDouble(o -> DamageUtils.crystalDamage(mc.player, o.getPos())))
             .map(entity -> (EndCrystalEntity) entity);
         return crystal.map(endCrystalEntity -> DamageUtils.crystalDamage(mc.player, endCrystalEntity.getPos())).orElse(0.0);
+    }
+
+    public enum ActiveWhen {
+        Always,
+        Sneaking,
+        NotSneaking
     }
 }

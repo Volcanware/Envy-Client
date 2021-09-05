@@ -15,6 +15,7 @@ import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.utils.world.BlockIterator;
 import mathax.client.legacy.utils.world.BlockUtils;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class LightOverlay extends Module {
     private final Mesh mesh = new ShaderMesh(Shaders.POS_COLOR, DrawMode.Lines, Mesh.Attrib.Vec3, Mesh.Attrib.Color);
 
     public LightOverlay() {
-        super(Categories.Render, "light-overlay", "Shows blocks where mobs can spawn.");
+        super(Categories.Render, Items.YELLOW_STAINED_GLASS, "light-overlay", "Shows blocks where mobs can spawn.");
     }
 
     @EventHandler

@@ -8,6 +8,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -28,7 +29,7 @@ public class ClickTP extends Module {
     );
 
     public ClickTP() {
-        super(Categories.Movement, "click-TP", "Teleports you to the block you click on.");
+        super(Categories.Movement, Items.STONE_BUTTON, "click-TP", "Teleports you to the block you click on.");
     }
 
     @EventHandler

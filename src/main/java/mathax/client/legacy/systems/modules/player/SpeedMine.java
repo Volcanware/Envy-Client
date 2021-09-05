@@ -10,6 +10,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.Items;
 
 import static net.minecraft.entity.effect.StatusEffects.HASTE;
 
@@ -38,7 +39,7 @@ public class SpeedMine extends Module {
     );
 
     public SpeedMine() {
-        super(Categories.Player, "speed-mine", "Allows you to quickly mine blocks.");
+        super(Categories.Player, Items.GOLDEN_PICKAXE, "speed-mine", "Allows you to quickly mine blocks.");
     }
 
     @EventHandler

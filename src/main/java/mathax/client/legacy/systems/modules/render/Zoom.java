@@ -10,6 +10,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 
 public class Zoom extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -55,7 +56,7 @@ public class Zoom extends Module {
     private double lastFov;
 
     public Zoom() {
-        super(Categories.Render, "zoom", "Zooms your view.");
+        super(Categories.Render, Items.GLASS, "zoom", "Zooms your view.");
     }
 
     @Override

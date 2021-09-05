@@ -4,6 +4,7 @@ import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.shape.VoxelShape;
 
@@ -11,7 +12,7 @@ import java.util.stream.Stream;
 
 public class Parkour extends Module {
     public Parkour() {
-        super(Categories.Movement, "parkour", "Automatically jumps at the edges of blocks.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "parkour", "Automatically jumps at the edges of blocks.");
     }
 
     @EventHandler

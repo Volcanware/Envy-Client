@@ -5,6 +5,7 @@ import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class Blink extends Module {
     public Blink() {
-        super(Categories.Movement, "blink", "Allows you to essentially teleport while suspending motion updates.");
+        super(Categories.Movement, Items.TINTED_GLASS, "blink", "Allows you to essentially teleport while suspending motion updates.");
     }
 
     private final List<PlayerMoveC2SPacket> packets = new ArrayList<>();

@@ -26,20 +26,23 @@ public class MatHaxToast implements Toast {
     public static final int TEXT_COLOR = Color.fromRGBA(255, 255, 255, 255);
 
     private ItemStack icon;
+    private Integer titleColor = TITLE_COLOR;
     private Text title, text;
     private boolean justUpdated = true, playedSound;
     private long start, duration;
 
-    public MatHaxToast(@Nullable Item item, @NotNull String title, @Nullable String text, long duration) {
+    public MatHaxToast(@Nullable Item item, @NotNull Integer titleColor, @NotNull String title, @Nullable String text, long duration) {
         this.icon = item != null ? item.getDefaultStack() : null;
-        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(TITLE_COLOR)));
+        this.titleColor = titleColor;
+        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(titleColor)));
         this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(TEXT_COLOR))) : null;
         this.duration = duration;
     }
 
-    public MatHaxToast(@Nullable Item item, @NotNull String title, @Nullable String text) {
+    public MatHaxToast(@Nullable Item item, @NotNull Integer titleColor, @NotNull String title, @Nullable String text) {
         this.icon = item != null ? item.getDefaultStack() : null;
-        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(TITLE_COLOR)));
+        this.titleColor = titleColor;
+        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(titleColor)));
         this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(TEXT_COLOR))) : null;
         this.duration = 6000;
     }

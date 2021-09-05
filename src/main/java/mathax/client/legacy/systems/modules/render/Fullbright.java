@@ -11,6 +11,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.item.Items;
 
 public class Fullbright extends Module {
     public enum Mode {
@@ -47,7 +48,7 @@ public class Fullbright extends Module {
     );
 
     public Fullbright() {
-        super(Categories.Render, "fullbright", "Lights up your world!");
+        super(Categories.Render, Items.BEACON, "fullbright", "Lights up your world!");
 
         MatHaxClientLegacy.EVENT_BUS.subscribe(StaticListener.class);
     }

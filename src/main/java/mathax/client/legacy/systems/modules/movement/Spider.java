@@ -7,6 +7,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
 public class Spider extends Module {
@@ -21,7 +22,7 @@ public class Spider extends Module {
     );
 
     public Spider() {
-        super(Categories.Movement, "spider", "Allows you to climb walls like a spider.");
+        super(Categories.Movement, Items.SPIDER_EYE, "spider", "Allows you to climb walls like a spider.");
     }
 
     @EventHandler

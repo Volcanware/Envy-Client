@@ -151,24 +151,6 @@ public class ConfigTab extends Tab {
         .build()
     );
 
-    public static final Setting<Boolean> moduleToggleToast = sgToasts.add(new BoolSetting.Builder()
-        .name("module-toggle")
-        .description("Sends a toast when you toggle a module.")
-        .defaultValue(true)
-        .onChanged(aBoolean -> Config.get().moduleToggleToast = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().moduleToggleToast))
-        .build()
-    );
-
-    public static final Setting<Boolean> zoomToggleToast = sgToasts.add(new BoolSetting.Builder()
-        .name("zoom-toggle")
-        .description("Sends a toast when you toggle zoom module.")
-        .defaultValue(false)
-        .onChanged(aBoolean -> Config.get().zoomToggleToast = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().zoomToggleToast))
-        .build()
-    );
-
     public static final Setting<Boolean> playSoundToast = sgToasts.add(new BoolSetting.Builder()
         .name("play-sound")
         .description("Plays a sound when a toast appears.")

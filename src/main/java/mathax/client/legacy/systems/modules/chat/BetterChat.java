@@ -15,6 +15,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.client.gui.hud.ChatHudLine;
+import net.minecraft.item.Items;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 
@@ -171,7 +172,7 @@ public class BetterChat extends Module {
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     public BetterChat() {
-        super(Categories.Chat, "better-chat", "Improves your chat experience in various ways.");
+        super(Categories.Chat, Items.DROPPER, "better-chat", "Improves your chat experience in various ways.");
     }
 
     {

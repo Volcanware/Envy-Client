@@ -11,8 +11,9 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
+import net.minecraft.item.Items;
 
-public class Capes extends Module {
+public class CapesModule extends Module {
     private int timer = 0;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -30,12 +31,12 @@ public class Capes extends Module {
         .name("ignore-own")
         .description("Ignores your own cape.")
         .defaultValue(true)
-        .onChanged(val -> mathax.client.legacy.utils.network.Capes.reload())
+        .onChanged(val -> mathax.client.legacy.utils.network.CapesModule.reload())
         .build()
     );*/
 
-    public Capes() {
-        super(Categories.Fun, "capes", "When enabled you will see MatHax capes on users which have them.");
+    public CapesModule() {
+        super(Categories.Fun, Items.CAKE, "capes", "When enabled you will see MatHax capes on users which have them.");
     }
 
     @EventHandler

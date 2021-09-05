@@ -41,7 +41,7 @@ public class MatHaxLegacyCommand extends Command {
                     ChatUtils.info("Reloading capes...");
                     Capes.init();
 
-                    ChatUtils.info("Capes reload complete!");
+                    ChatUtils.info("CapesModule reload complete!");
                     return SINGLE_SUCCESS;
                 })
             )
@@ -60,7 +60,7 @@ public class MatHaxLegacyCommand extends Command {
                         ChatUtils.info("Reloading capes...");
                         Capes.init();
 
-                        ChatUtils.info("Capes reload complete!");
+                        ChatUtils.info("CapesModule reload complete!");
                         return SINGLE_SUCCESS;
                     })
                 )

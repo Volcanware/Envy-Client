@@ -8,6 +8,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.misc.Pool;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.world.dimension.DimensionType;
 
 import java.util.ArrayDeque;
@@ -51,7 +52,7 @@ public class Breadcrumbs extends Module {
     private DimensionType lastDimension;
 
     public Breadcrumbs() {
-        super(Categories.Render, "breadcrumbs", "Displays a trail behind where you have walked.");
+        super(Categories.Render, Items.BREAD, "breadcrumbs", "Displays a trail behind where you have walked.");
     }
 
     @Override

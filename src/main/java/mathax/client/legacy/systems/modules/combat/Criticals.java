@@ -16,6 +16,7 @@ import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
@@ -43,7 +44,7 @@ public class Criticals extends Module {
     private boolean sendPackets;
     private int sendTimer;
     public Criticals() {
-        super(Categories.Combat, "criticals", "Performs critical attacks when you hit your target.");
+        super(Categories.Combat, Items.DIAMOND_SWORD, "criticals", "Performs critical attacks when you hit your target.");
     }
 
     @Override

@@ -6,6 +6,7 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +20,7 @@ public class GhostHand extends Module {
     private final List<BlockPos> posList = new ArrayList<>();
 
     public GhostHand() {
-        super(Categories.Player, "ghost-hand", "Opens containers through walls.");
+        super(Categories.Player, Items.ENDER_CHEST, "ghost-hand", "Opens containers through walls.");
     }
 
     @EventHandler

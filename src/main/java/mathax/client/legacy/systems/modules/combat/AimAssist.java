@@ -18,6 +18,7 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
 
 public class AimAssist extends Module {
@@ -84,7 +85,7 @@ public class AimAssist extends Module {
     private Entity target;
 
     public AimAssist() {
-        super(Categories.Combat, "aim-assist", "Automatically aims at entities.");
+        super(Categories.Combat, Items.ARMOR_STAND, "aim-assist", "Automatically aims at entities.");
     }
 
     @EventHandler

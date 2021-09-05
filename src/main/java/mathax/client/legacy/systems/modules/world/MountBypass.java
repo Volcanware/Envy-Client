@@ -6,13 +6,14 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.passive.AbstractDonkeyEntity;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 
 public class MountBypass extends Module {
     private boolean dontCancel;
 
     public MountBypass() {
-        super(Categories.World, "mount-bypass", "Allows you to bypass the IllegalStacks plugin and put chests on entities.");
+        super(Categories.World, Items.SADDLE, "mount-bypass", "Allows you to bypass the IllegalStacks plugin and put chests on entities.");
     }
 
     @EventHandler

@@ -9,6 +9,7 @@ import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.world.Timer;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 
 public class NoSlow extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -68,7 +69,7 @@ public class NoSlow extends Module {
     private boolean usedTimer;
 
     public NoSlow() {
-        super(Categories.Movement, "no-slow", "Allows you to move normally when using objects that will slow you.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "no-slow", "Allows you to move normally when using objects that will slow you.");
     }
 
     public boolean airStrict() {

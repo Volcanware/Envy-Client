@@ -8,6 +8,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 
 public class TimeChanger extends Module {
@@ -25,7 +26,7 @@ public class TimeChanger extends Module {
     long oldTime;
 
     public TimeChanger() {
-        super(Categories.Render, "time-changer", "Makes you able to set a custom time.");
+        super(Categories.Render, Items.CLOCK, "time-changer", "Makes you able to set a custom time.");
     }
 
     @Override

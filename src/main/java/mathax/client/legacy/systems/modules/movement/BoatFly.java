@@ -11,6 +11,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.player.PlayerUtils;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.VehicleMoveS2CPacket;
 import net.minecraft.util.math.Vec3d;
 
@@ -51,7 +52,7 @@ public class BoatFly extends Module {
     );
 
     public BoatFly() {
-        super(Categories.Movement, "boat-fly", "Transforms your boat into a plane.");
+        super(Categories.Movement, Items.OAK_BOAT, "boat-fly", "Transforms your boat into a plane.");
     }
 
     @EventHandler

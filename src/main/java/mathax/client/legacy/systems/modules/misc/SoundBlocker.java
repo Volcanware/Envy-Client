@@ -7,6 +7,7 @@ import mathax.client.legacy.settings.SoundEventListSetting;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvent;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class SoundBlocker extends Module {
     );
 
     public SoundBlocker() {
-        super(Categories.Misc, "sound-blocker", "Cancels out selected sounds.");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "sound-blocker", "Cancels out selected sounds.");
     }
 
     @EventHandler

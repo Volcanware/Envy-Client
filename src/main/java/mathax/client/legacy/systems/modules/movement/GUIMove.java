@@ -14,6 +14,7 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.ingame.*;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -79,7 +80,7 @@ public class GUIMove extends Module {
     );
 
     public GUIMove() {
-        super(Categories.Movement, "GUI-move", "Allows you to perform various actions while in GUIs.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "GUI-move", "Allows you to perform various actions while in GUIs.");
     }
 
     @Override

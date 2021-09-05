@@ -11,6 +11,7 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class AutoBreed extends Module {
     private final List<Entity> animalsFed = new ArrayList<>();
 
     public AutoBreed() {
-        super(Categories.World, "auto-breed", "Automatically breeds specified animals.");
+        super(Categories.World, Items.WHEAT, "auto-breed", "Automatically breeds specified animals.");
     }
 
     @Override

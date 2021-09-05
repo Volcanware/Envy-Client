@@ -44,7 +44,7 @@ public class Friends extends System<Friends> implements Iterable<Friend> {
         if (friend.name.isEmpty()) return false;
         if (friend.name.equals(mc.getSession().getUsername())) {
             ChatUtils.error("Friends", "You can't add yourself to friends!");
-            if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, Formatting.DARK_RED + "Friends", Formatting.RED + "You can't add yourself!"));
+            if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD, color.getPacked(), "Friends", Formatting.RED + "You can't add yourself!"));
             return false;
         }
 

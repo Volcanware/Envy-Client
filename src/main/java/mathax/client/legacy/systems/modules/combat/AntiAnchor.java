@@ -12,6 +12,7 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
+import net.minecraft.item.Items;
 
 public class AntiAnchor extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -31,7 +32,7 @@ public class AntiAnchor extends Module {
     );
 
     public AntiAnchor() {
-        super(Categories.Combat, "anti-anchor", "Automatically prevents Anchor Aura by placing a slab on your head.");
+        super(Categories.Combat, Items.RESPAWN_ANCHOR, "anti-anchor", "Automatically prevents Anchor Aura by placing a slab on your head.");
     }
 
     @EventHandler

@@ -11,6 +11,7 @@ import mathax.client.legacy.utils.world.BlockIterator;
 import mathax.client.legacy.utils.world.BlockUtils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.*;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class SpawnProofer extends Module {
     private int ticksWaited;
 
     public SpawnProofer() {
-        super(Categories.World, "spawn-proofer", "Automatically spawnproofs unlit areas.");
+        super(Categories.World, Items.SPAWNER, "spawn-proofer", "Automatically spawnproofs unlit areas.");
     }
 
     @EventHandler

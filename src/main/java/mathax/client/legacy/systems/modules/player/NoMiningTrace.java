@@ -5,6 +5,7 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
+import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
 
 public class NoMiningTrace extends Module {
@@ -18,7 +19,7 @@ public class NoMiningTrace extends Module {
     );
 
     public NoMiningTrace() {
-        super(Categories.Player, "no-mining-trace", "Allows you to mine blocks through entities.");
+        super(Categories.Player, Items.DIAMOND_PICKAXE, "no-mining-trace", "Allows you to mine blocks through entities.");
     }
 
     public boolean canWork() {

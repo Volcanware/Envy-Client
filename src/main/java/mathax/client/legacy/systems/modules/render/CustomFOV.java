@@ -7,6 +7,7 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 
 public class CustomFOV extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -23,7 +24,7 @@ public class CustomFOV extends Module {
     private double fov;
 
     public CustomFOV() {
-        super(Categories.Render, "custom-fov", "Allows your FOV to be more customizable.");
+        super(Categories.Render, Items.GLOW_INK_SAC, "custom-fov", "Allows your FOV to be more customizable.");
     }
 
     @Override

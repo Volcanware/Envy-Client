@@ -12,6 +12,7 @@ import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.HorseBaseEntity;
+import net.minecraft.item.Items;
 
 public class EntityControl extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -24,7 +25,7 @@ public class EntityControl extends Module {
     );
 
     public EntityControl() {
-        super(Categories.Movement, "entity-control", "Lets you control rideable entities without a saddle.");
+        super(Categories.Movement, Items.DIAMOND_HORSE_ARMOR, "entity-control", "Lets you control rideable entities without a saddle.");
     }
 
     @Override

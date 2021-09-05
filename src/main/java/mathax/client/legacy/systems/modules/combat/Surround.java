@@ -15,6 +15,7 @@ import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Collections;
@@ -108,7 +109,7 @@ public class Surround extends Module {
     private boolean return_;
 
     public Surround() {
-        super(Categories.Combat, "surround", "Surrounds you in blocks to prevent you from taking lots of damage.");
+        super(Categories.Combat, Items.OBSIDIAN, "surround", "Surrounds you in blocks to prevent you from taking lots of damage.");
     }
 
     @Override

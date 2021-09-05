@@ -32,8 +32,6 @@ public class Config extends System<Config> {
     public boolean zoomToggleMessage = ConfigTab.zoomToggleMessage.get();
     public boolean deleteChatCommandsInfo = ConfigTab.deleteChatCommandsInfo.get();
     public boolean chatCommandsToast = ConfigTab.chatCommandsToast.get();
-    public boolean moduleToggleToast = ConfigTab.moduleToggleToast.get();
-    public boolean zoomToggleToast = ConfigTab.zoomToggleToast.get();
     public boolean playSoundToast = ConfigTab.playSoundToast.get();
 
     public List<String> dontShowAgainPrompts = new ArrayList<>();
@@ -71,8 +69,6 @@ public class Config extends System<Config> {
         tag.putBoolean("zoomToggleMessage", zoomToggleMessage);
         tag.putBoolean("deleteChatCommandsInfo", deleteChatCommandsInfo);
         tag.putBoolean("chatCommandsToast", chatCommandsToast);
-        tag.putBoolean("moduleToggleToast", moduleToggleToast);
-        tag.putBoolean("zoomToggleToast", zoomToggleToast);
         tag.putBoolean("playSoundToast", playSoundToast);
 
         tag.put("dontShowAgainPrompts", listToNbt(dontShowAgainPrompts));
@@ -95,8 +91,6 @@ public class Config extends System<Config> {
         zoomToggleMessage = getBoolean(tag, "zoomToggleMessage", ConfigTab.zoomToggleMessage);
         deleteChatCommandsInfo = getBoolean(tag, "deleteChatCommandsInfo", ConfigTab.deleteChatCommandsInfo);
         chatCommandsToast = getBoolean(tag, "chatCommandsToast", ConfigTab.chatCommandsToast);
-        moduleToggleToast = getBoolean(tag, "moduleToggleToast", ConfigTab.moduleToggleToast);
-        zoomToggleToast = getBoolean(tag, "zoomToggleToast", ConfigTab.zoomToggleToast);
         playSoundToast = getBoolean(tag, "playSoundToast", ConfigTab.playSoundToast);
 
         dontShowAgainPrompts.clear();

@@ -5,12 +5,13 @@ import mathax.client.legacy.mixin.BlockHitResultAccessor;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.util.math.Direction;
 
 public class BuildHeight extends Module {
     public BuildHeight() {
-        super(Categories.World, "build-height", "Allows you to interact with objects at the build limit.");
+        super(Categories.World, Items.SCAFFOLDING, "build-height", "Allows you to interact with objects at the build limit.");
     }
 
     @EventHandler

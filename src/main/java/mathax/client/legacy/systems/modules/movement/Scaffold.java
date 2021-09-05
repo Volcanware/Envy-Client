@@ -18,6 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -122,7 +123,7 @@ public class Scaffold extends Module {
     private double lastSneakingY;
 
     public Scaffold() {
-        super(Categories.Movement, "scaffold", "Automatically places blocks under you.");
+        super(Categories.Movement, Items.COBBLESTONE, "scaffold", "Automatically places blocks under you.");
     }
 
     @Override

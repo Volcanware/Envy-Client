@@ -2,6 +2,7 @@ package mathax.client.legacy.utils.network;
 
 import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.systems.modules.Modules;
+import mathax.client.legacy.systems.modules.fun.CapesModule;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,7 +32,7 @@ public class Capes {
         TO_RETRY.clear();
         TO_REMOVE.clear();
 
-        if (Modules.get().isActive(mathax.client.legacy.systems.modules.fun.Capes.class)) {
+        if (Modules.get().isActive(CapesModule.class)) {
             MatHaxExecutor.execute(() -> {
                 // Cape owners
                 Stream<String> lines = Http.get(MatHaxClientLegacy.URL + "Cape/capeowners").sendLines();
@@ -44,7 +45,7 @@ public class Capes {
                     }
                 });
 
-                // Capes
+                // CapesModule
                 lines = Http.get(MatHaxClientLegacy.URL + "Cape/capes").sendLines();
                 if (lines != null) lines.forEach(s -> {
                     String[] split = s.split(" ");
@@ -71,7 +72,7 @@ public class Capes {
     }
 
     public static Identifier get(PlayerEntity player) {
-        if (Modules.get().isActive(mathax.client.legacy.systems.modules.fun.Capes.class)) {
+        if (Modules.get().isActive(CapesModule.class)) {
             String capeName = OWNERS.get(player.getUuid());
             if (capeName != null) {
                 Cape cape = TEXTURES.get(capeName);
@@ -89,7 +90,7 @@ public class Capes {
     }
 
     public static void tick() {
-        if (Modules.get().isActive(mathax.client.legacy.systems.modules.fun.Capes.class)) {
+        if (Modules.get().isActive(CapesModule.class)) {
             synchronized (TO_REGISTER) {
                 for (Cape cape : TO_REGISTER) cape.register();
                 TO_REGISTER.clear();
@@ -132,7 +133,7 @@ public class Capes {
         }
 
         public void download() {
-            if (Modules.get().isActive(mathax.client.legacy.systems.modules.fun.Capes.class)) {
+            if (Modules.get().isActive(CapesModule.class)) {
                 if (downloaded || downloading || retryTimer > 0) return;
                 downloading = true;
 
@@ -170,7 +171,7 @@ public class Capes {
         }
 
         public void register() {
-            if (Modules.get().isActive(mathax.client.legacy.systems.modules.fun.Capes.class)) {
+            if (Modules.get().isActive(CapesModule.class)) {
                 mc.getTextureManager().registerTexture(this, new NativeImageBackedTexture(img));
                 img = null;
 

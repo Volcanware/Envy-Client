@@ -1,4 +1,4 @@
-package mathax.client.legacy.systems.modules.player;
+package mathax.client.legacy.systems.modules.misc;
 
 import io.netty.channel.Channel;
 import mathax.client.legacy.events.world.TickEvent;
@@ -10,6 +10,7 @@ import mathax.client.legacy.mixin.ClientConnectionAccessor;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -44,7 +45,7 @@ public class OffhandCrash extends Module {
     private static final PlayerActionC2SPacket PACKET = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, new BlockPos(0, 0, 0) , Direction.UP);
 
     public OffhandCrash() {
-        super(Categories.Misc, "offhand-crash", "An exploit that can crash other players by swapping back and forth between your main hand and offhand.");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "offhand-crash", "An exploit that can crash other players by swapping back and forth between your main hand and offhand.");
     }
 
     @EventHandler

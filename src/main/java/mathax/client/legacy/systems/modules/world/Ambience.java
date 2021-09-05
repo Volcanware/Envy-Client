@@ -8,6 +8,7 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.client.render.SkyProperties;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
 public class Ambience extends Module {
@@ -138,7 +139,7 @@ public class Ambience extends Module {
     );
 
     public Ambience() {
-        super(Categories.World, "ambience", "Change the color of various pieces of the environment.");
+        super(Categories.World, Items.RED_STAINED_GLASS, "ambience", "Change the color of various pieces of the environment.");
     }
 
     @Override

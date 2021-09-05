@@ -12,6 +12,7 @@ import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.Items;
 
 public class PotionSpoof extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -24,7 +25,7 @@ public class PotionSpoof extends Module {
     );
 
     public PotionSpoof() {
-        super(Categories.Player, "potion-spoof", "Spoofs specified potion effects for you. SOME effects DO NOT work.");
+        super(Categories.Player, Items.POTION, "potion-spoof", "Spoofs specified potion effects for you. SOME effects DO NOT work.");
     }
 
     @EventHandler

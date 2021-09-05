@@ -21,7 +21,6 @@ import mathax.client.legacy.gui.widgets.pressable.WCheckbox;
 import mathax.client.legacy.gui.widgets.pressable.WMinus;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.waypoints.Waypoint;
-import mathax.client.legacy.systems.waypoints.Waypoints;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.Utils;
@@ -30,6 +29,7 @@ import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.world.Dimension;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.client.gui.screen.DeathScreen;
+import net.minecraft.item.Items;
 import net.minecraft.text.BaseText;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
@@ -65,7 +65,7 @@ public class WaypointsModule extends Module {
     );
 
     public WaypointsModule() {
-        super(Categories.Render, "waypoints", "Allows you to create waypoints.");
+        super(Categories.Render, Items.BEACON, "waypoints", "Allows you to create waypoints.");
     }
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -110,7 +110,7 @@ public class WaypointsModule extends Module {
                     break;
             }
 
-            Waypoints.get().add(waypoint);
+            mathax.client.legacy.systems.waypoints.Waypoints.get().add(waypoint);
         }
 
         cleanDeathWPs(maxDeathPositions.get());
@@ -119,13 +119,13 @@ public class WaypointsModule extends Module {
     private void cleanDeathWPs(int max) {
         int oldWpC = 0;
 
-        ListIterator<Waypoint> wps = Waypoints.get().iteratorReverse();
+        ListIterator<Waypoint> wps = mathax.client.legacy.systems.waypoints.Waypoints.get().iteratorReverse();
         while (wps.hasPrevious()) {
             Waypoint wp = wps.previous();
             if (wp.name.startsWith("Death ") && "skull".equals(wp.icon)) {
                 oldWpC++;
                 if (oldWpC > max)
-                    Waypoints.get().remove(wp);
+                    mathax.client.legacy.systems.waypoints.Waypoints.get().remove(wp);
             }
         }
     }
@@ -148,8 +148,8 @@ public class WaypointsModule extends Module {
         }));
         table.row();
 
-        // Waypoints
-        for (Waypoint waypoint : Waypoints.get()) {
+        // WaypointsModule
+        for (Waypoint waypoint : mathax.client.legacy.systems.waypoints.Waypoints.get()) {
             // Icon
             table.add(new WIcon(waypoint));
 
@@ -166,7 +166,7 @@ public class WaypointsModule extends Module {
             WCheckbox visible = table.add(theme.checkbox(waypoint.visible)).widget();
             visible.action = () -> {
                 waypoint.visible = visible.checked;
-                Waypoints.get().save();
+                mathax.client.legacy.systems.waypoints.Waypoints.get().save();
             };
 
             // Edit
@@ -176,7 +176,7 @@ public class WaypointsModule extends Module {
             // Remove
             WMinus remove = table.add(theme.minus()).widget();
             remove.action = () -> {
-                Waypoints.get().remove(waypoint);
+                mathax.client.legacy.systems.waypoints.Waypoints.get().remove(waypoint);
 
                 table.clear();
                 fillTable(theme, table);
@@ -189,7 +189,7 @@ public class WaypointsModule extends Module {
                     if (mc.player == null || mc.world == null) return;
                     IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
                     if (baritone.getPathingBehavior().isPathing()) baritone.getPathingBehavior().cancelEverything();
-                    Vec3d vec = Waypoints.get().getCoords(waypoint);
+                    Vec3d vec = mathax.client.legacy.systems.waypoints.Waypoints.get().getCoords(waypoint);
                     BlockPos pos = new BlockPos(vec.x, vec.y, vec.z);
                     baritone.getCustomGoalProcess().setGoalAndPath(new GoalGetToBlock(pos));
                 };
@@ -336,8 +336,8 @@ public class WaypointsModule extends Module {
             // Save
             WButton save = table.add(theme.button("Save")).expandX().widget();
             save.action = () -> {
-                if (newWaypoint) Waypoints.get().add(waypoint);
-                else Waypoints.get().save();
+                if (newWaypoint) mathax.client.legacy.systems.waypoints.Waypoints.get().add(waypoint);
+                else mathax.client.legacy.systems.waypoints.Waypoints.get().save();
 
                 onClose();
             };

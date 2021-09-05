@@ -15,6 +15,7 @@ import mathax.client.legacy.utils.render.AlignmentX;
 import mathax.client.legacy.utils.render.AlignmentY;
 import mathax.client.legacy.utils.render.color.SettingColor;
 import mathax.client.legacy.bus.EventHandler;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -95,7 +96,7 @@ public class HUD extends Module {
     }
 
     public HUD() {
-        super(Categories.Render, "HUD", "In game overlay.");
+        super(Categories.Render, Items.GLASS, "HUD", "In game overlay.");
 
         // MAIN INFO
         mainInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 2, 2);

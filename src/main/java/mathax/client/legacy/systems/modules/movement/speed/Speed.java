@@ -13,6 +13,7 @@ import mathax.client.legacy.systems.modules.world.Timer;
 import mathax.client.legacy.utils.player.PlayerUtils;
 import mathax.client.legacy.bus.EventHandler;
 import net.minecraft.entity.MovementType;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
 public class Speed extends Module {
@@ -90,7 +91,7 @@ public class Speed extends Module {
     private SpeedMode currentMode;
 
     public Speed() {
-        super(Categories.Movement, "speed", "Modifies your movement speed when moving on the ground.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "speed", "Modifies your movement speed when moving on the ground.");
 
         onSpeedModeChanged(speedMode.get());
     }

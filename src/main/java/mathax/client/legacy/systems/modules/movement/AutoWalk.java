@@ -12,20 +12,9 @@ import mathax.client.legacy.utils.world.GoalDirection;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.bus.EventPriority;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.item.Items;
 
 public class AutoWalk extends Module {
-    public enum Mode {
-        Simple,
-        Smart
-    }
-
-    public enum Direction {
-        Forwards,
-        Backwards,
-        Left,
-        Right
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -63,7 +52,7 @@ public class AutoWalk extends Module {
     private GoalDirection goal;
 
     public AutoWalk() {
-        super(Categories.Movement, "auto-walk", "Automatically walks forward.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "auto-walk", "Automatically walks forward.");
     }
 
     @Override
@@ -122,5 +111,16 @@ public class AutoWalk extends Module {
         timer = 0;
         goal = new GoalDirection(mc.player.getPos(), mc.player.getYaw());
         BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath(goal);
+    }
+    public enum Mode {
+        Simple,
+        Smart
+    }
+
+    public enum Direction {
+        Forwards,
+        Backwards,
+        Left,
+        Right
     }
 }

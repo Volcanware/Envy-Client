@@ -12,10 +12,7 @@ import net.minecraft.block.SkullBlock;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.item.AliasedBlockItem;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -24,7 +21,7 @@ import net.minecraft.util.shape.VoxelShape;
 
 public class ItemPhysics extends Module {
     public ItemPhysics() {
-        super(Categories.Render, "item-physics", "Applies physics to items on the ground.");
+        super(Categories.Render, Items.BEEF, "item-physics", "Applies physics to items on the ground.");
     }
 
     @EventHandler
