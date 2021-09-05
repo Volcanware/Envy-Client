@@ -110,7 +110,7 @@ public class TextRadarHUD extends HUDElement {
 
         box.setSize(width, height);
     }
-    
+
     private final Color RED = new Color(255, 25, 25);
     private final Color AMBER = new Color(255, 105, 25);
     private final Color GREEN = new Color(25, 252, 25);

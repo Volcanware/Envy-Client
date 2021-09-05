@@ -26,7 +26,7 @@ public class ItemHighlight extends Module {
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
         .name("color")
         .description("The color to highlight the items with.")
-        .defaultValue(new SettingColor(225, 25, 255, 50))
+        .defaultValue(new SettingColor(230, 75, 100, 50))
         .build()
     );
 
