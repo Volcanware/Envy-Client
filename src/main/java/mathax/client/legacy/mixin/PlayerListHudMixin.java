@@ -1,8 +1,5 @@
 package mathax.client.legacy.mixin;
 
-import mathax.client.legacy.renderer.GL;
-import mathax.client.legacy.renderer.Renderer2D;
-import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.misc.BetterTab;
 import mathax.client.legacy.utils.Utils;
@@ -12,9 +9,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.PlayerListHud;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,8 +18,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.List;
 
 @Mixin(PlayerListHud.class)
 public class PlayerListHudMixin {

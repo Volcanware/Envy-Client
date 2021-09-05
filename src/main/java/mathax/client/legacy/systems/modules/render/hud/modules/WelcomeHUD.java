@@ -14,8 +14,6 @@ import mathax.client.legacy.utils.render.color.SettingColor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static mathax.client.legacy.utils.Utils.mc;
-
 public class WelcomeHUD extends TripleTextHUDElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 

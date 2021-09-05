@@ -12,8 +12,6 @@ import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.render.MatHaxToast;
 import mathax.client.legacy.utils.render.color.Color;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtIo;

@@ -3,10 +3,7 @@ package mathax.client.legacy.systems.modules.chat;
 
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.events.game.GameJoinedEvent;
-import mathax.client.legacy.events.game.GameLeftEvent;
 import mathax.client.legacy.events.packets.PacketEvent;
-import mathax.client.legacy.events.world.ParticleEvent;
-import mathax.client.legacy.gui.tabs.builtin.DiscordPresenceTab;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.friends.Friends;
 import mathax.client.legacy.systems.modules.Categories;
@@ -19,10 +16,7 @@ import mathax.client.legacy.systems.modules.combat.CEVBreaker;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.entity.EntityUtils;
 import mathax.client.legacy.utils.placeholders.Placeholders;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.*;
 
 public class AutoEZ extends Module {

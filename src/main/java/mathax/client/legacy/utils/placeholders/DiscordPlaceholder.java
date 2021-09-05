@@ -7,7 +7,6 @@ import mathax.client.legacy.gui.tabs.builtin.*;
 import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.network.Http;
 import mathax.client.legacy.utils.render.PeekScreen;
-import mathax.client.legacy.utils.render.PromptBuilder;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.*;

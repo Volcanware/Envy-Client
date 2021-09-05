@@ -6,7 +6,6 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.events.packets.PacketEvent;
 import mathax.client.legacy.events.world.TickEvent;
-import mathax.client.legacy.gui.GuiThemes;
 import mathax.client.legacy.systems.commands.Command;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.fun.Notebot;

@@ -62,7 +62,7 @@ public class CrystalAura extends Module {
     public final Setting<Double> targetRange = sgGeneral.add(new DoubleSetting.Builder()
         .name("target-range")
         .description("Range in which to target players.")
-        .defaultValue(8)
+        .defaultValue(10)
         .min(0)
         .sliderMax(16)
         .build()
@@ -81,13 +81,13 @@ public class CrystalAura extends Module {
         .defaultValue(true)
         .build()
     );
-
-
+    
     private final Setting<Double> minDamage = sgGeneral.add(new DoubleSetting.Builder()
         .name("min-damage")
         .description("Minimum damage the crystal needs to deal to your target.")
         .defaultValue(6)
         .min(0)
+        .sliderMax(36)
         .build()
     );
 
@@ -404,14 +404,31 @@ public class CrystalAura extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The side color of the block overlay.")
-        .defaultValue(new SettingColor(255, 255, 255, 25))
+        .defaultValue(new SettingColor(255, 255, 255, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The line color of the block overlay.")
-        .defaultValue(new SettingColor(255, 255, 255))
+        .defaultValue(new SettingColor(255, 255, 255, 255))
+        .build()
+    );
+
+    private final Setting<Boolean> renderDamageText = sgRender.add(new BoolSetting.Builder()
+        .name("damage")
+        .description("Renders crystal damage text in the block overlay.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> damageTextScale = sgRender.add(new DoubleSetting.Builder()
+        .name("damage-scale")
+        .description("How big the damage text should be.")
+        .defaultValue(1.25)
+        .min(1)
+        .sliderMax(4)
+        .visible(renderDamageText::get)
         .build()
     );
 
@@ -439,23 +456,6 @@ public class CrystalAura extends Module {
         .description("The text color of the block overlay.")
         .defaultValue(new SettingColor(230, 75, 100, 255))
         .visible(() -> textColorMode.get() == ColorMode.Static)
-        .build()
-    );
-
-    private final Setting<Boolean> renderDamageText = sgRender.add(new BoolSetting.Builder()
-        .name("damage")
-        .description("Renders crystal damage text in the block overlay.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Double> damageTextScale = sgRender.add(new DoubleSetting.Builder()
-        .name("damage-scale")
-        .description("How big the damage text should be.")
-        .defaultValue(1.25)
-        .min(1)
-        .sliderMax(4)
-        .visible(renderDamageText::get)
         .build()
     );
 
@@ -525,11 +525,6 @@ public class CrystalAura extends Module {
 
     @Override
     public void onActivate() {
-        /*if (Modules.get().isActive(CrystalAuraPlus.class)) {
-            ChatUtils.error("Crystal Aura+", "Crystal Aura+ was enabled while enabling Crystal Aura, disabling Crystal Aura+...");
-            Modules.get().get(CrystalAuraPlus.class).toggle();
-        }*/
-
         breakTimer = 0;
         placeTimer = 0;
         ticksPassed = 0;
@@ -1025,7 +1020,7 @@ public class CrystalAura extends Module {
                         if (facePlaceArmor.get()) return true;
                     }
                     else {
-                        if ( (itemStack.getMaxDamage() - itemStack.getDamage()) / itemStack.getMaxDamage() * 100 <= facePlaceDurability.get()) return true;
+                        if ((double) (itemStack.getMaxDamage() - itemStack.getDamage()) / itemStack.getMaxDamage() * 100 <= facePlaceDurability.get()) return true;
                     }
                 }
             }
@@ -1115,36 +1110,7 @@ public class CrystalAura extends Module {
     }
 
     private boolean intersectsWithEntities(Box box) {
-        // TODO: Improve
-        return mc.world.getOtherEntities(mc.player, box, entity -> !entity.isSpectator() && !removed.contains(entity.getId())).size() > 0;
-
-        // Not using mc.world.getOtherEntities() just because this is a bit faster
-        /*int startX = MathHelper.floor((box.minX - 2) / 16);
-        int endX = MathHelper.floor((box.maxX + 2) / 16);
-        int startZ = MathHelper.floor((box.minZ - 2) / 16);
-        int endZ = MathHelper.floor((box.maxZ + 2) / 16);
-        ChunkManager chunkManager = mc.world.getChunkManager();
-        for (int x = startX; x <= endX; x++) {
-            for (int z = startZ; z <= endZ; z++) {
-                WorldChunk chunk = chunkManager.getWorldChunk(x, z, false);
-                if (chunk != null) {
-                    TypeFilterableList<Entity>[] entitySections = chunk.getEntitySectionArray();
-                    int startY = MathHelper.floor((box.minY - 2) / 16);
-                    int endY = MathHelper.floor((box.maxY + 2) / 16);
-                    startY = MathHelper.clamp(startY, 0, entitySections.length - 1);
-                    endY = MathHelper.clamp(endY, 0, entitySections.length - 1);
-                    for (int y = startY; y <= endY; y++) {
-                        TypeFilterableList<Entity> entitySection = entitySections[y];
-                        for (Entity entity : entitySection) {
-                            if (entity.getBoundingBox().intersects(box) && !entity.isSpectator() && !removed.contains(entity.getId())) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return false;*/
+        return EntityUtils.intersectsWithEntity(box, entity -> !entity.isSpectator() && !removed.contains(entity.getId()));
     }
 
     // Render
@@ -1183,28 +1149,24 @@ public class CrystalAura extends Module {
 
             String text = String.format("%.1f", renderDamage);
             double w = TextRenderer.get().getWidth(text) / 2;
-            TextRenderer.get().render(text, -w, 0, getTextColor(renderDamage), true);
+            if (textColorMode.get() == ColorMode.Damage) {
+                TextRenderer.get().render(text, -w, 0, getDamageTextColor(renderDamage), true);
+            } else {
+                TextRenderer.get().render(text, -w, 0, textColor.get(), true);
+            }
 
             TextRenderer.get().end();
             NametagUtils.end();
         }
     }
 
-    private Color getTextColor(double renderDamage) {
+    private Color getDamageTextColor(double renderDamage) {
         Color RED = new Color(255, 0, 0, textColorDamageA.get());
         Color GREEN = new Color(0, 255, 0, textColorDamageA.get());
         Color YELLOW = new Color(255, 255, 0, textColorDamageA.get());
-        if (textColorMode.get() == ColorMode.Damage) {
-            if (renderDamage < 6) {
-                return RED;
-            } else if (renderDamage < 15) {
-                return YELLOW;
-            } else {
-                return GREEN;
-            }
-        } else {
-            return textColor.get();
-        }
+        if (renderDamage < 7) return RED;
+        if (renderDamage < 17) return YELLOW;
+        else return GREEN;
     }
 
     public enum ColorMode {

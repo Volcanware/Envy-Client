@@ -1,10 +1,8 @@
 package mathax.client.legacy.gui.screens;
 
 import mathax.client.legacy.gui.GuiTheme;
-import mathax.client.legacy.gui.WindowScreen;
 import mathax.client.legacy.gui.widgets.containers.WTable;
 import mathax.client.legacy.gui.widgets.input.WTextBox;
-import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.systems.accounts.Accounts;
 import mathax.client.legacy.systems.accounts.types.PremiumAccount;
 
