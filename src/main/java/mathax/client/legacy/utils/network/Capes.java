@@ -45,7 +45,7 @@ public class Capes {
                     }
                 });
 
-                // CapesModule
+                // Capes
                 lines = Http.get(MatHaxClientLegacy.URL + "Cape/capes").sendLines();
                 if (lines != null) lines.forEach(s -> {
                     String[] split = s.split(" ");

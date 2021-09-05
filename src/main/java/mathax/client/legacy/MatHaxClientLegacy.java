@@ -118,9 +118,9 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         Systems.addPreLoadTask(() -> {
             if (!Modules.get().getFile().exists()) {
                 Modules.get().get(CapesModule.class).toggle(false); // CAPES
-                Modules.get().get(Background.class).toggle(false);                                     // BACKGROUND
-                Modules.get().get(HUD.class).toggle(false);                                            // HUD
-                Modules.get().get(HUD.class).reset.run();                                                      // DEFAULT HUD LOCATIONS AND TOGGLES
+                Modules.get().get(Background.class).toggle(false);    // BACKGROUND
+                Modules.get().get(HUD.class).toggle(false);              // HUD
+                Modules.get().get(HUD.class).reset.run();                 // DEFAULT HUD LOCATIONS AND TOGGLES
             }
         });
 
