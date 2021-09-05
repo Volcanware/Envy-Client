@@ -56,7 +56,7 @@ public class FriendsCommand extends Command {
                         .executes(context -> {
                             Friend friend = FriendArgumentType.getFriend(context, "friend");
 
-                            if (Friends.get().add(friend)) {
+                            if (Friends.get().remove(friend)) {
                                 if (Config.get().chatCommandsInfo) info("Removed (highlight)%s (default)from friends.", friend.name);
                                 if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Formatting.DARK_RED + "Friends", Formatting.GRAY + "Removed " + Formatting.WHITE + friend.name + Formatting.GRAY + " from friends."));
                             }
