@@ -507,7 +507,7 @@ public class Nametags extends Module {
         } else if (displayItemEnchants.get()) displayItemEnchants.set(false);
 
         if (Config.get().viewMatHaxLegacyUsers) {
-            if (mc.getSession().getUsername().equals("Matejko06")) {
+            if (player.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || player.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) {
                 GL.bindTexture(mathaxLogo);
                 Renderer2D.TEXTURE.begin();
                 double textHeight = text.getHeight() / 2;
