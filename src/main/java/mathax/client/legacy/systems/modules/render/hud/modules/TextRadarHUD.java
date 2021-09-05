@@ -95,7 +95,6 @@ public class TextRadarHUD extends HUDElement {
             if (!friends.get() && Friends.get().isFriend(entity)) continue;
 
             String text = "";
-            MatHaxClientLegacy.LOG.info(entity.getUuidAsString()); // TODO
             if ((entity.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) && Config.get().viewMatHaxLegacyUsers)
                 text += "    " + entity.getEntityName();
             else

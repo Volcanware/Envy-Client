@@ -91,7 +91,6 @@ public class MultiplayerScreenMixin extends Screen {
     private String getDeveloper() {
         if (Modules.get() == null) return "";
         if (Modules.get().isActive(NameProtect.class)) return "";
-        MatHaxClientLegacy.LOG.info(mc.getSession().getUuid());
         if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return Formatting.WHITE + " [Developer]";
         else return "";
     }
