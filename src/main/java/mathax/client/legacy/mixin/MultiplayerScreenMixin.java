@@ -1,5 +1,6 @@
 package mathax.client.legacy.mixin;
 
+import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.gui.GuiThemes;
 import mathax.client.legacy.systems.modules.misc.NameProtect;
 import mathax.client.legacy.systems.proxies.Proxy;
@@ -90,7 +91,8 @@ public class MultiplayerScreenMixin extends Screen {
     private String getDeveloper() {
         if (Modules.get() == null) return "";
         if (Modules.get().isActive(NameProtect.class)) return "";
-        if (mc.getSession().getUsername().equals("Matejko06")) return Formatting.WHITE + " [Developer]";
+        MatHaxClientLegacy.LOG.info(mc.getSession().getUuid());
+        if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return Formatting.WHITE + " [Developer]";
         else return "";
     }
 

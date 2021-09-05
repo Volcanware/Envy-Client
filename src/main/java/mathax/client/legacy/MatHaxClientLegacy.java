@@ -77,6 +77,9 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
     public static Screen screenToOpen;
 
+    public static String devUUID = "3e24ef27-e66d-45d2-bf4b-2c7ade68ff47";
+    public static String devOfflineUUID = "7c73f844-73c3-3a7d-9978-004ba0a6436e";
+
     public static final String URL = "https://api.mathaxclient.xyz/";
 
     public static String logprefix = "[MatHax Legacy] ";

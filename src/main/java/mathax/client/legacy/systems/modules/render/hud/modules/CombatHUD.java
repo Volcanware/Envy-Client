@@ -1,6 +1,7 @@
 package mathax.client.legacy.systems.modules.render.hud.modules;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.renderer.GL;
 import mathax.client.legacy.renderer.Renderer2D;
 import mathax.client.legacy.renderer.text.TextRenderer;
@@ -218,7 +219,7 @@ public class CombatHUD extends HUDElement {
             // Name
             String nameText = "";
 
-            if ((playerEntity.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || playerEntity.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers) {
+            if ((playerEntity.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || playerEntity.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) && Config.get().viewMatHaxLegacyUsers) {
                 nameText += "     " + playerEntity.getEntityName();
                 GL.bindTexture(mathaxLogo);
                 Renderer2D.TEXTURE.begin();

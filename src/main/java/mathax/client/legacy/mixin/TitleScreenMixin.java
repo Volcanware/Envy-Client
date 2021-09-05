@@ -185,7 +185,7 @@ public class TitleScreenMixin extends Screen {
     private String getDeveloper() {
         if (Modules.get() == null) return "";
         if (Modules.get().isActive(NameProtect.class)) return "";
-        if (mc.getSession().getUsername().equals("Matejko06")) return Formatting.WHITE + " [Developer]";
+        if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return Formatting.WHITE + " [Developer]";
         else return "";
     }
 }

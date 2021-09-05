@@ -1,6 +1,7 @@
 package mathax.client.legacy.systems.modules.render;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.events.render.Render2DEvent;
 import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.renderer.GL;
@@ -347,7 +348,7 @@ public class Nametags extends Module {
         if (player == mc.player) name = Modules.get().get(NameProtect.class).getName(player.getEntityName());
         else name = player.getEntityName();
 
-        if ((player.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || player.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e")) && Config.get().viewMatHaxLegacyUsers) {
+        if ((player.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || player.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) && Config.get().viewMatHaxLegacyUsers) {
             name = "     " + player.getEntityName();
         }
 
@@ -504,7 +505,7 @@ public class Nametags extends Module {
             }
         } else if (displayItemEnchants.get()) displayItemEnchants.set(false);
 
-        if (player.getUuidAsString().equals("3e24ef27-e66d-45d2-bf4b-2c7ade68ff47") || player.getUuidAsString().equals("7c73f844-73c3-3a7d-9978-004ba0a6436e") &&Config.get().viewMatHaxLegacyUsers) {
+        if (player.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || player.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID) &&Config.get().viewMatHaxLegacyUsers) {
             GL.bindTexture(mathaxLogo);
             Renderer2D.TEXTURE.begin();
             double textHeight = text.getHeight() / 2;
