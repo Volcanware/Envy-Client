@@ -63,7 +63,7 @@ public class ModuleScreen extends WindowScreen {
         tobrC.action = () -> module.toggleOnBindRelease = tobrC.checked;
 
         // Module
-        WSection moduleSection = add(theme.section("Module", true)).expandX().widget();
+        add(theme.section("Module", true)).expandX().widget();
 
         // Bottom
         WHorizontalList bottom = add(theme.horizontalList()).expandX().widget();
@@ -77,18 +77,27 @@ public class ModuleScreen extends WindowScreen {
 
         WHorizontalList bottom2 = add(theme.horizontalList()).expandX().widget();
 
-        // Toasts
-        bottom2.add(theme.label("Toggle toast: "));
-        WCheckbox toastToggle = bottom2.add(theme.checkbox(module.isToastEnabled())).widget();
-        toastToggle.action = () -> {
-            if (module.isToastEnabled() != toastToggle.checked) module.toggleToast(toastToggle.checked);
+        // Messages
+        bottom2.add(theme.label("Toggle message: "));
+        WCheckbox messageToggle = bottom2.add(theme.checkbox(module.isMessageEnabled())).widget();
+        messageToggle.action = () -> {
+            if (module.isMessageEnabled() != messageToggle.checked) module.toggleMessage(messageToggle.checked);
         };
 
         WHorizontalList bottom3 = add(theme.horizontalList()).expandX().widget();
 
+        // Toasts
+        bottom3.add(theme.label("Toggle toast: "));
+        WCheckbox toastToggle = bottom3.add(theme.checkbox(module.isToastEnabled())).widget();
+        toastToggle.action = () -> {
+            if (module.isToastEnabled() != toastToggle.checked) module.toggleToast(toastToggle.checked);
+        };
+
+        WHorizontalList bottom4 = add(theme.horizontalList()).expandX().widget();
+
         //   Visible
-        bottom3.add(theme.label("Visible: "));
-        WCheckbox visible = bottom3.add(theme.checkbox(module.isVisible())).widget();
+        bottom4.add(theme.label("Visible: "));
+        WCheckbox visible = bottom4.add(theme.checkbox(module.isVisible())).widget();
         visible.action = () -> {
             if (module.isVisible() != visible.checked) module.setVisible(visible.checked);
         };

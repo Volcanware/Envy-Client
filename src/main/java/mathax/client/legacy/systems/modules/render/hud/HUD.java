@@ -114,7 +114,7 @@ public class HUD extends Module {
         mainInfo.add(new PlayerModelHUD(this));
 
         // MODULE INFO
-        moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 225);
+        moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 215);
         // Modules
         moduleInfo.add(new ModuleInfoHUD(this));
 
@@ -148,7 +148,7 @@ public class HUD extends Module {
         invPot.add(new PotionTimersHUD(this));
 
         // TIME & ENEMY
-        timeEnemy = new HUDElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Bottom, 2, 15);
+        timeEnemy = new HUDElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Center, 2, 15);
         // Modules
         timeEnemy.add(new DateHUD(this));
         timeEnemy.add(new RealTimeHUD(this));

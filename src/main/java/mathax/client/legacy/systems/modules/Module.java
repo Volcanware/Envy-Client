@@ -39,8 +39,9 @@ public abstract class Module implements ISerializable<Module> {
 
     public final Settings settings = new Settings();
 
-    private boolean toggleToast = true;
     private boolean active;
+    private boolean toggleMessage = true;
+    private boolean toggleToast = true;
     private boolean visible = true;
 
     public boolean serialize = true;
@@ -93,8 +94,8 @@ public abstract class Module implements ISerializable<Module> {
     }
 
     public void sendToggledMsg(String title, Module module) {
-        if (module.name.equals("zoom") && !Config.get().zoomToggleMessage) return;
-        if (Config.get().chatCommandsInfo) ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY,  "[" + Formatting.DARK_RED + "Modules" + Formatting.GRAY + "] Toggled (highlight)%s(default) %s(default).", title, isActive() ? Formatting.GREEN + "on" : Formatting.RED + "off");
+        if (!module.isMessageEnabled()) return;
+        if (Config.get().chatCommandsInfo) ChatUtils.info("Modules", "Toggled (highlight)%s(default) %s(default).", title, getOnOff(module));
     }
 
     public void sendToggledToast(String title, Module module) {
@@ -128,6 +129,14 @@ public abstract class Module implements ISerializable<Module> {
 
     public boolean isVisible() {
         return visible;
+    }
+
+    public void toggleMessage(boolean toggleMessage) {
+        this.toggleMessage = toggleMessage;
+    }
+
+    public boolean isMessageEnabled() {
+        return toggleMessage;
     }
 
     public void toggleToast(boolean toggleToast) {

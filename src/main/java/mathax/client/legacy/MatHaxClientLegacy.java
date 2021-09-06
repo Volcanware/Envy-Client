@@ -48,6 +48,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.util.Window;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -118,9 +119,9 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         Systems.addPreLoadTask(() -> {
             if (!Modules.get().getFile().exists()) {
                 Modules.get().get(CapesModule.class).toggle(false); // CAPES
-                Modules.get().get(Background.class).toggle(false);    // BACKGROUND
-                Modules.get().get(HUD.class).toggle(false);              // HUD
-                Modules.get().get(HUD.class).reset.run();                 // DEFAULT HUD LOCATIONS AND TOGGLES
+                Modules.get().get(Background.class).toggle(false);  // BACKGROUND
+                Modules.get().get(HUD.class).toggle(false);         // HUD
+                Modules.get().get(HUD.class).reset.run();                   // DEFAULT HUD LOCATIONS AND TOGGLES
             }
         });
 
@@ -243,6 +244,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     private void onKey(KeyEvent event) {
         // Click GUI
         if (event.action == KeyAction.Press && KeyBinds.OPEN_CLICK_GUI.matchesKey(event.key, 0)) {
+            if (mc.getOverlay() instanceof SplashOverlay) return;
             if (!Utils.canUpdate() && Utils.isWhitelistedScreen() || mc.currentScreen == null) openClickGui();
         }
     }
@@ -352,16 +354,4 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         else if (mc.world == null) return "";
         else return queuePos;
     }
-
-    //TODO
-
-    // Add big-text logo to all settings etc screens.
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
 }
