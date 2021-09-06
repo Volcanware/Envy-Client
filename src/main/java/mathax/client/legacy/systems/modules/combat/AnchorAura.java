@@ -184,7 +184,7 @@ public class AnchorAura extends Module {
     private final Setting<SettingColor> placeSideColor = sgRender.add(new ColorSetting.Builder()
         .name("place-side-color")
         .description("The side color for positions to be placed.")
-        .defaultValue(new SettingColor(225, 75, 100, 75))
+        .defaultValue(new SettingColor(230, 75, 100, 50))
         .visible(renderPlace::get)
         .build()
     );
@@ -192,7 +192,7 @@ public class AnchorAura extends Module {
     private final Setting<SettingColor> placeLineColor = sgRender.add(new ColorSetting.Builder()
         .name("place-line-color")
         .description("The line color for positions to be placed.")
-        .defaultValue(new SettingColor(225, 75, 100, 255))
+        .defaultValue(new SettingColor(230, 75, 100, 255))
         .visible(renderPlace::get)
         .build()
     );
@@ -207,7 +207,7 @@ public class AnchorAura extends Module {
     private final Setting<SettingColor> breakSideColor = sgRender.add(new ColorSetting.Builder()
         .name("break-side-color")
         .description("The side color for anchors to be broken.")
-        .defaultValue(new SettingColor(225, 75, 100, 75))
+        .defaultValue(new SettingColor(230, 75, 100, 50))
         .visible(renderBreak::get)
         .build()
     );
@@ -215,7 +215,7 @@ public class AnchorAura extends Module {
     private final Setting<SettingColor> breakLineColor = sgRender.add(new ColorSetting.Builder()
         .name("break-line-color")
         .description("The line color for anchors to be broken.")
-        .defaultValue(new SettingColor(225, 75, 100, 255))
+        .defaultValue(new SettingColor(230, 75, 100, 255))
         .visible(renderBreak::get)
         .build()
     );
