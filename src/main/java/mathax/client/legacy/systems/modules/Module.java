@@ -95,7 +95,7 @@ public abstract class Module implements ISerializable<Module> {
 
     public void sendToggledMsg(String title, Module module) {
         if (!module.isMessageEnabled()) return;
-        if (Config.get().chatCommandsInfo) ChatUtils.info("Modules", "Toggled (highlight)%s(default) %s(default).", title, getOnOff(module));
+        if (Config.get().chatCommandsInfo) ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY, "Toggled (highlight)%s(default) %s(default).", title, getOnOff(module));
     }
 
     public void sendToggledToast(String title, Module module) {

@@ -22,7 +22,7 @@ public class Speed extends Module {
     public final Setting<SpeedModes> speedMode = sgGeneral.add(new EnumSetting.Builder<SpeedModes>()
         .name("mode")
         .description("The method of applying speed.")
-        .defaultValue(SpeedModes.Vanilla)
+        .defaultValue(SpeedModes.Strafe)
         .onModuleActivated(speedModesSetting -> onSpeedModeChanged(speedModesSetting.get()))
         .onChanged(this::onSpeedModeChanged)
         .build()
