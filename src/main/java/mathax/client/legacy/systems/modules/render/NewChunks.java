@@ -32,17 +32,31 @@ public class NewChunks extends Module {
         .build()
     );
 
+    private final Setting<Boolean> newChunksToggle = sgGeneral.add(new BoolSetting.Builder()
+        .name("new-chunks")
+        .description("Determines if new chunks are visible.")
+        .defaultValue(true)
+        .build()
+    );
+
     private final Setting<SettingColor> newChunksColor = sgGeneral.add(new ColorSetting.Builder()
         .name("new-chunks-color")
         .description("Color of the chunks that are (most likely) completely new.")
-        .defaultValue(new SettingColor(0, 255, 0))
+        .defaultValue(new SettingColor(255, 0, 0))
+        .build()
+    );
+
+    private final Setting<Boolean> oldChunksToggle = sgGeneral.add(new BoolSetting.Builder()
+        .name("old-chunks")
+        .description("Determines if old chunks are visible.")
+        .defaultValue(true)
         .build()
     );
 
     private final Setting<SettingColor> oldChunksColor = sgGeneral.add(new ColorSetting.Builder()
         .name("old-chunks-color")
         .description("Color of the chunks that have (most likely) been loaded before.")
-        .defaultValue(new SettingColor(255, 0, 0))
+        .defaultValue(new SettingColor(0, 255, 0))
         .build()
     );
 
@@ -65,7 +79,7 @@ public class NewChunks extends Module {
 
     @EventHandler
     private void onRender(Render3DEvent event) {
-        if (newChunksColor.get().a>3) {
+        if (newChunksColor.get().a > 3 && newChunksToggle.get()) {
             synchronized (newChunks) {
                 for (ChunkPos c : newChunks) {
                     if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) {
@@ -75,7 +89,7 @@ public class NewChunks extends Module {
             }
         }
 
-        if (oldChunksColor.get().a>3){
+        if (oldChunksColor.get().a > 3 && oldChunksToggle.get()){
             synchronized (oldChunks) {
                 for (ChunkPos c : oldChunks) {
                     if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) {
@@ -103,7 +117,7 @@ public class NewChunks extends Module {
                     ChunkPos chunkPos = new ChunkPos(pos);
 
                     for (Direction dir: searchDirs) {
-                        if (mc.world.getBlockState(pos.offset(dir)).getFluidState().isStill() && !oldChunks.contains(chunkPos)) {
+                        if (mc.world.getBlockState(pos.offset(dir)).getFluidState().isStill() && !oldChunks.contains(chunkPos) && newChunksToggle.get()) {
                             newChunks.add(chunkPos);
                             return;
                         }
@@ -119,7 +133,7 @@ public class NewChunks extends Module {
                 ChunkPos chunkPos = new ChunkPos(packet.getPos());
 
                 for (Direction dir: searchDirs) {
-                    if (mc.world.getBlockState(packet.getPos().offset(dir)).getFluidState().isStill() && !oldChunks.contains(chunkPos)) {
+                    if (mc.world.getBlockState(packet.getPos().offset(dir)).getFluidState().isStill() && !oldChunks.contains(chunkPos) && newChunksToggle.get()) {
                         newChunks.add(chunkPos);
                         return;
                     }
@@ -141,7 +155,7 @@ public class NewChunks extends Module {
                         for (int z = 0; z < 16; z++) {
                             FluidState fluid = chunk.getFluidState(x, y, z);
 
-                            if (!fluid.isEmpty() && !fluid.isStill()) {
+                            if (!fluid.isEmpty() && !fluid.isStill() && oldChunksToggle.get()) {
                                 oldChunks.add(pos);
                                 return;
                             }
