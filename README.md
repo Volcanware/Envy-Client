@@ -3,6 +3,7 @@
 </p>
 
 <h1 align="center">MatHax Legacy</h1>
+<p align="center">Forked from <a href="https://meteorclient.com/">Meteor Client</a>.</p>
 
 <h3 align="center">MatHax Client</h3>
 <p align="center">A Minecraft Fabric Utility Client.</p>
