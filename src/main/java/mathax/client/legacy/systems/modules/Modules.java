@@ -220,7 +220,7 @@ public class Modules extends System<Modules> {
             if (value != GLFW.GLFW_KEY_ESCAPE) {
                 moduleToBind.keybind.set(isKey, value);
                 ChatUtils.info("KeyBinds", "Module (highlight)%s (default)bound to (highlight)%s(default).", moduleToBind.title, moduleToBind.keybind);
-                mc.getToastManager().add(new MatHaxToast(moduleToBind.category.icon.getItem(), moduleToBind.category.color, moduleToBind.title, Formatting.GRAY + "Bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                mc.getToastManager().add(new MatHaxToast(moduleToBind.icon, moduleToBind.category.color, moduleToBind.title, Formatting.GRAY + "Bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
             }
 
             MatHaxClientLegacy.EVENT_BUS.post(ModuleBindChangedEvent.get(moduleToBind));
