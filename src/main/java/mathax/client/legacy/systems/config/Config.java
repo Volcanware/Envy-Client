@@ -4,6 +4,7 @@ import mathax.client.legacy.gui.tabs.builtin.ConfigTab;
 import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.systems.Systems;
 import mathax.client.legacy.utils.misc.Version;
+import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.RainbowColors;
 import mathax.client.legacy.systems.System;
 import net.fabricmc.loader.api.FabricLoader;
@@ -23,13 +24,11 @@ public class Config extends System<Config> {
     public boolean customFont = ConfigTab.customFont.get();
     public int rotationHoldTicks = ConfigTab.rotationHoldTicks.get();
     public boolean useTeamColor = ConfigTab.useTeamColor.get();
-    public boolean viewMatHaxLegacyUsers = ConfigTab.viewMatHaxLegacyUsers.get();
 
     public String prefix = ConfigTab.prefix.get();
     public boolean rainbowPrefix = ConfigTab.rainbowPrefix.get();
     public boolean openChatOnPrefix = ConfigTab.openChatOnPrefix.get();
     public boolean chatCommandsInfo = ConfigTab.chatCommandsInfo.get();
-    public boolean zoomToggleMessage = ConfigTab.zoomToggleMessage.get();
     public boolean deleteChatCommandsInfo = ConfigTab.deleteChatCommandsInfo.get();
     public boolean chatCommandsToast = ConfigTab.chatCommandsToast.get();
     public boolean playSoundToast = ConfigTab.playSoundToast.get();
@@ -61,12 +60,10 @@ public class Config extends System<Config> {
         tag.putDouble("rainbowSpeed", RainbowColors.GLOBAL.getSpeed());
         tag.putInt("rotationHoldTicks", rotationHoldTicks);
         tag.putBoolean("useTeamColor", useTeamColor);
-        tag.putBoolean("viewMatHaxLegacyUsers", viewMatHaxLegacyUsers);
         tag.putBoolean("rainbowPrefix", rainbowPrefix);
         tag.putString("prefix", prefix);
         tag.putBoolean("openChatOnPrefix", openChatOnPrefix);
         tag.putBoolean("chatCommandsInfo", chatCommandsInfo);
-        tag.putBoolean("zoomToggleMessage", zoomToggleMessage);
         tag.putBoolean("deleteChatCommandsInfo", deleteChatCommandsInfo);
         tag.putBoolean("chatCommandsToast", chatCommandsToast);
         tag.putBoolean("playSoundToast", playSoundToast);
@@ -82,13 +79,11 @@ public class Config extends System<Config> {
         RainbowColors.GLOBAL.setSpeed(tag.contains("rainbowSpeed") ? tag.getDouble("rainbowSpeed") : ConfigTab.rainbowSpeed.getDefaultValue() / 100);
         rotationHoldTicks = getInt(tag, "rotationHoldTicks", ConfigTab.rotationHoldTicks);
         useTeamColor = getBoolean(tag, "useTeamColor", ConfigTab.useTeamColor);
-        viewMatHaxLegacyUsers = getBoolean(tag, "viewMatHaxLegacyUsers", ConfigTab.viewMatHaxLegacyUsers);
 
         prefix = getString(tag, "prefix", ConfigTab.prefix);
         rainbowPrefix = getBoolean(tag, "rainbowPrefix", ConfigTab.rainbowPrefix);
         openChatOnPrefix = getBoolean(tag, "openChatOnPrefix", ConfigTab.openChatOnPrefix);
         chatCommandsInfo = getBoolean(tag, "chatCommandsInfo", ConfigTab.chatCommandsInfo);
-        zoomToggleMessage = getBoolean(tag, "zoomToggleMessage", ConfigTab.zoomToggleMessage);
         deleteChatCommandsInfo = getBoolean(tag, "deleteChatCommandsInfo", ConfigTab.deleteChatCommandsInfo);
         chatCommandsToast = getBoolean(tag, "chatCommandsToast", ConfigTab.chatCommandsToast);
         playSoundToast = getBoolean(tag, "playSoundToast", ConfigTab.playSoundToast);

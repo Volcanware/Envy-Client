@@ -219,7 +219,7 @@ public class CombatHUD extends HUDElement {
             // Name
             String nameText = "";
 
-            if ((playerEntity.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || playerEntity.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) && Config.get().viewMatHaxLegacyUsers) {
+            if (playerEntity.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || playerEntity.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) {
                 nameText += "     " + playerEntity.getEntityName();
                 GL.bindTexture(mathaxLogo);
                 Renderer2D.TEXTURE.begin();

@@ -349,7 +349,7 @@ public class Nametags extends Module {
         if (player == mc.player) name = Modules.get().get(NameProtect.class).getName(player.getEntityName());
         else name = player.getEntityName();
 
-        if ((player.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || player.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) && Config.get().viewMatHaxLegacyUsers) {
+        if (player.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || player.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) {
             name = "     " + player.getEntityName();
         }
 
@@ -506,7 +506,7 @@ public class Nametags extends Module {
             }
         } else if (displayItemEnchants.get()) displayItemEnchants.set(false);
 
-        if (player.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || player.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID) &&Config.get().viewMatHaxLegacyUsers) {
+        if (player.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || player.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) {
             GL.bindTexture(mathaxLogo);
             Renderer2D.TEXTURE.begin();
             double textHeight = text.getHeight() / 2;

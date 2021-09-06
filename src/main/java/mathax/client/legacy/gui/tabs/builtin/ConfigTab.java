@@ -8,7 +8,9 @@ import mathax.client.legacy.renderer.Fonts;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.utils.render.PromptBuilder;
+import mathax.client.legacy.utils.render.color.Color;
 import mathax.client.legacy.utils.render.color.RainbowColors;
+import mathax.client.legacy.utils.render.color.SettingColor;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.option.KeyBinding;
 
@@ -76,13 +78,6 @@ public class ConfigTab extends Tab {
         .build()
     );
 
-    public static final Setting<Boolean> viewMatHaxLegacyUsers = sgGeneral.add(new BoolSetting.Builder()
-        .name("mathax-legacy-users")
-        .description("Shows MatHax logo next to MatHax Legacy users. [Currently just works for devs :(]")
-        .defaultValue(true)
-        .build()
-    );
-
     // Chat
 
     public static final Setting<String> prefix = sgChat.add(new StringSetting.Builder()
@@ -118,15 +113,6 @@ public class ConfigTab extends Tab {
         .defaultValue(true)
         .onChanged(aBoolean -> Config.get().chatCommandsInfo = aBoolean)
         .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().chatCommandsInfo))
-        .build()
-    );
-
-    public static final Setting<Boolean> zoomToggleMessage = sgChat.add(new BoolSetting.Builder()
-        .name("zoom-toggle")
-        .description("Sends a chat message when you toggle zoom module.")
-        .defaultValue(false)
-        .onChanged(aBoolean -> Config.get().zoomToggleMessage = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().zoomToggleMessage))
         .build()
     );
 

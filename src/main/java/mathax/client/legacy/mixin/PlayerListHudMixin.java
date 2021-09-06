@@ -66,7 +66,7 @@ public class PlayerListHudMixin {
             String text = latency + "ms";
             textRenderer.drawWithShadow(matrices, text, (float) x + width - textRenderer.getWidth(text), (float) y, color);
         } else {
-            /*if ((mc.getSession().getUsername().equals("Matejko06"))) && betterTab.isActive() && Config.get().viewMatHaxLegacyUsers) {
+            /*if ((mc.getSession().getUsername().equals("Matejko06"))) && betterTab.isActive()) {
 
             }*/
             renderLatencyIcon(matrices, width, x, y, entry);

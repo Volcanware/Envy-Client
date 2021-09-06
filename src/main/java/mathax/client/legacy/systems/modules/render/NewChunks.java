@@ -21,42 +21,62 @@ import java.util.*;
 /*/                                                /*/
 /*/ Ported from BleachHack. https://bleachhack.org /*/
 /*/                                                /*/
-public class NewChunks extends Module {
 
+public class NewChunks extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgNewChunks = settings.createGroup("New Chunks");
+    private final SettingGroup sgOldChunks = settings.createGroup("Old Chunks");
 
     private final Setting<Boolean> remove = sgGeneral.add(new BoolSetting.Builder()
         .name("remove")
-        .description("Removes the cached chunks when disabling the module.")
+        .description("Removes the cached chunks when disabling the module and leaving.")
         .defaultValue(true)
         .build()
     );
 
-    private final Setting<Boolean> newChunksToggle = sgGeneral.add(new BoolSetting.Builder()
+    // New Chunks
+
+    private final Setting<Boolean> newChunksToggle = sgNewChunks.add(new BoolSetting.Builder()
         .name("new-chunks")
         .description("Determines if new chunks are visible.")
         .defaultValue(true)
         .build()
     );
 
-    private final Setting<SettingColor> newChunksColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("new-chunks-color")
-        .description("Color of the chunks that are (most likely) completely new.")
+    private final Setting<SettingColor> newChunksFillColor = sgNewChunks.add(new ColorSetting.Builder()
+        .name("fill-color")
+        .description("Fill color of the chunks that are (most likely) completely new.")
+        .defaultValue(new SettingColor(255, 0, 0, 0))
+        .build()
+    );
+
+    private final Setting<SettingColor> newChunksLineColor = sgNewChunks.add(new ColorSetting.Builder()
+        .name("line-color")
+        .description("Line color of the chunks that are (most likely) completely new.")
         .defaultValue(new SettingColor(255, 0, 0))
         .build()
     );
 
-    private final Setting<Boolean> oldChunksToggle = sgGeneral.add(new BoolSetting.Builder()
-        .name("old-chunks")
+    // Old Chunks
+
+    private final Setting<Boolean> oldChunksToggle = sgOldChunks.add(new BoolSetting.Builder()
+        .name("new-chunks")
         .description("Determines if old chunks are visible.")
         .defaultValue(true)
         .build()
     );
 
-    private final Setting<SettingColor> oldChunksColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("old-chunks-color")
-        .description("Color of the chunks that have (most likely) been loaded before.")
-        .defaultValue(new SettingColor(0, 255, 0))
+    private final Setting<SettingColor> oldChunksFillColor = sgOldChunks.add(new ColorSetting.Builder()
+        .name("fill-color")
+        .description("Fill color of the chunks that are old.")
+        .defaultValue(new SettingColor(255, 0, 0, 0))
+        .build()
+    );
+
+    private final Setting<SettingColor> oldChunksLineColor = sgOldChunks.add(new ColorSetting.Builder()
+        .name("line-color")
+        .description("Line color of the chunks that are old.")
+        .defaultValue(new SettingColor(255, 0, 0))
         .build()
     );
 
@@ -79,32 +99,25 @@ public class NewChunks extends Module {
 
     @EventHandler
     private void onRender(Render3DEvent event) {
-        if (newChunksColor.get().a > 3 && newChunksToggle.get()) {
+        if ((newChunksLineColor.get().a > 3 || newChunksFillColor.get().a > 3) && newChunksToggle.get()) {
             synchronized (newChunks) {
                 for (ChunkPos c : newChunks) {
                     if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) {
-                        drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), newChunksColor.get(), event);
+                        drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), newChunksFillColor.get(), newChunksLineColor.get(), event);
                     }
                 }
             }
         }
 
-        if (oldChunksColor.get().a > 3 && oldChunksToggle.get()){
+        if ((oldChunksLineColor.get().a > 3 || oldChunksFillColor.get().a > 3) && oldChunksToggle.get()){
             synchronized (oldChunks) {
                 for (ChunkPos c : oldChunks) {
                     if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) {
-                        drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), oldChunksColor.get(), event);
+                        drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), oldChunksFillColor.get(), oldChunksLineColor.get(), event);
                     }
                 }
             }
         }
-    }
-
-    private void drawBoxOutline(Box box, Color color, Render3DEvent event) {
-        event.renderer.box(
-            box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ,
-            new Color(0,0,0,0), color, ShapeMode.Lines, 0
-        );
     }
 
     @EventHandler
@@ -164,5 +177,12 @@ public class NewChunks extends Module {
                 }
             }
         }
+    }
+
+
+    private void drawBoxOutline(Box box, Color fillColor, Color lineColor, Render3DEvent event) {
+        event.renderer.box(
+            box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, fillColor, lineColor, ShapeMode.Lines, 0
+        );
     }
 }

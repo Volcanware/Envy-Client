@@ -95,7 +95,7 @@ public class TextRadarHUD extends HUDElement {
             if (!friends.get() && Friends.get().isFriend(entity)) continue;
 
             String text = "";
-            if ((entity.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) && Config.get().viewMatHaxLegacyUsers)
+            if (entity.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID))
                 text += "    " + entity.getEntityName();
             else
                 text += entity.getEntityName();
@@ -135,14 +135,14 @@ public class TextRadarHUD extends HUDElement {
 
             String text = "";
 
-            if ((entity.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) && Config.get().viewMatHaxLegacyUsers) {
+            if (entity.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) {
                 GL.bindTexture(mathaxLogo);
                 Renderer2D.TEXTURE.begin();
                 Renderer2D.TEXTURE.texQuad(x - renderer.textWidth(text) + 2, y, 16, 16, textureColor);
                 Renderer2D.TEXTURE.render(null);
             }
 
-            if ((entity.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID)) && Config.get().viewMatHaxLegacyUsers)
+            if (entity.getUuidAsString().equals(MatHaxClientLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxClientLegacy.devOfflineUUID))
                 text += "    " + entity.getEntityName();
             else
                 text += entity.getEntityName();
