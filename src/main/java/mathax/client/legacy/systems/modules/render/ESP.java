@@ -41,7 +41,7 @@ public class ESP extends Module {
     public final Setting<ShapeMode> shapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
         .description("How the shapes are rendered.")
-        .defaultValue(ShapeMode.Both)
+        .defaultValue(ShapeMode.Lines)
         .build()
     );
 
