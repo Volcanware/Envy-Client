@@ -42,14 +42,14 @@ public class WelcomeHUD extends TripleTextHUDElement {
     protected String getLeft() {
         switch (message.get()) {
             case Welcome -> {
-                if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Client Legacy, ";
-                if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return "Welcome to MatHax Client Legacy, Developer ";
-                else return "Welcome to MatHax Client Legacy, ";
+                if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Legacy, ";
+                if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return "Welcome to MatHax Legacy, Developer ";
+                else return "Welcome to MatHax Legacy, ";
             }
             case Using -> {
-                if (Modules.get().isActive(NameProtect.class)) return "You are using MatHax Client Legacy, ";
-                if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return "You are using MatHax Client Legacy, Developer ";
-                else return "You are using MatHax Client Legacy, ";
+                if (Modules.get().isActive(NameProtect.class)) return "You are using MatHax Legacy, ";
+                if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return "You are using MatHax Legacy, Developer ";
+                else return "You are using MatHax Legacy, ";
             }
             case Time -> {
                 if (Modules.get().isActive(NameProtect.class)) return getTime() + ", ";
@@ -67,9 +67,9 @@ public class WelcomeHUD extends TripleTextHUDElement {
                 else return "You are a sussy baka, ";
             }
             default -> {
-                if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Client Legacy, ";
-                if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return "Welcome to MatHax Client Legacy, Developer ";
-                else return "Welcome to MatHax Client Legacy, ";
+                if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Legacy, ";
+                if ((mc.getSession().getUuid().equals(MatHaxClientLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxClientLegacy.devOfflineUUID.replace("-", "")))) return "Welcome to MatHax Legacy, Developer ";
+                else return "Welcome to MatHax Legacy, ";
             }
         }
     }

@@ -30,11 +30,11 @@ public class WatermarkHUD extends TripleTextHUDElement {
     );
 
     public WatermarkHUD(HUD hud) {
-        super(hud, "watermark", "Displays a MatHax Client Legacy watermark.", true);
+        super(hud, "watermark", "Displays a MatHax Legacy watermark.", true);
     }
 
     protected String getLeft() {
-        return "MatHax Client Legacy ";
+        return "MatHax Legacy ";
     }
 
     protected String getRight() {
