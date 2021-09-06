@@ -111,7 +111,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
         LOG.info(logprefix + "Initializing MatHax Client Legacy " + clientVersionWithV + "...");
         Utils.mc = MinecraftClient.getInstance();
-        mc.execute(this::updateImage);
+        mc.execute(this::setIcon);
         mc.execute(this::titleLoading);
         EVENT_BUS.registerLambdaFactory("mathax.client.legacy", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
@@ -185,7 +185,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         LOG.info(logprefix + "MatHax Client Legacy " + clientVersionWithV + " initialized!");
     }
 
-    public void updateImage() {
+    public void setIcon() {
         final Window window = MinecraftClient.getInstance().getWindow();
         window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon128.png"));
     }
@@ -215,8 +215,6 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
     @EventHandler
     private void onGameJoined(GameJoinedEvent event) {
-        //TODO: Unwated servers.
-
         Utils.didntCheckForLatestVersion = true;
     }
 
