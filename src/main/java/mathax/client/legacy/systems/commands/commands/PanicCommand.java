@@ -12,14 +12,14 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class PanicCommand extends Command {
     public PanicCommand() {
-        super("panic", "Disables all modules.");
+        super("panic", "Disables all active modules.");
     }
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             new ArrayList<>(Modules.get().getActive()).forEach(Module::toggle);
-
+            info("All modules disabled.");
             return SINGLE_SUCCESS;
         });
     }
