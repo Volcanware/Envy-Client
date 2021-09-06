@@ -78,7 +78,7 @@ public class WatermarkHUD extends TripleTextHUDElement {
         }
     }
 
-    private Color textureColor = new Color(255, 255, 255, 255);
+    private final Color textureColor = new Color(255, 255, 255, 255);
 
     private void drawBackground(int x, int textWidth, int y) {
         int w = (int) box.width - textWidth;

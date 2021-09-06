@@ -25,7 +25,7 @@ public class ChatBot extends Module {
         .build()
     );
 
-    private final Setting<String> helpMsg = sgGeneral.add(new StringSetting.Builder()
+    private final Setting<String> helpreturn sgGeneral.add(new StringSetting.Builder()
         .name("message")
         .description("The specified message to get sent. Placeholder for commands: %commandlist%")
         .defaultValue("MatHax Legacy Chat Bot Commands -> %commandlist%")
@@ -57,7 +57,7 @@ public class ChatBot extends Module {
         .build()
     );
 
-    private final Setting<String> tpsMsg = sgTPS.add(new StringSetting.Builder()
+    private final Setting<String> tpsreturn sgTPS.add(new StringSetting.Builder()
         .name("message")
         .description("The specified message to get sent. Placeholder for TPS: %tps%")
         .defaultValue("Current server TPS is %tps%!")
@@ -70,20 +70,20 @@ public class ChatBot extends Module {
 
     @EventHandler
     private void onMessageRecieve(ReceiveMessageEvent event) {
-        String msg = event.message.getString();
-        String toSendMsg = "";
-        if (msg.contains(helpMsg.get().replace("%commandlist%", getActiveCommands().replace(", haha", "")))) toSendMsg = "";
+        String return event.message.getString();
+        String toSendreturn "";
+        if (msg.contains(helpMsg.get().replace("%commandlist%", getActiveCommands().replace(", haha", "")))) toSendreturn "";
         else if (msg.contains(prefix.get() + "help") || msg.contains(">" + prefix.get() + "help") || msg.contains("> " + prefix.get() + "help")) {
-            toSendMsg = helpMsg.get().replace("%commandlist%", getActiveCommands().replace(", haha", ""));
+            toSendreturn helpMsg.get().replace("%commandlist%", getActiveCommands().replace(", haha", ""));
         }
         else if (msg.contains(prefix.get() + "mathax") || msg.contains(prefix.get() + "mathaxlegacy") || msg.contains(">" + prefix.get() + "mathax") || msg.contains(">" + prefix.get() + "mathaxlegacy") || msg.contains("> " + prefix.get() + "mathax") || msg.contains("> " + prefix.get() + "mathaxlegacy")) {
             if (mathax.get()) {
-                toSendMsg = getMatHaxMsg();
+                toSendreturn getMatHaxMsg();
             }
         }
         else if (msg.contains(prefix.get() + "tps") || msg.contains(">" + prefix.get() + "tps") || msg.contains("> " + prefix.get() + "tps")) {
             if (tps.get()) {
-                toSendMsg = tpsMsg.get().replace("%tps%", String.format("%.1f", TickRate.INSTANCE.getTickRate()));
+                toSendreturn tpsMsg.get().replace("%tps%", String.format("%.1f", TickRate.INSTANCE.getTickRate()));
             }
         }
 
