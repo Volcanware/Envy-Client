@@ -63,6 +63,7 @@ public class Commands extends System<Commands> {
         add(new SettingCommand());
         add(new SpectateCommand());
         add(new GamemodeCommand());
+        add(new GhostCommand());
         add(new SaveCommand());
         add(new SaveMapCommand());
         add(new ModulesCommand());

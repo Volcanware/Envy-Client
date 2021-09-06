@@ -16,7 +16,6 @@ import mathax.client.legacy.systems.modules.misc.swarm.Swarm;
 import mathax.client.legacy.systems.modules.misc.swarm.SwarmConnection;
 import mathax.client.legacy.systems.modules.misc.swarm.SwarmWorker;
 import mathax.client.legacy.systems.modules.world.InfinityMiner;
-import mathax.client.legacy.utils.player.ChatUtils;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.BlockStateArgument;
 import net.minecraft.command.argument.BlockStateArgumentType;
@@ -71,11 +70,11 @@ public class SwarmCommand extends Command {
             if (swarm.isActive()) {
                 if (swarm.isHost()) {
                     if (swarm.host.getConnectionCount() > 0) {
-                        ChatUtils.info("--- Swarm Connections (highlight)(%s/%s)(default) ---", swarm.host.getConnectionCount(), swarm.host.getConnections().length);
+                        info("--- Swarm Connections (highlight)(%s/%s)(default) ---", swarm.host.getConnectionCount(), swarm.host.getConnections().length);
 
                         for (int i = 0; i < swarm.host.getConnections().length; i++) {
                             SwarmConnection connection = swarm.host.getConnections()[i];
-                            if (connection != null) ChatUtils.info("(highlight)Worker %s(default): %s.", i, connection.getConnection());
+                            if (connection != null) info("(highlight)Worker %s(default): %s.", i, connection.getConnection());
                         }
                     }
                     else {

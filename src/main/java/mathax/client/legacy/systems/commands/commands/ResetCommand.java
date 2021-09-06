@@ -8,7 +8,6 @@ import mathax.client.legacy.systems.commands.arguments.ModuleArgumentType;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.render.hud.HUD;
-import mathax.client.legacy.utils.player.ChatUtils;
 import net.minecraft.command.CommandSource;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
@@ -30,12 +29,12 @@ public class ResetCommand extends Command {
                 }))
                 .then(literal("all").executes(context -> {
                     Modules.get().getAll().forEach(module -> module.settings.forEach(group -> group.forEach(Setting::reset)));
-                    ChatUtils.info("Modules", "Reset all module's settings");
+                    info("Modules", "Reset all module's settings");
                     return SINGLE_SUCCESS;
                 }))
         ).then(literal("gui").executes(context -> {
             GuiThemes.get().clearWindowConfigs();
-            ChatUtils.info("The ClickGUI positioning has been reset.");
+            info("The ClickGUI positioning has been reset.");
             return SINGLE_SUCCESS;
         })).then(literal("bind")
                 .then(argument("module", ModuleArgumentType.module()).executes(context -> {
@@ -48,7 +47,7 @@ public class ResetCommand extends Command {
                 }))
                 .then(literal("all").executes(context -> {
                     Modules.get().getAll().forEach(module -> module.keybind.set(true, -1));
-                    ChatUtils.info("Modules", "Reset all binds");
+                    info("Modules", "Reset all binds");
                     return SINGLE_SUCCESS;
                 }))
         ).then(literal("hud").executes(context -> {

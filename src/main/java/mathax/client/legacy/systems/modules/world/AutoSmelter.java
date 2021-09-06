@@ -8,7 +8,6 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.Utils;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.player.InvUtils;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.inventory.SimpleInventory;
@@ -98,7 +97,7 @@ public class AutoSmelter extends Module {
         }
 
         if (disableWhenOutOfItems.get() && slot == -1) {
-            ChatUtils.error("Auto Smelter", "You do not have any items in your inventory that can be smelted, disabling...");
+            error("You do not have any items in your inventory that can be smelted, disabling...");
             toggle();
             return;
         }
@@ -123,7 +122,7 @@ public class AutoSmelter extends Module {
         }
 
         if (disableWhenOutOfItems.get() && slot == -1) {
-            ChatUtils.error("Auto Smelter", "You do not have any fuel in your inventory, disabling...");
+            error("You do not have any fuel in your inventory, disabling...");
             toggle();
             return;
         }
@@ -138,7 +137,7 @@ public class AutoSmelter extends Module {
         InvUtils.quickMove().slotId(2);
 
         if (!resultStack.isEmpty()) {
-            ChatUtils.error("Auto Smelter", "Your inventory is full, disabling...");
+            error("Your inventory is full, disabling...");
             toggle();
         }
     }

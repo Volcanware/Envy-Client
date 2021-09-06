@@ -6,7 +6,6 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.misc.MyPotion;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.player.InvUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -90,7 +89,7 @@ public class AutoBrewer extends Module {
         }
 
         if (slot == -1) {
-            ChatUtils.error("Auto Brewer", "You do not have any %s left in your inventory, disabling..", ingredient.getName().getString());
+            error("You do not have any %s left in your inventory, disabling..", ingredient.getName().getString());
             toggle();
             return true;
         }
@@ -112,7 +111,7 @@ public class AutoBrewer extends Module {
             }
 
             if (slot == -1) {
-                ChatUtils.error("Auto Brewer", "You do not have a sufficient amount of blaze powder to use as fuel for the brew, disabling...");
+                error("You do not have a sufficient amount of blaze powder to use as fuel for the brew, disabling...");
                 toggle();
                 return true;
             }
@@ -142,7 +141,7 @@ public class AutoBrewer extends Module {
             }
 
             if (slot == -1) {
-                ChatUtils.error("Auto Brewer", "You do not have a sufficient amount of water bottles to complete this brew, disabling...");
+                error("You do not have a sufficient amount of water bottles to complete this brew, disabling...");
                 toggle();
                 return true;
             }
@@ -158,7 +157,7 @@ public class AutoBrewer extends Module {
             InvUtils.quickMove().slotId(i);
 
             if (!c.slots.get(i).getStack().isEmpty()) {
-                ChatUtils.error("Auto Brewer", "You do not have a sufficient amount of inventory space, disabling...");
+                error("You do not have a sufficient amount of inventory space, disabling...");
                 toggle();
                 return true;
             }

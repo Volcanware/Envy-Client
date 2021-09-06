@@ -4,7 +4,6 @@ import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.events.render.Render3DEvent;
 import mathax.client.legacy.renderer.ShapeMode;
 import mathax.client.legacy.systems.modules.Module;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.settings.BoolSetting;
 import mathax.client.legacy.settings.ColorSetting;
@@ -178,14 +177,14 @@ public class InstaAutoCity extends Module {
             if (mc.player.squaredDistanceTo(mineTarget.getX(), mineTarget.getY(), mineTarget.getZ()) > range.get()) {
                 if (autoToggle.get()) {
                     if (chatInfo.get()) {
-                        ChatUtils.info("Insta Auto City", "Target block out of reach, disabling...");
+                        info("Target block out of reach, disabling...");
                     }
                     toggle();
                     return;
                 }
             }
             if (chatInfo.get()) {
-                ChatUtils.info("Insta Auto City", "Attempting to city " + Formatting.WHITE + target.getGameProfile().getName() + Formatting.GRAY + "...");
+                info("Attempting to city " + Formatting.WHITE + target.getGameProfile().getName() + Formatting.GRAY + "...");
             }
             targetBlockPos = target.getBlockPos();
             int n = InvUtils.findInHotbar(Items.BARRIER).getSlot();
@@ -203,7 +202,7 @@ public class InstaAutoCity extends Module {
             }
             if (n == -1) {
                 if (chatInfo.get()) {
-                    ChatUtils.info("Insta Auto City", "No pickaxe found, disabling...");
+                    info("No pickaxe found, disabling...");
                 }
                 toggle();
                 return;
@@ -212,10 +211,10 @@ public class InstaAutoCity extends Module {
                 int n2 = InvUtils.findInHotbar((Item[]) new Item[]{Items.OBSIDIAN}).getSlot();
                 BlockPos blockPos = mineTarget.down(1);
                 if (!BlockUtils.canPlace(blockPos) && mc.world.getBlockState(blockPos).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK && chatInfo.get()) {
-                    ChatUtils.info("Insta Auto City", "Couldn't place support block, mining anyway.");
+                    info("Couldn't place support block, mining anyway.");
                 } else if (n2 == -1) {
                     if (chatInfo.get()) {
-                        ChatUtils.info("Insta Auto City", "No obsidian found for support, mining anyway.");
+                        info("No obsidian found for support, mining anyway.");
                     }
                 } else {
                     EnhancedBlockUtils.place(blockPos, Hand.MAIN_HAND, n2, rotate.get(), 0, true);
@@ -227,7 +226,7 @@ public class InstaAutoCity extends Module {
             target = null;
             if (autoToggle.get()) {
                 if (chatInfo.get()) {
-                    ChatUtils.info("Insta Auto City", "No target block found, disabling...");
+                    info("No target block found, disabling...");
                 }
                 toggle();
             }

@@ -104,19 +104,19 @@ public class Burrow extends Module {
     @Override
     public void onActivate() {
         if (!mc.world.getBlockState(mc.player.getBlockPos()).getMaterial().isReplaceable()) {
-            ChatUtils.error("Burrow", "Already burrowed, disabling...");
+            error("Already burrowed, disabling...");
             toggle();
             return;
         }
 
         if (!PlayerUtils.isInHole(false) && onlyInHole.get()) {
-            ChatUtils.error("Burrow", "Not in a hole, disabling...");
+            error("Not in a hole, disabling...");
             toggle();
             return;
         }
 
         if (!checkHead()) {
-            ChatUtils.error("Burrow", "Not enough headroom to burrow, disabling...");
+            error("Not enough headroom to burrow, disabling...");
             toggle();
             return;
         }
@@ -124,7 +124,7 @@ public class Burrow extends Module {
         FindItemResult result = getItem();
 
         if (!result.isHotbar() && !result.isOffhand()) {
-            ChatUtils.error("Burrow", "No burrow block found, disabling...");
+            error("No burrow block found, disabling...");
             toggle();
             return;
         }

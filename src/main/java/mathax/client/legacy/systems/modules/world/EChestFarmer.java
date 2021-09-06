@@ -7,7 +7,6 @@ import mathax.client.legacy.renderer.ShapeMode;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Modules;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.player.FindItemResult;
 import mathax.client.legacy.utils.player.InvUtils;
 import mathax.client.legacy.utils.player.PlayerUtils;
@@ -131,7 +130,7 @@ public class EChestFarmer extends Module {
 
         // Disable if the block is too far away
         if (PlayerUtils.distanceTo(target) > mc.interactionManager.getReachDistance()) {
-            ChatUtils.error("EChest Farmer", "Target block pos out of reach.");
+            error("Target block pos out of reach.");
             target = null;
             return;
         }
@@ -139,7 +138,7 @@ public class EChestFarmer extends Module {
         // Toggle if obby amount reached
         if (selfToggle.get() && InvUtils.find(Items.OBSIDIAN).getCount() - (ignoreExisting.get() ? startCount : 0) >= amount.get()) {
             InvUtils.swapBack();
-            ChatUtils.error("EChest Farmer", "Obsidian amount reached, disabling...");
+            error("Obsidian amount reached, disabling...");
             toggle();
             return;
         }

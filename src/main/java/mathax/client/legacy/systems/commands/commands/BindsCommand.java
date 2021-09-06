@@ -30,7 +30,7 @@ public class BindsCommand extends Command {
                     .filter(module -> module.keybind.isSet())
                     .collect(Collectors.toList());
 
-            ChatUtils.info("--- Bound Modules ((highlight)%d(default)) ---", modules.size());
+            info("--- Bound Modules ((highlight)%d(default)) ---", modules.size());
 
             for (Module module : modules) {
                 HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, getTooltip(module));

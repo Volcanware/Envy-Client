@@ -1,6 +1,5 @@
 package mathax.client.legacy.systems.modules;
 
-import mathax.client.legacy.utils.render.color.Color;
 import net.minecraft.item.ItemStack;
 
 public class Category {

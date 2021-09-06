@@ -8,7 +8,6 @@ import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.utils.entity.EntityUtils;
 import mathax.client.legacy.utils.entity.SortPriority;
 import mathax.client.legacy.utils.entity.TargetUtils;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.player.FindItemResult;
 import mathax.client.legacy.utils.player.InvUtils;
 import mathax.client.legacy.utils.world.BlockUtils;
@@ -111,7 +110,7 @@ public class AutoAnvil extends Module {
     private void onTick(TickEvent.Pre event) {
         // Head check
         if (toggleOnBreak.get() && target != null && target.getInventory().getArmorStack(3).isEmpty()) {
-            ChatUtils.error("Auto Anvil", "Target head slot is empty, disabling...");
+            error("Target head slot is empty, disabling...");
             toggle();
             return;
         }

@@ -23,7 +23,7 @@ public class CommandsCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-            ChatUtils.info("--- Commands ((highlight)%d(default)) ---", Commands.get().getCount());
+            info("--- Commands ((highlight)%d(default)) ---", Commands.get().getCount());
 
             BaseText commands = new LiteralText("");
             Commands.get().getAll().forEach(command -> commands.append(getCommandText(command)));

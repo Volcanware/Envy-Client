@@ -26,9 +26,9 @@ public class Main {
             null
         );
 
-        if (option == 0) {
-            openUrl("https://fabricmc.net/use/");
-        } else if (option == 1) {
+        switch (option) {
+            case 0: openUrl("https://fabricmc.net/use/");
+            case 1:
             String os = System.getProperty("os.name").toLowerCase();
 
             try {
@@ -51,10 +51,8 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (option == 2) {
-            openUrl("https://mathaxclient.xyz");
-        } else if (option == 3) {
-            openUrl("https://mathaxclient.xyz/Discord");
+            case 2: openUrl("https://mathaxclient.xyz");
+            case 3: openUrl("https://mathaxclient.xyz/Discord");
         }
     }
 

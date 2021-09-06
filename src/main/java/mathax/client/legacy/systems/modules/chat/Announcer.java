@@ -92,8 +92,8 @@ public class Announcer extends Module {
     }
 
     private class Moving extends Feature {
-        private final Setting<String> return sg.add(new StringSetting.Builder()
-        .name("moving-msg")
+        private final Setting<String> message = sg.add(new StringSetting.Builder()
+        .name("moving-message")
         .description("The chat message for moving a certain amount of blocks.")
         .defaultValue("I just moved %distance% blocks thanks to MatHax Legacy!")
         .build()
@@ -161,13 +161,13 @@ public class Announcer extends Module {
         }
 
         void sendMsg() {
-            mc.player.sendChatMessage(msg.get().replace("%distance%", String.format("%.1f", distance)));
+            mc.player.sendChatMessage(message.get().replace("%distance%", String.format("%.1f", distance)));
         }
     }
 
     private class Mining extends Feature {
-        private final Setting<String> return sg.add(new StringSetting.Builder()
-            .name("mining-msg")
+        private final Setting<String> message = sg.add(new StringSetting.Builder()
+            .name("mining-message")
             .description("The chat message for mining blocks.")
             .defaultValue("I just mined %count% %block% thanks to MatHax Legacy!")
             .build()
@@ -212,15 +212,15 @@ public class Announcer extends Module {
 
         void sendMsg() {
             if (count > 0) {
-                mc.player.sendChatMessage(msg.get().replace("%count%", Integer.toString(count)).replace("%block%", lastBlock.getName().getString()));
+                mc.player.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%block%", lastBlock.getName().getString()));
                 count = 0;
             }
         }
     }
 
     private class Placing extends Feature {
-        private final Setting<String> return sg.add(new StringSetting.Builder()
-            .name("placing-msg")
+        private final Setting<String> message = sg.add(new StringSetting.Builder()
+            .name("placing-message")
             .description("The chat message for placing blocks.")
             .defaultValue("I just placed %count% %block% thanks to MatHax Legacy!")
             .build()
@@ -263,15 +263,15 @@ public class Announcer extends Module {
 
         void sendMsg() {
             if (count > 0) {
-                mc.player.sendChatMessage(msg.get().replace("%count%", Integer.toString(count)).replace("%block%", lastBlock.getName().getString()));
+                mc.player.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%block%", lastBlock.getName().getString()));
                 count = 0;
             }
         }
     }
 
     private class DropItems extends Feature {
-        private final Setting<String> return sg.add(new StringSetting.Builder()
-            .name("drop-items-msg")
+        private final Setting<String> message = sg.add(new StringSetting.Builder()
+            .name("drop-items-message")
             .description("The chat message for dropping items.")
             .defaultValue("I just dropped %count% %item% thanks to MatHax Legacy!")
             .build()
@@ -314,15 +314,15 @@ public class Announcer extends Module {
 
         void sendMsg() {
             if (count > 0) {
-                mc.player.sendChatMessage(msg.get().replace("%count%", Integer.toString(count)).replace("%item%", lastItem.getName().getString()));
+                mc.player.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%item%", lastItem.getName().getString()));
                 count = 0;
             }
         }
     }
 
     private class PickItems extends Feature {
-        private final Setting<String> return sg.add(new StringSetting.Builder()
-            .name("pick-items-msg")
+        private final Setting<String> message = sg.add(new StringSetting.Builder()
+            .name("pick-items-message")
             .description("The chat message for picking up items.")
             .defaultValue("I just picked up %count% %item% thanks to MatHax Legacy!")
             .build()
@@ -365,15 +365,15 @@ public class Announcer extends Module {
 
         void sendMsg() {
             if (count > 0) {
-                mc.player.sendChatMessage(msg.get().replace("%count%", Integer.toString(count)).replace("%item%", lastItem.getName().getString()));
+                mc.player.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%item%", lastItem.getName().getString()));
                 count = 0;
             }
         }
     }
 
     private class OpenContainer extends Feature {
-        private final Setting<String> return sg.add(new StringSetting.Builder()
-            .name("open-container-msg")
+        private final Setting<String> message = sg.add(new StringSetting.Builder()
+            .name("open-container-message")
             .description("The chat message for opening a container.")
             .defaultValue("I just opened %name% thanks to MatHax Legacy!")
             .build()
@@ -398,7 +398,7 @@ public class Announcer extends Module {
         }
 
         void sendMsg(String name) {
-            mc.player.sendChatMessage(msg.get().replace("%name%", name));
+            mc.player.sendChatMessage(message.get().replace("%name%", name));
         }
     }
 }

@@ -369,6 +369,7 @@ public class Modules extends System<Modules> {
         add(new AntiAnvil());
         add(new AntiBed());
         add(new ArrowDodge());
+        add(new Auto32K());
         add(new AutoAnvil());
         add(new AutoArmor());
         add(new AutoCity());
@@ -447,9 +448,9 @@ public class Modules extends System<Modules> {
         add(new Jesus());
         add(new NoFall());
         add(new NoSlow());
-        //add(new PacketFly());
+        add(new PacketFly());
         add(new Parkour());
-        //add(new Phase());
+        add(new Phase());
         add(new ReverseStep());
         add(new SafeWalk());
         add(new Scaffold());
@@ -482,13 +483,15 @@ public class Modules extends System<Modules> {
         add(new Fullbright());
         add(new HandView());
         add(new HoleESP());
-        add(new ItemPhysics());
         add(new ItemHighlight());
+        add(new ItemPhysics());
         add(new LightOverlay());
         add(new LogoutSpots());
         add(new Nametags());
+        add(new NewChunks());
         add(new NoBob());
         add(new NoRender());
+        add(new SkeletonESP());
         add(new Search());
         add(new StorageESP());
         add(new TimeChanger());
@@ -516,6 +519,7 @@ public class Modules extends System<Modules> {
         add(new AutoShearer());
         add(new AutoSign());
         add(new AutoSmelter());
+        add(new AutoWither());
         add(new BuildHeight());
         add(new EChestFarmer());
         add(new EndermanLook());
@@ -562,6 +566,7 @@ public class Modules extends System<Modules> {
         add(new NameProtect());
         add(new Notifier());
         add(new PacketCanceller());
+        add(new Panic());
         add(new SoundBlocker());
         add(new TPSSync());
         add(new VanillaSpoof());

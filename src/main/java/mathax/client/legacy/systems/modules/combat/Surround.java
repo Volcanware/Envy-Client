@@ -7,7 +7,6 @@ import mathax.client.legacy.settings.Setting;
 import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.player.InvUtils;
 import mathax.client.legacy.utils.player.PlayerUtils;
 import mathax.client.legacy.utils.world.BlockUtils;
@@ -121,7 +120,7 @@ public class Surround extends Module {
     private void onTick(TickEvent.Pre event) {
         if ((disableOnJump.get() && (mc.options.keyJump.isPressed() || mc.player.input.jumping)) || (disableOnYChange.get() && mc.player.prevY < mc.player.getY())) {
             if (chatInfo.get()) {
-                ChatUtils.info("Surround", "You jumped, disabling...");
+                info("You jumped, disabling...");
             }
             toggle();
             return;

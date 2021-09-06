@@ -6,7 +6,6 @@ import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Modules;
-import mathax.client.legacy.utils.player.ChatUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Items;
 
@@ -57,7 +56,7 @@ public class WallHack extends Module {
     @Override
     public void onActivate() {
         if (Modules.get().isActive(Xray.class)) {
-            ChatUtils.error("Xray", "Xray was enabled while enabling Wallhack, disabling Xray...");
+            error("Xray was enabled while enabling Wallhack, disabling Xray...");
             Modules.get().get(Xray.class).toggle();
         }
         mc.worldRenderer.reload();

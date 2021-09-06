@@ -210,7 +210,7 @@ public class BedAura extends Module {
     private void onTick(TickEvent.Post event) {
         // Check if beds can explode here
         if (mc.world.getDimension().isBedWorking()) {
-            ChatUtils.error("Bed Aura", "You can't blow up beds in this dimension, disabling...");
+            error("You can't blow up beds in this dimension, disabling...");
             toggle();
             return;
         }

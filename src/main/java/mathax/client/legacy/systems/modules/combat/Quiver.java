@@ -7,7 +7,6 @@ import mathax.client.legacy.settings.SettingGroup;
 import mathax.client.legacy.settings.StatusEffectListSetting;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.player.FindItemResult;
 import mathax.client.legacy.utils.player.InvUtils;
 import mathax.client.legacy.bus.EventHandler;
@@ -53,7 +52,7 @@ public class Quiver extends Module {
         FindItemResult bow = InvUtils.findInHotbar(Items.BOW);
 
         if (!bow.isHotbar()) {
-            ChatUtils.error("Quiver", "No bow found, disabling...");
+            error("No bow found, disabling...");
             toggle();
         }
 

@@ -11,7 +11,6 @@ import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.systems.modules.Modules;
-import mathax.client.legacy.utils.player.ChatUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -80,7 +79,7 @@ public class Xray extends Module {
     @Override
     public void onActivate() {
         if (Modules.get().isActive(WallHack.class)) {
-            ChatUtils.error("Wallhack", "Wallhack was enabled while enabling Xray, disabling Wallhack...");
+            error("Wallhack was enabled while enabling Xray, disabling Wallhack...");
             Modules.get().get(WallHack.class).toggle();
         }
 

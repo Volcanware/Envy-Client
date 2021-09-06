@@ -9,10 +9,8 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import mathax.client.legacy.systems.commands.Command;
 import mathax.client.legacy.systems.config.Config;
-import mathax.client.legacy.systems.enemies.Enemies;
 import mathax.client.legacy.systems.friends.Friend;
 import mathax.client.legacy.systems.friends.Friends;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.render.MatHaxToast;
 import net.minecraft.command.CommandSource;
 import net.minecraft.item.Items;
@@ -73,7 +71,7 @@ public class FriendsCommand extends Command {
 
         builder.then(literal("list").executes(context -> {
                     info("--- Friends ((highlight)%s(default)) ---", Friends.get().count());
-                    Friends.get().forEach(friend-> ChatUtils.info("(highlight)" + friend.name));
+                    Friends.get().forEach(friend-> info("(highlight)" + friend.name));
                     return SINGLE_SUCCESS;
                 })
         );

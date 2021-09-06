@@ -15,7 +15,6 @@ import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.misc.Keybind;
 import mathax.client.legacy.utils.misc.input.KeyAction;
 import mathax.client.legacy.utils.network.MatHaxExecutor;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.player.InvUtils;
 import mathax.client.legacy.utils.player.InventorySorter;
 import mathax.client.legacy.systems.modules.Categories;
@@ -238,7 +237,7 @@ public class InventoryTweaks extends Module {
 
     private void checkAutoStealSetttings() {
         if (autoSteal.get() && autoDump.get()) {
-            ChatUtils.error("Inventory Tweaks", "You can't enable Auto Steal and Auto Dump at the same time!");
+            error("You can't enable Auto Steal and Auto Dump at the same time!");
             autoDump.set(false);
         }
     }

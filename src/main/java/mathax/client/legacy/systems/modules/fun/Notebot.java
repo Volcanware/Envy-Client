@@ -17,7 +17,6 @@ import mathax.client.legacy.utils.notebot.NotebotUtils;
 import mathax.client.legacy.utils.notebot.nbs.Layer;
 import mathax.client.legacy.utils.notebot.nbs.Note;
 import mathax.client.legacy.utils.notebot.nbs.Song;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.player.FindItemResult;
 import mathax.client.legacy.utils.player.InvUtils;
 import mathax.client.legacy.utils.player.Rotations;
@@ -94,14 +93,14 @@ public class Notebot extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(204, 0, 0, 10))
+        .defaultValue(new SettingColor(230, 75, 100, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(204, 0, 0, 255))
+        .defaultValue(new SettingColor(230, 75, 100, 255))
         .build()
     );
 
@@ -293,13 +292,13 @@ public class Notebot extends Module {
     public void Play() {
         if (mc.player == null) return;
         if (mc.player.getAbilities().creativeMode && stage != Stage.Preview) {
-            ChatUtils.error("NoteBot", "You need to be in survival mode.");
+            error("You need to be in survival mode.");
         }
         else if (stage == Stage.Preview || stage == Stage.Playing) {
             isPlaying = true;
             info("Playing.");
         } else {
-            ChatUtils.error("NoteBot", "No song loaded.");
+            error("No song loaded.");
         }
     }
 
@@ -360,7 +359,7 @@ public class Notebot extends Module {
 
     private boolean loadFileToMap(File file) {
         if (!file.exists() || !file.isFile()) {
-            ChatUtils.error("NoteBot", "File not found");
+            error("File not found");
             return false;
         }
         String extension = FilenameUtils.getExtension(file.getName());
@@ -378,7 +377,7 @@ public class Notebot extends Module {
         try {
             data = Files.readAllLines(file.toPath());
         } catch (IOException e) {
-            ChatUtils.error("Note Bot", "Error while reading \"%s\"",file.getName());
+            error("Error while reading \"%s\"",file.getName());
             return false;
         }
         resetVariables();
@@ -410,7 +409,7 @@ public class Notebot extends Module {
     private boolean loadNbsFile(File file) {
         Song nbsSong = NBSDecoder.parse(file);
         if (nbsSong == null) {
-            ChatUtils.error("NoteBot", "Couldn't parse the file. Only classic and opennbs v5 are supported");
+            error("Couldn't parse the file. Only classic and opennbs v5 are supported");
             return false;
         }
         List<Layer> layers = new ArrayList<>(nbsSong.getLayerHashMap().values());
@@ -464,7 +463,7 @@ public class Notebot extends Module {
         });
         scanForNoteblocks();
         if (uniqueNotes.size() > possibleBlockPos.size()+scannedNoteblocks.size()) {
-            ChatUtils.error("NoteBot", "Too many notes. %d is the maximum.", possibleBlockPos.size());
+            error("Too many notes. %d is the maximum.", possibleBlockPos.size());
             return false;
         }
         currentNote = 0;
@@ -511,7 +510,7 @@ public class Notebot extends Module {
         FindItemResult noteBlock = InvUtils.findInHotbar(Items.NOTE_BLOCK);
 
         if (!noteBlock.found()) {
-            ChatUtils.error("NoteBot", "Not enough noteblocks");
+            error("Not enough noteblocks");
             disable();
             return;
         }
@@ -521,7 +520,7 @@ public class Notebot extends Module {
         try {
             pos = mc.player.getBlockPos().add(possibleBlockPos.get(index));
         } catch (IndexOutOfBoundsException e) {
-            ChatUtils.error("NoteBot", "Not enough valid positions.");
+            error("Not enough valid positions.");
             disable();
             return;
         }

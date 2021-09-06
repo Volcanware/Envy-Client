@@ -11,7 +11,6 @@ import mathax.client.legacy.systems.commands.Command;
 import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.enemies.Enemies;
 import mathax.client.legacy.systems.enemies.Enemy;
-import mathax.client.legacy.utils.player.ChatUtils;
 import mathax.client.legacy.utils.render.MatHaxToast;
 import net.minecraft.command.CommandSource;
 import net.minecraft.item.Items;
@@ -72,7 +71,7 @@ public class EnemiesCommand extends Command {
 
         builder.then(literal("list").executes(context -> {
                     info("--- Enemies ((highlight)%s(default)) ---", Enemies.get().count());
-                    Enemies.get().forEach(enemy-> ChatUtils.info("(highlight)" + enemy.name));
+                    Enemies.get().forEach(enemy-> info("(highlight)" + enemy.name));
                     return SINGLE_SUCCESS;
                 })
         );

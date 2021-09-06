@@ -2,7 +2,6 @@ package mathax.client.legacy.systems.modules.render.hud.modules;
 
 import mathax.client.legacy.renderer.Renderer2D;
 import mathax.client.legacy.settings.*;
-import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.render.hud.HUD;

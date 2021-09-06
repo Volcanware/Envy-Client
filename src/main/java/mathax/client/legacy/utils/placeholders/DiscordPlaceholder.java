@@ -182,6 +182,10 @@ public class DiscordPlaceholder {
             return "CEV Breaker";
         }  else if (s.equals("Click Tp")) {
             return "Click TP";
+        }  else if (s.equals("Auto 32k")) {
+            return "Auto 32K";
+        }  else if (s.equals("Skeleton Esp")) {
+            return "Skeleton ESP";
         } else {
             return s;
         }

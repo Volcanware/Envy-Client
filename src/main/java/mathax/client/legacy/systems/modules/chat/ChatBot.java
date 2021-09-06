@@ -25,7 +25,7 @@ public class ChatBot extends Module {
         .build()
     );
 
-    private final Setting<String> helpreturn sgGeneral.add(new StringSetting.Builder()
+    private final Setting<String> helpMsg = sgGeneral.add(new StringSetting.Builder()
         .name("message")
         .description("The specified message to get sent. Placeholder for commands: %commandlist%")
         .defaultValue("MatHax Legacy Chat Bot Commands -> %commandlist%")
@@ -57,7 +57,7 @@ public class ChatBot extends Module {
         .build()
     );
 
-    private final Setting<String> tpsreturn sgTPS.add(new StringSetting.Builder()
+    private final Setting<String> tpsMsg = sgTPS.add(new StringSetting.Builder()
         .name("message")
         .description("The specified message to get sent. Placeholder for TPS: %tps%")
         .defaultValue("Current server TPS is %tps%!")
@@ -70,25 +70,16 @@ public class ChatBot extends Module {
 
     @EventHandler
     private void onMessageRecieve(ReceiveMessageEvent event) {
-        String return event.message.getString();
-        String toSendreturn "";
-        if (msg.contains(helpMsg.get().replace("%commandlist%", getActiveCommands().replace(", haha", "")))) toSendreturn "";
+        String msg = event.message.getString();
+        if (msg.contains(helpMsg.get().replace("%commandlist%", ""))) return;
         else if (msg.contains(prefix.get() + "help") || msg.contains(">" + prefix.get() + "help") || msg.contains("> " + prefix.get() + "help")) {
-            toSendreturn helpMsg.get().replace("%commandlist%", getActiveCommands().replace(", haha", ""));
+            sendMessage(helpMsg.get().replace("%commandlist%", getActiveCommands().replace(", removeme", "")));
         }
-        else if (msg.contains(prefix.get() + "mathax") || msg.contains(prefix.get() + "mathaxlegacy") || msg.contains(">" + prefix.get() + "mathax") || msg.contains(">" + prefix.get() + "mathaxlegacy") || msg.contains("> " + prefix.get() + "mathax") || msg.contains("> " + prefix.get() + "mathaxlegacy")) {
-            if (mathax.get()) {
-                toSendreturn getMatHaxMsg();
-            }
+        else if ((msg.contains(prefix.get() + "mathax") || msg.contains(prefix.get() + "mathaxlegacy") || msg.contains(">" + prefix.get() + "mathax") || msg.contains(">" + prefix.get() + "mathaxlegacy") || msg.contains("> " + prefix.get() + "mathax") || msg.contains("> " + prefix.get() + "mathaxlegacy")) && mathax.get()) {
+            sendMessage(getMatHaxMsg());
         }
-        else if (msg.contains(prefix.get() + "tps") || msg.contains(">" + prefix.get() + "tps") || msg.contains("> " + prefix.get() + "tps")) {
-            if (tps.get()) {
-                toSendreturn tpsMsg.get().replace("%tps%", String.format("%.1f", TickRate.INSTANCE.getTickRate()));
-            }
-        }
-
-        if (!toSendMsg.equals("")) {
-            sendMessage(toSendMsg);
+        else if ((msg.contains(prefix.get() + "tps") || msg.contains(">" + prefix.get() + "tps") || msg.contains("> " + prefix.get() + "tps")) && tps.get()) {
+            sendMessage(tpsMsg.get().replace("%tps%", String.format("%.1f", TickRate.INSTANCE.getTickRate())));
         }
     }
 
@@ -100,7 +91,7 @@ public class ChatBot extends Module {
         if (tps.get()) {
             commandList.append(prefix.get() + "tps, ");
         }
-        commandList.append("haha");
+        commandList.append("removeme");
         return commandList.toString();
     }
 

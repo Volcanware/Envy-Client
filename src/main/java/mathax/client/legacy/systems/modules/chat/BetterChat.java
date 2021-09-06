@@ -444,7 +444,7 @@ public class BetterChat extends Module {
         BaseText sendButton = new LiteralText("[SEND ANYWAY]");
         BaseText hintBaseText = new LiteralText("");
 
-        BaseText hintreturn new LiteralText("Send your message to the global chat even if there are coordinates:");
+        BaseText hintMsg = new LiteralText("Send your message to the global chat even if there are coordinates:");
         hintMsg.setStyle(hintBaseText.getStyle().withFormatting(Formatting.GRAY));
         hintBaseText.append(hintMsg);
 

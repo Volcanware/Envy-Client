@@ -69,7 +69,7 @@ public class AutoNametag extends Module {
         FindItemResult findNametag = InvUtils.findInHotbar(Items.NAME_TAG);
 
         if (!findNametag.found()) {
-            ChatUtils.error("Auto Nametag", "No Nametag in Hotbar");
+            error("No Nametag in Hotbar");
             toggle();
             return;
         }

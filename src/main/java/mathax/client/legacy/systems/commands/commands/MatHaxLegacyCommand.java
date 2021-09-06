@@ -6,7 +6,6 @@ import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.systems.Systems;
 import mathax.client.legacy.systems.commands.Command;
 import mathax.client.legacy.utils.network.Capes;
-import mathax.client.legacy.utils.player.ChatUtils;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.BaseText;
 import net.minecraft.text.LiteralText;
@@ -27,50 +26,50 @@ public class MatHaxLegacyCommand extends Command {
 
         builder.executes(context -> {
             text = new LiteralText("MatHax Legacy");
-            ChatUtils.info("You are using " + text + " " + Formatting.WHITE + MatHaxClientLegacy.clientVersionWithV + Formatting.GRAY+ "!");
+            info("You are using " + text + " " + Formatting.WHITE + MatHaxClientLegacy.clientVersionWithV + Formatting.GRAY+ "!");
             return SINGLE_SUCCESS;
         });
 
         builder.then(literal("version").executes(ctx -> {
             text = new LiteralText("MatHax Legacy");
-            ChatUtils.info("You are using " + text + " " + Formatting.WHITE + MatHaxClientLegacy.clientVersionWithV + Formatting.GRAY+ "!");
+            info("You are using " + text + " " + Formatting.WHITE + MatHaxClientLegacy.clientVersionWithV + Formatting.GRAY+ "!");
             return SINGLE_SUCCESS;
         }));
 
         builder.then(literal("cape").executes(ctx -> {
             text = new LiteralText("MatHax");
             if (Capes.OWNERS.containsKey(mc.player.getUuid())) {
-                ChatUtils.info("You own a " + text + " Cape! :)");
+                info("You own a " + text + " Cape! :)");
             } else {
-                ChatUtils.info("You dont own a " + text + " Cape! :(");
+                info("You dont own a " + text + " Cape! :(");
             }
             return SINGLE_SUCCESS;
         })
             .then(argument("reload", StringArgumentType.word())
                 .executes(context -> {
-                    ChatUtils.info("Reloading capes...");
+                    info("Reloading capes...");
                     Capes.init();
 
-                    ChatUtils.info("Capes reload complete!");
+                    info("Capes reload complete!");
                     return SINGLE_SUCCESS;
                 })
             )
         );
 
         builder.then(literal("reload").executes(context -> {
-                ChatUtils.info("Reloading...");
+                info("Reloading...");
                 Systems.load();
                 Capes.init();
-                ChatUtils.info("Reload complete!");
+                info("Reload complete!");
                 return SINGLE_SUCCESS;
                 })
 
                 .then(argument("capes", StringArgumentType.word())
                     .executes(context -> {
-                        ChatUtils.info("Reloading capes...");
+                        info("Reloading capes...");
                         Capes.init();
 
-                        ChatUtils.info("Capes reload complete!");
+                        info("Capes reload complete!");
                         return SINGLE_SUCCESS;
                     })
                 )
