@@ -15,7 +15,6 @@ import net.minecraft.util.Formatting;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class MatHaxLegacyCommand extends Command {
-    private static BaseText text = new LiteralText("");
 
     public MatHaxLegacyCommand() {
         super("mathaxlegacy", "Some MatHax Legacy commands.");
@@ -23,26 +22,21 @@ public class MatHaxLegacyCommand extends Command {
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        text.getStyle().withColor(MatHaxClientLegacy.INSTANCE.MATHAX_COLOR.getPacked());
-
         builder.executes(context -> {
-            text = new LiteralText("MatHax Legacy");
-            info("You are using " + text + " " + Formatting.WHITE + Version.getStylized() + Formatting.GRAY+ "!");
+            info("You are using " + Formatting.RED + "MatHax Legacy" + Formatting.GRAY + " " + Formatting.WHITE + Version.getStylized() + Formatting.GRAY+ "!");
             return SINGLE_SUCCESS;
         });
 
         builder.then(literal("version").executes(ctx -> {
-            text = new LiteralText("MatHax Legacy");
-            info("You are using " + text + " " + Formatting.WHITE + Version.getStylized() + Formatting.GRAY+ "!");
+            info("You are using " + Formatting.RED + "MatHax Legacy" + Formatting.GRAY + " " + Formatting.WHITE + Version.getStylized() + Formatting.GRAY+ "!");
             return SINGLE_SUCCESS;
         }));
 
         builder.then(literal("cape").executes(ctx -> {
-            text = new LiteralText("MatHax");
             if (Capes.OWNERS.containsKey(mc.player.getUuid())) {
-                info("You own a " + text + " Cape! :)");
+                info("You own a " + Formatting.RED + "MatHax" + Formatting.GRAY + " Cape! :)");
             } else {
-                info("You dont own a " + text + " Cape! :(");
+                info("You dont own a " + Formatting.RED + "MatHax" + Formatting.GRAY + " Cape! :(");
             }
             return SINGLE_SUCCESS;
         })

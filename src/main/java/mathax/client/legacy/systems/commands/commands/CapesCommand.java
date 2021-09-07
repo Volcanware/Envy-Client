@@ -1,9 +1,14 @@
 package mathax.client.legacy.systems.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.systems.commands.Command;
 import mathax.client.legacy.utils.network.Capes;
+import mathax.client.legacy.utils.player.ChatUtils;
 import net.minecraft.command.CommandSource;
+import net.minecraft.text.BaseText;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.Formatting;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
@@ -16,9 +21,9 @@ public class CapesCommand extends Command {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             if (Capes.OWNERS.containsKey(mc.player.getUuid())) {
-                info("You own a MatHax Cape! :)");
+                ChatUtils.info("Capes", "You own a \" + Formatting.RED + \"MatHax\" + Formatting.GRAY + \" Cape! :)");
             } else {
-                info("You dont own a MatHax Cape! :(");
+                ChatUtils.info("Capes", "You dont own a " + Formatting.RED + "MatHax" + Formatting.GRAY + " Cape! :(");
             }
             return SINGLE_SUCCESS;
         });
