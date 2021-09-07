@@ -1,13 +1,10 @@
 package mathax.client.legacy.systems.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.systems.commands.Command;
 import mathax.client.legacy.utils.network.Capes;
 import mathax.client.legacy.utils.player.ChatUtils;
 import net.minecraft.command.CommandSource;
-import net.minecraft.text.BaseText;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
