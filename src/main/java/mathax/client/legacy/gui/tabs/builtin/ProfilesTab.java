@@ -171,7 +171,7 @@ public class ProfilesTab extends Tab {
             table.row();
 
             // WaypointsModule
-            table.add(theme.label("WaypointsModule:"));
+            table.add(theme.label("Waypoints Module:"));
             WCheckbox waypointsBool = table.add(theme.checkbox(ogProfile.waypoints)).widget();
             waypointsBool.action = () -> newProfile.waypoints = waypointsBool.checked;
             table.row();
