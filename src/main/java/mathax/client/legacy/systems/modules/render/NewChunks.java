@@ -60,7 +60,7 @@ public class NewChunks extends Module {
     // Old Chunks
 
     private final Setting<Boolean> oldChunksToggle = sgOldChunks.add(new BoolSetting.Builder()
-        .name("new-chunks")
+        .name("old-chunks")
         .description("Determines if old chunks are visible.")
         .defaultValue(true)
         .build()
@@ -69,14 +69,14 @@ public class NewChunks extends Module {
     private final Setting<SettingColor> oldChunksFillColor = sgOldChunks.add(new ColorSetting.Builder()
         .name("fill-color")
         .description("Fill color of the chunks that are old.")
-        .defaultValue(new SettingColor(255, 0, 0, 0))
+        .defaultValue(new SettingColor(0, 255, 0, 0))
         .build()
     );
 
     private final Setting<SettingColor> oldChunksLineColor = sgOldChunks.add(new ColorSetting.Builder()
         .name("line-color")
         .description("Line color of the chunks that are old.")
-        .defaultValue(new SettingColor(255, 0, 0))
+        .defaultValue(new SettingColor(0, 255, 0))
         .build()
     );
 
