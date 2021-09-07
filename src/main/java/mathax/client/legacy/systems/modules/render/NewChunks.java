@@ -3,6 +3,10 @@ package mathax.client.legacy.systems.modules.render;
 import mathax.client.legacy.bus.EventHandler;
 import mathax.client.legacy.events.packets.PacketEvent;
 import mathax.client.legacy.events.render.Render3DEvent;
+import mathax.client.legacy.gui.GuiTheme;
+import mathax.client.legacy.gui.widgets.WWidget;
+import mathax.client.legacy.gui.widgets.containers.WHorizontalList;
+import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.renderer.ShapeMode;
 import mathax.client.legacy.settings.*;
 import mathax.client.legacy.systems.modules.Categories;
@@ -79,6 +83,20 @@ public class NewChunks extends Module {
         .defaultValue(new SettingColor(0, 255, 0))
         .build()
     );
+
+    @Override
+    public WWidget getWidget(GuiTheme theme) {
+        WHorizontalList w = theme.horizontalList();
+
+        WButton remove = w.add(theme.button("Remove")).widget();
+        remove.action = () -> {
+            newChunks.clear();
+            oldChunks.clear();
+        };
+        w.add(theme.label("Removes all cached chunks."));
+
+        return w;
+    }
 
     private Set<ChunkPos> newChunks = Collections.synchronizedSet(new HashSet<>());
     private Set<ChunkPos> oldChunks = Collections.synchronizedSet(new HashSet<>());

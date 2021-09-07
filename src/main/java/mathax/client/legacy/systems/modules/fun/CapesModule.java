@@ -27,14 +27,6 @@ public class CapesModule extends Module {
         .build()
     );
 
-    /*private final Setting<Boolean> ignoreOwn = sgGeneral.add(new BoolSetting.Builder()
-        .name("ignore-own")
-        .description("Ignores your own cape.")
-        .defaultValue(true)
-        .onChanged(val -> mathax.client.legacy.utils.network.CapesModule.reload())
-        .build()
-    );*/
-
     public CapesModule() {
         super(Categories.Fun, Items.CAKE, "capes", "When enabled you will see MatHax capes on users which have them.");
     }
