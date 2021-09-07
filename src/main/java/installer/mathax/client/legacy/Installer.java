@@ -38,7 +38,7 @@ public class Installer {
         // Options
         int option = JOptionPane.showOptionDialog(
             null,
-            "How to install:\nPut this .jar file in your mods folder and run Fabric for Minecraft version " + Version.getMinecraft() + ".\n\n",
+            "How to install:\nPut this .jar file to your mods folder and run Fabric for Minecraft version " + Version.getMinecraft() + ".\n\n",
             "MatHax Legacy v" + Version.get() + " " + Version.getDevStylized() + " | Fabric " + Version.getMinecraft(),
             JOptionPane.YES_NO_CANCEL_OPTION,
             JOptionPane.ERROR_MESSAGE,
