@@ -164,7 +164,7 @@ public class InfinityMiner extends Module {
             } else if (autoWalkHome.get() && isInventoryFull() && secondaryMode != Mode.Home)
                 baritoneRequestPathHome();
             else if (!autoWalkHome.get() && isInventoryFull() && autoLogOut.get()) {
-                this.toggle();
+                toggle();
                 requestLogout(currentMode);
             } else if (currentMode == Mode.Repair) {
                 int REPAIR_BUFFER = 15;
@@ -190,7 +190,7 @@ public class InfinityMiner extends Module {
             } else if (currentMode == Mode.Home) {
                 if (Math.abs(mc.player.getY() - playerY) <= .5 && Math.abs(mc.player.getX() - playerX) <= .5 && Math.abs(mc.player.getZ() - playerZ) <= .5) {
                     if (autoLogOut.get()) requestLogout(currentMode);
-                    this.toggle();
+                    toggle();
                 } else if (isTool() && getCurrentDamage() <= durabilityThreshold.get()) currentMode = Mode.Repair;
             }
         } catch (Exception ignored) {
@@ -275,7 +275,7 @@ public class InfinityMiner extends Module {
         baritoneRequestStop();
         if (!BaritoneAPI.getSettings().mineScanDroppedItems.value)
             BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
-        if (this.isActive()) this.toggle();
+        if (this.isActive()) toggle();
     }
 
     @SuppressWarnings("unused")
@@ -284,7 +284,7 @@ public class InfinityMiner extends Module {
         baritoneRequestStop();
         if (!BaritoneAPI.getSettings().mineScanDroppedItems.value)
             BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
-        if (this.isActive()) this.toggle();
+        if (this.isActive()) toggle();
     }
 
     public Mode getMode() {

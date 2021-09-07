@@ -5,7 +5,7 @@ import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.misc.NameProtect;
 import mathax.client.legacy.utils.Utils;
-import mathax.client.legacy.utils.misc.Version;
+import mathax.client.legacy.Version;
 import mathax.client.legacy.utils.network.Http;
 import mathax.client.legacy.utils.network.MatHaxExecutor;
 import mathax.client.legacy.utils.render.PromptBuilder;
@@ -70,18 +70,18 @@ public class TitleScreenMixin extends Screen {
             String apiLatestVer = Http.get(MatHaxClientLegacy.URL + "Version/Legacy/1-17-1").sendString();
             String processedApiLatestVer = apiLatestVer.replace("\n", "");
             if (processedApiLatestVer == null) {
-                newUpdateString = MatHaxClientLegacy.clientVersionWithV + " [Could not get Latest Version]";
+                newUpdateString = Version.getStylized() + " [Could not get Latest Version]";
             } else {
                 Version latestVer = new Version(processedApiLatestVer);
-                Version currentVer = new Version(MatHaxClientLegacy.versionNumber);
+                Version currentVer = new Version(Version.get());
                 if (latestVer.isHigherThan(currentVer)) {
-                    newUpdateString = MatHaxClientLegacy.clientVersionWithV + " [Outdated | Latest Version: v" + latestVer + "]";
+                    newUpdateString = Version.getStylized() + " [Outdated | Latest Version: v" + latestVer + "]";
                 } else {
-                    newUpdateString = MatHaxClientLegacy.clientVersionWithV;
+                    newUpdateString = Version.getStylized();
                 }
             }
         } else {
-            newUpdateString = MatHaxClientLegacy.clientVersionWithV;
+            newUpdateString = Version.getStylized();
         }
         return newUpdateString;
     }
@@ -91,7 +91,7 @@ public class TitleScreenMixin extends Screen {
 
         textLeftUp = "Logged in as ";
 
-        textRightUp1 = "MatHax Client Legacy";
+        textRightUp1 = "MatHax Legacy";
         textRightUp2 = " ";
 
         textRightDown1 = "By";

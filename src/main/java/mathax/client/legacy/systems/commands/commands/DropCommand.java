@@ -25,7 +25,7 @@ public class DropCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
 
-        // Main Hand
+        // Installer Hand
         builder.then(literal("hand").executes(context -> drop(player -> player.dropSelectedItem(true))));
 
         // Offhand
@@ -38,7 +38,7 @@ public class DropCommand extends Command {
             }
         })));
 
-        // Main Inv
+        // Installer Inv
         builder.then(literal("inventory").executes(context -> drop(player -> {
             for (int i = 9; i < player.getInventory().main.size(); i++) {
                 InvUtils.drop().slotMain(i - 9);

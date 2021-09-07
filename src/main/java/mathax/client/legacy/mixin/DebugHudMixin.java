@@ -3,9 +3,11 @@ package mathax.client.legacy.mixin;
 import mathax.client.legacy.MatHaxClientLegacy;
 import mathax.client.legacy.systems.config.Config;
 import mathax.client.legacy.utils.Utils;
-import mathax.client.legacy.utils.misc.Version;
+import mathax.client.legacy.Version;
 import mathax.client.legacy.utils.network.Http;
 import net.minecraft.client.gui.hud.DebugHud;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +19,9 @@ import java.util.List;
 public class DebugHudMixin {
     @Inject(at = @At("RETURN"), method = "getLeftText")
     protected void getLeftText(CallbackInfoReturnable<List<String>> info) {
-        String line = "§cMatHax Client Legacy §7" + MatHaxClientLegacy.clientVersionWithV + getNewUpdate();
+        LiteralText mathax = new LiteralText("MatHax Legacy");
+        mathax.setStyle(mathax.getStyle().withColor(MatHaxClientLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
+        String line = mathax + " " + Formatting.GRAY + Version.getStylized() + getNewUpdate();
         info.getReturnValue().add(line);
     }
 

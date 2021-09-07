@@ -23,7 +23,7 @@ public class LagNotifierHUD extends TripleTextHUDElement {
     private final Setting<SettingColor> severeColor = sgGeneral.add(new ColorSetting.Builder()
         .name("severe-color")
         .description("Color of lag length.")
-        .defaultValue(new SettingColor(80, 0, 0))
+        .defaultValue(new SettingColor(155, 0, 0))
         .build()
     );
 

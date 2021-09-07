@@ -1,5 +1,6 @@
 package mathax.client.legacy.systems.modules.render.hud;
 
+import com.mojang.serialization.Lifecycle;
 import mathax.client.legacy.events.render.Render2DEvent;
 import mathax.client.legacy.gui.GuiTheme;
 import mathax.client.legacy.gui.screens.HudElementScreen;
@@ -8,6 +9,7 @@ import mathax.client.legacy.gui.widgets.WWidget;
 import mathax.client.legacy.gui.widgets.containers.WHorizontalList;
 import mathax.client.legacy.gui.widgets.pressable.WButton;
 import mathax.client.legacy.settings.*;
+import mathax.client.legacy.systems.modules.Modules;
 import mathax.client.legacy.systems.modules.render.hud.modules.*;
 import mathax.client.legacy.systems.modules.Categories;
 import mathax.client.legacy.systems.modules.Module;
@@ -20,10 +22,11 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class HUD extends Module {
     private static final HUDRenderer RENDERER = new HUDRenderer();

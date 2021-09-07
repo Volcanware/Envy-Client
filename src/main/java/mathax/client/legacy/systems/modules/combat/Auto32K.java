@@ -109,7 +109,7 @@ public class Auto32K extends Module {
                     mc.player.setSneaking(true);
                     if (!BlockUtils.place(bestBlock.up(),  findShulker,true,100,false)) {
                         error("Failed to place.");
-                        this.toggle();
+                        toggle();
                         return;
                     }
                     mc.player.setSneaking(false);
@@ -128,7 +128,7 @@ public class Auto32K extends Module {
                     if(bestBlock == null) return;
                     if (!BlockUtils.place(bestBlock.add(x, 0, z), hopperSlot, true, 100, false)) {
                         error("Failed to place.");
-                        this.toggle();
+                        toggle();
                         return;
                     }
                     phase += 1;
@@ -217,7 +217,7 @@ public class Auto32K extends Module {
                 if(slot != -1) {
                     mc.player.getInventory().selectedSlot = slot - 32;
                 }
-            }else this.toggle();
+            } else toggle();
         }
     }
 

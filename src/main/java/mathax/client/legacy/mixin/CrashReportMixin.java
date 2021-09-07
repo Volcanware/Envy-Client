@@ -1,6 +1,7 @@
 package mathax.client.legacy.mixin;
 
 import mathax.client.legacy.MatHaxClientLegacy;
+import mathax.client.legacy.Version;
 import mathax.client.legacy.systems.modules.Module;
 import mathax.client.legacy.systems.modules.Category;
 import mathax.client.legacy.systems.modules.Modules;
@@ -18,9 +19,9 @@ public class CrashReportMixin {
     private void onAddStackTrace(StringBuilder sb, CallbackInfo info) {
         if (Modules.get() != null) {
             sb.append("\n\n");
-            sb.append("--- MatHax Client Legacy ---");
+            sb.append("--- MatHax Legacy ---");
             sb.append("\n");
-            sb.append("Version: ").append(MatHaxClientLegacy.clientVersionWithV).append("\n");
+            sb.append("Version: ").append(Version.getStylized()).append("\n");
 
             for (Category category : Modules.loopCategories()) {
                 List<Module> modules = Modules.get().getGroup(category);

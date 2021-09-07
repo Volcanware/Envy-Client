@@ -8,7 +8,7 @@ import mathax.client.legacy.systems.modules.render.hud.HUD;
 import mathax.client.legacy.systems.modules.render.hud.HUDRenderer;
 import mathax.client.legacy.systems.modules.render.hud.TripleTextHUDElement;
 import mathax.client.legacy.utils.Utils;
-import mathax.client.legacy.utils.misc.Version;
+import mathax.client.legacy.Version;
 import mathax.client.legacy.utils.network.Http;
 import mathax.client.legacy.utils.render.color.Color;
 import net.minecraft.util.Identifier;
@@ -38,7 +38,7 @@ public class WatermarkHUD extends TripleTextHUDElement {
     }
 
     protected String getRight() {
-        return MatHaxClientLegacy.clientVersionWithV;
+        return Version.getStylized();
     }
 
     public String getEnd() {
@@ -100,7 +100,7 @@ public class WatermarkHUD extends TripleTextHUDElement {
                 return newUpdateString;
             }
             Version latestVer = new Version(processedApiLatestVer);
-            Version currentVer = new Version(MatHaxClientLegacy.versionNumber);
+            Version currentVer = new Version(Version.get());
             if (latestVer.isHigherThan(currentVer)) {
                 newUpdateString = " [Outdated | Latest Version: v" + latestVer + "]";
             } else {

@@ -3,6 +3,7 @@ package mathax.client.legacy.systems.commands.commands;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.client.legacy.MatHaxClientLegacy;
+import mathax.client.legacy.Version;
 import mathax.client.legacy.systems.Systems;
 import mathax.client.legacy.systems.commands.Command;
 import mathax.client.legacy.utils.network.Capes;
@@ -26,13 +27,13 @@ public class MatHaxLegacyCommand extends Command {
 
         builder.executes(context -> {
             text = new LiteralText("MatHax Legacy");
-            info("You are using " + text + " " + Formatting.WHITE + MatHaxClientLegacy.clientVersionWithV + Formatting.GRAY+ "!");
+            info("You are using " + text + " " + Formatting.WHITE + Version.getStylized() + Formatting.GRAY+ "!");
             return SINGLE_SUCCESS;
         });
 
         builder.then(literal("version").executes(ctx -> {
             text = new LiteralText("MatHax Legacy");
-            info("You are using " + text + " " + Formatting.WHITE + MatHaxClientLegacy.clientVersionWithV + Formatting.GRAY+ "!");
+            info("You are using " + text + " " + Formatting.WHITE + Version.getStylized() + Formatting.GRAY+ "!");
             return SINGLE_SUCCESS;
         }));
 

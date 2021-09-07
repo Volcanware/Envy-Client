@@ -3,6 +3,7 @@ package mathax.client.legacy.systems.modules.chat;
 import it.unimi.dsi.fastutil.chars.Char2CharArrayMap;
 import it.unimi.dsi.fastutil.chars.Char2CharMap;
 import mathax.client.legacy.MatHaxClientLegacy;
+import mathax.client.legacy.Version;
 import mathax.client.legacy.events.game.ReceiveMessageEvent;
 import mathax.client.legacy.events.game.SendMessageEvent;
 import mathax.client.legacy.mixin.ChatHudAccessor;
@@ -428,7 +429,7 @@ public class BetterChat extends Module {
 
     private String getSuffixString() {
         if (suffixAppendVersion.get()) {
-            return " | MatHax Legacy " + MatHaxClientLegacy.clientVersionWithV;
+            return " | MatHax Legacy " + Version.getStylized();
         } else {
             return " | MatHax Legacy";
         }

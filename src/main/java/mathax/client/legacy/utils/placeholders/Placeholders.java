@@ -1,6 +1,7 @@
 package mathax.client.legacy.utils.placeholders;
 
 import mathax.client.legacy.MatHaxClientLegacy;
+import mathax.client.legacy.Version;
 import mathax.client.legacy.utils.Utils;
 import net.minecraft.SharedConstants;
 
@@ -26,8 +27,8 @@ public class Placeholders {
 
     private static String getReplacement(String placeholder) {
         switch (placeholder) {
-            case "%version%":      return MatHaxClientLegacy.clientVersionWithV;
-            case "%mc_version%":   return SharedConstants.getGameVersion().getName();
+            case "%version%":      return Version.getStylized();
+            case "%mc_version%":   return Version.getMinecraft();
             case "%player%":
             case "%username%":     return mc.getSession().getUsername();
             case "%server%":       return Utils.getWorldName();

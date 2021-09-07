@@ -1,6 +1,7 @@
 package mathax.client.legacy.utils.placeholders;
 
 import mathax.client.legacy.MatHaxClientLegacy;
+import mathax.client.legacy.Version;
 import mathax.client.legacy.gui.screens.*;
 import mathax.client.legacy.gui.screens.settings.ColorSettingScreen;
 import mathax.client.legacy.gui.tabs.builtin.*;
@@ -127,7 +128,7 @@ public class DiscordPlaceholder {
                         return "In " + mc.currentScreen.getTitle().toString();
                     }
                 }
-            case "%version%":      return MatHaxClientLegacy.clientVersionWithV;
+            case "%version%":      return Version.getStylized();
             case "%username%":     return mc.getSession().getUsername();
             case "%health%":       return getHealth();
             default: return "In " + mc.currentScreen.getTitle().toString();

@@ -31,6 +31,15 @@ public abstract class HUDElement implements ISerializable<HUDElement> {
         this.mc = MinecraftClient.getInstance();
     }
 
+    public HUDElement(HUD hud, String name, String description) {
+        this.hud = hud;
+        this.name = name;
+        this.title = Utils.nameToTitle(name);
+        this.description = description;
+        this.defaultActive = false;
+        this.mc = MinecraftClient.getInstance();
+    }
+
     public void toggle() {
         active = !active;
     }

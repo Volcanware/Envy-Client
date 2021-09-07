@@ -1,4 +1,7 @@
-package mathax.client.legacy.utils.misc;
+package mathax.client.legacy;
+
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.SharedConstants;
 
 public class Version {
     private final String string;
@@ -18,6 +21,31 @@ public class Version {
                 throw new IllegalArgumentException("[MatHax Legacy] Failed to parse version string.");
             }
         }
+    }
+
+    public static String get() {
+        return FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata().getVersion().getFriendlyString();
+    }
+
+    public static Integer getDev() {
+        return 3;
+    }
+
+    public static String getDevBuild() {
+        Integer dev = getDev();
+        if (dev == 0) {
+            return "";
+        } else {
+            return "Dev-" + dev;
+        }
+    }
+
+    public static String getStylized() {
+        return "v" + get() + " " + getDevBuild();
+    }
+
+    public static String getMinecraft(){
+        return SharedConstants.getGameVersion().getName();
     }
 
     public boolean isHigherThan(Version version) {

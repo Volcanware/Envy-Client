@@ -1,6 +1,7 @@
 package mathax.client.legacy.systems.modules.chat;
 
 import mathax.client.legacy.MatHaxClientLegacy;
+import mathax.client.legacy.Version;
 import mathax.client.legacy.events.world.TickEvent;
 import mathax.client.legacy.gui.GuiTheme;
 import mathax.client.legacy.gui.widgets.WWidget;
@@ -71,7 +72,7 @@ public class Spam extends Module {
 
     private final Setting<Boolean> placeholder = sgGeneral.add(new BoolSetting.Builder()
         .name("placeholders")
-        .description("Replaces placeholders. Example: %version% -> v" + MatHaxClientLegacy.versionNumber)
+        .description("Replaces placeholders. Example: %version% -> " + Version.getStylized())
         .defaultValue(true)
         .build()
     );

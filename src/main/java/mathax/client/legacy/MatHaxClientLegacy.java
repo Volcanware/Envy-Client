@@ -43,7 +43,6 @@ import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -70,7 +69,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
     public static final File MCCONFIG_FOLDER = new File(net.fabricmc.loader.FabricLoader.INSTANCE.getConfigDirectory(), "/MatHax/Legacy");
     public static final File FOLDER = new File(FabricLoader.getInstance().getGameDir().toString(), "MatHax/Legacy");
-    public static final File VERSION_FOLDER = new File(FOLDER + "/" + getMinecraftVersion());
+    public static final File VERSION_FOLDER = new File(FOLDER + "/" + Version.getMinecraft());
 
     public final Color MATHAX_COLOR = new Color(230, 75, 100);
     public final int MATHAX_COLOR_INT = Color.fromRGBA(230, 75, 100, 255);
@@ -86,22 +85,6 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
     public static String logprefix = "[MatHax Legacy] ";
 
-    static ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
-
-    public static String versionNumber = metadata.getVersion().getFriendlyString();
-    public static Integer devBuildNumber = 1;
-
-    public static String devBuild() {
-        if (devBuildNumber == 0) {
-            return "";
-        } else {
-            return " Dev-" + devBuildNumber;
-        }
-    }
-
-    public static String clientVersionWithV = "v" + versionNumber + devBuild();
-    public static String discordVersion = "v" + versionNumber + devBuild();
-
     @Override
     public void onInitializeClient() {
         if (INSTANCE == null) {
@@ -109,10 +92,9 @@ public class MatHaxClientLegacy implements ClientModInitializer {
             return;
         }
 
-        LOG.info(logprefix + "Initializing MatHax Client Legacy " + clientVersionWithV + "...");
+        LOG.info(logprefix + "Initializing MatHax Legacy " + Version.getStylized() + "...");
         Utils.mc = MinecraftClient.getInstance();
-        mc.execute(this::setIcon);
-        mc.execute(this::titleLoading);
+        mc.execute(() -> titleIconManager(1));
         EVENT_BUS.registerLambdaFactory("mathax.client.legacy", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
         LOG.info(logprefix + "10% initialized!");
@@ -161,7 +143,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
 
         LOG.info(logprefix + "80% initialized!");
         Systems.init();
-        mc.execute(this::titleLoaded);
+        mc.execute(() -> titleIconManager(2));
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             Systems.save();
@@ -180,37 +162,26 @@ public class MatHaxClientLegacy implements ClientModInitializer {
         Systems.load();
 
         LOG.info(logprefix + "100% initialized!");
-        mc.execute(this::titleFinal);
+        mc.execute(() -> titleIconManager(3));
 
-        LOG.info(logprefix + "MatHax Client Legacy " + clientVersionWithV + " initialized!");
+        LOG.info(logprefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
     }
 
-    public void setIcon() {
+    public void titleIconManager(Integer process) {
         final Window window = MinecraftClient.getInstance().getWindow();
-        window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon128.png"));
-    }
-
-    public void titleLoading() {
-        final Window window = MinecraftClient.getInstance().getWindow();
-        window.setTitle("MatHax Client Legacy " + clientVersionWithV + " - " + MinecraftClient.getInstance().getVersionType() + " " + getMinecraftVersion() + " is being loaded...");
-    }
-
-    public void titleLoaded() {
-        final Window window = MinecraftClient.getInstance().getWindow();
-        window.setTitle("MatHax Client Legacy " + clientVersionWithV + " - " + MinecraftClient.getInstance().getVersionType() + " " + getMinecraftVersion() + " loaded!");
-    }
-
-    public void titleFinal() {
-        final Window window = MinecraftClient.getInstance().getWindow();
-        window.setTitle("MatHax Client Legacy " + clientVersionWithV + " - " + MinecraftClient.getInstance().getVersionType() + " " + getMinecraftVersion());
+        switch (process) {
+            case 1:
+                window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
+                window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon128.png"));
+            case 2:
+                window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
+            case 3:
+                window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft());
+        }
     }
 
     private void openClickGui() {
         Tabs.get().get(0).openScreen(GuiThemes.get());
-    }
-
-    public static String getMinecraftVersion(){
-        return SharedConstants.getGameVersion().getName();
     }
 
     @EventHandler
@@ -275,7 +246,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
                 rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
                 rpc.state = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
                 rpc.largeImageKey = "logo";
-                rpc.largeImageText = "MatHax Legacy " + discordVersion;
+                rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
                 applySmallImage();
                 rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
                 rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
@@ -290,7 +261,7 @@ public class MatHaxClientLegacy implements ClientModInitializer {
                             rpc.details = DiscordPlaceholder.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
                             rpc.state = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
                             rpc.largeImageKey = "logo";
-                            rpc.largeImageText = "MatHax Legacy " + discordVersion;
+                            rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
                             applySmallImage();
                             rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
                             rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;

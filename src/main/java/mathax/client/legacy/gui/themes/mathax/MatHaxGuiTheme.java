@@ -79,7 +79,7 @@ public class MatHaxGuiTheme extends GuiTheme {
 
     // Colors
 
-    public final Setting<SettingColor> accentColor = color("accent", "Main color of the GUI.", new SettingColor(230, 75, 100));
+    public final Setting<SettingColor> accentColor = color("accent", "Installer color of the GUI.", new SettingColor(230, 75, 100));
     public final Setting<SettingColor> checkboxColor = color("checkbox", "Color of checkbox.", new SettingColor(230, 75, 100));
     public final Setting<SettingColor> plusColor = color("plus", "Color of plus button.", new SettingColor(255, 255, 255));
     public final Setting<SettingColor> minusColor = color("minus", "Color of minus button.", new SettingColor(255, 255, 255));

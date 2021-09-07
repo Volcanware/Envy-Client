@@ -1,6 +1,7 @@
 package mathax.client.legacy.utils.misc.input;
 
 import mathax.client.legacy.MatHaxClientLegacy;
+import mathax.client.legacy.Version;
 import mathax.client.legacy.mixin.KeyBindingAccessor;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
@@ -9,7 +10,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.Map;
 
 public class KeyBinds {
-    private static final String CATEGORY = "MatHax Client Legacy " + MatHaxClientLegacy.clientVersionWithV;
+    private static final String CATEGORY = "MatHax Legacy " + Version.getStylized();
 
     //TODO: Translation stopped working???????????????
     public static KeyBinding OPEN_CLICK_GUI = new KeyBinding("Open Click GUI", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, CATEGORY);

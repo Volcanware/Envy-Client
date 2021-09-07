@@ -117,7 +117,7 @@ public class AutoMountBypassDupe extends Module {
 
                 if (!InvUtils.swap(slot, true)) {
                     error("Cannot find chest in your hotbar, disabling...");
-                    this.toggle();
+                    toggle();
                 }
             }
         } else if (slots == 0) {
