@@ -66,6 +66,7 @@ import static mathax.client.legacy.utils.Utils.mc;
 public class MatHaxClientLegacy implements ClientModInitializer {
     public static MatHaxClientLegacy INSTANCE;
     public static final IEventBus EVENT_BUS = new EventBus();
+    public static Screen screenToOpen;
 
     public static final File MCCONFIG_FOLDER = new File(net.fabricmc.loader.FabricLoader.INSTANCE.getConfigDirectory(), "/MatHax/Legacy");
     public static final File FOLDER = new File(FabricLoader.getInstance().getGameDir().toString(), "MatHax/Legacy");
@@ -75,15 +76,13 @@ public class MatHaxClientLegacy implements ClientModInitializer {
     public final int MATHAX_COLOR_INT = Color.fromRGBA(230, 75, 100, 255);
 
     public static final Logger LOG = LogManager.getLogger();
-
-    public static Screen screenToOpen;
+    public static String logprefix = "[MatHax Legacy] ";
 
     public static String devUUID = "3e24ef27-e66d-45d2-bf4b-2c7ade68ff47";
     public static String devOfflineUUID = "7c73f844-73c3-3a7d-9978-004ba0a6436e";
 
     public static final String URL = "https://api.mathaxclient.xyz/";
 
-    public static String logprefix = "[MatHax Legacy] ";
 
     @Override
     public void onInitializeClient() {
