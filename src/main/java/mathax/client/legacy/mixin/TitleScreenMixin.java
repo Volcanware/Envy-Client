@@ -40,6 +40,8 @@ public class TitleScreenMixin extends Screen {
     private String textRightUp2;
     private int textRightUp2Length;
 
+    private String textRightUp3;
+
     private int fullLengthRightUp;
     private int prevWidthRightUp;
 
@@ -62,30 +64,6 @@ public class TitleScreenMixin extends Screen {
         super(title);
     }
 
-    private String newUpdateString;
-
-    private String textRightUp3() {
-        if (Utils.didntCheckForLatestVersion) {
-            Utils.didntCheckForLatestVersion = false;
-            String apiLatestVer = Http.get(MatHaxClientLegacy.URL + "Version/Legacy/1-17-1").sendString();
-            String processedApiLatestVer = apiLatestVer.replace("\n", "");
-            if (processedApiLatestVer == null) {
-                newUpdateString = Version.getStylized() + " [Could not get Latest Version]";
-            } else {
-                Version latestVer = new Version(processedApiLatestVer);
-                Version currentVer = new Version(Version.get());
-                if (latestVer.isHigherThan(currentVer)) {
-                    newUpdateString = Version.getStylized() + " [Outdated | Latest Version: v" + latestVer + "]";
-                } else {
-                    newUpdateString = Version.getStylized();
-                }
-            }
-        } else {
-            newUpdateString = Version.getStylized();
-        }
-        return newUpdateString;
-    }
-
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
 
@@ -93,6 +71,7 @@ public class TitleScreenMixin extends Screen {
 
         textRightUp1 = "MatHax Legacy";
         textRightUp2 = " ";
+        textRightUp3 = Version.getStylized();
 
         textRightDown1 = "By";
         textRightDown2 = " ";
@@ -108,7 +87,7 @@ public class TitleScreenMixin extends Screen {
         textRightUp2Length = textRenderer.getWidth(textRightUp2);
         int textRightUp1Length = textRenderer.getWidth(textRightUp1);
         int textRightUp2Length = textRenderer.getWidth(textRightUp2);
-        int textRightUp3Length = textRenderer.getWidth(textRightUp3());
+        int textRightUp3Length = textRenderer.getWidth(textRightUp3);
 
         textRightDown1Length = textRenderer.getWidth(textRightDown1);
         textRightDown2Length = textRenderer.getWidth(textRightDown2);
@@ -136,7 +115,8 @@ public class TitleScreenMixin extends Screen {
                 Version latestVer = new Version(processedApiLatestVer);
 
                 if (latestVer.isHigherThan(Config.get().version)) {
-                    MatHaxClientLegacy.LOG.info(MatHaxClientLegacy.logprefix + "There is a new version of MatHax Legacy, v" + latestVer.toString() + "! You are using v" + Config.get().version.toString() + "!");
+                    MatHaxClientLegacy.LOG.info(MatHaxClientLegacy.logprefix + "There is a new version of MatHax Legacy, v" + latestVer + "! You are using v" + Config.get().version.toString() + "!");
+                    String DOWNLOAD_URL = MatHaxClientLegacy.URL + "/Download";
                     new PromptBuilder()
                         .title("New Update")
                         .message("A new version of MatHax Legacy has been released.")
@@ -146,7 +126,7 @@ public class TitleScreenMixin extends Screen {
                         .message("\n")
                         .message("Do you want to update?")
                         .onYes(() -> {
-                            Util.getOperatingSystem().open(MatHaxClientLegacy.URL);
+                            Util.getOperatingSystem().open(DOWNLOAD_URL);
                         })
                         .promptId("new-update")
                         .show();
@@ -164,7 +144,7 @@ public class TitleScreenMixin extends Screen {
         prevWidthRightUp += textRightUp1Length;
         textRenderer.drawWithShadow(matrices, textRightUp2, width - fullLengthRightUp + prevWidthRightUp - 3, 3, WHITE);
         prevWidthRightUp += textRightUp2Length;
-        textRenderer.drawWithShadow(matrices, textRightUp3(), width - fullLengthRightUp + prevWidthRightUp - 3, 3, GRAY);
+        textRenderer.drawWithShadow(matrices, textRightUp3, width - fullLengthRightUp + prevWidthRightUp - 3, 3, GRAY);
 
         prevWidthRightDown = 0;
         textRenderer.drawWithShadow(matrices, textRightDown1, width - fullLengthRightDown - 3, 15, WHITE);

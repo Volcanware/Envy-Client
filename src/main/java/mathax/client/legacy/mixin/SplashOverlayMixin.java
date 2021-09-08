@@ -1,5 +1,6 @@
 package mathax.client.legacy.mixin;
 
+import mathax.client.legacy.utils.Utils;
 import mathax.client.legacy.utils.splash.PreviewSplashOverlay;
 import mathax.client.legacy.utils.splash.SplashUtils;
 import net.minecraft.client.MinecraftClient;
@@ -41,6 +42,8 @@ public abstract class SplashOverlayMixin {
     // Logo
     @Inject(method = "init(Lnet/minecraft/client/MinecraftClient;)V", at = @At("HEAD"), cancellable = true)
     private static void init(MinecraftClient client, CallbackInfo callbackInfo) {
+        Utils.didntCheckForLatestVersion = true;
+
         SplashUtils.reset();
         SplashUtils.init();
         client.getTextureManager().registerTexture(LOGO, new SplashUtils(MATHAX_LOGO));

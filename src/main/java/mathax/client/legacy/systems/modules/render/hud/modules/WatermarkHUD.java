@@ -14,9 +14,11 @@ import mathax.client.legacy.utils.render.color.Color;
 import net.minecraft.util.Identifier;
 
 public class WatermarkHUD extends TripleTextHUDElement {
-    private static final Identifier mathaxTexture = new Identifier("mathaxlegacy", "textures/logo/big-text.png");
+    private final Color visiblityColor = new Color(255, 255, 255, 255);
+    private static final Identifier mathaxTexture = new Identifier("mathaxlegacy", "textures/icons/icon.png");
 
     private String newUpdateString = "";
+    private static String space = "    ";
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -25,7 +27,18 @@ public class WatermarkHUD extends TripleTextHUDElement {
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Determines what watermark style to use.")
-        .defaultValue(Mode.Image)
+        .defaultValue(Mode.Both)
+        .build()
+    );
+
+    private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
+        .name("scale")
+        .description("The scale of the icon.")
+        .defaultValue(1)
+        .min(1)
+        .sliderMin(1)
+        .sliderMax(5)
+        .visible(() -> mode.get() == Mode.Icon)
         .build()
     );
 
@@ -48,45 +61,59 @@ public class WatermarkHUD extends TripleTextHUDElement {
     @Override
     public void update(HUDRenderer renderer) {
         if (mode.get() == Mode.Text) {
-            double textWidth = renderer.textWidth(getLeft()) + renderer.textWidth(getRight());
-            box.setSize(textWidth + renderer.textWidth(getEnd()), renderer.textHeight());
+            double textWidth = renderer.textWidth(getLeft()) + renderer.textWidth(getRight()) + renderer.textWidth(getEnd());
+            box.setSize(textWidth, renderer.textHeight());
             double x = box.getX();
             double y = box.getY();
             renderer.text(getLeft(), x, y, hud.primaryColor.get());
             renderer.text(getRight(), x + renderer.textWidth(getLeft()), y, hud.secondaryColor.get());
             renderer.text(getEnd(), x + textWidth, y, hud.primaryColor.get());
+        } else if (mode.get() == Mode.Icon) {
+            double width = 32 * scale.get();
+            double height = 32 * scale.get();
+            box.setSize(width,  height);
         } else {
-            double width = 1392 / 6;
-            double height = 128 / 6;
-            double height2 = height / 4.5;
-            double textWidth = 4 + renderer.textWidth(getRight()) + renderer.textWidth(getEnd());
-            box.setSize(width + textWidth,  height);
-            double x = box.getX() + width;
-            double y = box.getY() + height2;
-            renderer.text(" " + getRight(), 4 + x, y, hud.secondaryColor.get());
-            renderer.text(getEnd(), x + 1 + renderer.textWidth(getRight()), y, hud.primaryColor.get());
+            double spaceWidth = renderer.textWidth(space);
+            double textWidth = spaceWidth + renderer.textWidth(getLeft()) + renderer.textWidth(getRight()) + renderer.textWidth(getEnd());
+            double width = renderer.textHeight();
+            double height = renderer.textHeight();
+            box.setSize(width + textWidth - spaceWidth + 1, height);
+            double x = box.getX();
+            double y = box.getY();
+            renderer.text(getLeft(), x + spaceWidth, y, hud.primaryColor.get());
+            renderer.text(getRight(), x + spaceWidth + renderer.textWidth(getLeft()), y, hud.secondaryColor.get());
+            renderer.text(getEnd(), x + textWidth - renderer.textWidth(getEnd()), y, hud.primaryColor.get());
         }
     }
 
     @Override
     public void render(HUDRenderer renderer) {
-        if (mode.get() == Mode.Image) {
-            double x = box.getX();
-            double y = box.getY();
-            double textWidth = renderer.textWidth(getRight()) + renderer.textWidth(getEnd());
-            drawBackground((int) x, (int) textWidth, (int) y);
+        double x = 0;
+        double y = 0;
+        switch (mode.get()) {
+            case Icon:
+                x = box.getX();
+                y = box.getY();
+                drawIcon((int) x, (int) y, 0);
+            case Both:
+                x = box.getX();
+                y = box.getY();
+                double textWidth = renderer.textWidth(getLeft()) + renderer.textWidth(getRight()) + renderer.textWidth(getEnd());
+                drawIcon((int) x, (int) y, (int) textWidth);
         }
     }
 
-    private final Color textureColor = new Color(255, 255, 255, 255);
-
-    private void drawBackground(int x, int textWidth, int y) {
-        int w = (int) box.width - textWidth;
+    private void drawIcon(int x, int y, int textWidth) {
+        int w = 0;
+        switch (mode.get()) {
+            case Icon -> w = (int) box.width;
+            case Both -> w = (int) box.width - textWidth;
+        }
         int h = (int) box.height;
 
         GL.bindTexture(mathaxTexture);
         Renderer2D.TEXTURE.begin();
-        Renderer2D.TEXTURE.texQuad(x, y, w, h, textureColor);
+        Renderer2D.TEXTURE.texQuad(x, y, w, h, visiblityColor);
         Renderer2D.TEXTURE.render(null);
     }
 
@@ -111,7 +138,8 @@ public class WatermarkHUD extends TripleTextHUDElement {
     }
 
     public enum Mode {
-        Image,
-        Text
+        Text,
+        Icon,
+        Both
     }
 }

@@ -39,9 +39,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CombatHUD extends HUDElement {
-    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/logo/logo.png");
-
-    private Color textureColor = new Color(255, 255, 255, 255);
+    private final Color visiblityColor = new Color(255, 255, 255, 255);
+    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
 
     private static final Color GREEN = new Color(15, 255, 15);
     private static final Color RED = new Color(255, 15, 15);
@@ -223,7 +222,7 @@ public class CombatHUD extends HUDElement {
                 nameText += "     " + playerEntity.getEntityName();
                 GL.bindTexture(mathaxLogo);
                 Renderer2D.TEXTURE.begin();
-                Renderer2D.TEXTURE.texQuad(x - renderer.textWidth(nameText) + 2, y, 16, 16, textureColor);
+                Renderer2D.TEXTURE.texQuad(x, y, 16, 16, visiblityColor);
                 Renderer2D.TEXTURE.render(null);
             } else
                 nameText += playerEntity.getEntityName();

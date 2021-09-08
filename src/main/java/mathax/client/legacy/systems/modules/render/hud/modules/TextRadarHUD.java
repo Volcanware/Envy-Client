@@ -22,7 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class TextRadarHUD extends HUDElement {
-    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/logo/logo.png");
+    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
 
     private Color textureColor = new Color(255, 255, 255, 255);
 

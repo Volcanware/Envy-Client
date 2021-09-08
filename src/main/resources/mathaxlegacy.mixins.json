@@ -133,6 +133,7 @@
     "RenderTickCounterMixin",
     "ScreenMixin",
     "SectionedEntityCacheAccessor",
+    "SelectWorldScreenMixin",
     "ShulkerBoxBlockMixin",
     "ShulkerBoxScreenMixin",
     "SignBlockEntityRendererMixin",
