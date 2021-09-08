@@ -88,10 +88,7 @@ public abstract class SplashOverlayMixin {
     @Inject(method = "render",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;setOverlay(Lnet/minecraft/client/gui/screen/Overlay;)V"))
     private void onSetOverlay(CallbackInfo info) {
-
-        //noinspection ConstantConditions
         if ((Object) this instanceof PreviewSplashOverlay previewScreen) {
-
             // Casting because SplashOverlayMixin doesn't extend PreviewSplashOverlay
             previewScreen.onDone();
         }
@@ -99,7 +96,7 @@ public abstract class SplashOverlayMixin {
 
     @ModifyConstant(method = "render", constant = @Constant(floatValue = 500))
     private float getFadeInTime(float old) {
-        return 500;
+        return 0;
     }
 
     @ModifyConstant(method = "render", constant = @Constant(floatValue = 1000))

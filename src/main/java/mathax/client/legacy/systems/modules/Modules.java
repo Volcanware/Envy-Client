@@ -400,6 +400,7 @@ public class Modules extends System<Modules> {
 
     private void initPlayer() {
         add(new AntiHunger());
+        add(new AntiSpawnpoint());
         add(new AutoEat());
         add(new AutoFish());
         add(new AutoGap());
@@ -514,6 +515,7 @@ public class Modules extends System<Modules> {
         add(new AntiGhostBlock());
         add(new AutoBreed());
         add(new AutoBrewer());
+        add(new AutoExtinguish());
         add(new AutoMount());
         add(new AutoNametag());
         add(new AutoShearer());
@@ -545,7 +547,6 @@ public class Modules extends System<Modules> {
     }
 
     private void initFun() {
-        add(new BookBot());
         add(new CapesModule());
         add(new Notebot());
         //add(new PenisESP());
@@ -561,6 +562,8 @@ public class Modules extends System<Modules> {
         add(new AutoReconnect());
         add(new AutoRespawn());
         add(new BetterTab());
+        add(new BookBot());
+        add(new CoordinateLogger());
         add(new MiddleClickExtra());
         add(new MiddleClickFriend());
         add(new NameProtect());

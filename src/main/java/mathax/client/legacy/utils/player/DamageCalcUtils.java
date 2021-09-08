@@ -2,7 +2,6 @@ package mathax.client.legacy.utils.player;
 
 import mathax.client.legacy.mixininterface.IExplosion;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.DamageUtil;
@@ -17,11 +16,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.explosion.Explosion;
 
+import static mathax.client.legacy.utils.Utils.mc;
+
 import java.util.Objects;
 
 public class DamageCalcUtils {
     private static final Explosion explosion = new Explosion(null, null, 0, 0, 0, 6, false, Explosion.DestructionType.DESTROY);
-    public static MinecraftClient mc = MinecraftClient.getInstance();
 
     //Always Calculate damage, then armour, then enchantments, then potion effect
     public static double crystalDamage(LivingEntity player, Vec3d crystal) {

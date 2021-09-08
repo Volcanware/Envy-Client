@@ -66,7 +66,7 @@ public abstract class HUDElement implements ISerializable<HUDElement> {
 
     @Override
     public HUDElement fromTag(NbtCompound tag) {
-        active = tag.contains("active");
+        active = tag.contains("active") ? tag.getBoolean("active") : defaultActive;
         if (tag.contains("settings")) settings.fromTag(tag.getCompound("settings"));
         box.fromTag(tag.getCompound("box"));
 

@@ -147,8 +147,10 @@ public class AutoEZ extends Module {
 
     public String getMessageStyle() {
         switch (mode.get()) {
-            case EZ: return getMessage();
-            case GG: return getGgMessage();
+            case EZ:
+                return getMessage();
+            case GG:
+                return getGgMessage();
             //case TROLL -> return getTrollMessage();
         }
         return "";
@@ -156,8 +158,10 @@ public class AutoEZ extends Module {
 
     public String getCrystalMessageStyle() {
         switch (mode.get()) {
-            case EZ: return getCrystalMessage();
-            case GG: return getGgCrystalMessage();
+            case EZ:
+                return getCrystalMessage();
+            case GG:
+                return getGgCrystalMessage();
             //case TROLL -> return getTrollCrystalMessage();
         }
         return "";
@@ -165,8 +169,10 @@ public class AutoEZ extends Module {
 
     public String getBedMessageStyle() {
         switch (mode.get()) {
-            case EZ: return getBedMessage();
-            case GG: return getGgBedMessage();
+            case EZ:
+                return getBedMessage();
+            case GG:
+                return getGgBedMessage();
             //case TROLL -> return getTrollBedMessage();
         }
         return "";
@@ -174,8 +180,10 @@ public class AutoEZ extends Module {
 
     public String getAnchorMessageStyle() {
         switch (mode.get()) {
-            case EZ: return getAnchorMessage();
-            case GG: return getGgAnchorMessage();
+            case EZ:
+                return getAnchorMessage();
+            case GG:
+                return getGgAnchorMessage();
             //case TROLL -> return getTrollAnchorMessage();
         }
         return "";
@@ -184,14 +192,22 @@ public class AutoEZ extends Module {
     public String getMessage() {
         int randomNumber = Utils.random(1, 8);
         switch (randomNumber) {
-            case 1: return "I am too good for %killedperson%! MatHax Legacy on top!";
-            case 2: return "haha %killedperson% is a noob! MatHax Legacy on top!";
-            case 3: return "I just EZZz'd %killedperson% using MatHax Legacy!";
-            case 4: return "I just fucked %killedperson% using MatHax Legacy!";
-            case 5: return "I just nae nae'd %killedperson% using MatHax Legacy!";
-            case 6: return "Take the L nerd %killedperson%! You just got ended by MatHax Legacy!";
-            case 7: return "%killedperson% just got raped by MatHax Legacy!";
-            case 8: return "%killedperson% just got ended by MatHax Legacy!";
+            case 1:
+                return "I am too good for %killedperson%! MatHax Legacy on top!";
+            case 2:
+                return "haha %killedperson% is a noob! MatHax Legacy on top!";
+            case 3:
+                return "I just EZZz'd %killedperson% using MatHax Legacy!";
+            case 4:
+                return "I just fucked %killedperson% using MatHax Legacy!";
+            case 5:
+                return "I just nae nae'd %killedperson% using MatHax Legacy!";
+            case 6:
+                return "Take the L nerd %killedperson%! You just got ended by MatHax Legacy!";
+            case 7:
+                return "%killedperson% just got raped by MatHax Legacy!";
+            case 8:
+                return "%killedperson% just got ended by MatHax Legacy!";
         }
         return "";
     }
@@ -199,10 +215,14 @@ public class AutoEZ extends Module {
     public String getGgMessage() {
         int randomNumber = Utils.random(1, 4);
         switch (randomNumber) {
-            case 1: return "Close fight %killedperson%, but MatHax Legacy helped me to win!";
-            case 2: return "Good fight, %killedperson%! MatHax Legacy helped me alot!";
-            case 3: return "GG %killedperson%! MatHax Legacy on top!";
-            case 4: return "Nice fight %killedperson%! MatHax Legacy is so good!";
+            case 1:
+                return "Close fight %killedperson%, but MatHax Legacy helped me to win!";
+            case 2:
+                return "Good fight, %killedperson%! MatHax Legacy helped me alot!";
+            case 3:
+                return "GG %killedperson%! MatHax Legacy on top!";
+            case 4:
+                return "Nice fight %killedperson%! MatHax Legacy is so good!";
         }
         return "";
     }
@@ -210,14 +230,22 @@ public class AutoEZ extends Module {
     public String getCrystalMessage() {
         int randomNumber = Utils.random(1, 8);
         switch (randomNumber) {
-            case 1: return "My crystal aura is too fast for %killedperson%! MatHax Legacy on top!";
-            case 2: return "I just EZZz'd %killedperson% using MatHax Legacy crystal aura!";
-            case 3: return "I just fucked %killedperson% using MatHax Legacy crystal aura!";
-            case 4: return "haha %killedperson% is a noob! MatHax Legacy crystal aura on top!";
-            case 5: return "I just nae nae'd %killedperson% using MatHax Legacy crystal aura!";
-            case 6: return "Take the L nerd %killedperson%! You just got ended by MatHax Legacy crystal aura!";
-            case 7: return "%killedperson% just got raped by MatHax Legacy crystal aura!";
-            case 8: return "%killedperson% just got ended by MatHax Legacy crystal aura!";
+            case 1:
+                return "My crystal aura is too fast for %killedperson%! MatHax Legacy on top!";
+            case 2:
+                return "I just EZZz'd %killedperson% using MatHax Legacy crystal aura!";
+            case 3:
+                return "I just fucked %killedperson% using MatHax Legacy crystal aura!";
+            case 4:
+                return "haha %killedperson% is a noob! MatHax Legacy crystal aura on top!";
+            case 5:
+                return "I just nae nae'd %killedperson% using MatHax Legacy crystal aura!";
+            case 6:
+                return "Take the L nerd %killedperson%! You just got ended by MatHax Legacy crystal aura!";
+            case 7:
+                return "%killedperson% just got raped by MatHax Legacy crystal aura!";
+            case 8:
+                return "%killedperson% just got ended by MatHax Legacy crystal aura!";
         }
         return "";
     }
@@ -225,10 +253,14 @@ public class AutoEZ extends Module {
     public String getGgCrystalMessage() {
         int randomNumber = Utils.random(1, 4);
         switch (randomNumber) {
-            case 1: return "Close fight %killedperson%, but MatHax Legacy crystal aura won!";
-            case 2: return "Good fight, %killedperson%! MatHax Legacy crystal aura helped me!";
-            case 3: return "GG %killedperson%! MatHax Legacy crystal aura on top!";
-            case 4: return "Nice fight %killedperson%! MatHax Legacy crystal aura is so good!";
+            case 1:
+                return "Close fight %killedperson%, but MatHax Legacy crystal aura won!";
+            case 2:
+                return "Good fight, %killedperson%! MatHax Legacy crystal aura helped me!";
+            case 3:
+                return "GG %killedperson%! MatHax Legacy crystal aura on top!";
+            case 4:
+                return "Nice fight %killedperson%! MatHax Legacy crystal aura is so good!";
         }
         return "";
     }
@@ -236,14 +268,22 @@ public class AutoEZ extends Module {
     public String getBedMessage() {
         int randomNumber = Utils.random(1, 8);
         switch (randomNumber) {
-            case 1: return "My bed aura is too fast for %killedperson%! MatHax Legacy on top!";
-            case 2: return "I just EZZz'd %killedperson% using MatHax Legacy bed aura!";
-            case 3: return "I just fucked %killedperson% using MatHax Legacy bed aura!";
-            case 4: return "haha %killedperson% is a noob! MatHax Legacy bed aura on top!";
-            case 5: return "I just nae nae'd %killedperson% using MatHax Legacy bed aura!";
-            case 6: return "Take the L nerd %killedperson%! You just got ended by MatHax Legacy bed aura!";
-            case 7: return "%killedperson% just got raped by MatHax Legacy bed aura!";
-            case 8: return "%killedperson% just got ended by MatHax Legacy bed aura!";
+            case 1:
+                return "My bed aura is too fast for %killedperson%! MatHax Legacy on top!";
+            case 2:
+                return "I just EZZz'd %killedperson% using MatHax Legacy bed aura!";
+            case 3:
+                return "I just fucked %killedperson% using MatHax Legacy bed aura!";
+            case 4:
+                return "haha %killedperson% is a noob! MatHax Legacy bed aura on top!";
+            case 5:
+                return "I just nae nae'd %killedperson% using MatHax Legacy bed aura!";
+            case 6:
+                return "Take the L nerd %killedperson%! You just got ended by MatHax Legacy bed aura!";
+            case 7:
+                return "%killedperson% just got raped by MatHax Legacy bed aura!";
+            case 8:
+                return "%killedperson% just got ended by MatHax Legacy bed aura!";
         }
         return "";
     }
@@ -251,10 +291,14 @@ public class AutoEZ extends Module {
     public String getGgBedMessage() {
         int randomNumber = Utils.random(1, 4);
         switch (randomNumber) {
-            case 1: return "Close fight %killedperson%, but MatHax Legacy bed aura won!";
-            case 2: return "Good fight, %killedperson%! MatHax Legacy bed aura helped me!";
-            case 3: return "GG %killedperson%! MatHax Legacy bed aura on top!";
-            case 4: return "Nice fight %killedperson%! MatHax Legacy bed aura is so good!";
+            case 1:
+                return "Close fight %killedperson%, but MatHax Legacy bed aura won!";
+            case 2:
+                return "Good fight, %killedperson%! MatHax Legacy bed aura helped me!";
+            case 3:
+                return "GG %killedperson%! MatHax Legacy bed aura on top!";
+            case 4:
+                return "Nice fight %killedperson%! MatHax Legacy bed aura is so good!";
         }
         return "";
     }
@@ -262,14 +306,22 @@ public class AutoEZ extends Module {
     public String getAnchorMessage() {
         int randomNumber = Utils.random(1, 8);
         switch (randomNumber) {
-            case 1: return "My anchor aura is too fast for %killedperson%! MatHax Legacy on top!";
-            case 2: return "I just EZZz'd %killedperson% using MatHax Legacy anchor aura!";
-            case 3: return "I just fucked %killedperson% using MatHax Legacy anchor aura!";
-            case 4: return "haha %killedperson% is a noob! MatHax Legacy anchor aura on top!";
-            case 5: return "I just nae nae'd %killedperson% using MatHax Legacy anchor aura!";
-            case 6: return "Take the L nerd %killedperson%! You just got ended by MatHax Legacy anchor aura!";
-            case 7: return "%killedperson% just got raped by MatHax Legacy anchor aura!";
-            case 8: return "%killedperson% just got ended by MatHax Legacy anchor aura!";
+            case 1:
+                return "My anchor aura is too fast for %killedperson%! MatHax Legacy on top!";
+            case 2:
+                return "I just EZZz'd %killedperson% using MatHax Legacy anchor aura!";
+            case 3:
+                return "I just fucked %killedperson% using MatHax Legacy anchor aura!";
+            case 4:
+                return "haha %killedperson% is a noob! MatHax Legacy anchor aura on top!";
+            case 5:
+                return "I just nae nae'd %killedperson% using MatHax Legacy anchor aura!";
+            case 6:
+                return "Take the L nerd %killedperson%! You just got ended by MatHax Legacy anchor aura!";
+            case 7:
+                return "%killedperson% just got raped by MatHax Legacy anchor aura!";
+            case 8:
+                return "%killedperson% just got ended by MatHax Legacy anchor aura!";
         }
         return "";
     }
@@ -277,10 +329,14 @@ public class AutoEZ extends Module {
     public String getGgAnchorMessage() {
         int randomNumber = Utils.random(1, 4);
         switch (randomNumber) {
-            case 1: return "Close fight %killedperson%, but MatHax Legacy anchor aura won!";
-            case 2: return "Good fight, %killedperson%! MatHax Legacy anchor aura helped me!";
-            case 3: return "GG %killedperson%! MatHax Legacy anchor aura on top!";
-            case 4: return "Nice fight %killedperson%! MatHax Legacy anchor aura is so good!";
+            case 1:
+                return "Close fight %killedperson%, but MatHax Legacy anchor aura won!";
+            case 2:
+                return "Good fight, %killedperson%! MatHax Legacy anchor aura helped me!";
+            case 3:
+                return "GG %killedperson%! MatHax Legacy anchor aura on top!";
+            case 4:
+                return "Nice fight %killedperson%! MatHax Legacy anchor aura is so good!";
         }
         return "";
     }
@@ -323,14 +379,22 @@ public class AutoEZ extends Module {
     public String getTotemMessage() {
         int randomNumber = Utils.random(1, 8);
         switch (randomNumber) {
-            case 1: return "I am too good for %poppedperson%, pop more! MatHax Legacy on top!";
-            case 2: return "haha %poppedperson% is a noob, easy pop! MatHax Legacy on top!";
-            case 3: return "I just EZZz'd %poppedperson%'s totem using MatHax Legacy!";
-            case 4: return "I just fucked %poppedperson%'S totem using MatHax Legacy!";
-            case 5: return "I just nae nae'd %poppedperson%'s totem using MatHax Legacy!";
-            case 6: return "Take the L nerd %poppedperson%! Your totem just got ended by MatHax Legacy!";
-            case 7: return "%poppedperson%'s totem just got raped by MatHax Legacy!";
-            case 8: return "%poppedperson% just got popped by MatHax Legacy!";
+            case 1:
+                return "I am too good for %poppedperson%, pop more! MatHax Legacy on top!";
+            case 2:
+                return "haha %poppedperson% is a noob, easy pop! MatHax Legacy on top!";
+            case 3:
+                return "I just EZZz'd %poppedperson%'s totem using MatHax Legacy!";
+            case 4:
+                return "I just fucked %poppedperson%'S totem using MatHax Legacy!";
+            case 5:
+                return "I just nae nae'd %poppedperson%'s totem using MatHax Legacy!";
+            case 6:
+                return "Take the L nerd %poppedperson%! Your totem just got ended by MatHax Legacy!";
+            case 7:
+                return "%poppedperson%'s totem just got raped by MatHax Legacy!";
+            case 8:
+                return "%poppedperson% just got popped by MatHax Legacy!";
         }
         return "";
     }

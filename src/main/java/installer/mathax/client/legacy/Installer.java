@@ -25,6 +25,7 @@ public class Installer {
         ImageIcon icon = createImageIcon("/assets/mathaxlegacy/textures/icons/window/icon64.png", "MatHax Legacy");
 
         // Colors & Fonts
+        // TODO: Load Comfortaa font and make it work. :)
         UIManager.put("OptionPane.background", MATHAX_BACKGROUND_COLOR);
         UIManager.put("Panel.background", MATHAX_BACKGROUND_COLOR);
         UIManager.put("Button.background", MATHAX_COLOR);
@@ -38,17 +39,18 @@ public class Installer {
         // Options
         int option = JOptionPane.showOptionDialog(
             null,
-            "How to install:\nPut this .jar file to your mods folder and run Fabric for Minecraft version " + Version.getMinecraft() + ".\n\n",
+            "\nHow to install:\nPut this .jar file to your mods folder and run Fabric for Minecraft version " + Version.getMinecraft() + ".\n\n",
             "MatHax Legacy v" + Version.get() + " " + Version.getDevStylized() + " | Fabric " + Version.getMinecraft(),
             JOptionPane.YES_NO_CANCEL_OPTION,
             JOptionPane.ERROR_MESSAGE,
             icon,
-            new String[] { "Download Fabric", "Open mods folder", "MatHax Website", "MatHax Discord" },
+            new String[]{"Download Fabric", "Open mods folder", "MatHax Website", "MatHax Discord"},
             null
         );
 
         switch (option) {
-            case 0: openUrl("https://fabricmc.net/use/");
+            case 0:
+                openUrl("https://fabricmc.net/use/");
             case 1:
                 String os = System.getProperty("os.name").toLowerCase();
 
@@ -72,8 +74,10 @@ public class Installer {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            case 2: openUrl("https://mathaxclient.xyz");
-            case 3: openUrl("https://mathaxclient.xyz/Discord");
+            case 2:
+                openUrl("https://mathaxclient.xyz");
+            case 3:
+                openUrl("https://mathaxclient.xyz/Discord");
         }
     }
 
