@@ -47,7 +47,7 @@ public class Asm {
 
             if (export) {
                 try {
-                    Path path = Path.of(FabricLoader.getInstance().getGameDir().toString(), ".mathaxlegacy.asm.out", name.replace('.', '/') + ".class");
+                    Path path = Path.of(FabricLoader.getInstance().getGameDir().toString(), ".MatHax.Legacy.asm.out", name.replace('.', '/') + ".class");
                     new File(path.toUri()).getParentFile().mkdirs();
                     Files.write(path, bytes);
                 } catch (IOException e) {

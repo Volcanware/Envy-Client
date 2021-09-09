@@ -27,7 +27,6 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.Formatting;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -48,8 +47,7 @@ public class Notifier extends Module {
     private final SettingGroup sgTotemPops = settings.createGroup("Totem Pops");
     private final SettingGroup sgVisualRange = settings.createGroup("Visual Range");
     private final SettingGroup sgArmor = settings.createGroup("Armor");
-    private final SettingGroup sgArmorMsgs = settings.createGroup("Armor Messages");
-    private final SettingGroup sgArmorPMs = settings.createGroup("Armor PMs");
+    private final SettingGroup sgArmorMessages = settings.createGroup("Armor Messages");
 
     // Totem Pops
 
@@ -168,53 +166,45 @@ public class Notifier extends Module {
 
     // Armor Messages
 
-    private final Setting<Boolean> armorMessagesIgnoreFriends = sgArmorMsgs.add(new BoolSetting.Builder()
-        .name("ignore-friends")
-        .description("Ignores friends.")
-        .defaultValue(false)
-        .visible(armorIgnoreFriends::get)
-        .build()
-    );
-
-    private final Setting<Boolean> armorMessagesIgnoreEnemies = sgArmorMsgs.add(new BoolSetting.Builder()
-        .name("ignore-enemies")
-        .description("Ignores enemies.")
+    private final Setting<Boolean> armorMessagesFriends = sgArmorMessages.add(new BoolSetting.Builder()
+        .name("private-friends")
+        .description("Shows a message just for you about friends armor durability being low.")
         .defaultValue(true)
-        .visible(armorIgnoreEnemies::get)
         .build()
     );
 
-    private final Setting<Boolean> armorMessagesIgnoreOthers = sgArmorMsgs.add(new BoolSetting.Builder()
-        .name("ignore-others")
-        .description("Ignores everyone else.")
+    private final Setting<Boolean> armorPMsFriends = sgArmorMessages.add(new BoolSetting.Builder()
+        .name("PM-friends")
+        .description("PM friends armor durability being low.")
         .defaultValue(true)
-        .visible(armorIgnoreOthers::get)
         .build()
     );
 
-    // Armor PMs
-
-    private final Setting<Boolean> armorPMsIgnoreFriends = sgArmorPMs.add(new BoolSetting.Builder()
-        .name("ignore-friends")
-        .description("Ignores friends.")
-        .defaultValue(false)
-        .visible(armorIgnoreFriends::get)
-        .build()
-    );
-
-    private final Setting<Boolean> armorPMsIgnoreEnemies = sgArmorPMs.add(new BoolSetting.Builder()
-        .name("ignore-enemies")
-        .description("Ignores enemies.")
+    private final Setting<Boolean> armorMessagesEnemies = sgArmorMessages.add(new BoolSetting.Builder()
+        .name("private-enemies")
+        .description("Shows a message just for you about enemies armor durability being low.")
         .defaultValue(true)
-        .visible(armorIgnoreEnemies::get)
         .build()
     );
 
-    private final Setting<Boolean> armorPMsIgnoreOthers = sgArmorPMs.add(new BoolSetting.Builder()
-        .name("ignore-others")
-        .description("Ignores everyone else.")
+    private final Setting<Boolean> armorPMsEnemies = sgArmorMessages.add(new BoolSetting.Builder()
+        .name("PM-friends")
+        .description("PM enemies armor durability being low.")
         .defaultValue(true)
-        .visible(armorIgnoreOthers::get)
+        .build()
+    );
+
+    private final Setting<Boolean> armorMessagesOthers = sgArmorMessages.add(new BoolSetting.Builder()
+        .name("private-others")
+        .description("Shows a message just for you about others armor durability being low.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> armorPMsOthers = sgArmorMessages.add(new BoolSetting.Builder()
+        .name("PM-others")
+        .description("PM others armor durability being low.")
+        .defaultValue(true)
         .build()
     );
 
@@ -225,7 +215,7 @@ public class Notifier extends Module {
     // Visual Range
 
     @EventHandler
-    private void onEntityAdded(EntityAddedEvent event) throws AWTException {
+    private void onEntityAdded(EntityAddedEvent event) {
         if (event.entity.getUuid().equals(mc.player.getUuid()) || !entities.get().getBoolean(event.entity.getType()) || !visualRange.get() || this.event.get() == Event.Despawn) return;
 
         if (event.entity instanceof PlayerEntity) {
@@ -331,20 +321,20 @@ public class Notifier extends Module {
                         if (player == mc.player && !armorIgnoreSelf.get()) {
                             info("Your (highlight)%s(default) %s low durability!", getArmorPieceName(stack), getArmorPieceHasHave(stack));
                         } else if (Friends.get().isFriend(player) && !armorIgnoreFriends.get()) {
-                            if (armorMessagesIgnoreFriends.get())
-                                info("(highlight)%s(default)'s (highlight)%s(default) %s low durability!", player.getName(), getArmorPieceName(stack), getArmorPieceHasHave(stack));
-                            if (armorPMsIgnoreFriends.get())
-                                mc.player.sendChatMessage("/msg " + player.getName() + "Your " + getArmorPieceName(stack) + " " + getArmorPieceHasHave(stack) + " low durability!");
+                            if (armorMessagesFriends.get())
+                                info("(highlight)%s(default)'s (highlight)%s(default) %s low durability!", player.getEntityName(), getArmorPieceName(stack), getArmorPieceHasHave(stack));
+                            if (armorPMsFriends.get())
+                                mc.player.sendChatMessage("/msg " + player.getEntityName() + " Your " + getArmorPieceName(stack) + " " + getArmorPieceHasHave(stack) + " low durability!");
                         } else if (Enemies.get().isEnemy(player) && !armorIgnoreEnemies.get()) {
-                            if (armorMessagesIgnoreEnemies.get())
-                                info("(highlight)%s(default)'s " + getArmorPieceName(stack) + " %s low durability!", player.getName(), getArmorPieceName(stack), getArmorPieceHasHave(stack));
-                            if (armorPMsIgnoreEnemies.get())
-                                mc.player.sendChatMessage("/msg " + player.getName() + "Your " + getArmorPieceName(stack) + " " + getArmorPieceHasHave(stack) + " low durability!");
+                            if (armorMessagesEnemies.get())
+                                info("(highlight)%s(default)'s " + getArmorPieceName(stack) + " %s low durability!", player.getEntityName(), getArmorPieceName(stack), getArmorPieceHasHave(stack));
+                            if (armorPMsEnemies.get())
+                                mc.player.sendChatMessage("/msg " + player.getEntityName() + " Your " + getArmorPieceName(stack) + " " + getArmorPieceHasHave(stack) + " low durability!");
                         } else if (armorIgnoreOthers.get()) {
-                            if (armorMessagesIgnoreOthers.get())
-                                info("(highlight)%s(default)'s (highlight)%s(default) %s low durability!", player.getName(), getArmorPieceName(stack), getArmorPieceHasHave(stack));
-                            if (armorPMsIgnoreOthers.get())
-                                mc.player.sendChatMessage("/msg " + player.getName() + "Your " + getArmorPieceName(stack) + " " + getArmorPieceHasHave(stack) + " low durability!");
+                            if (armorMessagesOthers.get())
+                                info("(highlight)%s(default)'s (highlight)%s(default) %s low durability!", player.getEntityName(), getArmorPieceName(stack), getArmorPieceHasHave(stack));
+                            if (armorPMsOthers.get())
+                                mc.player.sendChatMessage("/msg " + player.getEntityName() + " Your " + getArmorPieceName(stack) + " " + getArmorPieceHasHave(stack) + " low durability!");
                         }
                         entityArmorArraylist.put(player, player.getInventory().armor.indexOf(stack));
                     }
