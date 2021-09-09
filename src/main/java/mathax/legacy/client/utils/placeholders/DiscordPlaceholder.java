@@ -1,12 +1,10 @@
 package mathax.legacy.client.utils.placeholders;
 
-import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.Version;
 import mathax.legacy.client.gui.screens.*;
 import mathax.legacy.client.gui.screens.settings.ColorSettingScreen;
 import mathax.legacy.client.gui.tabs.builtin.*;
 import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.utils.network.Http;
 import mathax.legacy.client.utils.render.PeekScreen;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;

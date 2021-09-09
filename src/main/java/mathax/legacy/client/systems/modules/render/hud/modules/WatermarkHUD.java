@@ -1,14 +1,11 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
-import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.renderer.GL;
 import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
 import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.Version;
-import mathax.legacy.client.utils.network.Http;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.settings.DoubleSetting;
 import mathax.legacy.client.settings.EnumSetting;
@@ -20,7 +17,7 @@ public class WatermarkHUD extends TripleTextHUDElement {
     private final Color visiblityColor = new Color(255, 255, 255, 255);
     private static final Identifier mathaxTexture = new Identifier("mathaxlegacy", "textures/icons/icon.png");
 
-    private String newUpdateString = "";
+    private String versionString = "";
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -121,20 +118,16 @@ public class WatermarkHUD extends TripleTextHUDElement {
     public String getNewUpdate() {
         if (!Version.checkedForLatest) {
             Version.checkedForLatest = true;
-            String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");;
-            if (apiLatestVer == null) {
-                newUpdateString = " [Could not get Latest Version]";
-                return newUpdateString;
-            }
-            Version latestVer = new Version(apiLatestVer);
-            Version currentVer = new Version(Version.get());
-            if (latestVer.isHigherThan(currentVer)) {
-                newUpdateString = " [Outdated | Latest Version: v" + latestVer + "]";
-            } else {
-                newUpdateString = "";
+            switch (Version.checkLatest()) {
+                case 0:
+                    versionString = " [Could not get Latest Version]";
+                case 1:
+                    versionString = " [Outdated | Latest Version: v" + Version.getLatest() + "]";
+                case 2:
+                    versionString = "";
             }
         }
-        return newUpdateString;
+        return versionString;
     }
 
     public enum Mode {

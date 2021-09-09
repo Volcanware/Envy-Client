@@ -12,7 +12,7 @@ import mathax.legacy.client.mixin.ProjectileEntityAccessor;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.misc.Vec3;
-import mathax.legacy.client.utils.network.Http;
+import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.render.NametagUtils;
 import mathax.legacy.client.utils.render.color.Color;
@@ -119,7 +119,7 @@ public class EntityOwner extends Module {
         // Makes a HTTP request to Mojang API
         MatHaxExecutor.execute(() -> {
             if (isActive()) {
-                List<UuidNameHistoryResponseItem> res = Http.get("https://api.mojang.com/user/profiles/" + uuid.toString().replace("-", "") + "/names").sendJson(RESPONSE_TYPE);
+                List<UuidNameHistoryResponseItem> res = HTTP.get("https://api.mojang.com/user/profiles/" + uuid.toString().replace("-", "") + "/names").sendJson(RESPONSE_TYPE);
 
                 if (isActive()) {
                     if (res == null || res.size() <= 0) uuidToName.put(uuid, "Failed to get name");

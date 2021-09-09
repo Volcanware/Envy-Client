@@ -35,7 +35,7 @@ public class Capes {
         if (Modules.get().isActive(CapesModule.class)) {
             MatHaxExecutor.execute(() -> {
                 // Cape owners
-                Stream<String> lines = Http.get(MatHaxLegacy.API_URL + "Cape/capeowners").sendLines();
+                Stream<String> lines = HTTP.get(MatHaxLegacy.API_URL + "Cape/capeowners").sendLines();
                 if (lines != null) lines.forEach(s -> {
                     String[] split = s.split(" ");
 
@@ -46,7 +46,7 @@ public class Capes {
                 });
 
                 // Capes
-                lines = Http.get(MatHaxLegacy.API_URL + "Cape/capes").sendLines();
+                lines = HTTP.get(MatHaxLegacy.API_URL + "Cape/capes").sendLines();
                 if (lines != null) lines.forEach(s -> {
                     String[] split = s.split(" ");
 
@@ -148,7 +148,7 @@ public class Capes {
                             }
                         }
 
-                        InputStream in = Http.get(url).sendInputStream();
+                        InputStream in = HTTP.get(url).sendInputStream();
                         if (in == null) {
                             synchronized (TO_RETRY) {
                                 TO_RETRY.add(this);

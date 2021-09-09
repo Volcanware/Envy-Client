@@ -4,7 +4,7 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.renderer.Texture;
 import mathax.legacy.client.utils.misc.ISerializable;
 import mathax.legacy.client.utils.misc.NbtException;
-import mathax.legacy.client.utils.network.Http;
+import mathax.legacy.client.utils.network.HTTP;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
@@ -33,7 +33,7 @@ public class AccountCache implements ISerializable<AccountCache> {
                 skin = ImageIO.read(mc.getResourceManager().getResource(new Identifier("mathaxlegacy", "textures/steve.png")).getInputStream());
             }
             else {
-                skin = ImageIO.read(Http.get(skinUrl).sendInputStream());
+                skin = ImageIO.read(HTTP.get(skinUrl).sendInputStream());
             }
 
             // Whole picture

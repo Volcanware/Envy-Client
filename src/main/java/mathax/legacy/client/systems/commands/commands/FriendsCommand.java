@@ -39,11 +39,12 @@ public class FriendsCommand extends Command {
 
                             if (Friends.get().add(friend)) {
                                 if (Config.get().chatCommandsInfo) info("Added (highlight)%s (default)to friends.", friend.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends", Formatting.GRAY + "Added " + Formatting.WHITE + friend.name + Formatting.GRAY + " to friends."));
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", Formatting.GRAY + "Added to friends."));
                             }
                             else {
+                                if (friend.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is already your friend.", friend.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends", Formatting.WHITE + friend.name + Formatting.RED + " is already your friend."));
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", Formatting.WHITE + friend.name + Formatting.RED + "Already your friend."));
                             }
 
                             return SINGLE_SUCCESS;
@@ -57,11 +58,12 @@ public class FriendsCommand extends Command {
 
                             if (Friends.get().remove(friend)) {
                                 if (Config.get().chatCommandsInfo) info("Removed (highlight)%s (default)from friends.", friend.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends", Formatting.GRAY + "Removed " + Formatting.WHITE + friend.name + Formatting.GRAY + " from friends."));
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", Formatting.GRAY + "Removed from friends."));
                             }
                             else {
+                                if (friend.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is not your friend.", friend.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends", Formatting.WHITE + friend.name + Formatting.RED + " is not your friend."));
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", Formatting.WHITE + friend.name + Formatting.RED + "Not your friend."));
                             }
 
                             return SINGLE_SUCCESS;

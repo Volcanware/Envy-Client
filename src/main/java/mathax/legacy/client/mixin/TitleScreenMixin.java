@@ -6,7 +6,6 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.Version;
-import mathax.legacy.client.utils.network.Http;
 import mathax.legacy.client.utils.render.PromptBuilder;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.client.gui.screen.Screen;
@@ -68,17 +67,13 @@ public class TitleScreenMixin extends Screen {
     private String getTextRightUp4() {
         if (!Version.checkedForLatestTitleText) {
             Version.checkedForLatestTitleText = true;
-            String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");
-            if (apiLatestVer == null) {
-                textRightUp4Util = " [Could not get Latest Version]";
-            } else {
-                Version latestVer = new Version(apiLatestVer);
-                Version currentVer = new Version(Version.get());
-                if (latestVer.isHigherThan(currentVer)) {
-                    textRightUp4Util = " [Outdated | Latest Version: v" + latestVer + "]";
-                } else {
+            switch (Version.checkLatest()) {
+                case 0:
+                    textRightUp4Util = " [Could not get Latest Version]";
+                case 1:
+                    textRightUp4Util = " [Outdated | Latest Version: v" + Version.getLatest() + "]";
+                case 2:
                     textRightUp4Util = "";
-                }
             }
         }
         return textRightUp4Util;
@@ -157,31 +152,27 @@ public class TitleScreenMixin extends Screen {
 
             MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
 
-            String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");
-            if (apiLatestVer == null) {
-                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Could not check for latest version!");
-                return;
-            }
-
-            Version latestVer = new Version(apiLatestVer);
-
-            if (latestVer.isHigherThan(new Version(Version.get()))) {
-                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + latestVer + "! You are using v" + Version.get() + "!");
-                new PromptBuilder()
-                    .title("New Update")
-                    .message("A new version of MatHax Legacy has been released.")
-                    .message("\n")
-                    .message("Your version: v" + Version.get())
-                    .message("Latest version: v" + latestVer)
-                    .message("\n")
-                    .message("Do you want to update?")
-                    .onYes(() -> {
-                        Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
-                    })
-                    .promptId("new-update")
-                    .show();
-            } else {
-                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, v" + Config.get().version.toString() + "!");
+            switch (Version.checkLatest()) {
+                case 0:
+                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Could not check for latest version!");
+                    return;
+                case 1:
+                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.get() + "!");
+                    new PromptBuilder()
+                        .title("New Update")
+                        .message("A new version of MatHax Legacy has been released.")
+                        .message("\n")
+                        .message("Your version: v" + Version.get())
+                        .message("Latest version: v" + Version.getLatest())
+                        .message("\n")
+                        .message("Do you want to update?")
+                        .onYes(() -> {
+                            Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
+                        })
+                        .promptId("new-update")
+                        .show();
+                case 2:
+                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, v" + Config.get().version.toString() + "!");
             }
         }
     }

@@ -5,7 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.legacy.client.systems.commands.arguments.PlayerListEntryArgumentType;
 import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.utils.misc.text.TextUtils;
-import mathax.legacy.client.utils.network.Http;
+import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.utils.render.color.Color;
@@ -35,7 +35,7 @@ public class NameHistoryCommand extends Command {
                 PlayerListEntry lookUpTarget = PlayerListEntryArgumentType.getPlayerListEntry(context);
 
                 Type type = new TypeToken<List<NameHistoryObject>>(){}.getType();
-                List<NameHistoryObject> nameHistoryObjects = Http.get("https://api.mojang.com/user/profiles/" + lookUpTarget.getProfile().getId().toString().replace("-", "") + "/names").sendJson(type);
+                List<NameHistoryObject> nameHistoryObjects = HTTP.get("https://api.mojang.com/user/profiles/" + lookUpTarget.getProfile().getId().toString().replace("-", "") + "/names").sendJson(type);
 
                 if (nameHistoryObjects == null || nameHistoryObjects.isEmpty()) {
                     error("There was an error fetching that users name history.");

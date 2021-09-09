@@ -14,7 +14,7 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.BetterTooltips;
 import mathax.legacy.client.systems.modules.world.Timer;
 import mathax.legacy.client.utils.placeholders.Placeholders;
-import mathax.legacy.client.utils.network.Http;
+import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.player.EChestMemory;
 import mathax.legacy.client.utils.render.PeekScreen;
 import mathax.legacy.client.utils.render.color.Color;
@@ -362,7 +362,7 @@ public class Utils {
     }
 
     public static String getCoper() {
-        String apiCoper = Http.get(MatHaxLegacy.API_URL + "Coper/CoperName").sendString().replace("\n", "");
+        String apiCoper = HTTP.get(MatHaxLegacy.API_URL + "Coper/CoperName").sendString().replace("\n", "");
         if (apiCoper == null) {
             return Placeholders.apply("%player%");
         } else {
@@ -371,7 +371,7 @@ public class Utils {
     }
 
     public static String getCoperReplacement() {
-        String apiCoperReplacement = Http.get(MatHaxLegacy.API_URL + "Coper/CoperReplacement").sendString().replace("\n", "");
+        String apiCoperReplacement = HTTP.get(MatHaxLegacy.API_URL + "Coper/CoperReplacement").sendString().replace("\n", "");
         if (apiCoperReplacement == null) {
             return Placeholders.apply("%player%Coper");
         } else {

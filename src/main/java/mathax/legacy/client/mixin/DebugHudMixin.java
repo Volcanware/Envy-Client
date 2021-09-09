@@ -1,10 +1,7 @@
 package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.systems.config.Config;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.Version;
-import mathax.legacy.client.utils.network.Http;
 import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
@@ -17,6 +14,8 @@ import java.util.List;
 
 @Mixin(DebugHud.class)
 public class DebugHudMixin {
+    private String versionString = "";
+
     @Inject(at = @At("RETURN"), method = "getLeftText")
     protected void getLeftText(CallbackInfoReturnable<List<String>> info) {
         LiteralText mathax = new LiteralText("MatHax Legacy");
@@ -28,19 +27,15 @@ public class DebugHudMixin {
     public String getNewUpdate() {
         if (!Version.checkedForLatest) {
             Version.checkedForLatest = true;
-            String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");;
-            if (apiLatestVer == null) {
-                return " [Could not get Latest Version]";
-            }
-
-            Version latestVer = new Version(apiLatestVer);
-
-            if (latestVer.isHigherThan(Config.get().version)) {
-                return " [Outdated | Latest Version: " + latestVer + "]";
-            } else {
-                return "";
+            switch (Version.checkLatest()) {
+                case 0:
+                    versionString = " [Could not get Latest Version]";
+                case 1:
+                    versionString = " [Outdated | Latest Version: v" + Version.getLatest() + "]";
+                case 2:
+                    versionString = "";
             }
         }
-        return "";
+        return versionString;
     }
 }

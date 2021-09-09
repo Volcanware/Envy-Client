@@ -33,17 +33,11 @@ public class SayCommand extends Command {
                     message = Modules.get().get(BetterChat.class).applyAnnoy(message);
 
                 if (Modules.get().get(BetterChat.class).fancy.get()) {
-                    if (Modules.get().get(BetterChat.class).fancyType.get() == BetterChat.FancyType.FullWidth) {
-                        message = Modules.get().get(BetterChat.class).applyFull(message);
-                    }
-                    if (Modules.get().get(BetterChat.class).fancyType.get() == BetterChat.FancyType.SmallCAPS) {
-                        message = Modules.get().get(BetterChat.class).applySmall(message);
-                    }
-                    if (Modules.get().get(BetterChat.class).fancyType.get() == BetterChat.FancyType.UwU) {
-                        message = Modules.get().get(BetterChat.class).applyUwU(message);
-                    }
-                    if (Modules.get().get(BetterChat.class).fancyType.get() == BetterChat.FancyType.Leet) {
-                        message = Modules.get().get(BetterChat.class).applyLeet(message);
+                    switch (Modules.get().get(BetterChat.class).fancyType.get()) {
+                        case FullWidth -> message = Modules.get().get(BetterChat.class).applyFull(message);
+                        case SmallCAPS -> message = Modules.get().get(BetterChat.class).applySmall(message);
+                        case UwU -> message = Modules.get().get(BetterChat.class).applyUwU(message);
+                        case Leet -> message = Modules.get().get(BetterChat.class).applyLeet(message);
                     }
                 }
 

@@ -1,5 +1,6 @@
 package mathax.legacy.client;
 
+import mathax.legacy.client.utils.network.HTTP;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 
@@ -58,6 +59,30 @@ public class Version {
         }
 
         return false;
+    }
+
+    public static Integer checkLatest() {
+        String apiLatestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");
+        if (apiLatestVer == null) {
+            return 0;
+        } else {
+            Version latestVer = new Version(apiLatestVer);
+            Version currentVer = new Version(Version.get());
+            if (latestVer.isHigherThan(currentVer)) {
+                return 1;
+            } else {
+                return 2;
+            }
+        }
+    }
+
+    public static String getLatest() {
+        String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");
+        if (latestVer == null) {
+            return "NULL";
+        } else {
+            return latestVer;
+        }
     }
 
     @Override
