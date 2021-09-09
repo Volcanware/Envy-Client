@@ -79,7 +79,8 @@ public class MatHaxLegacy implements ClientModInitializer {
     public static String devUUID = "3e24ef27-e66d-45d2-bf4b-2c7ade68ff47";
     public static String devOfflineUUID = "7c73f844-73c3-3a7d-9978-004ba0a6436e";
 
-    public static final String URL = "https://api.mathaxclient.xyz/";
+    public static final String URL = "https://mathaxclient.xyz/";
+    public static final String API_URL = "https://api.mathaxclient.xyz/";
 
 
     @Override
@@ -140,13 +141,12 @@ public class MatHaxLegacy implements ClientModInitializer {
 
         LOG.info(logprefix + "80% initialized!");
         Systems.init();
-        Utils.mc.execute(() -> titleIconManager(2));
-
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             Systems.save();
             GuiThemes.save();
             DiscordRPC.disable();
         }));
+        Utils.mc.execute(() -> titleIconManager(2));
 
         LOG.info(logprefix + "90% initialized!");
         Fonts.load();
@@ -168,8 +168,8 @@ public class MatHaxLegacy implements ClientModInitializer {
         final Window window = MinecraftClient.getInstance().getWindow();
         switch (process) {
             case 1:
-                window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
                 window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon128.png"));
+                window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
             case 2:
                 window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
             case 3:

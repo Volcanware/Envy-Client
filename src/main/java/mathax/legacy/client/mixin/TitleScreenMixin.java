@@ -106,7 +106,7 @@ public class TitleScreenMixin extends Screen {
             MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
 
             MatHaxExecutor.execute(() -> {
-                String apiLatestVer = Http.get(MatHaxLegacy.URL + "Version/Legacy/1-17-1").sendString();
+                String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
                 String processedApiLatestVer = apiLatestVer.replace("\n", "");
                 if (processedApiLatestVer == null) return;
 
@@ -114,7 +114,6 @@ public class TitleScreenMixin extends Screen {
 
                 if (latestVer.isHigherThan(Config.get().version)) {
                     MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + latestVer + "! You are using v" + Config.get().version.toString() + "!");
-                    String DOWNLOAD_URL = MatHaxLegacy.URL + "/Download";
                     new PromptBuilder()
                         .title("New Update")
                         .message("A new version of MatHax Legacy has been released.")
@@ -124,7 +123,7 @@ public class TitleScreenMixin extends Screen {
                         .message("\n")
                         .message("Do you want to update?")
                         .onYes(() -> {
-                            Util.getOperatingSystem().open(DOWNLOAD_URL);
+                            Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
                         })
                         .promptId("new-update")
                         .show();

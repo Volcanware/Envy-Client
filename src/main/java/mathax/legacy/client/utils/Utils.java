@@ -363,7 +363,7 @@ public class Utils {
     }
 
     public static String getCoper() {
-        String apiCoper = Http.get(MatHaxLegacy.URL + "Coper/CoperName").sendString();
+        String apiCoper = Http.get(MatHaxLegacy.API_URL + "Coper/CoperName").sendString();
         String processedApiCoper = apiCoper.replace("\n", "");
         if (processedApiCoper == null) {
             return Placeholders.apply("%player%");
@@ -373,7 +373,7 @@ public class Utils {
     }
 
     public static String getCoperReplacement() {
-        String apiCoperReplacement = Http.get(MatHaxLegacy.URL + "Coper/CoperReplacement").sendString();
+        String apiCoperReplacement = Http.get(MatHaxLegacy.API_URL + "Coper/CoperReplacement").sendString();
         String processedApiCoperReplacement = apiCoperReplacement.replace("\n", "");
         if (processedApiCoperReplacement == null) {
             return Placeholders.apply("%player%Coper");
