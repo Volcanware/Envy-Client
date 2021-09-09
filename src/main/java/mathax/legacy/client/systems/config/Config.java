@@ -36,13 +36,7 @@ public class Config extends System<Config> {
 
     public Config() {
         super("Config");
-
-        ModMetadata metadata = FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata();
-
-        String versionString = metadata.getVersion().getFriendlyString();
-        if (versionString.contains("-")) versionString = versionString.split("-")[0];
-
-        version = new Version(versionString);
+        version = new Version(Version.get());
     }
 
     public static Config get() {

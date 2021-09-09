@@ -26,15 +26,14 @@ public class DebugHudMixin {
     }
 
     public String getNewUpdate() {
-        if (Utils.didntCheckForLatestVersion) {
-            Utils.didntCheckForLatestVersion = false;
-            String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
-            String processedApiLatestVer = apiLatestVer.replace("\n", "");
-            if (processedApiLatestVer == null) {
+        if (!Version.checkedForLatest) {
+            Version.checkedForLatest = true;
+            String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");;
+            if (apiLatestVer == null) {
                 return " [Could not get Latest Version]";
             }
 
-            Version latestVer = new Version(processedApiLatestVer);
+            Version latestVer = new Version(apiLatestVer);
 
             if (latestVer.isHigherThan(Config.get().version)) {
                 return " [Outdated | Latest Version: " + latestVer + "]";

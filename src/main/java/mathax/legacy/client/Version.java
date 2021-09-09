@@ -4,6 +4,9 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 
 public class Version {
+    public static boolean checkedForLatestTitleText = false;
+    public static boolean checkedForLatestTitle = false;
+    public static boolean checkedForLatest = false;
     private final String string;
     private final int[] numbers;
 
@@ -28,7 +31,7 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 3;
+        return 4;
     }
 
     public static String getDevBuild() {

@@ -183,12 +183,12 @@ public class MatHaxLegacy implements ClientModInitializer {
 
     @EventHandler
     private void onGameJoined(GameJoinedEvent event) {
-        Utils.didntCheckForLatestVersion = true;
+        Version.checkedForLatest = false;
     }
 
     @EventHandler
     private void onGameLeft(GameLeftEvent event) {
-        Utils.didntCheckForLatestVersion = true;
+        Version.checkedForLatest = false;
         Systems.save();
     }
 

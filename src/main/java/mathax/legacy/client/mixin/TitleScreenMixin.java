@@ -7,7 +7,6 @@ import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.Version;
 import mathax.legacy.client.utils.network.Http;
-import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.render.PromptBuilder;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.client.gui.screen.Screen;
@@ -25,7 +24,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin extends Screen {
-
     private final int WHITE = Color.fromRGBA(255, 255, 255, 255);
     private final int GRAY = Color.fromRGBA(175, 175, 175, 255);
 
@@ -39,6 +37,9 @@ public class TitleScreenMixin extends Screen {
     private int textRightUp2Length;
 
     private String textRightUp3;
+    private int textRightUp3Length;
+
+    private String textRightUp4;
 
     private int fullLengthRightUp;
     private int prevWidthRightUp;
@@ -62,14 +63,35 @@ public class TitleScreenMixin extends Screen {
         super(title);
     }
 
+    private String textRightUp4Util = "";
+
+    private String getTextRightUp4() {
+        if (!Version.checkedForLatestTitleText) {
+            Version.checkedForLatestTitleText = true;
+            String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");
+            if (apiLatestVer == null) {
+                textRightUp4Util = " [Could not get Latest Version]";
+            } else {
+                Version latestVer = new Version(apiLatestVer);
+                Version currentVer = new Version(Version.get());
+                if (latestVer.isHigherThan(currentVer)) {
+                    textRightUp4Util = " [Outdated | Latest Version: v" + latestVer + "]";
+                } else {
+                    textRightUp4Util = "";
+                }
+            }
+        }
+        return textRightUp4Util;
+    }
+
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
-
         textLeftUp = "Logged in as ";
 
         textRightUp1 = "MatHax Legacy";
         textRightUp2 = " ";
         textRightUp3 = Version.getStylized();
+        textRightUp4 = getTextRightUp4();
 
         textRightDown1 = "By";
         textRightDown2 = " ";
@@ -83,9 +105,11 @@ public class TitleScreenMixin extends Screen {
 
         textRightUp1Length = textRenderer.getWidth(textRightUp1);
         textRightUp2Length = textRenderer.getWidth(textRightUp2);
+        textRightUp3Length = textRenderer.getWidth(textRightUp3);
         int textRightUp1Length = textRenderer.getWidth(textRightUp1);
         int textRightUp2Length = textRenderer.getWidth(textRightUp2);
         int textRightUp3Length = textRenderer.getWidth(textRightUp3);
+        int textRightUp4Length = textRenderer.getWidth(textRightUp4);
 
         textRightDown1Length = textRenderer.getWidth(textRightDown1);
         textRightDown2Length = textRenderer.getWidth(textRightDown2);
@@ -93,7 +117,7 @@ public class TitleScreenMixin extends Screen {
         int textRightDown2Length = textRenderer.getWidth(textRightDown2);
         int textRightDown3Length = textRenderer.getWidth(textRightDown3);
 
-        fullLengthRightUp =  textRightUp1Length + textRightUp2Length + textRightUp3Length;
+        fullLengthRightUp =  textRightUp1Length + textRightUp2Length + textRightUp3Length + textRightUp4Length;
         prevWidthRightUp = 0;
         fullLengthRightDown = textRightDown1Length + textRightDown2Length + textRightDown3Length;
         prevWidthRightDown = 0;
@@ -101,38 +125,6 @@ public class TitleScreenMixin extends Screen {
 
     @Inject(method = "render", at = @At("TAIL"))
     private void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
-        if (Utils.didntCheckForLatestVersion) {
-            Utils.didntCheckForLatestVersion = false;
-            MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
-
-            MatHaxExecutor.execute(() -> {
-                String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
-                String processedApiLatestVer = apiLatestVer.replace("\n", "");
-                if (processedApiLatestVer == null) return;
-
-                Version latestVer = new Version(processedApiLatestVer);
-
-                if (latestVer.isHigherThan(Config.get().version)) {
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + latestVer + "! You are using v" + Config.get().version.toString() + "!");
-                    new PromptBuilder()
-                        .title("New Update")
-                        .message("A new version of MatHax Legacy has been released.")
-                        .message("\n")
-                        .message("Your version: v" + Config.get().version)
-                        .message("Latest version: v" +  latestVer)
-                        .message("\n")
-                        .message("Do you want to update?")
-                        .onYes(() -> {
-                            Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
-                        })
-                        .promptId("new-update")
-                        .show();
-                } else {
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, v" + Config.get().version.toString() + "!");
-                }
-            });
-        }
-
         textRenderer.drawWithShadow(matrices, textLeftUp, 3, 3, WHITE);
         textRenderer.drawWithShadow(matrices, Modules.get().get(NameProtect.class).getName(client.getSession().getUsername()) + getDeveloper(), 3 + textLeftUpLength, 3, GRAY);
 
@@ -142,6 +134,8 @@ public class TitleScreenMixin extends Screen {
         textRenderer.drawWithShadow(matrices, textRightUp2, width - fullLengthRightUp + prevWidthRightUp - 3, 3, WHITE);
         prevWidthRightUp += textRightUp2Length;
         textRenderer.drawWithShadow(matrices, textRightUp3, width - fullLengthRightUp + prevWidthRightUp - 3, 3, GRAY);
+        prevWidthRightUp += textRightUp3Length;
+        textRenderer.drawWithShadow(matrices, textRightUp4, width - fullLengthRightUp + prevWidthRightUp - 3, 3, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
 
         prevWidthRightDown = 0;
         textRenderer.drawWithShadow(matrices, textRightDown1, width - fullLengthRightDown - 3, 15, WHITE);
@@ -157,6 +151,39 @@ public class TitleScreenMixin extends Screen {
         addDrawableChild(new ButtonWidget(width - 103, height - 58, 100, 20, new LiteralText(textRightDownButtonWebsite), button -> {
             Util.getOperatingSystem().open("https://mathaxclient.xyz/");
         }));
+
+        if (!Version.checkedForLatestTitle) {
+            Version.checkedForLatestTitle = true;
+
+            MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
+
+            String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");
+            if (apiLatestVer == null) {
+                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Could not check for latest version!");
+                return;
+            }
+
+            Version latestVer = new Version(apiLatestVer);
+
+            if (latestVer.isHigherThan(new Version(Version.get()))) {
+                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + latestVer + "! You are using v" + Version.get() + "!");
+                new PromptBuilder()
+                    .title("New Update")
+                    .message("A new version of MatHax Legacy has been released.")
+                    .message("\n")
+                    .message("Your version: v" + Version.get())
+                    .message("Latest version: v" + latestVer)
+                    .message("\n")
+                    .message("Do you want to update?")
+                    .onYes(() -> {
+                        Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
+                    })
+                    .promptId("new-update")
+                    .show();
+            } else {
+                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, v" + Config.get().version.toString() + "!");
+            }
+        }
     }
 
     private String getDeveloper() {

@@ -64,7 +64,6 @@ public class Utils {
     private static final Random random = new Random();
     private static final DecimalFormat df;
     public static MinecraftClient mc;
-    public static boolean didntCheckForLatestVersion = true;
     public static boolean isReleasingTrident;
     public static final Color WHITE = new Color(255, 255, 255);
     public static boolean rendering3D = true;
@@ -363,22 +362,20 @@ public class Utils {
     }
 
     public static String getCoper() {
-        String apiCoper = Http.get(MatHaxLegacy.API_URL + "Coper/CoperName").sendString();
-        String processedApiCoper = apiCoper.replace("\n", "");
-        if (processedApiCoper == null) {
+        String apiCoper = Http.get(MatHaxLegacy.API_URL + "Coper/CoperName").sendString().replace("\n", "");
+        if (apiCoper == null) {
             return Placeholders.apply("%player%");
         } else {
-            return processedApiCoper;
+            return apiCoper;
         }
     }
 
     public static String getCoperReplacement() {
-        String apiCoperReplacement = Http.get(MatHaxLegacy.API_URL + "Coper/CoperReplacement").sendString();
-        String processedApiCoperReplacement = apiCoperReplacement.replace("\n", "");
-        if (processedApiCoperReplacement == null) {
+        String apiCoperReplacement = Http.get(MatHaxLegacy.API_URL + "Coper/CoperReplacement").sendString().replace("\n", "");
+        if (apiCoperReplacement == null) {
             return Placeholders.apply("%player%Coper");
         } else {
-            return processedApiCoperReplacement;
+            return apiCoperReplacement;
         }
     }
 

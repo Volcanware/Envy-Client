@@ -42,8 +42,6 @@ public abstract class SplashOverlayMixin {
     // Logo
     @Inject(method = "init(Lnet/minecraft/client/MinecraftClient;)V", at = @At("HEAD"), cancellable = true)
     private static void init(MinecraftClient client, CallbackInfo callbackInfo) {
-        Utils.didntCheckForLatestVersion = true;
-
         SplashUtils.reset();
         SplashUtils.init();
         client.getTextureManager().registerTexture(LOGO, new SplashUtils(MATHAX_LOGO));

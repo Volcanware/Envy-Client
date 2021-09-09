@@ -1,5 +1,6 @@
 package mathax.legacy.client.mixin;
 
+import mathax.legacy.client.Version;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.LastServerInfo;
 import org.spongepowered.asm.mixin.Final;
@@ -28,7 +29,7 @@ public class DirectConnectScreenMixin extends Screen
 	@Inject(at = {@At("TAIL")}, method = {"saveAndClose()V"})
 	private void onSaveAndClose(CallbackInfo ci)
 	{
-        Utils.didntCheckForLatestVersion = true;
+        Version.checkedForLatest = false;
 
 		LastServerInfo.setLastServer(serverEntry);
 	}

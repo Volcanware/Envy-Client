@@ -191,18 +191,4 @@ public class DiscordPlaceholder {
             return s;
         }
     }
-
-    public static String getNewUpdate() {
-        if (Utils.didntCheckForLatestVersion) {
-            Utils.didntCheckForLatestVersion = false;
-            String apiLatestVer = Http.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
-            String processedApiLatestVer = apiLatestVer.replace("\n", "");
-            if (processedApiLatestVer == null) {
-                return "Unknown Version";
-            } else {
-                return "v" + processedApiLatestVer;
-            }
-        }
-        return "Unknown Version";
-    }
 }

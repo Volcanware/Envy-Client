@@ -1,6 +1,7 @@
 package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.Version;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.systems.proxies.Proxy;
@@ -43,6 +44,10 @@ public class MultiplayerScreenMixin extends Screen {
 
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
+        Version.checkedForLatestTitleText = false;
+        Version.checkedForLatestTitle = false;
+        Version.checkedForLatest = false;
+
         textColor1 = Color.fromRGBA(255, 255, 255, 255);
         textColor2 = Color.fromRGBA(175, 175, 175, 255);
 
@@ -64,9 +69,6 @@ public class MultiplayerScreenMixin extends Screen {
 
     @Inject(method = "render", at = @At("TAIL"))
     private void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
-
-        Utils.didntCheckForLatestVersion = true;
-
         float x = 3;
         float y = 3;
 
