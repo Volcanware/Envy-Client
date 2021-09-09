@@ -32,7 +32,7 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 5;
+        return 6;
     }
 
     public static String getDevBuild() {
