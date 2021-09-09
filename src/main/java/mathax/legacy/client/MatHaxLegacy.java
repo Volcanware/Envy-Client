@@ -103,10 +103,10 @@ public class MatHaxLegacy implements ClientModInitializer {
                 Modules.get().get(HUD.class).reset.run(); // DEFAULT HUD LOCATIONS AND TOGGLES
             }
         });
-
-        LOG.info(logprefix + "20% initialized!");
         Tabs.init();
         DiscordRPC.init();
+
+        LOG.info(logprefix + "20% initialized!");
         GL.init();
         Shaders.init();
         Renderer2D.init();
@@ -226,7 +226,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         }
     }
 
-    public class DiscordRPC {
+    public static class DiscordRPC {
         private static final String APP_ID = "878967665501306920";
         private static final String STEAM_ID = "";
 
@@ -241,11 +241,11 @@ public class MatHaxLegacy implements ClientModInitializer {
                 net.arikia.dev.drpc.DiscordRPC.discordInitialize(APP_ID, handlers, true, STEAM_ID);
                 rpc.startTimestamp = System.currentTimeMillis() / 1000;
                 rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-                rpc.state = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
+                rpc.state = DiscordPlaceholder.apply("%activity%" + QueuePosition.get());
                 rpc.largeImageKey = "logo";
                 rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
                 applySmallImage();
-                rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
+                rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + QueuePosition.get());
                 rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
                 rpc.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
                 rpc.partySize = Utils.mc.getNetworkHandler() != null ? Utils.mc.getNetworkHandler().getPlayerList().size() : 1;
@@ -256,11 +256,11 @@ public class MatHaxLegacy implements ClientModInitializer {
                         net.arikia.dev.drpc.DiscordRPC.discordRunCallbacks();
                         try {
                             rpc.details = DiscordPlaceholder.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-                            rpc.state = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
+                            rpc.state = DiscordPlaceholder.apply("%activity%" + QueuePosition.get());
                             rpc.largeImageKey = "logo";
                             rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
                             applySmallImage();
-                            rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueuePosition());
+                            rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + QueuePosition.get());
                             rpc.partySize = Utils.mc.getNetworkHandler() != null ? Utils.mc.getNetworkHandler().getPlayerList().size() : 1;
                             rpc.partyMax = 1;
                             net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
@@ -297,27 +297,29 @@ public class MatHaxLegacy implements ClientModInitializer {
         }
     }
 
-    private static String queuePos = "";
+    private static class QueuePosition {
+        private static String queuePos = "";
 
-    @EventHandler
-    private static void onMessageRecieve(ReceiveMessageEvent event) {
-        if (DiscordPresenceTab.queuePosition.get()) {
-            if (event.message.getString().contains("[MatHax Legacy] ")) return;
-            String messageString = event.message.getString();
-            if (messageString.contains("Position in queue: ")) {
-                String queue = messageString.replace("Position in queue: ", "");
-                queuePos = " (Position: " + queue + ")";
+        @EventHandler
+        private static void onMessageRecieve(ReceiveMessageEvent event) {
+            if (DiscordPresenceTab.queuePosition.get()) {
+                if (event.message.getString().contains("[MatHax Legacy] ")) return;
+                String messageString = event.message.getString();
+                if (messageString.contains("Position in queue: ")) {
+                    String queue = messageString.replace("Position in queue: ", "");
+                    queuePos = " (Position: " + queue + ")";
+                } else {
+                    queuePos = "";
+                }
             } else {
                 queuePos = "";
             }
-        } else {
-            queuePos = "";
         }
-    }
 
-    public static String getQueuePosition() {
-        if (Utils.mc.isInSingleplayer()) return "";
-        else if (Utils.mc.world == null) return "";
-        else return queuePos;
+        public static String get() {
+            if (Utils.mc.isInSingleplayer()) return "";
+            else if (Utils.mc.world == null) return "";
+            else return queuePos;
+        }
     }
 }
