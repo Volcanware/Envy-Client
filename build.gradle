@@ -87,7 +87,7 @@ jar {
     from "LICENSE"
 
     manifest {
-        attributes("Main-Class": "installer.mathax.client.legacy.Installer")
+        attributes("Main-Class": "mathax.legacy.installer.Installer")
     }
 }
 

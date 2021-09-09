@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "mathax.client.legacy.mixin.baritone",
+  "package": "mathax.legacy.client.mixin.baritone",
   "compatibilityLevel": "JAVA_16",
   "client": [
     "ComeCommandMixin"

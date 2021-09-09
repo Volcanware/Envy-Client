@@ -1,0 +1,75 @@
+package mathax.legacy.client.mixin;
+
+import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.systems.modules.misc.BetterTab;
+import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.render.color.Color;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.hud.PlayerListHud;
+import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(PlayerListHud.class)
+public class PlayerListHudMixin {
+    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
+
+    private Color textureColor = new Color(255, 255, 255, 255);
+
+    private int x = 0;
+    private int y = 0;
+    private PlayerListEntry playerListEntry = null;
+
+    @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Ljava/lang/Math;min(II)I", ordinal = 0), index = 1)
+    private int modifyCount(int count) {
+        BetterTab module = Modules.get().get(BetterTab.class);
+
+        return module.isActive() ? module.tabSize.get() : count;
+    }
+
+    @Inject(method = "getPlayerName", at = @At("HEAD"), cancellable = true)
+    public void getPlayerName(PlayerListEntry playerListEntry, CallbackInfoReturnable<Text> info) {
+        BetterTab betterTab = Modules.get().get(BetterTab.class);
+
+        if (betterTab.isActive()) info.setReturnValue(betterTab.getPlayerName(playerListEntry));
+    }
+
+    @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Ljava/lang/Math;min(II)I", ordinal = 1), index = 0)
+    private int modifyWidth(int width) {
+        BetterTab module = Modules.get().get(BetterTab.class);
+
+        return module.isActive() && module.accurateLatency.get() ? width + 32 : width;
+    }
+
+    @Shadow
+    protected void renderLatencyIcon(MatrixStack matrices, int width, int x, int y, PlayerListEntry entry) {}
+
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/PlayerListHud;renderLatencyIcon(Lnet/minecraft/client/util/math/MatrixStack;IIILnet/minecraft/client/network/PlayerListEntry;)V"))
+    protected void renderLatencyIcon(PlayerListHud self, MatrixStack matrices, int width, int x, int y, PlayerListEntry entry) {
+        BetterTab betterTab = Modules.get().get(BetterTab.class);
+
+        if (betterTab.isActive() && betterTab.accurateLatency.get()) {
+            MinecraftClient mc = MinecraftClient.getInstance();
+            TextRenderer textRenderer = mc.textRenderer;
+
+            int latency = Utils.clamp(entry.getLatency(), 0, 99999);
+            int color = latency < 150 ? 0x00E970 : latency < 300 ? 0xE7D020 : 0xD74238;
+            String text = latency + "ms";
+            textRenderer.drawWithShadow(matrices, text, (float) x + width - textRenderer.getWidth(text), (float) y, color);
+        } else {
+            /*if ((mc.getSession().getUsername().equals("Matejko06"))) && betterTab.isActive()) {
+
+            }*/
+            renderLatencyIcon(matrices, width, x, y, entry);
+        }
+    }
+}

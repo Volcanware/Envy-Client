@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "name": "MatHax Client Legacy",
+  "name": "MatHax Legacy",
   "id": "mathaxlegacy",
   "version": "${version}",
   "description": "MatHax Legacy is an fork of Meteor Client, advanced Minecraft utility client for Fabric.",
@@ -9,15 +9,15 @@
   ],
   "contact": {
     "homepage": "https://mathaxclient.xyz",
-    "issues": "https://github.com/Matejko06/MatHaxClient/issues",
-    "discord": "https://mathaxclient.xyz/Discord"
+    "discord": "https://mathaxclient.xyz/Discord",
+    "issues": "https://github.com/Matejko06/MatHax-Client-Legacy/issues"
   },
   "license": "GPL-3.0",
   "icon": "assets/mathaxlegacy/textures/icons/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "mathax.client.legacy.MatHaxClientLegacy"
+      "mathax.legacy.client.MatHaxLegacy"
     ]
   },
   "mixins": [
