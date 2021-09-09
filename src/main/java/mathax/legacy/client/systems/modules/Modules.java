@@ -545,6 +545,7 @@ public class Modules extends System<Modules> {
         add(new BetterChat());
         add(new ChatBot());
         add(new MessageAura());
+        add(new Notifier());
         add(new Spam());
     }
 
@@ -569,7 +570,6 @@ public class Modules extends System<Modules> {
         add(new MiddleClickExtra());
         add(new MiddleClickFriend());
         add(new NameProtect());
-        add(new Notifier());
         add(new PacketCanceller());
         add(new Panic());
         add(new SoundBlocker());
