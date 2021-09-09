@@ -44,7 +44,7 @@ public class FriendsCommand extends Command {
                             else {
                                 if (friend.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is already your friend.", friend.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", Formatting.WHITE + friend.name + Formatting.RED + "Already your friend."));
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", Formatting.RED + "Already your friend."));
                             }
 
                             return SINGLE_SUCCESS;
@@ -63,7 +63,7 @@ public class FriendsCommand extends Command {
                             else {
                                 if (friend.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is not your friend.", friend.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", Formatting.WHITE + friend.name + Formatting.RED + "Not your friend."));
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", Formatting.RED + "Not your friend."));
                             }
 
                             return SINGLE_SUCCESS;
