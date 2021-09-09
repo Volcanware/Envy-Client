@@ -28,7 +28,7 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 2;
+        return 3;
     }
 
     public static String getDevBuild() {
