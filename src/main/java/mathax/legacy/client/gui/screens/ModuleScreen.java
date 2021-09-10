@@ -66,39 +66,33 @@ public class ModuleScreen extends WindowScreen {
         // Bottom
         WHorizontalList bottom = add(theme.horizontalList()).expandX().widget();
 
-        //   Active
-        bottom.add(theme.label("Active: "));
-        WCheckbox active = bottom.add(theme.checkbox(module.isActive())).expandCellX().widget();
-        active.action = () -> {
-            if (module.isActive() != active.checked) module.toggle(Utils.canUpdate());
+        // Messages
+        bottom.add(theme.label("Toggle message: "));
+        WCheckbox messageToggle = bottom.add(theme.checkbox(module.isMessageEnabled())).expandCellX().widget();
+        messageToggle.action = () -> {
+            if (module.isMessageEnabled() != messageToggle.checked) module.toggleMessage(messageToggle.checked);
+        };
+
+        // Toasts
+        bottom.add(theme.label("Toggle toast: "));
+        WCheckbox toastToggle = bottom.add(theme.checkbox(module.isToastEnabled())).widget();
+        toastToggle.action = () -> {
+            if (module.isToastEnabled() != toastToggle.checked) module.toggleToast(toastToggle.checked);
         };
 
         // Bottom 2
         WHorizontalList bottom2 = add(theme.horizontalList()).expandX().widget();
 
-        // Messages
-        bottom2.add(theme.label("Toggle message: "));
-        WCheckbox messageToggle = bottom2.add(theme.checkbox(module.isMessageEnabled())).widget();
-        messageToggle.action = () -> {
-            if (module.isMessageEnabled() != messageToggle.checked) module.toggleMessage(messageToggle.checked);
+        //   Active
+        bottom2.add(theme.label("Active: "));
+        WCheckbox active = bottom2.add(theme.checkbox(module.isActive())).expandCellX().widget();
+        active.action = () -> {
+            if (module.isActive() != active.checked) module.toggle(Utils.canUpdate());
         };
-
-        // Bottom 3
-        WHorizontalList bottom3 = add(theme.horizontalList()).expandX().widget();
-
-        // Toasts
-        bottom3.add(theme.label("Toggle toast: "));
-        WCheckbox toastToggle = bottom3.add(theme.checkbox(module.isToastEnabled())).widget();
-        toastToggle.action = () -> {
-            if (module.isToastEnabled() != toastToggle.checked) module.toggleToast(toastToggle.checked);
-        };
-
-        // Bottom 4
-        WHorizontalList bottom4 = add(theme.horizontalList()).expandX().widget();
 
         //   Visible
-        bottom4.add(theme.label("Visible: "));
-        WCheckbox visible = bottom4.add(theme.checkbox(module.isVisible())).widget();
+        bottom2.add(theme.label("Visible: "));
+        WCheckbox visible = bottom2.add(theme.checkbox(module.isVisible())).widget();
         visible.action = () -> {
             if (module.isVisible() != visible.checked) module.setVisible(visible.checked);
         };
