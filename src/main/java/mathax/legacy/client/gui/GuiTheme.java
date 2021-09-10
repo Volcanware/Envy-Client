@@ -1,10 +1,7 @@
 package mathax.legacy.client.gui;
 
 import mathax.legacy.client.gui.renderer.packer.GuiTexture;
-import mathax.legacy.client.gui.screens.AccountsScreen;
-import mathax.legacy.client.gui.screens.ModuleScreen;
-import mathax.legacy.client.gui.screens.ModulesScreen;
-import mathax.legacy.client.gui.screens.ProxiesScreen;
+import mathax.legacy.client.gui.screens.*;
 import mathax.legacy.client.gui.tabs.TabScreen;
 import mathax.legacy.client.gui.utils.CharFilter;
 import mathax.legacy.client.gui.utils.SettingsWidgetFactory;

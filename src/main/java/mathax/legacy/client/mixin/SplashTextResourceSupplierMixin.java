@@ -14,15 +14,13 @@ import java.util.Random;
 
 @Mixin(SplashTextResourceSupplier.class)
 public class SplashTextResourceSupplierMixin {
-    private boolean override = true;
     private final Random random = new Random();
 
     private final List<String> mathaxSplashes = getMatHaxSplashes();
 
     @Inject(method = "get", at = @At("HEAD"), cancellable = true)
     private void onApply(CallbackInfoReturnable<String> cir) {
-        if (override) cir.setReturnValue(mathaxSplashes.get(random.nextInt(mathaxSplashes.size())));
-        override = !override;
+        cir.setReturnValue(mathaxSplashes.get(random.nextInt(mathaxSplashes.size())));
     }
 
     private static List<String> getMatHaxSplashes() {
@@ -39,6 +37,9 @@ public class SplashTextResourceSupplierMixin {
             Formatting.YELLOW + "cope",
             Formatting.YELLOW + "IntelliJ IDEa",
             Formatting.YELLOW + "I <3 nns",
+            Formatting.YELLOW + "haha 69",
+            Formatting.YELLOW + "420 XDDDDDD",
+            Formatting.YELLOW + "haha 69",
             Formatting.YELLOW + "haha 69",
 
             // COPER [Taken from API when connected to internet, else using username of logged player.]

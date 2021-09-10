@@ -2,6 +2,7 @@ package mathax.legacy.client.utils.placeholders;
 
 import mathax.legacy.client.Version;
 import mathax.legacy.client.gui.screens.*;
+import mathax.legacy.client.gui.screens.TitleScreen;
 import mathax.legacy.client.gui.screens.settings.ColorSettingScreen;
 import mathax.legacy.client.gui.tabs.builtin.*;
 import mathax.legacy.client.utils.Utils;
@@ -39,6 +40,8 @@ public class DiscordPlaceholder {
             case "%activity%":
                 if (mc.getOverlay() instanceof SplashOverlay) {
                     return "The game is loading...";
+                } else if (mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) {
+                    return "In main menu";
                 } else if (mc.currentScreen instanceof TitleScreen) {
                     return "In main menu";
                 } else if (mc.currentScreen instanceof MultiplayerScreen) {
