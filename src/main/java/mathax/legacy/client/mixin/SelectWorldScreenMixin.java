@@ -20,7 +20,6 @@ public class SelectWorldScreenMixin extends Screen {
     @Inject(method = "render", at = @At("TAIL"))
     private void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
         Version.checkedForLatestTitleText = false;
-        Version.checkedForLatestTitle = false;
         Version.checkedForLatest = false;
     }
 }

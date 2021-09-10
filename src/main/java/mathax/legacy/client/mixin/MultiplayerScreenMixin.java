@@ -45,7 +45,6 @@ public class MultiplayerScreenMixin extends Screen {
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
         Version.checkedForLatestTitleText = false;
-        Version.checkedForLatestTitle = false;
         Version.checkedForLatest = false;
 
         textColor1 = Color.fromRGBA(255, 255, 255, 255);
