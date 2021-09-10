@@ -176,7 +176,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         }
     }
 
-    private void openClickGui() {
+    private void openClickGUI() {
         Tabs.get().get(0).openScreen(GuiThemes.get());
     }
 
@@ -210,7 +210,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         // Click GUI
         if (event.action == KeyAction.Press && KeyBinds.OPEN_CLICK_GUI.matchesKey(event.key, 0)) {
             if (Utils.mc.getOverlay() instanceof SplashOverlay) return;
-            if (!Utils.canUpdate() && Utils.isWhitelistedScreen() || Utils.mc.currentScreen == null) openClickGui();
+            if (!Utils.canUpdate() && Utils.isWhitelistedScreen() || Utils.mc.currentScreen == null) openClickGUI();
         }
     }
 

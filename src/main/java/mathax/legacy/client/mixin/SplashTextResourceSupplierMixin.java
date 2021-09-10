@@ -39,8 +39,8 @@ public class SplashTextResourceSupplierMixin {
             Formatting.YELLOW + "I <3 nns",
             Formatting.YELLOW + "haha 69",
             Formatting.YELLOW + "420 XDDDDDD",
-            Formatting.YELLOW + "haha 69",
-            Formatting.YELLOW + "haha 69",
+            Formatting.YELLOW + "ayy",
+            Formatting.YELLOW + "too ez",
 
             // COPER [Taken from API when connected to internet, else using username of logged player.]
             Formatting.GRAY + Utils.getCoper() + Formatting.YELLOW + " coping hard",
