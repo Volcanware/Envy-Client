@@ -8,7 +8,6 @@ import mathax.legacy.client.gui.widgets.WWidget;
 import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
 import mathax.legacy.client.gui.widgets.containers.WVerticalList;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.bus.EventHandler;

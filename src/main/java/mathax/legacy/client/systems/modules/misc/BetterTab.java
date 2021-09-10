@@ -1,6 +1,5 @@
 package mathax.legacy.client.systems.modules.misc;
 
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.enemies.Enemies;
 import mathax.legacy.client.systems.enemies.Enemy;
 import mathax.legacy.client.systems.modules.Module;

@@ -1,7 +1,6 @@
 package mathax.legacy.client.systems.modules.combat;
 
 import mathax.legacy.client.events.entity.player.AttackEntityEvent;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.player.InvUtils;

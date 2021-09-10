@@ -7,7 +7,6 @@ import mathax.legacy.client.gui.tabs.Tab;
 import mathax.legacy.client.gui.tabs.TabScreen;
 import mathax.legacy.client.gui.tabs.WindowTabScreen;
 import mathax.legacy.client.gui.widgets.input.WTextBox;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.settings.*;
 import net.minecraft.client.gui.screen.Screen;

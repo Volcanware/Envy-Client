@@ -1,7 +1,6 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDElement;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;

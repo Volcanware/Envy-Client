@@ -5,7 +5,6 @@ import mathax.legacy.client.gui.tabs.Tab;
 import mathax.legacy.client.gui.tabs.TabScreen;
 import mathax.legacy.client.gui.tabs.WindowTabScreen;
 import mathax.legacy.client.renderer.Fonts;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.render.PromptBuilder;
 import mathax.legacy.client.utils.render.color.RainbowColors;

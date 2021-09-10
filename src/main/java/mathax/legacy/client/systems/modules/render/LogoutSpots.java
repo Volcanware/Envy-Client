@@ -8,7 +8,6 @@ import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.renderer.text.TextRenderer;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.misc.Vec3;
 import mathax.legacy.client.utils.player.PlayerUtils;

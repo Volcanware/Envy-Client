@@ -1,7 +1,6 @@
 package mathax.legacy.client.gui.tabs;
 
 import mathax.legacy.client.gui.tabs.builtin.*;
-import mathax.legacy.client.gui.tabs.builtin.*;
 
 import java.util.ArrayList;
 import java.util.List;

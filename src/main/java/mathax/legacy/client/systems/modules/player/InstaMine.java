@@ -3,7 +3,6 @@ package mathax.legacy.client.systems.modules.player;
 import mathax.legacy.client.events.entity.player.StartBreakingBlockEvent;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;

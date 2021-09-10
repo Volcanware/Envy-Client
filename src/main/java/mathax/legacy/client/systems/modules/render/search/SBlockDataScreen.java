@@ -2,7 +2,6 @@ package mathax.legacy.client.systems.modules.render.search;
 
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WindowScreen;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.settings.*;

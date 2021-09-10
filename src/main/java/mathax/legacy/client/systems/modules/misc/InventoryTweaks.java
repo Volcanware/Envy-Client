@@ -9,7 +9,6 @@ import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.mixin.CloseHandledScreenC2SPacketAccessor;
 import mathax.legacy.client.mixin.HandledScreenAccessor;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.Keybind;

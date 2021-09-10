@@ -7,7 +7,6 @@ import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.input.WTextBox;
 import mathax.legacy.client.gui.widgets.pressable.WMinus;
 import mathax.legacy.client.gui.widgets.pressable.WPlus;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;

@@ -6,8 +6,6 @@ import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.Version;
 import mathax.legacy.client.utils.render.color.RainbowColors;
 import mathax.legacy.client.systems.System;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;

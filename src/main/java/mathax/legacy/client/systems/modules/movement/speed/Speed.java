@@ -3,7 +3,6 @@ package mathax.legacy.client.systems.modules.movement.speed;
 import mathax.legacy.client.events.entity.player.PlayerMoveEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.movement.speed.modes.Strafe;
 import mathax.legacy.client.systems.modules.movement.speed.modes.Vanilla;
 import mathax.legacy.client.systems.modules.Categories;

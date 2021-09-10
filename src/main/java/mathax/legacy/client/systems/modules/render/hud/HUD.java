@@ -7,8 +7,6 @@ import mathax.legacy.client.gui.tabs.builtin.HudTab;
 import mathax.legacy.client.gui.widgets.WWidget;
 import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
-import mathax.legacy.client.settings.*;
-import mathax.legacy.client.systems.modules.render.hud.modules.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.render.AlignmentX;

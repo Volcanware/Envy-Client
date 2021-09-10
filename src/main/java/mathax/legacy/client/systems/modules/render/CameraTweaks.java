@@ -2,7 +2,6 @@ package mathax.legacy.client.systems.modules.render;
 
 import mathax.legacy.client.events.game.ChangePerspectiveEvent;
 import mathax.legacy.client.events.mathax.MouseScrollEvent;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.bus.EventHandler;

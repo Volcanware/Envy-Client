@@ -2,7 +2,6 @@ package mathax.legacy.client.systems.modules.movement;
 
 import mathax.legacy.client.events.entity.player.CobwebEntityCollisionEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;

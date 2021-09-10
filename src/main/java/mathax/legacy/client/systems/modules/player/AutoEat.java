@@ -3,7 +3,6 @@ package mathax.legacy.client.systems.modules.player;
 import baritone.api.BaritoneAPI;
 import mathax.legacy.client.events.entity.player.ItemUseCrosshairTargetEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.combat.BedAura;
 import mathax.legacy.client.systems.modules.combat.KillAura;
 import mathax.legacy.client.systems.modules.Categories;

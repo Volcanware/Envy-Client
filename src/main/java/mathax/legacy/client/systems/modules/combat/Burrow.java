@@ -2,7 +2,6 @@ package mathax.legacy.client.systems.modules.combat;
 
 import mathax.legacy.client.events.mathax.KeyEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
@@ -12,10 +11,6 @@ import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.player.*;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.settings.*;
-import mathax.legacy.client.utils.player.FindItemResult;
-import mathax.legacy.client.utils.player.InvUtils;
-import mathax.legacy.client.utils.player.PlayerUtils;
-import mathax.legacy.client.utils.player.Rotations;
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;

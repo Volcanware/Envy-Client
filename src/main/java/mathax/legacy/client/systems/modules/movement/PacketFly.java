@@ -6,7 +6,6 @@ import mathax.legacy.client.events.entity.player.PlayerMoveEvent;
 import mathax.legacy.client.events.entity.player.SendMovementPacketsEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.mixin.PlayerPositionLookS2CPacketAccessor;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.player.PlayerUtils;

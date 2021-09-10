@@ -1,7 +1,5 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
-import mathax.legacy.client.settings.*;
-import mathax.legacy.client.systems.modules.combat.*;
 import mathax.legacy.client.systems.modules.combat.*;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.Module;

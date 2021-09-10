@@ -6,7 +6,6 @@ import mathax.legacy.client.events.entity.player.AttackEntityEvent;
 import mathax.legacy.client.events.entity.player.InteractBlockEvent;
 import mathax.legacy.client.events.entity.player.StartBreakingBlockEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;

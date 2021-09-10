@@ -1,7 +1,6 @@
 package mathax.legacy.client.mixin;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import mathax.legacy.client.systems.modules.render.*;
 import mathax.legacy.client.systems.modules.world.Ambience;
 import mathax.legacy.client.utils.render.Outlines;
 import mathax.legacy.client.utils.render.color.Color;

@@ -2,7 +2,6 @@ package mathax.legacy.client.systems.modules.movement;
 
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.mixin.PlayerMoveC2SPacketAccessor;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;

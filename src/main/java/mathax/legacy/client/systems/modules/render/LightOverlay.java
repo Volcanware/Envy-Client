@@ -6,7 +6,6 @@ import mathax.legacy.client.renderer.DrawMode;
 import mathax.legacy.client.renderer.Mesh;
 import mathax.legacy.client.renderer.ShaderMesh;
 import mathax.legacy.client.renderer.Shaders;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.misc.Pool;

@@ -14,9 +14,6 @@ import mathax.legacy.client.utils.render.color.SettingColor;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import mathax.legacy.client.settings.ColorSetting;
-import mathax.legacy.client.settings.Setting;
-import mathax.legacy.client.settings.SettingGroup;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.option.Perspective;

@@ -5,7 +5,6 @@ import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.mixin.AbstractBlockAccessor;
 import mathax.legacy.client.renderer.Renderer3D;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.misc.Pool;
 import mathax.legacy.client.utils.render.color.Color;

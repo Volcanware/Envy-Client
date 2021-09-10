@@ -1,6 +1,5 @@
 package mathax.legacy.client.mixin;
 
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.splash.PreviewSplashOverlay;
 import mathax.legacy.client.utils.splash.SplashUtils;
 import net.minecraft.client.MinecraftClient;

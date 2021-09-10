@@ -3,7 +3,6 @@ package mathax.legacy.client.systems.commands;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import mathax.legacy.client.systems.commands.commands.*;
 import mathax.legacy.client.systems.System;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.commands.commands.*;

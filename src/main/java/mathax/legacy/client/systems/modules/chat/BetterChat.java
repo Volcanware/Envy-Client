@@ -7,7 +7,6 @@ import mathax.legacy.client.events.game.ReceiveMessageEvent;
 import mathax.legacy.client.events.game.SendMessageEvent;
 import mathax.legacy.client.mixin.ChatHudAccessor;
 import mathax.legacy.client.mixininterface.IChatHud;
-import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.commands.Commands;
 import mathax.legacy.client.systems.commands.commands.SayCommand;
 import mathax.legacy.client.systems.modules.Categories;
