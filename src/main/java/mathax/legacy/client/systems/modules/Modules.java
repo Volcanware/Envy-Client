@@ -525,6 +525,7 @@ public class Modules extends System<Modules> {
         add(new AutoSmelter());
         add(new AutoWither());
         add(new BuildHeight());
+        add(new ColorSigns());
         add(new EChestFarmer());
         add(new EndermanLook());
         add(new Flamethrower());
@@ -567,15 +568,16 @@ public class Modules extends System<Modules> {
         add(new BetterTab());
         add(new BookBot());
         add(new CoordinateLogger());
+        add(new InventoryTweaks());
         add(new MiddleClickExtra());
         add(new MiddleClickFriend());
         add(new NameProtect());
         add(new PacketCanceller());
         add(new Panic());
         add(new SoundBlocker());
+        add(new SoundLocator());
         add(new TPSSync());
         add(new VanillaSpoof());
-        add(new InventoryTweaks());
     }
 
     public static class ModuleRegistry extends Registry<Module> {
