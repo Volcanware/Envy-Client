@@ -47,10 +47,10 @@ public class SoundLocator extends Module {
     private void printSound(SoundInstance sound) {
         WeightedSoundSet soundSet = mc.getSoundManager().get(sound.getId());
         MutableText text = soundSet.getSubtitle().copy();
-        text.append(String.format("%s at ", Formatting.RESET));
+        text.append(String.format("%s at ", Formatting.GRAY));
         Vec3d pos = new Vec3d(sound.getX(), sound.getY(), sound.getZ());
         text.append(ChatUtils.formatCoords(pos));
-        text.append(String.format("%s.", Formatting.RESET));
+        text.append(String.format("%s.", Formatting.GRAY));
         info(text);
     }
 }
