@@ -169,7 +169,7 @@ public class PacketFly extends Module {
     }
 
     private boolean checkHitBoxes() {
-        return !(mc.world.getBlockCollisions(mc.player, mc.player.getBoundingBox().expand(-0.0625,-0.0625,-0.0625)).count() == 0);
+        return !(mc.world.getBlockCollisions(mc.player, mc.player.getBoundingBox().expand(-0.0625, -0.0625, -0.0625)).findAny().isEmpty());
     }
 
     private boolean resetCounter(int counter) {

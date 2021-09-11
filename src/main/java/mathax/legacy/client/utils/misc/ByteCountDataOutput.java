@@ -8,11 +8,11 @@ public class ByteCountDataOutput implements DataOutput {
 
     private int count;
 
-    public int getCount() {
+    public int getCount() throws IOException {
         return count;
     }
 
-    public void reset() {
+    public void reset() throws IOException {
         count = 0;
     }
 

@@ -29,7 +29,6 @@ public class SplashTextResourceSupplierMixin {
             // SPLASHES
             Formatting.RED + "MatHax on top!",
             Formatting.GRAY + "Matejko06 " + Formatting.RED + "based god",
-            Formatting.GRAY + "GeekieCoder " + Formatting.RED + "based god",
             Formatting.RED + "MatHaxClient.xyz",
             Formatting.RED + "MatHaxClient.xyz/Discord",
 

@@ -69,7 +69,7 @@ public class ConfigTab extends Tab {
     public static final Setting<Boolean> useTeamColor = sgGeneral.add(new BoolSetting.Builder()
         .name("use-team-color")
         .description("Uses player's team color for rendering things like esp and tracers.")
-        .defaultValue(true)
+        .defaultValue(false)
         .onChanged(aBoolean -> Config.get().useTeamColor = aBoolean)
         .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().useTeamColor))
         .build()

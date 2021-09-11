@@ -146,6 +146,13 @@ public class NoRender extends Module {
         .build()
     );
 
+    public final Setting<Boolean> noCommandSuggestions = sgHUD.add(new BoolSetting.Builder()
+        .name("command-suggestions")
+        .description("Disables command suggestion render in chat.")
+        .defaultValue(false)
+        .build()
+    );
+
     // World
 
     private final Setting<Boolean> noWeather = sgWorld.add(new BoolSetting.Builder()

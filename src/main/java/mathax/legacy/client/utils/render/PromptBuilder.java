@@ -22,7 +22,8 @@ public class PromptBuilder {
     private final List<String> messages = new ArrayList<>();
     private Runnable onYes = () -> {};
     private Runnable onNo = () -> {};
-    public String promptId = null;
+    public static String promptId = null;
+    private WCheckbox dontShowAgainCheckbox;
 
     public PromptBuilder() {
         this(GuiThemes.get(), mc.currentScreen);
@@ -98,9 +99,11 @@ public class PromptBuilder {
 
             add(theme.horizontalSeparator()).expandX();
 
-            WHorizontalList checkboxContainer = add(theme.horizontalList()).expandX().widget();
-            WCheckbox dontShowAgainCheckbox = checkboxContainer.add(theme.checkbox(false)).widget();
-            checkboxContainer.add(theme.label("Don't show this prompt again.")).expandX();
+            if (!promptId.equals("new-update-button")) {
+                WHorizontalList checkboxContainer = add(theme.horizontalList()).expandX().widget();
+                dontShowAgainCheckbox = checkboxContainer.add(theme.checkbox(false)).widget();
+                checkboxContainer.add(theme.label("Don't show this prompt again.")).expandX();
+            }
 
             WHorizontalList list = add(theme.horizontalList()).expandX().widget();
 
@@ -113,14 +116,18 @@ public class PromptBuilder {
             WButton noButton = list.add(theme.button("No")).expandX().widget();
             noButton.action = () -> {
                 onNo.run();
-                if (dontShowAgainCheckbox.checked)
-                    Config.get().dontShowAgainPrompts.add(promptId);
+                if (!promptId.equals("new-update-button")) {
+                    if (dontShowAgainCheckbox.checked)
+                        Config.get().dontShowAgainPrompts.add(promptId);
+                }
                 this.onClose();
             };
 
-            dontShowAgainCheckbox.action = () -> {
-                yesButton.visible = !dontShowAgainCheckbox.checked;
-            };
+            if (!promptId.equals("new-update-button")) {
+                dontShowAgainCheckbox.action = () -> {
+                    yesButton.visible = !dontShowAgainCheckbox.checked;
+                };
+            }
         }
     }
 }

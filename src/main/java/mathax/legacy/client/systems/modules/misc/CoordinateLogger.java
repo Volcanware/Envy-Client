@@ -108,7 +108,9 @@ public class CoordinateLogger extends Module {
                         return;
                     }
                 }
-            } catch(NullPointerException e) {}
+            } catch(NullPointerException e) {
+                e.printStackTrace();
+            }
         } else if (event.packet instanceof WorldEventS2CPacket) {
             WorldEventS2CPacket worldEventS2CPacket = (WorldEventS2CPacket) event.packet;
             if (worldEventS2CPacket.isGlobal()) {

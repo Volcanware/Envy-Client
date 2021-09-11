@@ -269,6 +269,7 @@ public class MatHaxLegacy implements ClientModInitializer {
                         try {
                             Thread.sleep(2000);
                         } catch (InterruptedException ex) {
+                            ex.printStackTrace();
                         }
                     }
                 }, "RPC-Callback-Handler").start();

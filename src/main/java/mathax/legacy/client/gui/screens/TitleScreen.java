@@ -5,10 +5,10 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.Version;
+import mathax.legacy.client.gui.GuiThemes;
+import mathax.legacy.client.gui.tabs.Tabs;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
-import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.utils.render.PromptBuilder;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.Element;
@@ -54,7 +54,6 @@ public class TitleScreen extends Screen {
 
     private static final Identifier LOGO = new Identifier("mathaxlegacy", "textures/title/logo.png");
     private static final Identifier BACKGROUND = new Identifier("mathaxlegacy", "textures/title/background.png");
-    //private static final Identifier BACKGROUND_2 = new Identifier("mathaxlegacy", "textures/title/background2.png");
     private static final Identifier ACCESSIBILITY_ICON_TEXTURE = new Identifier("minecraft", "textures/gui/accessibility.png");
 
     @Nullable
@@ -65,8 +64,6 @@ public class TitleScreen extends Screen {
 
     private float xOffset;
     private float yOffset;
-
-    //private int background = 0;
 
     public TitleScreen() {
         this(false);
@@ -90,35 +87,6 @@ public class TitleScreen extends Screen {
     }
 
     protected void init() {
-        if (!Version.checkedForLatestTitle) {
-            Version.checkedForLatestTitle = true;
-
-            MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
-
-            switch (Version.checkLatest()) {
-                case 0:
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Could not check for latest version!");
-                    return;
-                case 1:
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.get() + "!");
-                    new PromptBuilder()
-                        .title("New Update")
-                        .message("A new version of MatHax Legacy has been released.")
-                        .message("\n")
-                        .message("Your version: v" + Version.get())
-                        .message("Latest version: v" + Version.getLatest())
-                        .message("\n")
-                        .message("Do you want to update?")
-                        .onYes(() -> {
-                            Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
-                        })
-                        .promptId("new-update")
-                        .show();
-                case 2:
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, v" + Version.get() + "!");
-            }
-        }
-
         if (splashText == null) {
             splashText = client.getSplashTextLoader().get();
         }
@@ -127,27 +95,10 @@ public class TitleScreen extends Screen {
         copyrightTextX = width - copyrightTextWidth - 2;
         int j = height / 4 + 48;
         int spacingY = 24;
-        initWidgetsNormal(j, 24);
 
-        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, j + 72 + 12 + spacingY, 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> {
-            client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager()));
-        }, new TranslatableText("narrator.button.language")));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + 72 + 12 + spacingY, 98, 20, new TranslatableText("menu.options"), (button) -> {
-            client.setScreen(new OptionsScreen(this, client.options));
-        }));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, j + 72 + 12 + spacingY, 98, 20, new TranslatableText("menu.quit"), (button) -> {
-            client.scheduleStop();
-        }));
-        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, j + 72 + 12 + spacingY, 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> {
-            client.setScreen(new AccessibilityOptionsScreen(this, client.options));
-        }, new TranslatableText("narrator.button.accessibility")));
-    }
-
-    private void initWidgetsNormal(int y, int spacingY) {
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> {
             client.setScreen(new SelectWorldScreen(this));
         }));
-
         boolean bl = client.isMultiplayerEnabled();
         ButtonWidget.TooltipSupplier tooltipSupplier = bl ? ButtonWidget.EMPTY : new ButtonWidget.TooltipSupplier() {
             private final Text MULTIPLAYER_DISABLED_TEXT = new TranslatableText("title.multiplayer.disabled");
@@ -163,18 +114,36 @@ public class TitleScreen extends Screen {
                 consumer.accept(MULTIPLAYER_DISABLED_TEXT);
             }
         };
-        (addDrawableChild(new ButtonWidget(width / 2 - 100, y + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> {
+        (addDrawableChild(new ButtonWidget(width / 2 - 100, j + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> {
             Screen screen = client.options.skipMultiplayerWarning ? new MultiplayerScreen(this) : new MultiplayerWarningScreen(this);
             client.setScreen(screen);
         }, tooltipSupplier))).active = bl;
 
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + spacingY * 2, 200, 20, new LiteralText("MatHax Website"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 2) + (spacingY / 2), 200, 20, new LiteralText("MatHax Website"), (button) -> {
             Util.getOperatingSystem().open(MatHaxLegacy.URL);
         }));
 
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + spacingY * 3, 200, 20, new LiteralText("MatHax Discord"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 3) + (spacingY / 2), 200, 20, new LiteralText("MatHax Discord"), (button) -> {
             Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord");
         }));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 4) + (spacingY / 2), 98, 20, new TranslatableText("title.mathaxlegacy.click-gui"), (button) -> {
+            Tabs.get().get(0).openScreen(GuiThemes.get());
+        }));
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 4) + (spacingY / 2), 98, 20, new TranslatableText("title.mathaxlegacy.check-for-update"), (button) -> {
+            Version.checkForUpdate(true);
+        }));
+        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, j + (spacingY * 6), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> {
+            client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager()));
+        }, new TranslatableText("narrator.button.language")));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 6), 98, 20, new TranslatableText("menu.options"), (button) -> {
+            client.setScreen(new OptionsScreen(this, client.options));
+        }));
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 6), 98, 20, new TranslatableText("menu.quit"), (button) -> {
+            client.scheduleStop();
+        }));
+        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, j + (spacingY * 6), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> {
+            client.setScreen(new AccessibilityOptionsScreen(this, client.options));
+        }, new TranslatableText("narrator.button.accessibility")));
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -188,17 +157,8 @@ public class TitleScreen extends Screen {
         float fade = doBackgroundFade ? (float)(Util.getMeasuringTimeMs() - backgroundFadeStart) / 1000.0F : 1.0F;
         xOffset = -1.0f * (((float) mouseX - (float) width / 2.0f) / ((float) width / 32.0f));
         yOffset = -1.0f * (((float) mouseY - (float) height / 2.0f) / ((float) height / 18.0f));
-
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-
-        //TODO: Make it fade and get higher quality background 2
-        /*if (background < 6000) {
-            RenderSystem.setShaderTexture(0, BACKGROUND);
-        } else {
-            RenderSystem.setShaderTexture(0, BACKGROUND_2);
-        }*/
         RenderSystem.setShaderTexture(0, BACKGROUND);
-
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, doBackgroundFade ? (float)MathHelper.ceil(MathHelper.clamp(fade, 0.0F, 1.0F)) : 1.0F);
@@ -255,7 +215,7 @@ public class TitleScreen extends Screen {
             drawStringWithShadow(matrices, textRenderer, loggedInAs, 2, 2, GRAY);
             drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, 2, GRAY);
             drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, 2, WHITE);
-            if (!(Modules.get() == null) && !Modules.get().isActive(NameProtect.class) && (Utils.mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || Utils.mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) {
+            if (!(Modules.get() == null) && !Modules.get().isActive(NameProtect.class) && (client.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || client.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) {
                 drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, 2, GRAY);
                 drawStringWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, 2, GRAY);
                 drawStringWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, 2, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
@@ -291,17 +251,15 @@ public class TitleScreen extends Screen {
                 }
             }
 
+            if (!Version.checkedForLatestTitle) {
+                Version.checkedForLatestTitle = true;
+
+                Version.checkForUpdate(false);
+            }
+
             super.render(matrices, mouseX, mouseY, delta);
         }
     }
-
-    /*public void tick() {
-        if (background > 12000) {
-            background = 0;
-        } else {
-            background++;
-        }
-    }*/
 
     private String getUpdateText() {
         if (!Version.checkedForLatestTitleText) {

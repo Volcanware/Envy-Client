@@ -8,6 +8,7 @@ import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.SortPriority;
 import mathax.legacy.client.utils.entity.Target;
@@ -103,7 +104,7 @@ public class KillAura extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgTargeting.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Entities to attack.")
-        .defaultValue(new Object2BooleanOpenHashMap<>(0))
+        .defaultValue(Utils.asObject2BooleanOpenHashMap(EntityType.PLAYER))
         .onlyAttackable()
         .build()
     );

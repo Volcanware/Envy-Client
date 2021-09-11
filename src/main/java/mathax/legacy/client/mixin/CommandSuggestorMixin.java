@@ -6,9 +6,12 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.suggestion.Suggestions;
 import mathax.legacy.client.systems.commands.Commands;
 import mathax.legacy.client.systems.config.Config;
+import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.systems.modules.render.NoRender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.CommandSuggestor;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.command.CommandSource;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,17 +28,21 @@ public abstract class CommandSuggestorMixin {
 
     @Shadow private ParseResults<CommandSource> parse;
 
-    @Shadow @Final private TextFieldWidget textField;
+    @Shadow @Final
+    TextFieldWidget textField;
 
-    @Shadow @Final private MinecraftClient client;
+    @Shadow @Final
+    MinecraftClient client;
 
-    @Shadow private boolean completingSuggestions;
+    @Shadow
+    boolean completingSuggestions;
 
     @Shadow private CompletableFuture<Suggestions> pendingSuggestions;
 
     @Shadow protected abstract void show();
 
-    @Shadow private CommandSuggestor.SuggestionWindow window;
+    @Shadow
+    CommandSuggestor.SuggestionWindow window;
 
     @Inject(method = "refresh",
             at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false),
@@ -66,4 +73,8 @@ public abstract class CommandSuggestorMixin {
         }
     }
 
+    @Inject(method = "render", at = @At(value = "HEAD"), cancellable = true)
+    public void onRenderCommandSuggestion(MatrixStack matrices, int mouseX, int mouseY, CallbackInfo info) {
+        if (Modules.get().get(NoRender.class).noCommandSuggestions.get()) info.cancel();
+    }
 }
