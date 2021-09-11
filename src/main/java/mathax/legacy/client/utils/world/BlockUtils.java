@@ -35,6 +35,13 @@ public class BlockUtils {
         MatHaxLegacy.EVENT_BUS.subscribe(BlockUtils.class);
     }
 
+    // Get Block
+
+    public static Block getBlock(BlockPos p) {
+        if (p == null) return null;
+        return mc.world.getBlockState(p).getBlock();
+    }
+
     // Placing
 
     public static boolean place(BlockPos blockPos, FindItemResult findItemResult, int rotationPriority) {

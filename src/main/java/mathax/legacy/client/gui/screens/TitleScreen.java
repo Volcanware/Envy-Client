@@ -26,7 +26,6 @@ import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -62,8 +61,6 @@ public class TitleScreen extends Screen {
     private final boolean doBackgroundFade;
     private long backgroundFadeStart;
 
-    private float xOffset;
-    private float yOffset;
 
     public TitleScreen() {
         this(false);
@@ -118,30 +115,34 @@ public class TitleScreen extends Screen {
             Screen screen = client.options.skipMultiplayerWarning ? new MultiplayerScreen(this) : new MultiplayerWarningScreen(this);
             client.setScreen(screen);
         }, tooltipSupplier))).active = bl;
-
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 2) + (spacingY / 2), 200, 20, new LiteralText("MatHax Website"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 2) + (spacingY / 2), 200, 20, new TranslatableText("title.button.mathaxlegacy.mathax-website"), (button) -> {
             Util.getOperatingSystem().open(MatHaxLegacy.URL);
         }));
-
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 3) + (spacingY / 2), 200, 20, new LiteralText("MatHax Discord"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 3) + (spacingY / 2), 200, 20, new TranslatableText("title.button.mathaxlegacy.mathax-discord"), (button) -> {
             Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord");
         }));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 4) + (spacingY / 2), 98, 20, new TranslatableText("title.mathaxlegacy.click-gui"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 4) + (spacingY / 2), 98, 20, new TranslatableText("title.button.mathaxlegacy.click-gui"), (button) -> {
             Tabs.get().get(0).openScreen(GuiThemes.get());
         }));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 4) + (spacingY / 2), 98, 20, new TranslatableText("title.mathaxlegacy.check-for-update"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 4) + (spacingY / 2), 98, 20, new TranslatableText("title.button.mathaxlegacy.check-for-update"), (button) -> {
             Version.checkForUpdate(true);
         }));
-        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, j + (spacingY * 6), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 5) + (spacingY / 2), 98, 20, new TranslatableText("title.button.mathaxlegacy.proxies"), (button) -> {
+            client.setScreen(GuiThemes.get().proxiesScreen());
+        }));
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 5) + (spacingY / 2), 98, 20, new TranslatableText("title.button.mathaxlegacy.accounts"), (button) -> {
+            client.setScreen(GuiThemes.get().accountsScreen());
+        }));
+        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, j + (spacingY * 7), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> {
             client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager()));
         }, new TranslatableText("narrator.button.language")));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 6), 98, 20, new TranslatableText("menu.options"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 7), 98, 20, new TranslatableText("menu.options"), (button) -> {
             client.setScreen(new OptionsScreen(this, client.options));
         }));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 6), 98, 20, new TranslatableText("menu.quit"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 7), 98, 20, new TranslatableText("menu.quit"), (button) -> {
             client.scheduleStop();
         }));
-        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, j + (spacingY * 6), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> {
+        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, j + (spacingY * 7), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> {
             client.setScreen(new AccessibilityOptionsScreen(this, client.options));
         }, new TranslatableText("narrator.button.accessibility")));
     }
@@ -155,14 +156,16 @@ public class TitleScreen extends Screen {
         double width2 = width * 1.2;
         double height2 = height * 1.2;
         float fade = doBackgroundFade ? (float)(Util.getMeasuringTimeMs() - backgroundFadeStart) / 1000.0F : 1.0F;
-        xOffset = -1.0f * (((float) mouseX - (float) width / 2.0f) / ((float) width / 32.0f));
-        yOffset = -1.0f * (((float) mouseY - (float) height / 2.0f) / ((float) height / 18.0f));
+        float xOffset = -1.0f * (((float) mouseX - (float) width / 2.0f) / ((float) width / 32.0f));
+        float yOffset = -1.0f * (((float) mouseY - (float) height / 2.0f) / ((float) height / 18.0f));
+        int backgroundX = (int)xOffset - 32;
+        int backgroundY = (int)yOffset - 32;
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, BACKGROUND);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, doBackgroundFade ? (float)MathHelper.ceil(MathHelper.clamp(fade, 0.0F, 1.0F)) : 1.0F);
-        drawTexture(matrices, (int)xOffset - 32, (int)yOffset - 32, (int)width2, (int)height2, 0.0F, 0.0F, 16, 128, 16, 128);
+        drawTexture(matrices, backgroundX, backgroundY, (int)width2, (int)height2, 0.0F, 0.0F, 16, 128, 16, 128);
         float fade2 = doBackgroundFade ? MathHelper.clamp(fade - 1.0F, 0.0F, 1.0F) : 1.0F;
         int ceil = MathHelper.ceil(fade2 * 255.0F) << 24;
         if ((ceil & -67108864) != 0) {

@@ -5,6 +5,7 @@ import mathax.legacy.client.utils.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.PickaxeItem;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 
@@ -15,6 +16,12 @@ import static mathax.legacy.client.utils.Utils.mc;
 public class InvUtils {
     private static final Action ACTION = new Action();
     public static int previousSlot = -1;
+
+    // Update Slot
+
+    public static void updateSlot(int newSlot) {
+        mc.player.getInventory().selectedSlot = newSlot;
+    }
 
     // Finding items
 
@@ -84,6 +91,10 @@ public class InvUtils {
         }
 
         return new FindItemResult(slot, 1);
+    }
+
+    public static FindItemResult findPick() {
+        return InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof PickaxeItem);
     }
 
     // Interactions

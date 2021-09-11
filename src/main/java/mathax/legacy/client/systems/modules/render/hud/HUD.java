@@ -163,6 +163,9 @@ public class HUD extends Module {
         crosshair = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
         // Modules
         crosshair.add(new TotemHUD(this));
+        crosshair.add(new CrystalHUD(this));
+        crosshair.add(new EGapHUD(this));
+        crosshair.add(new XPBottleHUD(this));
 
         // CROSSHAIR 2
         crosshair2 = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);

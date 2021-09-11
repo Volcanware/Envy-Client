@@ -14,6 +14,7 @@ import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.utils.world.BlockUtils;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.settings.*;
+import mathax.legacy.client.utils.world.EnhancedBlockUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowableFluid;
@@ -28,6 +29,7 @@ public class AnchorAura extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgPlace = settings.createGroup("Place");
     private final SettingGroup sgBreak = settings.createGroup("Break");
+    private final SettingGroup sgAutomation = settings.createGroup("Automation");
     private final SettingGroup sgPause = settings.createGroup("Pause");
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -67,6 +69,13 @@ public class AnchorAura extends Module {
         .name("min-health")
         .description("The minimum health you have to be for Anchor Aura to work.")
         .defaultValue(15)
+        .build()
+    );
+
+    private final Setting<Boolean> antiStuck = sgGeneral.add(new BoolSetting.Builder()
+        .name("anti-stuck")
+        .description("Prevent getting stuck when glowstone is placed on the target's head.")
+        .defaultValue(true)
         .build()
     );
 
@@ -142,7 +151,38 @@ public class AnchorAura extends Module {
         .build()
     );
 
+    // Automation
+
+    private final Setting<Boolean> breakSelfTrap = sgAutomation.add(new BoolSetting.Builder()
+        .name("break-self-trap")
+        .description("Break target's self-trap before placing/breaking.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> breakBurrow = sgAutomation.add(new BoolSetting.Builder()
+        .name("break-burrow")
+        .description("Break target's burrow before placing/breaking.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> fastPlaceAfter = sgAutomation.add(new BoolSetting.Builder()
+        .name("fast-place-after-break")
+        .description("Place the next anchor immediately after breaking target's self-trap.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> renderAutomation = sgAutomation.add(new BoolSetting.Builder()
+        .name("render-break")
+        .description("Render mining self-trap/burrow.")
+        .defaultValue(true)
+        .build()
+    );
+
     // Pause
+
 
     private final Setting<Boolean> pauseOnEat = sgPause.add(new BoolSetting.Builder()
         .name("pause-on-eat")
@@ -184,7 +224,7 @@ public class AnchorAura extends Module {
     private final Setting<SettingColor> placeSideColor = sgRender.add(new ColorSetting.Builder()
         .name("place-side-color")
         .description("The side color for positions to be placed.")
-        .defaultValue(new SettingColor(230, 75, 100, 50))
+        .defaultValue(new SettingColor(230, 75, 100, 75))
         .visible(renderPlace::get)
         .build()
     );
@@ -207,7 +247,7 @@ public class AnchorAura extends Module {
     private final Setting<SettingColor> breakSideColor = sgRender.add(new ColorSetting.Builder()
         .name("break-side-color")
         .description("The side color for anchors to be broken.")
-        .defaultValue(new SettingColor(230, 75, 100, 50))
+        .defaultValue(new SettingColor(230, 75, 100, 75))
         .visible(renderBreak::get)
         .build()
     );
@@ -223,6 +263,9 @@ public class AnchorAura extends Module {
     private int placeDelayLeft;
     private int breakDelayLeft;
     private PlayerEntity target;
+    private boolean sentTrapMine;
+    private boolean sentBurrowMine;
+    private boolean sentAntiStuck;
 
     public AnchorAura() {
         super(Categories.Combat, Items.RESPAWN_ANCHOR, "anchor-aura", "Automatically places and breaks Respawn Anchors to harm entities.");
@@ -233,6 +276,9 @@ public class AnchorAura extends Module {
         placeDelayLeft = 0;
         breakDelayLeft = 0;
         target = null;
+        sentTrapMine = false;
+        sentBurrowMine = false;
+        sentAntiStuck = false;
     }
 
     @EventHandler
@@ -254,6 +300,55 @@ public class AnchorAura extends Module {
         FindItemResult glowStone = InvUtils.findInHotbar(Items.GLOWSTONE);
 
         if (!anchor.found() || !glowStone.found()) return;
+
+        //Anti Stuck
+        if (antiStuck.get() && !sentAntiStuck) {
+            if (findBreakPos(target.getBlockPos()) == null && findPlacePos(target.getBlockPos()) == null && BlockUtils.getBlock(target.getBlockPos().up(2)) == Blocks.GLOWSTONE) {
+                FindItemResult pick = InvUtils.findPick();
+                if (pick.found()) {
+                    InvUtils.updateSlot(pick.getSlot());
+                    PlayerUtils.doPacketMine(target.getBlockPos().up(2));
+                    sentAntiStuck = true;
+                    return;
+                }
+            }
+        }
+        if (sentAntiStuck && BlockUtils.getBlock(target.getBlockPos().up(2)) != Blocks.GLOWSTONE) sentAntiStuck = false;
+
+        //Anti Self Trap
+        if (breakSelfTrap.get() && !sentTrapMine) {
+            if (findBreakPos(target.getBlockPos()) == null && findPlacePos(target.getBlockPos()) == null && EnhancedBlockUtils.isTrapBlock(target.getBlockPos().up(2))) {
+                FindItemResult pick = InvUtils.findPick();
+                if (pick.found()) {
+                    InvUtils.updateSlot(pick.getSlot());
+                    info("Breaking (highlight)%s(default)'s self-trap.", target.getEntityName());
+                    PlayerUtils.doPacketMine(target.getBlockPos().up(2));
+                    sentTrapMine = true;
+                    return;
+                }
+            }
+        }
+        if (sentTrapMine && !EnhancedBlockUtils.isTrapBlock(target.getBlockPos().up(2))) {
+            if (fastPlaceAfter.get()) { placeDelayLeft = 0; breakDelayLeft = 0; }
+            sentTrapMine = false;
+        }
+
+        //Anti Burrow
+        if (breakBurrow.get() && !sentBurrowMine && PlayerUtils.isBurrowed(target, true)) {
+            FindItemResult pick = InvUtils.findPick();
+            if (pick.found()) {
+                InvUtils.updateSlot(pick.getSlot());
+                info("Breaking (highlight)%s(default)'s burrow.", target.getEntityName());
+                PlayerUtils.doPacketMine(target.getBlockPos());
+                sentBurrowMine = true;
+                return;
+            }
+        }
+        if (sentBurrowMine && PlayerUtils.isBurrowed(target, true)) {
+            return;
+        } else {
+            sentBurrowMine = false;
+        }
 
         if (breakDelayLeft >= breakDelay.get()) {
             BlockPos breakPos = findBreakPos(target.getBlockPos());
@@ -295,6 +390,11 @@ public class AnchorAura extends Module {
             if (breakPos == null) return;
 
             event.renderer.box(breakPos, breakSideColor.get(), breakLineColor.get(), shapeMode.get(), 0);
+        }
+
+        if (renderAutomation.get() && target != null) {
+            if (sentBurrowMine) event.renderer.box(target.getBlockPos(), breakSideColor.get(), breakLineColor.get(), shapeMode.get(), 0);
+            if (sentTrapMine) event.renderer.box(target.getBlockPos().up(2), breakSideColor.get(), breakLineColor.get(), shapeMode.get(), 0);
         }
     }
 

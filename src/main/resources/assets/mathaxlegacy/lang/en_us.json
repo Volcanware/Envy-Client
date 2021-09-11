@@ -1,5 +1,12 @@
 {
-  "title.mathaxlegacy.click-gui": "Click GUI",
-  "title.mathaxlegacy.check-for-update": "Check for Update",
+  "title.button.mathaxlegacy.mathax-website": "MatHax Website",
+  "title.button.mathaxlegacy.mathax-discord": "MatHax Discord",
+  "title.button.mathaxlegacy.click-gui": "Click GUI",
+  "title.button.mathaxlegacy.check-for-update": "Check for Update",
+  "title.button.mathaxlegacy.proxies": "Proxies",
+  "title.button.mathaxlegacy.accounts": "Accounts",
+  "serverlist.button.mathaxlegacy.proxies": "Proxies",
+  "serverlist.button.mathaxlegacy.accounts": "Accounts",
+  "serverlist.button.mathaxlegacy.last-server": "Last Server",
   "key.mathaxlegacy.open-click-gui": "Open Click GUI"
 }

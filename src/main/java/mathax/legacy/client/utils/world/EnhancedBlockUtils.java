@@ -9,6 +9,7 @@ import mathax.legacy.client.utils.player.Rotations;
 import net.minecraft.block.*;
 import net.minecraft.client.render.BlockBreakingInfo;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -28,7 +29,7 @@ import java.util.Map;
 import static mathax.legacy.client.utils.Utils.mc;
 
 public class EnhancedBlockUtils {
-    static final boolean $assertionsDisabled;
+    static final boolean assertionsDisabled;
     private static final ArrayList<BlockPos> blocks;
     private static final Vec3d hitPos;
     public static final Map<Integer, BlockBreakingInfo/*class_3191*/> breakingBlocks;
@@ -59,7 +60,7 @@ public class EnhancedBlockUtils {
     }
 
     static {
-        $assertionsDisabled = !EnhancedBlockUtils.class.desiredAssertionStatus();
+        assertionsDisabled = !EnhancedBlockUtils.class.desiredAssertionStatus();
         hitPos = new Vec3d(0.0, 0.0, 0.0);
         blocks = new ArrayList();
         breakingBlocks = new HashMap<Integer, BlockBreakingInfo/*class_3191*/>();
@@ -140,7 +141,7 @@ public class EnhancedBlockUtils {
     }
 
     public static boolean isSurrounded(LivingEntity livingEntity) {
-        if (!$assertionsDisabled && mc.world == null) {
+        if (!assertionsDisabled && mc.world == null) {
             throw new AssertionError();
         }
         return !mc.world.getBlockState(livingEntity.getBlockPos().add(1, 0, 0)).isAir() && !mc.world.getBlockState(livingEntity.getBlockPos().add(-1, 0, 0)).isAir() && !mc.world.getBlockState(livingEntity.getBlockPos().add(0, 0, 1)).isAir() && !mc.world.getBlockState(livingEntity.getBlockPos().add(0, 0, -1)).isAir();
@@ -220,10 +221,10 @@ public class EnhancedBlockUtils {
     }
 
     public static boolean isIdkLmao(LivingEntity livingEntity) {
-        if (!$assertionsDisabled && mc.world == null) {
+        if (!assertionsDisabled && mc.world == null) {
             throw new AssertionError();
         }
-        if (!$assertionsDisabled && mc.player == null) {
+        if (!assertionsDisabled && mc.player == null) {
             throw new AssertionError();
         }
         int n = 0;
@@ -269,6 +270,29 @@ public class EnhancedBlockUtils {
 
     public static boolean isBurrowed(LivingEntity livingEntity) {
         return !mc.world.getBlockState(livingEntity.getBlockPos()).isAir();
+    }
+
+    public static boolean isAnvilBlock(BlockPos pos) {
+        return BlockUtils.getBlock(pos) == Blocks.ANVIL || BlockUtils.getBlock(pos) == Blocks.CHIPPED_ANVIL || BlockUtils.getBlock(pos) == Blocks.DAMAGED_ANVIL;
+    }
+
+    public static boolean isPlayerBurrowed(PlayerEntity p, boolean holeCheck) {
+        BlockPos pos = p.getBlockPos();
+        if (holeCheck && !isInHole(p)) return false;
+        return BlockUtils.getBlock(pos) == Blocks.ENDER_CHEST || BlockUtils.getBlock(pos) == Blocks.OBSIDIAN || isAnvilBlock(pos);
+    }
+
+    public static boolean isTrapBlock(BlockPos pos) {
+        return BlockUtils.getBlock(pos) == Blocks.OBSIDIAN || BlockUtils.getBlock(pos) == Blocks.ENDER_CHEST;
+    }
+
+    public static boolean isInHole(PlayerEntity p) {
+        BlockPos pos = p.getBlockPos();
+        return !mc.world.getBlockState(pos.add(1, 0, 0)).isAir()
+            && !mc.world.getBlockState(pos.add(-1, 0, 0)).isAir()
+            && !mc.world.getBlockState(pos.add(0, 0, 1)).isAir()
+            && !mc.world.getBlockState(pos.add(0, 0, -1)).isAir()
+            && !mc.world.getBlockState(pos.add(0, -1, 0)).isAir();
     }
 
     private static void place2(int n, Vec3d vec3d, Hand hand, Direction direction, BlockPos blockPos, boolean bl, boolean bl2, boolean bl3) {

@@ -81,7 +81,7 @@ public class Version {
     public static String getLatest() {
         String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");
         if (latestVer == null) {
-            return "NULL";
+            return "ERROR";
         } else {
             return latestVer;
         }
@@ -94,7 +94,7 @@ public class Version {
                 MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Could not check for latest version!");
                 return;
             case 1:
-                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.get() + "!");
+                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.get() + "! You can download the newest version on " + MatHaxLegacy.URL + "Download!");
                 String promptId = "new-update";
                 if (button) {
                     promptId += "-button";

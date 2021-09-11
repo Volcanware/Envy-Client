@@ -15,6 +15,7 @@ import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.misc.text.TextUtils;
 import mathax.legacy.client.utils.world.BlockUtils;
 import mathax.legacy.client.utils.world.Dimension;
+import mathax.legacy.client.utils.world.EnhancedBlockUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BedBlockEntity;
@@ -26,6 +27,7 @@ import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
 import net.minecraft.item.SwordItem;
+import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -43,6 +45,14 @@ public class PlayerUtils {
     private static final Vec3d horizontalVelocity = new Vec3d(0, 0, 0);
 
     private static final Color color = new Color();
+
+    public static void swingHand(boolean offhand) {
+        if (offhand) {
+            mc.player.swingHand(Hand.OFF_HAND);
+        } else {
+            mc.player.swingHand(Hand.MAIN_HAND);
+        }
+    }
 
     public static boolean placeBlock(BlockPos blockPos, Hand hand, boolean bl) {
         return PlayerUtils.placeBlock(blockPos, hand, true, bl);
@@ -241,6 +251,18 @@ public class PlayerUtils {
         }
 
         return air < 2;
+    }
+
+    public static boolean isBurrowed(PlayerEntity p, boolean holeCheck) {
+        BlockPos pos = p.getBlockPos();
+        if (holeCheck && !EnhancedBlockUtils.isInHole(p)) return false;
+        return BlockUtils.getBlock(pos) == Blocks.ENDER_CHEST || BlockUtils.getBlock(pos) == Blocks.OBSIDIAN || EnhancedBlockUtils.isAnvilBlock(pos);
+    }
+
+    public static void doPacketMine(BlockPos targetPos) {
+        mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, targetPos, Direction.UP));
+        swingHand(false);
+        mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, targetPos, Direction.UP));
     }
 
     public static double possibleHealthReductions() {
