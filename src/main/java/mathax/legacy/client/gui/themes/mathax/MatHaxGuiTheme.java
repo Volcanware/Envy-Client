@@ -81,17 +81,17 @@ public class MatHaxGuiTheme extends GuiTheme {
     public final Setting<Integer> round = sgGeneral.add(new IntSetting.Builder()
         .name("round")
         .description("How much windows should be rounded")
-        .defaultValue(0)
+        .defaultValue(10)
         .min(0)
         .max(20)
         .sliderMin(0)
-        .sliderMax(15)
+        .sliderMax(20)
         .build()
     );
 
     // Colors
 
-    public final Setting<SettingColor> accentColor = color("accent", "Installer color of the GUI.", new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b));
+    public final Setting<SettingColor> mainColor = color("main", "Main color of the GUI.", new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b));
     public final Setting<SettingColor> checkboxColor = color("checkbox", "Color of checkbox.", new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b));
     public final Setting<SettingColor> plusColor = color("plus", "Color of plus button.", new SettingColor(255, 255, 255));
     public final Setting<SettingColor> minusColor = color("minus", "Color of minus button.", new SettingColor(255, 255, 255));

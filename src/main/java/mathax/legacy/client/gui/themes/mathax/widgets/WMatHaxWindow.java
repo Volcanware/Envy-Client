@@ -24,7 +24,7 @@ public class WMatHaxWindow extends WWindow implements MatHaxWidget {
     private class WMatHaxHeader extends WHeader {
         @Override
         protected void onRender(GuiRenderer renderer, double mouseX, double mouseY, double delta) {
-            renderer.quadRounded(this, theme().accentColor.get(), theme.roundAmount());
+            renderer.quadRounded(this, theme().mainColor.get(), theme.roundAmount());
         }
     }
 }

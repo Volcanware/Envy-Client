@@ -69,7 +69,7 @@ public class WMatHaxModule extends WPressable implements MatHaxWidget {
             renderer.quad(x, y, width * animationProgress1, height, theme.moduleBackground.get());
         }
         if (animationProgress2 > 0) {
-            renderer.quad(x, y + height * (1 - animationProgress2), theme.scale(2), height * animationProgress2, theme.accentColor.get());
+            renderer.quad(x, y + height * (1 - animationProgress2), theme.scale(2), height * animationProgress2, theme.mainColor.get());
         }
 
         double x = this.x + pad;
