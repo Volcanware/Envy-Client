@@ -109,7 +109,7 @@ public class MatHaxGuiTheme extends GuiTheme {
             sgBackgroundColors,
             "background",
             new SettingColor(35, 35, 45, 100),
-            new SettingColor(35, 35, 45, 1500),
+            new SettingColor(35, 35, 45, 150),
             new SettingColor(35, 35, 45, 200)
     );
 
