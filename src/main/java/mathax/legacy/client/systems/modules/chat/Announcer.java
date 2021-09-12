@@ -29,7 +29,7 @@ public class Announcer extends Module {
     };
 
     public Announcer() {
-        super(Categories.Chat, Items.BELL, "announcer", "Announces specified actions into chat.");
+        super(Categories.Chat, Items.BELL, "announcer");
     }
 
     @Override
@@ -93,14 +93,14 @@ public class Announcer extends Module {
 
     private class Moving extends Feature {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
-        .name("moving-message")
+        .name("message")
         .description("The chat message for moving a certain amount of blocks.")
         .defaultValue("I just moved %distance% blocks thanks to MatHax Legacy!")
         .build()
         );
 
         private final Setting<Double> delay = sg.add(new DoubleSetting.Builder()
-        .name("moving-delay")
+        .name("delay")
         .description("The amount of delay between moving messages in seconds.")
         .defaultValue(10)
         .sliderMax(60)
@@ -108,7 +108,7 @@ public class Announcer extends Module {
         );
 
         private final Setting<Double> minDistance = sg.add(new DoubleSetting.Builder()
-        .name("moving-min-distance")
+        .name("min-distance")
         .description("The minimum distance for a moving message to send into chat.")
         .defaultValue(10)
         .sliderMax(100)
@@ -167,7 +167,7 @@ public class Announcer extends Module {
 
     private class Mining extends Feature {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
-            .name("mining-message")
+            .name("message")
             .description("The chat message for mining blocks.")
             .defaultValue("I just mined %count% %block% thanks to MatHax Legacy!")
             .build()
@@ -220,7 +220,7 @@ public class Announcer extends Module {
 
     private class Placing extends Feature {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
-            .name("placing-message")
+            .name("message")
             .description("The chat message for placing blocks.")
             .defaultValue("I just placed %count% %block% thanks to MatHax Legacy!")
             .build()
@@ -271,7 +271,7 @@ public class Announcer extends Module {
 
     private class DropItems extends Feature {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
-            .name("drop-items-message")
+            .name("message")
             .description("The chat message for dropping items.")
             .defaultValue("I just dropped %count% %item% thanks to MatHax Legacy!")
             .build()
@@ -322,7 +322,7 @@ public class Announcer extends Module {
 
     private class PickItems extends Feature {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
-            .name("pick-items-message")
+            .name("message")
             .description("The chat message for picking up items.")
             .defaultValue("I just picked up %count% %item% thanks to MatHax Legacy!")
             .build()
@@ -373,7 +373,7 @@ public class Announcer extends Module {
 
     private class OpenContainer extends Feature {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
-            .name("open-container-message")
+            .name("message")
             .description("The chat message for opening a container.")
             .defaultValue("I just opened %name% thanks to MatHax Legacy!")
             .build()

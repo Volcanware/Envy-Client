@@ -30,6 +30,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class HoleFiller extends Module {
+    private final Pool<Hole> holePool = new Pool<>(Hole::new);
+    private final List<Hole> holes = new ArrayList<>();
+    private final byte NULL = 0;
+    private int timer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -126,13 +131,8 @@ public class HoleFiller extends Module {
         .build()
     );
 
-    private final Pool<Hole> holePool = new Pool<>(Hole::new);
-    private final List<Hole> holes = new ArrayList<>();
-    private final byte NULL = 0;
-    private int timer;
-
     public HoleFiller() {
-        super(Categories.Combat, Items.OBSIDIAN, "hole-filler", "Fills holes with specified blocks.");
+        super(Categories.Combat, Items.OBSIDIAN, "hole-filler");
     }
 
     @Override

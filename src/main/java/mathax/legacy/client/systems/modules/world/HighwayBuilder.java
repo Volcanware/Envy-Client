@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.world;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.ShapeMode;
@@ -9,6 +10,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.player.AutoEat;
 import mathax.legacy.client.systems.modules.player.AutoTool;
+import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.misc.HorizontalDirection;
 import mathax.legacy.client.utils.misc.MBlockPos;
 import mathax.legacy.client.utils.player.CustomPlayerInput;
@@ -187,14 +189,14 @@ public class HighwayBuilder extends Module {
     private final Setting<SettingColor> renderMineSideColor = sgRenderMine.add(new ColorSetting.Builder()
         .name("blocks-to-mine-side-color")
         .description("Color of blocks to be mined.")
-        .defaultValue(new SettingColor(230, 75, 100, 75))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 75))
         .build()
     );
 
     private final Setting<SettingColor> renderMineLineColor = sgRenderMine.add(new ColorSetting.Builder()
         .name("blocks-to-mine-line-color")
         .description("Color of blocks to be mined.")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
@@ -217,14 +219,14 @@ public class HighwayBuilder extends Module {
     private final Setting<SettingColor> renderPlaceSideColor = sgRenderPlace.add(new ColorSetting.Builder()
         .name("blocks-to-place-side-color")
         .description("Color of blocks to be placed.")
-        .defaultValue(new SettingColor(230, 75, 100, 75))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 75))
         .build()
     );
 
     private final Setting<SettingColor> renderPlaceLineColor = sgRenderPlace.add(new ColorSetting.Builder()
         .name("blocks-to-place-line-color")
         .description("Color of blocks to be placed.")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
@@ -245,7 +247,7 @@ public class HighwayBuilder extends Module {
     private final MBlockPos posRender3 = new MBlockPos();
 
     public HighwayBuilder() {
-        super(Categories.World, Items.OBSIDIAN, "highway-builder", "Automatically builds highways.");
+        super(Categories.World, Items.OBSIDIAN, "highway-builder");
     }
 
     @Override
@@ -300,7 +302,7 @@ public class HighwayBuilder extends Module {
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (width.get() < 3 && dir.diagonal) {
-            errorEarly("Highway Builder", "Diagonal highways with width less than 3 are not supported.");
+            errorEarly("Diagonal highways with width less than 3 are not supported.");
             return;
         }
 
@@ -386,7 +388,7 @@ public class HighwayBuilder extends Module {
     }
 
     private void disconnect(String message, Object... args) {
-        MutableText text = new LiteralText(String.format("%s[%s%s%s] %s", Formatting.GRAY, Formatting.BLUE, title, Formatting.GRAY, Formatting.RED) + String.format(message, args)).append("\n");
+        MutableText text = new LiteralText(String.format("%s[%s%s%s] %s", Formatting.GRAY, Formatting.BLUE, Language.getModuleTitleString(name), Formatting.GRAY, Formatting.RED) + String.format(message, args)).append("\n");
         text.append(getStatsText());
 
         mc.getNetworkHandler().getConnection().disconnect(text);

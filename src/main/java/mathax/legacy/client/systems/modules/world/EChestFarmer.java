@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.world;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.ShapeMode;
@@ -81,14 +82,14 @@ public class EChestFarmer extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(225, 75, 100, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 100))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(225, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .build()
     );
 
@@ -98,7 +99,7 @@ public class EChestFarmer extends Module {
     private int startCount, prevSlot;
 
     public EChestFarmer() {
-        super(Categories.World, Items.ENDER_CHEST, "EChest-farmer", "Places and breaks EChests to farm obsidian.");
+        super(Categories.World, Items.ENDER_CHEST, "EChest-farmer");
     }
 
     @Override

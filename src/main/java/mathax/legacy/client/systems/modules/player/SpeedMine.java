@@ -15,12 +15,6 @@ import net.minecraft.item.Items;
 import static net.minecraft.entity.effect.StatusEffects.HASTE;
 
 public class SpeedMine extends Module {
-    public enum Mode {
-        Normal,
-        Haste1,
-        Haste2
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -39,7 +33,7 @@ public class SpeedMine extends Module {
     );
 
     public SpeedMine() {
-        super(Categories.Player, Items.GOLDEN_PICKAXE, "speed-mine", "Allows you to quickly mine blocks.");
+        super(Categories.Player, Items.GOLDEN_PICKAXE, "speed-mine");
     }
 
     @EventHandler
@@ -58,5 +52,11 @@ public class SpeedMine extends Module {
                 mc.player.addStatusEffect(new StatusEffectInstance(HASTE, 20, amplifier, false, false, false));
             }
         }
+    }
+
+    public enum Mode {
+        Normal,
+        Haste1,
+        Haste2
     }
 }

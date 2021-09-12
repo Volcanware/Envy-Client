@@ -12,7 +12,7 @@ import net.minecraft.item.Items;
 
 public class AutoRespawn extends Module {
     public AutoRespawn() {
-        super(Categories.Player, Items.COMMAND_BLOCK, "auto-respawn", "Automatically respawns after death.");
+        super(Categories.Player, Items.COMMAND_BLOCK, "auto-respawn");
     }
 
     @EventHandler(priority = EventPriority.HIGH)

@@ -12,7 +12,6 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import net.minecraft.item.Items;
-import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
@@ -51,7 +50,7 @@ public class AntiGhostBlock extends Module {
 
     private void lambda$onTick$0(List list, long l, BlockPos blockPos, Long l2) {
         if (list.isEmpty() && l - l2 >= (long)requestDelay.get().intValue()) {
-            mc.getNetworkHandler().sendPacket((Packet<?>) new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, Direction.UP));
+            mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, Direction.UP));
             list.add(blockPos.asLong());
             lastRequest = l;
         }
@@ -63,7 +62,7 @@ public class AntiGhostBlock extends Module {
     }
 
     public AntiGhostBlock() {
-        super(Categories.World, Items.BARRIER, "anti-ghost-block", "Automatically removes ghost blocks.");
+        super(Categories.World, Items.BARRIER, "anti-ghost-block");
         blocks = new HashMap();
         lock = false;
         lastRequest = 0L;

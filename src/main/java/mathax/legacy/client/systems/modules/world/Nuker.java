@@ -19,18 +19,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Nuker extends Module {
-    public enum Mode {
-        All,
-        Flatten,
-        Smash
-    }
-
-    public enum SortMode {
-        None,
-        Closest,
-        Furthest
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgWhitelist = settings.createGroup("Whitelist");
 
@@ -99,7 +87,7 @@ public class Nuker extends Module {
     private int noBlockTimer;
 
     public Nuker() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "nuker", "Breaks blocks around you.");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "nuker");
     }
 
     @Override
@@ -180,5 +168,17 @@ public class Nuker extends Module {
             for (BlockPos.Mutable blockPos : blocks) blockPosPool.free(blockPos);
             blocks.clear();
         });
+    }
+
+    public enum Mode {
+        All,
+        Flatten,
+        Smash
+    }
+
+    public enum SortMode {
+        None,
+        Closest,
+        Furthest
     }
 }

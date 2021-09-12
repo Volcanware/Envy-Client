@@ -14,11 +14,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Items;
 
 public class Fullbright extends Module {
-    public enum Mode {
-        Gamma,
-        Luminance
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -48,7 +43,7 @@ public class Fullbright extends Module {
     );
 
     public Fullbright() {
-        super(Categories.Render, Items.BEACON, "fullbright", "Lights up your world!");
+        super(Categories.Render, Items.BEACON, "fullbright");
 
         MatHaxLegacy.EVENT_BUS.subscribe(StaticListener.class);
     }
@@ -111,5 +106,10 @@ public class Fullbright extends Module {
 
             lastTimesEnabled = timesEnabled;
         }
+    }
+
+    public enum Mode {
+        Gamma,
+        Luminance
     }
 }

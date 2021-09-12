@@ -3,9 +3,7 @@ package mathax.legacy.client.utils.player;
 import mathax.legacy.client.mixininterface.IClientPlayerInteractionManager;
 import mathax.legacy.client.utils.Utils;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.*;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 
@@ -93,11 +91,25 @@ public class InvUtils {
         return new FindItemResult(slot, 1);
     }
 
+    public static FindItemResult findEgap() {
+        return InvUtils.findInHotbar(Items.ENCHANTED_GOLDEN_APPLE);
+    }
+
+    public static FindItemResult findSword() {
+        return InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof SwordItem);
+    }
+
     public static FindItemResult findPick() {
         return InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof PickaxeItem);
     }
 
     // Interactions
+
+    public static Item getItemFromSlot(Integer slot) {
+        if (slot == -1) return null;
+        if (slot == 45) return mc.player.getOffHandStack().getItem();
+        return mc.player.getInventory().getStack(slot).getItem();
+    }
 
     public static boolean swap(int slot, boolean swapBack) {
         if (slot < 0 || slot > 8) return false;

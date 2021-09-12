@@ -18,6 +18,11 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.Items;
 
 public class Background extends Module {
+    private Shader shader;
+    private Framebuffer fbo1, fbo2;
+
+    private boolean enabled;
+    private long fadeEndAt;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgBlur = settings.createGroup("Blur");
@@ -100,14 +105,8 @@ public class Background extends Module {
         .build()
     );*/
 
-    private Shader shader;
-    private Framebuffer fbo1, fbo2;
-
-    private boolean enabled;
-    private long fadeEndAt;
-
     public Background() {
-        super(Categories.Render, Items.TINTED_GLASS, "background", "Custom background when in GUI screens.");
+        super(Categories.Render, Items.TINTED_GLASS, "background");
 
         // The listeners need to run even when the module is not enabled
         MatHaxLegacy.EVENT_BUS.subscribe(new ConsumerListener<>(WindowResizedEvent.class, event -> {

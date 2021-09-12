@@ -14,6 +14,8 @@ import mathax.legacy.client.bus.EventHandler;
 import net.minecraft.item.Items;
 
 public class AirJump extends Module {
+    private int level;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> maintainLevel = sgGeneral.add(new BoolSetting.Builder()
@@ -23,10 +25,8 @@ public class AirJump extends Module {
         .build()
     );
 
-    private int level;
-
     public AirJump() {
-        super(Categories.Movement, Items.BARRIER, "air-jump", "Lets you jump in the air.");
+        super(Categories.Movement, Items.BARRIER, "air-jump");
     }
 
     @Override

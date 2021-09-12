@@ -115,7 +115,7 @@ public class VeinMiner extends Module {
     private final List<BlockPos> foundBlockPositions = new ArrayList<>();
 
     public VeinMiner() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "vein-miner", "Mines all nearby blocks with this type");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "vein-miner");
     }
 
     @Override

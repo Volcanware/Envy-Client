@@ -12,6 +12,7 @@ import mathax.legacy.client.bus.EventPriority;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.block.enums.SlabType;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -40,6 +41,14 @@ public class BlockUtils {
     public static Block getBlock(BlockPos p) {
         if (p == null) return null;
         return mc.world.getBlockState(p).getBlock();
+    }
+
+    public static boolean isTrapBlock(BlockPos pos) {
+        return getBlock(pos) == Blocks.OBSIDIAN || getBlock(pos) == Blocks.ENDER_CHEST;
+    }
+
+    public static boolean isWeb(BlockPos pos) {
+        return BlockUtils.getBlock(pos) == Blocks.COBWEB || BlockUtils.getBlock(pos) == Block.getBlockFromItem(Items.STRING);
     }
 
     // Placing

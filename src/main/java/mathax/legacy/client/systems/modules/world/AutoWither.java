@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.world;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
@@ -100,13 +101,13 @@ public class AutoWither extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The side color of the target block rendering.")
-        .defaultValue(new SettingColor(230, 75, 100, 50))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
         .build()
     );
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The line color of the target block rendering.")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
@@ -117,7 +118,7 @@ public class AutoWither extends Module {
     private int witherTicksWaited, blockTicksWaited;
 
     public AutoWither() {
-        super(Categories.World, Items.WITHER_SKELETON_SKULL, "auto-wither", "Automatically builds withers.");
+        super(Categories.World, Items.WITHER_SKELETON_SKULL, "auto-wither");
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.player.ChatUtils;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.BaseText;
@@ -26,7 +27,7 @@ public class ModulesCommand extends Command {
             Modules.loopCategories().forEach(category -> {
                 BaseText categoryMessage = new LiteralText("");
                 Modules.get().getGroup(category).forEach(module -> categoryMessage.append(getModuleText(module)));
-                ChatUtils.sendMsg(category.name, categoryMessage);
+                ChatUtils.sendMsg(Language.getCategoryTitleString(category.name), categoryMessage);
             });
 
             return SINGLE_SUCCESS;
@@ -37,11 +38,11 @@ public class ModulesCommand extends Command {
         // Hover tooltip
         BaseText tooltip = new LiteralText("");
 
-        tooltip.append(new LiteralText(module.title).formatted(Formatting.BLUE, Formatting.BOLD)).append("\n");
+        tooltip.append(new LiteralText(Language.getModuleTitleString(module.name)).formatted(Formatting.BLUE, Formatting.BOLD)).append("\n");
         tooltip.append(new LiteralText(module.name).formatted(Formatting.GRAY)).append("\n\n");
-        tooltip.append(new LiteralText(module.description).formatted(Formatting.WHITE));
+        tooltip.append(new LiteralText(Language.getModuleDescriptionString(module.name)).formatted(Formatting.WHITE));
 
-        BaseText finalModule = new LiteralText(module.title);
+        BaseText finalModule = new LiteralText(Language.getModuleTitleString(module.name));
         if (module != Modules.get().getList().get(Modules.get().getList().size() - 1)) finalModule.append(new LiteralText(", ").formatted(Formatting.GRAY));
         finalModule.setStyle(finalModule.getStyle().withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip)));
 

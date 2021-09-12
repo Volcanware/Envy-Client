@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.combat;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.ShapeMode;
@@ -25,7 +26,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
+/*/ Automation                                                                                                   /*/
+/*/ Used from Orion Meteor Addon                                                                                 /*/
+/*/ https://github.com/GhostTypes/orion/blob/main/src/main/java/me/ghosttypes/orion/modules/main/AnchorAura.java /*/
+
 public class AnchorAura extends Module {
+    private int placeDelayLeft;
+    private int breakDelayLeft;
+    private PlayerEntity target;
+    private boolean sentTrapMine;
+    private boolean sentBurrowMine;
+    private boolean sentAntiStuck;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgPlace = settings.createGroup("Place");
     private final SettingGroup sgBreak = settings.createGroup("Break");
@@ -224,7 +236,7 @@ public class AnchorAura extends Module {
     private final Setting<SettingColor> placeSideColor = sgRender.add(new ColorSetting.Builder()
         .name("place-side-color")
         .description("The side color for positions to be placed.")
-        .defaultValue(new SettingColor(230, 75, 100, 75))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 75))
         .visible(renderPlace::get)
         .build()
     );
@@ -232,7 +244,7 @@ public class AnchorAura extends Module {
     private final Setting<SettingColor> placeLineColor = sgRender.add(new ColorSetting.Builder()
         .name("place-line-color")
         .description("The line color for positions to be placed.")
-        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .visible(renderPlace::get)
         .build()
     );
@@ -247,7 +259,7 @@ public class AnchorAura extends Module {
     private final Setting<SettingColor> breakSideColor = sgRender.add(new ColorSetting.Builder()
         .name("break-side-color")
         .description("The side color for anchors to be broken.")
-        .defaultValue(new SettingColor(230, 75, 100, 75))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 75))
         .visible(renderBreak::get)
         .build()
     );
@@ -255,20 +267,13 @@ public class AnchorAura extends Module {
     private final Setting<SettingColor> breakLineColor = sgRender.add(new ColorSetting.Builder()
         .name("break-line-color")
         .description("The line color for anchors to be broken.")
-        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .visible(renderBreak::get)
         .build()
     );
 
-    private int placeDelayLeft;
-    private int breakDelayLeft;
-    private PlayerEntity target;
-    private boolean sentTrapMine;
-    private boolean sentBurrowMine;
-    private boolean sentAntiStuck;
-
     public AnchorAura() {
-        super(Categories.Combat, Items.RESPAWN_ANCHOR, "anchor-aura", "Automatically places and breaks Respawn Anchors to harm entities.");
+        super(Categories.Combat, Items.RESPAWN_ANCHOR, "anchor-aura");
     }
 
     @Override

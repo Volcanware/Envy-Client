@@ -13,11 +13,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
 
 public class FastUse extends Module {
-    public enum Mode {
-        All,
-        Some
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -42,7 +37,7 @@ public class FastUse extends Module {
     );
 
     public FastUse() {
-        super(Categories.Player, Items.REDSTONE_BLOCK, "fast-use", "Allows you to use items at very high speeds.");
+        super(Categories.Player, Items.REDSTONE_BLOCK, "fast-use");
     }
 
     @EventHandler
@@ -57,5 +52,10 @@ public class FastUse extends Module {
                     ((MinecraftClientAccessor) mc).setItemUseCooldown(0);
                 break;
         }
+    }
+
+    public enum Mode {
+        All,
+        Some
     }
 }

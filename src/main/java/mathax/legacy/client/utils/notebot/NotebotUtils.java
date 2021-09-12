@@ -219,10 +219,6 @@ public class NotebotUtils {
         }
     }
 
-    public enum InstrumentType {
-        Any, NotDrums, Harp, Bass, Bells, Flute, Chimes, Guitar, Xylophone, IronXylophone, CowBell, Didgeridoo, Bit, Banjo, Pling
-    }
-
     public static SoundEvent getInstrumentSound(InstrumentType instrument) {
         switch (instrument) {
             case Bass:
@@ -253,4 +249,23 @@ public class NotebotUtils {
                 return SoundEvents.BLOCK_NOTE_BLOCK_HARP;
         }
     }
+
+    public enum InstrumentType {
+        Any,
+        NotDrums,
+        Harp,
+        Bass,
+        Bells,
+        Flute,
+        Chimes,
+        Guitar,
+        Xylophone,
+        IronXylophone,
+        CowBell,
+        Didgeridoo,
+        Bit,
+        Banjo,
+        Pling
+    }
+
 }

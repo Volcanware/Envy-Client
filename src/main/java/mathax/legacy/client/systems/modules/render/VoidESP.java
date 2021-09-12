@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.ShapeMode;
@@ -75,14 +76,14 @@ public class VoidESP extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("fill-color")
         .description("The color that fills holes in the void.")
-        .defaultValue(new SettingColor(225, 25, 25, 50))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color to draw lines of holes to the void.")
-        .defaultValue(new SettingColor(225, 25, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
@@ -92,7 +93,7 @@ public class VoidESP extends Module {
     private final List<Void> voidHoles = new ArrayList<>();
 
     public VoidESP() {
-        super(Categories.Render, Items.RED_STAINED_GLASS, "void-ESP", "Renders holes in bedrock layers that lead to the void.");
+        super(Categories.Render, Items.RED_STAINED_GLASS, "void-ESP");
     }
 
     private boolean isBlockWrong(BlockPos blockPos) {

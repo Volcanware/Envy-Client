@@ -22,6 +22,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 
 public class AutoAnvil extends Module {
+    private PlayerEntity target;
+    private int timer;
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
@@ -88,11 +90,8 @@ public class AutoAnvil extends Module {
         .build()
     );
 
-    private PlayerEntity target;
-    private int timer;
-
     public AutoAnvil() {
-        super(Categories.Combat, Items.ANVIL, "auto-anvil", "Automatically places anvils above players to destroy helmets.");
+        super(Categories.Combat, Items.ANVIL, "auto-anvil");
     }
 
     @Override

@@ -2,6 +2,7 @@ package mathax.legacy.client.systems.modules.combat;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import it.unimi.dsi.fastutil.ints.*;
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.entity.EntityAddedEvent;
 import mathax.legacy.client.events.entity.EntityRemovedEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
@@ -50,6 +51,45 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class CrystalAura extends Module {
+    private int breakTimer, placeTimer, switchTimer, ticksPassed;
+    private final List<PlayerEntity> targets = new ArrayList<>();
+
+    private final Vec3d vec3d = new Vec3d(0, 0, 0);
+    private final Vec3d playerEyePos = new Vec3d(0, 0, 0);
+    private final Vec3 vec3 = new Vec3();
+    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
+    private final Box box = new Box(0, 0, 0, 0, 0, 0);
+
+    private final Vec3d vec3dRayTraceEnd = new Vec3d(0, 0, 0);
+    private RaycastContext raycastContext;
+
+    private final IntSet placedCrystals = new IntOpenHashSet();
+    private boolean placing;
+    private int placingTimer;
+    private final BlockPos.Mutable placingCrystalBlockPos = new BlockPos.Mutable();
+
+    private final IntSet removed = new IntOpenHashSet();
+    private final Int2IntMap attemptedBreaks = new Int2IntOpenHashMap();
+    private final Int2IntMap waitingToExplode = new Int2IntOpenHashMap();
+    private int attacks;
+
+    private double serverYaw;
+
+    private PlayerEntity bestTarget;
+    private double bestTargetDamage;
+    private int bestTargetTimer;
+
+    private boolean didRotateThisTick;
+    private boolean isLastRotationPos;
+    private final Vec3d lastRotationPos = new Vec3d(0, 0 ,0);
+    private double lastYaw, lastPitch;
+    private int lastRotationTimer;
+
+    private int renderTimer, breakRenderTimer;
+    private final BlockPos.Mutable renderPos = new BlockPos.Mutable();
+    private final BlockPos.Mutable breakRenderPos = new BlockPos.Mutable();
+    private double renderDamage;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgPlace = settings.createGroup("Place");
     private final SettingGroup sgFacePlace = settings.createGroup("Face Place");
@@ -454,7 +494,7 @@ public class CrystalAura extends Module {
     private final Setting<SettingColor> textColor = sgRender.add(new ColorSetting.Builder()
         .name("text-color")
         .description("The text color of the block overlay.")
-        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .visible(() -> textColorMode.get() == ColorMode.Static)
         .build()
     );
@@ -478,49 +518,8 @@ public class CrystalAura extends Module {
         .build()
     );
 
-    // Fields
-
-    private int breakTimer, placeTimer, switchTimer, ticksPassed;
-    private final List<PlayerEntity> targets = new ArrayList<>();
-
-    private final Vec3d vec3d = new Vec3d(0, 0, 0);
-    private final Vec3d playerEyePos = new Vec3d(0, 0, 0);
-    private final Vec3 vec3 = new Vec3();
-    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
-    private final Box box = new Box(0, 0, 0, 0, 0, 0);
-
-    private final Vec3d vec3dRayTraceEnd = new Vec3d(0, 0, 0);
-    private RaycastContext raycastContext;
-
-    private final IntSet placedCrystals = new IntOpenHashSet();
-    private boolean placing;
-    private int placingTimer;
-    private final BlockPos.Mutable placingCrystalBlockPos = new BlockPos.Mutable();
-
-    private final IntSet removed = new IntOpenHashSet();
-    private final Int2IntMap attemptedBreaks = new Int2IntOpenHashMap();
-    private final Int2IntMap waitingToExplode = new Int2IntOpenHashMap();
-    private int attacks;
-
-    private double serverYaw;
-
-    private PlayerEntity bestTarget;
-    private double bestTargetDamage;
-    private int bestTargetTimer;
-
-    private boolean didRotateThisTick;
-    private boolean isLastRotationPos;
-    private final Vec3d lastRotationPos = new Vec3d(0, 0 ,0);
-    private double lastYaw, lastPitch;
-    private int lastRotationTimer;
-
-    private int renderTimer, breakRenderTimer;
-    private final BlockPos.Mutable renderPos = new BlockPos.Mutable();
-    private final BlockPos.Mutable breakRenderPos = new BlockPos.Mutable();
-    private double renderDamage;
-
     public CrystalAura() {
-        super(Categories.Combat, Items.END_CRYSTAL, "crystal-aura", "Automatically places and attacks crystals.");
+        super(Categories.Combat, Items.END_CRYSTAL, "crystal-aura");
     }
 
     @Override

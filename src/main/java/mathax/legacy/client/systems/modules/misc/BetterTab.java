@@ -15,12 +15,10 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 
 public class BetterTab extends Module {
-    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
-
-    private Color textureColor = new Color(255, 255, 255, 255);
+    /*private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
+    private Color textureColor = new Color(255, 255, 255, 255);*/
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -71,7 +69,7 @@ public class BetterTab extends Module {
     );
 
     public BetterTab() {
-        super(Categories.Misc, Items.PAPER, "better-tab", "Various improvements to the tab list.");
+        super(Categories.Misc, Items.PAPER, "better-tab");
     }
 
     public Text getPlayerName(PlayerListEntry playerListEntry) {

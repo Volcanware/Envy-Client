@@ -12,6 +12,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 
 public class NoSlow extends Module {
+    private boolean usedTimer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> items = sgGeneral.add(new BoolSetting.Builder()
@@ -66,10 +68,8 @@ public class NoSlow extends Module {
         .build()
     );
 
-    private boolean usedTimer;
-
     public NoSlow() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "no-slow", "Allows you to move normally when using objects that will slow you.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "no-slow");
     }
 
     public boolean airStrict() {

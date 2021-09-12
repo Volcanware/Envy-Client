@@ -1,5 +1,6 @@
 package mathax.legacy.client.utils.placeholders;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.Version;
 import mathax.legacy.client.gui.screens.*;
 import mathax.legacy.client.gui.screens.TitleScreen;
@@ -40,7 +41,11 @@ public class DiscordPlaceholder {
         switch (placeholder) {
             case "%activity%":
                 if (mc.getOverlay() instanceof SplashOverlay) {
-                    return "The game is loading...";
+                    if (MatHaxLegacy.INSTANCE.firstLoading) {
+                        return "The game is loading...";
+                    } else {
+                        return "The game is reloading...";
+                    }
                 } else if (mc.currentScreen instanceof PromptBuilder.PromptScreen && PromptBuilder.promptId.equals("new-update")) {
                     return "Viewing new update";
                 } else if (mc.currentScreen instanceof PromptBuilder.PromptScreen && PromptBuilder.promptId.equals("new-update-button")) {
@@ -147,9 +152,8 @@ public class DiscordPlaceholder {
     }
 
     private static String getModule() {
-        String module = ((ModuleScreen) mc.currentScreen).module.name.toLowerCase();
-        String replaced = module.replace("-", " ");
-        String[] split = replaced.split(" ");
+        String module = ((ModuleScreen) mc.currentScreen).module.name.toLowerCase().replace("-", " ");
+        String[] split = module.split(" ");
         StringBuffer sb = new StringBuffer();
 
         for (int i = 0; i < split.length; i++) {

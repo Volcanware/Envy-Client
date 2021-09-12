@@ -29,6 +29,14 @@ import java.util.List;
 import java.util.Map;
 
 public class AutoGap extends Module {
+    private boolean requiresEGap;
+
+    private boolean eating;
+    private int slot, prevSlot;
+
+    private final List<Class<? extends Module>> wasAura = new ArrayList<>();
+    private boolean wasBaritone;
+
     private static final Class<? extends Module>[] AURAS = new Class[] { KillAura.class, CrystalAura.class, AnchorAura.class, BedAura.class };
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -106,16 +114,8 @@ public class AutoGap extends Module {
         .build()
     );
 
-    private boolean requiresEGap;
-
-    private boolean eating;
-    private int slot, prevSlot;
-
-    private final List<Class<? extends Module>> wasAura = new ArrayList<>();
-    private boolean wasBaritone;
-
     public AutoGap() {
-        super(Categories.Player, Items.ENCHANTED_GOLDEN_APPLE, "auto-gap", "Automatically eats Gaps or E-Gaps.");
+        super(Categories.Player, Items.ENCHANTED_GOLDEN_APPLE, "auto-gap");
     }
 
     @Override

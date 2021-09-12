@@ -60,7 +60,7 @@ public class AutoNametag extends Module {
     private boolean offHand;
 
     public AutoNametag() {
-        super(Categories.World, Items.NAME_TAG, "auto-nametag", "Automatically uses nametags on entities without a nametag. WILL nametag ALL entities in the specified distance.");
+        super(Categories.World, Items.NAME_TAG, "auto-nametag");
     }
 
     @EventHandler

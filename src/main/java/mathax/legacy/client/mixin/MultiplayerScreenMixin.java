@@ -5,7 +5,7 @@ import mathax.legacy.client.Version;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.systems.proxies.Proxy;
-import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.misc.LastServerInfo;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.systems.modules.Modules;
@@ -16,8 +16,6 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -43,51 +41,63 @@ public class MultiplayerScreenMixin extends Screen {
 
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
-        Version.checkedForLatestTitleText = false;
         Version.checkedForLatest = false;
 
-        loggedInAs = "Logged in as ";
+        loggedInAs = Language.getTextString("logged-in-as") + " ";
         loggedInAsLength = textRenderer.getWidth(loggedInAs);
 
-        addDrawableChild(new ButtonWidget(this.width - 75 - 3 - 75 - 2, 3, 75, 20, new TranslatableText("serverlist.button.mathaxlegacy.proxies"), button -> {
+        addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, Language.getButton("proxies"), button -> {
             client.setScreen(GuiThemes.get().proxiesScreen());
         }));
 
-        addDrawableChild(new ButtonWidget(this.width - 75 - 3, 3, 75, 20, new TranslatableText("serverlist.button.mathaxlegacy.accounts"), button -> {
+        addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, Language.getButton("accounts"), button -> {
             client.setScreen(GuiThemes.get().accountsScreen());
         }));
 
-        addDrawableChild(new ButtonWidget(this.width / 2 - 154, 10, 100, 20, new TranslatableText("serverlist.button.mathaxlegacy.last-server"), button -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, Language.getButton("last-server"), button -> {
             LastServerInfo.reconnect(parent);
         }));
     }
 
     @Inject(method = "render", at = @At("TAIL"))
     private void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
-        float x = 3;
-        float y = 3;
+        float x = 2;
+        float y = 2;
+
+        String space = " ";
+        int spaceLength = textRenderer.getWidth(space);
+
+        String loggedInAs = Language.getTextString("logged-in-as");
+        String loggedName = Modules.get().get(NameProtect.class).getName(client.getSession().getUsername());
+        String loggedOpenDeveloper = "[";
+        String loggedDeveloper = "Developer";
+        String loggedCloseDeveloper = "]";
+        int loggedInAsLength = textRenderer.getWidth(loggedInAs);
+        int loggedNameLength = textRenderer.getWidth(loggedName);
+        int loggedOpenDeveloperLength = textRenderer.getWidth(loggedOpenDeveloper);
+        int loggedDeveloperLength = textRenderer.getWidth(loggedDeveloper);
 
         // Logged in as
-        textRenderer.drawWithShadow(matrices, loggedInAs, x, y, GRAY);
-        textRenderer.drawWithShadow(matrices, Modules.get().get(NameProtect.class).getName(client.getSession().getUsername()) + getDeveloper(), x + loggedInAsLength, y, WHITE);
+        drawStringWithShadow(matrices, textRenderer, loggedInAs, 2, 2, GRAY);
+        drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, 2, GRAY);
+        drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, 2, WHITE);
+        if (!(Modules.get() == null) && !Modules.get().isActive(NameProtect.class) && (client.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || client.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) {
+            drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, 2, GRAY);
+            drawStringWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, 2, GRAY);
+            drawStringWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, 2, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
+            drawStringWithShadow(matrices, textRenderer, loggedCloseDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + loggedDeveloperLength + 2, 2, GRAY);
+        }
 
         y += textRenderer.fontHeight + 2;
 
         // Proxy
         Proxy proxy = Proxies.get().getEnabled();
 
-        String left = proxy != null ? "Using proxy " : "Not using a proxy";
-        String right = proxy != null ? "(" + proxy.name + ") " + proxy.ip + ":" + proxy.port : null;
+        String proxiesleft = proxy != null ? Language.getTextString("using-proxy") + " " : Language.getTextString("not-using-proxy");
+        String proxiesRight = proxy != null ? "(" + proxy.name + ") " + proxy.ip + ":" + proxy.port : null;
 
-        textRenderer.drawWithShadow(matrices, left, x, y, GRAY);
-        if (right != null) textRenderer.drawWithShadow(matrices, right, x + textRenderer.getWidth(left), y, WHITE);
-    }
-
-    private String getDeveloper() {
-        if (Modules.get() == null) return "";
-        if (Modules.get().isActive(NameProtect.class)) return "";
-        if ((Utils.mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || Utils.mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) return Formatting.WHITE + " [Developer]";
-        else return "";
+        drawStringWithShadow(matrices, textRenderer, proxiesleft, (int)x, (int)y, GRAY);
+        if (proxiesRight != null) drawStringWithShadow(matrices, textRenderer, proxiesRight, (int)x + textRenderer.getWidth(proxiesleft), (int)y, WHITE);
     }
 
     @Inject(at = {@At("HEAD")},

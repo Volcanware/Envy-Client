@@ -259,10 +259,34 @@ public class PlayerUtils {
         return BlockUtils.getBlock(pos) == Blocks.ENDER_CHEST || BlockUtils.getBlock(pos) == Blocks.OBSIDIAN || EnhancedBlockUtils.isAnvilBlock(pos);
     }
 
+    public static boolean isWebbed(PlayerEntity player) {
+        BlockPos pos = player.getBlockPos();
+        if (BlockUtils.isWeb(pos)) return true;
+        return BlockUtils.isWeb(pos.up());
+    }
+
+    public static void mineWeb(PlayerEntity p, int swordSlot) {
+        if (p == null || swordSlot == -1) return;
+        BlockPos pos = p.getBlockPos();
+        BlockPos webPos = null;
+        if (BlockUtils.isWeb(pos)) webPos = pos;
+        if (BlockUtils.isWeb(pos.up())) webPos = pos.up();
+        if (BlockUtils.isWeb(pos.up(2))) webPos = pos.up(2);
+        if (webPos == null) return;
+        InvUtils.updateSlot(swordSlot);
+        doRegularMine(webPos);
+    }
+
     public static void doPacketMine(BlockPos targetPos) {
         mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, targetPos, Direction.UP));
         swingHand(false);
         mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, targetPos, Direction.UP));
+    }
+
+    public static void doRegularMine(BlockPos targetPos) {
+        mc.interactionManager.updateBlockBreakingProgress(targetPos, Direction.UP);
+        Vec3d hitPos = new Vec3d(targetPos.getX() + 0.5, targetPos.getY() + 0.5, targetPos.getZ() + 0.5);
+        Rotations.rotate(Rotations.getYaw(hitPos), Rotations.getPitch(hitPos), 50, () -> swingHand(false));
     }
 
     public static double possibleHealthReductions() {

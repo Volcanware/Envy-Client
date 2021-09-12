@@ -22,6 +22,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class ArrowDodge extends Module {
+    private final List<Vec3d> possibleMoveDirections = Arrays.asList(
+        new Vec3d(1, 0, 1),
+        new Vec3d(0, 0, 1),
+        new Vec3d(-1, 0, 1),
+        new Vec3d(1, 0, 0),
+        new Vec3d(-1, 0, 0),
+        new Vec3d(1, 0, -1),
+        new Vec3d(0, 0, -1),
+        new Vec3d(-1, 0, -1)
+    );
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgMovement = settings.createGroup("Movement");
 
@@ -57,19 +68,8 @@ public class ArrowDodge extends Module {
         .build()
     );
 
-    private final List<Vec3d> possibleMoveDirections = Arrays.asList(
-        new Vec3d(1, 0, 1),
-        new Vec3d(0, 0, 1),
-        new Vec3d(-1, 0, 1),
-        new Vec3d(1, 0, 0),
-        new Vec3d(-1, 0, 0),
-        new Vec3d(1, 0, -1),
-        new Vec3d(0, 0, -1),
-        new Vec3d(-1, 0, -1)
-    );
-
     public ArrowDodge() {
-        super(Categories.Combat, Items.ARROW, "arrow-dodge", "Tries to dodge arrows coming at you.");
+        super(Categories.Combat, Items.ARROW, "arrow-dodge");
     }
 
     @EventHandler

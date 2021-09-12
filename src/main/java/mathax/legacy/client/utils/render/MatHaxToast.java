@@ -1,6 +1,7 @@
 package mathax.legacy.client.utils.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.Utils;
@@ -21,11 +22,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class MatHaxToast implements Toast {
-    public static final int TITLE_COLOR = Color.fromRGBA(230, 75, 100, 255);
+    public static final int TITLE_COLOR = Color.fromRGBA(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255);
     public static final int TEXT_COLOR = Color.fromRGBA(255, 255, 255, 255);
 
     private ItemStack icon;
-    private Integer titleColor = TITLE_COLOR;
+    private int titleColor = TITLE_COLOR;
     private Text title, text;
     private boolean justUpdated = true, playedSound;
     private long start, duration;
@@ -66,7 +67,7 @@ public class MatHaxToast implements Toast {
             titleY = 7;
         }
 
-        Utils.mc.textRenderer.draw(matrices, title, x, titleY, TITLE_COLOR);
+        Utils.mc.textRenderer.draw(matrices, title, x, titleY, titleColor);
 
         if (icon != null) Utils.mc.getItemRenderer().renderInGui(icon, 8, 8);
 
@@ -84,7 +85,7 @@ public class MatHaxToast implements Toast {
     }
 
     public void setTitle(@NotNull String title) {
-        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(TITLE_COLOR)));
+        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(titleColor)));
         justUpdated = true;
     }
 

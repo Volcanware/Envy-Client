@@ -23,6 +23,9 @@ import net.minecraft.util.shape.VoxelShape;
 import java.util.Map;
 
 public class BreakIndicators extends Module {
+    private final Color cSides = new Color();
+    private final Color cLines = new Color();
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<ShapeMode> shapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
@@ -46,11 +49,8 @@ public class BreakIndicators extends Module {
         .build()
     );
 
-    private final Color cSides = new Color();
-    private final Color cLines = new Color();
-
     public BreakIndicators() {
-        super(Categories.Render, Items.IRON_PICKAXE, "break-indicators", "Renders the progress of a block being broken.");
+        super(Categories.Render, Items.IRON_PICKAXE, "break-indicators");
     }
 
     @EventHandler

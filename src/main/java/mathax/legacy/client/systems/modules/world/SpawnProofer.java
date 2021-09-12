@@ -65,7 +65,7 @@ public class SpawnProofer extends Module {
     private int ticksWaited;
 
     public SpawnProofer() {
-        super(Categories.World, Items.SPAWNER, "spawn-proofer", "Automatically spawnproofs unlit areas.");
+        super(Categories.World, Items.SPAWNER, "spawn-proofer");
     }
 
     @EventHandler

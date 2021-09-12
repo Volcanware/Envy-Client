@@ -29,6 +29,11 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Auto32K extends Module {
+    private int x;
+    private int z;
+    private int phase = 0;
+    private BlockPos bestBlock;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -68,13 +73,8 @@ public class Auto32K extends Module {
         .build()
     );
 
-    private int x;
-    private int z;
-    private int phase = 0;
-    private BlockPos bestBlock;
-
     public Auto32K(){
-        super(Categories.Combat, Items.HOPPER, "auto-32K", "Automatically attacks other players with a 32k weapon.");
+        super(Categories.Combat, Items.HOPPER, "auto-32K");
     }
 
     @Override

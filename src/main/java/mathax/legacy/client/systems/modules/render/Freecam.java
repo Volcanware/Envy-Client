@@ -87,7 +87,7 @@ public class Freecam extends Module {
     private boolean forward, backward, right, left, up, down;
 
     public Freecam() {
-        super(Categories.Render, Items.PLAYER_HEAD, "freecam", "Allows the camera to move away from the player.");
+        super(Categories.Render, Items.PLAYER_HEAD, "freecam");
     }
 
     @Override

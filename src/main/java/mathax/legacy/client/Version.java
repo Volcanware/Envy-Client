@@ -7,7 +7,6 @@ import net.minecraft.SharedConstants;
 import net.minecraft.util.Util;
 
 public class Version {
-    public static boolean checkedForLatestTitleText = false;
     public static boolean checkedForLatestTitle = false;
     public static boolean checkedForLatest = false;
     private final String string;
@@ -34,7 +33,7 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 0;
+        return 1;
     }
 
     public static String getDevBuild() {

@@ -14,6 +14,8 @@ public class CameraTweaks extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgScrolling = settings.createGroup("Scrolling");
 
+    public double distance;
+
     // General
 
     private final Setting<Boolean> clip = sgGeneral.add(new BoolSetting.Builder()
@@ -58,10 +60,8 @@ public class CameraTweaks extends Module {
         .build()
     );
 
-    public double distance;
-
     public CameraTweaks() {
-        super(Categories.Render, Items.COMMAND_BLOCK, "camera-tweaks", "Allows modification of the third person camera.");
+        super(Categories.Render, Items.COMMAND_BLOCK, "camera-tweaks");
     }
 
     @Override

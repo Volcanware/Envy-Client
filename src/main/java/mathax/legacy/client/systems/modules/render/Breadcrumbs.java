@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Categories;
@@ -15,12 +16,19 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class Breadcrumbs extends Module {
+    private final Pool<Section> sectionPool = new Pool<>(Section::new);
+    private final Queue<Section> sections = new ArrayDeque<>();
+
+    private Section section;
+
+    private DimensionType lastDimension;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
         .name("color")
         .description("The color of the Breadcrumbs trail.")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
@@ -44,15 +52,8 @@ public class Breadcrumbs extends Module {
         .build()
     );
 
-    private final Pool<Section> sectionPool = new Pool<>(Section::new);
-    private final Queue<Section> sections = new ArrayDeque<>();
-
-    private Section section;
-
-    private DimensionType lastDimension;
-
     public Breadcrumbs() {
-        super(Categories.Render, Items.BREAD, "breadcrumbs", "Displays a trail behind where you have walked.");
+        super(Categories.Render, Items.BREAD, "breadcrumbs");
     }
 
     @Override

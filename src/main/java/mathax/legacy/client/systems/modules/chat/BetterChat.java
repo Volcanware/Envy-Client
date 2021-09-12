@@ -69,6 +69,14 @@ public class BetterChat extends Module {
         .build()
     );
 
+    private final Setting<Boolean> timestampsSeconds = sgGeneral.add(new BoolSetting.Builder()
+        .name("seconds")
+        .description("Adds seconds to the timestamps.")
+        .defaultValue(true)
+        .visible(timestamps::get)
+        .build()
+    );
+
     private final Setting<Boolean> playerHeads = sgGeneral.add(new BoolSetting.Builder()
         .name("player-heads")
         .description("Displays player heads next to their messages.")
@@ -170,9 +178,10 @@ public class BetterChat extends Module {
     private final Char2CharMap FULL_WIDTH = new Char2CharArrayMap();
     private final Char2CharMap SMALL_CAPS = new Char2CharArrayMap();
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    private final SimpleDateFormat timeFormatSeconds = new SimpleDateFormat("HH:mm:ss");
 
     public BetterChat() {
-        super(Categories.Chat, Items.DROPPER, "better-chat", "Improves your chat experience in various ways.");
+        super(Categories.Chat, Items.DROPPER, "better-chat");
     }
 
     {
@@ -218,7 +227,14 @@ public class BetterChat extends Module {
             Matcher matcher = Pattern.compile("^(<[0-9]{2}:[0-9]{2}>\\s)").matcher(message.getString());
             if (matcher.matches()) message.getSiblings().subList(0, 8).clear();
 
-            Text timestamp = new LiteralText("<" + timeFormat.format(new Date()) + "> ").formatted(Formatting.GRAY);
+            String time = "";
+            if (timestampsSeconds.get()) {
+                time = timeFormatSeconds.format(new Date());
+            } else {
+                time = timeFormat.format(new Date());
+            }
+
+            Text timestamp = new LiteralText("<" + time + "> ").formatted(Formatting.GRAY);
 
             message = new LiteralText("").append(timestamp).append(message);
         }

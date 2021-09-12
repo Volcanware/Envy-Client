@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Categories;
@@ -58,14 +59,14 @@ public class Trajectories extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The side color.")
-        .defaultValue(new SettingColor(230, 75, 100, 35))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 35))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The line color.")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
@@ -75,7 +76,7 @@ public class Trajectories extends Module {
     private final List<Path> paths = new ArrayList<>();
 
     public Trajectories() {
-        super(Categories.Render, Items.ENDER_PEARL, "trajectories", "Predicts the trajectory of throwable items.");
+        super(Categories.Render, Items.ENDER_PEARL, "trajectories");
     }
 
     private boolean itemFilter(Item item) {

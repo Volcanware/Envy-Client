@@ -2,17 +2,13 @@
 package mathax.legacy.client.systems.modules.chat;
 
 import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.events.game.GameJoinedEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.systems.modules.combat.AnchorAura;
-import mathax.legacy.client.systems.modules.combat.BedAura;
-import mathax.legacy.client.systems.modules.combat.CrystalAura;
-import mathax.legacy.client.systems.modules.combat.CEVBreaker;
+import mathax.legacy.client.systems.modules.combat.*;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.placeholders.Placeholders;
@@ -21,7 +17,7 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.*;
 
 public class AutoEZ extends Module {
-    private int totemsPopped = 0;
+    //private int totemsPopped = 0;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     //private final SettingGroup sgTotemPops = settings.createGroup("Totem Pops");
@@ -69,7 +65,7 @@ public class AutoEZ extends Module {
     );*/
 
     public AutoEZ() {
-        super(Categories.Chat, Items.LIGHTNING_ROD, "auto-EZ", "Announces when you kill someone.");
+        super(Categories.Chat, Items.LIGHTNING_ROD, "auto-EZ");
     }
 
     // KILL
@@ -122,8 +118,8 @@ public class AutoEZ extends Module {
                             }
                         }
                     } else {
-                        if ((msg.contains("bed") || msg.contains("[Intentional Game Design]")) && Modules.get().isActive(BedAura.class)) {
-                            if (mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get()) {
+                        if ((msg.contains("bed") || msg.contains("[Intentional Game Design]")) && (Modules.get().isActive(BedAura.class) || Modules.get().isActive(BedAuraPlus.class))) {
+                            if ((mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get()) || (mc.player.distanceTo(player) < Modules.get().get(BedAuraPlus.class).targetRange.get())) {
                                 String message = getBedMessageStyle();
                                 String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
                                 if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
@@ -349,9 +345,9 @@ public class AutoEZ extends Module {
 
     // TOTEM POPS
 
-    @EventHandler
+    /*@EventHandler
     private void onTotemPop(PacketEvent.Receive event) {
-        /*if (!totemsEnabled.get()) return;
+        if (!totemsEnabled.get()) return;
         if (!(event.packet instanceof EntityStatusS2CPacket)) return;
 
         EntityStatusS2CPacket packet = (EntityStatusS2CPacket) event.packet;
@@ -373,7 +369,7 @@ public class AutoEZ extends Module {
             totemsPopped = 1;
         } else {
             ++totemsPopped;
-        }*/
+        }
     }
 
     public String getTotemMessage() {
@@ -409,5 +405,5 @@ public class AutoEZ extends Module {
     private void onGameJoin(GameJoinedEvent event) {
         // TOTEM POPS
         totemsPopped = 0;
-    }
+    }*/
 }

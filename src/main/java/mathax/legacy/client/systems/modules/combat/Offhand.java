@@ -18,6 +18,10 @@ import net.minecraft.item.*;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
 public class Offhand extends Module {
+    private boolean isClicking;
+    private boolean sentMessage;
+    private Item currentItem;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Item> item = sgGeneral.add(new EnumSetting.Builder<Item>()
@@ -62,12 +66,8 @@ public class Offhand extends Module {
         .build()
     );
 
-    private boolean isClicking;
-    private boolean sentMessage;
-    private Item currentItem;
-
     public Offhand() {
-        super(Categories.Combat, Items.ENCHANTED_GOLDEN_APPLE, "offhand", "Allows you to hold specified items in your offhand.");
+        super(Categories.Combat, Items.ENCHANTED_GOLDEN_APPLE, "offhand");
     }
 
     @Override

@@ -32,6 +32,9 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class InventoryTweaks extends Module {
+    private InventorySorter sorter;
+    private boolean invOpened;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgSorting = settings.createGroup("Sorting");
     private final SettingGroup sgAutoDrop = settings.createGroup("Auto Drop");
@@ -149,12 +152,8 @@ public class InventoryTweaks extends Module {
         .build()
     );
 
-
-    private InventorySorter sorter;
-    private boolean invOpened;
-
     public InventoryTweaks() {
-        super(Categories.Misc, Items.CHEST, "inventory-tweaks", "Various inventory related utilities.");
+        super(Categories.Misc, Items.CHEST, "inventory-tweaks");
     }
 
     @Override

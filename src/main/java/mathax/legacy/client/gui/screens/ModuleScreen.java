@@ -14,6 +14,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.utils.language.Language;
 import net.minecraft.client.MinecraftClient;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -24,7 +25,7 @@ public class ModuleScreen extends WindowScreen {
     private WKeybind keybind;
 
     public ModuleScreen(GuiTheme theme, Module module) {
-        super(theme, module.title);
+        super(theme, Language.getModuleTitleString(module.name));
 
         this.module = module;
     }
@@ -32,7 +33,7 @@ public class ModuleScreen extends WindowScreen {
     @Override
     public void initWidgets() {
         // Description
-        add(theme.label(module.description, Utils.getWindowWidth() / 2.0));
+        add(theme.label(Language.getModuleDescriptionString(module.name), Utils.getWindowWidth() / 2.0));
 
         // Settings
         if (module.settings.groups.size() > 0) {

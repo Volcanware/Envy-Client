@@ -65,7 +65,7 @@ public class ChatBot extends Module {
     );
 
     public ChatBot() {
-        super(Categories.Chat, Items.OBSERVER, "chat-bot", "Bot which automatically responds to commands.");
+        super(Categories.Chat, Items.OBSERVER, "chat-bot");
     }
 
     @EventHandler

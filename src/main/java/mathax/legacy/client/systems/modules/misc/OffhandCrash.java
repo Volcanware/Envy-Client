@@ -16,6 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 public class OffhandCrash extends Module {
+    private static final PlayerActionC2SPacket PACKET = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, new BlockPos(0, 0, 0) , Direction.UP);
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> doCrash = sgGeneral.add(new BoolSetting.Builder()
@@ -42,10 +44,8 @@ public class OffhandCrash extends Module {
         .build()
     );
 
-    private static final PlayerActionC2SPacket PACKET = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, new BlockPos(0, 0, 0) , Direction.UP);
-
     public OffhandCrash() {
-        super(Categories.Misc, Items.COMMAND_BLOCK, "offhand-crash", "An exploit that can crash other players by swapping back and forth between your main hand and offhand.");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "offhand-crash");
     }
 
     @EventHandler

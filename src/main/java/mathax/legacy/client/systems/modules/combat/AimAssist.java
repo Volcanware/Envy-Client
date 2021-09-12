@@ -22,6 +22,9 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
 
 public class AimAssist extends Module {
+    private final Vec3 vec3d1 = new Vec3();
+    private Entity target;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgSpeed = settings.createGroup("Aim Speed");
 
@@ -81,11 +84,8 @@ public class AimAssist extends Module {
         .build()
     );
 
-    private final Vec3 vec3d1 = new Vec3();
-    private Entity target;
-
     public AimAssist() {
-        super(Categories.Combat, Items.ARMOR_STAND, "aim-assist", "Automatically aims at entities.");
+        super(Categories.Combat, Items.ARMOR_STAND, "aim-assist");
     }
 
     @EventHandler

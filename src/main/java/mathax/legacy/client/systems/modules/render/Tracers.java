@@ -132,7 +132,7 @@ public class Tracers extends Module {
     private final Color distanceColor = new Color(255, 255, 255);
 
     public Tracers() {
-        super(Categories.Render, Items.WHITE_STAINED_GLASS, "tracers", "Displays tracer lines to specified entities.");
+        super(Categories.Render, Items.WHITE_STAINED_GLASS, "tracers");
     }
 
     @EventHandler

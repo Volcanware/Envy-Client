@@ -24,10 +24,15 @@ import java.util.List;
 import java.util.Random;
 
 public class AntiAFK extends Module {
-    public enum SpinMode {
-        Server,
-        Client
-    }
+    private final List<String> messages = new ArrayList<>();
+    private int timer;
+    private int messageI;
+    private int strafeTimer = 0;
+    private boolean direction = false;
+
+    private final Random random = new Random();
+
+    private float prevYaw;
 
     private final SettingGroup sgActions = settings.createGroup("Actions");
     private final SettingGroup sgMessages = settings.createGroup("Messages");
@@ -133,18 +138,8 @@ public class AntiAFK extends Module {
         .build()
     );
 
-    private final List<String> messages = new ArrayList<>();
-    private int timer;
-    private int messageI;
-    private int strafeTimer = 0;
-    private boolean direction = false;
-
-    private final Random random = new Random();
-
-    private float prevYaw;
-
     public AntiAFK() {
-        super(Categories.Movement, Items.COMMAND_BLOCK, "anti-AFK", "Performs different actions to prevent getting kicked for AFK reasons.");
+        super(Categories.Movement, Items.COMMAND_BLOCK, "anti-AFK");
     }
 
     @Override
@@ -288,5 +283,10 @@ public class AntiAFK extends Module {
         }
 
         return super.fromTag(tag);
+    }
+
+    public enum SpinMode {
+        Server,
+        Client
     }
 }

@@ -32,13 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InfinityMiner extends Module {
-    public enum Mode {
-        Target,
-        Repair,
-        Still,
-        Home
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAutoToggles = settings.createGroup("Auto Toggles");
     private final SettingGroup sgExtras = settings.createGroup("Extras");
@@ -101,7 +94,7 @@ public class InfinityMiner extends Module {
     private volatile Boolean BLOCKER = false;
 
     public InfinityMiner() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever.");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner");
     }
 
     private boolean filter(Block block) {
@@ -322,5 +315,12 @@ public class InfinityMiner extends Module {
             default:
                 return "";
         }
+    }
+
+    public enum Mode {
+        Target,
+        Repair,
+        Still,
+        Home
     }
 }

@@ -16,10 +16,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Util;
 
 public class Swarm extends Module {
-    public enum Mode {
-        Host,
-        Worker
-    }
+    public SwarmHost host;
+    public SwarmWorker worker;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -46,11 +44,8 @@ public class Swarm extends Module {
         .build()
     );
 
-    public SwarmHost host;
-    public SwarmWorker worker;
-
     public Swarm() {
-        super(Categories.Misc, Items.BEEHIVE, "Swarm", "Allows you to control multiple instances of MatHax from one central host.");
+        super(Categories.Misc, Items.BEEHIVE, "Swarm");
     }
 
     @Override
@@ -132,5 +127,10 @@ public class Swarm extends Module {
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (isWorker()) worker.tick();
+    }
+
+    public enum Mode {
+        Host,
+        Worker
     }
 }

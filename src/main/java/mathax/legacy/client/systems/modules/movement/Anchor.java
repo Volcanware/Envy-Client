@@ -15,6 +15,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
 public class Anchor extends Module {
+    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
+    private boolean wasInHole;
+    private boolean foundHole;
+    private int holeX, holeZ;
+
+    public boolean cancelJump;
+
+    public boolean controlMovement;
+    public double deltaX, deltaZ;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Integer> maxHeight = sgGeneral.add(new IntSetting.Builder()
@@ -61,18 +71,8 @@ public class Anchor extends Module {
         .build()
     );
 
-    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
-    private boolean wasInHole;
-    private boolean foundHole;
-    private int holeX, holeZ;
-
-    public boolean cancelJump;
-
-    public boolean controlMovement;
-    public double deltaX, deltaZ;
-
     public Anchor() {
-        super(Categories.Movement, Items.ANVIL, "anchor", "Helps you get into holes by stopping your movement completely over a hole.");
+        super(Categories.Movement, Items.ANVIL, "anchor");
     }
 
     @Override

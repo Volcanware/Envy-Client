@@ -22,31 +22,7 @@ import net.minecraft.util.Hand;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_MIDDLE;
 
 public class MiddleClickExtra extends Module {
-    private enum Type {
-        Immediate,
-        LongerSingleClick,
-        Longer
-    }
-
-    public enum Mode {
-        Pearl(Items.ENDER_PEARL, Type.Immediate),
-        Rocket(Items.FIREWORK_ROCKET, Type.Immediate),
-
-        Rod(Items.FISHING_ROD, Type.LongerSingleClick),
-
-        Bow(Items.BOW, Type.Longer),
-        Gap(Items.GOLDEN_APPLE, Type.Longer),
-        EGap(Items.ENCHANTED_GOLDEN_APPLE, Type.Longer),
-        Chorus(Items.CHORUS_FRUIT, Type.Longer);
-
-        private final Item item;
-        private final Type type;
-
-        Mode(Item item, Type type) {
-            this.item = item;
-            this.type = type;
-        }
-    }
+    private boolean isUsing;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -64,10 +40,8 @@ public class MiddleClickExtra extends Module {
         .build()
     );
 
-    private boolean isUsing;
-
     public MiddleClickExtra() {
-        super(Categories.Misc, Items.STONE_BUTTON, "middle-click-extra", "Lets you use items when you middle click.");
+        super(Categories.Misc, Items.STONE_BUTTON, "middle-click-extra");
     }
 
     @Override
@@ -129,6 +103,32 @@ public class MiddleClickExtra extends Module {
             mc.options.keyUse.setPressed(false);
             InvUtils.swapBack();
             isUsing = false;
+        }
+    }
+
+    private enum Type {
+        Immediate,
+        LongerSingleClick,
+        Longer
+    }
+
+    public enum Mode {
+        Pearl(Items.ENDER_PEARL, Type.Immediate),
+        Rocket(Items.FIREWORK_ROCKET, Type.Immediate),
+
+        Rod(Items.FISHING_ROD, Type.LongerSingleClick),
+
+        Bow(Items.BOW, Type.Longer),
+        Gap(Items.GOLDEN_APPLE, Type.Longer),
+        EGap(Items.ENCHANTED_GOLDEN_APPLE, Type.Longer),
+        Chorus(Items.CHORUS_FRUIT, Type.Longer);
+
+        private final Item item;
+        private final Type type;
+
+        Mode(Item item, Type type) {
+            this.item = item;
+            this.type = type;
         }
     }
 }

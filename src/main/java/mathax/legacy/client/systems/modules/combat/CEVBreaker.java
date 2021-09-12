@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.combat;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.render.Render3DEvent;
@@ -32,7 +33,6 @@ public class CEVBreaker extends Module {
     boolean firtDone;
     boolean isDone;
     static final boolean assertionsDisabled = !CEVBreaker.class.desiredAssertionStatus();
-    private final BlockPos.Mutable blockPos;
     BlockPos pos;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -84,19 +84,18 @@ public class CEVBreaker extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 50))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .build()
     );
     public CEVBreaker() {
-        super(Categories.Combat, Items.END_CRYSTAL, "CEV-breaker", "Places obsidian on top of people and explodes crystals on top of their heads after destroying the obsidian.");
-        blockPos = new BlockPos.Mutable();
+        super(Categories.Combat, Items.END_CRYSTAL, "CEV-breaker");
     }
 
     @EventHandler

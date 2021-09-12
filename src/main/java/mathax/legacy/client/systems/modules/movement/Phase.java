@@ -15,6 +15,9 @@ import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Module;
 
 public class Phase extends Module {
+    private double prevX = Double.NaN;
+    private double prevZ = Double.NaN;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -36,12 +39,8 @@ public class Phase extends Module {
         .build()
     );
 
-
-    private double prevX = Double.NaN;
-    private double prevZ = Double.NaN;
-
     public Phase() {
-        super(Categories.Movement, Items.ELYTRA, "phase", "Lets you clip through ground sometimes.");
+        super(Categories.Movement, Items.ELYTRA, "phase");
     }
 
     @Override

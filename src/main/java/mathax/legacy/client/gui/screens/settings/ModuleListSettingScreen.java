@@ -5,6 +5,7 @@ import mathax.legacy.client.gui.widgets.WWidget;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.utils.language.Language;
 
 import java.util.List;
 
@@ -20,6 +21,6 @@ public class ModuleListSettingScreen extends LeftRightListSettingScreen<Module> 
 
     @Override
     protected String getValueName(Module value) {
-        return value.title;
+        return Language.getModuleTitleString(value.name);
     }
 }

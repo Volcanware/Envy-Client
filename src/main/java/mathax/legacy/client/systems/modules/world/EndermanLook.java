@@ -14,11 +14,6 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
 public class EndermanLook extends Module {
-    public enum Mode{
-        LookAt,
-        LookAway
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> lookMode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -29,7 +24,7 @@ public class EndermanLook extends Module {
     );
 
     public EndermanLook() {
-        super(Categories.World, Items.ENDER_EYE, "enderman-look", "Either looks at all Endermen or prevents you from looking at Endermen.");
+        super(Categories.World, Items.ENDER_EYE, "enderman-look");
     }
 
 
@@ -71,5 +66,10 @@ public class EndermanLook extends Module {
         double e = vec3d.dotProduct(vec3d2);
 
         return e > 1.0D - 0.025D / d && mc.player.canSee(entity);
+    }
+
+    public enum Mode{
+        LookAt,
+        LookAway
     }
 }

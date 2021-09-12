@@ -40,6 +40,12 @@ import java.util.PrimitiveIterator;
 import java.util.Random;
 
 public class BookBot extends Module {
+    private File file = new File(MatHaxLegacy.FOLDER, "bookbot.txt");
+    private final PointerBuffer filters;
+
+    private int delayTimer, bookCount;
+    private Random random;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -90,14 +96,8 @@ public class BookBot extends Module {
         .build()
     );
 
-    private File file = new File(MatHaxLegacy.FOLDER, "bookbot.txt");
-    private final PointerBuffer filters;
-
-    private int delayTimer, bookCount;
-    private Random random;
-
     public BookBot() {
-        super(Categories.Misc, Items.WRITABLE_BOOK, "book-bot", "Automatically writes in books.");
+        super(Categories.Misc, Items.WRITABLE_BOOK, "book-bot");
 
         if (!file.exists()) {
             file = null;

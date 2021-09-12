@@ -24,6 +24,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Quiver extends Module {
+    private final List<Integer> arrowSlots = new ArrayList<>();
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<List<StatusEffect>> effects = sgGeneral.add(new StatusEffectListSetting.Builder()
@@ -40,10 +42,8 @@ public class Quiver extends Module {
         .build()
     );
 
-    private final List<Integer> arrowSlots = new ArrayList<>();
-
     public Quiver() {
-        super(Categories.Combat, Items.BOW, "quiver", "Shoots arrows at yourself.");
+        super(Categories.Combat, Items.BOW, "quiver");
     }
 
     @Override

@@ -42,7 +42,7 @@ public class SafeWalk extends Module {
     );
 
     public SafeWalk() {
-        super(Categories.Movement, Items.GOLDEN_BOOTS, "safe-walk", "Prevents you from walking off blocks or on blocks that you dont want.");
+        super(Categories.Movement, Items.GOLDEN_BOOTS, "safe-walk");
     }
 
     @EventHandler

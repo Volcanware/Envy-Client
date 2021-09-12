@@ -32,6 +32,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Jesus extends Module {
+    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
+
+    private int tickTimer = 10;
+    private int packetTimer = 0;
+
+    private boolean preBaritoneAssumeWalkOnWater;
+    private boolean preBaritoneAssumeWalkOnLava;
+
     private final SettingGroup sgGeneral = settings.createGroup("General");
     private final SettingGroup sgWater = settings.createGroup("Water");
     private final SettingGroup sgLava = settings.createGroup("Lava");
@@ -133,16 +141,8 @@ public class Jesus extends Module {
 
     // Other
 
-    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
-
-    private int tickTimer = 10;
-    private int packetTimer = 0;
-
-    private boolean preBaritoneAssumeWalkOnWater;
-    private boolean preBaritoneAssumeWalkOnLava;
-
     public Jesus() {
-        super(Categories.Movement, Items.WATER_BUCKET, "jesus", "Walk on liquids and powder snow like Jesus.");
+        super(Categories.Movement, Items.WATER_BUCKET, "jesus");
     }
 
     @Override

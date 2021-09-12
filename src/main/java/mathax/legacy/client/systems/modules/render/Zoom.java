@@ -56,7 +56,7 @@ public class Zoom extends Module {
     private double lastFov;
 
     public Zoom() {
-        super(Categories.Render, Items.GLASS, "zoom", "Zooms your view.");
+        super(Categories.Render, Items.SPYGLASS, "zoom");
     }
 
     @Override

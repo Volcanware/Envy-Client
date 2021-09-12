@@ -29,7 +29,7 @@ public class WelcomeHUD extends TripleTextHUDElement {
     private final Setting<SettingColor> usernameColor = sgGeneral.add(new ColorSetting.Builder()
         .name("username-color")
         .description("Color of the username.")
-        .defaultValue(new SettingColor(230, 75, 100, true))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, true))
         .build()
     );
 

@@ -38,7 +38,6 @@ import java.util.*;
 
 public class Nametags extends Module {
     private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
-
     private Color textureColor = new Color(255, 255, 255, 255);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -240,7 +239,7 @@ public class Nametags extends Module {
     private final List<Entity> entityList = new ArrayList<>();
 
     public Nametags() {
-        super(Categories.Render, Items.CYAN_STAINED_GLASS, "nametags", "Displays customizable nametags above players.");
+        super(Categories.Render, Items.CYAN_STAINED_GLASS, "nametags");
     }
 
     private static String ticksToTime(int ticks) {

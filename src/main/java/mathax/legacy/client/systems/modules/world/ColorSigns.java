@@ -11,7 +11,7 @@ import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 public class ColorSigns extends Module {
 
     public ColorSigns() {
-        super(Categories.World, Items.OAK_SIGN, "color-signs", "Allows you to use colors on signs on NON-PAPER servers (use \"&\" for color symbols)");
+        super(Categories.World, Items.OAK_SIGN, "color-signs");
     }
 
     @EventHandler

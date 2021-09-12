@@ -11,12 +11,6 @@ import mathax.legacy.client.bus.EventHandler;
 import net.minecraft.item.Items;
 
 public class Rotation extends Module {
-    public enum LockMode {
-        Smart,
-        Simple,
-        None
-    }
-
     private final SettingGroup sgYaw = settings.createGroup("Yaw");
     private final SettingGroup sgPitch = settings.createGroup("Pitch");
 
@@ -59,7 +53,7 @@ public class Rotation extends Module {
     );
 
     public Rotation() {
-        super(Categories.Player, Items.COMMAND_BLOCK, "rotation", "Changes/locks your yaw and pitch.");
+        super(Categories.Player, Items.COMMAND_BLOCK, "rotation");
     }
 
     @Override
@@ -92,5 +86,11 @@ public class Rotation extends Module {
         mc.player.setYaw(yawAngle);
         mc.player.headYaw = yawAngle;
         mc.player.bodyYaw = yawAngle;
+    }
+
+    public enum LockMode {
+        Smart,
+        Simple,
+        None
     }
 }

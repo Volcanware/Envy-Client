@@ -20,6 +20,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 public class AntiBed extends Module {
+    private boolean breaking;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> placeStringTop = sgGeneral.add(new BoolSetting.Builder()
@@ -50,10 +52,8 @@ public class AntiBed extends Module {
         .build()
     );
 
-    private boolean breaking;
-
     public AntiBed() {
-        super(Categories.Combat, Items.RED_BED, "anti-bed", "Places string to prevent beds being placed on you.");
+        super(Categories.Combat, Items.RED_BED, "anti-bed");
     }
 
     @EventHandler

@@ -52,7 +52,7 @@ public class BoatFly extends Module {
     );
 
     public BoatFly() {
-        super(Categories.Movement, Items.OAK_BOAT, "boat-fly", "Transforms your boat into a plane.");
+        super(Categories.Movement, Items.OAK_BOAT, "boat-fly");
     }
 
     @EventHandler

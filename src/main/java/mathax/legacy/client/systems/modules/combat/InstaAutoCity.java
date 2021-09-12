@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.combat;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.renderer.ShapeMode;
@@ -132,24 +133,19 @@ public class InstaAutoCity extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 50))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .build()
     );
 
-    @Override
-    public String getInfoString() {
-        return target != null ? target.getEntityName() : null;
-    }
-
     public InstaAutoCity() {
-        super(Categories.Combat, Items.DIAMOND_PICKAXE, "insta-auto-city", "Automatically instamines the closest city block.");
+        super(Categories.Combat, Items.DIAMOND_PICKAXE, "insta-auto-city");
     }
 
     @Override
@@ -286,6 +282,11 @@ public class InstaAutoCity extends Module {
                 toggle();
             }
         }
+    }
+
+    @Override
+    public String getInfoString() {
+        return target != null ? target.getEntityName() : null;
     }
 
     @EventHandler

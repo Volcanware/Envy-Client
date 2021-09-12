@@ -32,7 +32,7 @@ public class SpinBot extends Module {
     );
 
     public SpinBot() {
-        super(Categories.Fun, Items.GUNPOWDER, "spin-bot", "Makes you spin like Spin Bot in CS:GO.");
+        super(Categories.Fun, Items.GUNPOWDER, "spin-bot");
         count = 0;
     }
 

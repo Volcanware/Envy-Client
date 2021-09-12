@@ -29,7 +29,7 @@ public class CapesModule extends Module {
     );
 
     public CapesModule() {
-        super(Categories.Fun, Items.CAKE, "capes", "When enabled you will see MatHax capes on users which have them.");
+        super(Categories.Fun, Items.CAKE, "capes");
     }
 
     @EventHandler

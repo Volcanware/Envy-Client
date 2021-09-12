@@ -18,6 +18,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 
 public class SmartSurround extends Module {
+    private int rPosX;
+    private int rPosZ;
+    private Entity crystal;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> minDamage = sgGeneral.add(new DoubleSetting.Builder()
@@ -34,12 +38,8 @@ public class SmartSurround extends Module {
         .build()
     );
 
-    private int rPosX;
-    private int rPosZ;
-    private Entity crystal;
-
     public SmartSurround() {
-        super(Categories.Combat, Items.OBSIDIAN, "smart-surround", "Attempts to save you from crystals automatically.");
+        super(Categories.Combat, Items.OBSIDIAN, "smart-surround");
     }
 
     @EventHandler

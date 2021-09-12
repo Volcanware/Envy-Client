@@ -14,6 +14,10 @@ import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 public class AntiHunger extends Module {
+    private boolean lastOnGround;
+    private boolean sendOnGroundTruePacket;
+    private boolean ignorePacket;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> sprint = sgGeneral.add(new BoolSetting.Builder()
@@ -30,12 +34,8 @@ public class AntiHunger extends Module {
         .build()
     );
 
-    private boolean lastOnGround;
-    private boolean sendOnGroundTruePacket;
-    private boolean ignorePacket;
-
     public AntiHunger() {
-        super(Categories.Player, Items.COOKED_BEEF, "anti-hunger", "Reduces (does NOT remove) hunger consumption.");
+        super(Categories.Player, Items.COOKED_BEEF, "anti-hunger");
     }
 
     @Override

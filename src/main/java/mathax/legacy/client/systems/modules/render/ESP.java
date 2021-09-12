@@ -21,11 +21,6 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.Box;
 
 public class ESP extends Module {
-    public enum Mode {
-        Box,
-        Shader
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgColors = settings.createGroup("Colors");
 
@@ -138,7 +133,7 @@ public class ESP extends Module {
     private int count;
 
     public ESP() {
-        super(Categories.Render, Items.RED_STAINED_GLASS, "ESP", "Renders entities through walls.");
+        super(Categories.Render, Items.RED_STAINED_GLASS, "ESP");
     }
 
     private void render(Render3DEvent event, Entity entity) {
@@ -222,4 +217,8 @@ public class ESP extends Module {
         return Integer.toString(count);
     }
 
+    public enum Mode {
+        Box,
+        Shader
+    }
 }

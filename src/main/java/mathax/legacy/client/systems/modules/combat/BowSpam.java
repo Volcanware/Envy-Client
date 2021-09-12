@@ -13,6 +13,9 @@ import net.minecraft.item.ArrowItem;
 import net.minecraft.item.Items;
 
 public class BowSpam extends Module {
+    private boolean wasBow = false;
+    private boolean wasHoldingRightClick = false;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Integer> charge = sgGeneral.add(new IntSetting.Builder()
@@ -33,11 +36,8 @@ public class BowSpam extends Module {
         .build()
     );
 
-    private boolean wasBow = false;
-    private boolean wasHoldingRightClick = false;
-
     public BowSpam() {
-        super(Categories.Combat, Items.BOW, "bow-spam", "Spams arrows.");
+        super(Categories.Combat, Items.BOW, "bow-spam");
     }
 
     @Override

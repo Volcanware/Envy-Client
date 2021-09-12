@@ -24,6 +24,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public class AutoArmor extends Module {
+    private final Object2IntMap<Enchantment> enchantments = new Object2IntOpenHashMap<>();
+    private final ArmorPiece[] armorPieces = new ArmorPiece[4];
+    private final ArmorPiece helmet = new ArmorPiece(3);
+    private final ArmorPiece chestplate = new ArmorPiece(2);
+    private final ArmorPiece leggings = new ArmorPiece(1);
+    private final ArmorPiece boots = new ArmorPiece(0);
+    private int timer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Protection> preferredProtection = sgGeneral.add(new EnumSetting.Builder<Protection>()
@@ -70,16 +78,8 @@ public class AutoArmor extends Module {
         .build()
     );
 
-    private final Object2IntMap<Enchantment> enchantments = new Object2IntOpenHashMap<>();
-    private final ArmorPiece[] armorPieces = new ArmorPiece[4];
-    private final ArmorPiece helmet = new ArmorPiece(3);
-    private final ArmorPiece chestplate = new ArmorPiece(2);
-    private final ArmorPiece leggings = new ArmorPiece(1);
-    private final ArmorPiece boots = new ArmorPiece(0);
-    private int timer;
-
     public AutoArmor() {
-        super(Categories.Combat, Items.DIAMOND_CHESTPLATE, "auto-armor", "Automatically equips armor.");
+        super(Categories.Combat, Items.DIAMOND_CHESTPLATE, "auto-armor");
 
         armorPieces[0] = helmet;
         armorPieces[1] = chestplate;

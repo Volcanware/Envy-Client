@@ -13,6 +13,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Category;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.language.Language;
 import net.minecraft.item.Items;
 import net.minecraft.util.Pair;
 
@@ -23,11 +24,12 @@ public class ModulesScreen extends TabScreen {
         super(theme, Tabs.get().get(0));
 
         add(createCategoryContainer());
-
         // Help
+        /*
         WVerticalList help = add(theme.verticalList()).pad(4).bottom().widget();
         help.add(theme.label("Left click - Toggle module"));
         help.add(theme.label("Right click - Open module settings"));
+        */
     }
 
     protected WCategoryController createCategoryContainer() {
@@ -37,8 +39,8 @@ public class ModulesScreen extends TabScreen {
     // Category
 
     protected void createCategory(WContainer c, Category category) {
-        WWindow w = theme.window(category.name);
-        w.id = category.name;
+        WWindow w = theme.window(Language.getCategoryTitleString(category.name));
+        w.id = Language.getCategoryTitleString(category.name);
         w.padding = 0;
         w.spacing = 0;
 
@@ -52,7 +54,7 @@ public class ModulesScreen extends TabScreen {
         w.view.spacing = 0;
 
         for (Module module : Modules.get().getGroup(category)) {
-            w.add(theme.module(module)).expandX().widget().tooltip = module.description;
+            w.add(theme.module(module)).expandX().widget().tooltip = Language.getModuleDescriptionString(module.name);
         }
     }
 

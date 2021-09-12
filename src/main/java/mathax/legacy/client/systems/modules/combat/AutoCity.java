@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.combat;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.ShapeMode;
@@ -21,6 +22,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 public class AutoCity extends Module {
+    private PlayerEntity target;
+    private BlockPos mineTarget;
+    private boolean sentMessage;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -73,23 +78,19 @@ public class AutoCity extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 50))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .build()
     );
 
-    private PlayerEntity target;
-    private BlockPos mineTarget;
-    private boolean sentMessage;
-
     public AutoCity() {
-        super(Categories.Combat, Items.DIAMOND_PICKAXE, "auto-city", "Automatically cities a target by mining the nearest obsidian next to them.");
+        super(Categories.Combat, Items.DIAMOND_PICKAXE, "auto-city");
     }
 
     @EventHandler

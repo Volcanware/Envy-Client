@@ -1,6 +1,7 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDElement;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
@@ -40,7 +41,7 @@ public class ArmorHUD extends HUDElement {
     private final Setting<SettingColor> textColor = sgGeneral.add(new ColorSetting.Builder()
         .name("text-color")
         .description("The color of durability")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 

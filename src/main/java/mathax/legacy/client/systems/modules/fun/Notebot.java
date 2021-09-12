@@ -93,14 +93,14 @@ public class Notebot extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 50))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .build()
     );
 
@@ -120,7 +120,7 @@ public class Notebot extends Module {
     private WLabel status;
 
     public Notebot() {
-        super(Categories.Fun, Items.NOTE_BLOCK, "notebot","Plays noteblock nicely.");
+        super(Categories.Fun, Items.NOTE_BLOCK, "notebot");
 
         for (int y = -5; y < 5; y++) {
             for (int x = -5; x < 5; x++) {

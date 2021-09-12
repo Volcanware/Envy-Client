@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.world;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.entity.player.StartBreakingBlockEvent;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
@@ -111,7 +112,7 @@ public class PacketMine extends Module {
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .build()
     );
 
@@ -121,7 +122,7 @@ public class PacketMine extends Module {
     private boolean swapped, shouldUpdateSlot;
 
     public PacketMine() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "packet-mine", "Sends packets to mine blocks without the mining animation.");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "packet-mine");
     }
 
     @Override

@@ -1,11 +1,13 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDElement;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
+import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.settings.*;
@@ -42,7 +44,7 @@ public class ActiveModulesHUD extends HUDElement {
     private final Setting<SettingColor> flatColor = sgGeneral.add(new ColorSetting.Builder()
         .name("flat-color")
         .description("Color for flat color mode.")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b))
         .visible(() -> colorMode.get() == ColorMode.Flat)
         .build()
     );
@@ -188,14 +190,14 @@ public class ActiveModulesHUD extends HUDElement {
 
         else if (colorMode == ColorMode.Category) color = new Color(module.category.color);
 
-        renderer.text(module.title, x, y, color);
+        renderer.text(Language.getModuleTitleString(module.name), x, y, color);
 
-        double textLength = renderer.textWidth(module.title);
+        double textLength = renderer.textWidth(Language.getModuleTitleString(module.name));
 
         if (activeInfo.get()) {
             String info = module.getInfoString();
             if (info != null) {
-                renderer.text(info, x + renderer.textWidth(module.title) + renderer.textWidth(" "), y, hud.secondaryColor.get());
+                renderer.text(info, x + renderer.textWidth(Language.getModuleTitleString(module.name)) + renderer.textWidth(" "), y, hud.secondaryColor.get());
                 textLength += renderer.textWidth(" ") + renderer.textWidth(info);
             }
         }
@@ -237,7 +239,7 @@ public class ActiveModulesHUD extends HUDElement {
     }
 
     private double getModuleWidth(HUDRenderer renderer, Module module) {
-        double width = renderer.textWidth(module.title);
+        double width = renderer.textWidth(Language.getModuleTitleString(module.name));
 
         if (activeInfo.get()) {
             String info = module.getInfoString();

@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.player;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.entity.player.StartBreakingBlockEvent;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
@@ -63,14 +64,14 @@ public class InstaMine extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 50))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .build()
     );
 
@@ -80,7 +81,7 @@ public class InstaMine extends Module {
     private Direction direction;
 
     public InstaMine() {
-        super(Categories.Player, Items.DIAMOND_PICKAXE, "insta-mine", "Attempts to instantly mine blocks.");
+        super(Categories.Player, Items.DIAMOND_PICKAXE, "insta-mine");
     }
 
     @Override

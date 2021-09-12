@@ -6,6 +6,7 @@ import mathax.legacy.client.gui.widgets.WWidget;
 import mathax.legacy.client.settings.Settings;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.misc.ISerializable;
 import mathax.legacy.client.utils.misc.Keybind;
 import mathax.legacy.client.utils.player.ChatUtils;
@@ -32,8 +33,6 @@ public abstract class Module implements ISerializable<Module> {
     public final Category category;
     public final Item icon;
     public final String name;
-    public final String title;
-    public final String description;
     public final Color color;
 
     public final Settings settings = new Settings();
@@ -48,13 +47,11 @@ public abstract class Module implements ISerializable<Module> {
     public final Keybind keybind = Keybind.none();
     public boolean toggleOnBindRelease = false;
 
-    public Module(Category category, Item icon, String name, String description) {
+    public Module(Category category, Item icon, String name) {
         this.mc = MinecraftClient.getInstance();
         this.category = category;
         this.icon = icon;
         this.name = name;
-        this.title = Utils.nameToTitle(name);
-        this.description = description;
         this.color = Color.fromHsv(Utils.random(0.0, 360.0), 0.35, 1);
     }
 
@@ -92,14 +89,14 @@ public abstract class Module implements ISerializable<Module> {
         toggle(true);
     }
 
-    public void sendToggledMsg(String title, Module module) {
+    public void sendToggledMsg(String name, Module module) {
         if (!module.isMessageEnabled()) return;
-        if (Config.get().chatCommandsInfo) ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY, "Toggled (highlight)%s(default) %s(default).", title, getOnOff(module));
+        if (Config.get().chatCommandsInfo) ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY, "Toggled (highlight)%s(default) %s(default).", Language.getModuleTitleString(name), getOnOff(module));
     }
 
-    public void sendToggledToast(String title, Module module) {
+    public void sendToggledToast(String name, Module module) {
         if (!module.isToastEnabled()) return;
-        mc.getToastManager().add(new MatHaxToast(module.icon, module.category.color, title, Formatting.GRAY + "Toggled " + getOnOff(module) + Formatting.GRAY + "."));
+        mc.getToastManager().add(new MatHaxToast(module.icon, module.category.color, Language.getModuleTitleString(name), Formatting.GRAY + "Toggled " + getOnOff(module) + Formatting.GRAY + "."));
     }
 
     private String getOnOff(Module module) {
@@ -107,19 +104,19 @@ public abstract class Module implements ISerializable<Module> {
     }
 
     public void info(Text message) {
-        ChatUtils.sendMsg(title, message);
+        ChatUtils.sendMsg(Language.getModuleTitleString(name), message);
     }
 
     public void info(String message, Object... args) {
-        ChatUtils.info(title, message, args);
+        ChatUtils.info(Language.getModuleTitleString(name), message, args);
     }
 
     public void warning(String message, Object... args) {
-        ChatUtils.warning(title, message, args);
+        ChatUtils.warning(Language.getModuleTitleString(name), message, args);
     }
 
     public void error(String message, Object... args) {
-        ChatUtils.error(title, message, args);
+        ChatUtils.error(Language.getModuleTitleString(name), message, args);
     }
 
     public void setVisible(boolean visible) {

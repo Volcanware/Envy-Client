@@ -31,7 +31,7 @@ public class SoundLocator extends Module {
     );
 
     public SoundLocator() {
-        super(Categories.Misc, Items.NOTE_BLOCK, "sound-locator", "Prints locations of sound events.");
+        super(Categories.Misc, Items.NOTE_BLOCK, "sound-locator");
     }
 
     @EventHandler

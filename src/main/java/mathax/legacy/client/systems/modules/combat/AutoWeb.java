@@ -13,6 +13,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 
 public class AutoWeb extends Module {
+    private PlayerEntity target = null;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
@@ -44,10 +46,8 @@ public class AutoWeb extends Module {
         .build()
     );
 
-    private PlayerEntity target = null;
-
     public AutoWeb() {
-        super(Categories.Combat, Items.COBWEB, "auto-web", "Automatically places webs on other players.");
+        super(Categories.Combat, Items.COBWEB, "auto-web");
     }
 
     @EventHandler

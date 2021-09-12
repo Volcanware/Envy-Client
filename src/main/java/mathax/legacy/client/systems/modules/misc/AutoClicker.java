@@ -12,15 +12,7 @@ import mathax.legacy.client.bus.EventHandler;
 import net.minecraft.item.Items;
 
 public class AutoClicker extends Module {
-    public enum Mode {
-        Hold,
-        Press
-    }
-
-    public enum Button {
-        Right,
-        Left
-    }
+    private int timer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -47,10 +39,8 @@ public class AutoClicker extends Module {
         .build()
     );
 
-    private int timer;
-
     public AutoClicker() {
-        super(Categories.Misc, Items.STONE_BUTTON, "auto-clicker", "Automatically clicks.");
+        super(Categories.Misc, Items.STONE_BUTTON, "auto-clicker");
     }
 
     @Override
@@ -94,5 +84,15 @@ public class AutoClicker extends Module {
                 }
                 break;
         }
+    }
+
+    public enum Mode {
+        Hold,
+        Press
+    }
+
+    public enum Button {
+        Right,
+        Left
     }
 }

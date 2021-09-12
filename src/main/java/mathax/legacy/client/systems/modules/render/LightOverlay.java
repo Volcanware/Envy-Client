@@ -22,12 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LightOverlay extends Module {
-    public enum Spawn {
-        Never,
-        Potential,
-        Always
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgColors = settings.createGroup("Colors");
 
@@ -80,7 +74,7 @@ public class LightOverlay extends Module {
     private final Mesh mesh = new ShaderMesh(Shaders.POS_COLOR, DrawMode.Lines, Mesh.Attrib.Vec3, Mesh.Attrib.Color);
 
     public LightOverlay() {
-        super(Categories.Render, Items.YELLOW_STAINED_GLASS, "light-overlay", "Shows blocks where mobs can spawn.");
+        super(Categories.Render, Items.YELLOW_STAINED_GLASS, "light-overlay");
     }
 
     @EventHandler

@@ -62,7 +62,7 @@ public class AutoExtinguish extends Module {
     );
     private final Setting<Boolean> waterBucket = sgBucket.add(new BoolSetting.Builder()
         .name("water")
-        .description("Automatically places water when you are on fire (and don't have fire resistance).")
+        .description("Automatically places water when you are on fire. (and don't have fire resistance)")
         .defaultValue(false)
         .build()
     );
@@ -86,7 +86,7 @@ public class AutoExtinguish extends Module {
     private static final StatusEffect FIRE_RESISTANCE = Registry.STATUS_EFFECT.get(new Identifier("fire_resistance"));
 
     public AutoExtinguish() {
-        super(Categories.World, Items.CAMPFIRE, "auto-extinguish", "Automatically extinguishes fire around you");
+        super(Categories.World, Items.CAMPFIRE, "auto-extinguish");
     }
 
     @EventHandler

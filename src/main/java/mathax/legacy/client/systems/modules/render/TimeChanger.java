@@ -26,7 +26,7 @@ public class TimeChanger extends Module {
     long oldTime;
 
     public TimeChanger() {
-        super(Categories.Render, Items.CLOCK, "time-changer", "Makes you able to set a custom time.");
+        super(Categories.Render, Items.CLOCK, "time-changer");
     }
 
     @Override

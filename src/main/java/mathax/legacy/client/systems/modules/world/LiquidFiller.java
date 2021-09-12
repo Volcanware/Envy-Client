@@ -19,13 +19,7 @@ import net.minecraft.item.Items;
 import java.util.List;
 
 public class LiquidFiller extends Module {
-    public enum PlaceIn {
-        Lava,
-        Water,
-        Both
-    }
-
-    private final SettingGroup sgGeneral  = settings.getDefaultGroup();
+    private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<PlaceIn> placeInLiquids = sgGeneral.add(new EnumSetting.Builder<PlaceIn>()
         .name("place-in")
@@ -76,8 +70,8 @@ public class LiquidFiller extends Module {
 
     private int timer;
 
-    public LiquidFiller(){
-        super(Categories.World, Items.WATER_BUCKET, "liquid-filler", "Places blocks inside of liquid source blocks within range of you.");
+    public LiquidFiller() {
+        super(Categories.World, Items.WATER_BUCKET, "liquid-filler");
     }
 
     @Override
@@ -121,13 +115,19 @@ public class LiquidFiller extends Module {
 
     private List<Block> getDefaultWhitelist() {
         return Lists.newArrayList(
-                Blocks.DIRT,
-                Blocks.COBBLESTONE,
-                Blocks.STONE,
-                Blocks.NETHERRACK,
-                Blocks.DIORITE,
-                Blocks.GRANITE,
-                Blocks.ANDESITE
+            Blocks.DIRT,
+            Blocks.COBBLESTONE,
+            Blocks.STONE,
+            Blocks.NETHERRACK,
+            Blocks.DIORITE,
+            Blocks.GRANITE,
+            Blocks.ANDESITE
         );
+    }
+
+    public enum PlaceIn {
+        Lava,
+        Water,
+        Both
     }
 }

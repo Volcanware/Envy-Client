@@ -9,6 +9,7 @@ import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.tabs.Tabs;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
+import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.Element;
@@ -26,6 +27,7 @@ import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -48,8 +50,6 @@ public class TitleScreen extends Screen {
     public static final String COPYRIGHT = "Copyright Mojang AB. Do not distribute!";
     private int copyrightTextWidth;
     private int copyrightTextX;
-
-    private String updateTextUtil = "";
 
     private static final Identifier LOGO = new Identifier("mathaxlegacy", "textures/title/logo.png");
     private static final Identifier BACKGROUND = new Identifier("mathaxlegacy", "textures/title/background.png");
@@ -115,22 +115,26 @@ public class TitleScreen extends Screen {
             Screen screen = client.options.skipMultiplayerWarning ? new MultiplayerScreen(this) : new MultiplayerWarningScreen(this);
             client.setScreen(screen);
         }, tooltipSupplier))).active = bl;
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 2) + (spacingY / 2), 200, 20, new TranslatableText("title.button.mathaxlegacy.mathax-website"), (button) -> {
+        String website = "MatHax ";
+        website += Language.getButton("website").getString();
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 2) + (spacingY / 2), 200, 20, new LiteralText(website), (button) -> {
             Util.getOperatingSystem().open(MatHaxLegacy.URL);
         }));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 3) + (spacingY / 2), 200, 20, new TranslatableText("title.button.mathaxlegacy.mathax-discord"), (button) -> {
+        String discord = "MatHax ";
+        discord += Language.getButton("discord").getString();
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 3) + (spacingY / 2), 200, 20, new LiteralText(discord), (button) -> {
             Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord");
         }));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 4) + (spacingY / 2), 98, 20, new TranslatableText("title.button.mathaxlegacy.click-gui"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 4) + (spacingY / 2), 98, 20, Language.getButton("click-gui"), (button) -> {
             Tabs.get().get(0).openScreen(GuiThemes.get());
         }));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 4) + (spacingY / 2), 98, 20, new TranslatableText("title.button.mathaxlegacy.check-for-update"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 4) + (spacingY / 2), 98, 20, Language.getButton("check-for-update"), (button) -> {
             Version.checkForUpdate(true);
         }));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 5) + (spacingY / 2), 98, 20, new TranslatableText("title.button.mathaxlegacy.proxies"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 5) + (spacingY / 2), 98, 20, Language.getButton("proxies"), (button) -> {
             client.setScreen(GuiThemes.get().proxiesScreen());
         }));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 5) + (spacingY / 2), 98, 20, new TranslatableText("title.button.mathaxlegacy.accounts"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 5) + (spacingY / 2), 98, 20, Language.getButton("accounts"), (button) -> {
             client.setScreen(GuiThemes.get().accountsScreen());
         }));
         addDrawableChild(new TexturedButtonWidget(width / 2 - 124, j + (spacingY * 7), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> {
@@ -187,7 +191,7 @@ public class TitleScreen extends Screen {
             String space = " ";
             int spaceLength = textRenderer.getWidth(space);
 
-            String loggedInAs = "Logged in as";
+            String loggedInAs = Language.getTextString("logged-in-as");
             String loggedName = Modules.get().get(NameProtect.class).getName(client.getSession().getUsername());
             String loggedOpenDeveloper = "[";
             String loggedDeveloper = "Developer";
@@ -199,13 +203,11 @@ public class TitleScreen extends Screen {
 
             String watermarkName = "MatHax Legacy";
             String watermarkVersion = Version.getStylized();
-            String watermarkUpdate = getUpdateText();
             int watermarkNameLength = textRenderer.getWidth(watermarkName);
             int watermarkVersionLength = textRenderer.getWidth(watermarkVersion);
-            int watermarkUpdateLength = textRenderer.getWidth(watermarkUpdate);
-            int watermarkFullLength = watermarkNameLength + spaceLength + watermarkVersionLength + watermarkUpdateLength;
+            int watermarkFullLength = watermarkNameLength + spaceLength + watermarkVersionLength;
 
-            String authorBy = "By";
+            String authorBy = Language.getTextString("by");
             String authorName = "Matejko06";
             int authorByLength = textRenderer.getWidth(authorBy);
             int authorNameLength = textRenderer.getWidth(authorName);
@@ -231,8 +233,6 @@ public class TitleScreen extends Screen {
             drawStringWithShadow(matrices, textRenderer, space, width - watermarkFullLength + watermarkPreviousWidth - 2, 2, WHITE);
             watermarkPreviousWidth += spaceLength;
             drawStringWithShadow(matrices, textRenderer, watermarkVersion, width - watermarkFullLength + watermarkPreviousWidth - 2, 2, GRAY);
-            watermarkPreviousWidth += watermarkVersionLength;
-            drawStringWithShadow(matrices, textRenderer, watermarkUpdate, width - watermarkFullLength + watermarkPreviousWidth - 2, 2, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
 
             int authorPreviousWidth = 0;
             drawStringWithShadow(matrices, textRenderer, authorBy, width - authorFullLength - 2, 16, GRAY);
@@ -262,21 +262,6 @@ public class TitleScreen extends Screen {
 
             super.render(matrices, mouseX, mouseY, delta);
         }
-    }
-
-    private String getUpdateText() {
-        if (!Version.checkedForLatestTitleText) {
-            Version.checkedForLatestTitleText = true;
-            switch (Version.checkLatest()) {
-                case 0:
-                    updateTextUtil = " [Could not get Latest Version]";
-                case 1:
-                    updateTextUtil = " [Outdated | Latest Version: v" + Version.getLatest() + "]";
-                case 2:
-                    updateTextUtil = "";
-            }
-        }
-        return updateTextUtil;
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {

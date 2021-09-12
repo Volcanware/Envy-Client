@@ -16,6 +16,8 @@ import java.util.Comparator;
 import java.util.Optional;
 
 public class Step extends Module {
+    private float prevStepHeight;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Double> height = sgGeneral.add(new DoubleSetting.Builder()
@@ -50,11 +52,8 @@ public class Step extends Module {
         .build()
     );
 
-    private float prevStepHeight;
-    private boolean prevBaritoneAssumeStep;
-
     public Step() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "step", "Allows you to walk up full blocks instantly.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "step");
     }
 
     @Override

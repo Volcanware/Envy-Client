@@ -22,11 +22,16 @@ import net.minecraft.world.chunk.WorldChunk;
 
 import java.util.*;
 
-/*/                                                /*/
-/*/ Ported from BleachHack. https://bleachhack.org /*/
-/*/                                                /*/
+/*/                         /*/
+/*/ Ported from BleachHack. /*/
+/*/ https://bleachhack.org  /*/
+/*/                         /*/
 
 public class NewChunks extends Module {
+    private Set<ChunkPos> newChunks = Collections.synchronizedSet(new HashSet<>());
+    private Set<ChunkPos> oldChunks = Collections.synchronizedSet(new HashSet<>());
+    private static final Direction[] searchDirs = new Direction[] { Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH, Direction.UP };
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgNewChunks = settings.createGroup("New Chunks");
     private final SettingGroup sgOldChunks = settings.createGroup("Old Chunks");
@@ -98,12 +103,8 @@ public class NewChunks extends Module {
         return w;
     }
 
-    private Set<ChunkPos> newChunks = Collections.synchronizedSet(new HashSet<>());
-    private Set<ChunkPos> oldChunks = Collections.synchronizedSet(new HashSet<>());
-    private static final Direction[] searchDirs = new Direction[] { Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH, Direction.UP };
-
     public NewChunks() {
-        super(Categories.Render, Items.GRASS_BLOCK, "new-chunks", "Detects completely new chunks using certain traits of them");
+        super(Categories.Render, Items.GRASS_BLOCK, "new-chunks");
     }
 
     @Override

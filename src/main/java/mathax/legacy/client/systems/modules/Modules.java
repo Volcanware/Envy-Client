@@ -29,6 +29,7 @@ import mathax.legacy.client.systems.modules.render.search.Search;
 import mathax.legacy.client.systems.modules.world.*;
 import mathax.legacy.client.systems.modules.world.Timer;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.misc.input.Input;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.player.ChatUtils;
@@ -90,9 +91,9 @@ public class Modules extends System<Modules> {
 
     public void sortModules() {
         for (List<Module> modules : groups.values()) {
-            modules.sort(Comparator.comparing(o -> o.title));
+            modules.sort(Comparator.comparing(o -> Language.getModuleTitleString(o.name)));
         }
-        modules.sort(Comparator.comparing(o -> o.title));
+        modules.sort(Comparator.comparing(o -> Language.getModuleTitleString(o.name)));
     }
 
     public static void registerCategory(Category category) {
@@ -157,7 +158,7 @@ public class Modules extends System<Modules> {
         List<Pair<Module, Integer>> modules = new ArrayList<>();
 
         for (Module module : this.moduleInstances.values()) {
-            int words = Utils.search(module.title, text);
+            int words = Utils.search(Language.getModuleTitleString(module.name), text);
             if (words > 0) modules.add(new Pair<>(module, words));
         }
 
@@ -171,7 +172,7 @@ public class Modules extends System<Modules> {
         for (Module module : this.moduleInstances.values()) {
             for (SettingGroup sg : module.settings) {
                 for (Setting<?> setting : sg) {
-                    int words = Utils.search(setting.title, text);
+                    int words = Utils.search(Language.getModuleTitleString(setting.name), text);
                     if (words > 0) {
                         modules.add(new Pair<>(module, words));
                         break;
@@ -221,8 +222,8 @@ public class Modules extends System<Modules> {
         if (moduleToBind != null && moduleToBind.keybind.canBindTo(isKey, value)) {
             if (value != GLFW.GLFW_KEY_ESCAPE) {
                 moduleToBind.keybind.set(isKey, value);
-                ChatUtils.info("KeyBinds", "Module (highlight)%s (default)bound to (highlight)%s(default).", moduleToBind.title, moduleToBind.keybind);
-                mc.getToastManager().add(new MatHaxToast(moduleToBind.icon, moduleToBind.category.color, moduleToBind.title, Formatting.GRAY + "Bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                ChatUtils.info("KeyBinds", "Module (highlight)%s (default)bound to (highlight)%s(default).", Language.getModuleTitleString(moduleToBind.name), moduleToBind.keybind);
+                mc.getToastManager().add(new MatHaxToast(moduleToBind.icon, moduleToBind.category.color, Language.getModuleTitleString(moduleToBind.name), Formatting.GRAY + "Bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
             }
 
             MatHaxLegacy.EVENT_BUS.post(ModuleBindChangedEvent.get(moduleToBind));
@@ -250,8 +251,8 @@ public class Modules extends System<Modules> {
             for (Module module : moduleInstances.values()) {
                 if (module.keybind.matches(isKey, value) && (isPress || module.toggleOnBindRelease)) {
                     module.toggle();
-                    module.sendToggledMsg(module.title, module);
-                    module.sendToggledToast(module.title, module);
+                    module.sendToggledMsg(module.name, module);
+                    module.sendToggledToast(module.name, module);
                 }
             }
         }
@@ -266,8 +267,8 @@ public class Modules extends System<Modules> {
         for (Module module : moduleInstances.values()) {
             if (module.toggleOnBindRelease && module.isActive()) {
                 module.toggle();
-                module.sendToggledMsg(module.title, module);
-                module.sendToggledToast(module.title, module);
+                module.sendToggledMsg(module.name, module);
+                module.sendToggledToast(module.name, module);
             }
         }
     }
@@ -380,6 +381,7 @@ public class Modules extends System<Modules> {
         add(new AutoWeapon());
         add(new AutoWeb());
         add(new BedAura());
+        add(new BedAuraPlus());
         add(new BowAimbot());
         add(new BowSpam());
         add(new Burrow());

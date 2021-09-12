@@ -13,17 +13,6 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.util.math.Vec3d;
 
 public class Flight extends Module {
-    public enum Mode {
-        Abilities,
-        Velocity
-    }
-
-    public enum AntiKickMode {
-        Normal,
-        Packet,
-        None
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAntiKick = settings.createGroup("Anti Kick");
 
@@ -80,7 +69,7 @@ public class Flight extends Module {
     );
 
     public Flight() {
-        super(Categories.Movement, Items.COMMAND_BLOCK, "flight", "FLYYYyy! No Fall is recommended with this module.");
+        super(Categories.Movement, Items.COMMAND_BLOCK, "flight");
     }
 
     private int delayLeft = delay.get();
@@ -194,5 +183,16 @@ public class Flight extends Module {
                 lastY = currentY;
             }
         }
+    }
+
+    public enum Mode {
+        Abilities,
+        Velocity
+    }
+
+    public enum AntiKickMode {
+        Normal,
+        Packet,
+        None
     }
 }

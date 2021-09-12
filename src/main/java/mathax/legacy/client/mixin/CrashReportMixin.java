@@ -4,6 +4,7 @@ import mathax.legacy.client.Version;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Category;
 import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.utils.language.Language;
 import net.minecraft.util.crash.CrashReport;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,7 +39,7 @@ public class CrashReportMixin {
 
                     for (Module module : modules) {
                         if (module instanceof Module && module.isActive()) {
-                            sb.append(module.title).append(" (").append(module.name).append(")\n");
+                            sb.append(Language.getModuleTitleString(module.name)).append(" (").append(module.name).append(")\n");
                         }
                     }
                 }

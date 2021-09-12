@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render.hud;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render2DEvent;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.screens.HudElementScreen;
@@ -46,7 +47,7 @@ public class HUD extends Module {
     public final Setting<SettingColor> primaryColor = sgGeneral.add(new ColorSetting.Builder()
         .name("primary-color")
         .description("Primary color of text.")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
@@ -95,7 +96,7 @@ public class HUD extends Module {
     }
 
     public HUD() {
-        super(Categories.Render, Items.GLASS, "HUD", "In game overlay.");
+        super(Categories.Render, Items.GLASS, "HUD");
 
         // MAIN INFO
         mainInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 2, 2);

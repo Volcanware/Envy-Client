@@ -5,6 +5,7 @@ import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.player.ChatUtils;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.HoverEvent;
@@ -35,7 +36,7 @@ public class BindsCommand extends Command {
             for (Module module : modules) {
                 HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, getTooltip(module));
 
-                MutableText text = new LiteralText(module.title).formatted(Formatting.WHITE);
+                MutableText text = new LiteralText(Language.getModuleTitleString(module.name)).formatted(Formatting.WHITE);
                 text.setStyle(text.getStyle().withHoverEvent(hoverEvent));
 
                 MutableText sep = new LiteralText(" - ");
@@ -54,8 +55,8 @@ public class BindsCommand extends Command {
     }
 
     private MutableText getTooltip(Module module) {
-        MutableText tooltip = new LiteralText(Utils.nameToTitle(module.title)).formatted(Formatting.BLUE, Formatting.BOLD).append("\n\n");
-        tooltip.append(new LiteralText(module.description).formatted(Formatting.WHITE));
+        MutableText tooltip = new LiteralText(Utils.nameToTitle(Language.getModuleTitleString(module.name))).formatted(Formatting.BLUE, Formatting.BOLD).append("\n\n");
+        tooltip.append(new LiteralText(Language.getModuleDescriptionString(module.name)).formatted(Formatting.WHITE));
 
         return tooltip;
     }

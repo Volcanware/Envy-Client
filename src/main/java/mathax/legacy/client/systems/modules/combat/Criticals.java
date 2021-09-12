@@ -22,6 +22,10 @@ import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 public class Criticals extends Module {
+    private PlayerInteractEntityC2SPacket attackPacket;
+    private HandSwingC2SPacket swingPacket;
+    private boolean sendPackets;
+    private int sendTimer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -39,12 +43,8 @@ public class Criticals extends Module {
         .build()
     );
 
-    private PlayerInteractEntityC2SPacket attackPacket;
-    private HandSwingC2SPacket swingPacket;
-    private boolean sendPackets;
-    private int sendTimer;
     public Criticals() {
-        super(Categories.Combat, Items.DIAMOND_SWORD, "criticals", "Performs critical attacks when you hit your target.");
+        super(Categories.Combat, Items.DIAMOND_SWORD, "criticals");
     }
 
     @Override

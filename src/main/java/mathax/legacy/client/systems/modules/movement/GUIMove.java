@@ -19,12 +19,6 @@ import net.minecraft.item.Items;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class GUIMove extends Module {
-    public enum Screens {
-        GUI,
-        Inventory,
-        Both
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Screens> screens = sgGeneral.add(new EnumSetting.Builder<Screens>()
@@ -80,7 +74,7 @@ public class GUIMove extends Module {
     );
 
     public GUIMove() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "GUI-move", "Allows you to perform various actions while in GUIs.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "GUI-move");
     }
 
     @Override
@@ -130,5 +124,11 @@ public class GUIMove extends Module {
 
     private boolean skip() {
         return mc.currentScreen == null || Modules.get().isActive(Freecam.class) || (mc.currentScreen instanceof CreativeInventoryScreen && ((CreativeInventoryScreenAccessor) mc.currentScreen).getSelectedTab() == ItemGroup.SEARCH.getIndex()) || mc.currentScreen instanceof ChatScreen || mc.currentScreen instanceof SignEditScreen || mc.currentScreen instanceof AnvilScreen || mc.currentScreen instanceof AbstractCommandBlockScreen || mc.currentScreen instanceof StructureBlockScreen;
+    }
+
+    public enum Screens {
+        GUI,
+        Inventory,
+        Both
     }
 }

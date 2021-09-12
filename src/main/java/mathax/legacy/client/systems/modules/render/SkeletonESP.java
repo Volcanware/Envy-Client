@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.settings.*;
@@ -42,12 +43,12 @@ public class SkeletonESP extends Module {
     private final Setting<SettingColor> skeletonColorSetting = sgGeneral.add(new ColorSetting.Builder()
         .name("players-color")
         .description("The other player's color.")
-        .defaultValue(new SettingColor(230, 75, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
     public SkeletonESP() {
-        super(Categories.Render, Items.SKELETON_SKULL, "skeleton-ESP", "Spooky scary skeleton.");
+        super(Categories.Render, Items.SKELETON_SKULL, "skeleton-ESP");
         freecam = Modules.get().get(Freecam.class);
     }
 

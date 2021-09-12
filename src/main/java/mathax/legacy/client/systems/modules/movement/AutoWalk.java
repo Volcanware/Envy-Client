@@ -15,6 +15,9 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.item.Items;
 
 public class AutoWalk extends Module {
+    private int timer = 0;
+    private GoalDirection goal;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -48,11 +51,8 @@ public class AutoWalk extends Module {
         .build()
     );
 
-    private int timer = 0;
-    private GoalDirection goal;
-
     public AutoWalk() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "auto-walk", "Automatically walks forward.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "auto-walk");
     }
 
     @Override

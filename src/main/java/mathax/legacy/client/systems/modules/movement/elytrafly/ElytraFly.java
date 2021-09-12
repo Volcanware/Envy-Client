@@ -24,11 +24,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
 public class ElytraFly extends Module {
-    public enum ChestSwapMode {
-        Always,
-        Never,
-        WaitForGround
-    }
+    private ElytraFlightMode currentMode;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAutopilot = settings.createGroup("Autopilot");
@@ -176,10 +172,8 @@ public class ElytraFly extends Module {
         .build()
     );
 
-    private ElytraFlightMode currentMode;
-
     public ElytraFly() {
-        super(Categories.Movement, Items.ELYTRA, "elytra-fly", "Gives you more control over your elytra.");
+        super(Categories.Movement, Items.ELYTRA, "elytra-fly");
     }
 
     @Override
@@ -327,5 +321,11 @@ public class ElytraFly extends Module {
     @Override
     public String getInfoString() {
         return currentMode.getHudString();
+    }
+
+    public enum ChestSwapMode {
+        Always,
+        Never,
+        WaitForGround
     }
 }

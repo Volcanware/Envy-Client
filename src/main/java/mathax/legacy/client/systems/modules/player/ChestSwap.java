@@ -7,6 +7,7 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.player.InvUtils;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
@@ -31,7 +32,7 @@ public class ChestSwap extends Module {
     );
 
     public ChestSwap() {
-        super(Categories.Player, Items.DIAMOND_CHESTPLATE, "chest-swap", "Automatically swaps between a chestplate and an elytra.");
+        super(Categories.Player, Items.DIAMOND_CHESTPLATE, "chest-swap");
     }
 
     @Override
@@ -118,14 +119,14 @@ public class ChestSwap extends Module {
     }
 
     @Override
-    public void sendToggledMsg(String title, Module module) {
-        if (stayOn.get()) super.sendToggledMsg(title, module);
-        else if (Config.get().chatCommandsInfo) info("Triggered (highlight)%s(default).", title);
+    public void sendToggledMsg(String name, Module module) {
+        if (stayOn.get()) super.sendToggledMsg(name, module);
+        else if (Config.get().chatCommandsInfo) info("Triggered (highlight)%s(default).", Language.getModuleTitleString(name));
     }
 
     @Override
-    public void sendToggledToast(String title, Module module) {
-        if (stayOn.get()) super.sendToggledToast(title, module);
+    public void sendToggledToast(String name, Module module) {
+        if (stayOn.get()) super.sendToggledToast(name, module);
         else if (Config.get().chatCommandsInfo) return; //TODO toast
     }
 

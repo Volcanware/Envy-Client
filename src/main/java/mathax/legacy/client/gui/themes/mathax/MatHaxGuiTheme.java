@@ -1,5 +1,6 @@
 package mathax.legacy.client.gui.themes.mathax;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.DefaultSettingsWidgetFactory;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WidgetScreen;
@@ -79,8 +80,8 @@ public class MatHaxGuiTheme extends GuiTheme {
 
     // Colors
 
-    public final Setting<SettingColor> accentColor = color("accent", "Installer color of the GUI.", new SettingColor(230, 75, 100));
-    public final Setting<SettingColor> checkboxColor = color("checkbox", "Color of checkbox.", new SettingColor(230, 75, 100));
+    public final Setting<SettingColor> accentColor = color("accent", "Installer color of the GUI.", new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b));
+    public final Setting<SettingColor> checkboxColor = color("checkbox", "Color of checkbox.", new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b));
     public final Setting<SettingColor> plusColor = color("plus", "Color of plus button.", new SettingColor(255, 255, 255));
     public final Setting<SettingColor> minusColor = color("minus", "Color of minus button.", new SettingColor(255, 255, 255));
 
@@ -89,16 +90,16 @@ public class MatHaxGuiTheme extends GuiTheme {
     public final Setting<SettingColor> textColor = color(sgTextColors, "text", "Color of text.", new SettingColor(255, 255, 255));
     public final Setting<SettingColor> textSecondaryColor = color(sgTextColors, "text-secondary-text", "Color of secondary text.", new SettingColor(150, 150, 150));
     public final Setting<SettingColor> titleTextColor = color(sgTextColors, "title-text", "Color of title text.", new SettingColor(255, 255, 255));
-    public final Setting<SettingColor> loggedInColor = color(sgTextColors, "logged-in-text", "Color of logged in account name.", new SettingColor(45, 225, 45));
+    public final Setting<SettingColor> loggedInColor = color(sgTextColors, "logged-in-text", "Color of logged in account name in Account Manager.", new SettingColor(45, 225, 45));
 
     // Background
 
     public final ThreeStateColorSetting backgroundColor = new ThreeStateColorSetting(
             sgBackgroundColors,
             "background",
-            new SettingColor(35, 35, 35, 100),
-            new SettingColor(55, 55, 55, 100),
-            new SettingColor(75, 75, 75, 100)
+            new SettingColor(35, 35, 45, 100),
+            new SettingColor(35, 35, 45, 1500),
+            new SettingColor(35, 35, 45, 200)
     );
 
     public final Setting<SettingColor> moduleBackground = color(sgBackgroundColors, "module-background", "Color of module background when active.", new SettingColor(50, 50, 50));
@@ -122,25 +123,25 @@ public class MatHaxGuiTheme extends GuiTheme {
     // Scrollbar
 
     public final ThreeStateColorSetting scrollbarColor = new ThreeStateColorSetting(
-            sgScrollbar,
-            "Scrollbar",
-            new SettingColor(55, 55, 55, 200),
-            new SettingColor(85, 85, 85, 200),
-            new SettingColor(150, 150, 150, 200)
+        sgScrollbar,
+        "Scrollbar",
+        new SettingColor(35, 35, 45, 100),
+        new SettingColor(35, 35, 45, 150),
+        new SettingColor(35, 35, 45, 150)
     );
 
     // Slider
 
     public final ThreeStateColorSetting sliderHandle = new ThreeStateColorSetting(
-            sgSlider,
-            "slider-handle",
-            new SettingColor(0, 255, 180),
-            new SettingColor(0, 240, 165),
-            new SettingColor(0, 225, 150)
+        sgSlider,
+        "slider-handle",
+        new SettingColor(230, 75, 100),
+        new SettingColor(255, 100, 125),
+        new SettingColor(255, 100, 125)
     );
 
-    public final Setting<SettingColor> sliderLeft = color(sgSlider, "slider-left", "Color of slider left part.", new SettingColor(0, 150, 80));
-    public final Setting<SettingColor> sliderRight = color(sgSlider, "slider-right", "Color of slider right part.", new SettingColor(50, 50, 50));
+    public final Setting<SettingColor> sliderLeft = color(sgSlider, "slider-left", "Color of slider left part.", new SettingColor(230, 75, 100));
+    public final Setting<SettingColor> sliderRight = color(sgSlider, "slider-right", "Color of slider right part.", new SettingColor(35, 35, 45));
 
     public MatHaxGuiTheme() {
         super("MatHax");

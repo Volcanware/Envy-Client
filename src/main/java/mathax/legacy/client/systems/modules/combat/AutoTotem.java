@@ -16,6 +16,9 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 
 public class AutoTotem extends Module {
+    public boolean locked;
+    private int totems, ticks;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -69,11 +72,8 @@ public class AutoTotem extends Module {
         .build()
     );
 
-    public boolean locked;
-    private int totems, ticks;
-
     public AutoTotem() {
-        super(Categories.Combat, Items.TOTEM_OF_UNDYING, "auto-totem", "Automatically equips a totem in your offhand.");
+        super(Categories.Combat, Items.TOTEM_OF_UNDYING, "auto-totem");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Surround extends Module {
+    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
+    private boolean return_;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -104,11 +106,8 @@ public class Surround extends Module {
     );
 
     // TODO: Make a render for Surround monkeys.
-    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
-    private boolean return_;
-
     public Surround() {
-        super(Categories.Combat, Items.OBSIDIAN, "surround", "Surrounds you in blocks to prevent you from taking lots of damage.");
+        super(Categories.Combat, Items.OBSIDIAN, "surround");
     }
 
     @Override

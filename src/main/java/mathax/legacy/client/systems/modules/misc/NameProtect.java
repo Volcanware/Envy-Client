@@ -8,6 +8,8 @@ import mathax.legacy.client.systems.modules.Module;
 import net.minecraft.item.Items;
 
 public class NameProtect extends Module {
+    private String username = "If you see this, something is wrong...";
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<String> name = sgGeneral.add(new StringSetting.Builder()
@@ -17,10 +19,8 @@ public class NameProtect extends Module {
         .build()
     );
 
-    private String username = "If you see this, something is wrong.";
-
     public NameProtect() {
-        super(Categories.Misc, Items.TINTED_GLASS, "name-protect", "Hides your name client-side.");
+        super(Categories.Misc, Items.NAME_TAG, "name-protect");
     }
 
     @Override

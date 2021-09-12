@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.combat;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.ShapeMode;
@@ -21,17 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelfTrap extends Module {
-    public enum TopMode {
-        AntiFacePlace,
-        Full,
-        Top,
-        None
-    }
-
-    public enum BottomMode {
-        Single,
-        None
-    }
+    private final List<BlockPos> placePositions = new ArrayList<>();
+    private boolean placed;
+    private int delay;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
@@ -101,23 +94,19 @@ public class SelfTrap extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 10))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 10))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 75, 100, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .build()
     );
 
-    private final List<BlockPos> placePositions = new ArrayList<>();
-    private boolean placed;
-    private int delay;
-
     public SelfTrap(){
-        super(Categories.Combat, Items.OBSIDIAN, "self-trap", "Places obsidian above your head.");
+        super(Categories.Combat, Items.OBSIDIAN, "self-trap");
     }
 
     @Override
@@ -193,5 +182,17 @@ public class SelfTrap extends Module {
 
     private void add(BlockPos blockPos) {
         if (!placePositions.contains(blockPos) && mc.world.getBlockState(blockPos).getMaterial().isReplaceable() && mc.world.canPlace(Blocks.OBSIDIAN.getDefaultState(), blockPos, ShapeContext.absent())) placePositions.add(blockPos);
+    }
+
+    public enum TopMode {
+        AntiFacePlace,
+        Full,
+        Top,
+        None
+    }
+
+    public enum BottomMode {
+        Single,
+        None
     }
 }

@@ -12,6 +12,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class Chams extends Module {
+    public static final Identifier BLANK = new Identifier("mathaxlegacy", "textures/blank.png");
+
     private final SettingGroup sgThroughWalls = settings.createGroup("Through Walls");
     private final SettingGroup sgPlayers = settings.createGroup("Players");
     private final SettingGroup sgCrystals = settings.createGroup("Crystals");
@@ -181,10 +183,8 @@ public class Chams extends Module {
         .build()
     );
 
-    public static final Identifier BLANK = new Identifier("mathaxlegacy", "textures/blank.png");
-
     public Chams() {
-        super(Categories.Render, Items.GREEN_STAINED_GLASS, "chams", "Tweaks rendering of entities.");
+        super(Categories.Render, Items.GREEN_STAINED_GLASS, "chams");
     }
 
     public boolean shouldRender(Entity entity) {

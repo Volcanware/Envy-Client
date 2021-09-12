@@ -7,6 +7,7 @@ import mathax.legacy.client.gui.utils.AlignmentX;
 import mathax.legacy.client.gui.widgets.pressable.WPressable;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.language.Language;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
@@ -41,7 +42,7 @@ public class WMatHaxModule extends WPressable implements MatHaxWidget {
     protected void onCalculateSize() {
         double pad = pad();
 
-        if (titleWidth == 0) titleWidth = theme.textWidth(module.title);
+        if (titleWidth == 0) titleWidth = theme.textWidth(Language.getModuleTitleString(module.name));
 
         width = pad + titleWidth + pad;
         height = pad + theme.textHeight() + pad;
@@ -81,6 +82,6 @@ public class WMatHaxModule extends WPressable implements MatHaxWidget {
             x += w - titleWidth;
         }
 
-        renderer.text(module.title, x, y + pad, theme.textColor.get(), false);
+        renderer.text(Language.getModuleTitleString(module.name), x, y + pad, theme.textColor.get(), false);
     }
 }

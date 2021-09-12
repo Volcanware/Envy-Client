@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.settings.ColorSetting;
 import mathax.legacy.client.settings.ItemListSetting;
 import mathax.legacy.client.settings.Setting;
@@ -27,12 +28,12 @@ public class ItemHighlight extends Module {
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
         .name("color")
         .description("The color to highlight the items with.")
-        .defaultValue(new SettingColor(230, 75, 100, 50))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
         .build()
     );
 
     public ItemHighlight() {
-        super(Categories.Render, Items.PURPLE_STAINED_GLASS_PANE, "item-highlight", "Highlights selected items when in guis");
+        super(Categories.Render, Items.PURPLE_STAINED_GLASS_PANE, "item-highlight");
     }
 
     public int getColor(ItemStack stack) {

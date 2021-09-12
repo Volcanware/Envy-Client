@@ -33,7 +33,7 @@ public class PotionSaver extends Module {
     );
 
     public PotionSaver() {
-        super(Categories.Player, Items.SPLASH_POTION, "potion-saver", "Stops potion effects ticking when you stand still.");
+        super(Categories.Player, Items.SPLASH_POTION, "potion-saver");
     }
 
     public boolean shouldFreeze(StatusEffect effect) {

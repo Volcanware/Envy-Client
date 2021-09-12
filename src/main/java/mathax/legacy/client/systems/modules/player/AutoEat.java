@@ -22,6 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoEat extends Module {
+    public boolean eating;
+    private int slot, prevSlot;
+
+    private final List<Class<? extends Module>> wasAura = new ArrayList<>();
+    private boolean wasBaritone;
+
     private static final Class<? extends Module>[] AURAS = new Class[] { KillAura.class, CrystalAura.class, AnchorAura.class, BedAura.class };
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -64,14 +70,8 @@ public class AutoEat extends Module {
         .build()
     );
 
-    public boolean eating;
-    private int slot, prevSlot;
-
-    private final List<Class<? extends Module>> wasAura = new ArrayList<>();
-    private boolean wasBaritone;
-
     public AutoEat() {
-        super(Categories.Player, Items.APPLE, "auto-eat", "Automatically eats food.");
+        super(Categories.Player, Items.APPLE, "auto-eat");
     }
 
     @Override

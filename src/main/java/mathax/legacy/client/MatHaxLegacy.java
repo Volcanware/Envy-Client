@@ -71,6 +71,8 @@ public class MatHaxLegacy implements ClientModInitializer {
 
     public final Color MATHAX_COLOR = new Color(230, 75, 100);
     public final int MATHAX_COLOR_INT = Color.fromRGBA(230, 75, 100, 255);
+    public final Color MATHAX_BACKGROUND_COLOR = new Color(30, 30, 45);
+    public final int MATHAX_BACKGROUND_COLOR_INT = Color.fromRGBA(30, 30, 45, 255);
 
     public static final Logger LOG = LogManager.getLogger();
     public static String logprefix = "[MatHax Legacy] ";
@@ -81,6 +83,7 @@ public class MatHaxLegacy implements ClientModInitializer {
     public static final String URL = "https://mathaxclient.xyz/";
     public static final String API_URL = "https://api.mathaxclient.xyz/";
 
+    public boolean firstLoading = false;
 
     @Override
     public void onInitializeClient() {
@@ -92,6 +95,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         LOG.info(logprefix + "Initializing MatHax Legacy " + Version.getStylized() + "...");
         Utils.mc = MinecraftClient.getInstance();
         Utils.mc.execute(() -> titleIconManager(1));
+        firstLoading = true;
         EVENT_BUS.registerLambdaFactory("mathax.legacy.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
         LOG.info(logprefix + "10% initialized!");
@@ -133,24 +137,23 @@ public class MatHaxLegacy implements ClientModInitializer {
         BlockUtils.init();
 
         LOG.info(logprefix + "70% initialized!");
-        // Register categories
         Modules.REGISTERING_CATEGORIES = true;
         Categories.register();
         Modules.REGISTERING_CATEGORIES = false;
-
-        LOG.info(logprefix + "80% initialized!");
         Systems.init();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             Systems.save();
             GuiThemes.save();
             DiscordRPC.disable();
         }));
-        Utils.mc.execute(() -> titleIconManager(2));
 
-        LOG.info(logprefix + "90% initialized!");
+        LOG.info(logprefix + "80% initialized!");
         Fonts.load();
         GuiRenderer.init();
         GuiThemes.postInit();
+        Utils.mc.execute(() -> titleIconManager(2));
+
+        LOG.info(logprefix + "90% initialized!");
         Capes.init();
         EVENT_BUS.subscribe(this);
         EVENT_BUS.post(new ClientInitialisedEvent()); // TODO: This is there just for compatibility
@@ -159,6 +162,7 @@ public class MatHaxLegacy implements ClientModInitializer {
 
         LOG.info(logprefix + "100% initialized!");
         Utils.mc.execute(() -> titleIconManager(3));
+        firstLoading = false;
 
         LOG.info(logprefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
     }
@@ -240,11 +244,11 @@ public class MatHaxLegacy implements ClientModInitializer {
                 net.arikia.dev.drpc.DiscordRPC.discordInitialize(APP_ID, handlers, true, STEAM_ID);
                 rpc.startTimestamp = System.currentTimeMillis() / 1000;
                 rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-                rpc.state = DiscordPlaceholder.apply("%activity%" + QueuePosition.get());
+                rpc.state = DiscordPlaceholder.apply("%activity%" + getQueue());
                 rpc.largeImageKey = "logo";
                 rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
                 applySmallImage();
-                rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + QueuePosition.get());
+                rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueue());
                 rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
                 rpc.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
                 rpc.partySize = Utils.mc.getNetworkHandler() != null ? Utils.mc.getNetworkHandler().getPlayerList().size() : 1;
@@ -255,11 +259,11 @@ public class MatHaxLegacy implements ClientModInitializer {
                         net.arikia.dev.drpc.DiscordRPC.discordRunCallbacks();
                         try {
                             rpc.details = DiscordPlaceholder.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-                            rpc.state = DiscordPlaceholder.apply("%activity%" + QueuePosition.get());
+                            rpc.state = DiscordPlaceholder.apply("%activity%" + getQueue());
                             rpc.largeImageKey = "logo";
                             rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
                             applySmallImage();
-                            rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + QueuePosition.get());
+                            rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueue());
                             rpc.partySize = Utils.mc.getNetworkHandler() != null ? Utils.mc.getNetworkHandler().getPlayerList().size() : 1;
                             rpc.partyMax = 1;
                             net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
@@ -287,7 +291,8 @@ public class MatHaxLegacy implements ClientModInitializer {
         private static void applySmallImage() {
             if (delay == 5) {
                 if (number == 16) number = 1;
-                if (DiscordPresenceTab.smallImageMode.get() == DiscordPresenceTab.SmallImageMode.Dogs) rpc.smallImageKey = "dog-" + number;
+                if (DiscordPresenceTab.smallImageMode.get() == DiscordPresenceTab.SmallImageMode.Dogs)
+                    rpc.smallImageKey = "dog-" + number;
                 else rpc.smallImageKey = "cat-" + number;
                 ++number;
                 delay = 0;
@@ -296,30 +301,27 @@ public class MatHaxLegacy implements ClientModInitializer {
             }
         }
     }
+    private static String queuePos = "";
 
-    private static class QueuePosition {
-        private static String queuePos = "";
-
-        @EventHandler
-        private static void onMessageRecieve(ReceiveMessageEvent event) {
-            if (DiscordPresenceTab.queuePosition.get()) {
-                if (event.message.getString().contains("[MatHax Legacy] ")) return;
-                String messageString = event.message.getString();
-                if (messageString.contains("Position in queue: ")) {
-                    String queue = messageString.replace("Position in queue: ", "");
-                    queuePos = " (Position: " + queue + ")";
-                } else {
-                    queuePos = "";
-                }
+    @EventHandler
+    private static void onMessageRecieve(ReceiveMessageEvent event) {
+        if (DiscordPresenceTab.queuePosition.get()) {
+            if (event.message.getString().contains("[MatHax Legacy] ")) return;
+            String messageString = event.message.getString();
+            if (messageString.contains("Position in queue: ")) {
+                String queue = messageString.replace("Position in queue: ", "");
+                queuePos = " (Position: " + queue + ")";
             } else {
                 queuePos = "";
             }
+        } else {
+            queuePos = "";
         }
+    }
 
-        public static String get() {
-            if (Utils.mc.isInSingleplayer()) return "";
-            else if (Utils.mc.world == null) return "";
-            else return queuePos;
-        }
+    public static String getQueue() {
+        if (Utils.mc.isInSingleplayer()) return "";
+        else if (Utils.mc.world == null) return "";
+        else return queuePos;
     }
 }

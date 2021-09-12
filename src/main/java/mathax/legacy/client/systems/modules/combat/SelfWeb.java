@@ -13,11 +13,6 @@ import mathax.legacy.client.settings.*;
 import net.minecraft.item.Items;
 
 public class SelfWeb extends Module {
-
-    public enum Mode {
-        Normal,
-        Smart
-    }
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -59,7 +54,7 @@ public class SelfWeb extends Module {
     );
 
     public SelfWeb() {
-        super(Categories.Combat, Items.COBWEB, "self-web", "Automatically places webs on you.");
+        super(Categories.Combat, Items.COBWEB, "self-web");
     }
 
     @EventHandler
@@ -84,5 +79,10 @@ public class SelfWeb extends Module {
         }
 
         if (turnOff.get()) toggle();
+    }
+
+    public enum Mode {
+        Normal,
+        Smart
     }
 }

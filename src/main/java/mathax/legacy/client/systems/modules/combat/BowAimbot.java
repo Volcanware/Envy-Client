@@ -27,6 +27,9 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
 public class BowAimbot extends Module {
+    private boolean wasPathing;
+    private Entity target;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
@@ -75,11 +78,8 @@ public class BowAimbot extends Module {
         .build()
     );
 
-    private boolean wasPathing;
-    private Entity target;
-
     public BowAimbot() {
-        super(Categories.Combat, Items.BOW, "bow-aimbot", "Automatically aims your bow for you.");
+        super(Categories.Combat, Items.BOW, "bow-aimbot");
     }
 
     @Override

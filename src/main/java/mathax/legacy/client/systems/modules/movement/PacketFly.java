@@ -21,6 +21,9 @@ import java.util.Set;
 
 public class PacketFly extends Module {
     private final Set<PlayerMoveC2SPacket> packets = new ConcurrentSet();
+    private int flightCounter = 0;
+    private int teleportID = 0;
+
     private final SettingGroup sgMovement = settings.createGroup("Movement");
     private final SettingGroup sgClient = settings.createGroup("Client");
     private final SettingGroup sgBypass = settings.createGroup("Bypass");
@@ -118,11 +121,8 @@ public class PacketFly extends Module {
         .build()
     );
 
-    private int flightCounter = 0;
-    private int teleportID = 0;
-
     public PacketFly() {
-        super(Categories.Movement, Items.ELYTRA, "packet-fly", "Allows you to fly using packets.");
+        super(Categories.Movement, Items.ELYTRA, "packet-fly");
     }
 
     @EventHandler

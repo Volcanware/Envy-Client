@@ -29,6 +29,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoMountBypassDupe extends Module {
+    private final List<Integer> slotsToMove = new ArrayList<>();
+    private final List<Integer> slotsToThrow = new ArrayList<>();
+
+    private boolean noCancel = false;
+    private boolean sneak = false;
+
+    private AbstractDonkeyEntity entity;
+
+    private int timer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> shulkersOnly = sgGeneral.add(new BoolSetting.Builder()
@@ -52,18 +62,8 @@ public class AutoMountBypassDupe extends Module {
         .build()
     );
 
-    private final List<Integer> slotsToMove = new ArrayList<>();
-    private final List<Integer> slotsToThrow = new ArrayList<>();
-
-    private boolean noCancel = false;
-    private boolean sneak = false;
-
-    private AbstractDonkeyEntity entity;
-
-    private int timer;
-
     public AutoMountBypassDupe() {
-        super(Categories.Misc, Items.COMMAND_BLOCK, "auto-mount-bypass-dupe", "Automatically does the mount bypass dupe.");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "auto-mount-bypass-dupe");
     }
 
     @Override

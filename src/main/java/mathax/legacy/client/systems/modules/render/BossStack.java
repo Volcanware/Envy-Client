@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.WeakHashMap;
 
 public class BossStack extends Module {
+    public static final WeakHashMap<ClientBossBar, Integer> barMap = new WeakHashMap<>();
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Boolean> stack = sgGeneral.add(new BoolSetting.Builder()
@@ -41,10 +43,8 @@ public class BossStack extends Module {
         .build()
     );
 
-    public static final WeakHashMap<ClientBossBar, Integer> barMap = new WeakHashMap<>();
-
     public BossStack() {
-        super(Categories.Render, Items.NETHER_STAR, "boss-stack", "Stacks boss bars to make your HUD less cluttered.");
+        super(Categories.Render, Items.NETHER_STAR, "boss-stack");
     }
 
     @EventHandler
