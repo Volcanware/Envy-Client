@@ -113,7 +113,7 @@ public class MatHaxGuiTheme extends GuiTheme {
             new SettingColor(35, 35, 45, 200)
     );
 
-    public final Setting<SettingColor> moduleBackground = color(sgBackgroundColors, "module-background", "Color of module background when active.", new SettingColor(50, 50, 50));
+    public final Setting<SettingColor> moduleBackground = color(sgBackgroundColors, "module-background", "Color of module background when active.", new SettingColor(35, 35, 45, 225));
 
     // Outline
 
