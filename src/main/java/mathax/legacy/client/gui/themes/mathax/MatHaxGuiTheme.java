@@ -78,6 +78,17 @@ public class MatHaxGuiTheme extends GuiTheme {
             .build()
     );
 
+    public final Setting<Integer> round = sgGeneral.add(new IntSetting.Builder()
+        .name("round")
+        .description("How much windows should be rounded")
+        .defaultValue(0)
+        .min(0)
+        .max(20)
+        .sliderMin(0)
+        .sliderMax(15)
+        .build()
+    );
+
     // Colors
 
     public final Setting<SettingColor> accentColor = color("accent", "Installer color of the GUI.", new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b));
@@ -291,6 +302,11 @@ public class MatHaxGuiTheme extends GuiTheme {
     @Override
     public boolean hideHUD() {
         return hideHUD.get();
+    }
+
+    @Override
+    public int roundAmount() {
+        return round.get();
     }
 
     public class ThreeStateColorSetting {

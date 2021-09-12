@@ -151,7 +151,7 @@ public class CombatHUD extends HUDElement {
     );
 
     private final Setting<SettingColor> healthColor1 = sgGeneral.add(new ColorSetting.Builder()
-        .name("healh-stage-1")
+        .name("health-stage-1")
         .description("The color on the left of the health gradient.")
         .defaultValue(new SettingColor(255, 15, 15))
         .build()
@@ -195,7 +195,7 @@ public class CombatHUD extends HUDElement {
 
             // Background
             Renderer2D.COLOR.begin();
-            Renderer2D.COLOR.quad(x, y, box.width, box.height, backgroundColor.get());
+            Renderer2D.COLOR.quadRounded(x, y, box.width, box.height, backgroundColor.get(), renderer.roundAmount(), true);
             Renderer2D.COLOR.render(null);
 
             // Player Model

@@ -209,6 +209,8 @@
   "module.description.mathaxlegacy.packet-fly": "Allows you to fly using packets.",
   "module.title.mathaxlegacy.parkour": "Parkour",
   "module.description.mathaxlegacy.parkour": "Automatically jumps at the edges of blocks.",
+  "module.title.mathaxlegacy.prone": "Prone",
+  "module.description.mathaxlegacy.prone": "Become prone on demand.",
   "module.title.mathaxlegacy.phase": "Phase",
   "module.description.mathaxlegacy.phase": "Lets you clip through ground sometimes.",
   "module.title.mathaxlegacy.reverse-step": "Reverse Step",

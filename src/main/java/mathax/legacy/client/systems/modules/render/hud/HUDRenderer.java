@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render.hud;
 
+import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.renderer.text.TextRenderer;
 import mathax.legacy.client.utils.render.color.Color;
 
@@ -40,5 +41,9 @@ public class HUDRenderer {
 
     public void addPostTask(Runnable runnable) {
         postTasks.add(runnable);
+    }
+
+    public int roundAmount() {
+        return GuiThemes.get().roundAmount();
     }
 }

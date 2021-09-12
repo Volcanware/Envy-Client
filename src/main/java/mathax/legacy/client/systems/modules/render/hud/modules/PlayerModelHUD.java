@@ -90,7 +90,7 @@ public class PlayerModelHUD extends HUDElement {
 
         if (background.get()) {
             Renderer2D.COLOR.begin();
-            Renderer2D.COLOR.quad(x, y, box.width, box.height, backgroundColor.get());
+            Renderer2D.COLOR.quadRounded(x, y, box.width, box.height, backgroundColor.get(), renderer.roundAmount(), true);
             Renderer2D.COLOR.render(null);
         }
 

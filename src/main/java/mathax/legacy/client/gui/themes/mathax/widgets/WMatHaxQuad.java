@@ -11,6 +11,6 @@ public class WMatHaxQuad extends WQuad {
 
     @Override
     protected void onRender(GuiRenderer renderer, double mouseX, double mouseY, double delta) {
-        renderer.quad(x, y, width, height, color);
+        renderer.quadRounded(x, y, width, height, color, theme.roundAmount());
     }
 }

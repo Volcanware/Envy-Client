@@ -204,6 +204,8 @@ public abstract class GuiTheme implements ISerializable<GuiTheme> {
 
     public abstract boolean categoryIcons();
 
+    public abstract int roundAmount();
+
     public abstract boolean hideHUD();
 
     public double textWidth(String text, int length, boolean title) {

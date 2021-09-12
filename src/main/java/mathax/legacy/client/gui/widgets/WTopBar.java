@@ -28,6 +28,15 @@ public abstract class WTopBar extends WHorizontalList {
         }
     }
 
+    protected int getState(WTopBarButton btn) {
+        int a = 0;
+        if (btn.equals(cells.get(0).widget()))
+            a |= 1;
+        if (btn.equals(cells.get(cells.size() - 1).widget()))
+            a |= 2;
+        return a;
+    }
+
     protected class WTopBarButton extends WPressable {
         private final Tab tab;
 
@@ -61,7 +70,20 @@ public abstract class WTopBar extends WHorizontalList {
             double pad = pad();
             Color color = getButtonColor(pressed || (Utils.mc.currentScreen instanceof TabScreen && ((TabScreen) Utils.mc.currentScreen).tab == tab), mouseOver);
 
-            renderer.quad(x, y, width, height, color);
+            switch (getState(this)) {
+                case 1:
+                    renderer.quadRoundedSide(this, color, theme.roundAmount(), false);
+                    break;
+                case 2:
+                    renderer.quadRoundedSide(this, color, theme.roundAmount(), true);
+                    break;
+                case 3:
+                    renderer.quadRounded(this, color, theme.roundAmount());
+                    break;
+                default:
+                    renderer.quad(this, color);
+                    break;
+            }
             renderer.text(tab.name, x + pad, y + pad, getNameColor(), false);
         }
     }

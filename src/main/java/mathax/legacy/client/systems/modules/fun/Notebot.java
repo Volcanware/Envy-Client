@@ -75,6 +75,12 @@ public class Notebot extends Module {
         .defaultValue(true)
         .build()
     );
+    private final Setting<Boolean> repeatMode = sgGeneral.add(new BoolSetting.Builder()
+        .name("repeat-mode")
+        .description("Whether or not to repeat current song.")
+        .defaultValue(false)
+        .build()
+    );
 
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
         .name("render")
@@ -190,7 +196,11 @@ public class Notebot extends Module {
             if (!isPlaying) return;
 
             if (mc.player == null || currentIndex >= song.size()) {
-                stop();
+                if(repeatMode.get()){
+                    pause();
+                } else {
+                    stop();
+                }
                 return;
             }
 
@@ -222,10 +232,10 @@ public class Notebot extends Module {
         status = table.add(theme.label(getStatus())).expandCellX().widget();
 
         // Pause
-        WButton pause = table.add(theme.button(isPlaying ? "Pause" : "Resume")).right().widget();
-        pause.action = () -> {
-            Pause();
-            pause.set(isPlaying ? "Pause" : "Resume");
+        WButton pauseBtn = table.add(theme.button(isPlaying ? "Pause" : "Resume")).right().widget();
+        pauseBtn.action = () -> {
+            pause();
+            pauseBtn.set(isPlaying ? "Pause" : "Resume");
             status.set(getStatus());
         };
 
@@ -302,7 +312,7 @@ public class Notebot extends Module {
         }
     }
 
-    public void Pause() {
+    public void pause() {
         if (!isActive()) toggle();
         if (isPlaying) {
             info("Pausing.");

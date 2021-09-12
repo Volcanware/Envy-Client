@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
+import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.renderer.GL;
 import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
@@ -102,7 +103,7 @@ public class InventoryViewerHUD extends HUDElement {
             }
             case Flat -> {
                 Renderer2D.COLOR.begin();
-                Renderer2D.COLOR.quad(x, y, w, h, color.get());
+                Renderer2D.COLOR.quadRounded(x, y, w, h, color.get(), GuiThemes.get().roundAmount(), true);
                 Renderer2D.COLOR.render(null);
             }
         }

@@ -455,6 +455,7 @@ public class Modules extends System<Modules> {
         add(new NoSlow());
         add(new PacketFly());
         add(new Parkour());
+        add(new Prone());
         add(new Phase());
         add(new ReverseStep());
         add(new SafeWalk());
@@ -496,6 +497,7 @@ public class Modules extends System<Modules> {
         add(new NewChunks());
         add(new NoBob());
         add(new NoRender());
+        add(new Prone());
         add(new SkeletonESP());
         add(new Search());
         add(new StorageESP());

@@ -43,12 +43,12 @@ public class NotebotCommand extends Command {
         }));
         builder.then(literal("pause").executes(ctx -> {
             Notebot notebot = Modules.get().get(Notebot.class);
-            notebot.Pause();
+            notebot.pause();
             return SINGLE_SUCCESS;
         }));
         builder.then(literal("resume").executes(ctx -> {
             Notebot notebot = Modules.get().get(Notebot.class);
-            notebot.Pause();
+            notebot.pause();
             return SINGLE_SUCCESS;
         }));
         builder.then(literal("stop").executes(ctx -> {
