@@ -167,6 +167,7 @@ public class HUD extends Module {
         crosshair.add(new CrystalHUD(this));
         crosshair.add(new EGapHUD(this));
         crosshair.add(new XPBottleHUD(this));
+        crosshair.add(new BedHUD(this));
 
         // CROSSHAIR 2
         crosshair2 = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);

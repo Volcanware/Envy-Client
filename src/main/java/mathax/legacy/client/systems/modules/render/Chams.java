@@ -1,6 +1,7 @@
 package mathax.legacy.client.systems.modules.render;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
@@ -64,7 +65,7 @@ public class Chams extends Module {
     public final Setting<SettingColor> playersColor = sgPlayers.add(new ColorSetting.Builder()
         .name("color")
         .description("The color of player models.")
-        .defaultValue(new SettingColor(0, 255, 255, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 100))
         .visible(players::get)
         .build()
     );

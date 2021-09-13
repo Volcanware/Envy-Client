@@ -213,7 +213,7 @@ public class Offhand extends Module {
         EGap(Items.ENCHANTED_GOLDEN_APPLE),
         Gap(Items.GOLDEN_APPLE),
         Crystal(Items.END_CRYSTAL),
-        //TODO: All types
+        // TODO: All types in one :))))))
         Bed(Items.RED_BED),
         Shield(Items.SHIELD);
 
