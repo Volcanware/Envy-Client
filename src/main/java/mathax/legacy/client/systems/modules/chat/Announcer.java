@@ -29,7 +29,7 @@ public class Announcer extends Module {
     };
 
     public Announcer() {
-        super(Categories.Chat, Items.BELL, "announcer");
+        super(Categories.Chat, Items.BELL, "announcer", "Announces specified actions into chat.");
     }
 
     @Override

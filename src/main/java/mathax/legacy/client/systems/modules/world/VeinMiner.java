@@ -31,8 +31,9 @@ import java.util.List;
 import java.util.Set;
 
 public class VeinMiner extends Module {
-    private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final Pool<MyBlock> blockPool = new Pool<>(MyBlock::new);
+    private final List<MyBlock> blocks = new ArrayList<>();
+    private final List<BlockPos> foundBlockPositions = new ArrayList<>();
 
     private final Set<Vec3i> blockNeighbours = Sets.newHashSet(
         new Vec3i(1, -1, 1), new Vec3i(0, -1, 1), new Vec3i(-1, -1, 1),
@@ -47,6 +48,9 @@ public class VeinMiner extends Module {
         new Vec3i(1, 1, 0), new Vec3i(0, 1, 0), new Vec3i(-1, 1, 0),
         new Vec3i(1, 1, -1), new Vec3i(0, 1, -1), new Vec3i(-1, 1, -1)
     );
+
+    private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgRender = settings.createGroup("Render");
 
     // General
 
@@ -110,12 +114,8 @@ public class VeinMiner extends Module {
         .build()
     );
 
-    private final Pool<MyBlock> blockPool = new Pool<>(MyBlock::new);
-    private final List<MyBlock> blocks = new ArrayList<>();
-    private final List<BlockPos> foundBlockPositions = new ArrayList<>();
-
     public VeinMiner() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "vein-miner");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "vein-miner", "Mines all nearby blocks with this type.");
     }
 
     @Override

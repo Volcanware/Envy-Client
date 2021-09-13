@@ -18,6 +18,9 @@ import net.minecraft.item.ShearsItem;
 import net.minecraft.util.Hand;
 
 public class AutoShearer extends Module {
+    private Entity entity;
+    private boolean offHand;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> distance = sgGeneral.add(new DoubleSetting.Builder()
@@ -42,11 +45,8 @@ public class AutoShearer extends Module {
         .build()
     );
 
-    private Entity entity;
-    private boolean offHand;
-
     public AutoShearer() {
-        super(Categories.World, Items.SHEARS, "auto-shearer");
+        super(Categories.World, Items.SHEARS, "auto-shearer", "Automatically shears sheep.");
     }
 
     @Override

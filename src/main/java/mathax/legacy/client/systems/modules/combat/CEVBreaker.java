@@ -94,8 +94,11 @@ public class CEVBreaker extends Module {
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
         .build()
     );
+
+    //TODO: Explodes crystals without mining, fix :)))))
+
     public CEVBreaker() {
-        super(Categories.Combat, Items.END_CRYSTAL, "CEV-breaker");
+        super(Categories.Combat, Items.END_CRYSTAL, "CEV-breaker", "Places obsidian on top of people and explodes crystals on top of their heads after destroying the obsidian.");
     }
 
     @EventHandler

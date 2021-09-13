@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpawnProofer extends Module {
+    private final Pool<BlockPos.Mutable> spawnPool = new Pool<>(BlockPos.Mutable::new);
+    private final List<BlockPos.Mutable> spawns = new ArrayList<>();
+    private int ticksWaited;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Integer> range = sgGeneral.add(new IntSetting.Builder()
@@ -59,13 +63,8 @@ public class SpawnProofer extends Module {
         .build()
     );
 
-
-    private final Pool<BlockPos.Mutable> spawnPool = new Pool<>(BlockPos.Mutable::new);
-    private final List<BlockPos.Mutable> spawns = new ArrayList<>();
-    private int ticksWaited;
-
     public SpawnProofer() {
-        super(Categories.World, Items.SPAWNER, "spawn-proofer");
+        super(Categories.World, Items.SPAWNER, "spawn-proofer", "Automatically spawnproofs unlit areas.");
     }
 
     @EventHandler

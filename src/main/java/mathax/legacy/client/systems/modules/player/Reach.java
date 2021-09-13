@@ -20,7 +20,7 @@ public class Reach extends Module {
     );
 
     public Reach() {
-        super(Categories.Player, Items.COMMAND_BLOCK, "reach");
+        super(Categories.Player, Items.COMMAND_BLOCK, "reach", "Gives you super long arms.");
     }
 
     public float getReach() {

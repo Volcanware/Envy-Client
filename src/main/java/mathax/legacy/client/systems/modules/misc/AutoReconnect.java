@@ -12,8 +12,6 @@ import net.minecraft.client.network.ServerInfo;
 import net.minecraft.item.Items;
 
 public class AutoReconnect extends Module {
-    public ServerInfo lastServerInfo;
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Double> time = sgGeneral.add(new DoubleSetting.Builder()
@@ -26,14 +24,6 @@ public class AutoReconnect extends Module {
     );
 
     public AutoReconnect() {
-        super(Categories.Misc, Items.REPEATER, "auto-reconnect");
-        MatHaxLegacy.EVENT_BUS.subscribe(new StaticListener());
-    }
-
-    private class StaticListener {
-        @EventHandler
-        private void onConnectToServer(ConnectToServerEvent event) {
-            lastServerInfo = mc.isInSingleplayer() ? null : mc.getCurrentServerEntry();
-        }
+        super(Categories.Misc, Items.REPEATER, "auto-reconnect", "Automatically reconnects when disconnected from a server.");
     }
 }

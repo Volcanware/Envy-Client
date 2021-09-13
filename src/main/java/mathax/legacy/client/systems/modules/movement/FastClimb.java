@@ -22,7 +22,7 @@ public class FastClimb extends Module {
     );
 
     public FastClimb() {
-        super(Categories.Movement, Items.LADDER, "fast-climb");
+        super(Categories.Movement, Items.LADDER, "fast-climb", "Allows you to climb faster.");
     }
 
     @EventHandler

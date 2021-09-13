@@ -19,6 +19,8 @@ import net.minecraft.item.Items;
 import java.util.List;
 
 public class LiquidFiller extends Module {
+    private int timer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<PlaceIn> placeInLiquids = sgGeneral.add(new EnumSetting.Builder<PlaceIn>()
@@ -68,10 +70,8 @@ public class LiquidFiller extends Module {
         .build()
     );
 
-    private int timer;
-
     public LiquidFiller() {
-        super(Categories.World, Items.WATER_BUCKET, "liquid-filler");
+        super(Categories.World, Items.WATER_BUCKET, "liquid-filler", "Places blocks inside of liquid source blocks within range of you.");
     }
 
     @Override

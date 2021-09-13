@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class AntiGhostBlock extends Module {
-    private long lastRequest;
-    private boolean lock;
-    private final HashMap<BlockPos, Long> blocks;
+    private final HashMap<BlockPos, Long> blocks = new HashMap<>();
+    private long lastRequest = 0L;
+    private boolean lock = false;
 
     SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -48,7 +48,11 @@ public class AntiGhostBlock extends Module {
         .build()
     );
 
-    private void lambda$onTick$0(List list, long l, BlockPos blockPos, Long l2) {
+    public AntiGhostBlock() {
+        super(Categories.World, Items.BARRIER, "anti-ghost-block", "Automatically tries to remove ghost blocks.");
+    }
+
+    private void tick(List list, long l, BlockPos blockPos, Long l2) {
         if (list.isEmpty() && l - l2 >= (long)requestDelay.get().intValue()) {
             mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, Direction.UP));
             list.add(blockPos.asLong());
@@ -59,13 +63,6 @@ public class AntiGhostBlock extends Module {
     @EventHandler
     private void onBlockBreak(BreakBlockEvent breakBlockEvent) {
         blocks.put(breakBlockEvent.blockPos, mc.world.getTime());
-    }
-
-    public AntiGhostBlock() {
-        super(Categories.World, Items.BARRIER, "anti-ghost-block");
-        blocks = new HashMap();
-        lock = false;
-        lastRequest = 0L;
     }
 
     @EventHandler
@@ -82,7 +79,7 @@ public class AntiGhostBlock extends Module {
             return;
         }
         ArrayList arrayList = new ArrayList();
-        blocks.forEach((arg_0, arg_1) -> lambda$onTick$0(arrayList, l, arg_0, arg_1));
+        blocks.forEach((argument, argument2) -> tick(arrayList, l, argument, argument2));
         arrayList.forEach(blocks::remove);
     }
 

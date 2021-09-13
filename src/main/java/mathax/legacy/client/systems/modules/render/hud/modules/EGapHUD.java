@@ -26,7 +26,7 @@ public class EGapHUD extends HUDElement {
     );
 
     public EGapHUD(HUD hud) {
-        super(hud, "e-gaps", "Displays the amount of e-gaps in your inventory.", true);
+        super(hud, "e-gap", "Displays the amount of e-gaps in your inventory.", true);
     }
 
     @Override

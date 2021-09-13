@@ -85,7 +85,7 @@ public class AimAssist extends Module {
     );
 
     public AimAssist() {
-        super(Categories.Combat, Items.ARMOR_STAND, "aim-assist");
+        super(Categories.Combat, Items.ARMOR_STAND, "aim-assist", "Automatically aims at entities.");
     }
 
     @EventHandler

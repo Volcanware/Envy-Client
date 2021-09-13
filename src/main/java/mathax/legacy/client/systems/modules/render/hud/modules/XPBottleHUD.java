@@ -26,7 +26,7 @@ public class XPBottleHUD extends HUDElement {
     );
 
     public XPBottleHUD(HUD hud) {
-        super(hud, "xp-bottles", "Displays the amount of XP bottles in your inventory.", true);
+        super(hud, "xp-bottle", "Displays the amount of XP bottles in your inventory.", true);
     }
 
     @Override

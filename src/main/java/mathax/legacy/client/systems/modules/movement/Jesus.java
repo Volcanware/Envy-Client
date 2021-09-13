@@ -142,7 +142,7 @@ public class Jesus extends Module {
     // Other
 
     public Jesus() {
-        super(Categories.Movement, Items.WATER_BUCKET, "jesus");
+        super(Categories.Movement, Items.WATER_BUCKET, "jesus", "Walk on liquids and powder snow like Jesus.");
     }
 
     @Override

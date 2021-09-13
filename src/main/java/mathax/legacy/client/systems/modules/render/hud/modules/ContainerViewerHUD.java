@@ -16,6 +16,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class ContainerViewerHUD extends HUDElement {
+    private final ItemStack[] inventory = new ItemStack[9 * 3];
+
     private static final Identifier TEXTURE = new Identifier("mathaxlegacy", "textures/container/container.png");
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -37,8 +39,6 @@ public class ContainerViewerHUD extends HUDElement {
         .defaultValue(false)
         .build()
     );
-
-    private final ItemStack[] inventory = new ItemStack[9 * 3];
 
     public ContainerViewerHUD(HUD hud) {
         super(hud, "container-viewer", "Displays held containers.", false);

@@ -14,6 +14,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class InventoryViewerHUD extends HUDElement {
+    private final ItemStack[] editorInv;
+
     private static final Identifier TEXTURE = new Identifier("mathaxlegacy", "textures/container/container.png");
     private static final Identifier TEXTURE_TRANSPARENT = new Identifier("mathaxlegacy", "textures/container/container-transparent.png");
 
@@ -44,8 +46,6 @@ public class InventoryViewerHUD extends HUDElement {
         .visible(() -> background.get() != Background.None)
         .build()
     );
-
-    private final ItemStack[] editorInv;
 
     public InventoryViewerHUD(HUD hud) {
         super(hud, "inventory-viewer", "Displays your inventory.", true);

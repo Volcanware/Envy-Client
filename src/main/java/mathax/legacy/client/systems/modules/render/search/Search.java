@@ -28,6 +28,13 @@ import net.minecraft.world.chunk.WorldChunk;
 import java.util.*;
 
 public class Search extends Module {
+    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
+
+    private final Long2ObjectMap<SChunk> chunks = new Long2ObjectOpenHashMap<>();
+    private final List<SGroup> groups = new UnorderedArrayList<>();
+
+    private Dimension lastDimension;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
@@ -64,15 +71,8 @@ public class Search extends Module {
         .build()
     );
 
-    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
-
-    private final Long2ObjectMap<SChunk> chunks = new Long2ObjectOpenHashMap<>();
-    private final List<SGroup> groups = new UnorderedArrayList<>();
-
-    private Dimension lastDimension;
-
     public Search() {
-        super(Categories.Render, Items.COMMAND_BLOCK, "search");
+        super(Categories.Render, Items.COMMAND_BLOCK, "search", "Searches for specified blocks.");
 
         RainbowColors.register(this::onTickRainbow);
     }

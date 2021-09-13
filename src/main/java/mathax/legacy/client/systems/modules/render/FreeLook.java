@@ -12,6 +12,11 @@ import net.minecraft.item.Items;
 import org.lwjgl.glfw.GLFW;
 
 public class FreeLook extends Module {
+    public float cameraYaw;
+    public float cameraPitch;
+
+    private Perspective prePers;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgArrows = settings.createGroup("Arrows");
 
@@ -57,13 +62,8 @@ public class FreeLook extends Module {
         .build()
     );
 
-    public float cameraYaw;
-    public float cameraPitch;
-
-    private Perspective prePers;
-
     public FreeLook() {
-        super(Categories.Render, Items.PLAYER_HEAD, "free-look");
+        super(Categories.Render, Items.PLAYER_HEAD, "free-look", "Allows more rotation options in third person.");
     }
 
     @Override

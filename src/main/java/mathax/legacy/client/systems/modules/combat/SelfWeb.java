@@ -24,7 +24,7 @@ public class SelfWeb extends Module {
 
     private final Setting<Integer> range = sgGeneral.add(new IntSetting.Builder()
         .name("range")
-        .description("How far away the player has to be from you to place webs. Requires Mode to Smart.")
+        .description("How far away the player has to be from you to place webs. Requires Smart mode.")
         .defaultValue(3)
         .min(1)
         .sliderMax(7)
@@ -54,7 +54,7 @@ public class SelfWeb extends Module {
     );
 
     public SelfWeb() {
-        super(Categories.Combat, Items.COBWEB, "self-web");
+        super(Categories.Combat, Items.COBWEB, "self-web", "Automatically places webs on you.");
     }
 
     @EventHandler

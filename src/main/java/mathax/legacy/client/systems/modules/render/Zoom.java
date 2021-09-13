@@ -13,6 +13,11 @@ import mathax.legacy.client.bus.EventHandler;
 import net.minecraft.item.Items;
 
 public class Zoom extends Module {
+    private boolean preCinematic;
+    private double preMouseSensitivity;
+    private double value;
+    private double lastFov;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgScroll = settings.createGroup("Scroll");
 
@@ -50,13 +55,8 @@ public class Zoom extends Module {
         .build()
     );
 
-    private boolean preCinematic;
-    private double preMouseSensitivity;
-    private double value;
-    private double lastFov;
-
     public Zoom() {
-        super(Categories.Render, Items.SPYGLASS, "zoom");
+        super(Categories.Render, Items.SPYGLASS, "zoom", "Zooms your view.");
     }
 
     @Override

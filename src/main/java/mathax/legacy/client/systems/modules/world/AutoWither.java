@@ -27,6 +27,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class AutoWither extends Module {
+    private final Pool<Wither> witherPool = new Pool<>(Wither::new);
+    private final ArrayList<Wither> withers = new ArrayList<>();
+    private Wither wither;
+
+    private int witherTicksWaited, blockTicksWaited;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -111,14 +117,8 @@ public class AutoWither extends Module {
         .build()
     );
 
-    private final Pool<Wither> witherPool = new Pool<>(Wither::new);
-    private final ArrayList<Wither> withers = new ArrayList<>();
-    private Wither wither;
-
-    private int witherTicksWaited, blockTicksWaited;
-
     public AutoWither() {
-        super(Categories.World, Items.WITHER_SKELETON_SKULL, "auto-wither");
+        super(Categories.World, Items.WITHER_SKELETON_SKULL, "auto-wither", "Automatically builds withers.");
     }
 
     @Override

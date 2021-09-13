@@ -12,19 +12,21 @@ import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.SortPriority;
 import mathax.legacy.client.utils.entity.TargetUtils;
-import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.player.*;
 import mathax.legacy.client.utils.render.color.SettingColor;
+import mathax.legacy.client.utils.world.BedUtils;
 import mathax.legacy.client.utils.world.BlockUtils;
 import mathax.legacy.client.utils.world.CardinalDirection;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.block.BedBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BedBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BedItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -36,14 +38,17 @@ public class BedAura extends Module {
     private CardinalDirection direction;
     private PlayerEntity target;
     private BlockPos placePos, breakPos;
-    private int timer;
+    private Item ogItem;
+    private boolean safetyToggled;
+    private int timer, webTimer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgTargeting = settings.createGroup("Targeting");
     private final SettingGroup sgAutoMove = settings.createGroup("Inventory");
+    private final SettingGroup sgAutomation = settings.createGroup("Automation");
+    private final SettingGroup sgSafety = settings.createGroup("Safety");
     private final SettingGroup sgPause = settings.createGroup("Pause");
     private final SettingGroup sgRender = settings.createGroup("Render");
-
     // General
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
@@ -138,6 +143,69 @@ public class BedAura extends Module {
         .build()
     );
 
+    private final Setting<Boolean> restoreOnDisable = sgAutoMove.add(new BoolSetting.Builder()
+        .name("restore-on-disable")
+        .description("Put whatever was in your auto move slot back after disabling.")
+        .defaultValue(true)
+        .build()
+    );
+
+    // Automation
+
+    private final Setting<Boolean> breakWeb = sgAutomation.add(new BoolSetting.Builder()
+        .name("break-web")
+        .description("Break target's webs/string automatically.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> preventEscape = sgAutomation.add(new BoolSetting.Builder()
+        .name("prevent-escape")
+        .description("Place a block over the target's head before bedding.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Boolean> renderAutomation = sgAutomation.add(new BoolSetting.Builder()
+        .name("render-break")
+        .description("Render mining self-trap/burrow.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Boolean> disableOnNoBeds = sgAutomation.add(new BoolSetting.Builder()
+        .name("disable-on-no-beds")
+        .description("Disable if you run out of beds.")
+        .defaultValue(false)
+        .build()
+    );
+
+    // Safety
+
+    private final Setting<Boolean> disableOnSafety = sgSafety.add(new BoolSetting.Builder()
+        .name("disable-on-safety")
+        .description("Disable BedAura+ when safety activates.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> safetyHP = sgSafety.add(new DoubleSetting.Builder()
+        .name("safety-hp")
+        .description("What health safety activates at.")
+        .defaultValue(7)
+        .min(1)
+        .max(36)
+        .sliderMax(36)
+        .build()
+    );
+
+    private final Setting<Boolean> safetyGapSwap = sgSafety.add(new BoolSetting.Builder()
+        .name("swap-to-gap")
+        .description("Swap to egaps after activating safety.")
+        .defaultValue(false)
+        .build()
+    );
+
     // Pause
 
     private final Setting<Boolean> pauseOnEat = sgPause.add(new BoolSetting.Builder()
@@ -199,17 +267,33 @@ public class BedAura extends Module {
     );
 
     public BedAura() {
-        super(Categories.Combat, Items.RED_BED, "bed-aura");
+        super(Categories.Combat, Items.RED_BED, "bed-aura", "Automatically places and explodes beds in the Nether and End.");
     }
 
     @Override
     public void onActivate() {
-        if (Modules.get().isActive(BedAuraPlus.class)) {
-            info("(highlight)%s(default) is enabled, disabling it...", Language.getModuleTitleString(Modules.get().get(BedAuraPlus.class).name));
-            Modules.get().get(BedAuraPlus.class).toggle();
-        }
         timer = delay.get();
+        webTimer = 0;
         direction = CardinalDirection.North;
+        ogItem = InvUtils.getItemFromSlot(autoMoveSlot.get() - 1);
+        if (ogItem instanceof BedItem) ogItem = null;
+        safetyToggled = false;
+    }
+
+    @Override
+    public void onDeactivate() {
+        if (safetyToggled) {
+            warning("Your health is too low!");
+            if (safetyGapSwap.get()) {
+                FindItemResult gap = InvUtils.findEgap();
+                if (gap.found()) mc.player.getInventory().selectedSlot = gap.getSlot();
+            }
+        }
+
+        if (!safetyToggled && restoreOnDisable.get() && ogItem != null) {
+            FindItemResult ogItemInv = InvUtils.find(ogItem);
+            if (ogItemInv.found()) InvUtils.move().from(ogItemInv.getSlot()).toHotbar(autoMoveSlot.get() - 1);
+        }
     }
 
     @EventHandler
@@ -218,6 +302,15 @@ public class BedAura extends Module {
         if (mc.world.getDimension().isBedWorking()) {
             error("You can't blow up beds in this dimension, disabling...");
             toggle();
+            return;
+        }
+
+        // Safety
+        if (PlayerUtils.getTotalHealth() <= safetyHP.get()) {
+            if (disableOnSafety.get()) {
+                safetyToggled = true;
+                toggle();
+            }
             return;
         }
 
@@ -236,8 +329,32 @@ public class BedAura extends Module {
         if (autoMove.get()) {
             FindItemResult bed = InvUtils.find(itemStack -> itemStack.getItem() instanceof BedItem);
 
-            if (bed.found() && bed.getSlot() != autoMoveSlot.get() - 1) {
-                InvUtils.move().from(bed.getSlot()).toHotbar(autoMoveSlot.get() - 1);
+            if (bed.found() && bed.getSlot() != autoMoveSlot.get() - 1) InvUtils.move().from(bed.getSlot()).toHotbar(autoMoveSlot.get() - 1);
+            if (!bed.found() && disableOnNoBeds.get()) {
+                warning("You have run out of beds, disabling...");
+                toggle();
+                return;
+            }
+        }
+
+        if (preventEscape.get() && BlockUtils.getBlock(target.getBlockPos().up(2)) != Blocks.OBSIDIAN && BedUtils.isInHole(target)) {
+            FindItemResult obsidian = InvUtils.find(Items.OBSIDIAN);
+            if (obsidian.found()) {BlockUtils.place(target.getBlockPos().up(2), obsidian, true, 50, true, true, true);}
+            if (BlockUtils.getBlock(target.getBlockPos().up(2)) != Blocks.OBSIDIAN) return;
+        }
+
+        if (placePos == null && PlayerUtils.isWebbed(target) && breakWeb.get()) {
+            FindItemResult sword = InvUtils.findSword();
+            if (sword.found()) {
+                InvUtils.updateSlot(sword.getSlot());
+                if (webTimer <= 0) {
+                    info("Breaking " + target.getEntityName() + "'s web.");
+                    webTimer = 100;
+                } else {
+                    webTimer--;
+                }
+                PlayerUtils.mineWeb(target, sword.getSlot());
+                return;
             }
         }
 

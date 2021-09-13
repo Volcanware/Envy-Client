@@ -50,7 +50,7 @@ public class BreakIndicators extends Module {
     );
 
     public BreakIndicators() {
-        super(Categories.Render, Items.IRON_PICKAXE, "break-indicators");
+        super(Categories.Render, Items.IRON_PICKAXE, "break-indicators", "Renders the progress of a block being broken.");
     }
 
     @EventHandler

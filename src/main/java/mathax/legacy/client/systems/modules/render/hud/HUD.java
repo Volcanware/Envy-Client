@@ -96,7 +96,7 @@ public class HUD extends Module {
     }
 
     public HUD() {
-        super(Categories.Render, Items.GLASS, "HUD");
+        super(Categories.Render, Items.GLASS, "HUD", "In game overlay.");
 
         // MAIN INFO
         mainInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 2, 2);
@@ -112,7 +112,7 @@ public class HUD extends Module {
         mainInfo.add(new DurabilityHUD(this));
         mainInfo.add(new BiomeHUD(this));
         mainInfo.add(new PlayerModelHUD(this));
-        mainInfo.add(new CombatHUD(this));
+        mainInfo.add(new CombatInfoHUD(this));
 
         // MODULE INFO
         moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 215);

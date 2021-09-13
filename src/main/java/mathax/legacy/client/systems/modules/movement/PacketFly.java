@@ -122,7 +122,7 @@ public class PacketFly extends Module {
     );
 
     public PacketFly() {
-        super(Categories.Movement, Items.ELYTRA, "packet-fly");
+        super(Categories.Movement, Items.ELYTRA, "packet-fly", "Allows you to fly using packets.");
     }
 
     @EventHandler

@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public class Parkour extends Module {
     public Parkour() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "parkour");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "parkour", "Automatically jumps at the edges of blocks.");
     }
 
     @EventHandler

@@ -21,6 +21,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
 public class Flamethrower extends Module {
+    private Entity entity;
+    private int ticks = 0;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> distance = sgGeneral.add(new DoubleSetting.Builder()
@@ -74,11 +77,8 @@ public class Flamethrower extends Module {
         .build()
     );
 
-    private Entity entity;
-    private int ticks = 0;
-
     public Flamethrower() {
-        super(Categories.World, Items.FIRE_CHARGE, "flamethrower");
+        super(Categories.World, Items.FIRE_CHARGE, "flamethrower", "Ignites every alive piece of food.");
     }
 
     @Override

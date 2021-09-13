@@ -87,7 +87,7 @@ public class AutoLog extends Module {
     );
 
     public AutoLog() {
-        super(Categories.Combat, Items.REDSTONE, "auto-log");
+        super(Categories.Combat, Items.REDSTONE, "auto-log", "Automatically disconnects you when certain requirements are met.");
     }
 
     @EventHandler

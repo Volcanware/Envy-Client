@@ -32,9 +32,8 @@ public class Trail extends Module {
         .build()
     );
 
-
     public Trail() {
-        super(Categories.Render, Items.BLUE_STAINED_GLASS, "trail");
+        super(Categories.Render, Items.BLUE_STAINED_GLASS, "trail", "Renders a customizable trail behind your player.");
     }
 
     @EventHandler

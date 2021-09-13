@@ -31,6 +31,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class EntityOwner extends Module {
+    private final Vec3 pos = new Vec3();
+    private final Map<UUID, String> uuidToName = new HashMap<>();
 
     private static final Color BACKGROUND = new Color(0, 0, 0, 75);
     private static final Color TEXT = new Color(255, 255, 255);
@@ -53,11 +55,8 @@ public class EntityOwner extends Module {
         .build()
     );
 
-    private final Vec3 pos = new Vec3();
-    private final Map<UUID, String> uuidToName = new HashMap<>();
-
     public EntityOwner() {
-        super(Categories.Render, Items.NAME_TAG, "entity-owner");
+        super(Categories.Render, Items.NAME_TAG, "entity-owner", "Displays the name of the player who owns the entity you're looking at.");
     }
 
     @Override

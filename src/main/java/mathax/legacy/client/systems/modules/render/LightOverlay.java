@@ -22,6 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LightOverlay extends Module {
+    private final Pool<Cross> crossPool = new Pool<>(Cross::new);
+    private final List<Cross> crosses = new ArrayList<>();
+
+    private final BlockPos.Mutable bp = new BlockPos.Mutable();
+
+    private final Mesh mesh = new ShaderMesh(Shaders.POS_COLOR, DrawMode.Lines, Mesh.Attrib.Vec3, Mesh.Attrib.Color);
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgColors = settings.createGroup("Colors");
 
@@ -66,15 +73,8 @@ public class LightOverlay extends Module {
         .build()
     );
 
-    private final Pool<Cross> crossPool = new Pool<>(Cross::new);
-    private final List<Cross> crosses = new ArrayList<>();
-
-    private final BlockPos.Mutable bp = new BlockPos.Mutable();
-
-    private final Mesh mesh = new ShaderMesh(Shaders.POS_COLOR, DrawMode.Lines, Mesh.Attrib.Vec3, Mesh.Attrib.Color);
-
     public LightOverlay() {
-        super(Categories.Render, Items.YELLOW_STAINED_GLASS, "light-overlay");
+        super(Categories.Render, Items.YELLOW_STAINED_GLASS, "light-overlay", "Shows blocks where mobs can spawn.");
     }
 
     @EventHandler

@@ -66,7 +66,7 @@ public class InventoryTweaks extends Module {
     private final Setting<Boolean> xCarry = sgGeneral.add(new BoolSetting.Builder()
         .name("xcarry")
         .description("Allows you to store four extra items in your crafting grid.")
-        .defaultValue(true)
+        .defaultValue(false)
         .onChanged(v -> {
             if (v || !Utils.canUpdate()) return;
             mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.playerScreenHandler.syncId));
@@ -80,7 +80,7 @@ public class InventoryTweaks extends Module {
     private final Setting<Boolean> sortingEnabled = sgSorting.add(new BoolSetting.Builder()
         .name("sorting-enabled")
         .description("Automatically sorts stacks in inventory.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 
@@ -153,7 +153,7 @@ public class InventoryTweaks extends Module {
     );
 
     public InventoryTweaks() {
-        super(Categories.Misc, Items.CHEST, "inventory-tweaks");
+        super(Categories.Misc, Items.CHEST, "inventory-tweaks", "Various inventory related utilities.");
     }
 
     @Override

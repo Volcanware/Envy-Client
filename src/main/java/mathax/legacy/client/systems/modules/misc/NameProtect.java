@@ -20,7 +20,7 @@ public class NameProtect extends Module {
     );
 
     public NameProtect() {
-        super(Categories.Misc, Items.NAME_TAG, "name-protect");
+        super(Categories.Misc, Items.NAME_TAG, "name-protect", "Hides your username client-side.");
     }
 
     @Override

@@ -93,13 +93,13 @@ public class Utils {
     }
 
     public static String getWorldTime() {
-        if (mc.world == null) return "00:00";
+        if (mc.world == null) return "00:00:00";
 
         int ticks = (int) (mc.world.getTimeOfDay() % 24000);
         ticks += 6000;
         if (ticks > 24000) ticks -= 24000;
 
-        return String.format("%02d:%02d", ticks / 1000, (int) (ticks % 1000 / 1000.0 * 60));
+        return String.format("%02d:%02d:00", ticks / 1000, (int) (ticks % 1000 / 1000.0 * 60));
     }
 
     public static Iterable<WorldChunk> chunks() {

@@ -27,7 +27,6 @@ public class Background extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgBlur = settings.createGroup("Blur");
     private final SettingGroup sgScreens = settings.createGroup("Screens");
-    //private final SettingGroup sgColors = settings.createGroup("Colors");
 
     // General
 
@@ -96,17 +95,8 @@ public class Background extends Module {
         .build()
     );
 
-    // Colors
-
-    /*private final Setting<SettingColor> color = sgColors.add(new ColorSetting.Builder()
-        .name("background-color")
-        .description("Color of the background.")
-        .defaultValue(new SettingColor(255, 255, 255))
-        .build()
-    );*/
-
     public Background() {
-        super(Categories.Render, Items.TINTED_GLASS, "background");
+        super(Categories.Render, Items.TINTED_GLASS, "background", "Custom background when in GUI screens.");
 
         // The listeners need to run even when the module is not enabled
         MatHaxLegacy.EVENT_BUS.subscribe(new ConsumerListener<>(WindowResizedEvent.class, event -> {

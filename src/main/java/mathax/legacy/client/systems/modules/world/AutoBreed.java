@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoBreed extends Module {
+    private final List<Entity> animalsFed = new ArrayList<>();
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
@@ -50,10 +52,8 @@ public class AutoBreed extends Module {
         .build()
     );
 
-    private final List<Entity> animalsFed = new ArrayList<>();
-
     public AutoBreed() {
-        super(Categories.World, Items.WHEAT, "auto-breed");
+        super(Categories.World, Items.WHEAT, "auto-breed", "Automatically breeds specified animals.");
     }
 
     @Override

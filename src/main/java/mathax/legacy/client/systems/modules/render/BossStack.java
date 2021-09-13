@@ -44,7 +44,7 @@ public class BossStack extends Module {
     );
 
     public BossStack() {
-        super(Categories.Render, Items.NETHER_STAR, "boss-stack");
+        super(Categories.Render, Items.NETHER_STAR, "boss-stack", "Stacks boss bars to make your HUD less cluttered.");
     }
 
     @EventHandler

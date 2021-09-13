@@ -4,6 +4,7 @@ import mathax.legacy.client.mixininterface.IClientPlayerInteractionManager;
 import mathax.legacy.client.utils.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.*;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 
@@ -277,5 +278,24 @@ public class InvUtils {
         private void click(int id) {
             mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, id, data, type, mc.player);
         }
+    }
+
+    // Auto Totem
+
+    private static void clickSlot(int id, int button, SlotActionType action) {
+        mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, id, button, action, mc.player);
+    }
+
+    public static void clickId(int id) {
+        clickSlot(id, 0, SlotActionType.PICKUP);
+    }
+
+    public static void swap(int id, int button) {
+        clickSlot(id, button, SlotActionType.SWAP);
+    }
+
+    public static int getFirstHotbarSlotId() {
+        if (mc.player.currentScreenHandler instanceof PlayerScreenHandler) return 36;
+        return mc.player.currentScreenHandler.slots.size() - 9;
     }
 }

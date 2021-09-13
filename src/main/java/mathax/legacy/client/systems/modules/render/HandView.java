@@ -21,24 +21,27 @@ public class HandView extends Module {
     private final Setting<Double> scaleX = sgScale.add(new DoubleSetting.Builder()
         .name("x")
         .description("The X scale of your hands.")
-        .defaultValue(1)
-        .sliderMin(0).sliderMax(5)
+        .defaultValue(0.250)
+        .sliderMin(0)
+        .sliderMax(5)
         .build()
     );
 
     private final Setting<Double> scaleY = sgScale.add(new DoubleSetting.Builder()
         .name("y")
         .description("The Y scale of your hands.")
-        .defaultValue(1)
-        .sliderMin(0).sliderMax(5)
+        .defaultValue(0.250)
+        .sliderMin(0)
+        .sliderMax(5)
         .build()
     );
 
     private final Setting<Double> scaleZ = sgScale.add(new DoubleSetting.Builder()
         .name("z")
         .description("The Z scale of your hands.")
-        .defaultValue(1)
-        .sliderMin(0).sliderMax(5)
+        .defaultValue(0.250)
+        .sliderMin(0)
+        .sliderMax(5)
         .build()
     );
 
@@ -47,24 +50,27 @@ public class HandView extends Module {
     private final Setting<Double> posX = sgPosition.add(new DoubleSetting.Builder()
         .name("x")
         .description("The X position offset of your hands.")
-        .defaultValue(0)
-        .sliderMin(-3).sliderMax(3)
+        .defaultValue(0.1)
+        .sliderMin(-3)
+        .sliderMax(3)
         .build()
     );
 
     private final Setting<Double> posY = sgPosition.add(new DoubleSetting.Builder()
         .name("y")
         .description("The Y position offset of your hands.")
-        .defaultValue(0)
-        .sliderMin(-3).sliderMax(3)
+        .defaultValue(1.250)
+        .sliderMin(-3)
+        .sliderMax(3)
         .build()
     );
 
     private final Setting<Double> posZ = sgPosition.add(new DoubleSetting.Builder()
         .name("z")
         .description("The Z position offset of your hands.")
-        .defaultValue(0)
-        .sliderMin(-3).sliderMax(3)
+        .defaultValue(-0.1)
+        .sliderMin(-3)
+        .sliderMax(3)
         .build()
     );
 
@@ -74,7 +80,8 @@ public class HandView extends Module {
         .name("x")
         .description("The X orientation of your hands.")
         .defaultValue(0)
-        .sliderMin(-1).sliderMax(1)
+        .sliderMin(-1)
+        .sliderMax(1)
         .build()
     );
 
@@ -82,7 +89,8 @@ public class HandView extends Module {
         .name("y")
         .description("The Y orientation of your hands.")
         .defaultValue(0)
-        .sliderMin(-1).sliderMax(1)
+        .sliderMin(-1)
+        .sliderMax(1)
         .build()
     );
 
@@ -90,7 +98,8 @@ public class HandView extends Module {
         .name("z")
         .description("The Z orientation of your hands.")
         .defaultValue(0)
-        .sliderMin(-1).sliderMax(1)
+        .sliderMin(-1)
+        .sliderMax(1)
         .build()
     );
 
@@ -107,8 +116,10 @@ public class HandView extends Module {
         .name("main-progress")
         .description("The swing progress of your main hand.")
         .defaultValue(0)
-        .min(0).max(1)
-        .sliderMin(0).sliderMax(1)
+        .min(0)
+        .max(1)
+        .sliderMin(0)
+        .sliderMax(1)
         .build()
     );
 
@@ -116,13 +127,15 @@ public class HandView extends Module {
         .name("offhand-progress")
         .description("The swing progress of your offhand.")
         .defaultValue(0)
-        .min(0).max(1)
-        .sliderMin(0).sliderMax(1)
+        .min(0)
+        .max(1)
+        .sliderMin(0)
+        .sliderMax(1)
         .build()
     );
 
     public HandView() {
-        super(Categories.Render, Items.LIME_STAINED_GLASS_PANE, "hand-view");
+        super(Categories.Render, Items.LIME_STAINED_GLASS_PANE, "hand-view", "Alters the way items are rendered in your hands.");
     }
 
     public void transform(MatrixStack matrices) {

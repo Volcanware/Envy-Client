@@ -32,6 +32,15 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InfinityMiner extends Module {
+    private Mode currentMode = Mode.Still;
+    private Mode secondaryMode;
+    private boolean baritoneRunning = false;
+    private int playerX;
+    private int playerY;
+    private int playerZ;
+    private final HashMap<String, Boolean> originalSettings = new HashMap<>();
+    private volatile Boolean BLOCKER = false;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAutoToggles = settings.createGroup("Auto Toggles");
     private final SettingGroup sgExtras = settings.createGroup("Extras");
@@ -84,17 +93,8 @@ public class InfinityMiner extends Module {
         .build()
     );
 
-    private Mode currentMode = Mode.Still;
-    private Mode secondaryMode;
-    private boolean baritoneRunning = false;
-    private int playerX;
-    private int playerY;
-    private int playerZ;
-    private final HashMap<String, Boolean> originalSettings = new HashMap<>();
-    private volatile Boolean BLOCKER = false;
-
     public InfinityMiner() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever.");
     }
 
     private boolean filter(Block block) {

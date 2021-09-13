@@ -7,7 +7,6 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDElement;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
-import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.settings.*;
@@ -16,6 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActiveModulesHUD extends HUDElement {
+    private final List<Module> modules = new ArrayList<>();
+
+    private final Color rainbow = new Color(255, 255, 255);
+    private double rainbowHue1, rainbowHue2;
+
+    private double prevX, prevY;
+    private double prevTextLength;
+    private Color prevColor = new Color();
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
@@ -85,15 +93,6 @@ public class ActiveModulesHUD extends HUDElement {
         .visible(() -> colorMode.get() == ColorMode.Rainbow)
         .build()
     );
-
-    private final List<Module> modules = new ArrayList<>();
-
-    private final Color rainbow = new Color(255, 255, 255);
-    private double rainbowHue1, rainbowHue2;
-
-    private double prevX, prevY;
-    private double prevTextLength;
-    private Color prevColor = new Color();
 
     public ActiveModulesHUD(HUD hud) {
         super(hud, "active-modules", "Displays your active modules.", true);
@@ -190,14 +189,14 @@ public class ActiveModulesHUD extends HUDElement {
 
         else if (colorMode == ColorMode.Category) color = new Color(module.category.color);
 
-        renderer.text(Language.getModuleTitleString(module.name), x, y, color);
+        renderer.text(module.title, x, y, color);
 
-        double textLength = renderer.textWidth(Language.getModuleTitleString(module.name));
+        double textLength = renderer.textWidth(module.title);
 
         if (activeInfo.get()) {
             String info = module.getInfoString();
             if (info != null) {
-                renderer.text(info, x + renderer.textWidth(Language.getModuleTitleString(module.name)) + renderer.textWidth(" "), y, hud.secondaryColor.get());
+                renderer.text(info, x + renderer.textWidth(module.title) + renderer.textWidth(" "), y, hud.secondaryColor.get());
                 textLength += renderer.textWidth(" ") + renderer.textWidth(info);
             }
         }
@@ -239,7 +238,7 @@ public class ActiveModulesHUD extends HUDElement {
     }
 
     private double getModuleWidth(HUDRenderer renderer, Module module) {
-        double width = renderer.textWidth(Language.getModuleTitleString(module.name));
+        double width = renderer.textWidth(module.title);
 
         if (activeInfo.get()) {
             String info = module.getInfoString();

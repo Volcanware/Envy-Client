@@ -12,6 +12,8 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 
 public class TimeChanger extends Module {
+    long oldTime;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> time = sgGeneral.add(new DoubleSetting.Builder()
@@ -23,10 +25,8 @@ public class TimeChanger extends Module {
         .build()
     );
 
-    long oldTime;
-
     public TimeChanger() {
-        super(Categories.Render, Items.CLOCK, "time-changer");
+        super(Categories.Render, Items.CLOCK, "time-changer", "Makes you able to set a custom time.");
     }
 
     @Override

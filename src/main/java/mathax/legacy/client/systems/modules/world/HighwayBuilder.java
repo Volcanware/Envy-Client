@@ -10,7 +10,6 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.player.AutoEat;
 import mathax.legacy.client.systems.modules.player.AutoTool;
-import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.misc.HorizontalDirection;
 import mathax.legacy.client.utils.misc.MBlockPos;
 import mathax.legacy.client.utils.player.CustomPlayerInput;
@@ -48,24 +47,21 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class HighwayBuilder extends Module {
-    public enum Floor {
-        Replace,
-        PlaceMissing
-    }
+    private HorizontalDirection dir, leftDir, rightDir;
 
-    public enum Rotation {
-        None(false, false),
-        Mine(true, false),
-        Place(false, true),
-        Both(true, true);
+    private Input prevInput;
+    private CustomPlayerInput input;
 
-        public boolean mine, place;
+    private State state, lastState;
+    private IBlockPosProvider blockPosProvider;
 
-        Rotation(boolean mine, boolean place) {
-            this.mine = mine;
-            this.place = place;
-        }
-    }
+    public Vec3d start;
+    public int blocksBroken, blocksPlaced;
+    private final MBlockPos lastBreakingPos = new MBlockPos();
+    private boolean displayInfo;
+
+    private final MBlockPos posRender2 = new MBlockPos();
+    private final MBlockPos posRender3 = new MBlockPos();
 
     private static final BlockPos ZERO = new BlockPos(0, 0, 0);
 
@@ -104,7 +100,7 @@ public class HighwayBuilder extends Module {
         .build()
     );
 
-    //TODO: Place the block under the side first, like my surround fix. Some servers blocks sides without it.
+    //TODO: Place the block under the side first, like my surround fix. Some servers blocks sides without it...
     /*private final Setting<Boolean> underSides = sgGeneral.add(new BoolSetting.Builder()
         .name("under-sides")
         .description("Places blocks under the side blocks. [Some servers blocks sides without it]")
@@ -230,24 +226,8 @@ public class HighwayBuilder extends Module {
         .build()
     );
 
-    private HorizontalDirection dir, leftDir, rightDir;
-
-    private Input prevInput;
-    private CustomPlayerInput input;
-
-    private State state, lastState;
-    private IBlockPosProvider blockPosProvider;
-
-    public Vec3d start;
-    public int blocksBroken, blocksPlaced;
-    private final MBlockPos lastBreakingPos = new MBlockPos();
-    private boolean displayInfo;
-
-    private final MBlockPos posRender2 = new MBlockPos();
-    private final MBlockPos posRender3 = new MBlockPos();
-
     public HighwayBuilder() {
-        super(Categories.World, Items.OBSIDIAN, "highway-builder");
+        super(Categories.World, Items.OBSIDIAN, "highway-builder", "Automatically builds highways.");
     }
 
     @Override
@@ -388,7 +368,7 @@ public class HighwayBuilder extends Module {
     }
 
     private void disconnect(String message, Object... args) {
-        MutableText text = new LiteralText(String.format("%s[%s%s%s] %s", Formatting.GRAY, Formatting.BLUE, Language.getModuleTitleString(name), Formatting.GRAY, Formatting.RED) + String.format(message, args)).append("\n");
+        MutableText text = new LiteralText(String.format("%s[%s%s%s] %s", Formatting.GRAY, Formatting.BLUE, title, Formatting.GRAY, Formatting.RED) + String.format(message, args)).append("\n");
         text.append(getStatsText());
 
         mc.getNetworkHandler().getConnection().disconnect(text);
@@ -1504,6 +1484,25 @@ public class HighwayBuilder extends Module {
                     y = py;
                 }
             };
+        }
+    }
+
+    public enum Floor {
+        Replace,
+        PlaceMissing
+    }
+
+    public enum Rotation {
+        None(false, false),
+        Mine(true, false),
+        Place(false, true),
+        Both(true, true);
+
+        public boolean mine, place;
+
+        Rotation(boolean mine, boolean place) {
+            this.mine = mine;
+            this.place = place;
         }
     }
 }

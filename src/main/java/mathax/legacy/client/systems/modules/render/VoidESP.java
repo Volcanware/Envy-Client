@@ -25,6 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VoidESP extends Module {
+    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
+
+    private final Pool<Void> voidHolePool = new Pool<>(Void::new);
+    private final List<Void> voidHoles = new ArrayList<>();
+
     private static final Direction[] SIDES = { Direction.EAST, Direction.NORTH, Direction.SOUTH, Direction.WEST };
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -87,13 +92,8 @@ public class VoidESP extends Module {
         .build()
     );
 
-    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
-
-    private final Pool<Void> voidHolePool = new Pool<>(Void::new);
-    private final List<Void> voidHoles = new ArrayList<>();
-
     public VoidESP() {
-        super(Categories.Render, Items.RED_STAINED_GLASS, "void-ESP");
+        super(Categories.Render, Items.RED_STAINED_GLASS, "void-ESP", "Renders holes in bedrock layers that lead to the void.");
     }
 
     private boolean isBlockWrong(BlockPos blockPos) {

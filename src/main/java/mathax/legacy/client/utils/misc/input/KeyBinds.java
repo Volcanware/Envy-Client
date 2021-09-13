@@ -11,7 +11,7 @@ import java.util.Map;
 public class KeyBinds {
     private static final String CATEGORY = "MatHax Legacy " + Version.getStylized();
 
-    public static KeyBinding OPEN_CLICK_GUI = new KeyBinding("key.mathaxlegacy.open-click-gui", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, CATEGORY);
+    public static KeyBinding OPEN_CLICK_GUI = new KeyBinding("Open Click GUI", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, CATEGORY);
 
     public static KeyBinding[] apply(KeyBinding[] binds) {
         // Add category

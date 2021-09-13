@@ -9,7 +9,6 @@ import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.tabs.Tabs;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
-import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.Element;
@@ -115,26 +114,22 @@ public class TitleScreen extends Screen {
             Screen screen = client.options.skipMultiplayerWarning ? new MultiplayerScreen(this) : new MultiplayerWarningScreen(this);
             client.setScreen(screen);
         }, tooltipSupplier))).active = bl;
-        String website = "MatHax ";
-        website += Language.getButton("website").getString();
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 2) + (spacingY / 2), 200, 20, new LiteralText(website), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 2) + (spacingY / 2), 200, 20, new LiteralText("MatHax Website"), (button) -> {
             Util.getOperatingSystem().open(MatHaxLegacy.URL);
         }));
-        String discord = "MatHax ";
-        discord += Language.getButton("discord").getString();
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 3) + (spacingY / 2), 200, 20, new LiteralText(discord), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 3) + (spacingY / 2), 200, 20, new LiteralText("MatHax Discord"), (button) -> {
             Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord");
         }));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 4) + (spacingY / 2), 98, 20, Language.getButton("click-gui"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 4) + (spacingY / 2), 98, 20, new LiteralText("Click GUI"), (button) -> {
             Tabs.get().get(0).openScreen(GuiThemes.get());
         }));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 4) + (spacingY / 2), 98, 20, Language.getButton("check-for-update"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 4) + (spacingY / 2), 98, 20, new LiteralText("Check for Update"), (button) -> {
             Version.checkForUpdate(true);
         }));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 5) + (spacingY / 2), 98, 20, Language.getButton("proxies"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 5) + (spacingY / 2), 98, 20, new LiteralText("Proxies"), (button) -> {
             client.setScreen(GuiThemes.get().proxiesScreen());
         }));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 5) + (spacingY / 2), 98, 20, Language.getButton("accounts"), (button) -> {
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 5) + (spacingY / 2), 98, 20, new LiteralText("Accounts"), (button) -> {
             client.setScreen(GuiThemes.get().accountsScreen());
         }));
         addDrawableChild(new TexturedButtonWidget(width / 2 - 124, j + (spacingY * 7), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> {
@@ -191,7 +186,7 @@ public class TitleScreen extends Screen {
             String space = " ";
             int spaceLength = textRenderer.getWidth(space);
 
-            String loggedInAs = Language.getTextString("logged-in-as");
+            String loggedInAs = "Logged in as";
             String loggedName = Modules.get().get(NameProtect.class).getName(client.getSession().getUsername());
             String loggedOpenDeveloper = "[";
             String loggedDeveloper = "Developer";
@@ -207,7 +202,7 @@ public class TitleScreen extends Screen {
             int watermarkVersionLength = textRenderer.getWidth(watermarkVersion);
             int watermarkFullLength = watermarkNameLength + spaceLength + watermarkVersionLength;
 
-            String authorBy = Language.getTextString("by");
+            String authorBy = "By";
             String authorName = "Matejko06";
             int authorByLength = textRenderer.getWidth(authorBy);
             int authorNameLength = textRenderer.getWidth(authorName);

@@ -26,7 +26,7 @@ public class CrystalHUD extends HUDElement {
     );
 
     public CrystalHUD(HUD hud) {
-        super(hud, "crystals", "Displays the amount of crystals in your inventory.", true);
+        super(hud, "crystal", "Displays the amount of crystals in your inventory.", true);
     }
 
     @Override

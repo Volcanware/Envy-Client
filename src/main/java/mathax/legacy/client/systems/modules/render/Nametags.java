@@ -37,6 +37,20 @@ import net.minecraft.world.GameMode;
 import java.util.*;
 
 public class Nametags extends Module {
+    private final Color WHITE = new Color(255, 255, 255);
+    private final Color RED = new Color(255, 25, 25);
+    private final Color AMBER = new Color(255, 105, 25);
+    private final Color GREEN = new Color(25, 250, 25);
+    private final Color GOLD = new Color(230, 185, 35);
+    private final Color GREY = new Color(150, 150, 150);
+    private final Color BLUE = new Color(20, 170, 170);
+
+    private final Vec3 pos = new Vec3();
+    private final double[] itemWidths = new double[6];
+
+    private final Map<Enchantment, Integer> enchantmentsToShowScale = new HashMap<>();
+    private final List<Entity> entityList = new ArrayList<>();
+
     private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
     private Color textureColor = new Color(255, 255, 255, 255);
 
@@ -224,22 +238,8 @@ public class Nametags extends Module {
         .build()
     );
 
-    private final Color WHITE = new Color(255, 255, 255);
-    private final Color RED = new Color(255, 25, 25);
-    private final Color AMBER = new Color(255, 105, 25);
-    private final Color GREEN = new Color(25, 250, 25);
-    private final Color GOLD = new Color(230, 185, 35);
-    private final Color GREY = new Color(150, 150, 150);
-    private final Color BLUE = new Color(20, 170, 170);
-
-    private final Vec3 pos = new Vec3();
-    private final double[] itemWidths = new double[6];
-
-    private final Map<Enchantment, Integer> enchantmentsToShowScale = new HashMap<>();
-    private final List<Entity> entityList = new ArrayList<>();
-
     public Nametags() {
-        super(Categories.Render, Items.CYAN_STAINED_GLASS, "nametags");
+        super(Categories.Render, Items.CYAN_STAINED_GLASS, "nametags", "Displays customizable nametags above players.");
     }
 
     private static String ticksToTime(int ticks) {

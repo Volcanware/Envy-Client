@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoReplenish extends Module {
+    private final ItemStack[] items = new ItemStack[10];
+    private boolean prevHadOpenScreen;
+    private int tickDelayLeft;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Integer> threshold = sgGeneral.add(new IntSetting.Builder()
@@ -66,12 +70,8 @@ public class AutoReplenish extends Module {
         .build()
     );
 
-    private final ItemStack[] items = new ItemStack[10];
-    private boolean prevHadOpenScreen;
-    private int tickDelayLeft;
-
     public AutoReplenish(){
-        super(Categories.Player, Items.CHEST, "auto-replenish");
+        super(Categories.Player, Items.CHEST, "auto-replenish", "Automatically refills items in your hotbar, main hand, or offhand.");
 
         for (int i = 0; i < items.length; i++) items[i] = new ItemStack(Items.AIR);
     }

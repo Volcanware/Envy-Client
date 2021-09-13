@@ -19,7 +19,6 @@ import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.render.MatHaxToast;
 import net.minecraft.block.entity.*;
 import net.minecraft.item.Items;
@@ -30,6 +29,8 @@ import java.io.*;
 import java.util.*;
 
 public class StashFinder extends Module {
+    public List<Chunk> chunks = new ArrayList<>();
+
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -73,10 +74,8 @@ public class StashFinder extends Module {
         .build()
     );
 
-    public List<Chunk> chunks = new ArrayList<>();
-
     public StashFinder() {
-        super(Categories.World, Items.RED_SHULKER_BOX, "stash-finder");
+        super(Categories.World, Items.RED_SHULKER_BOX, "stash-finder", "Searches loaded chunks for storage blocks. Saves to <your minecraft folder>/MatHax/Legacy/Stashes folder.");
     }
 
     @Override
@@ -118,10 +117,10 @@ public class StashFinder extends Module {
             if (notifications.get() && (!chunk.equals(prevChunk) || !chunk.countsEqual(prevChunk))) {
                 switch (notificationMode.get()) {
                     case Chat -> info("Found stash at (highlight)%s(default), (highlight)%s(default).", chunk.x, chunk.z);
-                    case Toast -> mc.getToastManager().add(new MatHaxToast(Items.CHEST, color.getPacked(), Language.getModuleTitleString(name), Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!"));
+                    case Toast -> mc.getToastManager().add(new MatHaxToast(Items.CHEST, color.getPacked(), title, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!"));
                     case Both -> {
                         info("Found stash at (highlight)%s(default), (highlight)%s(default).", chunk.x, chunk.z);
-                        mc.getToastManager().add(new MatHaxToast(Items.CHEST, color.getPacked(), Language.getModuleTitleString(name), Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!"));
+                        mc.getToastManager().add(new MatHaxToast(Items.CHEST, color.getPacked(), title, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!"));
                     }
                 }
             }

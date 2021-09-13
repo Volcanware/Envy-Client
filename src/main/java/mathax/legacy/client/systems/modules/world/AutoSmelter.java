@@ -52,7 +52,7 @@ public class AutoSmelter extends Module {
     private Map<Item, Integer> fuelTimeMap;
 
     public AutoSmelter() {
-        super(Categories.World, Items.FURNACE, "auto-smelter");
+        super(Categories.World, Items.FURNACE, "auto-smelter", "Automatically smelts items from your inventory");
     }
 
     private boolean fuelItemFilter(Item item) {

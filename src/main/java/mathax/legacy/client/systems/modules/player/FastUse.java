@@ -23,7 +23,7 @@ public class FastUse extends Module {
     );
 
     private final Setting<Boolean> exp = sgGeneral.add(new BoolSetting.Builder()
-        .name("xP")
+        .name("XP")
         .description("Fast-throws XP bottles if the mode is \"Some\".")
         .defaultValue(false)
         .build()
@@ -37,7 +37,7 @@ public class FastUse extends Module {
     );
 
     public FastUse() {
-        super(Categories.Player, Items.REDSTONE_BLOCK, "fast-use");
+        super(Categories.Player, Items.PLAYER_HEAD, "fast-use", "Allows you to use items at very high speeds.");
     }
 
     @EventHandler

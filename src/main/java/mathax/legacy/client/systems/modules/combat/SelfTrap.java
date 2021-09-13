@@ -106,7 +106,7 @@ public class SelfTrap extends Module {
     );
 
     public SelfTrap(){
-        super(Categories.Combat, Items.OBSIDIAN, "self-trap");
+        super(Categories.Combat, Items.OBSIDIAN, "self-trap", "Places obsidian above your head.");
     }
 
     @Override

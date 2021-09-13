@@ -173,7 +173,7 @@ public class ElytraFly extends Module {
     );
 
     public ElytraFly() {
-        super(Categories.Movement, Items.ELYTRA, "elytra-fly");
+        super(Categories.Movement, Items.ELYTRA, "elytra-fly", "Gives you more control over your elytra.");
     }
 
     @Override

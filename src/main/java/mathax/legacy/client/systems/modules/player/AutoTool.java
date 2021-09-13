@@ -75,7 +75,7 @@ public class AutoTool extends Module {
     private int bestSlot;
 
     public AutoTool() {
-        super(Categories.Player, Items.DIAMOND_HOE, "auto-tool");
+        super(Categories.Player, Items.DIAMOND_HOE, "auto-tool", "Automatically switches to the most effective tool when performing an action.");
     }
 
     @EventHandler
@@ -135,7 +135,7 @@ public class AutoTool extends Module {
     }
 
     private boolean shouldStopUsing(ItemStack itemStack) {
-        return antiBreak.get() && itemStack.getMaxDamage() - itemStack.getDamage() < breakDurability.get();
+        return antiBreak.get() && itemStack.getMaxDamage() - itemStack.getDamage() < itemStack.getMaxDamage() / breakDurability.get();
     }
 
     public static double getScore(ItemStack itemStack, BlockState state, boolean silkTouchEnderChest, EnchantPreference enchantPreference, Predicate<ItemStack> good) {

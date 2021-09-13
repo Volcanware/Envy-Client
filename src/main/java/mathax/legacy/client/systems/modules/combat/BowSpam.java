@@ -37,7 +37,7 @@ public class BowSpam extends Module {
     );
 
     public BowSpam() {
-        super(Categories.Combat, Items.BOW, "bow-spam");
+        super(Categories.Combat, Items.BOW, "bow-spam", "Spams arrows.");
     }
 
     @Override

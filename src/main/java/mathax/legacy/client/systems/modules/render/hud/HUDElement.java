@@ -9,8 +9,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.nbt.NbtCompound;
 
 public abstract class HUDElement implements ISerializable<HUDElement> {
-    public final String name, title;
-    public final String description;
+    public final String name, title, description;
 
     public boolean active;
     public final boolean defaultActive;

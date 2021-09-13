@@ -56,7 +56,7 @@ public class ElytraBoost extends Module {
     private final List<FireworkRocketEntity> fireworks = new ArrayList<>();
 
     public ElytraBoost() {
-        super(Categories.Movement, Items.ELYTRA, "elytra-boost");
+        super(Categories.Movement, Items.ELYTRA, "elytra-boost", "Boosts your elytra as if you used a firework.");
     }
 
     @Override

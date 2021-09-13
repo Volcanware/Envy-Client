@@ -43,7 +43,7 @@ public class Quiver extends Module {
     );
 
     public Quiver() {
-        super(Categories.Combat, Items.BOW, "quiver");
+        super(Categories.Combat, Items.BOW, "quiver", "Shoots arrows at yourself.");
     }
 
     @Override

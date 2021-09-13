@@ -87,7 +87,7 @@ public class Nuker extends Module {
     private int noBlockTimer;
 
     public Nuker() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "nuker");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "nuker", "Breaks blocks around you.");
     }
 
     @Override

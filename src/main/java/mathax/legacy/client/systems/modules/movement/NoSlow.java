@@ -69,7 +69,7 @@ public class NoSlow extends Module {
     );
 
     public NoSlow() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "no-slow");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "no-slow", "Allows you to move normally when using objects that will slow you.");
     }
 
     public boolean airStrict() {

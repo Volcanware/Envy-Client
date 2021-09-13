@@ -105,9 +105,9 @@ public class Surround extends Module {
         .build()
     );
 
-    // TODO: Make a render for Surround monkeys.
+    // TODO: Make a render for Surround
     public Surround() {
-        super(Categories.Combat, Items.OBSIDIAN, "surround");
+        super(Categories.Combat, Items.OBSIDIAN, "surround", "Surrounds you in blocks to prevent you from taking lots of damage.");
     }
 
     @Override

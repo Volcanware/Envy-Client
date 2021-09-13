@@ -6,7 +6,6 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.hud.HUDElement;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
-import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.settings.*;
 
@@ -47,7 +46,7 @@ public class ModuleInfoHUD extends HUDElement {
     );
 
     public ModuleInfoHUD(HUD hud) {
-        super(hud, "module-info", "Displays if selected modules are enabled or disabled.", true);
+        super(hud, "module-info", "Shows activity information about specified modules.", true);
     }
 
     @Override
@@ -90,14 +89,14 @@ public class ModuleInfoHUD extends HUDElement {
     }
 
     private void renderModule(HUDRenderer renderer, Module module, double x, double y) {
-        renderer.text(Language.getModuleTitleString(module.name), x, y, hud.primaryColor.get());
+        renderer.text(module.title, x, y, hud.primaryColor.get());
 
         String info = getModuleInfo(module);
-        renderer.text(info, x + renderer.textWidth(Language.getModuleTitleString(module.name)) + renderer.textWidth(" "), y, module.isActive() ? onColor.get() : offColor.get());
+        renderer.text(info, x + renderer.textWidth(module.title) + renderer.textWidth(" "), y, module.isActive() ? onColor.get() : offColor.get());
     }
 
     private double getModuleWidth(HUDRenderer renderer, Module module) {
-        double width = renderer.textWidth(Language.getModuleTitleString(module.name));
+        double width = renderer.textWidth(module.title);
         if (info.get()) width += renderer.textWidth(" ") + renderer.textWidth(getModuleInfo(module));
         return width;
     }

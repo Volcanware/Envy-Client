@@ -15,6 +15,10 @@ import net.minecraft.potion.Potions;
 import net.minecraft.screen.BrewingStandScreenHandler;
 
 public class AutoBrewer extends Module {
+    private int ingredientI;
+    private boolean first;
+    private int timer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<MyPotion> potion = sgGeneral.add(new PotionSetting.Builder()
@@ -24,12 +28,8 @@ public class AutoBrewer extends Module {
         .build()
     );
 
-    private int ingredientI;
-    private boolean first;
-    private int timer;
-
     public AutoBrewer() {
-        super(Categories.World, Items.BREWING_STAND, "auto-brewer");
+        super(Categories.World, Items.BREWING_STAND, "auto-brewer", "Automatically brews the specified potion.");
     }
 
     @Override

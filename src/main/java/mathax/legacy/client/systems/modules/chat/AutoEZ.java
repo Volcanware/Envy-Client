@@ -65,7 +65,7 @@ public class AutoEZ extends Module {
     );*/
 
     public AutoEZ() {
-        super(Categories.Chat, Items.LIGHTNING_ROD, "auto-EZ");
+        super(Categories.Chat, Items.LIGHTNING_ROD, "auto-EZ", "Announces in chat when you kill someone.");
     }
 
     // KILL
@@ -118,8 +118,8 @@ public class AutoEZ extends Module {
                             }
                         }
                     } else {
-                        if ((msg.contains("bed") || msg.contains("[Intentional Game Design]")) && (Modules.get().isActive(BedAura.class) || Modules.get().isActive(BedAuraPlus.class))) {
-                            if ((mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get()) || (mc.player.distanceTo(player) < Modules.get().get(BedAuraPlus.class).targetRange.get())) {
+                        if ((msg.contains("bed") || msg.contains("[Intentional Game Design]")) && (Modules.get().isActive(BedAura.class))) {
+                            if ((mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get())) {
                                 String message = getBedMessageStyle();
                                 String toSendMessage = Placeholders.apply(message).replace("%killedperson%", player.getName().getString());
                                 if (ignoreFriends.get() && Friends.get().isFriend(player)) return;

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoMend extends Module {
+    private boolean didMove;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<List<Item>> blacklist = sgGeneral.add(new ItemListSetting.Builder()
@@ -43,10 +45,8 @@ public class AutoMend extends Module {
         .build()
     );
 
-    private boolean didMove;
-
     public AutoMend() {
-        super(Categories.Player, Items.EXPERIENCE_BOTTLE, "auto-mend");
+        super(Categories.Player, Items.EXPERIENCE_BOTTLE, "auto-mend", "Automatically replaces items in your offhand with mending when fully repaired.");
     }
 
     @Override

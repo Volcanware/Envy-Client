@@ -37,9 +37,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CombatHUD extends HUDElement {
+public class CombatInfoHUD extends HUDElement {
     private final Color visiblityColor = new Color(255, 255, 255, 255);
     private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
+
+    private PlayerEntity playerEntity;
 
     private static final Color GREEN = new Color(15, 255, 15);
     private static final Color RED = new Color(255, 15, 15);
@@ -171,9 +173,7 @@ public class CombatHUD extends HUDElement {
         .build()
     );
 
-    private PlayerEntity playerEntity;
-
-    public CombatHUD(HUD hud) {
+    public CombatInfoHUD(HUD hud) {
         super(hud, "combat-info", "Displays information about your combat target.", true);
     }
 

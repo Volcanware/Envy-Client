@@ -12,10 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Blink extends Module {
+
     //TODO: Make blink spawn a "fake player"
 
     public Blink() {
-        super(Categories.Movement, Items.TINTED_GLASS, "blink");
+        super(Categories.Movement, Items.TINTED_GLASS, "blink", "Allows you to essentially teleport while suspending motion updates.");
     }
 
     private final List<PlayerMoveC2SPacket> packets = new ArrayList<>();

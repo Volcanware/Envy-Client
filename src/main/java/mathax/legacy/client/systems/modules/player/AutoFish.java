@@ -14,6 +14,15 @@ import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.Items;
 
 public class AutoFish extends Module {
+    private boolean ticksEnabled;
+    private int ticksToRightClick;
+    private int ticksData;
+
+    private int autoCastTimer;
+    private boolean autoCastEnabled;
+
+    private int autoCastCheckTimer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgSplashRangeDetection = settings.createGroup("Splash Detection");
 
@@ -70,17 +79,8 @@ public class AutoFish extends Module {
         .build()
     );
 
-    private boolean ticksEnabled;
-    private int ticksToRightClick;
-    private int ticksData;
-
-    private int autoCastTimer;
-    private boolean autoCastEnabled;
-
-    private int autoCastCheckTimer;
-
     public AutoFish() {
-        super(Categories.Player, Items.FISHING_ROD, "auto-fish");
+        super(Categories.Player, Items.FISHING_ROD, "auto-fish", "Automatically fishes for you.");
     }
 
     @Override

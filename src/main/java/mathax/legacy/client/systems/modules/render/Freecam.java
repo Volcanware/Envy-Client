@@ -24,6 +24,16 @@ import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
 
 public class Freecam extends Module {
+    public final Vec3 pos = new Vec3();
+    public final Vec3 prevPos = new Vec3();
+
+    private Perspective perspective;
+
+    public float yaw, pitch;
+    public float prevYaw, prevPitch;
+
+    private boolean forward, backward, right, left, up, down;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
@@ -76,18 +86,8 @@ public class Freecam extends Module {
         .build()
     );
 
-    public final Vec3 pos = new Vec3();
-    public final Vec3 prevPos = new Vec3();
-
-    private Perspective perspective;
-
-    public float yaw, pitch;
-    public float prevYaw, prevPitch;
-
-    private boolean forward, backward, right, left, up, down;
-
     public Freecam() {
-        super(Categories.Render, Items.PLAYER_HEAD, "freecam");
+        super(Categories.Render, Items.PLAYER_HEAD, "freecam", "Allows the camera to move away from the player.");
     }
 
     @Override

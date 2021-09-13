@@ -104,7 +104,7 @@ public class NewChunks extends Module {
     }
 
     public NewChunks() {
-        super(Categories.Render, Items.GRASS_BLOCK, "new-chunks");
+        super(Categories.Render, Items.GRASS_BLOCK, "new-chunks", "Detects completely new chunks using certain traits of them");
     }
 
     @Override

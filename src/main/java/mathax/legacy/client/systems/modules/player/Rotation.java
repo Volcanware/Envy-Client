@@ -53,7 +53,7 @@ public class Rotation extends Module {
     );
 
     public Rotation() {
-        super(Categories.Player, Items.COMMAND_BLOCK, "rotation");
+        super(Categories.Player, Items.COMMAND_BLOCK, "rotation", "Changes/locks your yaw and pitch.");
     }
 
     @Override

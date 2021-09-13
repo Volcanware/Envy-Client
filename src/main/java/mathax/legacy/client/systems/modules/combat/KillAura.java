@@ -207,7 +207,7 @@ public class KillAura extends Module {
     );
 
     public KillAura() {
-        super(Categories.Combat, Items.DIAMOND_SWORD, "kill-aura");
+        super(Categories.Combat, Items.DIAMOND_SWORD, "kill-aura", "Attacks specified entities around you.");
     }
 
     @Override

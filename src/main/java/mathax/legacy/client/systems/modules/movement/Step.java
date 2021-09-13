@@ -53,7 +53,7 @@ public class Step extends Module {
     );
 
     public Step() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "step");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "step", "Allows you to walk up full blocks instantly.");
     }
 
     @Override

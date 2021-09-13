@@ -115,7 +115,7 @@ public class AutoGap extends Module {
     );
 
     public AutoGap() {
-        super(Categories.Player, Items.ENCHANTED_GOLDEN_APPLE, "auto-gap");
+        super(Categories.Player, Items.ENCHANTED_GOLDEN_APPLE, "auto-gap", "Automatically eats Gaps or E-Gaps.");
     }
 
     @Override

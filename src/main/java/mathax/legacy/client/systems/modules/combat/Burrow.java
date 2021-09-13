@@ -98,7 +98,7 @@ public class Burrow extends Module {
     );
 
     public Burrow() {
-        super(Categories.Combat, Items.OBSIDIAN, "burrow");
+        super(Categories.Combat, Items.OBSIDIAN, "burrow", "Attempts to clip you into a block.");
     }
 
     @Override

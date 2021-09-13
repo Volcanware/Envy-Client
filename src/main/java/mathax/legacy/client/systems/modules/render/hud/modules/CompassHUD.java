@@ -36,8 +36,6 @@ public class CompassHUD extends HUDElement {
         .build()
     );
 
-    private double yaw, pitch;
-
     public CompassHUD(HUD hud) {
         super(hud, "compass", "Displays a compass.", true);
     }

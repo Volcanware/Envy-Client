@@ -25,6 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HoleESP extends Module {
+    private final Pool<Hole> holePool = new Pool<>(Hole::new);
+    private final List<Hole> holes = new ArrayList<>();
+
+    private final byte NULL = 0;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -150,13 +155,8 @@ public class HoleESP extends Module {
         .build()
     );
 
-    private final Pool<Hole> holePool = new Pool<>(Hole::new);
-    private final List<Hole> holes = new ArrayList<>();
-
-    private final byte NULL = 0;
-
     public HoleESP() {
-        super(Categories.Render, Items.LIME_STAINED_GLASS, "hole-ESP");
+        super(Categories.Render, Items.LIME_STAINED_GLASS, "hole-ESP", "Displays holes that you will take less damage in. Useful in cpvp.");
     }
 
     @EventHandler

@@ -43,7 +43,7 @@ public class Fullbright extends Module {
     );
 
     public Fullbright() {
-        super(Categories.Render, Items.BEACON, "fullbright");
+        super(Categories.Render, Items.BEACON, "fullbright", "Light everywhere! No more shadows!");
 
         MatHaxLegacy.EVENT_BUS.subscribe(StaticListener.class);
     }

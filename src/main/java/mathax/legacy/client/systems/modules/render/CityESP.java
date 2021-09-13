@@ -20,6 +20,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 
 public class CityESP extends Module {
+    private BlockPos target;
+
     private final SettingGroup sgRender = settings.createGroup("Render");
 
     // Render
@@ -45,10 +47,8 @@ public class CityESP extends Module {
         .build()
     );
 
-    private BlockPos target;
-
     public CityESP() {
-        super(Categories.Render, Items.RED_STAINED_GLASS, "city-ESP");
+        super(Categories.Render, Items.RED_STAINED_GLASS, "city-ESP", "Displays blocks that can be broken in order to city another player.");
     }
 
     @EventHandler

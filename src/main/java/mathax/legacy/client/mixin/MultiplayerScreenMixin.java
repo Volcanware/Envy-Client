@@ -5,7 +5,6 @@ import mathax.legacy.client.Version;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.systems.proxies.Proxy;
-import mathax.legacy.client.utils.language.Language;
 import mathax.legacy.client.utils.misc.LastServerInfo;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.systems.modules.Modules;
@@ -15,7 +14,9 @@ import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,9 +28,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MultiplayerScreenMixin extends Screen {
     private final int WHITE = Color.fromRGBA(255, 255, 255, 255);
     private final int GRAY = Color.fromRGBA(175, 175, 175, 255);
-
-    private String loggedInAs;
-    private int loggedInAsLength;
 
     @Shadow
     @Final
@@ -43,18 +41,15 @@ public class MultiplayerScreenMixin extends Screen {
     private void onInit(CallbackInfo info) {
         Version.checkedForLatest = false;
 
-        loggedInAs = Language.getTextString("logged-in-as") + " ";
-        loggedInAsLength = textRenderer.getWidth(loggedInAs);
-
-        addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, Language.getButton("proxies"), button -> {
+        addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> {
             client.setScreen(GuiThemes.get().proxiesScreen());
         }));
 
-        addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, Language.getButton("accounts"), button -> {
+        addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, new LiteralText("Accounts"), button -> {
             client.setScreen(GuiThemes.get().accountsScreen());
         }));
 
-        addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, Language.getButton("last-server"), button -> {
+        addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> {
             LastServerInfo.reconnect(parent);
         }));
     }
@@ -67,7 +62,7 @@ public class MultiplayerScreenMixin extends Screen {
         String space = " ";
         int spaceLength = textRenderer.getWidth(space);
 
-        String loggedInAs = Language.getTextString("logged-in-as");
+        String loggedInAs = "Logged-in-as ";
         String loggedName = Modules.get().get(NameProtect.class).getName(client.getSession().getUsername());
         String loggedOpenDeveloper = "[";
         String loggedDeveloper = "Developer";
@@ -93,7 +88,7 @@ public class MultiplayerScreenMixin extends Screen {
         // Proxy
         Proxy proxy = Proxies.get().getEnabled();
 
-        String proxiesleft = proxy != null ? Language.getTextString("using-proxy") + " " : Language.getTextString("not-using-proxy");
+        String proxiesleft = proxy != null ? "Using proxy" + " " : "Not using a proxy";
         String proxiesRight = proxy != null ? "(" + proxy.name + ") " + proxy.ip + ":" + proxy.port : null;
 
         drawStringWithShadow(matrices, textRenderer, proxiesleft, (int)x, (int)y, GRAY);

@@ -28,7 +28,7 @@ public class TridentBoost extends Module {
     );
 
     public TridentBoost() {
-        super(Categories.Movement, Items.TRIDENT, "trident-boost");
+        super(Categories.Movement, Items.TRIDENT, "trident-boost", "Boosts you when using riptide with a trident.");
     }
 
     public double getMultiplier() {

@@ -96,7 +96,7 @@ public class AutoMount extends Module {
     );
 
     public AutoMount() {
-        super(Categories.World, Items.SADDLE, "auto-mount");
+        super(Categories.World, Items.SADDLE, "auto-mount", "Automatically mounts entities.");
     }
 
     @EventHandler

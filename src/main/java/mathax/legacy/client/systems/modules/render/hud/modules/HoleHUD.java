@@ -20,6 +20,9 @@ import net.minecraft.util.math.MathHelper;
 import java.util.List;
 
 public class HoleHUD extends HUDElement {
+    private final Color BG_COLOR = new Color(255, 25, 25, 100);
+    private final Color OL_COLOR = new Color(255, 25, 25, 255);
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
@@ -39,9 +42,6 @@ public class HoleHUD extends HUDElement {
         .defaultValue(List.of(Blocks.OBSIDIAN, Blocks.BEDROCK, Blocks.CRYING_OBSIDIAN, Blocks.NETHERITE_BLOCK))
         .build()
     );
-
-    private final Color BG_COLOR = new Color(255, 25, 25, 100);
-    private final Color OL_COLOR = new Color(255, 25, 25, 255);
 
     public HoleHUD(HUD hud) {
         super(hud, "hole", "Displays information about the hole you are standing in.", true);

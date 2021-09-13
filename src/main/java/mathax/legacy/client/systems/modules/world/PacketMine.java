@@ -36,6 +36,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PacketMine extends Module {
+    private final Pool<MyBlock> blockPool = new Pool<>(MyBlock::new);
+    private final List<MyBlock> blocks = new ArrayList<>();
+
+    private boolean swapped, shouldUpdateSlot;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -116,13 +121,8 @@ public class PacketMine extends Module {
         .build()
     );
 
-    private final Pool<MyBlock> blockPool = new Pool<>(MyBlock::new);
-    private final List<MyBlock> blocks = new ArrayList<>();
-
-    private boolean swapped, shouldUpdateSlot;
-
     public PacketMine() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "packet-mine");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "packet-mine", "Sends packets to mine blocks without the mining animation.");
     }
 
     @Override

@@ -132,7 +132,7 @@ public class HoleFiller extends Module {
     );
 
     public HoleFiller() {
-        super(Categories.Combat, Items.OBSIDIAN, "hole-filler");
+        super(Categories.Combat, Items.OBSIDIAN, "hole-filler", "Fills holes with specified blocks.");
     }
 
     @Override

@@ -45,7 +45,7 @@ public class OffhandCrash extends Module {
     );
 
     public OffhandCrash() {
-        super(Categories.Misc, Items.COMMAND_BLOCK, "offhand-crash");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "offhand-crash", "An exploit that can crash other players by swapping back and forth between your main hand and offhand.");
     }
 
     @EventHandler

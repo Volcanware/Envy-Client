@@ -18,7 +18,7 @@ public class AntiLevitation extends Module {
     );
 
     public AntiLevitation() {
-        super(Categories.Movement, Items.ANVIL, "anti-levitation");
+        super(Categories.Movement, Items.ANVIL, "anti-levitation", "Prevents the levitation effect from working.");
     }
 
     public boolean isApplyGravity() {

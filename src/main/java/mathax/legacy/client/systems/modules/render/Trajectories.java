@@ -27,6 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Trajectories extends Module {
+    private final ProjectileEntitySimulator simulator = new ProjectileEntitySimulator();
+
+    private final Pool<Vec3> vec3s = new Pool<>(Vec3::new);
+    private final List<Path> paths = new ArrayList<>();
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -70,13 +75,8 @@ public class Trajectories extends Module {
         .build()
     );
 
-    private final ProjectileEntitySimulator simulator = new ProjectileEntitySimulator();
-
-    private final Pool<Vec3> vec3s = new Pool<>(Vec3::new);
-    private final List<Path> paths = new ArrayList<>();
-
     public Trajectories() {
-        super(Categories.Render, Items.ENDER_PEARL, "trajectories");
+        super(Categories.Render, Items.ENDER_PEARL, "trajectories", "Predicts the trajectory of throwable items.");
     }
 
     private boolean itemFilter(Item item) {

@@ -28,6 +28,12 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class BetterChat extends Module {
+    private final Char2CharMap FULL_WIDTH = new Char2CharArrayMap();
+    private final Char2CharMap SMALL_CAPS = new Char2CharArrayMap();
+
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    private final SimpleDateFormat timeFormatSeconds = new SimpleDateFormat("HH:mm:ss");
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgFilter = settings.createGroup("Filter");
     private final SettingGroup sgLongerChat = settings.createGroup("Longer Chat");
@@ -175,13 +181,8 @@ public class BetterChat extends Module {
         .build()
     );
 
-    private final Char2CharMap FULL_WIDTH = new Char2CharArrayMap();
-    private final Char2CharMap SMALL_CAPS = new Char2CharArrayMap();
-    private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-    private final SimpleDateFormat timeFormatSeconds = new SimpleDateFormat("HH:mm:ss");
-
     public BetterChat() {
-        super(Categories.Chat, Items.DROPPER, "better-chat");
+        super(Categories.Chat, Items.DROPPER, "better-chat", "Improves your chat experience in various ways.");
     }
 
     {

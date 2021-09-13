@@ -27,6 +27,14 @@ import java.util.List;
 import java.util.UUID;
 
 public class LogoutSpots extends Module {
+    private final List<Entry> players = new ArrayList<>();
+
+    private final List<PlayerListEntry> lastPlayerList = new ArrayList<>();
+    private final List<PlayerEntity> lastPlayers = new ArrayList<>();
+
+    private int timer;
+    private Dimension lastDimension;
+
     private static final Color GREEN = new Color(25, 225, 25);
     private static final Color ORANGE = new Color(225, 105, 25);
     private static final Color RED = new Color(225, 25, 25);
@@ -88,16 +96,8 @@ public class LogoutSpots extends Module {
         .build()
     );
 
-    private final List<Entry> players = new ArrayList<>();
-
-    private final List<PlayerListEntry> lastPlayerList = new ArrayList<>();
-    private final List<PlayerEntity> lastPlayers = new ArrayList<>();
-
-    private int timer;
-    private Dimension lastDimension;
-
     public LogoutSpots() {
-        super(Categories.Render, Items.LIME_STAINED_GLASS, "logout-spots");
+        super(Categories.Render, Items.LIME_STAINED_GLASS, "logout-spots", "Displays a box where another player has logged out at.");
         lineColor.changed();
     }
 

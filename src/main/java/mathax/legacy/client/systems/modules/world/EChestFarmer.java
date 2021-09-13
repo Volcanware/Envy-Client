@@ -99,7 +99,7 @@ public class EChestFarmer extends Module {
     private int startCount, prevSlot;
 
     public EChestFarmer() {
-        super(Categories.World, Items.ENDER_CHEST, "EChest-farmer");
+        super(Categories.World, Items.ENDER_CHEST, "EChest-farmer", "Places and breaks EChests to farm obsidian.");
     }
 
     @Override

@@ -22,8 +22,9 @@ import java.util.List;
 
 public class TextRadarHUD extends HUDElement {
     private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
-
     private Color textureColor = new Color(255, 255, 255, 255);
+
+    private final List<AbstractClientPlayerEntity> players = new ArrayList<>();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -73,10 +74,8 @@ public class TextRadarHUD extends HUDElement {
         .build()
     );
 
-    private final List<AbstractClientPlayerEntity> players = new ArrayList<>();
-
     public TextRadarHUD(HUD hud) {
-        super(hud, "player-info", "Displays players in your visual range.", true);
+        super(hud, "text-radar", "Displays players in your visual range.", true);
     }
 
     @Override

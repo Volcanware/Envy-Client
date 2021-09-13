@@ -273,7 +273,7 @@ public class AnchorAura extends Module {
     );
 
     public AnchorAura() {
-        super(Categories.Combat, Items.RESPAWN_ANCHOR, "anchor-aura");
+        super(Categories.Combat, Items.RESPAWN_ANCHOR, "anchor-aura", "Automatically places and breaks Respawn Anchors to harm entities.");
     }
 
     @Override
@@ -288,6 +288,7 @@ public class AnchorAura extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
+        // Check if can explode
         if (mc.world.getDimension().isRespawnAnchorWorking()) {
             error("You are in the Nether, disabling...");
             toggle();

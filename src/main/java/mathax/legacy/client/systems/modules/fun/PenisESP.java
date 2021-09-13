@@ -6,6 +6,6 @@ import net.minecraft.item.Items;
 
 public class PenisESP extends Module {
     public PenisESP() {
-        super(Categories.Fun, Items.STICK, "penis-ESP");
+        super(Categories.Fun, Items.STICK, "penis-ESP", "You know what that means...");
     }
 }

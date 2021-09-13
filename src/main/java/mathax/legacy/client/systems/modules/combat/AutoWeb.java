@@ -47,7 +47,7 @@ public class AutoWeb extends Module {
     );
 
     public AutoWeb() {
-        super(Categories.Combat, Items.COBWEB, "auto-web");
+        super(Categories.Combat, Items.COBWEB, "auto-web", "Automatically places webs on other players.");
     }
 
     @EventHandler

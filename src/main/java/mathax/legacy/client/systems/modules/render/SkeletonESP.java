@@ -31,8 +31,6 @@ import net.minecraft.util.math.*;
 public class SkeletonESP extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    private final Freecam freecam;
-
     public final Setting<SettingColor> skeletonSelfColorSetting = sgGeneral.add(new ColorSetting.Builder()
         .name("self-color")
         .description("The color of your nametag in Freecam.")
@@ -48,8 +46,7 @@ public class SkeletonESP extends Module {
     );
 
     public SkeletonESP() {
-        super(Categories.Render, Items.SKELETON_SKULL, "skeleton-ESP");
-        freecam = Modules.get().get(Freecam.class);
+        super(Categories.Render, Items.SKELETON_SKULL, "skeleton-ESP", "Spooky scary skeleton.");
     }
 
     @EventHandler
@@ -65,7 +62,7 @@ public class SkeletonESP extends Module {
         RenderSystem.enableCull();
         mc.world.getEntities().forEach(entity -> {
             if (!(entity instanceof PlayerEntity)) return;
-            if (mc.options.getPerspective() == Perspective.FIRST_PERSON && !freecam.isActive() && mc.player == entity) return;
+            if (mc.options.getPerspective() == Perspective.FIRST_PERSON && !Modules.get().isActive(Freecam.class) && mc.player == entity) return;
             int rotationHoldTicks = Config.get().rotationHoldTicks;
 
             Color skeletonColor = new Color(255, 255, 255);

@@ -31,7 +31,7 @@ public class AntiAnvil extends Module {
     );
 
     public AntiAnvil() {
-        super(Categories.Combat, Items.ANVIL, "anti-anvil");
+        super(Categories.Combat, Items.ANVIL, "anti-anvil", "Automatically prevents Auto Anvil by placing between you and the anvil.");
     }
 
     @EventHandler

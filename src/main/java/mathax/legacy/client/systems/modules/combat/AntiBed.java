@@ -53,7 +53,7 @@ public class AntiBed extends Module {
     );
 
     public AntiBed() {
-        super(Categories.Combat, Items.RED_BED, "anti-bed");
+        super(Categories.Combat, Items.RED_BED, "anti-bed", "Places string to prevent beds being placed on you.");
     }
 
     @EventHandler

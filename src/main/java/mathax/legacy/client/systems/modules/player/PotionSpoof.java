@@ -25,7 +25,7 @@ public class PotionSpoof extends Module {
     );
 
     public PotionSpoof() {
-        super(Categories.Player, Items.POTION, "potion-spoof");
+        super(Categories.Player, Items.POTION, "potion-spoof", "Spoofs specified potion effects for you. SOME effects DO NOT work.");
     }
 
     @EventHandler
