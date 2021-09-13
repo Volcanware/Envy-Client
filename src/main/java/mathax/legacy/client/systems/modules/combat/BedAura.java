@@ -14,13 +14,11 @@ import mathax.legacy.client.utils.entity.SortPriority;
 import mathax.legacy.client.utils.entity.TargetUtils;
 import mathax.legacy.client.utils.player.*;
 import mathax.legacy.client.utils.render.color.SettingColor;
-import mathax.legacy.client.utils.world.BedUtils;
 import mathax.legacy.client.utils.world.BlockUtils;
 import mathax.legacy.client.utils.world.CardinalDirection;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.block.BedBlock;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BedBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -38,9 +36,9 @@ public class BedAura extends Module {
     private CardinalDirection direction;
     private PlayerEntity target;
     private BlockPos placePos, breakPos;
-    private Item ogItem;
+    private Item slotItem;
     private boolean safetyToggled;
-    private int timer, webTimer;
+    private int timer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgTargeting = settings.createGroup("Targeting");
@@ -152,31 +150,10 @@ public class BedAura extends Module {
 
     // Automation
 
-    private final Setting<Boolean> breakWeb = sgAutomation.add(new BoolSetting.Builder()
-        .name("break-web")
-        .description("Break target's webs/string automatically.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> preventEscape = sgAutomation.add(new BoolSetting.Builder()
-        .name("prevent-escape")
-        .description("Place a block over the target's head before bedding.")
-        .defaultValue(false)
-        .build()
-    );
-
-    private final Setting<Boolean> renderAutomation = sgAutomation.add(new BoolSetting.Builder()
-        .name("render-break")
-        .description("Render mining self-trap/burrow.")
-        .defaultValue(false)
-        .build()
-    );
-
     private final Setting<Boolean> disableOnNoBeds = sgAutomation.add(new BoolSetting.Builder()
         .name("disable-on-no-beds")
         .description("Disable if you run out of beds.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 
@@ -273,10 +250,9 @@ public class BedAura extends Module {
     @Override
     public void onActivate() {
         timer = delay.get();
-        webTimer = 0;
         direction = CardinalDirection.North;
-        ogItem = InvUtils.getItemFromSlot(autoMoveSlot.get() - 1);
-        if (ogItem instanceof BedItem) ogItem = null;
+        slotItem = InvUtils.getItemFromSlot(autoMoveSlot.get() - 1);
+        if (slotItem instanceof BedItem) slotItem = null;
         safetyToggled = false;
     }
 
@@ -290,9 +266,9 @@ public class BedAura extends Module {
             }
         }
 
-        if (!safetyToggled && restoreOnDisable.get() && ogItem != null) {
-            FindItemResult ogItemInv = InvUtils.find(ogItem);
-            if (ogItemInv.found()) InvUtils.move().from(ogItemInv.getSlot()).toHotbar(autoMoveSlot.get() - 1);
+        if (!safetyToggled && restoreOnDisable.get() && slotItem != null) {
+            FindItemResult slotItemInv = InvUtils.find(slotItem);
+            if (slotItemInv.found()) InvUtils.move().from(slotItemInv.getSlot()).toHotbar(autoMoveSlot.get() - 1);
         }
     }
 
@@ -333,27 +309,6 @@ public class BedAura extends Module {
             if (!bed.found() && disableOnNoBeds.get()) {
                 warning("You have run out of beds, disabling...");
                 toggle();
-                return;
-            }
-        }
-
-        if (preventEscape.get() && BlockUtils.getBlock(target.getBlockPos().up(2)) != Blocks.OBSIDIAN && BedUtils.isInHole(target)) {
-            FindItemResult obsidian = InvUtils.find(Items.OBSIDIAN);
-            if (obsidian.found()) {BlockUtils.place(target.getBlockPos().up(2), obsidian, true, 50, true, true, true);}
-            if (BlockUtils.getBlock(target.getBlockPos().up(2)) != Blocks.OBSIDIAN) return;
-        }
-
-        if (placePos == null && PlayerUtils.isWebbed(target) && breakWeb.get()) {
-            FindItemResult sword = InvUtils.findSword();
-            if (sword.found()) {
-                InvUtils.updateSlot(sword.getSlot());
-                if (webTimer <= 0) {
-                    info("Breaking " + target.getEntityName() + "'s web.");
-                    webTimer = 100;
-                } else {
-                    webTimer--;
-                }
-                PlayerUtils.mineWeb(target, sword.getSlot());
                 return;
             }
         }

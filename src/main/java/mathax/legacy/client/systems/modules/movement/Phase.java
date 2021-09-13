@@ -150,7 +150,7 @@ public class Phase extends Module {
         prevZ = mc.player.getZ();
     }
 
-    public static enum Mode {
+    public enum Mode {
         NRNB,
         Normal,
         CollisionShape

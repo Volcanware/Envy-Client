@@ -8,10 +8,7 @@ import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
 
-public enum LastServerInfo
-{
-    ;
-
+public enum LastServerInfo {;
     private static ServerInfo lastServer;
 
     public static ServerInfo getLastServer()
