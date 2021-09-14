@@ -62,7 +62,7 @@ public class MultiplayerScreenMixin extends Screen {
         String space = " ";
         int spaceLength = textRenderer.getWidth(space);
 
-        String loggedInAs = "Logged-in-as ";
+        String loggedInAs = "Logged in as ";
         String loggedName = Modules.get().get(NameProtect.class).getName(client.getSession().getUsername());
         String loggedOpenDeveloper = "[";
         String loggedDeveloper = "Developer";
