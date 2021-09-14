@@ -1,13 +1,8 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
-import mathax.legacy.client.settings.BoolSetting;
-import mathax.legacy.client.settings.Setting;
-import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
 import mathax.legacy.client.utils.Utils;
-
-import java.text.SimpleDateFormat;
 
 public class InGameTimeHUD extends TripleTextHUDElement {
 

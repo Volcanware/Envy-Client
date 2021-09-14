@@ -7,7 +7,6 @@ import mathax.legacy.client.mixininterface.IExplosion;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.player.FindItemResult;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;

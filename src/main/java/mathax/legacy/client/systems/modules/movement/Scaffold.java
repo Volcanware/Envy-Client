@@ -245,17 +245,17 @@ public class Scaffold extends Module {
         return !(block instanceof FallingBlock) || !FallingBlock.canFallThrough(mc.world.getBlockState(pos));
     }
 
-    @EventHandler
-    private void onRender(Render3DEvent event) {
-        renderBlocks.sort(Comparator.comparingInt(o -> -o.ticks));
-        renderBlocks.forEach(renderBlock -> renderBlock.render(event, sideColor.get(), lineColor.get(), shapeMode.get()));
+    public enum ListMode {
+        Whitelist,
+        Blacklist
     }
 
     // Rendering
 
-    public enum ListMode {
-        Whitelist,
-        Blacklist
+    @EventHandler
+    private void onRender(Render3DEvent event) {
+        renderBlocks.sort(Comparator.comparingInt(o -> -o.ticks));
+        renderBlocks.forEach(renderBlock -> renderBlock.render(event, sideColor.get(), lineColor.get(), shapeMode.get()));
     }
 
     public static class RenderBlock {

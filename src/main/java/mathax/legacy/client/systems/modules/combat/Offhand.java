@@ -14,7 +14,6 @@ import mathax.legacy.client.utils.player.FindItemResult;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.bus.EventHandler;
 import net.minecraft.item.*;
-import net.minecraft.screen.slot.Slot;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 

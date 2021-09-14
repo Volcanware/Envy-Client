@@ -1,14 +1,10 @@
 package mathax.legacy.client.systems.modules.misc;
 
-import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.events.world.ConnectToServerEvent;
 import mathax.legacy.client.settings.DoubleSetting;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.bus.EventHandler;
-import net.minecraft.client.network.ServerInfo;
 import net.minecraft.item.Items;
 
 public class AutoReconnect extends Module {

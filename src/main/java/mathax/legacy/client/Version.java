@@ -4,7 +4,6 @@ import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.render.PromptBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
-import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.util.Util;
 
 public class Version {
