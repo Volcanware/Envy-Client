@@ -19,6 +19,7 @@ import net.minecraft.screen.slot.Slot;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
 public class Offhand extends Module {
+    private AutoTotem autoTotem = Modules.get().get(AutoTotem.class);
     private boolean isClicking;
     private boolean sentMessage;
     private Item currentItem;
@@ -80,7 +81,11 @@ public class Offhand extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        AutoTotem autoTotem = Modules.get().get(AutoTotem.class);
+        if (autoTotem.mode.get() == AutoTotem.Mode.Enhanced && autoTotem.isActive()) {
+            info("(highlight)" + title + "(default) currently does not work with (highlight)" + autoTotem.title + "(default) set to (highlight)Enhanced(default) mode, disabling...");
+            toggle();
+            return;
+        }
 
         // Sword Gap
         if ((mc.player.getMainHandStack().getItem() instanceof SwordItem
@@ -136,72 +141,6 @@ public class Offhand extends Module {
             || mc.player.getMainHandStack().getItem() == Items.TRIDENT
             || mc.player.getMainHandStack().getItem() == Items.CROSSBOW
             || mc.player.getMainHandStack().getItem().isFood();
-    }
-
-    public void autoTotemEnhanced() {
-        if (!isActive()) return;
-
-        final net.minecraft.item.Item
-            offhand_item = mc.player.getOffHandStack().getItem(),
-            mainhand_item = mc.player.getMainHandStack().getItem(),
-            cursor_item = mc.player.currentScreenHandler.getCursorStack().getItem();
-
-        if (mainhand_item instanceof SwordItem && swordGap.get()) {
-            if (offhand_item instanceof EnchantedGoldenAppleItem) return;
-
-            if (cursor_item instanceof EnchantedGoldenAppleItem) {
-                InvUtils.clickId(45);
-                return;
-            }
-
-            int egap_id = -1, gap_id = -1;
-
-            for (Slot slot : mc.player.currentScreenHandler.slots) {
-                net.minecraft.item.Item item = slot.getStack().getItem();
-                if (item instanceof EnchantedGoldenAppleItem) {
-                    egap_id = slot.id;
-                    break;
-                }
-
-                if (gap_id == -1 && item == Items.GOLDEN_APPLE) gap_id = slot.id;
-            }
-
-            if (egap_id == -1) {
-                if (cursor_item == Items.GOLDEN_APPLE) InvUtils.clickId(45);
-                else if (gap_id != -1) move(gap_id);
-
-                return;
-            }
-
-            move(egap_id);
-            return;
-        }
-
-        if (offhand_item == Items.END_CRYSTAL || mainhand_item == Items.END_CRYSTAL) return;
-
-        if (cursor_item == Items.END_CRYSTAL) {
-            InvUtils.clickId(45);
-            return;
-        }
-
-        int crystal_id = -1;
-
-        for (Slot slot : mc.player.currentScreenHandler.slots) {
-            net.minecraft.item.Item item = slot.getStack().getItem();
-            if (item != Items.END_CRYSTAL) continue;
-
-            crystal_id = slot.id;
-            break;
-        }
-
-        if (crystal_id == -1) return;
-
-        move(crystal_id);
-    }
-
-    private void move(int id) {
-        if (Modules.get().get(AutoTotem.class).version.get() == AutoTotem.Versions.mc_1_12) InvUtils.clickId(id);
-        else InvUtils.swap(id, 40);
     }
 
     @Override

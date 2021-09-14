@@ -57,7 +57,7 @@ public class AutoTotem extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+    public final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Determines when to hold a totem, strict will always hold.")
         .defaultValue(Mode.Enhanced)
@@ -180,9 +180,9 @@ public class AutoTotem extends Module {
             if (totems <= 0) locked = false;
             else if (ticks >= delay.get()) {
                 boolean low = mc.player.getHealth() + mc.player.getAbsorptionAmount() - PlayerUtils.possibleHealthReductions(explosion.get(), fall.get()) <= health.get();
-                boolean ely = elytra.get() && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA && mc.player.isFallFlying();
+                boolean elytras = elytra.get() && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA && mc.player.isFallFlying();
 
-                locked = mode.get() == Mode.Strict || (mode.get() == Mode.Smart && (low || ely));
+                locked = mode.get() == Mode.Strict || (mode.get() == Mode.Smart && (low || elytras));
 
                 if (locked && mc.player.getOffHandStack().getItem() != Items.TOTEM_OF_UNDYING) {
                     InvUtils.move().from(result.getSlot()).toOffhand();
@@ -197,13 +197,6 @@ public class AutoTotem extends Module {
                 if (mc.player.currentScreenHandler instanceof CreativeInventoryScreen.CreativeScreenHandler) return;
 
                 if (should_wait_next_tick.getAndSet(false)) return;
-
-                if (Modules.get().isActive(Offhand.class) && smartCheck()) {
-                    if (!(mc.currentScreen instanceof HandledScreen) &&
-                        mc.player.currentScreenHandler instanceof PlayerScreenHandler)
-                        Modules.get().get(Offhand.class).autoTotemEnhanced();
-                    return;
-                }
 
                 ItemStack
                     offhand_stack = mc.player.getInventory().getStack(40),
