@@ -8,6 +8,7 @@ import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.misc.Pool;
+import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.render.color.Color;
@@ -18,6 +19,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -182,7 +184,7 @@ public class Surround extends Module {
         renderSurroundBlocks.removeIf(renderSurroundBlock -> renderSurroundBlock.ticks <= 0);
 
         if ((disableOnJump.get() && (mc.options.keyJump.isPressed() || mc.player.input.jumping)) || (disableOnYChange.get() && mc.player.prevY < mc.player.getY())) {
-            info("You jumped, disabling...");
+            ChatUtils.sendMsg(this.hashCode(), "Surround", Formatting.DARK_RED, "You jumped, disabling...", Formatting.GRAY);
             toggle();
             return;
         }
