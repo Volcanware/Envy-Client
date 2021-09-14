@@ -51,12 +51,12 @@ public class Surround extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
-    private final Setting<Boolean> instant = sgGeneral.add(new BoolSetting.Builder()
+    /*private final Setting<Boolean> instant = sgGeneral.add(new BoolSetting.Builder()
         .name("instant")
         .description("Instantly places all blocks specified.")
         .defaultValue(false)
         .build()
-    );
+    );*/
 
     private final Setting<Boolean> doubleHeight = sgGeneral.add(new BoolSetting.Builder()
         .name("double-height")
