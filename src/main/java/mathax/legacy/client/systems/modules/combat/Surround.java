@@ -35,18 +35,10 @@ public class Surround extends Module {
     boolean underHeightPlaced = false;
     boolean doubleHeightPlaced = false;
     private boolean p1;
-    private boolean p2;
-    private boolean p3;
-    private boolean p4;
-    private boolean p5;
     private boolean p6;
     private boolean p7;
     private boolean p8;
     private boolean p9;
-    private boolean p10;
-    private boolean p11;
-    private boolean p12;
-    private boolean p13;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
@@ -202,13 +194,13 @@ public class Surround extends Module {
         // Under height
         underHeightPlaced = false;
         if (underHeight.get()) {
-            p2 = place(1, -1, 0);
+            boolean p2 = place(1, -1, 0);
             if (return_) return;
-            p3 = place(-1, -1, 0);
+            boolean p3 = place(-1, -1, 0);
             if (return_) return;
-            p4 = place(0, -1, 1);
+            boolean p4 = place(0, -1, 1);
             if (return_) return;
-            p5 = place(0, -1, -1);
+            boolean p5 = place(0, -1, -1);
             if (return_) return;
 
             if (p2 && p3 && p4 && p5) underHeightPlaced = true;
@@ -227,13 +219,13 @@ public class Surround extends Module {
         // Sides up
         doubleHeightPlaced = false;
         if (doubleHeight.get()) {
-            p10 = place(1, 1, 0);
+            boolean p10 = place(1, 1, 0);
             if (return_) return;
-            p11 = place(-1, 1, 0);
+            boolean p11 = place(-1, 1, 0);
             if (return_) return;
-            p12 = place(0, 1, 1);
+            boolean p12 = place(0, 1, 1);
             if (return_) return;
-            p13 = place(0, 1, -1);
+            boolean p13 = place(0, 1, -1);
             if (return_) return;
 
             if (p10 && p11 && p12 && p13) doubleHeightPlaced = true;

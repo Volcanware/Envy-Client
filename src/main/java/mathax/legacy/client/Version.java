@@ -33,7 +33,7 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 1;
+        return 3;
     }
 
     public static String getDevBuild() {
