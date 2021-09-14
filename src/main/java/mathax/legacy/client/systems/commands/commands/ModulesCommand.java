@@ -37,9 +37,9 @@ public class ModulesCommand extends Command {
         // Hover tooltip
         BaseText tooltip = new LiteralText("");
 
-        tooltip.append(new LiteralText(module.title).formatted(Formatting.BLUE, Formatting.BOLD)).append("\n");
-        tooltip.append(new LiteralText(module.name).formatted(Formatting.GRAY)).append("\n\n");
-        tooltip.append(new LiteralText(module.title).formatted(Formatting.WHITE));
+        tooltip.append(new LiteralText(module.title).formatted(Formatting.RED, Formatting.BOLD)).append("\n");
+        tooltip.append(new LiteralText(module.title).formatted(Formatting.GRAY)).append("\n\n");
+        tooltip.append(new LiteralText(module.description).formatted(Formatting.WHITE));
 
         BaseText finalModule = new LiteralText(module.title);
         if (module != Modules.get().getList().get(Modules.get().getList().size() - 1)) finalModule.append(new LiteralText(", ").formatted(Formatting.GRAY));

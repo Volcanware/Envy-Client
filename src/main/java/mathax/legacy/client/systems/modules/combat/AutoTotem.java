@@ -225,7 +225,7 @@ public class AutoTotem extends Module {
                 final int totem_id = getTotemId();
                 if (totem_id == -1 && !is_holding_totem) return;
 
-                if (!can_click_offhand && close_screen.get()) {
+                if (!can_click_offhand && close_screen.get() && mc.player.getInventory().count(Items.TOTEM_OF_UNDYING) < 1) {
                     mc.player.closeHandledScreen();
                     can_click_offhand = true;
                 }

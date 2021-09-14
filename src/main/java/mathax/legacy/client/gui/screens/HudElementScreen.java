@@ -26,7 +26,7 @@ public class HudElementScreen extends WindowScreen {
     @Override
     public void initWidgets() {
         // Description
-        add(theme.label(element.title, Utils.getWindowWidth() / 2.0));
+        add(theme.label(element.description, Utils.getWindowWidth() / 2.0));
 
         // Settings
         if (element.settings.sizeGroups() > 0) {
