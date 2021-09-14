@@ -251,13 +251,17 @@ public class BedAura extends Module {
     public void onActivate() {
         timer = delay.get();
         direction = CardinalDirection.North;
+        safetyToggled = false;
         slotItem = InvUtils.getItemFromSlot(autoMoveSlot.get() - 1);
         if (slotItem instanceof BedItem) slotItem = null;
-        safetyToggled = false;
     }
 
     @Override
     public void onDeactivate() {
+        target = null;
+        placePos = null;
+        breakPos = null;
+
         if (safetyToggled) {
             warning("Your health is too low!");
             if (safetyGapSwap.get()) {
@@ -313,11 +317,16 @@ public class BedAura extends Module {
             }
         }
 
-        if (breakPos == null) placePos = findPlace(target);
+        if (breakPos == null) {
+            placePos = findPlace(target);
+        }
 
         // Place bed
-        if (timer <= 0 && placeBed(placePos)) timer = delay.get();
-        else timer--;
+        if (timer <= 0 && placeBed(placePos)) {
+            timer = delay.get();
+        } else {
+            timer--;
+        }
 
         // Break bed
         if (breakPos == null) breakPos = findBreak();
@@ -362,15 +371,17 @@ public class BedAura extends Module {
                     double headSelfDamage = DamageUtils.bedDamage(mc.player, Utils.vec3d(centerPos));
                     double offsetSelfDamage = DamageUtils.bedDamage(mc.player, Utils.vec3d(centerPos.offset(dir.toDirection())));
 
-                    if (!mc.world.getBlockState(underCenterPos.offset((direction = dir).toDirection())).getMaterial().equals(Material.AIR)) {
-                        if (mc.world.getBlockState(centerPos).getMaterial().isReplaceable()
-                            && BlockUtils.canPlace(centerPos.offset(dir.toDirection()))
-                            && DamageUtils.bedDamage(target, Utils.vec3d(centerPos)) >= minDamage.get()
-                            && offsetSelfDamage < maxSelfDamage.get()
-                            && headSelfDamage < maxSelfDamage.get()
-                            && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - headSelfDamage > 0)
-                            && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - offsetSelfDamage > 0)) {
-                            return centerPos.offset((direction = dir).toDirection());
+                    if (!mc.world.getBlockState(centerPos).getMaterial().equals(Material.AIR)) {
+                        if (!mc.world.getBlockState(underCenterPos.offset((direction = dir).toDirection())).getMaterial().equals(Material.AIR)) {
+                            if (mc.world.getBlockState(centerPos).getMaterial().isReplaceable()
+                                && BlockUtils.canPlace(centerPos.offset(dir.toDirection()))
+                                && DamageUtils.bedDamage(target, Utils.vec3d(centerPos)) >= minDamage.get()
+                                && offsetSelfDamage < maxSelfDamage.get()
+                                && headSelfDamage < maxSelfDamage.get()
+                                && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - headSelfDamage > 0)
+                                && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - offsetSelfDamage > 0)) {
+                                return centerPos.offset((direction = dir).toDirection());
+                            }
                         }
                     }
                 }

@@ -4,6 +4,7 @@ import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.render.PromptBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
+import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.util.Util;
 
 public class Version {
@@ -33,7 +34,7 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 1;
+        return 2;
     }
 
     public static String getDevBuild() {
@@ -93,7 +94,7 @@ public class Version {
                 MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Could not check for latest version!");
                 return;
             case 1:
-                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.get() + "! You can download the newest version on " + MatHaxLegacy.URL + "Download!");
+                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.getStylized() + "! You can download the newest version on " + MatHaxLegacy.URL + "Download!");
                 String promptId = "new-update";
                 if (button) {
                     promptId += "-button";
@@ -102,7 +103,7 @@ public class Version {
                     .title("New Update")
                     .message("A new version of MatHax Legacy has been released.")
                     .message("\n")
-                    .message("Your version: v" + Version.get())
+                    .message("Your version: v" + Version.getStylized())
                     .message("Latest version: v" + Version.getLatest())
                     .message("\n")
                     .message("Do you want to update?")
@@ -112,7 +113,11 @@ public class Version {
                     .promptId(promptId)
                     .show();
             case 2:
-                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, v" + Version.get() + "!");
+                if (getDev() == 0) {
+                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "!");
+                } else {
+                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "! [Developer builds do not get update notifications on the full version or another developer build they are a developer build of!]");
+                }
         }
     }
 

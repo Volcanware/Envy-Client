@@ -75,14 +75,6 @@ public class Surround extends Module {
         .build()
     );
 
-    private final Setting<Boolean> chatInfo = sgGeneral.add(new BoolSetting.Builder()
-        .name("chat-info")
-        .description("Informs you in chat if toggled off.")
-        .defaultValue(true)
-        .visible(disableOnJump::get)
-        .build()
-    );
-
     private final Setting<Boolean> disableOnYChange = sgGeneral.add(new BoolSetting.Builder()
         .name("disable-on-y-change")
         .description("Automatically disables when your y level (step, jumping, atc).")
@@ -118,9 +110,7 @@ public class Surround extends Module {
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if ((disableOnJump.get() && (mc.options.keyJump.isPressed() || mc.player.input.jumping)) || (disableOnYChange.get() && mc.player.prevY < mc.player.getY())) {
-            if (chatInfo.get()) {
-                info("You jumped, disabling...");
-            }
+            info("You jumped, disabling...");
             toggle();
             return;
         }

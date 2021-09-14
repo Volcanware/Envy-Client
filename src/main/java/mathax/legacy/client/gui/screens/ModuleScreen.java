@@ -32,7 +32,7 @@ public class ModuleScreen extends WindowScreen {
     @Override
     public void initWidgets() {
         // Description
-        add(theme.label(module.title, Utils.getWindowWidth() / 2.0));
+        add(theme.label(module.description, Utils.getWindowWidth() / 2.0));
 
         // Settings
         if (module.settings.groups.size() > 0) {
