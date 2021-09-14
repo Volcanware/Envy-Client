@@ -164,8 +164,8 @@ public class TitleScreen extends Screen {
         float fade = doBackgroundFade ? (float)(Util.getMeasuringTimeMs() - backgroundFadeStart) / 1000.0F : 1.0F;
         float xOffset = -1.0f * (((float) mouseX - (float) width / 2.0f) / ((float) width / 32.0f));
         float yOffset = -1.0f * (((float) mouseY - (float) height / 2.0f) / ((float) height / 18.0f));
-        int backgroundX = (int)xOffset - 32;
-        int backgroundY = (int)yOffset - 32;
+        int backgroundX = ((int)xOffset - 16) * 3;
+        int backgroundY = ((int)yOffset - 16) * 2;
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, BACKGROUND);
         RenderSystem.enableBlend();
