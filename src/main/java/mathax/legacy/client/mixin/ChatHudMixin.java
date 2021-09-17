@@ -32,6 +32,8 @@ public abstract class ChatHudMixin implements IChatHud {
 
     private static final Pattern MATHAXLEGACY_PREFIX_REGEX = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[MatHax Legacy\\]");
     private static final Pattern BARITONE_PREFIX_REGEX = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[Baritone\\]");
+    private static final Pattern MATHAXLEGACY_PREFIX_REGEX_2 = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[MatHax Legacy\\]");
+    private static final Pattern BARITONE_PREFIX_REGEX_2 = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[Baritone\\]");
     private static final Identifier MATHAXLEGACY_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/chat/mathaxlegacy.png");
     private static final Identifier BARITONE_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/chat/baritone.png");
 
@@ -112,7 +114,27 @@ public abstract class ChatHudMixin implements IChatHud {
             RenderSystem.setShaderColor(1, 1, 1, 1);
             matrices.pop();
             return;
+        } else if (MATHAXLEGACY_PREFIX_REGEX_2.matcher(line).find()) {
+            RenderSystem.setShaderTexture(0, MATHAXLEGACY_CHAT_ICON);
+            matrices.push();
+            RenderSystem.setShaderColor(1, 1, 1, opacity);
+            matrices.translate(0, y, 0);
+            matrices.scale(0.125f, 0.125f, 1);
+            DrawableHelper.drawTexture(matrices, 0, 0, 0f, 0f, 64, 64, 64, 64);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
+            matrices.pop();
+            return;
         } else if (BARITONE_PREFIX_REGEX.matcher(line).find()) {
+            RenderSystem.setShaderTexture(0, BARITONE_CHAT_ICON);
+            matrices.push();
+            RenderSystem.setShaderColor(1, 1, 1, opacity);
+            matrices.translate(0, y, 10);
+            matrices.scale(0.125f, 0.125f, 1);
+            DrawableHelper.drawTexture(matrices, 0, 0, 0f, 0f, 64, 64, 64, 64);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
+            matrices.pop();
+            return;
+        } else if (BARITONE_PREFIX_REGEX_2.matcher(line).find()) {
             RenderSystem.setShaderTexture(0, BARITONE_CHAT_ICON);
             matrices.push();
             RenderSystem.setShaderColor(1, 1, 1, opacity);
