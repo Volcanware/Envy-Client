@@ -52,7 +52,7 @@ public class Search extends Module {
     private final Setting<SBlockData> defaultBlockConfig = sgGeneral.add(new GenericSetting.Builder<SBlockData>()
         .name("default-block-config")
         .description("Default block config.")
-        .defaultValue(new SBlockData(ShapeMode.Lines, new SettingColor(0, 255, 200), new SettingColor(0, 255, 200, 25), true, new SettingColor(0, 255, 200, 125)))
+        .defaultValue(new SBlockData(ShapeMode.Lines, new SettingColor(230, 75, 100), new SettingColor(230, 75, 100, 75), true, new SettingColor(230, 75, 100)))
         .build()
     );
 
