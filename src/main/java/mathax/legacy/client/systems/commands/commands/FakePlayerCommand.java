@@ -6,7 +6,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.systems.modules.render.FakePlayer;
+import mathax.legacy.client.systems.modules.misc.FakePlayer;
 import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerManager;
 import net.minecraft.command.CommandSource;
 
@@ -20,7 +20,7 @@ public class FakePlayerCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("spawn").executes(context -> {
-            if (active()) FakePlayerManager.add("Fit", 36, true);
+            if (active()) FakePlayerManager.add("MatHax", 36, true);
             return SINGLE_SUCCESS;
         })
                  .then(argument("name", StringArgumentType.word())

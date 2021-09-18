@@ -49,7 +49,7 @@ public class WMatHaxModule extends WPressable implements MatHaxWidget {
 
     @Override
     protected void onPressed(int button) {
-        if (button == GLFW_MOUSE_BUTTON_LEFT) module.toggle(Utils.canUpdate());
+        if (button == GLFW_MOUSE_BUTTON_LEFT) module.toggle();
         else if (button == GLFW_MOUSE_BUTTON_RIGHT) Utils.mc.setScreen(theme.moduleScreen(module));
     }
 

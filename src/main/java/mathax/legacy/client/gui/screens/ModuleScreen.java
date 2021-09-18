@@ -86,7 +86,7 @@ public class ModuleScreen extends WindowScreen {
         bottom2.add(theme.label("Active: "));
         WCheckbox active = bottom2.add(theme.checkbox(module.isActive())).expandCellX().widget();
         active.action = () -> {
-            if (module.isActive() != active.checked) module.toggle(Utils.canUpdate());
+            if (module.isActive() != active.checked) module.toggle();
         };
 
         //   Visible

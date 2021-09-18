@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.render;
+package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.widgets.WWidget;
@@ -16,7 +16,7 @@ public class FakePlayer extends Module {
     public final Setting<String> name = sgGeneral.add(new StringSetting.Builder()
         .name("name")
         .description("The name of the fake player.")
-        .defaultValue("Fit")
+        .defaultValue("MatHax")
         .build()
     );
 
@@ -37,7 +37,7 @@ public class FakePlayer extends Module {
     );
 
     public FakePlayer() {
-        super(Categories.Render, Items.ARMOR_STAND, "fake-player", "Spawns a client-side fake player for testing usages.");
+        super(Categories.Misc, Items.ARMOR_STAND, "fake-player", "Spawns a client-side fake player for testing usages.");
     }
 
     @Override

@@ -8,6 +8,7 @@ import mathax.legacy.client.gui.screens.settings.ColorSettingScreen;
 import mathax.legacy.client.gui.tabs.builtin.*;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.render.PeekScreen;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.*;
@@ -40,11 +41,7 @@ public class DiscordPlaceholder {
         switch (placeholder) {
             case "%activity%":
                 if (mc.getOverlay() instanceof SplashOverlay) {
-                    if (MatHaxLegacy.INSTANCE.firstLoading) {
-                        return "The game is loading...";
-                    } else {
-                        return "The game is reloading...";
-                    }
+                    return "Minecraft is loading...";
                 } else if (mc.currentScreen instanceof TitleScreen) {
                     return "In main menu";
                 } else if (mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) {
@@ -71,9 +68,9 @@ public class DiscordPlaceholder {
                     return "Changing Minecraft sound settings";
                 } else if (mc.currentScreen instanceof LanguageOptionsScreen) {
                     return "Changing Minecraft language";
-                }  else if (mc.currentScreen instanceof VideoOptionsScreen) {
+                } else if (mc.currentScreen instanceof VideoOptionsScreen) {
                     return "Changing Minecraft video settings";
-                }  else if (mc.currentScreen instanceof SkinOptionsScreen) {
+                } else if (mc.currentScreen instanceof SkinOptionsScreen) {
                     return "Changing Minecraft skin settings";
                 } else if (mc.currentScreen instanceof PackScreen) {
                     return "Changing resourcepack";
@@ -97,8 +94,6 @@ public class DiscordPlaceholder {
                     return "Configuring Baritone";
                 } else if (mc.currentScreen instanceof ConfigTab.ConfigScreen) {
                     return "Editing Config";
-                } else if (mc.currentScreen instanceof DiscordPresenceTab.DiscordPresenceScreen) {
-                    return "Configuring Discord Presence";
                 } else if (mc.currentScreen instanceof EnemiesTab.EnemiesScreen) {
                     return "Editing Enemies";
                 } else if (mc.currentScreen instanceof FriendsTab.FriendsScreen) {
@@ -107,11 +102,13 @@ public class DiscordPlaceholder {
                     return "Editing GUI";
                 } else if (mc.currentScreen instanceof HudTab.HudScreen) {
                     return "Editing HUD";
-                }  else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) {
+                } else if (mc.currentScreen instanceof HudElementScreen) {
+                    return "Editing HUD";
+                } else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) {
                     return "Configuring Macros";
-                }  else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) {
+                } else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) {
                     return "Configuring a Macro";
-                }  else if (mc.currentScreen instanceof ModulesScreen) {
+                } else if (mc.currentScreen instanceof ModulesScreen) {
                     return "In click gui";
                 } else if (mc.currentScreen instanceof ProfilesTab.ProfilesScreen) {
                     return "Changing profiles";
@@ -134,10 +131,14 @@ public class DiscordPlaceholder {
                         return "In " + mc.currentScreen.getTitle().toString();
                     }
                 }
-            case "%version%":      return Version.getStylized();
-            case "%username%":     return mc.getSession().getUsername();
-            case "%health%":       return getHealth();
-            default: return "In " + mc.currentScreen.getTitle().toString();
+            case "%version%":
+                return Version.getStylized();
+            case "%username%":
+                return mc.getSession().getUsername();
+            case "%health%":
+                return getHealth();
+            default:
+                return "In " + mc.currentScreen.getTitle().toString();
         }
     }
 
@@ -192,6 +193,8 @@ public class DiscordPlaceholder {
             return "Auto 32K";
         }  else if (s.equals("Skeleton Esp")) {
             return "Skeleton ESP";
+        }  else if (s.equals("Discord Rpc")) {
+            return "Discord RPC";
         } else {
             return s;
         }

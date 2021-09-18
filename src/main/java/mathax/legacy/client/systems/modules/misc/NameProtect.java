@@ -15,7 +15,7 @@ public class NameProtect extends Module {
     private final Setting<String> name = sgGeneral.add(new StringSetting.Builder()
         .name("name")
         .description("Name to be replaced with.")
-        .defaultValue("Fit")
+        .defaultValue("MatHax")
         .build()
     );
 

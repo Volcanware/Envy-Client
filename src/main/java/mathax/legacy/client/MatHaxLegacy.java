@@ -2,7 +2,6 @@ package mathax.legacy.client;
 
 import mathax.legacy.client.events.game.GameJoinedEvent;
 import mathax.legacy.client.events.game.GameLeftEvent;
-import mathax.legacy.client.events.game.ReceiveMessageEvent;
 import mathax.legacy.client.events.mathax.CharTypedEvent;
 import mathax.legacy.client.events.mathax.ClientInitialisedEvent;
 import mathax.legacy.client.events.mathax.KeyEvent;
@@ -13,19 +12,17 @@ import mathax.legacy.client.gui.tabs.Tabs;
 import mathax.legacy.client.bus.EventBus;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.bus.IEventBus;
-import mathax.legacy.client.gui.tabs.builtin.DiscordPresenceTab;
 import mathax.legacy.client.renderer.*;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.misc.CapesModule;
+import mathax.legacy.client.systems.modules.misc.DiscordRPC;
 import mathax.legacy.client.systems.modules.render.Background;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.utils.misc.FakeClientPlayer;
 import mathax.legacy.client.utils.misc.Names;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.misc.input.KeyBinds;
-import mathax.legacy.client.utils.placeholders.DiscordPlaceholder;
-import mathax.legacy.client.utils.placeholders.Placeholders;
 import mathax.legacy.client.utils.network.Capes;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.player.DamageUtils;
@@ -39,8 +36,6 @@ import mathax.legacy.client.utils.world.BlockUtils;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
-import net.arikia.dev.drpc.DiscordEventHandlers;
-import net.arikia.dev.drpc.DiscordRichPresence;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
@@ -83,8 +78,6 @@ public class MatHaxLegacy implements ClientModInitializer {
     public static final String URL = "https://mathaxclient.xyz/";
     public static final String API_URL = "https://api.mathaxclient.xyz/";
 
-    public boolean firstLoading = false;
-
     @Override
     public void onInitializeClient() {
         if (INSTANCE == null) {
@@ -95,23 +88,26 @@ public class MatHaxLegacy implements ClientModInitializer {
         LOG.info(logprefix + "Initializing MatHax Legacy " + Version.getStylized() + "...");
         Utils.mc = MinecraftClient.getInstance();
         Utils.mc.execute(() -> titleIconManager(1));
-        firstLoading = true;
         EVENT_BUS.registerLambdaFactory("mathax.legacy.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
         LOG.info(logprefix + "10% initialized!");
         Systems.addPreLoadTask(() -> {
             if (!Modules.get().getFile().exists()) {
-                Modules.get().get(CapesModule.class).toggle(false); // CAPES
-                Modules.get().get(Background.class).toggle(false); // BACKGROUND
-                Modules.get().get(HUD.class).toggle(false); // HUD
+                Modules.get().get(CapesModule.class).toggle(); // CAPES
+                Modules.get().get(CapesModule.class).setVisible(false); // CAPES
+                Modules.get().get(DiscordRPC.class).toggle(); // DISCORD RPC
+                Modules.get().get(DiscordRPC.class).setVisible(false); // DISCORD RPC
+                Modules.get().get(Background.class).toggle(); // BACKGROUND
+                Modules.get().get(Background.class).setVisible(false); // BACKGROUND
+                Modules.get().get(HUD.class).toggle(); // HUD
+                Modules.get().get(HUD.class).setVisible(false); // HUD
                 Modules.get().get(HUD.class).reset.run(); // DEFAULT HUD LOCATIONS AND TOGGLES
             }
         });
         Tabs.init();
-        DiscordRPC.init();
+        GL.init();
 
         LOG.info(logprefix + "20% initialized!");
-        GL.init();
         Shaders.init();
         Renderer2D.init();
         Outlines.init();
@@ -142,9 +138,9 @@ public class MatHaxLegacy implements ClientModInitializer {
         Modules.REGISTERING_CATEGORIES = false;
         Systems.init();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            DiscordRPC.deactivate();
             Systems.save();
             GuiThemes.save();
-            DiscordRPC.disable();
         }));
 
         LOG.info(logprefix + "80% initialized!");
@@ -162,7 +158,6 @@ public class MatHaxLegacy implements ClientModInitializer {
 
         LOG.info(logprefix + "100% initialized!");
         Utils.mc.execute(() -> titleIconManager(3));
-        firstLoading = false;
 
         LOG.info(logprefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
     }
@@ -227,101 +222,5 @@ public class MatHaxLegacy implements ClientModInitializer {
             Utils.mc.setScreen(new ChatScreen(Config.get().prefix));
             event.cancel();
         }
-    }
-
-    public static class DiscordRPC {
-        private static final String APP_ID = "878967665501306920";
-        private static final String STEAM_ID = "";
-
-        private static final DiscordRichPresence rpc = new DiscordRichPresence();
-        private static final DiscordEventHandlers handlers = new DiscordEventHandlers();
-        public static int delay = 0;
-        public static int number = 1;
-
-        public static void init() {
-            if (DiscordPresenceTab.enabled.get()) {
-                LOG.info(logprefix + "Enabling Discord Rich Presence...");
-                net.arikia.dev.drpc.DiscordRPC.discordInitialize(APP_ID, handlers, true, STEAM_ID);
-                rpc.startTimestamp = System.currentTimeMillis() / 1000;
-                rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-                rpc.state = DiscordPlaceholder.apply("%activity%" + getQueue());
-                rpc.largeImageKey = "logo";
-                rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
-                applySmallImage();
-                rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueue());
-                rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
-                rpc.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
-                rpc.partySize = Utils.mc.getNetworkHandler() != null ? Utils.mc.getNetworkHandler().getPlayerList().size() : 1;
-                rpc.partyMax = 1;
-                net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
-                new Thread(() -> {
-                    while (!Thread.currentThread().isInterrupted()) {
-                        net.arikia.dev.drpc.DiscordRPC.discordRunCallbacks();
-                        try {
-                            rpc.details = DiscordPlaceholder.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-                            rpc.state = DiscordPlaceholder.apply("%activity%" + getQueue());
-                            rpc.largeImageKey = "logo";
-                            rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
-                            applySmallImage();
-                            rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueue());
-                            rpc.partySize = Utils.mc.getNetworkHandler() != null ? Utils.mc.getNetworkHandler().getPlayerList().size() : 1;
-                            rpc.partyMax = 1;
-                            net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
-                        } catch (Exception e2) {
-                            e2.printStackTrace();
-                        }
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }, "RPC-Callback-Handler").start();
-                LOG.info(logprefix + "Discord Rich Presence enabled!");
-            }
-        }
-
-        public static void disable() {
-            LOG.info(logprefix + "Disabling Discord Rich Presence...");
-            net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
-            net.arikia.dev.drpc.DiscordRPC.discordShutdown();
-            LOG.info(logprefix + "Discord Rich Presence disabled!");
-        }
-
-        private static void applySmallImage() {
-            if (delay == 5) {
-                if (number == 16) number = 1;
-                if (DiscordPresenceTab.smallImageMode.get() == DiscordPresenceTab.SmallImageMode.Dogs)
-                    rpc.smallImageKey = "dog-" + number;
-                else rpc.smallImageKey = "cat-" + number;
-                ++number;
-                delay = 0;
-            } else {
-                ++delay;
-            }
-        }
-    }
-    private static String queuePos = "";
-
-    @EventHandler
-    private static void onMessageRecieve(ReceiveMessageEvent event) {
-        if (DiscordPresenceTab.queuePosition.get()) {
-            if (event.message.getString().contains("[MatHax Legacy] ")) return;
-            String messageString = event.message.getString();
-            if (messageString.contains("Position in queue: ")) {
-                String queue = messageString.replace("Position in queue: ", "");
-                queuePos = " (Position: " + queue + ")";
-            } else {
-                queuePos = "";
-            }
-        } else {
-            queuePos = "";
-        }
-    }
-
-    public static String getQueue() {
-        if (Utils.mc.isInSingleplayer()) return "";
-        else if (Utils.mc.world == null) return "";
-        else return queuePos;
     }
 }

@@ -5,6 +5,8 @@ import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.utils.entity.blink.BlinkPlayerCloneManager;
+import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerManager;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
@@ -12,15 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Blink extends Module {
-
-    //TODO: Make blink spawn a "fake player"
+    private final List<PlayerMoveC2SPacket> packets = new ArrayList<>();
+    private int timer = 0;
 
     public Blink() {
         super(Categories.Movement, Items.TINTED_GLASS, "blink", "Allows you to essentially teleport while suspending motion updates.");
     }
 
-    private final List<PlayerMoveC2SPacket> packets = new ArrayList<>();
-    private int timer = 0;
+    @Override
+    public void onActivate() {
+        BlinkPlayerCloneManager.clear();
+        BlinkPlayerCloneManager.add();
+    }
 
     @Override
     public void onDeactivate() {
@@ -29,6 +34,8 @@ public class Blink extends Module {
             packets.clear();
             timer = 0;
         }
+
+        BlinkPlayerCloneManager.clear();
     }
 
     @EventHandler

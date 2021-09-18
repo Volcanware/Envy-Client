@@ -13,7 +13,6 @@ public class Tabs {
         add(new ConfigTab());
         add(new GuiTab());
         add(new HudTab());
-        add(new DiscordPresenceTab());
         add(new MacrosTab());
         add(new ProfilesTab());
         add(new FriendsTab());

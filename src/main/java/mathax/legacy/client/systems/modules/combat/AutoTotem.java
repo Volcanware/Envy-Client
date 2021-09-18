@@ -73,7 +73,7 @@ public class AutoTotem extends Module {
         .build()
     );
 
-    private final Setting<Integer> health = sgGeneral.add(new IntSetting.Builder()
+    public final Setting<Integer> health = sgGeneral.add(new IntSetting.Builder()
         .name("health")
         .description("The health to hold a totem at.")
         .defaultValue(10)
@@ -91,17 +91,17 @@ public class AutoTotem extends Module {
         .build()
     );
 
-    private final Setting<Boolean> fall = sgGeneral.add(new BoolSetting.Builder()
-        .name("fall")
-        .description("Will hold a totem when fall damage could kill you.")
+    public final Setting<Boolean> explosion = sgGeneral.add(new BoolSetting.Builder()
+        .name("explosion")
+        .description("Will hold a totem when explosion damage could kill you.")
         .defaultValue(true)
         .visible(() -> mode.get() == Mode.Smart)
         .build()
     );
 
-    private final Setting<Boolean> explosion = sgGeneral.add(new BoolSetting.Builder()
-        .name("explosion")
-        .description("Will hold a totem when explosion damage could kill you.")
+    public final Setting<Boolean> fall = sgGeneral.add(new BoolSetting.Builder()
+        .name("fall")
+        .description("Will hold a totem when fall damage could kill you.")
         .defaultValue(true)
         .visible(() -> mode.get() == Mode.Smart)
         .build()

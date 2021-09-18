@@ -6,12 +6,12 @@ import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.screens.TitleScreen;
-import mathax.legacy.client.gui.tabs.builtin.DiscordPresenceTab;
 import mathax.legacy.client.mixin.ClientPlayNetworkHandlerAccessor;
 import mathax.legacy.client.mixin.MinecraftClientAccessor;
 import mathax.legacy.client.mixin.MinecraftServerAccessor;
 import mathax.legacy.client.mixininterface.IMinecraftClient;
 import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.systems.modules.misc.DiscordRPC;
 import mathax.legacy.client.systems.modules.render.BetterTooltips;
 import mathax.legacy.client.systems.modules.world.Timer;
 import mathax.legacy.client.utils.placeholders.Placeholders;
@@ -299,7 +299,7 @@ public class Utils {
             if (SystemUtils.IS_OS_WINDOWS) {
                 name = name.replace(":", "_");
             }
-            if (DiscordPresenceTab.serverVisibility.get()) {
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
                 return "Playing on " + name;
             } else {
                 return "Playing on a server";
@@ -329,7 +329,7 @@ public class Utils {
             if (SystemUtils.IS_OS_WINDOWS) {
                 name = name.replace(":", "_");
             }
-            if (DiscordPresenceTab.serverVisibility.get()) {
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
                 return name;
             } else {
                 return "a server";
@@ -352,7 +352,7 @@ public class Utils {
     }
 
     public static String getDiscordPlayerHealth() {
-        if (!DiscordPresenceTab.playerHealth.get()) return "";
+        if (!Modules.get().get(DiscordRPC.class).playerHealth.get()) return "";
         if (mc.world == null) return "";
         if (mc.player == null) return "";
         if (mc.player.isDead()) return " | Dead";

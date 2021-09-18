@@ -13,6 +13,7 @@ import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.player.FindItemResult;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.utils.player.PlayerUtils;
 import net.minecraft.item.*;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
@@ -80,11 +81,19 @@ public class Offhand extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        if (autoTotem.mode.get() == AutoTotem.Mode.Enhanced && autoTotem.isActive()) {
+        // Not working AT mods
+        if (autoTotem.mode.get() == AutoTotem.Mode.Strict && autoTotem.isActive()) {
+            info("(highlight)" + title + "(default) does not work with (highlight)" + autoTotem.title + "(default) set to (highlight)Strict(default) mode, disabling...");
+            toggle();
+            return;
+        } else if (autoTotem.mode.get() == AutoTotem.Mode.Enhanced && autoTotem.isActive()) {
             info("(highlight)" + title + "(default) currently does not work with (highlight)" + autoTotem.title + "(default) set to (highlight)Enhanced(default) mode, disabling...");
             toggle();
             return;
         }
+
+        // TEST
+        if (autoTotem.mode.get() == AutoTotem.Mode.Smart && autoTotem.isActive() && mc.player.getHealth() + mc.player.getAbsorptionAmount() - PlayerUtils.possibleHealthReductions(autoTotem.explosion.get(), autoTotem.fall.get()) <= autoTotem.health.get()) return;
 
         // Sword Gap
         if ((mc.player.getMainHandStack().getItem() instanceof SwordItem
@@ -132,7 +141,7 @@ public class Offhand extends Module {
 
     @EventHandler
     private void onMouseButton(MouseButtonEvent event) {
-        isClicking = mc.currentScreen == null && !Modules.get().get(AutoTotem.class).isLocked() && !usableItem() && !mc.player.isUsingItem() && event.action == KeyAction.Press && event.button == GLFW_MOUSE_BUTTON_RIGHT;
+        isClicking = mc.currentScreen == null && !autoTotem.isLocked() && !usableItem() && !mc.player.isUsingItem() && event.action == KeyAction.Press && event.button == GLFW_MOUSE_BUTTON_RIGHT;
     }
 
     private boolean usableItem() {

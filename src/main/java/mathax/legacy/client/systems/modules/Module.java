@@ -36,6 +36,7 @@ public abstract class Module implements ISerializable<Module> {
     private boolean visible = true;
 
     public boolean serialize = true;
+    public boolean runInMainMenu = false;
 
     public final Keybind keybind = Keybind.none();
     public boolean toggleOnBindRelease = false;
@@ -57,20 +58,20 @@ public abstract class Module implements ISerializable<Module> {
     public void onActivate() {}
     public void onDeactivate() {}
 
-    public void toggle(boolean onToggle) {
+    public void toggle() {
         if (!active) {
             active = true;
             Modules.get().addActive(this);
 
             settings.onActivated();
 
-            if (onToggle) {
+            if (runInMainMenu || Utils.canUpdate()) {
                 MatHaxLegacy.EVENT_BUS.subscribe(this);
                 onActivate();
             }
         }
         else {
-            if (onToggle) {
+            if (runInMainMenu || Utils.canUpdate()) {
                 MatHaxLegacy.EVENT_BUS.unsubscribe(this);
                 onDeactivate();
             }
@@ -78,10 +79,6 @@ public abstract class Module implements ISerializable<Module> {
             active = false;
             Modules.get().removeActive(this);
         }
-    }
-
-    public void toggle() {
-        toggle(true);
     }
 
     public void sendToggledMsg(String name, Module module) {
@@ -177,7 +174,7 @@ public abstract class Module implements ISerializable<Module> {
 
         toggleToast(tag.getBoolean("toggleToast"));
         boolean active = tag.getBoolean("active");
-        if (active != isActive()) toggle(Utils.canUpdate());
+        if (active != isActive()) toggle();
         setVisible(tag.getBoolean("visible"));
 
         return this;

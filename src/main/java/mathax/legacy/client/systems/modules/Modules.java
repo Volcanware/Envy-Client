@@ -275,7 +275,7 @@ public class Modules extends System<Modules> {
     private void onGameJoined(GameJoinedEvent event) {
         synchronized (active) {
             for (Module module : modules) {
-                if (module.isActive()) {
+                if (module.isActive() && !module.runInMainMenu) {
                     MatHaxLegacy.EVENT_BUS.subscribe(module);
                     module.onActivate();
                 }
@@ -287,7 +287,7 @@ public class Modules extends System<Modules> {
     private void onGameLeft(GameLeftEvent event) {
         synchronized (active) {
             for (Module module : modules) {
-                if (module.isActive()) {
+                if (module.isActive() && !module.runInMainMenu) {
                     MatHaxLegacy.EVENT_BUS.unsubscribe(module);
                     module.onDeactivate();
                 }
@@ -298,7 +298,7 @@ public class Modules extends System<Modules> {
     public void disableAll() {
         synchronized (active) {
             for (Module module : modules) {
-                if (module.isActive()) module.toggle(Utils.canUpdate());
+                if (module.isActive()) module.toggle();
             }
         }
     }
@@ -562,6 +562,7 @@ public class Modules extends System<Modules> {
         add(new BookBot());
         add(new CapesModule());
         add(new CoordinateLogger());
+        add(new DiscordRPC());
         add(new InventoryTweaks());
         add(new MiddleClickExtra());
         add(new MiddleClickFriend());

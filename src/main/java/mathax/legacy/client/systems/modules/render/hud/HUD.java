@@ -120,7 +120,7 @@ public class HUD extends Module {
         moduleInfo.add(new ModuleInfoHUD(this));
 
         // LOOKING AT & BREAKING
-        breakingLooking = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, -215);
+        breakingLooking = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 215);
         // Modules
         breakingLooking.add(new LookingAtHUD(this));
         breakingLooking.add(new BreakingBlockHUD(this));
