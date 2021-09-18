@@ -19,7 +19,9 @@ import mathax.legacy.client.gui.widgets.pressable.WPlus;
 import mathax.legacy.client.systems.macros.Macro;
 import mathax.legacy.client.systems.macros.Macros;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.nbt.NbtCompound;
 
 public class MacrosTab extends Tab {
     public MacrosTab() {
@@ -42,14 +44,7 @@ public class MacrosTab extends Tab {
         }
 
         @Override
-        protected void init() {
-            super.init();
-
-            clear();
-            initWidgets();
-        }
-
-        private void initWidgets() {
+        public void initWidgets() {
             // Macros
             if (Macros.get().getAll().size() > 0) {
                 WTable table = add(theme.table()).expandX().widget();
@@ -75,6 +70,23 @@ public class MacrosTab extends Tab {
             // New
             WButton create = add(theme.button("Create")).expandX().widget();
             create.action = () -> Utils.mc.setScreen(new MacroEditorScreen(theme, null));
+        }
+
+        @Override
+        public boolean toClipboard() {
+            return NbtUtils.toClipboard(Macros.get());
+        }
+
+        @Override
+        public boolean fromClipboard() {
+            NbtCompound clipboard = NbtUtils.fromClipboard(Macros.get().toTag());
+
+            if (clipboard != null) {
+                Macros.get().fromTag(clipboard);
+                return true;
+            }
+
+            return false;
         }
     }
 

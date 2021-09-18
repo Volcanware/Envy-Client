@@ -15,7 +15,9 @@ import mathax.legacy.client.gui.widgets.pressable.WPlus;
 import mathax.legacy.client.systems.profiles.Profile;
 import mathax.legacy.client.systems.profiles.Profiles;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.nbt.NbtCompound;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -43,15 +45,7 @@ public class ProfilesTab extends Tab {
         }
 
         @Override
-        protected void init() {
-            super.init();
-
-            initWidget();
-        }
-
-        private void initWidget() {
-            clear();
-
+        public void initWidgets() {
             WTable table = add(theme.table()).expandX().minWidth(300).widget();
 
             // WaypointsModule
@@ -69,13 +63,13 @@ public class ProfilesTab extends Tab {
 
                 // Edit
                 WButton edit = table.add(theme.button(GuiRenderer.EDIT)).widget();
-                edit.action = () -> Utils.mc.setScreen(new EditProfileScreen(theme, profile, this::initWidget));
+                edit.action = () -> Utils.mc.setScreen(new EditProfileScreen(theme, profile, this::reload));
 
                 // Remove
                 WMinus remove = table.add(theme.minus()).widget();
                 remove.action = () -> {
                     Profiles.get().remove(profile);
-                    initWidget();
+                    reload();
                 };
 
                 table.row();
@@ -86,7 +80,24 @@ public class ProfilesTab extends Tab {
 
             // Create
             WButton create = table.add(theme.button("Create")).expandX().widget();
-            create.action = () -> Utils.mc.setScreen(new EditProfileScreen(theme, null, this::initWidget));
+            create.action = () -> Utils.mc.setScreen(new EditProfileScreen(theme, null, this::reload));
+        }
+
+        @Override
+        public boolean toClipboard() {
+            return NbtUtils.toClipboard(Profiles.get());
+        }
+
+        @Override
+        public boolean fromClipboard() {
+            NbtCompound clipboard = NbtUtils.fromClipboard(Profiles.get().toTag());
+
+            if (clipboard != null) {
+                Profiles.get().fromTag(clipboard);
+                return true;
+            }
+
+            return false;
         }
     }
 

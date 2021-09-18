@@ -8,7 +8,6 @@ import mathax.legacy.client.gui.screens.settings.ColorSettingScreen;
 import mathax.legacy.client.gui.tabs.builtin.*;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.render.PeekScreen;
-import mathax.legacy.client.utils.render.PromptBuilder;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.*;
@@ -46,10 +45,6 @@ public class DiscordPlaceholder {
                     } else {
                         return "The game is reloading...";
                     }
-                } else if (mc.currentScreen instanceof PromptBuilder.PromptScreen && PromptBuilder.promptId.equals("new-update")) {
-                    return "Viewing new update";
-                } else if (mc.currentScreen instanceof PromptBuilder.PromptScreen && PromptBuilder.promptId.equals("new-update-button")) {
-                    return "Viewing new update";
                 } else if (mc.currentScreen instanceof TitleScreen) {
                     return "In main menu";
                 } else if (mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) {

@@ -12,9 +12,11 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDElement;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.misc.NbtUtils;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.nbt.NbtCompound;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -64,18 +66,40 @@ public class HudTab extends Tab {
         public HudScreen(GuiTheme theme, Tab tab) {
             super(theme, tab);
 
-            this.hud = Modules.get().get(HUD.class);
+            hud = Modules.get().get(HUD.class);
         }
 
         @Override
         protected void init() {
             super.init();
+
             Utils.mc.options.hudHidden = false;
+        }
+
+        @Override
+        public void initWidgets() {} // Unused
+
+        @Override
+        public boolean toClipboard() {
+            return NbtUtils.toClipboard(hud.title, hud.toTag());
+        }
+
+        @Override
+        public boolean fromClipboard() {
+            NbtCompound clipboard = NbtUtils.fromClipboard(hud.toTag());
+
+            if (clipboard != null) {
+                hud.fromTag(clipboard);
+                return true;
+            }
+
+            return false;
         }
 
         @Override
         public void onClose() {
             super.onClose();
+
             if (theme.hideHUD() && parent instanceof WidgetScreen) Utils.mc.options.hudHidden = true;
         }
 

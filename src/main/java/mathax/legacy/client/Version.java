@@ -1,7 +1,8 @@
 package mathax.legacy.client;
 
 import mathax.legacy.client.utils.network.HTTP;
-import mathax.legacy.client.utils.render.PromptBuilder;
+import mathax.legacy.client.utils.render.prompts.OkPrompt;
+import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 import net.minecraft.util.Util;
@@ -33,7 +34,7 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 4;
+        return 0;
     }
 
     public static String getDevBuild() {
@@ -63,11 +64,11 @@ public class Version {
     }
 
     public static Integer checkLatest() {
-        String apiLatestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");
+        String apiLatestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
         if (apiLatestVer == null) {
             return 0;
         } else {
-            Version latestVer = new Version(apiLatestVer);
+            Version latestVer = new Version(apiLatestVer.replace("\n", ""));
             Version currentVer = new Version(Version.get());
             if (latestVer.isHigherThan(currentVer)) {
                 return 1;
@@ -78,11 +79,11 @@ public class Version {
     }
 
     public static String getLatest() {
-        String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString().replace("\n", "");
+        String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
         if (latestVer == null) {
-            return "ERROR";
+            return "NULL";
         } else {
-            return latestVer;
+            return latestVer.replace("\n", "");
         }
     }
 
@@ -94,11 +95,11 @@ public class Version {
                 return;
             case 1:
                 MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.getStylized() + "! You can download the newest version on " + MatHaxLegacy.URL + "Download!");
-                String promptId = "new-update";
+                String id = "new-update";
                 if (button) {
-                    promptId += "-button";
+                    id += "-button";
                 }
-                new PromptBuilder()
+                YesNoPrompt.create()
                     .title("New Update")
                     .message("A new version of MatHax Legacy has been released.")
                     .message("\n")
@@ -109,7 +110,13 @@ public class Version {
                     .onYes(() -> {
                         Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
                     })
-                    .promptId(promptId)
+                    .onNo(() -> OkPrompt.create()
+                        .title("Are you sure?")
+                        .message("Using old versions of MatHax Legacy is not recommended")
+                        .message("and could report in issues.")
+                        .id("new-update-no")
+                        .show())
+                    .id(id)
                     .show();
             case 2:
                 if (getDev() == 0) {

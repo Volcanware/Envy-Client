@@ -12,6 +12,8 @@ import mathax.legacy.client.utils.world.TickRate;
 import net.minecraft.item.Items;
 
 public class ChatBot extends Module {
+    // TODO: Fix this terrible mess...
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgMatHax = settings.createGroup("MatHax");
     private final SettingGroup sgTPS = settings.createGroup("TPS");
@@ -84,12 +86,12 @@ public class ChatBot extends Module {
     }
 
     private String getActiveCommands() {
-        StringBuilder commandList = new StringBuilder().append(prefix.get() + "help, ");
+        StringBuilder commandList = new StringBuilder().append(prefix.get()).append("help, ");
         if (mathax.get()) {
-            commandList.append(prefix.get() + "mathax, mathaxlegacy, ");
+            commandList.append(prefix.get()).append("mathax, mathaxlegacy, ");
         }
         if (tps.get()) {
-            commandList.append(prefix.get() + "tps, ");
+            commandList.append(prefix.get()).append("tps, ");
         }
         commandList.append("removeme");
         return commandList.toString();

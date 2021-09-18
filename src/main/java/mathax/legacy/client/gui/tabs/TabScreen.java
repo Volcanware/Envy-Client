@@ -5,7 +5,7 @@ import mathax.legacy.client.gui.WidgetScreen;
 import mathax.legacy.client.gui.utils.Cell;
 import mathax.legacy.client.gui.widgets.WWidget;
 
-public class TabScreen extends WidgetScreen {
+public abstract class TabScreen extends WidgetScreen {
     public final Tab tab;
 
     public TabScreen(GuiTheme theme, Tab tab) {

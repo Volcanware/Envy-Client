@@ -13,32 +13,33 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Category;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Pair;
 
 import java.util.List;
 
 public class ModulesScreen extends TabScreen {
+
     public ModulesScreen(GuiTheme theme) {
         super(theme, Tabs.get().get(0));
+    }
 
-        add(createCategoryContainer());
+    @Override
+    public void initWidgets() {
+        add(new WCategoryController());
+
         // Help
-        /*
         WVerticalList help = add(theme.verticalList()).pad(4).bottom().widget();
         help.add(theme.label("Left click - Toggle module"));
         help.add(theme.label("Right click - Open module settings"));
-        */
-    }
-
-    protected WCategoryController createCategoryContainer() {
-        return new WCategoryController();
     }
 
     // Category
 
     protected void createCategory(WContainer c, Category category) {
-        WWindow w = theme.window(category.title);
+        WWindow w = theme.window(category.name);
         w.id = category.name;
         w.padding = 0;
         w.spacing = 0;
@@ -112,6 +113,26 @@ public class ModulesScreen extends TabScreen {
         w.add(l).expandX();
         createSearchW(l, text.get());
     }
+
+    @Override
+    public boolean toClipboard() {
+        return NbtUtils.toClipboard(Modules.get());
+    }
+
+    @Override
+    public boolean fromClipboard() {
+        NbtCompound clipboard = NbtUtils.fromClipboard(Modules.get().toTag());
+
+        if (clipboard != null) {
+            Modules.get().fromTag(clipboard);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void reload() {}
 
     // Stuff
 

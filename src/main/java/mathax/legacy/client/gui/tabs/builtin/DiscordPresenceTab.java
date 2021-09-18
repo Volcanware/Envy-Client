@@ -86,6 +86,10 @@ public class DiscordPresenceTab extends Tab {
             super(theme, tab);
 
             settings.onActivated();
+        }
+
+        @Override
+        public void initWidgets() {
             add(theme.settings(settings)).expandX();
         }
     }

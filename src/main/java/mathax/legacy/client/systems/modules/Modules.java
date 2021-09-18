@@ -33,9 +33,9 @@ import mathax.legacy.client.utils.misc.input.Input;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.utils.render.MatHaxToast;
-import mathax.legacy.client.systems.modules.fun.CapesModule;
-import mathax.legacy.client.systems.modules.fun.Notebot;
-import mathax.legacy.client.systems.modules.fun.SpinBot;
+import mathax.legacy.client.systems.modules.misc.CapesModule;
+import mathax.legacy.client.systems.modules.misc.Notebot;
+import mathax.legacy.client.systems.modules.misc.SpinBot;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -81,7 +81,6 @@ public class Modules extends System<Modules> {
         initRender();
         initWorld();
         initChat();
-        initFun();
         initMisc();
 
         // This is here because some hud elements depend on modules to be initialised before them
@@ -419,7 +418,6 @@ public class Modules extends System<Modules> {
         add(new NoInteract());
         add(new NoMiningTrace());
         add(new NoRotate());
-        add(new OffhandCrash());
         add(new PacketMine());
         add(new Portals());
         add(new PotionSaver());
@@ -546,38 +544,37 @@ public class Modules extends System<Modules> {
         add(new Announcer());
         add(new AutoEZ());
         add(new BetterChat());
-        add(new ChatBot());
+        //add(new ChatBot());
         add(new MessageAura());
         add(new Notifier());
         add(new Spam());
     }
 
-    private void initFun() {
-        add(new CapesModule());
-        add(new Notebot());
-        //add(new PenisESP());
-        add(new SpinBot());
-    }
-
     private void initMisc() {
-        add(new Swarm());
         add(new AntiPacketKick());
         add(new AutoClicker());
+        //add(new AutoCraft());
         add(new AutoLog());
         add(new AutoMountBypassDupe());
         add(new AutoReconnect());
         add(new AutoRespawn());
         add(new BetterTab());
         add(new BookBot());
+        add(new CapesModule());
         add(new CoordinateLogger());
         add(new InventoryTweaks());
         add(new MiddleClickExtra());
         add(new MiddleClickFriend());
         add(new NameProtect());
+        add(new Notebot());
+        add(new OffhandCrash());
         add(new PacketCanceller());
         add(new Panic());
+        //add(new PenisESP());
         add(new SoundBlocker());
         add(new SoundLocator());
+        add(new SpinBot());
+        add(new Swarm());
         add(new TPSSync());
         add(new VanillaSpoof());
     }

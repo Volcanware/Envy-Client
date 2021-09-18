@@ -2,7 +2,7 @@ package mathax.legacy.client.utils.network;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.systems.modules.fun.CapesModule;
+import mathax.legacy.client.systems.modules.misc.CapesModule;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.entity.player.PlayerEntity;

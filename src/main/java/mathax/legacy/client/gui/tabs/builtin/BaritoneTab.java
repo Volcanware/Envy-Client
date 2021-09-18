@@ -1,6 +1,7 @@
 package mathax.legacy.client.gui.tabs.builtin;
 
 import baritone.api.BaritoneAPI;
+import baritone.api.Settings$Setting;
 import baritone.api.utils.SettingsUtil;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.tabs.Tab;
@@ -21,16 +22,6 @@ public class BaritoneTab extends Tab {
         super("Baritone");
     }
 
-    @Override
-    public TabScreen createScreen(GuiTheme theme) {
-        return new BaritoneScreen(theme, this);
-    }
-
-    @Override
-    public boolean isScreen(Screen screen) {
-        return screen instanceof BaritoneScreen;
-    }
-
     private static Settings getSettings() {
         if (settings != null) return settings;
 
@@ -47,7 +38,7 @@ public class BaritoneTab extends Tab {
                 Object obj = field.get(BaritoneAPI.getSettings());
                 if (!(obj instanceof baritone.api.Settings$Setting)) continue;
 
-                baritone.api.Settings$Setting setting = (baritone.api.Settings$Setting<?>) obj;
+                Settings$Setting setting = (baritone.api.Settings$Setting<?>) obj;
                 Object value = setting.value;
 
                 if (value instanceof Boolean) {
@@ -115,10 +106,25 @@ public class BaritoneTab extends Tab {
         return settings;
     }
 
+    @Override
+    public TabScreen createScreen(GuiTheme theme) {
+        return new BaritoneScreen(theme, this);
+    }
+
+    @Override
+    public boolean isScreen(Screen screen) {
+        return screen instanceof BaritoneScreen;
+    }
+
     public static class BaritoneScreen extends WindowTabScreen {
         public BaritoneScreen(GuiTheme theme, Tab tab) {
             super(theme, tab);
 
+            getSettings().onActivated();
+        }
+
+        @Override
+        public void initWidgets() {
             WTextBox filter = add(theme.textBox("")).minWidth(400).expandX().widget();
             filter.setFocused(true);
             filter.action = () -> {
@@ -128,7 +134,6 @@ public class BaritoneTab extends Tab {
                 add(theme.settings(getSettings(), filter.get().trim())).expandX();
             };
 
-            getSettings().onActivated();
             add(theme.settings(getSettings(), filter.get().trim())).expandX();
         }
 

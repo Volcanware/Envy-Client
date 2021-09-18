@@ -8,7 +8,7 @@ import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.systems.modules.fun.Notebot;
+import mathax.legacy.client.systems.modules.misc.Notebot;
 import mathax.legacy.client.bus.EventHandler;
 import net.minecraft.command.CommandSource;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;

@@ -35,10 +35,10 @@ public class EnemiesTab extends Tab {
     }
 
     public static class EnemiesScreen extends WindowTabScreen {
+        private final Settings settings = new Settings();
+
         public EnemiesScreen(GuiTheme theme, Tab tab) {
             super(theme, tab);
-
-            Settings settings = new Settings();
 
             SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -61,13 +61,18 @@ public class EnemiesTab extends Tab {
             );
 
             settings.onActivated();
+        }
+
+        @Override
+        public void initWidgets() {
+            // Settings
             add(theme.settings(settings)).expandX();
 
             // Enemies
             WSection enemies = add(theme.section("Enemies")).expandX().widget();
             WTable table = enemies.add(theme.table()).expandX().widget();
 
-            fillTable(table);
+            initTable(table);
 
             // New
             WHorizontalList list = enemies.add(theme.horizontalList()).expandX().widget();
@@ -83,14 +88,14 @@ public class EnemiesTab extends Tab {
                     nameW.set("");
 
                     table.clear();
-                    fillTable(table);
+                    initTable(table);
                 }
             };
 
             enterAction = add.action;
         }
 
-        private void fillTable(WTable table) {
+        private void initTable(WTable table) {
             for (Enemy enemy : Enemies.get()) {
                 table.add(theme.label(enemy.name));
 
@@ -99,7 +104,7 @@ public class EnemiesTab extends Tab {
                     Enemies.get().remove(enemy);
 
                     table.clear();
-                    fillTable(table);
+                    initTable(table);
                 };
 
                 table.row();

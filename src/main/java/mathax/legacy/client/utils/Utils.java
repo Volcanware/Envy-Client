@@ -567,6 +567,6 @@ public class Utils {
         Map<T, Boolean> map = new HashMap<>();
         for (T item : checked)
             map.put(item, true);
-        return new Object2BooleanOpenHashMap<T>(map);
+        return new Object2BooleanOpenHashMap<>(map);
     }
 }

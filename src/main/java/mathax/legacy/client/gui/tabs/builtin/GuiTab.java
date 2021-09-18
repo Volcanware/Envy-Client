@@ -8,7 +8,9 @@ import mathax.legacy.client.gui.tabs.WindowTabScreen;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.input.WDropdown;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.nbt.NbtCompound;
 
 public class GuiTab extends Tab {
     public GuiTab() {
@@ -29,6 +31,11 @@ public class GuiTab extends Tab {
         public GuiScreen(GuiTheme theme, Tab tab) {
             super(theme, tab);
 
+            theme.settings.onActivated();
+        }
+
+        @Override
+        public void initWidgets() {
             WTable table = add(theme.table()).expandX().widget();
 
             table.add(theme.label("Theme:"));
@@ -40,8 +47,24 @@ public class GuiTab extends Tab {
                 tab.openScreen(GuiThemes.get());
             };
 
-            theme.settings.onActivated();
             add(theme.settings(theme.settings)).expandX();
+        }
+
+        @Override
+        public boolean toClipboard() {
+            return NbtUtils.toClipboard(theme.name + " GUI Theme", theme.toTag());
+        }
+
+        @Override
+        public boolean fromClipboard() {
+            NbtCompound clipboard = NbtUtils.fromClipboard(theme.toTag());
+
+            if (clipboard != null) {
+                theme.fromTag(clipboard);
+                return true;
+            }
+
+            return false;
         }
     }
 }

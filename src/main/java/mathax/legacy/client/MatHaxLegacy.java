@@ -17,7 +17,7 @@ import mathax.legacy.client.gui.tabs.builtin.DiscordPresenceTab;
 import mathax.legacy.client.renderer.*;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.modules.Categories;
-import mathax.legacy.client.systems.modules.fun.CapesModule;
+import mathax.legacy.client.systems.modules.misc.CapesModule;
 import mathax.legacy.client.systems.modules.render.Background;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.utils.misc.FakeClientPlayer;

@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.fun;
+package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
@@ -29,7 +29,7 @@ public class CapesModule extends Module {
     );
 
     public CapesModule() {
-        super(Categories.Fun, Items.CAKE, "capes", "When enabled you will see very cool MatHax cape on users which have them.");
+        super(Categories.Misc, Items.CAKE, "capes", "When enabled you will see very cool MatHax cape on users which have them.");
     }
 
     @EventHandler

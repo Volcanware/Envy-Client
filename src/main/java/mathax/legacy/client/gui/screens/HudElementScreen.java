@@ -12,6 +12,8 @@ import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDElement;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.misc.NbtUtils;
+import net.minecraft.nbt.NbtCompound;
 
 public class HudElementScreen extends WindowScreen {
     private final HUDElement element;
@@ -64,5 +66,22 @@ public class HudElementScreen extends WindowScreen {
     @Override
     protected void onRenderBefore(float delta) {
         if (!Utils.canUpdate()) Modules.get().get(HUD.class).onRender(Render2DEvent.get(0, 0, delta));
+    }
+
+    @Override
+    public boolean toClipboard() {
+        return NbtUtils.toClipboard(element.title, element.toTag());
+    }
+
+    @Override
+    public boolean fromClipboard() {
+        NbtCompound clipboard = NbtUtils.fromClipboard(element.toTag());
+
+        if (clipboard != null) {
+            element.fromTag(clipboard);
+            return true;
+        }
+
+        return false;
     }
 }

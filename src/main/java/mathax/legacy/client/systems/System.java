@@ -10,9 +10,12 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class System<T> implements ISerializable<T> {
+    private final String name;
     private File file;
 
     public System(String name) {
+        this.name = name;
+
         if (name != null) {
             this.file = new File(MatHaxLegacy.VERSION_FOLDER, name + ".nbt");
         }
@@ -66,6 +69,10 @@ public abstract class System<T> implements ISerializable<T> {
 
     public File getFile() {
         return file;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

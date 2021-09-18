@@ -10,8 +10,10 @@ import mathax.legacy.client.systems.accounts.Account;
 import mathax.legacy.client.systems.accounts.Accounts;
 import mathax.legacy.client.systems.accounts.MicrosoftLogin;
 import mathax.legacy.client.systems.accounts.types.MicrosoftAccount;
+import mathax.legacy.client.utils.misc.NbtUtils;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.Utils;
+import net.minecraft.nbt.NbtCompound;
 import org.jetbrains.annotations.Nullable;
 
 public class AccountsScreen extends WindowScreen {
@@ -40,11 +42,11 @@ public class AccountsScreen extends WindowScreen {
 
                 if (refreshToken != null) {
                     MicrosoftAccount account = new MicrosoftAccount(refreshToken);
-                    addAccount(null, account);
+                    addAccount(null, this, account);
                 }
             });
         });
-        addButton(l, "The Altening", () -> Utils.mc.setScreen(new AddAlteningAccountScreen(theme, this)));
+        addButton(l, "Altening", () -> Utils.mc.setScreen(new AddAlteningAccountScreen(theme, this)));
     }
 
     private void addButton(WContainer c, String text, Runnable action) {
@@ -52,11 +54,8 @@ public class AccountsScreen extends WindowScreen {
         button.action = action;
     }
 
-    public static void addAccount(@Nullable AddAccountScreen screen, Account<?> account) {
-        if (screen != null) {
-            screen.add.set("...");
-            screen.locked = true;
-        }
+    public static void addAccount(@Nullable AddAccountScreen screen, AccountsScreen parent, Account<?> account) {
+        if (screen != null) screen.locked = true;
 
         MatHaxExecutor.execute(() -> {
             if (account.fetchInfo() && account.fetchHead()) {
@@ -66,16 +65,31 @@ public class AccountsScreen extends WindowScreen {
                 if (screen != null) {
                     screen.locked = false;
                     screen.onClose();
-                    screen.parent.reload();
                 }
+
+                parent.reload();
 
                 return;
             }
 
-            if (screen != null) {
-                screen.add.set("Add");
-                screen.locked = false;
-            }
+            if (screen != null) screen.locked = false;
         });
+    }
+
+    @Override
+    public boolean toClipboard() {
+        return NbtUtils.toClipboard(Accounts.get());
+    }
+
+    @Override
+    public boolean fromClipboard() {
+        NbtCompound clipboard = NbtUtils.fromClipboard(Accounts.get().toTag());
+
+        if (clipboard != null) {
+            Accounts.get().fromTag(clipboard);
+            return true;
+        }
+
+        return false;
     }
 }

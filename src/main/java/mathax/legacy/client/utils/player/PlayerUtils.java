@@ -53,6 +53,9 @@ public class PlayerUtils {
             mc.player.swingHand(Hand.MAIN_HAND);
         }
     }
+    public static boolean isPlayerMoving(PlayerEntity p) {
+        return p.forwardSpeed != 0 || p.sidewaysSpeed != 0;
+    }
 
     public static boolean placeBlock(BlockPos blockPos, Hand hand, boolean bl) {
         return PlayerUtils.placeBlock(blockPos, hand, true, bl);

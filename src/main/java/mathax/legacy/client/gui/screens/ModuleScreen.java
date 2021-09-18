@@ -14,9 +14,8 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.bus.EventHandler;
-import net.minecraft.client.MinecraftClient;
-
-import static org.lwjgl.glfw.GLFW.*;
+import mathax.legacy.client.utils.misc.NbtUtils;
+import net.minecraft.nbt.NbtCompound;
 
 public class ModuleScreen extends WindowScreen {
     public final Module module;
@@ -110,19 +109,16 @@ public class ModuleScreen extends WindowScreen {
         keybind.reset();
     }
 
+    public boolean toClipboard() {
+        return NbtUtils.toClipboard(module.title, module.toTag());
+    }
+
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (super.keyPressed(keyCode, scanCode, modifiers)) return true;
+    public boolean fromClipboard() {
+        NbtCompound clipboard = NbtUtils.fromClipboard(module.toTag());
 
-        boolean control = MinecraftClient.IS_SYSTEM_MAC ? modifiers == GLFW_MOD_SUPER : modifiers == GLFW_MOD_CONTROL;
-
-        if (control && keyCode == GLFW_KEY_C) {
-            module.toClipboard();
-            return true;
-        }
-        else if (control && keyCode == GLFW_KEY_V) {
-            module.fromClipboard();
-            reload();
+        if (clipboard != null) {
+            module.fromTag(clipboard);
             return true;
         }
 

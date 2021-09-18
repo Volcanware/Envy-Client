@@ -19,10 +19,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static mathax.legacy.client.utils.Utils.mc;
 
@@ -49,6 +53,19 @@ public class BlockUtils {
 
     public static boolean isWeb(BlockPos pos) {
         return BlockUtils.getBlock(pos) == Blocks.COBWEB || BlockUtils.getBlock(pos) == Block.getBlockFromItem(Items.STRING);
+    }
+
+    public static List<BlockPos> getSphere(BlockPos centerPos, int radius, int height) {
+        ArrayList<BlockPos> blocks = new ArrayList<>();
+        for (int i = centerPos.getX() - radius; i < centerPos.getX() + radius; i++) {
+            for (int j = centerPos.getY() - height; j < centerPos.getY() + height; j++) {
+                for (int k = centerPos.getZ() - radius; k < centerPos.getZ() + radius; k++) {
+                    BlockPos pos = new BlockPos(i, j, k);
+                    if (distanceBetween(centerPos, pos) <= radius && !blocks.contains(pos)) blocks.add(pos);
+                }
+            }
+        }
+        return blocks;
     }
 
     // Placing
@@ -253,6 +270,15 @@ public class BlockUtils {
     public static boolean topSurface(BlockState blockState) {
         if (blockState.getBlock() instanceof SlabBlock && blockState.get(SlabBlock.TYPE) == SlabType.TOP) return true;
         else return blockState.getBlock() instanceof StairsBlock && blockState.get(StairsBlock.HALF) == BlockHalf.TOP;
+    }
+
+    // Util
+
+    public static double distanceBetween(BlockPos pos1, BlockPos pos2) {
+        double d = pos1.getX() - pos2.getX();
+        double e = pos1.getY() - pos2.getY();
+        double f = pos1.getZ() - pos2.getZ();
+        return MathHelper.sqrt((float) (d * d + e * e + f * f));
     }
 
     public enum MobSpawn {

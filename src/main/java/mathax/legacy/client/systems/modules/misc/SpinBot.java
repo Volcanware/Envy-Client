@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.fun;
+package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
@@ -32,7 +32,7 @@ public class SpinBot extends Module {
     );
 
     public SpinBot() {
-        super(Categories.Fun, Items.GUNPOWDER, "spin-bot", "Makes you spin like Spin Bot in CS:GO.");
+        super(Categories.Misc, Items.GUNPOWDER, "spin-bot", "Makes you spin like Spin Bot in CS:GO.");
         count = 0;
     }
 
