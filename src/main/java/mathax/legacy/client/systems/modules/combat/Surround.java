@@ -50,17 +50,17 @@ public class Surround extends Module {
         .build()
     );*/
 
+    private final Setting<Boolean> underHeight = sgGeneral.add(new BoolSetting.Builder()
+        .name("under-height")
+        .description("Places obsidian next to the block you are standing on. (Bypasses some anti cheats)")
+        .defaultValue(true)
+        .build()
+    );
+
     private final Setting<Boolean> doubleHeight = sgGeneral.add(new BoolSetting.Builder()
         .name("double-height")
         .description("Places obsidian on top of the original surround blocks to prevent people from face-placing you.")
         .defaultValue(false)
-        .build()
-    );
-
-    private final Setting<Boolean> underHeight = sgGeneral.add(new BoolSetting.Builder()
-        .name("under-height")
-        .description("Places obsidian next to the block youre standing on and fixes surround bug.")
-        .defaultValue(true)
         .build()
     );
 
@@ -297,7 +297,13 @@ public class Surround extends Module {
 
     @EventHandler
     private void onRender(Render3DEvent event) {
+<<<<<<< Updated upstream
         if (!render.get() || blockPos == null || blockPos.getY() > 256) return;
+=======
+        if (!render.get()) return;
+        if (blockPos == null) return;
+        if (blockPos.getY() > 256) return;
+>>>>>>> Stashed changes
         if (p1 && p6 && p7 && p8 &&p9) {
             if (underHeightPlaced || !underHeight.get()) return;
             if (doubleHeightPlaced || !doubleHeight.get()) return;

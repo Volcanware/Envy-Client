@@ -20,6 +20,7 @@ import net.minecraft.nbt.NbtCompound;
 public class ModuleScreen extends WindowScreen {
     public final Module module;
 
+    private WContainer settingsContainer;
     private WKeybind keybind;
 
     public ModuleScreen(GuiTheme theme, Module module) {
@@ -35,7 +36,8 @@ public class ModuleScreen extends WindowScreen {
 
         // Settings
         if (module.settings.groups.size() > 0) {
-            add(theme.settings(module.settings)).expandX();
+            settingsContainer = add(theme.verticalList()).expandX().widget();
+            settingsContainer.add(theme.settings(module.settings)).expandX();
         }
 
         // Custom widget
@@ -101,7 +103,7 @@ public class ModuleScreen extends WindowScreen {
     public void tick() {
         super.tick();
 
-        module.settings.tick(window, theme);
+        module.settings.tick(settingsContainer, theme);
     }
 
     @EventHandler
