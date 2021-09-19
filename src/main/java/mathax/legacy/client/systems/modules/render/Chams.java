@@ -125,7 +125,7 @@ public class Chams extends Module {
     public final Setting<SettingColor> crystalsCoreColor = sgCrystals.add(new ColorSetting.Builder()
         .name("core-color")
         .description("The color of end crystal models.")
-        .defaultValue(new SettingColor(0, 255, 255, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 100))
         .visible(renderCore::get)
         .build()
     );
@@ -141,7 +141,7 @@ public class Chams extends Module {
     public final Setting<SettingColor> crystalsFrame1Color = sgCrystals.add(new ColorSetting.Builder()
         .name("inner-frame-color")
         .description("The color of end crystal models.")
-        .defaultValue(new SettingColor(0, 255, 255, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 100))
         .visible(renderFrame1::get)
         .build()
     );
@@ -157,7 +157,7 @@ public class Chams extends Module {
     public final Setting<SettingColor> crystalsFrame2Color = sgCrystals.add(new ColorSetting.Builder()
         .name("outer-frame-color")
         .description("The color of end crystal models.")
-        .defaultValue(new SettingColor(0, 255, 255, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 100))
         .visible(renderFrame2::get)
         .build()
     );
@@ -180,7 +180,7 @@ public class Chams extends Module {
     public final Setting<SettingColor> handColor = sgHand.add(new ColorSetting.Builder()
         .name("hand-color")
         .description("The color of your hand.")
-        .defaultValue(new SettingColor(0, 255, 255, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 100))
         .build()
     );
 
