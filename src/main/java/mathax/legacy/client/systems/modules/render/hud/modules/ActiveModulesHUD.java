@@ -52,7 +52,7 @@ public class ActiveModulesHUD extends HUDElement {
     private final Setting<SettingColor> flatColor = sgGeneral.add(new ColorSetting.Builder()
         .name("flat-color")
         .description("Color for flat color mode.")
-        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .visible(() -> colorMode.get() == ColorMode.Flat)
         .build()
     );

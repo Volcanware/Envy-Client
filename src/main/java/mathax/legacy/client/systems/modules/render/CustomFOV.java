@@ -24,7 +24,7 @@ public class CustomFOV extends Module {
     );
 
     public CustomFOV() {
-        super(Categories.Render, Items.GLOW_INK_SAC, "custom-fov", "Allows your FOV to be more customizable.");
+        super(Categories.Render, Items.GLOW_INK_SAC, "Custom-FOV", "Allows your FOV to be more customizable.");
     }
 
     @Override

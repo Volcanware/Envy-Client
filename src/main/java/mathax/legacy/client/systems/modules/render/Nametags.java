@@ -92,14 +92,14 @@ public class Nametags extends Module {
     private final Setting<SettingColor> names = sgGeneral.add(new ColorSetting.Builder()
         .name("primary-color")
         .description("The color of the nametag names.")
-        .defaultValue(new SettingColor())
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
     public final Setting<SettingColor> selfColor = sgGeneral.add(new ColorSetting.Builder()
         .name("self-color")
         .description("The color of your nametag in Freecam.")
-        .defaultValue(new SettingColor(0, 165, 255, 255))
+        .defaultValue(new SettingColor(0, 165, 255))
         .build()
     );
 

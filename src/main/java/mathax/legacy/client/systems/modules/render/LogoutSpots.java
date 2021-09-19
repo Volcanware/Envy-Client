@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.entity.EntityAddedEvent;
 import mathax.legacy.client.events.render.Render2DEvent;
 import mathax.legacy.client.events.render.Render3DEvent;
@@ -71,21 +72,21 @@ public class LogoutSpots extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The side color.")
-        .defaultValue(new SettingColor(0, 50, 100, 55))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 75))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The line color.")
-        .defaultValue(new SettingColor(0, 50, 100))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
     private final Setting<SettingColor> nameColor = sgRender.add(new ColorSetting.Builder()
         .name("name-color")
         .description("The name color.")
-        .defaultValue(new SettingColor(255, 0, 250))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 

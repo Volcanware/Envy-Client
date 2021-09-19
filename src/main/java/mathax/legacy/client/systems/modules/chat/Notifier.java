@@ -44,8 +44,6 @@ public class Notifier extends Module {
 
     private final SettingGroup sgTotemPops = settings.createGroup("Totem Pops");
     private final SettingGroup sgVisualRange = settings.createGroup("Visual Range");
-    private final SettingGroup sgArmor = settings.createGroup("Armor");
-    private final SettingGroup sgArmorMessages = settings.createGroup("Armor Messages");
 
     // Totem Pops
 
