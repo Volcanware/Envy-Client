@@ -1,6 +1,7 @@
 package mathax.legacy.client.systems.modules.render;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
@@ -79,7 +80,7 @@ public class Tracers extends Module {
     private final Setting<SettingColor> playersColor = sgColors.add(new ColorSetting.Builder()
         .name("players-colors")
         .description("The player's color.")
-        .defaultValue(new SettingColor(255, 0, 250, 125))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b, 125))
         .visible(() -> !distance.get())
         .build()
     );

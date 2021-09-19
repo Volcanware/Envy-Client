@@ -12,7 +12,7 @@ import static mathax.legacy.client.utils.Utils.mc;
 
 public class BlinkPlayerCloneEntity extends OtherClientPlayerEntity {
     public BlinkPlayerCloneEntity() {
-        super(mc.world, new GameProfile(UUID.randomUUID(), mc.player.getEntityName()));
+        super(mc.world, new GameProfile(mc.player.getUuid(), mc.player.getEntityName()));
 
         copyPositionAndRotation(mc.player);
 

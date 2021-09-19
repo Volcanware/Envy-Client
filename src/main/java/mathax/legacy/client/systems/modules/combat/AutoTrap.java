@@ -116,7 +116,7 @@ public class AutoTrap extends Module {
     private final Setting<SettingColor> nextSideColor = sgRender.add(new ColorSetting.Builder()
         .name("next-side-color")
         .description("The side color of the next block to be placed.")
-        .defaultValue(new SettingColor(150, 150, 75, 50))
+        .defaultValue(new SettingColor(150, 150, 75, 75))
         .build()
     );
 

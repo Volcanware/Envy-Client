@@ -53,6 +53,10 @@ dependencies {
     modImplementation "com.github.MeteorDevelopment:baritone:${project.baritone_version}"
     include "com.github.MeteorDevelopment:baritone:${project.baritone_version}"
 
+    // Seed .locate features
+    modImplementation 'com.github.hube12:SEED:master-SNAPSHOT'
+    include 'com.github.hube12:SEED:master-SNAPSHOT'
+
     // Dependencies
     dependency "com.github.Vatuu:discord-rpc:${project.discord_version}"
 }

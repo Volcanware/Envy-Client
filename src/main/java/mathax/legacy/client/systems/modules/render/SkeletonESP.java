@@ -33,7 +33,7 @@ public class SkeletonESP extends Module {
 
     public final Setting<SettingColor> skeletonSelfColorSetting = sgGeneral.add(new ColorSetting.Builder()
         .name("self-color")
-        .description("The color of your nametag in Freecam.")
+        .description("The color of your skeleton in Freecam.")
         .defaultValue(new SettingColor(0, 165, 255, 255))
         .build()
     );

@@ -1,9 +1,11 @@
 package mathax.legacy.client.systems.modules.render;
 
+import mathax.legacy.client.bus.EventPriority;
 import mathax.legacy.client.events.entity.TookDamageEvent;
 import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.events.game.OpenScreenEvent;
 import mathax.legacy.client.events.mathax.KeyEvent;
+import mathax.legacy.client.events.mathax.MouseScrollEvent;
 import mathax.legacy.client.events.world.ChunkOcclusionEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.*;
@@ -28,6 +30,7 @@ public class Freecam extends Module {
     public final Vec3 prevPos = new Vec3();
 
     private Perspective perspective;
+    private double speedValue;
 
     public float yaw, pitch;
     public float prevYaw, prevPitch;
@@ -39,8 +42,18 @@ public class Freecam extends Module {
     private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
         .name("speed")
         .description("Your speed while in freecam.")
+        .onChanged(aDouble -> speedValue = aDouble)
         .defaultValue(1.0)
         .min(0.0)
+        .build()
+    );
+
+    private final Setting<Double> speedScrollSensitivity = sgGeneral.add(new DoubleSetting.Builder()
+        .name("speed-scroll-sensitivity")
+        .description("Allows you to change speed value using scroll wheel. 0 to disable.")
+        .defaultValue(0)
+        .min(0)
+        .sliderMax(2)
         .build()
     );
 
@@ -96,6 +109,7 @@ public class Freecam extends Module {
         pitch = mc.player.getPitch();
 
         perspective = mc.options.getPerspective();
+        speedValue = speed.get();
 
         pos.set(mc.gameRenderer.getCamera().getPos());
         prevPos.set(mc.gameRenderer.getCamera().getPos());
@@ -174,25 +188,25 @@ public class Freecam extends Module {
 
         boolean a = false;
         if (this.forward) {
-            velX += forward.x * s * speed.get();
-            velZ += forward.z * s * speed.get();
+            velX += forward.x * s * speedValue;
+            velZ += forward.z * s * speedValue;
             a = true;
         }
         if (this.backward) {
-            velX -= forward.x * s * speed.get();
-            velZ -= forward.z * s * speed.get();
+            velX -= forward.x * s * speedValue;
+            velZ -= forward.z * s * speedValue;
             a = true;
         }
 
         boolean b = false;
         if (this.right) {
-            velX += right.x * s * speed.get();
-            velZ += right.z * s * speed.get();
+            velX += right.x * s * speedValue;
+            velZ += right.z * s * speedValue;
             b = true;
         }
         if (this.left) {
-            velX -= right.x * s * speed.get();
-            velZ -= right.z * s * speed.get();
+            velX -= right.x * s * speedValue;
+            velZ -= right.z * s * speedValue;
             b = true;
         }
 
@@ -203,10 +217,10 @@ public class Freecam extends Module {
         }
 
         if (this.up) {
-            velY += s * speed.get();
+            velY += s * speedValue;
         }
         if (this.down) {
-            velY -= s * speed.get();
+            velY -= s * speedValue;
         }
 
         prevPos.set(pos);
@@ -236,6 +250,16 @@ public class Freecam extends Module {
         }
 
         if (cancel) event.cancel();
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    private void onMouseScroll(MouseScrollEvent event) {
+        if (speedScrollSensitivity.get() > 0) {
+            speedValue += event.value * 0.25 * (speedScrollSensitivity.get() * speedValue);
+            if (speedValue < 0.1) speedValue = 0.1;
+
+            event.cancel();
+        }
     }
 
     @EventHandler

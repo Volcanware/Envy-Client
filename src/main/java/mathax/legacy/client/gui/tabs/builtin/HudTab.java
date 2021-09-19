@@ -47,10 +47,10 @@ public class HudTab extends Tab {
     }
 
     public static class HudScreen extends WindowTabScreen {
-        private final Color HOVER_BG_COLOR = new Color(200, 200, 200, 50);
+        private final Color HOVER_BG_COLOR = new Color(200, 200, 200, 75);
         private final Color HOVER_OL_COLOR = new Color(200, 200, 200, 200);
 
-        private final Color INACTIVE_BG_COLOR = new Color(200, 25, 25, 50);
+        private final Color INACTIVE_BG_COLOR = new Color(200, 25, 25, 75);
         private final Color INACTIVE_OL_COLOR = new Color(200, 25, 25, 200);
 
         private final HUD hud;

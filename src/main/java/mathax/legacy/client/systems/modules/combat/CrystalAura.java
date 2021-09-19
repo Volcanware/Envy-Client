@@ -444,7 +444,7 @@ public class CrystalAura extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The side color of the block overlay.")
-        .defaultValue(new SettingColor(255, 255, 255, 50))
+        .defaultValue(new SettingColor(255, 255, 255, 75))
         .build()
     );
 

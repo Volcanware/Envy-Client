@@ -1,6 +1,7 @@
 package mathax.legacy.client.systems.modules.render;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Categories;
@@ -85,7 +86,7 @@ public class ESP extends Module {
     private final Setting<SettingColor> playersColor = sgColors.add(new ColorSetting.Builder()
         .name("players-color")
         .description("The other player's color.")
-        .defaultValue(new SettingColor(255, 255, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b))
         .build()
     );
 
@@ -93,42 +94,42 @@ public class ESP extends Module {
     public final Setting<SettingColor> selfColor = sgColors.add(new ColorSetting.Builder()
         .name("self-color")
         .description("The color of your ESP in Freecam.")
-        .defaultValue(new SettingColor(0, 165, 255, 125))
+        .defaultValue(new SettingColor(0, 165, 255))
         .build()
     );
 
     private final Setting<SettingColor> animalsColor = sgColors.add(new ColorSetting.Builder()
         .name("animals-color")
         .description("The animal's color.")
-        .defaultValue(new SettingColor(25, 255, 25, 255))
+        .defaultValue(new SettingColor(25, 255, 25))
         .build()
     );
 
     private final Setting<SettingColor> waterAnimalsColor = sgColors.add(new ColorSetting.Builder()
         .name("water-animals-color")
         .description("The water animal's color.")
-        .defaultValue(new SettingColor(25, 25, 255, 255))
+        .defaultValue(new SettingColor(25, 25, 255))
         .build()
     );
 
     private final Setting<SettingColor> monstersColor = sgColors.add(new ColorSetting.Builder()
         .name("monsters-color")
         .description("The monster's color.")
-        .defaultValue(new SettingColor(255, 25, 25, 255))
+        .defaultValue(new SettingColor(255, 25, 25))
         .build()
     );
 
     private final Setting<SettingColor> ambientColor = sgColors.add(new ColorSetting.Builder()
         .name("ambient-color")
         .description("The ambient's color.")
-        .defaultValue(new SettingColor(25, 25, 25, 255))
+        .defaultValue(new SettingColor(25, 25, 25))
         .build()
     );
 
     private final Setting<SettingColor> miscColor = sgColors.add(new ColorSetting.Builder()
         .name("misc-color")
         .description("The misc color.")
-        .defaultValue(new SettingColor(175, 175, 175, 255))
+        .defaultValue(new SettingColor(175, 175, 175))
         .build()
     );
 

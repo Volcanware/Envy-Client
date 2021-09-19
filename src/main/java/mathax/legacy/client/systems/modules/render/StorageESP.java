@@ -69,7 +69,7 @@ public class StorageESP extends Module {
     private final Setting<SettingColor> shulker = sgGeneral.add(new ColorSetting.Builder()
         .name("shulker")
         .description("The color of Shulker Boxes.")
-        .defaultValue(new SettingColor(255, 160, 0, 255))
+        .defaultValue(new SettingColor(0, 0, 0, 255, true))
         .build()
     );
 

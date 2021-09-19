@@ -6,6 +6,7 @@ import mathax.legacy.client.systems.commands.Commands;
 import mathax.legacy.client.systems.enemies.Enemies;
 import mathax.legacy.client.systems.macros.Macros;
 import mathax.legacy.client.systems.profiles.Profiles;
+import mathax.legacy.client.systems.seeds.Seeds;
 import mathax.legacy.client.systems.waypoints.Waypoints;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.friends.Friends;
@@ -39,6 +40,7 @@ public class Systems {
         add(new Waypoints());
         add(new Profiles());
         add(new Proxies());
+        add(new Seeds());
 
         for (System<?> system : systems.values()) {
             if (system != config) system.init();

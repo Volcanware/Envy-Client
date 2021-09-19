@@ -42,7 +42,7 @@ public class BlockSelection extends Module {
     private final Setting<SettingColor> sideColor = sgGeneral.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The side color.")
-        .defaultValue(new SettingColor(255, 255, 255, 50))
+        .defaultValue(new SettingColor(255, 255, 255, 75))
         .build()
     );
 

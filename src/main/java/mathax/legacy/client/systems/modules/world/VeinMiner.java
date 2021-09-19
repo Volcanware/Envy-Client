@@ -1,6 +1,7 @@
 package mathax.legacy.client.systems.modules.world;
 
 import com.google.common.collect.Sets;
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.entity.player.StartBreakingBlockEvent;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
@@ -103,14 +104,14 @@ public class VeinMiner extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(204, 0, 0, 10))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b, 75))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(204, 0, 0, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b, 255))
         .build()
     );
 

@@ -96,7 +96,7 @@ public class PacketMine extends Module {
     private final Setting<SettingColor> readySideColor = sgRender.add(new ColorSetting.Builder()
         .name("ready-side-color")
         .description("The color of the sides of the blocks that can be broken.")
-        .defaultValue(new SettingColor(0, 230, 0, 50))
+        .defaultValue(new SettingColor(0, 230, 0, 75))
         .build()
     );
 
@@ -110,7 +110,7 @@ public class PacketMine extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The color of the sides of the blocks being rendered.")
-        .defaultValue(new SettingColor(230, 0, 100, 50))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b, 75))
         .build()
     );
 
