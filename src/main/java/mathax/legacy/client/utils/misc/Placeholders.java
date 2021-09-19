@@ -1,4 +1,4 @@
-package mathax.legacy.client.utils.placeholders;
+package mathax.legacy.client.utils.misc;
 
 import mathax.legacy.client.Version;
 import mathax.legacy.client.utils.Utils;
@@ -25,12 +25,19 @@ public class Placeholders {
 
     private static String getReplacement(String placeholder) {
         switch (placeholder) {
-            case "%version%":      return Version.getStylized();
-            case "%mc_version%":   return Version.getMinecraft();
+            case "%version%":
+                return Version.getStylized();
+            case "%mc_version%":
+                return Version.getMinecraft();
             case "%player%":
-            case "%username%":     return mc.getSession().getUsername();
-            case "%server%":       return Utils.getWorldName();
-            default:               return "";
+            case "%username%":
+                return mc.getSession().getUsername();
+            case "%server%":
+                return Utils.getWorldName();
+            case "%health%":
+                return String.valueOf(Utils.getPlayerHealth());
+            default:
+                return "";
         }
     }
 }

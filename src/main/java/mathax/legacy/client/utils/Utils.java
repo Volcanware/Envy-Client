@@ -14,7 +14,7 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.misc.DiscordRPC;
 import mathax.legacy.client.systems.modules.render.BetterTooltips;
 import mathax.legacy.client.systems.modules.world.Timer;
-import mathax.legacy.client.utils.placeholders.Placeholders;
+import mathax.legacy.client.utils.misc.Placeholders;
 import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.player.EChestMemory;
 import mathax.legacy.client.utils.render.PeekScreen;
@@ -349,6 +349,16 @@ public class Utils {
         }
 
         return "Unknown";
+    }
+
+    public static Float getPlayerHealth() {
+        if (!Modules.get().get(DiscordRPC.class).playerHealth.get()) return 0f;
+        if (mc.world == null) return 0f;
+        if (mc.player == null) return 0f;
+        if (mc.player.isDead()) return 0f;
+        if (mc.player.isCreative()) return 0f;
+        if (mc.player.isSpectator()) return 0f;
+        return (float)Math.round(mc.player.getHealth() + mc.player.getAbsorptionAmount());
     }
 
     public static String getDiscordPlayerHealth() {

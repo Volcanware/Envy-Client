@@ -11,7 +11,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.friends.Friend;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
-import mathax.legacy.client.utils.placeholders.Placeholders;
+import mathax.legacy.client.utils.misc.Placeholders;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.utils.player.ChatUtils;

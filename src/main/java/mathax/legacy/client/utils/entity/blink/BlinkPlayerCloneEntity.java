@@ -1,7 +1,6 @@
 package mathax.legacy.client.utils.entity.blink;
 
 import com.mojang.authlib.GameProfile;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.network.OtherClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.player.PlayerEntity;

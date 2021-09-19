@@ -13,7 +13,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.utils.placeholders.Placeholders;
+import mathax.legacy.client.utils.misc.Placeholders;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;

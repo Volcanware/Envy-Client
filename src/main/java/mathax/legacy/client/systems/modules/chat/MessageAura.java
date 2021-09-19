@@ -10,7 +10,7 @@ import mathax.legacy.client.systems.enemies.Enemies;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Categories;
-import mathax.legacy.client.utils.placeholders.Placeholders;
+import mathax.legacy.client.utils.misc.Placeholders;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 

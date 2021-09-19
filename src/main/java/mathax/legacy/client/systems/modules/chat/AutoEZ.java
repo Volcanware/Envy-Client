@@ -11,7 +11,7 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.combat.*;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
-import mathax.legacy.client.utils.placeholders.Placeholders;
+import mathax.legacy.client.utils.misc.Placeholders;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.*;

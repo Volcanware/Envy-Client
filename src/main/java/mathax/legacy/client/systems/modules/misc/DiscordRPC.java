@@ -4,20 +4,34 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.Version;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.game.ReceiveMessageEvent;
+import mathax.legacy.client.gui.screens.*;
+import mathax.legacy.client.gui.screens.TitleScreen;
+import mathax.legacy.client.gui.screens.settings.ColorSettingScreen;
+import mathax.legacy.client.gui.tabs.builtin.*;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.utils.placeholders.DiscordPlaceholder;
-import mathax.legacy.client.utils.placeholders.Placeholders;
+import mathax.legacy.client.utils.render.PeekScreen;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRichPresence;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.*;
+import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
+import net.minecraft.client.gui.screen.option.*;
+import net.minecraft.client.gui.screen.pack.PackScreen;
+import net.minecraft.client.gui.screen.world.CreateWorldScreen;
+import net.minecraft.client.gui.screen.world.EditWorldScreen;
+import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.item.Items;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DiscordRPC extends Module {
     private static final String APP_ID = "878967665501306920";
     private static final String STEAM_ID = "";
-
     private static final DiscordRichPresence rpc = new DiscordRichPresence();
     private static final DiscordEventHandlers handlers = new DiscordEventHandlers();
 
@@ -66,27 +80,27 @@ public class DiscordRPC extends Module {
         net.arikia.dev.drpc.DiscordRPC.discordInitialize(APP_ID, handlers, true, STEAM_ID);
         rpc.startTimestamp = System.currentTimeMillis() / 1000;
         rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-        rpc.state = DiscordPlaceholder.apply("%activity%" + getQueue());
+        rpc.state = Placeholders.apply("%activity%" + getQueue());
         rpc.largeImageKey = "logo";
         rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
         applySmallImage();
-        rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueue());
+        rpc.smallImageText = Placeholders.apply("%activity%" + getQueue());
         rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
         rpc.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
-        rpc.partySize = Utils.mc.getNetworkHandler() != null ? Utils.mc.getNetworkHandler().getPlayerList().size() : 1;
+        rpc.partySize = MinecraftClient.getInstance().getNetworkHandler() != null ? MinecraftClient.getInstance().getNetworkHandler().getPlayerList().size() : 1;
         rpc.partyMax = 1;
         net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
         new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 net.arikia.dev.drpc.DiscordRPC.discordRunCallbacks();
                 try {
-                    rpc.details = DiscordPlaceholder.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-                    rpc.state = DiscordPlaceholder.apply("%activity%" + getQueue());
+                    rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
+                    rpc.state = Placeholders.apply("%activity%" + getQueue());
                     rpc.largeImageKey = "logo";
                     rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
                     applySmallImage();
-                    rpc.smallImageText = DiscordPlaceholder.apply("%activity%" + getQueue());
-                    rpc.partySize = Utils.mc.getNetworkHandler() != null ? Utils.mc.getNetworkHandler().getPlayerList().size() : 1;
+                    rpc.smallImageText = Placeholders.apply("%activity%" + getQueue());
+                    rpc.partySize = MinecraftClient.getInstance().getNetworkHandler() != null ? MinecraftClient.getInstance().getNetworkHandler().getPlayerList().size() : 1;
                     rpc.partyMax = 1;
                     net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
                 } catch (Exception e2) {
@@ -104,7 +118,10 @@ public class DiscordRPC extends Module {
 
     @Override
     public void onDeactivate() {
-        deactivate();
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Disabling Discord Rich Presence...");
+        net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
+        net.arikia.dev.drpc.DiscordRPC.discordShutdown();
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Discord Rich Presence disabled!");
     }
 
     public static void deactivate() {
@@ -112,6 +129,125 @@ public class DiscordRPC extends Module {
         net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
         net.arikia.dev.drpc.DiscordRPC.discordShutdown();
         MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Discord Rich Presence disabled!");
+    }
+
+    private class Placeholders  {
+        private static final Pattern pattern = Pattern.compile("(%activity%|%version%|%username%|%health%)");
+
+        public static String apply(String string) {
+            Matcher matcher = pattern.matcher(string);
+            StringBuffer sb = new StringBuffer(string.length());
+
+            while (matcher.find()) {
+                matcher.appendReplacement(sb, getReplacement(matcher.group(1)));
+            }
+            matcher.appendTail(sb);
+
+            return sb.toString();
+        }
+
+        private static String getReplacement(String placeholder) {
+            switch (placeholder) {
+                case "%activity%":
+                    if (MinecraftClient.getInstance() == null || MinecraftClient.getInstance().getOverlay() instanceof SplashOverlay) {
+                        return "Minecraft is loading...";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof TitleScreen) {
+                        return "In main menu";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) {
+                        return "In main menu";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof MultiplayerScreen) {
+                        return "In server selection";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ConnectScreen) {
+                        return "Connecting to " + Utils.getNakedActivity();
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof DisconnectedScreen) {
+                        return "Got disconnected from " + Utils.getNakedActivity();
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof GameMenuScreen) {
+                        return "Game paused on " + Utils.getNakedActivity();
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof PeekScreen) {
+                        return "Using .peek on " + Utils.getNakedActivity();
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof StatsScreen) {
+                        return "Viewing stats";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof OptionsScreen) {
+                        return "Changing Minecraft settings";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof AccessibilityOptionsScreen) {
+                        return "Changing Minecraft accessibility settings";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ChatOptionsScreen) {
+                        return "Changing Minecraft chat settings";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof SoundOptionsScreen) {
+                        return "Changing Minecraft sound settings";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof LanguageOptionsScreen) {
+                        return "Changing Minecraft language";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof VideoOptionsScreen) {
+                        return "Changing Minecraft video settings";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof SkinOptionsScreen) {
+                        return "Changing Minecraft skin settings";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof PackScreen) {
+                        return "Changing resourcepack";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ControlsOptionsScreen) {
+                        return "Changing Minecraft keybinds";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof NarratorOptionsScreen) {
+                        return "Changing Narrator settings";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof SelectWorldScreen) {
+                        return "In world selection";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof EditWorldScreen) {
+                        return "Editing a world";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof CreateWorldScreen) {
+                        return "Creating a new world";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof AddServerScreen) {
+                        return "Adding a server";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof DirectConnectScreen) {
+                        return "In direct connect";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ModuleScreen) {
+                        return "Editing module " + ((ModuleScreen) MinecraftClient.getInstance().currentScreen).module.title;
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof BaritoneTab.BaritoneScreen) {
+                        return "Configuring Baritone";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ConfigTab.ConfigScreen) {
+                        return "Editing Config";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof EnemiesTab.EnemiesScreen) {
+                        return "Editing Enemies";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof FriendsTab.FriendsScreen) {
+                        return "Editing Friends";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof GuiTab.GuiScreen) {
+                        return "Editing GUI";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof HudTab.HudScreen) {
+                        return "Editing HUD";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof HudElementScreen) {
+                        return "Editing HUD";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof MacrosTab.MacrosScreen) {
+                        return "Configuring Macros";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof MacrosTab.MacroEditorScreen) {
+                        return "Configuring a Macro";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ModulesScreen) {
+                        return "In click gui";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ProfilesTab.ProfilesScreen) {
+                        return "Changing profiles";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ColorSettingScreen) {
+                        return "Changing color";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof AccountsScreen) {
+                        return "In account manager";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof AddAlteningAccountScreen) {
+                        return "Adding the altening alt";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof AddCrackedAccountScreen) {
+                        return "Adding cracked account";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof AddPremiumAccountScreen) {
+                        return "Adding premium account";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ProxiesScreen) {
+                        return "Editing proxies";
+                    } else {
+                        if (!(MinecraftClient.getInstance().world == null)) {
+                            return Utils.getActivity();
+                        } else {
+                            return "In " + MinecraftClient.getInstance().currentScreen.getTitle().toString();
+                        }
+                    }
+                case "%version%":
+                    return Version.getStylized();
+                case "%username%":
+                    return MinecraftClient.getInstance().getSession().getUsername();
+                default:
+                    return "In " + MinecraftClient.getInstance().currentScreen.getTitle().toString();
+            }
+        }
     }
 
     private static String queuePos = "";
@@ -133,15 +269,15 @@ public class DiscordRPC extends Module {
     }
 
     public static String getQueue() {
-        if (Utils.mc.isInSingleplayer()) return "";
-        else if (Utils.mc.world == null) return "";
+        if (MinecraftClient.getInstance().isInSingleplayer()) return "";
+        else if (MinecraftClient.getInstance().world == null) return "";
         else return queuePos;
     }
 
-    private void applySmallImage() {
+    private static void applySmallImage() {
         if (delay == 5) {
             if (number == 16) number = 1;
-            if (smallImageMode.get() == SmallImageMode.Dogs) {
+            if (Modules.get().get(DiscordRPC.class).smallImageMode.get() == SmallImageMode.Dogs) {
                 rpc.smallImageKey = "dog-" + number;
             } else {
                 rpc.smallImageKey = "cat-" + number;

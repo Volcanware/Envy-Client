@@ -9,7 +9,6 @@ import mathax.legacy.client.events.game.GameJoinedEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.*;
-import mathax.legacy.client.systems.enemies.Enemies;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
@@ -20,7 +19,6 @@ import mathax.legacy.client.bus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.text.LiteralText;
@@ -112,98 +110,6 @@ public class Notifier extends Module {
     private final Setting<Boolean> visualRangeIgnoreFakes = sgVisualRange.add(new BoolSetting.Builder()
         .name("ignore-fake-players")
         .description("Ignores fake players.")
-        .defaultValue(true)
-        .build()
-    );
-
-    // Armor
-
-    private final Setting<Boolean> armor = sgArmor.add(new BoolSetting.Builder()
-        .name("armor")
-        .description("Notifies you & others when they have low armor durability.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Integer> armorThreshhold = sgArmor.add(new IntSetting.Builder()
-        .name("percentage")
-        .description("At which percentage to notify.")
-        .defaultValue(20)
-        .min(1)
-        .max(100)
-        .sliderMin(1)
-        .sliderMax(100)
-        .build()
-    );
-
-    private final Setting<Boolean> armorIgnoreSelf = sgArmor.add(new BoolSetting.Builder()
-        .name("ignore-self")
-        .description("Ignores you.")
-        .defaultValue(false)
-        .build()
-    );
-
-    private final Setting<Boolean> armorIgnoreFriends = sgArmor.add(new BoolSetting.Builder()
-        .name("ignore-friends")
-        .description("Ignores friends.")
-        .defaultValue(false)
-        .build()
-    );
-
-    private final Setting<Boolean> armorIgnoreEnemies = sgArmor.add(new BoolSetting.Builder()
-        .name("ignore-enemies")
-        .description("Ignores enemies.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> armorIgnoreOthers = sgArmor.add(new BoolSetting.Builder()
-        .name("ignore-others")
-        .description("Ignores everyone else.")
-        .defaultValue(true)
-        .build()
-    );
-
-    // Armor Messages
-
-    private final Setting<Boolean> armorMessagesFriends = sgArmorMessages.add(new BoolSetting.Builder()
-        .name("private-friends")
-        .description("Shows a message just for you about friends armor durability being low.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> armorPMsFriends = sgArmorMessages.add(new BoolSetting.Builder()
-        .name("PM-friends")
-        .description("PM friends armor durability being low.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> armorMessagesEnemies = sgArmorMessages.add(new BoolSetting.Builder()
-        .name("private-enemies")
-        .description("Shows a message just for you about enemies armor durability being low.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> armorPMsEnemies = sgArmorMessages.add(new BoolSetting.Builder()
-        .name("PM-friends")
-        .description("PM enemies armor durability being low.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> armorMessagesOthers = sgArmorMessages.add(new BoolSetting.Builder()
-        .name("private-others")
-        .description("Shows a message just for you about others armor durability being low.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> armorPMsOthers = sgArmorMessages.add(new BoolSetting.Builder()
-        .name("PM-others")
-        .description("PM others armor durability being low.")
         .defaultValue(true)
         .build()
     );
@@ -307,72 +213,6 @@ public class Notifier extends Module {
                 }
             }
         }
-
-        // Armor
-
-        if (armor.get()) {
-            for (PlayerEntity player : mc.world.getPlayers()) {
-                if (player instanceof FakePlayerEntity) return;
-                if (player.isDead()) return;
-                for (ItemStack stack : player.getInventory().armor) {
-                    if (stack == ItemStack.EMPTY) continue;
-                    int percent = Math.round(((stack.getMaxDamage() - stack.getDamage()) * 100f) / (float) stack.getMaxDamage());
-                    if (percent <= armorThreshhold.get() && !entityArmorArraylist.containsKey(player)) {
-                        if (player == mc.player && !armorIgnoreSelf.get()) {
-                            info("Your (highlight)%s(default) %s low durability!", getArmorPieceName(stack), getArmorPieceHasHave(stack));
-                        } else if (Friends.get().isFriend(player) && !armorIgnoreFriends.get()) {
-                            if (armorMessagesFriends.get())
-                                info("(highlight)%s(default)'s (highlight)%s(default) %s low durability!", player.getEntityName(), getArmorPieceName(stack), getArmorPieceHasHave(stack));
-                            if (armorPMsFriends.get())
-                                mc.player.sendChatMessage("/msg " + player.getEntityName() + " Your " + getArmorPieceName(stack) + " " + getArmorPieceHasHave(stack) + " low durability!");
-                        } else if (Enemies.get().isEnemy(player) && !armorIgnoreEnemies.get()) {
-                            if (armorMessagesEnemies.get())
-                                info("(highlight)%s(default)'s " + getArmorPieceName(stack) + " %s low durability!", player.getEntityName(), getArmorPieceName(stack), getArmorPieceHasHave(stack));
-                            if (armorPMsEnemies.get())
-                                mc.player.sendChatMessage("/msg " + player.getEntityName() + " Your " + getArmorPieceName(stack) + " " + getArmorPieceHasHave(stack) + " low durability!");
-                        } else if (armorIgnoreOthers.get()) {
-                            if (armorMessagesOthers.get())
-                                info("(highlight)%s(default)'s (highlight)%s(default) %s low durability!", player.getEntityName(), getArmorPieceName(stack), getArmorPieceHasHave(stack));
-                            if (armorPMsOthers.get())
-                                mc.player.sendChatMessage("/msg " + player.getEntityName() + " Your " + getArmorPieceName(stack) + " " + getArmorPieceHasHave(stack) + " low durability!");
-                        }
-                        entityArmorArraylist.put(player, player.getInventory().armor.indexOf(stack));
-                    }
-                    if (!entityArmorArraylist.containsKey(player) || entityArmorArraylist.get(player).intValue() != player.getInventory().armor.indexOf(stack) || percent <= armorThreshhold.get())
-                        continue;
-                    entityArmorArraylist.remove(player);
-                }
-                if (!entityArmorArraylist.containsKey(player) || player.getInventory().armor.get(entityArmorArraylist.get(player).intValue()) != ItemStack.EMPTY)
-                    continue;
-                entityArmorArraylist.remove(player);
-            }
-        }
-    }
-
-    private String getArmorPieceName(ItemStack stack) {
-        if (stack.getItem() == Items.DIAMOND_HELMET || stack.getItem() == Items.GOLDEN_HELMET || stack.getItem() == Items.IRON_HELMET || stack.getItem() == Items.CHAINMAIL_HELMET || stack.getItem() == Items.LEATHER_HELMET) {
-            return "helmet";
-        }
-        if (stack.getItem() == Items.DIAMOND_CHESTPLATE || stack.getItem() == Items.GOLDEN_CHESTPLATE || stack.getItem() == Items.IRON_CHESTPLATE || stack.getItem() == Items.CHAINMAIL_CHESTPLATE || stack.getItem() == Items.LEATHER_CHESTPLATE) {
-            return "chestplate";
-        }
-        if (stack.getItem() == Items.DIAMOND_LEGGINGS || stack.getItem() == Items.GOLDEN_LEGGINGS || stack.getItem() == Items.IRON_LEGGINGS || stack.getItem() == Items.CHAINMAIL_LEGGINGS || stack.getItem() == Items.LEATHER_LEGGINGS) {
-            return "leggings";
-        }
-        return "boots";
-    }
-
-    private String getArmorPieceHasHave(ItemStack stack) {
-        if (stack.getItem() == Items.DIAMOND_HELMET || stack.getItem() == Items.GOLDEN_HELMET || stack.getItem() == Items.IRON_HELMET || stack.getItem() == Items.CHAINMAIL_HELMET || stack.getItem() == Items.LEATHER_HELMET) {
-            return "has";
-        }
-        if (stack.getItem() == Items.DIAMOND_CHESTPLATE || stack.getItem() == Items.GOLDEN_CHESTPLATE || stack.getItem() == Items.IRON_CHESTPLATE || stack.getItem() == Items.CHAINMAIL_CHESTPLATE || stack.getItem() == Items.LEATHER_CHESTPLATE) {
-            return "has";
-        }
-        if (stack.getItem() == Items.DIAMOND_LEGGINGS || stack.getItem() == Items.GOLDEN_LEGGINGS || stack.getItem() == Items.IRON_LEGGINGS || stack.getItem() == Items.CHAINMAIL_LEGGINGS || stack.getItem() == Items.LEATHER_LEGGINGS) {
-            return "have";
-        }
-        return "have";
     }
 
     private int getChatId(Entity entity) {
