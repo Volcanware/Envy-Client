@@ -8,14 +8,14 @@ import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
 import mathax.legacy.client.utils.player.PlayerUtils;
 
 public class PositionHUD extends HUDElement {
-    private final String left1 = "";
+    private final String left1 = "XYZ ";
     private double left1Width;
     private String right1;
 
     private String left2;
     private double left2Width;
     private String right2;
-
+    
     public PositionHUD(HUD hud) {
         super(hud, "position", "Displays your coordinates in the world.", true);
     }
@@ -41,11 +41,11 @@ public class PositionHUD extends HUDElement {
 
         switch (PlayerUtils.getDimension()) {
             case Overworld -> {
-                left2 = "Nether: ";
+                left2 = "Nether XYZ: ";
                 right2 = String.format("%.1f %.1f %.1f", x1 / 8.0, y1, z1 / 8.0);
             }
             case Nether -> {
-                left2 = "Overworld: ";
+                left2 = "Overworld XYZ: ";
                 right2 = String.format("%.1f %.1f %.1f", x1 * 8.0, y1, z1 * 8.0);
             }
         }
