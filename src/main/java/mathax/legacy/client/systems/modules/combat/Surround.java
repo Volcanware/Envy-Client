@@ -297,13 +297,7 @@ public class Surround extends Module {
 
     @EventHandler
     private void onRender(Render3DEvent event) {
-<<<<<<< Updated upstream
         if (!render.get() || blockPos == null || blockPos.getY() > 256) return;
-=======
-        if (!render.get()) return;
-        if (blockPos == null) return;
-        if (blockPos.getY() > 256) return;
->>>>>>> Stashed changes
         if (p1 && p6 && p7 && p8 &&p9) {
             if (underHeightPlaced || !underHeight.get()) return;
             if (doubleHeightPlaced || !doubleHeight.get()) return;
