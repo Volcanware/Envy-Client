@@ -6,8 +6,6 @@ import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.UUID;
-
 import static mathax.legacy.client.utils.Utils.mc;
 
 public class BlinkPlayerCloneEntity extends OtherClientPlayerEntity {

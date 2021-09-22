@@ -44,6 +44,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_ALT;
 
 public class BetterTooltips extends Module {
     public static final Color ECHEST_COLOR = new Color(0, 50, 50);
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgPreviews = settings.createGroup("Previews");
     private final SettingGroup sgOther = settings.createGroup("Other");

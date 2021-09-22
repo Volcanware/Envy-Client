@@ -20,7 +20,7 @@ public class FakePlayerCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("spawn").executes(context -> {
-            if (active()) FakePlayerManager.add("MatHax", 36, true);
+            if (active()) FakePlayerManager.add("MatHax_Legacy", 36, true);
             return SINGLE_SUCCESS;
         })
                  .then(argument("name", StringArgumentType.word())

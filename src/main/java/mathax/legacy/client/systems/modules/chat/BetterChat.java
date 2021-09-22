@@ -332,7 +332,7 @@ public class BetterChat extends Module {
         message = getGreenChat() + message + getSuffix();
 
         if (coordsProtection.get() && containsCoordinates(message)) {
-            BaseText warningMessage = new LiteralText("It looks like there are coordinates in your message! ");
+            BaseText warningMessage = new LiteralText(Formatting.GRAY + "It looks like there are coordinates in your message! ");
 
             BaseText sendButton = getSendButton(message);
             warningMessage.append(sendButton);

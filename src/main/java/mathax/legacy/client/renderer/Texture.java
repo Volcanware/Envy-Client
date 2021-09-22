@@ -33,7 +33,7 @@ public class Texture {
         this.height = height;
 
         if (!valid) {
-            id = glGenTextures();
+            id = GL.genTexture();
             valid = true;
         }
 
