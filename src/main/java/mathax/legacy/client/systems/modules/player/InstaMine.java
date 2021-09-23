@@ -81,7 +81,7 @@ public class InstaMine extends Module {
     private Direction direction;
 
     public InstaMine() {
-        super(Categories.Player, Items.DIAMOND_PICKAXE, "insta-mine", "Attempts to instantly mine blocks.");
+        super(Categories.Player, Items.DIAMOND_PICKAXE, "insta-mine", "Attempts to instantly mine blocks");
     }
 
     @Override

@@ -52,7 +52,7 @@ public class Xray extends Module {
     );
 
     public Xray() {
-        super(Categories.Render, Items.BARRIER, "xray", "Only renders specified blocks. Good for mining.");
+        super(Categories.Render, Items.BARRIER, "xray", "Only renders specified blocks. Good for mining");
     }
 
     @Override

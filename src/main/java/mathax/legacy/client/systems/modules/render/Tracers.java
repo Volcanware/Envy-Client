@@ -133,7 +133,7 @@ public class Tracers extends Module {
     );
 
     public Tracers() {
-        super(Categories.Render, Items.WHITE_STAINED_GLASS, "tracers", "Displays tracer lines to specified entities.");
+        super(Categories.Render, Items.WHITE_STAINED_GLASS, "tracers", "Displays tracer lines to specified entities");
     }
 
     @EventHandler

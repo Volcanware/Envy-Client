@@ -69,7 +69,7 @@ public class Offhand extends Module {
     );
 
     public Offhand() {
-        super(Categories.Combat, Items.ENCHANTED_GOLDEN_APPLE, "offhand", "Allows you to hold specified items in your offhand.");
+        super(Categories.Combat, Items.ENCHANTED_GOLDEN_APPLE, "offhand", "Allows you to hold specified items in your offhand");
     }
 
     @Override

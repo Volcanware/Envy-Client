@@ -16,8 +16,9 @@ import net.minecraft.util.Formatting;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class CommandsCommand extends Command {
+
     public CommandsCommand() {
-        super("commands", "List of all commands.", "help");
+        super("commands", "List of all commands", "help");
     }
 
     @Override

@@ -244,7 +244,7 @@ public class BedAura extends Module {
     );
 
     public BedAura() {
-        super(Categories.Combat, Items.RED_BED, "bed-aura", "Automatically places and explodes beds in the Nether and End.");
+        super(Categories.Combat, Items.RED_BED, "bed-aura", "Automatically places and explodes beds in the Nether and End");
     }
 
     @Override

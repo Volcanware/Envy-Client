@@ -26,7 +26,7 @@ public class BookDupeCommand extends Command {
     }
 
     public BookDupeCommand() {
-        super("dupe", "Dupes using a held, writable book.");
+        super("dupe", "Dupes using a held, writable book");
     }
 
     @Override

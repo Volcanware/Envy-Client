@@ -54,7 +54,7 @@ public class BlockSelection extends Module {
     );
 
     public BlockSelection() {
-        super(Categories.Render, Items.WHITE_STAINED_GLASS, "block-selection", "Modifies how your block selection is rendered.");
+        super(Categories.Render, Items.WHITE_STAINED_GLASS, "block-selection", "Modifies how your block selection is rendered");
     }
 
     @EventHandler

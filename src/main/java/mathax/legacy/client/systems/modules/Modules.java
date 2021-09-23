@@ -371,6 +371,8 @@ public class Modules extends System<Modules> {
         add(new AutoAnvil());
         add(new AutoArmor());
         add(new AutoCity());
+        add(new AutoLog());
+        add(new AutoPot());
         add(new AutoTotem());
         add(new AutoTrap());
         add(new AutoWeapon());
@@ -490,7 +492,6 @@ public class Modules extends System<Modules> {
         add(new NewChunks());
         add(new NoBob());
         add(new NoRender());
-        add(new Prone());
         add(new SkeletonESP());
         add(new Search());
         add(new StorageESP());
@@ -539,6 +540,7 @@ public class Modules extends System<Modules> {
 
     private void initChat() {
         add(new Announcer());
+        add(new AntiVanish());
         add(new AutoEZ());
         add(new BetterChat());
         //add(new ChatBot());
@@ -551,7 +553,6 @@ public class Modules extends System<Modules> {
         add(new AntiPacketKick());
         add(new AutoClicker());
         //add(new AutoCraft());
-        add(new AutoLog());
         add(new AutoMountBypassDupe());
         add(new AutoReconnect());
         add(new AutoRespawn());

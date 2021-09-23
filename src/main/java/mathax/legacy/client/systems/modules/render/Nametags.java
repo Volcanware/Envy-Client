@@ -239,7 +239,7 @@ public class Nametags extends Module {
     );
 
     public Nametags() {
-        super(Categories.Render, Items.CYAN_STAINED_GLASS, "nametags", "Displays customizable nametags above players.");
+        super(Categories.Render, Items.CYAN_STAINED_GLASS, "nametags", "Displays customizable nametags above players");
     }
 
     private static String ticksToTime(int ticks) {

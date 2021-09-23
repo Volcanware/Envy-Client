@@ -7,8 +7,9 @@ import net.minecraft.command.CommandSource;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class ClearChatCommand extends Command {
+
     public ClearChatCommand() {
-        super("clear-chat", "Clears your chat.");
+        super("clear-chat", "Clears your chat");
     }
 
     @Override

@@ -69,7 +69,7 @@ public class ArrowDodge extends Module {
     );
 
     public ArrowDodge() {
-        super(Categories.Combat, Items.ARROW, "arrow-dodge", "Tries to dodge arrows coming at you.");
+        super(Categories.Combat, Items.ARROW, "arrow-dodge", "Tries to dodge arrows coming at you");
     }
 
     @EventHandler

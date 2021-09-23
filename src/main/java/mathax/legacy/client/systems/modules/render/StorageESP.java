@@ -102,7 +102,7 @@ public class StorageESP extends Module {
     private int count;
 
     public StorageESP() {
-        super(Categories.Render, Items.SHULKER_BOX, "storage-ESP", "Renders all specified storage blocks.");
+        super(Categories.Render, Items.SHULKER_BOX, "storage-ESP", "Renders all specified storage blocks");
     }
 
     private void getTileEntityColor(BlockEntity blockEntity) {

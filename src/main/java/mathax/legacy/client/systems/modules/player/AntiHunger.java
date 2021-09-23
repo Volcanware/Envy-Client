@@ -35,7 +35,7 @@ public class AntiHunger extends Module {
     );
 
     public AntiHunger() {
-        super(Categories.Player, Items.COOKED_BEEF, "anti-hunger", "Reduces (does NOT remove) hunger consumption.");
+        super(Categories.Player, Items.COOKED_BEEF, "anti-hunger", "Reduces (does NOT remove) hunger consumption");
     }
 
     @Override

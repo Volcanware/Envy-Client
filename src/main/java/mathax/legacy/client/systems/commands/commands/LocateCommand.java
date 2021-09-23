@@ -29,6 +29,10 @@ import net.minecraft.util.math.Vec3d;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class LocateCommand extends Command {
+    private Vec3d firstStart;
+    private Vec3d firstEnd;
+    private Vec3d secondStart;
+    private Vec3d secondEnd;
 
     private final static DynamicCommandExceptionType NOT_FOUND = new DynamicCommandExceptionType(o -> {
         if (o instanceof WorldGenUtils.Feature) {
@@ -39,11 +43,6 @@ public class LocateCommand extends Command {
         }
         return new LiteralText("Not found.");
     });
-
-    private Vec3d firstStart;
-    private Vec3d firstEnd;
-    private Vec3d secondStart;
-    private Vec3d secondEnd;
 
     public LocateCommand() {
         super("locate", "Locates structures", "loc");

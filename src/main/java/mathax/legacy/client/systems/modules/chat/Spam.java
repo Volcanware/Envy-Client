@@ -81,7 +81,7 @@ public class Spam extends Module {
     private String newText = "";
 
     public Spam() {
-        super(Categories.Chat, Items.BELL, "spam", "Spams specified messages in chat.");
+        super(Categories.Chat, Items.BELL, "spam", "Spams specified messages in chat");
     }
 
     @Override

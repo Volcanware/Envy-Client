@@ -273,7 +273,7 @@ public class AnchorAura extends Module {
     );
 
     public AnchorAura() {
-        super(Categories.Combat, Items.RESPAWN_ANCHOR, "anchor-aura", "Automatically places and breaks Respawn Anchors to harm entities.");
+        super(Categories.Combat, Items.RESPAWN_ANCHOR, "anchor-aura", "Automatically places and breaks Respawn Anchors to harm entities");
     }
 
     @Override

@@ -14,11 +14,10 @@ import net.minecraft.text.LiteralText;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class SayCommand extends Command {
-
     public String messageTextRaw = "";
 
     public SayCommand() {
-        super("say", "Sends messages in chat.");
+        super("say", "Sends messages in chat");
     }
 
     @Override

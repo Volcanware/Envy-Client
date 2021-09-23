@@ -25,7 +25,7 @@ public class AntiSpawnpoint extends Module {
     );
 
     public AntiSpawnpoint() {
-        super(Categories.Player, Items.RED_BED, "anti-spawnpoint", "Protects the player from losing the respawn point.");
+        super(Categories.Player, Items.RED_BED, "anti-spawnpoint", "Protects the player from losing the respawn point");
     }
 
     @EventHandler

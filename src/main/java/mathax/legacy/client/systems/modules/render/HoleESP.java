@@ -156,7 +156,7 @@ public class HoleESP extends Module {
     );
 
     public HoleESP() {
-        super(Categories.Render, Items.LIME_STAINED_GLASS, "hole-ESP", "Displays holes that you will take less damage in. Useful in cpvp.");
+        super(Categories.Render, Items.LIME_STAINED_GLASS, "hole-ESP", "Displays holes that you will take less damage in. Useful in cpvp");
     }
 
     @EventHandler

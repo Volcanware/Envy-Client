@@ -29,7 +29,7 @@ public class AutoBrewer extends Module {
     );
 
     public AutoBrewer() {
-        super(Categories.World, Items.BREWING_STAND, "auto-brewer", "Automatically brews the specified potion.");
+        super(Categories.World, Items.BREWING_STAND, "auto-brewer", "Automatically brews the specified potion");
     }
 
     @Override

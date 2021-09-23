@@ -26,6 +26,12 @@ import net.minecraft.util.registry.Registry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AutoExtinguish extends Module {
+    private boolean hasPlacedWater = false;
+    private BlockPos blockPos = null;
+    private boolean doesWaterBucketWork = true;
+
+    private static final StatusEffect FIRE_RESISTANCE = Registry.STATUS_EFFECT.get(new Identifier("fire_resistance"));
+
     private final SettingGroup sgGeneral = settings.createGroup("Extinguish Fire around you");
     private final SettingGroup sgBucket = settings.createGroup("Extinguish yourself");
 
@@ -35,6 +41,7 @@ public class AutoExtinguish extends Module {
         .defaultValue(false)
         .build()
     );
+
     private final Setting<Integer> horizontalRadius = sgGeneral.add(new IntSetting.Builder()
         .name("horizontal-radius")
         .description("Horizontal radius in which to search for fire.")
@@ -78,12 +85,6 @@ public class AutoExtinguish extends Module {
         .defaultValue(false)
         .build()
     );
-
-    private boolean hasPlacedWater = false;
-    private BlockPos blockPos = null;
-    private boolean doesWaterBucketWork = true;
-
-    private static final StatusEffect FIRE_RESISTANCE = Registry.STATUS_EFFECT.get(new Identifier("fire_resistance"));
 
     public AutoExtinguish() {
         super(Categories.World, Items.CAMPFIRE, "auto-extinguish", "Automatically extinguishes fire around you");

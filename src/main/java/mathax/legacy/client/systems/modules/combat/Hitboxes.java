@@ -30,7 +30,7 @@ public class Hitboxes extends Module {
     );
 
     public Hitboxes() {
-        super(Categories.Combat, Items.GLASS, "hitboxes", "Expands an entity's hitboxes.");
+        super(Categories.Combat, Items.GLASS, "hitboxes", "Expands an entity's hitboxes");
     }
 
     public double getEntityValue(Entity entity) {

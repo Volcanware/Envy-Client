@@ -9,8 +9,9 @@ import net.minecraft.command.CommandSource;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class BaritoneCommand extends Command {
+
     public BaritoneCommand() {
-        super("baritone", "Executes baritone commands.", "b");
+        super("baritone", "Executes baritone commands", "b");
     }
 
     @Override

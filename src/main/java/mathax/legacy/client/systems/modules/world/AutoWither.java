@@ -118,7 +118,7 @@ public class AutoWither extends Module {
     );
 
     public AutoWither() {
-        super(Categories.World, Items.WITHER_SKELETON_SKULL, "auto-wither", "Automatically builds withers.");
+        super(Categories.World, Items.WITHER_SKELETON_SKULL, "auto-wither", "Automatically builds withers");
     }
 
     @Override

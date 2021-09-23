@@ -49,7 +49,7 @@ public class AntiGhostBlock extends Module {
     );
 
     public AntiGhostBlock() {
-        super(Categories.World, Items.BARRIER, "anti-ghost-block", "Automatically tries to remove ghost blocks.");
+        super(Categories.World, Items.BARRIER, "anti-ghost-block", "Automatically tries to remove ghost blocks");
     }
 
     private void tick(List list, long l, BlockPos blockPos, Long l2) {

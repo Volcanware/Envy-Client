@@ -78,7 +78,7 @@ public class Flamethrower extends Module {
     );
 
     public Flamethrower() {
-        super(Categories.World, Items.FIRE_CHARGE, "flamethrower", "Ignites every alive piece of food.");
+        super(Categories.World, Items.FIRE_CHARGE, "flamethrower", "Ignites every alive piece of food");
     }
 
     @Override

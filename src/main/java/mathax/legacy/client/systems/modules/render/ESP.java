@@ -134,7 +134,7 @@ public class ESP extends Module {
     );
 
     public ESP() {
-        super(Categories.Render, Items.RED_STAINED_GLASS, "ESP", "Renders entities through walls.");
+        super(Categories.Render, Items.RED_STAINED_GLASS, "ESP", "Renders entities through walls");
     }
 
     private void render(Render3DEvent event, Entity entity) {

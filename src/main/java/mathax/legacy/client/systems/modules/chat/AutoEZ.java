@@ -42,7 +42,7 @@ public class AutoEZ extends Module {
     );
 
     public AutoEZ() {
-        super(Categories.Chat, Items.LIGHTNING_ROD, "auto-EZ", "Announces in chat when you kill someone.");
+        super(Categories.Chat, Items.LIGHTNING_ROD, "auto-EZ", "Announces in chat when you kill someone");
     }
 
     // KILL

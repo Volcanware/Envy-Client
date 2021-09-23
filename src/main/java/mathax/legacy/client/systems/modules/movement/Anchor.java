@@ -72,7 +72,7 @@ public class Anchor extends Module {
     );
 
     public Anchor() {
-        super(Categories.Movement, Items.ANVIL, "anchor", "Helps you get into holes by stopping your movement completely over a hole.");
+        super(Categories.Movement, Items.ANVIL, "anchor", "Helps you get into holes by stopping your movement completely over a hole");
     }
 
     @Override

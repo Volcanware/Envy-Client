@@ -10,8 +10,9 @@ import net.minecraft.util.Formatting;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class CapesCommand extends Command {
+
     public CapesCommand() {
-        super("capes", "MatHax Capes.", "cape");
+        super("capes", "MatHax Capes", "cape");
     }
 
     @Override

@@ -72,7 +72,7 @@ public class Search extends Module {
     );
 
     public Search() {
-        super(Categories.Render, Items.COMMAND_BLOCK, "search", "Searches for specified blocks.");
+        super(Categories.Render, Items.COMMAND_BLOCK, "search", "Searches for specified blocks");
 
         RainbowColors.register(this::onTickRainbow);
     }

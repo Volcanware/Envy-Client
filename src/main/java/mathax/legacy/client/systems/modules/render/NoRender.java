@@ -292,7 +292,7 @@ public class NoRender extends Module {
     );
 
     public NoRender() {
-        super(Categories.Render, Items.BARRIER, "no-render", "Disables certain animations or overlays from rendering.");
+        super(Categories.Render, Items.BARRIER, "no-render", "Disables certain animations or overlays from rendering");
     }
 
     // Overlay

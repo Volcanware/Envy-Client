@@ -46,7 +46,7 @@ public class AirPlace extends Module {
     );
 
     public AirPlace() {
-        super(Categories.World, Items.BARRIER, "air-place", "Places a block where your crosshair is pointing at.");
+        super(Categories.World, Items.BARRIER, "air-place", "Places a block where your crosshair is pointing at");
     }
 
     @EventHandler

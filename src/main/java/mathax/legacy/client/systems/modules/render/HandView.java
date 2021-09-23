@@ -135,7 +135,7 @@ public class HandView extends Module {
     );
 
     public HandView() {
-        super(Categories.Render, Items.LIME_STAINED_GLASS_PANE, "hand-view", "Alters the way items are rendered in your hands.");
+        super(Categories.Render, Items.LIME_STAINED_GLASS_PANE, "hand-view", "Alters the way items are rendered in your hands");
     }
 
     public void transform(MatrixStack matrices) {

@@ -227,7 +227,7 @@ public class HighwayBuilder extends Module {
     );
 
     public HighwayBuilder() {
-        super(Categories.World, Items.OBSIDIAN, "highway-builder", "Automatically builds highways.");
+        super(Categories.World, Items.OBSIDIAN, "highway-builder", "Automatically builds highways");
     }
 
     @Override

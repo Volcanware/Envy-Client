@@ -79,7 +79,7 @@ public class BowAimbot extends Module {
     );
 
     public BowAimbot() {
-        super(Categories.Combat, Items.BOW, "bow-aimbot", "Automatically aims your bow for you.");
+        super(Categories.Combat, Items.BOW, "bow-aimbot", "Automatically aims your bow for you");
     }
 
     @Override

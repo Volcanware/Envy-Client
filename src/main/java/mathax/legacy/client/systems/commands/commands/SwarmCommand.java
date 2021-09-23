@@ -27,11 +27,10 @@ import java.util.Random;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class SwarmCommand extends Command {
-
     private final static SimpleCommandExceptionType SWARM_NOT_ACTIVE = new SimpleCommandExceptionType(new LiteralText("The swarm module must be active to use this command."));
 
     public SwarmCommand() {
-        super("swarm", "Sends commands to connected swarm workers.");
+        super("swarm", "Sends commands to connected swarm workers");
     }
 
     @Override

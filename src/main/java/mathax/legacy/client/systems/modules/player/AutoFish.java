@@ -80,7 +80,7 @@ public class AutoFish extends Module {
     );
 
     public AutoFish() {
-        super(Categories.Player, Items.FISHING_ROD, "auto-fish", "Automatically fishes for you.");
+        super(Categories.Player, Items.FISHING_ROD, "auto-fish", "Automatically fishes for you");
     }
 
     @Override

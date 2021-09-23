@@ -91,7 +91,7 @@ public class AutoAnvil extends Module {
     );
 
     public AutoAnvil() {
-        super(Categories.Combat, Items.ANVIL, "auto-anvil", "Automatically places anvils above players to destroy helmets or get out of the hole (Burrow patched servers).");
+        super(Categories.Combat, Items.ANVIL, "auto-anvil", "Automatically places anvils above players to destroy helmets or get out of the hole (Burrow patched servers)");
     }
 
     @Override

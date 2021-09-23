@@ -6,6 +6,6 @@ import net.minecraft.item.Items;
 
 public class AntiCactus extends Module {
     public AntiCactus() {
-        super(Categories.World, Items.CACTUS, "anti-cactus", "Prevents you from taking damage from cacti.");
+        super(Categories.World, Items.CACTUS, "anti-cactus", "Prevents you from taking damage from cacti");
     }
 }

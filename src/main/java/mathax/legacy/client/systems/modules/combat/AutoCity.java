@@ -90,7 +90,7 @@ public class AutoCity extends Module {
     );
 
     public AutoCity() {
-        super(Categories.Combat, Items.DIAMOND_PICKAXE, "auto-city", "Automatically cities a target by mining the nearest obsidian next to them.");
+        super(Categories.Combat, Items.DIAMOND_PICKAXE, "auto-city", "Automatically cities a target by mining the nearest obsidian next to them");
     }
 
     @EventHandler

@@ -69,7 +69,7 @@ public class Flight extends Module {
     );
 
     public Flight() {
-        super(Categories.Movement, Items.COMMAND_BLOCK, "flight", "FLYYYyy! No Fall is recommended with this module.");
+        super(Categories.Movement, Items.COMMAND_BLOCK, "flight", "FLYYYyy! No Fall is recommended with this module");
     }
 
     private int delayLeft = delay.get();

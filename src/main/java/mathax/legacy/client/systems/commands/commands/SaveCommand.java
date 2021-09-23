@@ -8,8 +8,9 @@ import net.minecraft.command.CommandSource;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class SaveCommand extends Command {
+
     public SaveCommand() {
-        super("save", "");
+        super("save", "Saves all current settings");
     }
 
     @Override

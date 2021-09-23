@@ -19,7 +19,7 @@ public class DropCommand extends Command {
     private static final SimpleCommandExceptionType NO_SUCH_ITEM = new SimpleCommandExceptionType(new LiteralText("Could not find an item with that name!"));
 
     public DropCommand() {
-        super("drop", "Automatically drops specified items.");
+        super("drop", "Automatically drops specified items");
     }
 
     @Override

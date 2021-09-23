@@ -12,7 +12,6 @@ import net.minecraft.text.LiteralText;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class SpectateCommand extends Command {
-
     private final StaticListener shiftListener = new StaticListener();
 
     public SpectateCommand() {

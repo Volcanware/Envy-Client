@@ -185,7 +185,7 @@ public class Chams extends Module {
     );
 
     public Chams() {
-        super(Categories.Render, Items.GREEN_STAINED_GLASS, "chams", "Tweaks rendering of entities.");
+        super(Categories.Render, Items.GREEN_STAINED_GLASS, "chams", "Tweaks rendering of entities");
     }
 
     public boolean shouldRender(Entity entity) {

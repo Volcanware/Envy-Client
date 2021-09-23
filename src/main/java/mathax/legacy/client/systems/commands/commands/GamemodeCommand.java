@@ -8,8 +8,9 @@ import net.minecraft.world.GameMode;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class GamemodeCommand extends Command {
+
     public GamemodeCommand() {
-        super("gamemode", "Changes your gamemode client-side.", "gm");
+        super("gamemode", "Changes your gamemode client-side", "gm");
     }
 
     @Override

@@ -14,7 +14,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 public class MatHaxLegacyCommand extends Command {
 
     public MatHaxLegacyCommand() {
-        super("mathaxlegacy", "Some MatHax Legacy commands.");
+        super("mathaxlegacy", "Some MatHax Legacy commands");
     }
 
     @Override

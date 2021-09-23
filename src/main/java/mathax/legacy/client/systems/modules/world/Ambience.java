@@ -139,7 +139,7 @@ public class Ambience extends Module {
     );
 
     public Ambience() {
-        super(Categories.World, Items.RED_STAINED_GLASS, "ambience", "Change the color of various pieces of the environment.");
+        super(Categories.World, Items.RED_STAINED_GLASS, "ambience", "Change the color of various pieces of the environment");
     }
 
     @Override

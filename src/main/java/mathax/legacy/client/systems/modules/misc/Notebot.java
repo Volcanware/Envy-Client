@@ -125,7 +125,7 @@ public class Notebot extends Module {
     );
 
     public Notebot() {
-        super(Categories.Misc, Items.NOTE_BLOCK, "notebot", "Plays noteblocks nicely.");
+        super(Categories.Misc, Items.NOTE_BLOCK, "notebot", "Plays noteblocks nicely");
 
         for (int y = -5; y < 5; y++) {
             for (int x = -5; x < 5; x++) {

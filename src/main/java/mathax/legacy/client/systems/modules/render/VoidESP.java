@@ -93,7 +93,7 @@ public class VoidESP extends Module {
     );
 
     public VoidESP() {
-        super(Categories.Render, Items.RED_STAINED_GLASS, "void-ESP", "Renders holes in bedrock layers that lead to the void.");
+        super(Categories.Render, Items.RED_STAINED_GLASS, "void-ESP", "Renders holes in bedrock layers that lead to the void");
     }
 
     private boolean isBlockWrong(BlockPos blockPos) {

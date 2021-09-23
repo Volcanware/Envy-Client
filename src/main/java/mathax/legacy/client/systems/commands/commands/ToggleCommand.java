@@ -10,9 +10,8 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class ToggleCommand extends Command {
 
-
     public ToggleCommand() {
-        super("toggle", "Toggles a module.", "t");
+        super("toggle", "Toggles a module", "t");
     }
 
     @Override

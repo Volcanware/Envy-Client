@@ -29,7 +29,7 @@ public class Announcer extends Module {
     };
 
     public Announcer() {
-        super(Categories.Chat, Items.BELL, "announcer", "Announces specified actions into chat.");
+        super(Categories.Chat, Items.BELL, "announcer", "Announces specified actions into chat");
     }
 
     @Override
@@ -120,7 +120,7 @@ public class Announcer extends Module {
         private boolean first;
 
         Moving() {
-            super("Moving", "moving-enabled", "Send msg how much you moved.");
+            super("Moving", "moving-enabled", "Send msg how much you moved");
         }
 
         @Override
@@ -178,7 +178,7 @@ public class Announcer extends Module {
         private double notBrokenTimer;
 
         Mining() {
-            super("Mining", "mining-enabled", "Send msg how much blocks you mined.");
+            super("Mining", "mining-enabled", "Send msg how much blocks you mined");
         }
 
         @Override
@@ -231,7 +231,7 @@ public class Announcer extends Module {
         private double notPlacedTimer;
 
         Placing() {
-            super("Placing", "placing-enabled", "Send msg how much blocks you placed.");
+            super("Placing", "placing-enabled", "Send msg how much blocks you placed");
         }
 
         @Override
@@ -282,7 +282,7 @@ public class Announcer extends Module {
         private double notDroppedTimer;
 
         DropItems() {
-            super("Drop Items", "drop-items-enabled", "Send msg how much items you dropped.");
+            super("Drop Items", "drop-items-enabled", "Send msg how much items you dropped");
         }
 
         @Override
@@ -333,7 +333,7 @@ public class Announcer extends Module {
         private double notPickedUpTimer;
 
         PickItems() {
-            super("Pick Items", "pick-items-enabled", "Send msg how much items you pick up.");
+            super("Pick Items", "pick-items-enabled", "Send msg how much items you pick up");
         }
 
         @Override
@@ -380,7 +380,7 @@ public class Announcer extends Module {
         );
 
         public OpenContainer() {
-            super("Open Container", "open-container-enabled", "Sends msg when you open containers.");
+            super("Open Container", "open-container-enabled", "Sends msg when you open containers");
         }
 
         @Override

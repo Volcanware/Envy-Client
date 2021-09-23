@@ -96,7 +96,7 @@ public class HUD extends Module {
     }
 
     public HUD() {
-        super(Categories.Render, Items.GLASS, "HUD", "In game overlay.");
+        super(Categories.Render, Items.GLASS, "HUD", "In game overlay");
 
         // MAIN INFO
         mainInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 2, 2);

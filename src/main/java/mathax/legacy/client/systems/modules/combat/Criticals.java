@@ -44,7 +44,7 @@ public class Criticals extends Module {
     );
 
     public Criticals() {
-        super(Categories.Combat, Items.DIAMOND_SWORD, "criticals", "Performs critical attacks when you hit your target.");
+        super(Categories.Combat, Items.DIAMOND_SWORD, "criticals", "Performs critical attacks when you hit your target");
     }
 
     @Override

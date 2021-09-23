@@ -94,7 +94,7 @@ public class InfinityMiner extends Module {
     );
 
     public InfinityMiner() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever.");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever");
     }
 
     private boolean filter(Block block) {

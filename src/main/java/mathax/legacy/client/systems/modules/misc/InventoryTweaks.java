@@ -153,7 +153,7 @@ public class InventoryTweaks extends Module {
     );
 
     public InventoryTweaks() {
-        super(Categories.Misc, Items.CHEST, "inventory-tweaks", "Various inventory related utilities.");
+        super(Categories.Misc, Items.CHEST, "inventory-tweaks", "Various inventory related utilities");
     }
 
     @Override

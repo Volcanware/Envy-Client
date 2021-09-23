@@ -20,7 +20,7 @@ public class Sprint extends Module {
     );
 
     public Sprint() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "sprint", "Automatically sprints.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "sprint", "Automatically sprints");
     }
 
     @Override

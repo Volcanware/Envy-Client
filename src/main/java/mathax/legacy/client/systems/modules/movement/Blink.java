@@ -17,7 +17,7 @@ public class Blink extends Module {
     private int timer = 0;
 
     public Blink() {
-        super(Categories.Movement, Items.TINTED_GLASS, "blink", "Allows you to essentially teleport while suspending motion updates.");
+        super(Categories.Movement, Items.TINTED_GLASS, "blink", "Allows you to essentially teleport while suspending motion updates");
     }
 
     @Override

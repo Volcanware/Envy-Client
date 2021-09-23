@@ -69,7 +69,7 @@ public class DiscordRPC extends Module {
     );
 
     public DiscordRPC() {
-        super(Categories.Misc, Items.COMMAND_BLOCK, "discord-RPC", "Shows MatHax Legacy as your Discord status.");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "discord-RPC", "Shows MatHax Legacy as your Discord status");
 
         runInMainMenu = true;
     }

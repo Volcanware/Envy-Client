@@ -21,7 +21,7 @@ import net.minecraft.util.shape.VoxelShape;
 
 public class ItemPhysics extends Module {
     public ItemPhysics() {
-        super(Categories.Render, Items.BEEF, "item-physics", "Applies physics to items on the ground.");
+        super(Categories.Render, Items.BEEF, "item-physics", "Applies physics to items on the ground");
     }
 
     @EventHandler

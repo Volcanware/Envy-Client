@@ -98,7 +98,7 @@ public class CEVBreaker extends Module {
     //TODO: Explodes crystals without mining, fix :)))))
 
     public CEVBreaker() {
-        super(Categories.Combat, Items.END_CRYSTAL, "CEV-breaker", "Places obsidian on top of people and explodes crystals on top of their heads after destroying the obsidian.");
+        super(Categories.Combat, Items.END_CRYSTAL, "CEV-breaker", "Places obsidian on top of people and explodes crystals on top of their heads after destroying the obsidian");
     }
 
     @EventHandler

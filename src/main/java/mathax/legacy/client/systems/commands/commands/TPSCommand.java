@@ -11,7 +11,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 public class TPSCommand extends Command {
 
     public TPSCommand() {
-        super("tps", "Prints server tps.");
+        super("tps", "Prints server tps");
     }
 
     @Override

@@ -21,7 +21,7 @@ public class SeedCommand extends Command {
     private final static SimpleCommandExceptionType NO_SEED = new SimpleCommandExceptionType(new LiteralText("No seed for current world saved."));
 
     public SeedCommand() {
-        super("seed", "Get or set seed for the current world.");
+        super("seed", "Get or set seed for the current world");
     }
 
     @Override

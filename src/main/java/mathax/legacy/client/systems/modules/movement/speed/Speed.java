@@ -91,7 +91,7 @@ public class Speed extends Module {
     private SpeedMode currentMode;
 
     public Speed() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "speed", "Modifies your movement speed when moving.");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "speed", "Modifies your movement speed when moving");
 
         onSpeedModeChanged(speedMode.get());
     }

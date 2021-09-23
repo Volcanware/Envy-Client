@@ -24,7 +24,7 @@ public class Sneak extends Module {
     );
 
     public Sneak() {
-        super(Categories.Movement, Items.LEATHER_BOOTS, "sneak", "Sneaks for you.");
+        super(Categories.Movement, Items.LEATHER_BOOTS, "sneak", "Makes you sneak automatically");
     }
 
     public boolean doPacket() {

@@ -25,7 +25,7 @@ public class EntityControl extends Module {
     );
 
     public EntityControl() {
-        super(Categories.Movement, Items.DIAMOND_HORSE_ARMOR, "entity-control", "Lets you control rideable entities without a saddle.");
+        super(Categories.Movement, Items.DIAMOND_HORSE_ARMOR, "entity-control", "Lets you control rideable entities without a saddle");
     }
 
     @Override
