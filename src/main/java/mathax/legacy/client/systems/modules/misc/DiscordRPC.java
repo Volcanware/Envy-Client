@@ -124,6 +124,7 @@ public class DiscordRPC extends Module {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Discord Rich Presence disabled!");
     }
 
+    // For shutdown hook
     public static void deactivate() {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Disabling Discord Rich Presence...");
         net.arikia.dev.drpc.DiscordRPC.discordClearPresence();

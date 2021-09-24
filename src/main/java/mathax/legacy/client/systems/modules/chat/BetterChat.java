@@ -29,7 +29,17 @@ import java.util.regex.PatternSyntaxException;
 
 public class BetterChat extends Module {
     private final Char2CharMap FULL_WIDTH = new Char2CharArrayMap();
+    {
+        String[] chars = "aábcčdďeéěfghchiíjklmnňoópqrřsštťuúůvwxyýzžAÁBCČDĎEÉĚFGHCHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ0123456789|[]!?.,{}()\"'".split("");
+        String[] fontchars = "ａáｂｃčｄďｅéěｆｇｈｃｈｉíｊｋｌｍｎňｏóｐｑｒřｓšｔťｕúůｖｗｘｙýｚžＡÁＢＣČＤĎＥÉĚＦＧＨＣＨＩÍＪＫＬＭＮŇＯÓＰＱＲŘＳŠＴŤＵÚŮＶＷＸＹÝＺŽ０１２３４５６７８９｜［］！？．，｛｝（）\"＇".split("");
+        for (int i = 0; i < chars.length; i++) FULL_WIDTH.put(chars[i].charAt(0), fontchars[i].charAt(0));
+    }
     private final Char2CharMap SMALL_CAPS = new Char2CharArrayMap();
+    {
+        String[] chars = "abcdefghchijklmnopqrstuvwxyzABCDEFGHCHIJKLMNOPQRSTUVWXYZ0123456789|[]!?.,{}()\"'".split("");
+        String[] fontchars = "ᴀʙᴄᴅᴇꜰɢʜᴄʜɪᴊᴋʟᴍɴᴏᴘqʀꜱᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇꜰɢʜᴄʜɪᴊᴋʟᴍɴᴏᴩQʀꜱᴛᴜᴠᴡxYᴢ0123456789｜[]!?.,{}()\"'".split("");
+        for (int i = 0; i < chars.length; i++) SMALL_CAPS.put(chars[i].charAt(0), fontchars[i].charAt(0));
+    }
 
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     private final SimpleDateFormat timeFormatSeconds = new SimpleDateFormat("HH:mm:ss");
@@ -183,18 +193,6 @@ public class BetterChat extends Module {
 
     public BetterChat() {
         super(Categories.Chat, Items.DROPPER, "better-chat", "Improves your chat experience in various ways");
-    }
-
-    {
-        String[] chars = "aábcčdďeéěfghchiíjklmnňoópqrřsštťuúůvwxyýzžAÁBCČDĎEÉĚFGHCHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ0123456789|[]!?.,{}()\"'".split("");
-        String[] fontchars = "ａáｂｃčｄďｅéěｆｇｈｃｈｉíｊｋｌｍｎňｏóｐｑｒřｓšｔťｕúůｖｗｘｙýｚžＡÁＢＣČＤĎＥÉĚＦＧＨＣＨＩÍＪＫＬＭＮŇＯÓＰＱＲŘＳŠＴŤＵÚŮＶＷＸＹÝＺŽ０１２３４５６７８９｜［］！？．，｛｝（）\"＇".split("");
-        for (int i = 0; i < chars.length; i++) FULL_WIDTH.put(chars[i].charAt(0), fontchars[i].charAt(0));
-    }
-
-    {
-        String[] chars = "abcdefghchijklmnopqrstuvwxyzABCDEFGHCHIJKLMNOPQRSTUVWXYZ0123456789|[]!?.,{}()\"'".split("");
-        String[] fontchars = "ᴀʙᴄᴅᴇꜰɢʜᴄʜɪᴊᴋʟᴍɴᴏᴘqʀꜱᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇꜰɢʜᴄʜɪᴊᴋʟᴍɴᴏᴩQʀꜱᴛᴜᴠᴡxYᴢ0123456789｜[]!?.,{}()\"'".split("");
-        for (int i = 0; i < chars.length; i++) SMALL_CAPS.put(chars[i].charAt(0), fontchars[i].charAt(0));
     }
 
     @EventHandler

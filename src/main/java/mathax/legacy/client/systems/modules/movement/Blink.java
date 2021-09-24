@@ -22,7 +22,6 @@ public class Blink extends Module {
 
     @Override
     public void onActivate() {
-        BlinkPlayerCloneManager.clear();
         BlinkPlayerCloneManager.add();
     }
 

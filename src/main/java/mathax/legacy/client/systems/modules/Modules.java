@@ -542,6 +542,7 @@ public class Modules extends System<Modules> {
         add(new Announcer());
         add(new AntiVanish());
         add(new AutoEZ());
+        add(new StayHydrated());
         add(new BetterChat());
         //add(new ChatBot());
         add(new MessageAura());

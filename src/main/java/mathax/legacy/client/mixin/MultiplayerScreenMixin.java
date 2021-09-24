@@ -48,9 +48,11 @@ public class MultiplayerScreenMixin extends Screen {
             client.setScreen(GuiThemes.get().accountsScreen());
         }));
 
-        addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> {
-            LastServerInfo.reconnect(parent);
-        }));
+        if (LastServerInfo.getLastServer() != null) {
+            addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> {
+                LastServerInfo.reconnect(parent);
+            }));
+        }
     }
 
     @Inject(method = "render", at = @At("TAIL"))

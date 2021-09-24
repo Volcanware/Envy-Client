@@ -34,7 +34,7 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 1;
+        return 2;
     }
 
     public static String getDevBuild() {
@@ -122,7 +122,7 @@ public class Version {
                 if (getDev() == 0) {
                     MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "!");
                 } else {
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "! [Developer builds do not get update notifications on the full version or another developer build they are a developer build of!]");
+                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "! [Developer builds do not get update notifications on the full version or another developer build of the version they are a developer build of!]");
                 }
         }
     }

@@ -45,8 +45,6 @@ public class AutoEZ extends Module {
         super(Categories.Chat, Items.LIGHTNING_ROD, "auto-EZ", "Announces in chat when you kill someone");
     }
 
-    // KILL
-
     @EventHandler
     public void onPacketReadMessage(PacketEvent.Receive event) {
         if (event.packet instanceof GameMessageS2CPacket) {
