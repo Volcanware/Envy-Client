@@ -6,7 +6,7 @@ import mathax.legacy.client.utils.misc.HorizontalDirection;
 
 public class RotationHUD extends TripleTextHUDElement {
     public RotationHUD(HUD hud) {
-        super(hud, "rotation", "Displays your rotation.", false);
+        super(hud, "rotation", "Displays your rotation", false);
     }
 
     @Override

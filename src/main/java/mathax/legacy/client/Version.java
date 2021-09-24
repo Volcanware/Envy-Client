@@ -87,7 +87,7 @@ public class Version {
         }
     }
 
-    public static void checkForUpdate(boolean button) {
+    public static void checkForUpdate(boolean dontDisable) {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
         switch (Version.checkLatest()) {
             case 0:
@@ -96,8 +96,8 @@ public class Version {
             case 1:
                 MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.getStylized() + "! You can download the newest version on " + MatHaxLegacy.URL + "Download!");
                 String id = "new-update";
-                if (button) {
-                    id += "-button";
+                if (dontDisable) {
+                    id += "-dont-disable";
                 }
                 YesNoPrompt.create()
                     .title("New Update")

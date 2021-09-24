@@ -41,7 +41,7 @@ public class ContainerViewerHUD extends HUDElement {
     );
 
     public ContainerViewerHUD(HUD hud) {
-        super(hud, "container-viewer", "Displays held containers.", false);
+        super(hud, "container-viewer", "Displays held containers", false);
     }
 
     @Override

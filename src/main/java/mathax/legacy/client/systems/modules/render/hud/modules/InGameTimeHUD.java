@@ -7,7 +7,7 @@ import mathax.legacy.client.utils.Utils;
 public class InGameTimeHUD extends TripleTextHUDElement {
 
     public InGameTimeHUD(HUD hud) {
-        super(hud, "in-game-time", "Displays the in-game time.", true);
+        super(hud, "in-game-time", "Displays the in-game time", true);
     }
 
     @Override

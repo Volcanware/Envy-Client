@@ -44,7 +44,7 @@ public class HoleHUD extends HUDElement {
     );
 
     public HoleHUD(HUD hud) {
-        super(hud, "hole", "Displays information about the hole you are standing in.", true);
+        super(hud, "hole", "Displays information about the hole you are standing in", true);
     }
 
     @Override

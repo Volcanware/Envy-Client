@@ -38,6 +38,7 @@ public class EnemiesCommand extends Command {
                             Enemy enemy = EnemyArgumentType.getEnemy(context, "enemy");
 
                             if (Enemies.get().add(enemy)) {
+                                if (enemy.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) info("Added (highlight)%s (default)to enemies.", enemy.name);
                                 if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Enemies.get().color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + enemy.name + Formatting.GRAY + "]", Formatting.GRAY + "Added to enemies."));
                             }
@@ -57,6 +58,7 @@ public class EnemiesCommand extends Command {
                             Enemy enemy = EnemyArgumentType.getEnemy(context, "enemy");
 
                             if (Enemies.get().remove(enemy)) {
+                                if (enemy.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) info("Removed (highlight)%s (default)from enemies.", enemy.name);
                                 if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Enemies.get().color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + enemy.name + Formatting.GRAY + "]", Formatting.GRAY + "Removed from enemies."));
                             }

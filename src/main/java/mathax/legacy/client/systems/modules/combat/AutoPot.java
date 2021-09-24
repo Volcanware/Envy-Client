@@ -29,18 +29,19 @@ import java.util.Map;
 
 public class AutoPot extends Module {
     private final List<Class<? extends Module>> wasAura = new ArrayList<>();
-    private static final Class<? extends Module>[] AURAS = new Class[] {
+    private static final Class<? extends Module>[] AURA_LIST = new Class[] {
         KillAura.class,
         CrystalAura.class,
         AnchorAura.class,
         BedAura.class
     };
     private int slot, prevSlot;
-    private boolean drinking, splashing;
+    private boolean drinking, splashing, pitched;
     private boolean wasBaritone;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAutomation = settings.createGroup("Automation");
+    private final SettingGroup sgRotation = settings.createGroup("Rotation");
 
     // General
 
@@ -97,10 +98,42 @@ public class AutoPot extends Module {
         .build()
     );
 
-    private final Setting<Boolean> rotate = sgAutomation.add(new BoolSetting.Builder()
+    // Rotation
+
+    private final Setting<Boolean> rotate = sgRotation.add(new BoolSetting.Builder()
         .name("rotate")
         .description("Forces you to rotate downwards when throwing bottles.")
         .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<RotateMode> rotateMode = sgRotation.add(new EnumSetting.Builder<RotateMode>()
+        .name("mode")
+        .description("Determines how to rotate.")
+        .defaultValue(RotateMode.Server)
+        .build()
+    );
+
+    public final Setting<Double> splashingPitch = sgRotation.add(new DoubleSetting.Builder()
+        .name("splashing")
+        .description("Swings your hand when placing.")
+        .defaultValue(90)
+        .min(-90)
+        .max(90)
+        .sliderMin(-90)
+        .sliderMax(90)
+        .build()
+    );
+
+    public final Setting<Double> stoppedSplashingPitch = sgRotation.add(new DoubleSetting.Builder()
+        .name("stopped-splashing")
+        .description("Swings your hand when placing.")
+        .defaultValue(0)
+        .min(-90)
+        .max(90)
+        .sliderMin(-90)
+        .sliderMax(90)
+        .visible(() -> rotateMode.get() == RotateMode.Client)
         .build()
     );
 
@@ -116,17 +149,22 @@ public class AutoPot extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
+        if (healing.get() && !strength.get() && !shouldDrinkHealth() && splashing) {
+            stopSplashing();
+            return;
+        }
+
         if (healing.get()) {
-            if (ShouldDrinkHealth()) {
+            if (shouldDrinkHealth()) {
 
                 //Heal Pot Slot
-                int slot = HealingpotionSlot();
+                int slot = healingPotionSlot();
 
                 //Slot Not Invalid
                 if (slot != -1) {
                     startDrinking();
-                } else if (HealingpotionSlot() == -1 && useSplashPots.get()) {
-                    slot = HealingSplashpotionSlot();
+                } else if (healingPotionSlot() == -1 && useSplashPots.get()) {
+                    slot = healingSplashPotionSlot();
                     if (slot != -1) {
                         startSplashing();
                     }
@@ -134,9 +172,9 @@ public class AutoPot extends Module {
             }
 
             if (drinking) {
-                if (ShouldDrinkHealth()) {
+                if (shouldDrinkHealth()) {
                     if (isNotPotion(mc.player.getInventory().getStack(slot))) {
-                        slot = HealingpotionSlot();
+                        slot = healingPotionSlot();
                         if (slot == -1) {
                             if (chatInfo.get()) info("Ran out of Pots while drinking...");
                             stopDrinking();
@@ -145,7 +183,7 @@ public class AutoPot extends Module {
                     } else changeSlot(slot);
                 }
                 drink();
-                if (ShouldNotDrinkHealth()) {
+                if (shouldNotDrinkHealth()) {
                     if (chatInfo.get()) info("Health full!");
                     stopDrinking();
                     return;
@@ -153,9 +191,9 @@ public class AutoPot extends Module {
             }
 
             if (splashing) {
-                if (ShouldDrinkHealth()) {
+                if (shouldDrinkHealth()) {
                     if (isNotSplashPotion(mc.player.getInventory().getStack(slot))) {
-                        slot = HealingSplashpotionSlot();
+                        slot = healingSplashPotionSlot();
                         if (slot == -1) {
                             if (chatInfo.get()) info("Ran out of Pots while splashing...");
                             stopSplashing();
@@ -163,7 +201,7 @@ public class AutoPot extends Module {
                         } else changeSlot(slot);
                     }
                     splash();
-                    if (ShouldNotDrinkHealth()) {
+                    if (shouldNotDrinkHealth()) {
                         if (chatInfo.get()) info("Health full!");
                         stopSplashing();
                         return;
@@ -173,17 +211,17 @@ public class AutoPot extends Module {
         }
 
         if (strength.get()) {
-            if (ShouldDrinkStrength()) {
+            if (shouldDrinkStrength()) {
 
                 //Strength Pot Slot
-                int slot = StrengthpotionSlot();
+                int slot = strengthPotionSlot();
 
                 //Slot Not Invalid
                 if (slot != -1) {
                     startDrinking();
                 }
-                else if (StrengthpotionSlot() == -1 && useSplashPots.get()) {
-                    slot = StrengthSplashpotionSlot();
+                else if (strengthPotionSlot() == -1 && useSplashPots.get()) {
+                    slot = strengthSplashPotionSlot();
                     if (slot != -1) {
                         startSplashing();
                     }
@@ -191,9 +229,9 @@ public class AutoPot extends Module {
             }
 
             if (drinking) {
-                if (ShouldDrinkStrength()) {
+                if (shouldDrinkStrength()) {
                     if (isNotPotion(mc.player.getInventory().getStack(slot))) {
-                        slot = StrengthpotionSlot();
+                        slot = strengthPotionSlot();
                         if (slot == -1) {
                             stopDrinking();
                             if (chatInfo.get()) info("Out of Pots...");
@@ -207,9 +245,9 @@ public class AutoPot extends Module {
             }
 
             if (splashing) {
-                if (ShouldDrinkStrength()) {
+                if (shouldDrinkStrength()) {
                     if (isNotSplashPotion(mc.player.getInventory().getStack(slot))) {
-                        slot = StrengthSplashpotionSlot();
+                        slot = strengthSplashPotionSlot();
                         if (slot == -1) {
                             if (chatInfo.get()) info("Ran out of Pots while splashing...");
                             stopSplashing();
@@ -240,7 +278,7 @@ public class AutoPot extends Module {
         // Pause auras
         wasAura.clear();
         if (pauseAuras.get()) {
-            for (Class<? extends Module> klass : AURAS) {
+            for (Class<? extends Module> klass : AURA_LIST) {
                 Module module = Modules.get().get(klass);
 
                 if (module.isActive()) {
@@ -260,15 +298,23 @@ public class AutoPot extends Module {
 
     private void startSplashing() {
         prevSlot = mc.player.getInventory().selectedSlot;
-        if (rotate.get()){
-            Rotations.rotate(mc.player.getYaw(), 90); splash();
+        if (rotate.get()) {
+            switch (rotateMode.get()) {
+                case Server:
+                    Rotations.rotate(mc.player.getYaw(), splashingPitch.get().floatValue());
+                    splash();
+                case Client:
+                    pitched = true;
+                    mc.player.setPitch(splashingPitch.get().floatValue());
+                    splash();
+            }
         }
         splash();
 
         // Pause auras
         wasAura.clear();
         if (pauseAuras.get()) {
-            for (Class<? extends Module> klass : AURAS) {
+            for (Class<? extends Module> klass : AURA_LIST) {
                 Module module = Modules.get().get(klass);
 
                 if (module.isActive()) {
@@ -307,7 +353,7 @@ public class AutoPot extends Module {
 
         // Resume auras
         if (pauseAuras.get()) {
-            for (Class<? extends Module> klass : AURAS) {
+            for (Class<? extends Module> klass : AURA_LIST) {
                 Module module = Modules.get().get(klass);
 
                 if (wasAura.contains(klass) && !module.isActive()) {
@@ -325,12 +371,16 @@ public class AutoPot extends Module {
     private void stopSplashing() {
         changeSlot(prevSlot);
         setPressed(false);
+        if (pitched) {
+            mc.player.setPitch(stoppedSplashingPitch.get().floatValue());
+            pitched = false;
+        }
 
         splashing = false;
 
         // Resume auras
         if (pauseAuras.get()) {
-            for (Class<? extends Module> klass : AURAS) {
+            for (Class<? extends Module> klass : AURA_LIST) {
                 Module module = Modules.get().get(klass);
 
                 if (wasAura.contains(klass) && !module.isActive()) {
@@ -345,7 +395,7 @@ public class AutoPot extends Module {
         }
     }
 
-    private double truehealth() {
+    private double trueHealth() {
         assert mc.player != null;
         return mc.player.getHealth();
     }
@@ -356,7 +406,7 @@ public class AutoPot extends Module {
     }
 
     //Heal pot checks
-    private int HealingpotionSlot() {
+    private int healingPotionSlot() {
         int slot = -1;
         for (int i = 0; i < 9; i++) {
 
@@ -379,7 +429,7 @@ public class AutoPot extends Module {
         return slot;
     }
 
-    private int HealingSplashpotionSlot() {
+    private int healingSplashPotionSlot() {
         int slot = -1;
         for (int i = 0; i < 9; i++) {
 
@@ -403,7 +453,7 @@ public class AutoPot extends Module {
     }
 
     //Strength Pot Checks
-    private int StrengthSplashpotionSlot () {
+    private int strengthSplashPotionSlot () {
         int slot = -1;
         for (int i = 0; i < 9; i++) {
 
@@ -427,7 +477,7 @@ public class AutoPot extends Module {
         return slot;
     }
 
-    private int StrengthpotionSlot () {
+    private int strengthPotionSlot () {
         int slot = -1;
         for (int i = 0; i < 9; i++) {
 
@@ -461,18 +511,21 @@ public class AutoPot extends Module {
         return item != Items.SPLASH_POTION;
     }
 
-    private boolean ShouldDrinkHealth(){
-        if (truehealth() < health.get()) return true;
-        return false;
+    private boolean shouldDrinkHealth(){
+        return trueHealth() < health.get();
     }
 
-    private boolean ShouldNotDrinkHealth(){
-        if (truehealth() >= health.get()) return true;
-        return false;
+    private boolean shouldNotDrinkHealth(){
+        return trueHealth() >= health.get();
     }
 
-    private boolean ShouldDrinkStrength(){
+    private boolean shouldDrinkStrength(){
         Map<StatusEffect, StatusEffectInstance> effects = mc.player.getActiveStatusEffects();
         return !effects.containsKey(StatusEffects.STRENGTH);
+    }
+
+    public enum RotateMode {
+        Server,
+        Client
     }
 }

@@ -17,7 +17,7 @@ public class PositionHUD extends HUDElement {
     private String right2;
 
     public PositionHUD(HUD hud) {
-        super(hud, "position", "Displays your coordinates in the world.", true);
+        super(hud, "position", "Displays your coordinates in the world", true);
     }
 
     @Override

@@ -75,7 +75,7 @@ public class TextRadarHUD extends HUDElement {
     );
 
     public TextRadarHUD(HUD hud) {
-        super(hud, "text-radar", "Displays players in your visual range.", true);
+        super(hud, "text-radar", "Displays players in your visual range", true);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class TextRadarHUD extends HUDElement {
             else
                 text += entity.getEntityName();
 
-            if (health.get() || ping.get() || distance.get()) text += String.format(" -");
+            if (health.get() || ping.get() || distance.get()) text += " -";
             if (health.get()) text += String.format(" %s", Math.round(entity.getHealth() + entity.getAbsorptionAmount()));
             if (ping.get()) text += String.format(" [%sms]", Math.round(EntityUtils.getPing(entity)));
             if (distance.get()) text += String.format(" (%sm)", Math.round(mc.getCameraEntity().distanceTo(entity)));
@@ -151,7 +151,7 @@ public class TextRadarHUD extends HUDElement {
             if (health.get() || ping.get() || distance.get()) {
                 x += renderer.textWidth(text + " ");
 
-                text = String.format("-");
+                text = "-";
                 color = hud.secondaryColor.get();
 
                 renderer.text(text, x, y, color);

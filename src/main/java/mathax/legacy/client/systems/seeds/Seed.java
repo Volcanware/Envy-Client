@@ -41,7 +41,7 @@ public class Seed {
             seed.toString(),
             Formatting.GRAY,
             getVersionColor(version.toString()),
-            version.toString()
+            version
         ));
         text.setStyle(text.getStyle()
             .withClickEvent(new ClickEvent(

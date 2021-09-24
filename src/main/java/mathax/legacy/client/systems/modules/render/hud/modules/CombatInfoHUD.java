@@ -174,7 +174,7 @@ public class CombatInfoHUD extends HUDElement {
     );
 
     public CombatInfoHUD(HUD hud) {
-        super(hud, "combat-info", "Displays information about your combat target.", true);
+        super(hud, "combat-info", "Displays information about your combat target", true);
     }
 
     @Override

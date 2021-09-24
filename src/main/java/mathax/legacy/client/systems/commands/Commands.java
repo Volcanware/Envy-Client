@@ -35,8 +35,8 @@ public class Commands extends System<Commands> {
         add(new BookDupeCommand());
         add(new VClipCommand());
         add(new HClipCommand());
-        add(new CapesCommand());
         add(new ClearChatCommand());
+        add(new ClickGUICommand());
         add(new DismountCommand());
         add(new DamageCommand());
         add(new DropCommand());
@@ -52,6 +52,7 @@ public class Commands extends System<Commands> {
         add(new PanicCommand());
         add(new PeekCommand());
         add(new PluginsCommand());
+        add(new PrefixCommand());
         add(new ProfilesCommand());
         add(new ReloadCommand());
         add(new ResetCommand());
@@ -68,7 +69,6 @@ public class Commands extends System<Commands> {
         add(new SaveCommand());
         add(new SaveMapCommand());
         add(new ModulesCommand());
-        add(new MatHaxLegacyCommand());
         add(new GiveCommand());
         add(new NameHistoryCommand());
 

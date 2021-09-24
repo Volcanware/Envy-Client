@@ -6,7 +6,7 @@ import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
 
 public class FPSHUD extends TripleTextHUDElement {
     public FPSHUD(HUD hud) {
-        super(hud, "fps", "Displays your FPS.", true);
+        super(hud, "fps", "Displays your FPS", true);
     }
 
     @Override

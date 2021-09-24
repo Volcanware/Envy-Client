@@ -34,16 +34,15 @@ public abstract class DisconnectedScreenMixin extends Screen {
 
     @Inject(method = "init", at = @At("TAIL"))
     private void onRenderBackground(CallbackInfo info) {
-        int x = width / 2 - 100;
-        int y = Math.min((height / 2 + reasonHeight / 2) + 32, height - 30);
-
-        addDrawableChild(new ButtonWidget(x, y, 200, 20, new LiteralText("Reconnect"), b -> {
-            LastServerInfo.reconnect(parent);
-        }));
-
         if (LastServerInfo.getLastServer() != null) {
+            int x = width / 2 - 100;
+            int y = Math.min((height / 2 + reasonHeight / 2) + 32, height - 30);
             int x2 = width / 2 - 100;
             int y2 = Math.min((height / 2 + reasonHeight / 2) + 56, height - 30);
+
+            addDrawableChild(new ButtonWidget(x, y, 200, 20, new LiteralText("Reconnect"), b -> {
+                LastServerInfo.reconnect(parent);
+            }));
 
             autoReconnectBtn =
                 addDrawableChild(new ButtonWidget(x2, y2, 200, 20, new LiteralText(getText()), button -> {

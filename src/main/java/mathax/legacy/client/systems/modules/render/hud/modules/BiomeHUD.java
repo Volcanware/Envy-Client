@@ -14,7 +14,7 @@ public class BiomeHUD extends TripleTextHUDElement {
     private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
 
     public BiomeHUD(HUD hud) {
-        super(hud, "biome", "Displays the biome you are in.", false);
+        super(hud, "biome", "Displays the biome you are in", false);
     }
 
     @Override

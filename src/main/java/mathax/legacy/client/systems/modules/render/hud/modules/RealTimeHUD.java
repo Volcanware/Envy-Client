@@ -25,7 +25,7 @@ public class RealTimeHUD extends TripleTextHUDElement {
     );
 
     public RealTimeHUD(HUD hud) {
-        super(hud, "real-time", "Displays real world time.", true);
+        super(hud, "real-time", "Displays real world time", true);
     }
 
     @Override

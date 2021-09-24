@@ -95,7 +95,7 @@ public class ActiveModulesHUD extends HUDElement {
     );
 
     public ActiveModulesHUD(HUD hud) {
-        super(hud, "active-modules", "Displays your active modules.", true);
+        super(hud, "active-modules", "Displays your active modules", true);
     }
 
     @Override

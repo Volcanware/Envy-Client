@@ -5,7 +5,7 @@ import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
 
 public class DurabilityHUD extends TripleTextHUDElement {
     public DurabilityHUD(HUD hud) {
-        super(hud, "durability", "Displays durability of the item you are holding.", true);
+        super(hud, "durability", "Displays durability of the item you are holding", true);
     }
 
     @Override

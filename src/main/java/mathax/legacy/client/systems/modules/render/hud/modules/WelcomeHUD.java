@@ -34,7 +34,7 @@ public class WelcomeHUD extends TripleTextHUDElement {
     );
 
     public WelcomeHUD(HUD hud) {
-        super(hud, "welcome", "Displays a welcome message.", true);
+        super(hud, "welcome", "Displays a welcome message", true);
         rightColor = usernameColor.get();
     }
 
@@ -122,9 +122,6 @@ public class WelcomeHUD extends TripleTextHUDElement {
         }
         if (hour < 17) {
             return "Retard playing minecraft";
-        }
-        if (hour < 20) {
-            return "Time to sleep retard";
         }
         return "Time to sleep retard";
     }

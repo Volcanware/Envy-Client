@@ -175,10 +175,6 @@ public class MatHaxLegacy implements ClientModInitializer {
         }
     }
 
-    private void openClickGUI() {
-        Tabs.get().get(0).openScreen(GuiThemes.get());
-    }
-
     @EventHandler
     private void onGameJoined(GameJoinedEvent event) {
         Version.checkedForLatest = false;
@@ -211,6 +207,10 @@ public class MatHaxLegacy implements ClientModInitializer {
             if (Utils.mc.getOverlay() instanceof SplashOverlay) return;
             if (!Utils.canUpdate() && Utils.isWhitelistedScreen() || Utils.mc.currentScreen == null) openClickGUI();
         }
+    }
+
+    private void openClickGUI() {
+        Tabs.get().get(0).openScreen(GuiThemes.get());
     }
 
     @EventHandler

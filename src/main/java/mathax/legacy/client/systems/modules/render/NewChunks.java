@@ -28,8 +28,8 @@ import java.util.*;
 /*/                         /*/
 
 public class NewChunks extends Module {
-    private Set<ChunkPos> newChunks = Collections.synchronizedSet(new HashSet<>());
-    private Set<ChunkPos> oldChunks = Collections.synchronizedSet(new HashSet<>());
+    private final Set<ChunkPos> newChunks = Collections.synchronizedSet(new HashSet<>());
+    private final Set<ChunkPos> oldChunks = Collections.synchronizedSet(new HashSet<>());
     private static final Direction[] searchDirs = new Direction[] { Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH, Direction.UP };
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

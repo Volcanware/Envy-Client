@@ -22,7 +22,7 @@ public class DateHUD extends TripleTextHUDElement {
     );
 
     public DateHUD(HUD hud) {
-        super(hud, "date", "Displays current date.", true);
+        super(hud, "date", "Displays current date", true);
     }
 
     @Override

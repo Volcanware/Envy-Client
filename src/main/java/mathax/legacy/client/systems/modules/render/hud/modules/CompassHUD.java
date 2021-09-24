@@ -37,7 +37,7 @@ public class CompassHUD extends HUDElement {
     );
 
     public CompassHUD(HUD hud) {
-        super(hud, "compass", "Displays a compass.", true);
+        super(hud, "compass", "Displays a compass", true);
     }
 
     @Override

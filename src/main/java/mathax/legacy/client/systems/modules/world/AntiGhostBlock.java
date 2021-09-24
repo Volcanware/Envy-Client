@@ -24,7 +24,7 @@ import java.util.List;
 public class AntiGhostBlock extends Module {
     private final HashMap<BlockPos, Long> blocks = new HashMap<>();
     private long lastRequest = 0L;
-    private boolean lock = false;
+    private final boolean lock = false;
 
     SettingGroup sgGeneral = settings.getDefaultGroup();
 

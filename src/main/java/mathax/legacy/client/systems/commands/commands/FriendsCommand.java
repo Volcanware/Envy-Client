@@ -38,6 +38,7 @@ public class FriendsCommand extends Command {
                             Friend friend = FriendArgumentType.getFriend(context, "friend");
 
                             if (Friends.get().add(friend)) {
+                                if (friend.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) info("Added (highlight)%s (default)to friends.", friend.name);
                                 if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", Formatting.GRAY + "Added to friends."));
                             }
@@ -57,6 +58,7 @@ public class FriendsCommand extends Command {
                             Friend friend = FriendArgumentType.getFriend(context, "friend");
 
                             if (Friends.get().remove(friend)) {
+                                if (friend.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) info("Removed (highlight)%s (default)from friends.", friend.name);
                                 if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", Formatting.GRAY + "Removed from friends."));
                             }

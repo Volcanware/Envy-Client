@@ -136,7 +136,7 @@ public class CoordinateLogger extends Module {
     public BaseText formatMessage(String message, Vec3d coords) {
         BaseText text = new LiteralText(message);
         text.append(ChatUtils.formatCoords(coords));
-        text.append(Formatting.GRAY.toString()+".");
+        text.append(Formatting.GRAY +".");
         return text;
     }
 

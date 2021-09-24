@@ -26,7 +26,7 @@ public class TotemHUD extends HUDElement {
     );
 
     public TotemHUD(HUD hud) {
-        super(hud, "totems", "Displays the amount of totems in your inventory.", true);
+        super(hud, "totems", "Displays the amount of totems in your inventory", true);
     }
 
     @Override

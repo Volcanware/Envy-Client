@@ -75,7 +75,7 @@ public class PlayerModelHUD extends HUDElement {
     );
 
     public PlayerModelHUD(HUD hud) {
-        super(hud, "player-model", "Displays a model of your player.", true);
+        super(hud, "player-model", "Displays a model of your player", true);
     }
 
     @Override

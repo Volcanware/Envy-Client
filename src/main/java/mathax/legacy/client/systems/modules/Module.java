@@ -48,7 +48,7 @@ public abstract class Module implements ISerializable<Module> {
         this.name = name;
         this.title = Utils.nameToTitle(name);
         this.description = description;
-        this.color = Color.fromHsv(Utils.random(0.0, 360.0), 0.35, 1);
+        this.color = new Color(Utils.random(0, 255), Utils.random(0, 255), Utils.random(0, 255));
     }
 
     public WWidget getWidget(GuiTheme theme) {

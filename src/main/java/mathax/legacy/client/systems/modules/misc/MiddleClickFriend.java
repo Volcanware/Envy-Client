@@ -63,6 +63,7 @@ public class MiddleClickFriend extends Module {
     @EventHandler
     private void onMouseButton(MouseButtonEvent event) {
         if (event.action == KeyAction.Press && event.button == GLFW_MOUSE_BUTTON_MIDDLE && mc.currentScreen == null && mc.targetedEntity != null && mc.targetedEntity instanceof PlayerEntity) {
+            if (mc.targetedEntity.getUuidAsString().equals(mc.getSession().getUuid())) return;
             if (!Friends.get().isFriend((PlayerEntity) mc.targetedEntity)) {
                 if (Enemies.get().isEnemy((PlayerEntity) mc.targetedEntity)) {
                     ChatUtils.error("Friends", "Could not add to friends because this person is on your Enemy list.");

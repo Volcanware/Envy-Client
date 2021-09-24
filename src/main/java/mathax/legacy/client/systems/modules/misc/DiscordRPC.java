@@ -131,7 +131,7 @@ public class DiscordRPC extends Module {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Discord Rich Presence disabled!");
     }
 
-    private class Placeholders  {
+    private static class Placeholders  {
         private static final Pattern pattern = Pattern.compile("(%activity%|%version%|%username%|%health%)");
 
         public static String apply(String string) {
@@ -151,9 +151,7 @@ public class DiscordRPC extends Module {
                 case "%activity%":
                     if (MinecraftClient.getInstance() == null || MinecraftClient.getInstance().getOverlay() instanceof SplashOverlay) {
                         return "Minecraft is loading...";
-                    } else if (MinecraftClient.getInstance().currentScreen instanceof TitleScreen) {
-                        return "In main menu";
-                    } else if (MinecraftClient.getInstance().currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) {
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof TitleScreen || MinecraftClient.getInstance().currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) {
                         return "In main menu";
                     } else if (MinecraftClient.getInstance().currentScreen instanceof MultiplayerScreen) {
                         return "In server selection";

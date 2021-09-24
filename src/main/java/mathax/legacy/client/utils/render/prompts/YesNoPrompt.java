@@ -87,7 +87,7 @@ public class YesNoPrompt {
         }
     }
 
-    private class PromptScreen extends WindowScreen {
+    public class PromptScreen extends WindowScreen {
         public PromptScreen(GuiTheme theme) {
             super(theme, YesNoPrompt.this.title);
 
@@ -99,7 +99,7 @@ public class YesNoPrompt {
             for (String line : messages) add(theme.label(line)).expandX();
             add(theme.horizontalSeparator()).expandX();
 
-            if (id.equals("new-update-button")) {
+            if (id.equals(id + "-dont-disable")) {
                 WHorizontalList list = add(theme.horizontalList()).expandX().widget();
 
                 WButton yesButton = list.add(theme.button("Yes")).expandX().widget();
