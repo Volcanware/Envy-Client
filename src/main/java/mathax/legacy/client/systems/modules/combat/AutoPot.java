@@ -1,6 +1,7 @@
 package mathax.legacy.client.systems.modules.combat;
 
 import baritone.api.BaritoneAPI;
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.entity.player.ItemUseCrosshairTargetEvent;
 import mathax.legacy.client.events.world.TickEvent;
@@ -35,6 +36,7 @@ public class AutoPot extends Module {
         AnchorAura.class,
         BedAura.class
     };
+    private float prevPitch;
     private int slot, prevSlot;
     private boolean drinking, splashing, pitched;
     private boolean wasBaritone;
@@ -116,7 +118,7 @@ public class AutoPot extends Module {
 
     public final Setting<Double> splashingPitch = sgRotation.add(new DoubleSetting.Builder()
         .name("splashing")
-        .description("Swings your hand when placing.")
+        .description("The pitch when you are splashing potions.")
         .defaultValue(90)
         .min(-90)
         .max(90)
@@ -125,15 +127,23 @@ public class AutoPot extends Module {
         .build()
     );
 
-    public final Setting<Double> stoppedSplashingPitch = sgRotation.add(new DoubleSetting.Builder()
-        .name("stopped-splashing")
-        .description("Swings your hand when placing.")
+    private final Setting<Boolean> previousPitch = sgRotation.add(new BoolSetting.Builder()
+        .name("previous")
+        .description("Returns back to previous Pitch when finished splashing.")
+        .defaultValue(true)
+        .visible(() -> rotateMode.get() == RotateMode.Client)
+        .build()
+    );
+
+    public final Setting<Double> stoppedPitch = sgRotation.add(new DoubleSetting.Builder()
+        .name("stopped")
+        .description("The pitch when stopping splashing.")
         .defaultValue(0)
         .min(-90)
         .max(90)
         .sliderMin(-90)
         .sliderMax(90)
-        .visible(() -> rotateMode.get() == RotateMode.Client)
+        .visible(() -> rotateMode.get() == RotateMode.Client && !previousPitch.get())
         .build()
     );
 
@@ -304,6 +314,9 @@ public class AutoPot extends Module {
                     Rotations.rotate(mc.player.getYaw(), splashingPitch.get().floatValue());
                     splash();
                 case Client:
+                    if (mc.player.getPitch() != splashingPitch.get().floatValue()) {
+                        prevPitch = mc.player.getPitch();
+                    }
                     pitched = true;
                     mc.player.setPitch(splashingPitch.get().floatValue());
                     splash();
@@ -372,7 +385,11 @@ public class AutoPot extends Module {
         changeSlot(prevSlot);
         setPressed(false);
         if (pitched) {
-            mc.player.setPitch(stoppedSplashingPitch.get().floatValue());
+            if (previousPitch.get()) {
+                mc.player.setPitch(prevPitch);
+            } else {
+                mc.player.setPitch(stoppedPitch.get().floatValue());
+            }
             pitched = false;
         }
 
