@@ -41,11 +41,11 @@ public class PositionHUD extends HUDElement {
 
         switch (PlayerUtils.getDimension()) {
             case Overworld -> {
-                left2 = "Nether XYZ: ";
+                left2 = "Nether XYZ ";
                 right2 = String.format("%.1f %.1f %.1f", x1 / 8.0, y1, z1 / 8.0);
             }
             case Nether -> {
-                left2 = "Overworld XYZ: ";
+                left2 = "Overworld XYZ ";
                 right2 = String.format("%.1f %.1f %.1f", x1 * 8.0, y1, z1 * 8.0);
             }
         }

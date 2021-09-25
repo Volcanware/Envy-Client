@@ -147,7 +147,7 @@ public class AutoPot extends Module {
     );
 
     public AutoPot() {
-        super(Categories.Combat, Items.POTION, "auto-pot", "Automatically Duses Potions");
+        super(Categories.Combat, Items.POTION, "auto-pot", "Automatically uses Potions");
     }
 
     @Override
