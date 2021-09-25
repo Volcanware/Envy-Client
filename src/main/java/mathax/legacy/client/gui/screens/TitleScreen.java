@@ -40,7 +40,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 
-//TODO: Make MatHax theme & widgets work instead of buttons
+// TODO: REDESIGN SO ALL BUTTONS CAN BE ACCESSED IN EVERY GUI SCALE AND RESOLUTION AND RESIZE MATHAX LOGO SO IT IS NOT SO BIG
+// TODO: [LATER] Make MatHax theme & widgets work instead of buttons
 
 public class TitleScreen extends Screen {
     private final int WHITE = Color.fromRGBA(255, 255, 255, 255);
@@ -103,7 +104,6 @@ public class TitleScreen extends Screen {
                 if (!buttonWidget.active) {
                     renderOrderedTooltip(matrixStack, client.textRenderer.wrapLines(MULTIPLAYER_DISABLED_TEXT, Math.max(width / 2 - 43, 170)), i, j);
                 }
-
             }
 
             public void supply(Consumer<Text> consumer) {

@@ -108,7 +108,8 @@ public class AutoTotem extends Module {
     );
 
     public final Setting<Versions> version = sgGeneral.add(new EnumSetting.Builder<Versions>()
-        .name("minecraft-server-version")
+        .name("server-version")
+        .description("Which server does the server you are on run on.")
         .defaultValue(Versions.mc_1_17)
         .visible(() -> mode.get() == Mode.Enhanced)
         .build()

@@ -43,7 +43,7 @@ public class Zoom extends Module {
     private final Setting<Boolean> scroll = sgScroll.add(new BoolSetting.Builder()
         .name("scroll")
         .description("Allows you to change zoom value using scroll wheel.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 

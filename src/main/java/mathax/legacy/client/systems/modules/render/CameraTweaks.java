@@ -39,7 +39,7 @@ public class CameraTweaks extends Module {
     private final Setting<Boolean> scrollingEnabled = sgScrolling.add(new BoolSetting.Builder()
         .name("scrolling-enabled")
         .description("Allows you to scroll to change camera distance.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 

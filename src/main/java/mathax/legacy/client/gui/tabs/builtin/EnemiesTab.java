@@ -51,15 +51,6 @@ public class EnemiesTab extends Tab {
                 .build()
             );
 
-            sgGeneral.add(new BoolSetting.Builder()
-                .name("attack")
-                .description("Whether to attack enemies.")
-                .defaultValue(false)
-                .onChanged(aBoolean -> Enemies.get().attack = aBoolean)
-                .onModuleActivated(booleanSetting -> booleanSetting.set(Enemies.get().attack))
-                .build()
-            );
-
             settings.onActivated();
         }
 

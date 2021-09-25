@@ -25,7 +25,6 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
     private List<Enemy> enemies = new ArrayList<>();
 
     public final SettingColor color = new SettingColor(255, 0, 0);
-    public boolean attack = false;
 
     public Enemies() {
         super("Enemies");
@@ -102,7 +101,6 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
         for (Enemy Enemy : enemies) EnemiesTag.add(Enemy.toTag());
         tag.put("Enemies", EnemiesTag);
         tag.put("color", color.toTag());
-        tag.putBoolean("attack", attack);
 
         return tag;
     }
@@ -111,7 +109,6 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
     public Enemies fromTag(NbtCompound tag) {
         enemies = NbtUtils.listFromTag(tag.getList("Enemies", 10), tag1 -> new Enemy((NbtCompound) tag1));
         if (tag.contains("color")) color.fromTag(tag.getCompound("color"));
-        attack = tag.contains("attack") && tag.getBoolean("attack");
         return this;
     }
 }
