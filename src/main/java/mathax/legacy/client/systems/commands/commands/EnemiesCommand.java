@@ -18,6 +18,7 @@ import net.minecraft.util.Formatting;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -104,7 +105,7 @@ public class EnemiesCommand extends Command {
 
         @Override
         public Collection<String> getExamples() {
-            return Arrays.asList("Enemy");
+            return List.of("Matejko06");
         }
     }
 }

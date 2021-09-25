@@ -14,8 +14,6 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.misc.DiscordRPC;
 import mathax.legacy.client.systems.modules.render.BetterTooltips;
 import mathax.legacy.client.systems.modules.world.Timer;
-import mathax.legacy.client.utils.misc.Placeholders;
-import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.player.EChestMemory;
 import mathax.legacy.client.utils.render.PeekScreen;
 import mathax.legacy.client.utils.render.color.Color;
@@ -77,6 +75,7 @@ public class Utils {
         dfs.setDecimalSeparator('.');
         df.setDecimalFormatSymbols(dfs);
     }
+
     public static double getPlayerSpeed() {
         if (mc.player == null) return 0;
 
@@ -369,24 +368,6 @@ public class Utils {
         if (mc.player.isCreative()) return " | Creative Mode";
         if (mc.player.isSpectator()) return " | Spectator Mode";
         return " | " + Math.round(mc.player.getHealth() + mc.player.getAbsorptionAmount()) + " HP";
-    }
-
-    public static String getCoper() {
-        String apiCoper = HTTP.get(MatHaxLegacy.API_URL + "Coper/CoperName").sendString().replace("\n", "");
-        if (apiCoper == null) {
-            return Placeholders.apply("%player%");
-        } else {
-            return apiCoper;
-        }
-    }
-
-    public static String getCoperReplacement() {
-        String apiCoperReplacement = HTTP.get(MatHaxLegacy.API_URL + "Coper/CoperReplacement").sendString().replace("\n", "");
-        if (apiCoperReplacement == null) {
-            return Placeholders.apply("%player%Coper");
-        } else {
-            return apiCoperReplacement;
-        }
     }
 
     public static String nameToTitle(String name) {

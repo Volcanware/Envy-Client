@@ -1,6 +1,5 @@
 package mathax.legacy.client.mixin;
 
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.resource.SplashTextResourceSupplier;
 import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,10 +39,8 @@ public class SplashTextResourceSupplierMixin {
             Formatting.YELLOW + "420 XDDDDDD",
             Formatting.YELLOW + "ayy",
             Formatting.YELLOW + "too ez",
-
-            // COPER [Taken from API when connected to internet, else using username of logged player.]
-            Formatting.GRAY + Utils.getCoper() + Formatting.YELLOW + " coping hard",
-            Formatting.GRAY + Utils.getCoper() + Formatting.YELLOW + "? More like " + Formatting.GRAY + Utils.getCoperReplacement()
+            Formatting.YELLOW + "owned",
+            Formatting.YELLOW + "your mom :joy:"
         );
     }
 }

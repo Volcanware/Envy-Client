@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Spam extends Module {
+    private final List<String> messages = new ArrayList<>();
+    private int messageI, timer;
+    private String newText = "";
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
@@ -75,10 +79,6 @@ public class Spam extends Module {
         .defaultValue(true)
         .build()
     );
-
-    private final List<String> messages = new ArrayList<>();
-    private int messageI, timer;
-    private String newText = "";
 
     public Spam() {
         super(Categories.Chat, Items.BELL, "spam", "Spams specified messages in chat");

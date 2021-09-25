@@ -10,7 +10,6 @@ import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.input.WTextBox;
 import mathax.legacy.client.gui.widgets.pressable.WMinus;
 import mathax.legacy.client.gui.widgets.pressable.WPlus;
-import mathax.legacy.client.settings.BoolSetting;
 import mathax.legacy.client.settings.ColorSetting;
 import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.settings.Settings;

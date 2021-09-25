@@ -18,6 +18,7 @@ import net.minecraft.util.Formatting;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -104,8 +105,7 @@ public class FriendsCommand extends Command {
 
         @Override
         public Collection<String> getExamples() {
-            return Arrays.asList("Matejko06", "GeekieCoder");
+            return List.of("Matejko06");
         }
     }
-
 }

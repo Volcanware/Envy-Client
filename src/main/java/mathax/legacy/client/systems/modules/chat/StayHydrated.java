@@ -21,7 +21,7 @@ public class StayHydrated extends Module {
         .name("delay")
         .description("Delay between drinking notifications in minutes.")
         .defaultValue(120)
-        .min(0.5)
+        .min(1)
         .sliderMin(5)
         .sliderMax(180)
         .build()
@@ -47,9 +47,9 @@ public class StayHydrated extends Module {
         if (mc.world != null) count = true;
 
         if (notifyOnJoin && mc.world != null) {
-            postNotification();
             notifyOnJoin = false;
             ticks = 0;
+            postNotification();
             return;
         }
 
@@ -59,6 +59,7 @@ public class StayHydrated extends Module {
                 notifyOnJoin = true;
                 count = false;
             }
+
             return;
         }
 
