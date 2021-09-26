@@ -46,11 +46,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /*/                                                                                                                               /*/
 
 public class AutoTotem extends Module {
-    private final AtomicBoolean should_wait_next_tick = new AtomicBoolean(false);
+    private final AtomicBoolean shouldWaitNextTick = new AtomicBoolean(false);
     private static final double damage = (float)((int)((1 + 1) / 2.0D * 7.0D * 12.0D + 1.0D));
     private static final Explosion iexplosion = new Explosion(null, null, 0, 0, 0, 6.0F, false, Explosion.DestructionType.DESTROY);
-    private boolean should_override_totem, should_click_blank;
-    private int selected_slot = 0;
+    private boolean shouldOverrideTotem, shouldClickBlank;
+    private int selectedSlot = 0;
     public boolean locked;
     private int totems, ticks;
 
@@ -129,8 +129,8 @@ public class AutoTotem extends Module {
 
     @Override
     public void onActivate() {
-        should_override_totem = true;
-        selected_slot = mc.player.getInventory().selectedSlot;
+        shouldOverrideTotem = true;
+        selectedSlot = mc.player.getInventory().selectedSlot;
     }
 
     @EventHandler
@@ -145,7 +145,7 @@ public class AutoTotem extends Module {
                     return;
                 }
 
-                InvUtils.swap(totem_id, selected_slot);
+                InvUtils.swap(totem_id, selectedSlot);
 
                 totem_id = getTotemId();
                 if (totem_id == -1) return;
@@ -160,12 +160,12 @@ public class AutoTotem extends Module {
             case Strict, Smart: return;
             case Enhanced:
                 if (event.packet instanceof ClickSlotC2SPacket) {
-                    should_wait_next_tick.set(true);
+                    shouldWaitNextTick.set(true);
                     return;
                 }
 
                 if (event.packet instanceof UpdateSelectedSlotC2SPacket packet) {
-                    selected_slot = packet.getSelectedSlot();
+                    selectedSlot = packet.getSelectedSlot();
                 }
         }
     }
@@ -196,21 +196,21 @@ public class AutoTotem extends Module {
             case Enhanced:
                 if (mc.player.currentScreenHandler instanceof CreativeInventoryScreen.CreativeScreenHandler) return;
 
-                if (should_wait_next_tick.getAndSet(false)) return;
+                if (shouldWaitNextTick.getAndSet(false)) return;
 
                 ItemStack
-                    offhand_stack = mc.player.getInventory().getStack(40),
-                    cursor_stack = mc.player.currentScreenHandler.getCursorStack();
+                    offhandStack = mc.player.getInventory().getStack(40),
+                    cursorStack = mc.player.currentScreenHandler.getCursorStack();
 
                 final boolean
-                    is_holding_totem = cursor_stack.getItem() == Items.TOTEM_OF_UNDYING,
-                    is_totem_in_offhand = offhand_stack.getItem() == Items.TOTEM_OF_UNDYING;
-                boolean can_click_offhand = mc.player.currentScreenHandler instanceof PlayerScreenHandler;
+                    isHoldingTotem = cursorStack.getItem() == Items.TOTEM_OF_UNDYING,
+                    isTotemInOffhand = offhandStack.getItem() == Items.TOTEM_OF_UNDYING;
+                boolean canClickOffhand = mc.player.currentScreenHandler instanceof PlayerScreenHandler;
 
-                if (is_totem_in_offhand && !shouldOverrideTotem()) {
+                if (isTotemInOffhand && !shouldOverrideTotem()) {
                     if (!(mc.currentScreen instanceof HandledScreen) &&
-                        (should_click_blank || (version.get() != Versions.mc_1_12 && is_holding_totem))) {
-                        should_click_blank = false;
+                        (shouldClickBlank || (version.get() != Versions.mc_1_12 && isHoldingTotem))) {
+                        shouldClickBlank = false;
 
                         for (Slot slot : mc.player.currentScreenHandler.slots) {
                             if (!slot.getStack().isEmpty()) continue;
@@ -223,54 +223,54 @@ public class AutoTotem extends Module {
                 }
 
                 final int totem_id = getTotemId();
-                if (totem_id == -1 && !is_holding_totem) return;
+                if (totem_id == -1 && !isHoldingTotem) return;
 
-                if (!can_click_offhand && close_screen.get() && mc.player.getInventory().count(Items.TOTEM_OF_UNDYING) < 1) {
+                if (!canClickOffhand && close_screen.get() && mc.player.getInventory().count(Items.TOTEM_OF_UNDYING) < 1) {
                     mc.player.closeHandledScreen();
-                    can_click_offhand = true;
+                    canClickOffhand = true;
                 }
 
-                if (is_holding_totem && can_click_offhand) {
+                if (isHoldingTotem && canClickOffhand) {
                     InvUtils.clickId(45);
                     return;
                 }
 
-                if (version.get() == Versions.mc_1_12 && !can_click_offhand) {
-                    ItemStack mainhand_stack = mc.player.getInventory().getStack(selected_slot);
+                if (version.get() == Versions.mc_1_12 && !canClickOffhand) {
+                    ItemStack mainhand_stack = mc.player.getInventory().getStack(selectedSlot);
                     if (mainhand_stack.getItem() == Items.TOTEM_OF_UNDYING) {
                         mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket
                             (PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, BlockPos.ORIGIN, Direction.DOWN));
                         return;
                     }
 
-                    if (is_holding_totem) {
-                        InvUtils.clickId(InvUtils.getFirstHotbarSlotId() + selected_slot);
+                    if (isHoldingTotem) {
+                        InvUtils.clickId(InvUtils.getFirstHotbarSlotId() + selectedSlot);
                         return;
                     }
                 }
 
                 if (totem_id == -1) {
-                    if (is_holding_totem) {
+                    if (isHoldingTotem) {
                         for (Slot slot : mc.player.currentScreenHandler.slots) {
                             if (!slot.getStack().isEmpty()) continue;
                             InvUtils.clickId(slot.id);
                             return;
                         }
 
-                        InvUtils.clickId(InvUtils.getFirstHotbarSlotId() + selected_slot);
+                        InvUtils.clickId(InvUtils.getFirstHotbarSlotId() + selectedSlot);
                     }
                     return;
                 }
 
                 if (version.get() == Versions.mc_1_12) {
                     InvUtils.clickId(totem_id);
-                    should_click_blank = true;
+                    shouldClickBlank = true;
                     return;
                 }
 
                 InvUtils.swap(totem_id, 40);
 
-                should_override_totem = !is_totem_in_offhand;
+                shouldOverrideTotem = !isTotemInOffhand;
         }
     }
 
@@ -295,10 +295,10 @@ public class AutoTotem extends Module {
                         mc.player.getOffHandStack().decrement(1);
                 }
                 else if (event.packet instanceof UpdateSelectedSlotS2CPacket packet) {
-                    selected_slot = packet.getSlot();
+                    selectedSlot = packet.getSlot();
                 }
                 else if (event.packet instanceof OpenScreenS2CPacket || event.packet instanceof CloseScreenS2CPacket) {
-                    should_override_totem = true;
+                    shouldOverrideTotem = true;
                 }
         }
     }
@@ -323,7 +323,7 @@ public class AutoTotem extends Module {
     }
 
     private boolean shouldOverrideTotem() {
-        return should_override_totem && (version.get() == Versions.mc_1_16 ||
+        return shouldOverrideTotem && (version.get() == Versions.mc_1_16 ||
             (!(mc.player.currentScreenHandler instanceof PlayerScreenHandler) &&
                 version.get() == Versions.mc_1_17));
     }

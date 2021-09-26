@@ -19,7 +19,7 @@ import net.minecraft.item.*;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
 public class Offhand extends Module {
-    private AutoTotem autoTotem = Modules.get().get(AutoTotem.class);
+    private final AutoTotem autoTotem = Modules.get().get(AutoTotem.class);
     private boolean isClicking;
     private boolean sentMessage;
     private Item currentItem;
