@@ -54,13 +54,6 @@ public class DiscordRPC extends Module {
         .build()
     );
 
-    private final Setting<Boolean> queuePosition = sgGeneral.add(new BoolSetting.Builder()
-        .name("queue-position")
-        .description("Appends Queue position to MatHax RPC if in Queue.")
-        .defaultValue(true)
-        .build()
-    );
-
     private final Setting<SmallImageMode> smallImageMode = sgGeneral.add(new EnumSetting.Builder<SmallImageMode>()
         .name("small-images")
         .description("Shows cats or dogs on MatHax RPC.")
@@ -80,11 +73,11 @@ public class DiscordRPC extends Module {
         net.arikia.dev.drpc.DiscordRPC.discordInitialize(APP_ID, handlers, true, STEAM_ID);
         rpc.startTimestamp = System.currentTimeMillis() / 1000;
         rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-        rpc.state = Placeholders.apply("%activity%" + getQueue());
+        rpc.state = Placeholders.apply("%activity%");
         rpc.largeImageKey = "logo";
         rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
         applySmallImage();
-        rpc.smallImageText = Placeholders.apply("%activity%" + getQueue());
+        rpc.smallImageText = Placeholders.apply("%activity%");
         rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
         rpc.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
         rpc.partySize = MinecraftClient.getInstance().getNetworkHandler() != null ? MinecraftClient.getInstance().getNetworkHandler().getPlayerList().size() : 1;
@@ -95,11 +88,11 @@ public class DiscordRPC extends Module {
                 net.arikia.dev.drpc.DiscordRPC.discordRunCallbacks();
                 try {
                     rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-                    rpc.state = Placeholders.apply("%activity%" + getQueue());
+                    rpc.state = Placeholders.apply("%activity%");
                     rpc.largeImageKey = "logo";
                     rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
                     applySmallImage();
-                    rpc.smallImageText = Placeholders.apply("%activity%" + getQueue());
+                    rpc.smallImageText = Placeholders.apply("%activity%");
                     rpc.partySize = MinecraftClient.getInstance().getNetworkHandler() != null ? MinecraftClient.getInstance().getNetworkHandler().getPlayerList().size() : 1;
                     rpc.partyMax = 1;
                     net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
@@ -247,30 +240,6 @@ public class DiscordRPC extends Module {
                     return "In " + MinecraftClient.getInstance().currentScreen.getTitle().toString();
             }
         }
-    }
-
-    private static String queuePos = "";
-
-    @EventHandler
-    private void onMessageRecieve(ReceiveMessageEvent event) {
-        if (queuePosition.get()) {
-            if (event.message.getString().contains("[MatHax Legacy] ")) return;
-            String messageString = event.message.getString();
-            if (messageString.contains("Position in queue: ")) {
-                String queue = messageString.replace("Position in queue: ", "");
-                queuePos = " (Position: " + queue + ")";
-            } else {
-                queuePos = "";
-            }
-        } else {
-            queuePos = "";
-        }
-    }
-
-    public static String getQueue() {
-        if (MinecraftClient.getInstance().isInSingleplayer()) return "";
-        else if (MinecraftClient.getInstance().world == null) return "";
-        else return queuePos;
     }
 
     private static void applySmallImage() {
