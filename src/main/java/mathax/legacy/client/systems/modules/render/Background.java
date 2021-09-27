@@ -30,12 +30,12 @@ public class Background extends Module {
 
     // General
 
-    private final Setting<BackgroundMode> backgroundMode = sgGeneral.add(new EnumSetting.Builder<BackgroundMode>()
+    /*private final Setting<BackgroundMode> backgroundMode = sgGeneral.add(new EnumSetting.Builder<BackgroundMode>()
         .name("mode")
         .description("Which mode the blur should use.")
         .defaultValue(BackgroundMode.Blur)
         .build()
-    );
+    );*/
 
     private final Setting<Integer> fadeTime = sgGeneral.add(new IntSetting.Builder()
         .name("fade-time")
@@ -132,7 +132,8 @@ public class Background extends Module {
 
         if (!enabled) return;
 
-        if (backgroundMode.get() == BackgroundMode.Blur) {
+        //switch (backgroundMode.get()) {
+            //case Blur:
             // Initialize shader and framebuffer if running for the first time
             if (shader == null) {
                 shader = new Shader("background/blur.vert", "background/blur.frag");
@@ -186,7 +187,7 @@ public class Background extends Module {
             }
 
             PostProcessRenderer.endRender();
-        }
+        //}
     }
 
     private boolean shouldRender() {
@@ -201,9 +202,9 @@ public class Background extends Module {
         return false;
     }
 
-    public enum BackgroundMode {
+    /*public enum BackgroundMode {
         Blur
-    }
+    }*/
 
     public enum Mode {
         Fancy,

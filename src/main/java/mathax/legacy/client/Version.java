@@ -47,7 +47,12 @@ public class Version {
     }
 
     public static String getStylized() {
-        return "v" + get() + " " + getDevBuild();
+        Integer dev = getDev();
+        if (dev == 0) {
+            return "v" + get();
+        } else {
+            return "v" + get() + " " + getDevBuild();
+        }
     }
 
     public static String getMinecraft(){

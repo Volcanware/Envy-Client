@@ -122,7 +122,7 @@ public class Nametags extends Module {
     private final Setting<Double> maxCullRange = sgGeneral.add(new DoubleSetting.Builder()
         .name("culling-range")
         .description("Only render nametags within this distance of your player.")
-        .defaultValue(20)
+        .defaultValue(50)
         .min(0)
         .sliderMax(200)
         .visible(culling::get)
@@ -140,7 +140,8 @@ public class Nametags extends Module {
     );
 
     //Players
-    private final Setting<Boolean> displayPops = sgPlayers.add(new BoolSetting.Builder()
+
+    private final Setting<Boolean> displayTotemPops = sgPlayers.add(new BoolSetting.Builder()
         .name("show-pops")
         .description("Show the players pops.")
         .defaultValue(true)
@@ -265,7 +266,7 @@ public class Nametags extends Module {
 
     @EventHandler
     private void onReceivePacket(PacketEvent.Receive event) {
-        if (!displayPops.get()) return;
+        if (!displayTotemPops.get()) return;
         if (!(event.packet instanceof EntityStatusS2CPacket)) return;
 
         EntityStatusS2CPacket p = (EntityStatusS2CPacket) event.packet;
@@ -297,7 +298,7 @@ public class Nametags extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        if (displayPops.get()) {
+        if (displayTotemPops.get()) {
             synchronized (totemPopMap) {
                 for (PlayerEntity player : mc.world.getPlayers()) {
                     if (!totemPopMap.containsKey(player.getUuid())) continue;
@@ -443,7 +444,7 @@ public class Nametags extends Module {
         if (displayGameMode.get()) width += gmWidth;
         if (displayPing.get()) width += pingWidth;
         if (displayDistance.get()) width += distWidth;
-        if (displayPops.get()) width += popWidth;
+        if (displayTotemPops.get()) width += popWidth;
 
         double widthHalf = width / 2;
         double heightDown = text.getHeight(true);
@@ -462,7 +463,7 @@ public class Nametags extends Module {
         hX = text.render(healthText, hX, hY, healthColor, true);
         if (displayPing.get()) hX = text.render(pingText, hX, hY, BLUE, true);
         if (displayDistance.get()) hX = text.render(distText, hX, hY, GREY, true);
-        if (displayPops.get()) text.render(popText, hX, hY, AMBER, true);
+        if (displayTotemPops.get()) text.render(popText, hX, hY, AMBER, true);
         text.end();
 
         if (displayItems.get()) {
