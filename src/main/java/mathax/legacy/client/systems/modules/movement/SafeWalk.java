@@ -13,7 +13,6 @@ import net.minecraft.block.*;
 import net.minecraft.item.Items;
 import net.minecraft.util.shape.VoxelShapes;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class SafeWalk extends Module {

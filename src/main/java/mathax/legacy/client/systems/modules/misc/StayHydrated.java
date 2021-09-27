@@ -1,21 +1,34 @@
-package mathax.legacy.client.systems.modules.chat;
+package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.DoubleSetting;
+import mathax.legacy.client.settings.EnumSetting;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
+import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.utils.render.MatHaxToast;
+import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.item.Items;
 
 public class StayHydrated extends Module {
+    public final int BLUE = Color.fromRGBA(0, 128, 255, 255);
+
     private boolean menuCounting, notifyOnJoin, count;
     private int ticks = 0;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     //General
+
+    private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+        .name("mode")
+        .description("Determines how to notify you when its time to drink.")
+        .defaultValue(Mode.Both)
+        .build()
+    );
 
     private final Setting<Double> delay = sgGeneral.add(new DoubleSetting.Builder()
         .name("delay")
@@ -28,7 +41,7 @@ public class StayHydrated extends Module {
     );
 
     public StayHydrated() {
-        super(Categories.Chat, Items.WATER_BUCKET, "stay-hydrated", "Notifies you when its time to drink #StayHydrated");
+        super(Categories.Misc, Items.WATER_BUCKET, "stay-hydrated", "Notifies you when its time to drink #StayHydrated");
 
         runInMainMenu = true;
     }
@@ -49,7 +62,15 @@ public class StayHydrated extends Module {
         if (notifyOnJoin && mc.world != null) {
             notifyOnJoin = false;
             ticks = 0;
-            postNotification();
+            switch (mode.get()) {
+                case Chat:
+                    sendNotificationChat();
+                case Toast:
+                    sendNotificationToast();
+                case Both:
+                    sendNotificationChat();
+                    sendNotificationToast();
+            }
             return;
         }
 
@@ -64,12 +85,30 @@ public class StayHydrated extends Module {
         }
 
         if (ticks > (delay.get() * 20) * 60) {
-            postNotification();
+            switch (mode.get()) {
+                case Chat:
+                    sendNotificationChat();
+                case Toast:
+                    sendNotificationToast();
+                case Both:
+                    sendNotificationChat();
+                    sendNotificationToast();
+            }
             ticks = 0;
         }
     }
 
-    private void postNotification() {
+    private void sendNotificationChat() {
         info("Its time to drink! #StayHydrated");
+    }
+
+    private void sendNotificationToast() {
+        if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.WATER_BUCKET, BLUE, "Stay Hydrated", "Its time to drink!"));
+    }
+
+    public enum Mode {
+        Chat,
+        Toast,
+        Both
     }
 }

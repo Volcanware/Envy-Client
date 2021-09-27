@@ -26,9 +26,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
+/*/                                                                                                              /*/
 /*/ Automation                                                                                                   /*/
 /*/ Used from Orion Meteor Addon                                                                                 /*/
 /*/ https://github.com/GhostTypes/orion/blob/main/src/main/java/me/ghosttypes/orion/modules/main/AnchorAura.java /*/
+/*/                                                                                                              /*/
 
 public class AnchorAura extends Module {
     private int placeDelayLeft;

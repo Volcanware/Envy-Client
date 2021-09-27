@@ -59,7 +59,6 @@
     "CustomPayloadC2SPacketAccessor",
     "DefaultSkinHelperMixin",
     "DimensionTypeAccessor",
-    "DisableVanillaTitle",
     "DisconnectedScreenMixin",
     "DirectConnectScreenMixin",
     "EnchantingTableBlockEntityRendererMixin",

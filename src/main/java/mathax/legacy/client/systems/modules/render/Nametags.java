@@ -1,7 +1,11 @@
 package mathax.legacy.client.systems.modules.render;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.events.game.GameJoinedEvent;
+import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.render.Render2DEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.GL;
@@ -21,7 +25,6 @@ import mathax.legacy.client.utils.render.RenderUtils;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.bus.EventHandler;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -29,30 +32,36 @@ import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
-
 import java.util.*;
 
+/*/                                                                                                              /*/
+/*/ Taken from Orion Meteor Addon and edited by Matejko06                                                        /*/
+/*/ https://github.com/GhostTypes/orion/blob/main/src/main/java/me/ghosttypes/orion/modules/main/AnchorAura.java /*/
+/*/                                                                                                              /*/
+
 public class Nametags extends Module {
+    private static final Identifier MATHAX_ICON = new Identifier("mathaxlegacy", "textures/icons/icon.png");
+    private Color textureColor = new Color(255, 255, 255, 255);
+
     private final Color WHITE = new Color(255, 255, 255);
     private final Color RED = new Color(255, 25, 25);
     private final Color AMBER = new Color(255, 105, 25);
-    private final Color GREEN = new Color(25, 250, 25);
-    private final Color GOLD = new Color(230, 185, 35);
+    private final Color GREEN = new Color(25, 252, 25);
+    private final Color GOLD = new Color(232, 185, 35);
     private final Color GREY = new Color(150, 150, 150);
     private final Color BLUE = new Color(20, 170, 170);
 
     private final Vec3 pos = new Vec3();
     private final double[] itemWidths = new double[6];
 
+    private final Object2IntMap<UUID> totemPopMap = new Object2IntOpenHashMap<>();
     private final Map<Enchantment, Integer> enchantmentsToShowScale = new HashMap<>();
     private final List<Entity> entityList = new ArrayList<>();
-
-    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
-    private Color textureColor = new Color(255, 255, 255, 255);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgPlayers = settings.createGroup("Players");
@@ -63,22 +72,15 @@ public class Nametags extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Select entities to draw nametags on.")
-        .defaultValue(Utils.asObject2BooleanOpenHashMap(EntityType.PLAYER, EntityType.ITEM))
+        .defaultValue(Utils.asObject2BooleanOpenHashMap(EntityType.PLAYER, EntityType.ITEM, EntityType.TNT))
         .build()
     );
 
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
         .name("scale")
         .description("The scale of the nametag.")
-        .defaultValue(1)
+        .defaultValue(1.5)
         .min(0.1)
-        .build()
-    );
-
-    private final Setting<Boolean> yourself = sgGeneral.add(new BoolSetting.Builder()
-        .name("self")
-        .description("Displays a nametag on your player if you're in Freecam.")
-        .defaultValue(true)
         .build()
     );
 
@@ -90,13 +92,20 @@ public class Nametags extends Module {
     );
 
     private final Setting<SettingColor> names = sgGeneral.add(new ColorSetting.Builder()
-        .name("primary-color")
+        .name("color")
         .description("The color of the nametag names.")
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
-    public final Setting<SettingColor> selfColor = sgGeneral.add(new ColorSetting.Builder()
+    private final Setting<Boolean> self = sgGeneral.add(new BoolSetting.Builder()
+        .name("self")
+        .description("Displays a nametag on your player if you're in Freecam.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<SettingColor> selfColor = sgGeneral.add(new ColorSetting.Builder()
         .name("self-color")
         .description("The color of your nametag in Freecam.")
         .defaultValue(new SettingColor(0, 165, 255))
@@ -121,40 +130,25 @@ public class Nametags extends Module {
     );
 
     private final Setting<Integer> maxCullCount = sgGeneral.add(new IntSetting.Builder()
-        .name("culling-count")
-        .description("Only render this many nametags.")
+        .name("culling-count").description("Only render this many nametags.")
         .defaultValue(50)
         .min(1)
-        .sliderMin(1).sliderMax(100)
+        .sliderMin(1)
+        .sliderMax(100)
         .visible(culling::get)
         .build()
     );
 
     //Players
-
-    private final Setting<Boolean> displayHealth = sgPlayers.add(new BoolSetting.Builder()
-        .name("display-health")
-        .description("Shows the player's Health.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> displayPing = sgPlayers.add(new BoolSetting.Builder()
-        .name("ping")
-        .description("Shows the player's ping.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> displayDistance = sgPlayers.add(new BoolSetting.Builder()
-        .name("distance")
-        .description("Shows the distance between you and the player.")
+    private final Setting<Boolean> displayPops = sgPlayers.add(new BoolSetting.Builder()
+        .name("show-pops")
+        .description("Show the players pops.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> displayItems = sgPlayers.add(new BoolSetting.Builder()
-        .name("display-items")
+        .name("show-items")
         .description("Displays armor and hand items above the name tags.")
         .defaultValue(true)
         .build()
@@ -164,7 +158,8 @@ public class Nametags extends Module {
         .name("item-spacing")
         .description("The spacing between items.")
         .defaultValue(2)
-        .min(0).max(10)
+        .min(0)
+        .max(10)
         .sliderMax(5)
         .visible(displayItems::get)
         .build()
@@ -188,9 +183,7 @@ public class Nametags extends Module {
 
     private final Setting<Position> enchantPos = sgPlayers.add(new EnumSetting.Builder<Position>()
         .name("enchantment-position")
-        .description("Where the enchantments are rendered.")
-        .defaultValue(Position.Above)
-        .visible(displayItemEnchants::get)
+        .description("Where the enchantments are rendered.").defaultValue(Position.Above).visible(displayItemEnchants::get)
         .build()
     );
 
@@ -198,8 +191,10 @@ public class Nametags extends Module {
         .name("enchant-name-length")
         .description("The length enchantment names are trimmed to.")
         .defaultValue(3)
-        .min(1).max(5)
-        .sliderMin(0).sliderMax(5)
+        .min(1)
+        .max(5)
+        .sliderMin(0)
+        .sliderMax(5)
         .visible(displayItemEnchants::get)
         .build()
     );
@@ -216,16 +211,32 @@ public class Nametags extends Module {
         .name("enchant-text-scale")
         .description("The scale of the enchantment text.")
         .defaultValue(1)
-        .min(0.1).max(2)
-        .sliderMin(0.1).sliderMax(2)
+        .min(0.1)
+        .max(2)
+        .sliderMin(0.1)
+        .sliderMax(2)
         .visible(displayItemEnchants::get)
         .build()
     );
 
     private final Setting<Boolean> displayGameMode = sgPlayers.add(new BoolSetting.Builder()
         .name("gamemode")
-        .description("Shows the player's GameMode.")
-        .defaultValue(false)
+        .description("Shows the player's game mode.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> displayPing = sgPlayers.add(new BoolSetting.Builder()
+        .name("ping")
+        .description("Shows the player's ping.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> displayDistance = sgPlayers.add(new BoolSetting.Builder()
+        .name("distance")
+        .description("Shows the distance between you and the player.")
+        .defaultValue(true)
         .build()
     );
 
@@ -239,7 +250,35 @@ public class Nametags extends Module {
     );
 
     public Nametags() {
-        super(Categories.Render, Items.CYAN_STAINED_GLASS, "nametags", "Displays customizable nametags above players");
+        super(Categories.Render, Items.NAME_TAG, "nametags", "Displays customizable nametags above players");
+    }
+
+    @Override
+    public void onActivate() {
+        totemPopMap.clear();
+    }
+
+    @EventHandler
+    private void onGameJoin(GameJoinedEvent event) {
+        totemPopMap.clear();
+    }
+
+    @EventHandler
+    private void onReceivePacket(PacketEvent.Receive event) {
+        if (!displayPops.get()) return;
+        if (!(event.packet instanceof EntityStatusS2CPacket)) return;
+
+        EntityStatusS2CPacket p = (EntityStatusS2CPacket) event.packet;
+        if (p.getStatus() != 35) return;
+
+        Entity entity = p.getEntity(mc.world);
+
+        if (!(entity instanceof PlayerEntity)) return;
+
+        synchronized (totemPopMap) {
+            int pops = totemPopMap.getOrDefault(entity.getUuid(), 0);
+            totemPopMap.put(entity.getUuid(), ++pops);
+        }
     }
 
     private static String ticksToTime(int ticks) {
@@ -258,6 +297,18 @@ public class Nametags extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
+        if (displayPops.get()) {
+            synchronized (totemPopMap) {
+                for (PlayerEntity player : mc.world.getPlayers()) {
+                    if (!totemPopMap.containsKey(player.getUuid())) continue;
+
+                    if (player.deathTime > 0 || player.getHealth() <= 0) {
+                        int pops = totemPopMap.removeInt(player.getUuid());
+                    }
+                }
+            }
+        }
+
         entityList.clear();
 
         boolean freecamNotActive = !Modules.get().isActive(Freecam.class);
@@ -268,7 +319,7 @@ public class Nametags extends Module {
             if (!entities.get().containsKey(type)) continue;
 
             if (type == EntityType.PLAYER) {
-                if ((!yourself.get() || freecamNotActive) && entity == mc.player) continue;
+                if ((!self.get() || freecamNotActive) && entity == mc.player) continue;
             }
 
             if (!culling.get() || entity.getPos().distanceTo(cameraPos) < maxCullRange.get()) {
@@ -327,9 +378,13 @@ public class Nametags extends Module {
         TextRenderer text = TextRenderer.get();
         NametagUtils.begin(pos);
 
+        boolean showDev = false;
+        String gwText = "    ";
+        if (player.getUuidAsString().equals(MatHaxLegacy.devUUID) || player.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) showDev = true;
+
         // Gamemode
         GameMode gm = EntityUtils.getGameMode(player);
-        String gmText = "BOT";
+        String gmText = "NULL";
         if (gm != null) {
             gmText = switch (gm) {
                 case SPECTATOR -> "SP";
@@ -343,21 +398,20 @@ public class Nametags extends Module {
 
         // Name
         String name;
+        Color nameColor = PlayerUtils.getPlayerColor(player, names.get());
+        if (self.get() && player.getUuidAsString().equals(mc.getSession().getUuid())) nameColor = selfColor.get();
 
         if (player == mc.player) name = Modules.get().get(NameProtect.class).getName(player.getEntityName());
         else name = player.getEntityName();
 
-        if (player.getUuidAsString().equals(MatHaxLegacy.devUUID) || player.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) {
-            name = "     " + player.getEntityName();
-        }
+        name = name + " ";
 
         // Health
         float absorption = player.getAbsorptionAmount();
         int health = Math.round(player.getHealth() + absorption);
         double healthPercentage = health / (player.getMaxHealth() + absorption);
 
-        String healthString = String.valueOf(health);
-        String healthText = " " + healthString;
+        String healthText = String.valueOf(health);
         Color healthColor;
 
         if (healthPercentage <= 0.333) healthColor = RED;
@@ -370,20 +424,26 @@ public class Nametags extends Module {
 
         // Distance
         double dist = Math.round(PlayerUtils.distanceToCamera(player) * 10.0) / 10.0;
-        String distText = " " + dist + "m";
+        String distText = " (" + dist + "m)";
+
+        //Pops
+        String popText = " [" + getPops(player) + "]";
 
         // Calc widths
+        double devWidth = text.getWidth(gwText, true);
         double gmWidth = text.getWidth(gmText, true);
         double nameWidth = text.getWidth(name, true);
         double healthWidth = text.getWidth(healthText, true);
         double pingWidth = text.getWidth(pingText, true);
         double distWidth = text.getWidth(distText, true);
-        double width = nameWidth;
+        double popWidth = text.getWidth(popText, true);
+        double width = nameWidth + healthWidth;
 
-        if (displayHealth.get()) width += healthWidth;
+        if (showDev) width += devWidth;
         if (displayGameMode.get()) width += gmWidth;
         if (displayPing.get()) width += pingWidth;
         if (displayDistance.get()) width += distWidth;
+        if (displayPops.get()) width += popWidth;
 
         double widthHalf = width / 2;
         double heightDown = text.getHeight(true);
@@ -395,20 +455,14 @@ public class Nametags extends Module {
         double hX = -widthHalf;
         double hY = -heightDown;
 
+        if (showDev) hX = text.render(gwText, hX, hY, RED, true);
         if (displayGameMode.get()) hX = text.render(gmText, hX, hY, GOLD, true);
+        hX = text.render(name, hX, hY, nameColor, true);
 
-        Color getSelfColor = PlayerUtils.getPlayerColor(player, selfColor.get());
-        Color getNameColor = PlayerUtils.getPlayerColor(player, names.get());
-
-        if (player.equals(MinecraftClient.getInstance().getCameraEntity())) {
-            hX = text.render(name, hX, hY, getSelfColor, true);
-        } else {
-            hX = text.render(name, hX, hY, getNameColor, true);
-        }
-
-        if (displayHealth.get()) hX = text.render(healthText, hX, hY, healthColor, true);
+        hX = text.render(healthText, hX, hY, healthColor, true);
         if (displayPing.get()) hX = text.render(pingText, hX, hY, BLUE, true);
-        if (displayDistance.get()) text.render(distText, hX, hY, GREY, true);
+        if (displayDistance.get()) hX = text.render(distText, hX, hY, GREY, true);
+        if (displayPops.get()) text.render(popText, hX, hY, AMBER, true);
         text.end();
 
         if (displayItems.get()) {
@@ -504,8 +558,8 @@ public class Nametags extends Module {
             }
         } else if (displayItemEnchants.get()) displayItemEnchants.set(false);
 
-        if (player.getUuidAsString().equals(MatHaxLegacy.devUUID) || player.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) {
-            GL.bindTexture(mathaxLogo);
+        if (showDev) {
+            GL.bindTexture(MATHAX_ICON);
             Renderer2D.TEXTURE.begin();
             double textHeight = text.getHeight() / 2;
             Renderer2D.TEXTURE.texQuad(-width / 2 + 2, -textHeight * 2, 16, 16, textureColor);
@@ -564,9 +618,10 @@ public class Nametags extends Module {
         else healthColor = GREEN;
 
         double nameWidth = text.getWidth(nameText, true);
+        double healthWidth = text.getWidth(healthText, true);
         double heightDown = text.getHeight(true);
 
-        double width = nameWidth;
+        double width = nameWidth + healthWidth;
         double widthHalf = width / 2;
 
         drawBg(-widthHalf, -heightDown, width, heightDown);
@@ -621,6 +676,11 @@ public class Nametags extends Module {
         Renderer2D.COLOR.begin();
         Renderer2D.COLOR.quad(x - 1, y - 1, width + 2, height + 2, background.get());
         Renderer2D.COLOR.render(null);
+    }
+
+    public int getPops(PlayerEntity p) {
+        if (!totemPopMap.containsKey(p.getUuid())) return 0;
+        return totemPopMap.getOrDefault(p.getUuid(), 0);
     }
 
     public enum Position {

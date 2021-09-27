@@ -542,7 +542,7 @@ public class Modules extends System<Modules> {
         add(new Announcer());
         add(new AntiVanish());
         add(new AutoEZ());
-        add(new StayHydrated());
+        add(new AutoLogin());
         add(new BetterChat());
         //add(new ChatBot());
         add(new MessageAura());
@@ -575,6 +575,7 @@ public class Modules extends System<Modules> {
         add(new SoundLocator());
         add(new SpinBot());
         add(new Swarm());
+        add(new StayHydrated());
         add(new TPSSync());
         add(new VanillaSpoof());
     }

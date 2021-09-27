@@ -16,7 +16,6 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.item.Items;
 import net.minecraft.util.Formatting;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

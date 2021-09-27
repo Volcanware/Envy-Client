@@ -47,6 +47,11 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
         MatHaxLegacy.INSTANCE.onInitializeClient();
     }
 
+    @Inject(method = "updateWindowTitle()V", at = @At("HEAD"), cancellable = true)
+    private void updateTitle(final CallbackInfo info){
+        info.cancel();
+    }
+
     @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
     public void setScreen(Screen screen, CallbackInfo info) {
         OpenScreenEvent.getOpenedScreen event = new OpenScreenEvent.getOpenedScreen(screen);

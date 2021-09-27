@@ -14,29 +14,45 @@ import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerEntity;
+import mathax.legacy.client.utils.player.ArmorUtils;
 import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.utils.player.PlayerUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.Formatting;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
 import static mathax.legacy.client.utils.player.ChatUtils.formatCoords;
 
+/*/                                                                                                              /*/
+/*/ Burrow & Armor taken from Orion Meteor Addon and modified by Matejko06                                       /*/
+/*/ https://github.com/GhostTypes/orion/blob/main/src/main/java/me/ghosttypes/orion/modules/main/AnchorAura.java /*/
+/*/                                                                                                              /*/
+
 public class Notifier extends Module {
     private static String entityName;
     private static String entityPos;
 
-    private final Map<PlayerEntity, Integer> entityArmorArraylist = new HashMap<>();
+    private boolean alertedHelm;
+    private boolean alertedChest;
+    private boolean alertedLegs;
+    private boolean alertedBoots;
+
+    private int burrowMsgWait;
+
+    public static List<PlayerEntity> burrowedPlayers = new ArrayList<>();
+
     private final Object2IntMap<UUID> totemPopMap = new Object2IntOpenHashMap<>();
     private final Object2IntMap<UUID> chatIdMap = new Object2IntOpenHashMap<>();
 
@@ -44,11 +60,13 @@ public class Notifier extends Module {
 
     private final SettingGroup sgTotemPops = settings.createGroup("Totem Pops");
     private final SettingGroup sgVisualRange = settings.createGroup("Visual Range");
+    private final SettingGroup sgBurrow = settings.createGroup("Burrow");
+    private final SettingGroup sgArmor = settings.createGroup("Armor");
 
     // Totem Pops
 
     private final Setting<Boolean> totemPops = sgTotemPops.add(new BoolSetting.Builder()
-        .name("totem-pops")
+        .name("enabled")
         .description("Notifies you when a player pops a totem.")
         .defaultValue(true)
         .build()
@@ -78,7 +96,7 @@ public class Notifier extends Module {
     // Visual Range
 
     private final Setting<Boolean> visualRange = sgVisualRange.add(new BoolSetting.Builder()
-        .name("visual-range")
+        .name("enabled")
         .description("Notifies you when an entity enters your render distance.")
         .defaultValue(false)
         .build()
@@ -109,6 +127,44 @@ public class Notifier extends Module {
         .name("ignore-fake-players")
         .description("Ignores fake players.")
         .defaultValue(true)
+        .build()
+    );
+
+    // Burrow
+
+    private final Setting<Boolean> burrow = sgBurrow.add(new BoolSetting.Builder()
+        .name("enabled")
+        .description("Notifies you when someone burrows in your render distance.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Integer> range = sgBurrow.add(new IntSetting.Builder()
+        .name("range")
+        .description("How far away from you to check for burrowed players.")
+        .defaultValue(3)
+        .min(0)
+        .sliderMax(15)
+        .build()
+    );
+
+    // Burrow
+
+    private final Setting<Boolean> armor = sgArmor.add(new BoolSetting.Builder()
+        .name("enabled")
+        .description("Notifies you when your armor is low.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> threshold = sgArmor.add(new DoubleSetting.Builder()
+        .name("durability")
+        .description("How low an armor piece needs to be to alert you.")
+        .defaultValue(10)
+        .min(1)
+        .sliderMin(1)
+        .sliderMax(100)
+        .max(100)
         .build()
     );
 
@@ -156,12 +212,17 @@ public class Notifier extends Module {
         }
     }
 
-    // Totem Pops
+    // Totem Pops & Burrow
 
     @Override
     public void onActivate() {
         totemPopMap.clear();
         chatIdMap.clear();
+        alertedHelm = false;
+        alertedChest = false;
+        alertedLegs = false;
+        alertedBoots = false;
+        burrowMsgWait = 0;
     }
 
     @EventHandler
@@ -197,6 +258,50 @@ public class Notifier extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
+        if (armor.get()) {
+            Iterable<ItemStack> armorPieces = mc.player.getArmorItems();
+            for (ItemStack armorPiece : armorPieces){
+                if (ArmorUtils.checkThreshold(armorPiece, threshold.get())) {
+                    if (ArmorUtils.isHelmet(armorPiece) && !alertedHelm) {
+                        warning("Your helmet is low!");
+                        alertedHelm = true;
+                    }
+                    if (ArmorUtils.isChestplate(armorPiece) && !alertedChest) {
+                        warning("Your chestplate is low!");
+                        alertedChest = true;
+                    }
+                    if (ArmorUtils.isLegs(armorPiece) && !alertedLegs) {
+                        warning("Your leggings are low!");
+                        alertedLegs = true;
+                    }
+                    if (ArmorUtils.isBoots(armorPiece) && !alertedBoots) {
+                        warning("Your boots are low!");
+                        alertedBoots = true;
+                    }
+                }
+                if (!ArmorUtils.checkThreshold(armorPiece, threshold.get())) {
+                    if (ArmorUtils.isHelmet(armorPiece) && alertedHelm) alertedHelm = false;
+                    if (ArmorUtils.isChestplate(armorPiece) && alertedChest) alertedChest = false;
+                    if (ArmorUtils.isLegs(armorPiece) && alertedLegs) alertedLegs = false;
+                    if (ArmorUtils.isBoots(armorPiece) && alertedBoots) alertedBoots = false;
+                }
+            }
+        }
+
+        if (burrow.get()) {
+            for (PlayerEntity player : mc.world.getPlayers()) {
+                if (isBurrowValid(player)) {
+                    burrowedPlayers.add(player);
+                    warning("(highlight)" + player.getEntityName() + " (default)is burrowed!");
+                }
+
+                if (burrowedPlayers.contains(player) && !PlayerUtils.isBurrowed(player, true)) {
+                    burrowedPlayers.remove(player);
+                    warning("(highlight)" + player.getEntityName() + " (default)is no longer burrowed.");
+                }
+            }
+        }
+
         if (totemPops.get()) {
             synchronized (totemPopMap) {
                 for (PlayerEntity player : mc.world.getPlayers()) {
@@ -211,6 +316,11 @@ public class Notifier extends Module {
                 }
             }
         }
+    }
+
+    private boolean isBurrowValid(PlayerEntity p) {
+        if (p == mc.player) return false;
+        return mc.player.distanceTo(p) <= range.get() && !burrowedPlayers.contains(p) && PlayerUtils.isBurrowed(p, true) && !PlayerUtils.isPlayerMoving(p);
     }
 
     private int getChatId(Entity entity) {
