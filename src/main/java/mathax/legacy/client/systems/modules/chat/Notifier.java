@@ -263,19 +263,19 @@ public class Notifier extends Module {
             for (ItemStack armorPiece : armorPieces){
                 if (ArmorUtils.checkThreshold(armorPiece, threshold.get())) {
                     if (ArmorUtils.isHelmet(armorPiece) && !alertedHelm) {
-                        warning("Your helmet is low!");
+                        warning("Your helmet has low durability!");
                         alertedHelm = true;
                     }
                     if (ArmorUtils.isChestplate(armorPiece) && !alertedChest) {
-                        warning("Your chestplate is low!");
+                        warning("Your chestplate has low durability!");
                         alertedChest = true;
                     }
                     if (ArmorUtils.isLegs(armorPiece) && !alertedLegs) {
-                        warning("Your leggings are low!");
+                        warning("Your leggings habe low durability!");
                         alertedLegs = true;
                     }
                     if (ArmorUtils.isBoots(armorPiece) && !alertedBoots) {
-                        warning("Your boots are low!");
+                        warning("Your boots have low durability!");
                         alertedBoots = true;
                     }
                 }
