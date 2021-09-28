@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.render.Render2DEvent;
+import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
@@ -24,6 +25,7 @@ import net.minecraft.util.math.Vec3f;
 /*/                                                                                                                      /*/
 
 public class CustomCrosshair extends Module {
+    private float x, y;
     private int spinAmount;
     private final Timer timer = new Timer();
 
@@ -95,7 +97,7 @@ public class CustomCrosshair extends Module {
     // Outline
 
     private final Setting<Double> outline = sgOutline.add(new DoubleSetting.Builder()
-        .name("outline")
+        .name("enabled")
         .description("The outline of the crosshair.")
         .defaultValue(2)
         .min(0)
@@ -114,33 +116,43 @@ public class CustomCrosshair extends Module {
     // Spin
 
     private final Setting<Boolean> spin = sgSpin.add(new BoolSetting.Builder()
-        .name("spin")
+        .name("enabled")
         .description("Makes the crosshair spin.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Integer> spinSpeed = sgSpin.add(new IntSetting.Builder()
-        .name("spin-speed")
+        .name("speed")
         .description("The spin speed.")
-        .defaultValue(1)
+        .defaultValue(2)
         .min(1)
         .sliderMin(1)
-        .sliderMax(5)
+        .sliderMax(25)
         .build()
     );
 
     // Attack Indicator
 
     private final Setting<SettingColor> indicatorColor = sgAttackIndicator.add(new ColorSetting.Builder()
-        .name("indicator-color")
+        .name("color")
         .description("The color of attack indicator.")
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
+    private final Setting<Double> indicatorOutline = sgOutline.add(new DoubleSetting.Builder()
+        .name("outline")
+        .description("The outline of the indicator.")
+        .defaultValue(2)
+        .min(0)
+        .sliderMin(0)
+        .sliderMax(10)
+        .build()
+    );
+
     private final Setting<SettingColor> indicatorOutlineColor = sgAttackIndicator.add(new ColorSetting.Builder()
-        .name("indicator-outline-color")
+        .name("outline-color")
         .description("The color of the attack indicator outline.")
         .defaultValue(new SettingColor(0, 0, 0))
         .build()
@@ -152,10 +164,14 @@ public class CustomCrosshair extends Module {
     }
 
     @EventHandler
+    public void onTick(TickEvent.Post event) {
+        x = mc.getWindow().getWidth() / 2;
+        y = mc.getWindow().getHeight() / 2;
+    }
+
+    @EventHandler
     private void onRender2D(Render2DEvent event) {
         MatrixStack matrixStack = event.matrixStack;
-        float x = mc.getWindow().getScaledWidth();
-        float y = mc.getWindow().getScaledHeight();
 
         // Spin
         if (spin.get()) {
@@ -181,8 +197,8 @@ public class CustomCrosshair extends Module {
         // Attack Indicator
         if (mc.options.attackIndicator.equals(AttackIndicator.CROSSHAIR) && mc.player.getAttackCooldownProgress(0) < 1) {
             float width = 30;
-            if (mc.player.getAttackCooldownProgress(0) > 0) fillAndBorder(matrixStack, x - 15, y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 10, x - 15 + (width * mc.player.getAttackCooldownProgress(0)), y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 14, Color.fromRGBA(indicatorOutlineColor.get().r, indicatorOutlineColor.get().g, indicatorOutlineColor.get().b, indicatorOutlineColor.get().a), Color.fromRGBA(indicatorColor.get().r, indicatorColor.get().g, indicatorColor.get().b, indicatorColor.get().a), 1);
-            fillAndBorder(matrixStack, x - 15, y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 10, x + 15, y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 14, Color.fromRGBA(indicatorOutlineColor.get().r, indicatorOutlineColor.get().g, indicatorOutlineColor.get().b, indicatorOutlineColor.get().a), Color.fromRGBA(indicatorColor.get().a, indicatorColor.get().r, indicatorColor.get().g, indicatorColor.get().b), 1);
+            if (mc.player.getAttackCooldownProgress(0) > 0) fillAndBorder(matrixStack, x - 15, y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 10, x - 15 + (width * mc.player.getAttackCooldownProgress(0)), y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 14, Color.fromRGBA(indicatorOutlineColor.get().r, indicatorOutlineColor.get().g, indicatorOutlineColor.get().b, indicatorOutlineColor.get().a), Color.fromRGBA(indicatorColor.get().r, indicatorColor.get().g, indicatorColor.get().b, indicatorColor.get().a), indicatorOutline.get().floatValue());
+            fillAndBorder(matrixStack, x - 15, y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 10, x + 15, y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 14, Color.fromRGBA(indicatorOutlineColor.get().r, indicatorOutlineColor.get().g, indicatorOutlineColor.get().b, indicatorOutlineColor.get().a), Color.fromRGBA(indicatorColor.get().r, indicatorColor.get().g, indicatorColor.get().b, indicatorColor.get().a), indicatorOutline.get().floatValue());
         }
 
         if (!timer.passedMs(20 / spinSpeed.get())) return;

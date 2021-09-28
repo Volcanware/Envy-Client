@@ -119,7 +119,7 @@ public class Surround extends Module {
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
         .name("render")
         .description("Renders a block overlay where the obsidian will be placed.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 
