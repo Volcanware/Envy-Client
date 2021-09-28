@@ -139,7 +139,7 @@ public class CustomCrosshair extends Module {
         .build()
     );
 
-    private final Setting<SettingColor> indicatorOutlineColor = sgOutline.add(new ColorSetting.Builder()
+    private final Setting<SettingColor> indicatorOutlineColor = sgAttackIndicator.add(new ColorSetting.Builder()
         .name("indicator-outline-color")
         .description("The color of the attack indicator outline.")
         .defaultValue(new SettingColor(0, 0, 0))
