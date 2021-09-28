@@ -65,7 +65,7 @@ public class HudElementScreen extends WindowScreen {
 
     @Override
     protected void onRenderBefore(float delta) {
-        if (!Utils.canUpdate()) Modules.get().get(HUD.class).onRender(Render2DEvent.get(0, 0, delta));
+        if (!Utils.canUpdate()) Modules.get().get(HUD.class).onRender(Render2DEvent.get(0, 0, delta, null));
     }
 
     @Override

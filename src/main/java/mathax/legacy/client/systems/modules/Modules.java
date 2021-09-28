@@ -474,7 +474,7 @@ public class Modules extends System<Modules> {
         add(new CameraTweaks());
         add(new Chams());
         add(new CityESP());
-        //add(new CustomCrosshair());
+        add(new CustomCrosshair());
         add(new CustomFOV());
         add(new EntityOwner());
         add(new ESP());

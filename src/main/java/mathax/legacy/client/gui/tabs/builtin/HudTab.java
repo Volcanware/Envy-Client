@@ -297,11 +297,11 @@ public class HudTab extends Tab {
                 renderBackground(matrices);
 
                 Utils.unscaledProjection();
-                hud.onRender(Render2DEvent.get(0, 0, delta));
+                hud.onRender(Render2DEvent.get(0, 0, delta, null));
             }
             else {
                 Utils.unscaledProjection();
-                if (!hud.isActive()) hud.onRender(Render2DEvent.get(0, 0, delta));
+                if (!hud.isActive()) hud.onRender(Render2DEvent.get(0, 0, delta, matrices));
             }
 
             Renderer2D.COLOR.begin();

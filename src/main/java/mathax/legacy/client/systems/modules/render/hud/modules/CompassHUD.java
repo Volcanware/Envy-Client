@@ -19,6 +19,13 @@ public class CompassHUD extends HUDElement {
         .build()
     );
 
+    private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
+        .name("color")
+        .description("The color of the text.")
+        .defaultValue(new SettingColor(255, 255, 255))
+        .build()
+    );
+
     private final Setting<SettingColor> northColor = sgGeneral.add(new ColorSetting.Builder()
         .name("north-color")
         .description("Color of North.")
@@ -63,7 +70,7 @@ public class CompassHUD extends HUDElement {
                 axis,
                 (x + getX(direction, yaw)) - (renderer.textWidth(axis) / 2),
                 (y + getY(direction, yaw, pitch)) - (renderer.textHeight() / 2),
-                direction == Direction.N ? northColor.get() : hud.primaryColor.get());
+                direction == Direction.N ? northColor.get() : color.get());
         }
     }
 
