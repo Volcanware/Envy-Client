@@ -5,7 +5,7 @@ import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import mathax.legacy.client.utils.player.ChatUtils;
-import mathax.legacy.client.utils.render.MatHaxToast;
+import mathax.legacy.client.utils.render.ToastSystem;
 import mathax.legacy.client.utils.render.color.RainbowColors;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,7 +43,7 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
         if (enemy.name.isEmpty()) return false;
         if (enemy.name.equals(mc.getSession().getUsername())) {
             ChatUtils.error("Enemies", "You can't add yourself to enemies!");
-            if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + mc.getSession().getUsername() + Formatting.GRAY + "]", Formatting.RED + "You can't add yourself!"));
+            if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.REDSTONE_BLOCK, color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + mc.getSession().getUsername() + Formatting.GRAY + "]", null, Formatting.RED + "You can't add yourself!"));
             return false;
         }
 

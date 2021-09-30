@@ -11,7 +11,7 @@ import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.enemies.Enemies;
 import mathax.legacy.client.systems.enemies.Enemy;
-import mathax.legacy.client.utils.render.MatHaxToast;
+import mathax.legacy.client.utils.render.ToastSystem;
 import net.minecraft.command.CommandSource;
 import net.minecraft.item.Items;
 import net.minecraft.util.Formatting;
@@ -40,12 +40,12 @@ public class EnemiesCommand extends Command {
                             if (Enemies.get().add(enemy)) {
                                 if (enemy.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) info("Added (highlight)%s (default)to enemies.", enemy.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Enemies.get().color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + enemy.name + Formatting.GRAY + "]", Formatting.GRAY + "Added to enemies."));
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.REDSTONE_BLOCK, Enemies.get().color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + enemy.name + Formatting.GRAY + "]", null, Formatting.GRAY + "Added to enemies."));
                             }
                             else {
                                 if (enemy.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is already your enemy.", enemy.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Enemies.get().color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + enemy.name + Formatting.GRAY + "]", Formatting.RED + "Already your enemy."));
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.REDSTONE_BLOCK, Enemies.get().color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + enemy.name + Formatting.GRAY + "]", null, Formatting.RED + "Already your enemy."));
                             }
 
                             return SINGLE_SUCCESS;
@@ -60,12 +60,12 @@ public class EnemiesCommand extends Command {
                             if (Enemies.get().remove(enemy)) {
                                 if (enemy.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) info("Removed (highlight)%s (default)from enemies.", enemy.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Enemies.get().color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + enemy.name + Formatting.GRAY + "]", Formatting.GRAY + "Removed from enemies."));
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.REDSTONE_BLOCK, Enemies.get().color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + enemy.name + Formatting.GRAY + "]", null, Formatting.GRAY + "Removed from enemies."));
                             }
                             else {
                                 if (enemy.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
                                 if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is not your enemy.", enemy.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.REDSTONE_BLOCK, Enemies.get().color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + enemy.name + Formatting.GRAY + "]", "Not your enemy."));
+                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.REDSTONE_BLOCK, Enemies.get().color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + enemy.name + Formatting.GRAY + "]", null, Formatting.RED + "Not your enemy."));
                             }
 
                             return SINGLE_SUCCESS;

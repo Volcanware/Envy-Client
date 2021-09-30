@@ -32,7 +32,7 @@ import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.input.Input;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.player.ChatUtils;
-import mathax.legacy.client.utils.render.MatHaxToast;
+import mathax.legacy.client.utils.render.ToastSystem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -218,7 +218,7 @@ public class Modules extends System<Modules> {
             if (value != GLFW.GLFW_KEY_ESCAPE) {
                 moduleToBind.keybind.set(isKey, value);
                 ChatUtils.info("KeyBinds", "Module (highlight)%s (default)bound to (highlight)%s(default).", moduleToBind.title, moduleToBind.keybind);
-                mc.getToastManager().add(new MatHaxToast(moduleToBind.icon, moduleToBind.category.color, moduleToBind.title, Formatting.GRAY + "Bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
+                mc.getToastManager().add(new ToastSystem(moduleToBind.icon, moduleToBind.category.color, moduleToBind.title, null, Formatting.GRAY + "Bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + "."));
             }
 
             MatHaxLegacy.EVENT_BUS.post(ModuleBindChangedEvent.get(moduleToBind));

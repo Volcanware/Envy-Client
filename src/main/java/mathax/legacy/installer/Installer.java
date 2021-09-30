@@ -1,7 +1,5 @@
 package mathax.legacy.installer;
 
-import mathax.legacy.installer.version.Version;
-
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
@@ -40,8 +38,8 @@ public class Installer {
         // Options
         int option = JOptionPane.showOptionDialog(
             null,
-            "\nHow to install:\nPut this .jar file to your mods folder and run Fabric for Minecraft version " + Version.getMinecraft() + ".\n\n",
-            "MatHax Legacy v" + Version.get() + " " + Version.getDevStylized() + " | Fabric " + Version.getMinecraft(),
+            "\nHow to install:\nPut this .jar file to your mods folder and run Fabric for Minecraft version specified in the jar name.\n\n",
+            "MatHax Legacy",
             JOptionPane.YES_NO_CANCEL_OPTION,
             JOptionPane.ERROR_MESSAGE,
             icon,

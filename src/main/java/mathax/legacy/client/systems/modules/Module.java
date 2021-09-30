@@ -9,7 +9,7 @@ import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.ISerializable;
 import mathax.legacy.client.utils.misc.Keybind;
 import mathax.legacy.client.utils.player.ChatUtils;
-import mathax.legacy.client.utils.render.MatHaxToast;
+import mathax.legacy.client.utils.render.ToastSystem;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
@@ -89,7 +89,7 @@ public abstract class Module implements ISerializable<Module> {
 
     public void sendToggledToast(String name, Module module) {
         if (!module.isToastEnabled()) return;
-        mc.getToastManager().add(new MatHaxToast(module.icon, module.category.color, title, Formatting.GRAY + "Toggled " + getOnOff(module) + Formatting.GRAY + "."));
+        mc.getToastManager().add(new ToastSystem(module.icon, module.category.color, title, null, Formatting.GRAY + "Toggled " + getOnOff(module) + Formatting.GRAY + "."));
     }
 
     private String getOnOff(Module module) {

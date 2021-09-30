@@ -34,7 +34,7 @@ public class AutoLogin extends Module {
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onMessageRecieve(ReceiveMessageEvent event) {
         if (mc.world == null || mc.player == null) return;
-        String msg = event.message.getString();
+        String msg = event.getMessage().getString();
         if (msg.startsWith(">")) return; // Ignore chat messages
         for (String loginMsg: loginMessages) {
             if (msg.contains(loginMsg)) {

@@ -3,7 +3,6 @@ package mathax.legacy.client.systems.config;
 import mathax.legacy.client.gui.tabs.builtin.ConfigTab;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.systems.Systems;
-import mathax.legacy.client.Version;
 import mathax.legacy.client.utils.render.color.RainbowColors;
 import mathax.legacy.client.systems.System;
 import net.minecraft.nbt.NbtCompound;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Config extends System<Config> {
-    public final Version version;
-
     public String font = ConfigTab.font.get();
     public boolean customFont = ConfigTab.customFont.get();
     public int rotationHoldTicks = ConfigTab.rotationHoldTicks.get();
@@ -34,7 +31,6 @@ public class Config extends System<Config> {
 
     public Config() {
         super("Config");
-        version = new Version(Version.get());
     }
 
     public static Config get() {
@@ -44,8 +40,6 @@ public class Config extends System<Config> {
     @Override
     public NbtCompound toTag() {
         NbtCompound tag = new NbtCompound();
-        tag.putString("version", version.toString());
-
         tag.putString("font", font);
         tag.putBoolean("customFont", customFont);
         tag.putDouble("rainbowSpeed", RainbowColors.GLOBAL.getSpeed());

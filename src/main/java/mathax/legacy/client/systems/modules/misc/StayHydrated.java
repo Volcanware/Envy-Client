@@ -9,7 +9,7 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.render.MatHaxToast;
+import mathax.legacy.client.utils.render.ToastSystem;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.item.Items;
 
@@ -103,7 +103,7 @@ public class StayHydrated extends Module {
     }
 
     private void sendNotificationToast() {
-        if (Config.get().chatCommandsToast) mc.getToastManager().add(new MatHaxToast(Items.WATER_BUCKET, BLUE, "Stay Hydrated", "Its time to drink!"));
+        if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!"));
     }
 
     public enum Mode {

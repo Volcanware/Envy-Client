@@ -21,29 +21,31 @@ import net.minecraft.text.TextColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MatHaxToast implements Toast {
+public class ToastSystem implements Toast {
     public static final int TITLE_COLOR = Color.fromRGBA(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255);
     public static final int TEXT_COLOR = Color.fromRGBA(255, 255, 255, 255);
 
     private ItemStack icon;
-    private int titleColor = TITLE_COLOR;
     private Text title, text;
     private boolean justUpdated = true, playedSound;
+    private final int titleColor, textColor;
     private long start, duration;
 
-    public MatHaxToast(@Nullable Item item, @NotNull Integer titleColor, @NotNull String title, @Nullable String text, long duration) {
+    public ToastSystem(@Nullable Item item, @Nullable Integer titleColor, @NotNull String title, @Nullable Integer textColor, @Nullable String text, long duration) {
         this.icon = item != null ? item.getDefaultStack() : null;
-        this.titleColor = titleColor;
-        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(titleColor)));
-        this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(TEXT_COLOR))) : null;
+        this.titleColor = titleColor != null ? titleColor : TITLE_COLOR;
+        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(this.titleColor)));
+        this.textColor = textColor != null ? textColor : TEXT_COLOR;
+        this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(this.textColor))) : null;
         this.duration = duration;
     }
 
-    public MatHaxToast(@Nullable Item item, @NotNull Integer titleColor, @NotNull String title, @Nullable String text) {
+    public ToastSystem(@Nullable Item item, @Nullable Integer titleColor, @NotNull String title, @Nullable Integer textColor, @Nullable String text) {
         this.icon = item != null ? item.getDefaultStack() : null;
-        this.titleColor = titleColor;
-        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(titleColor)));
-        this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(TEXT_COLOR))) : null;
+        this.titleColor = titleColor != null ? titleColor : TITLE_COLOR;
+        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(this.titleColor)));
+        this.textColor = textColor != null ? textColor : TEXT_COLOR;
+        this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(this.textColor))) : null;
         this.duration = 6000;
     }
 
@@ -63,7 +65,7 @@ public class MatHaxToast implements Toast {
         int titleY = 12;
 
         if (text != null) {
-            Utils.mc.textRenderer.draw(matrices, text, x, 18, TEXT_COLOR);
+            Utils.mc.textRenderer.draw(matrices, text, x, 18, textColor);
             titleY = 7;
         }
 
@@ -90,7 +92,7 @@ public class MatHaxToast implements Toast {
     }
 
     public void setText(@Nullable String text) {
-        this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(TEXT_COLOR))) : null;
+        this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(textColor))) : null;
         justUpdated = true;
     }
 

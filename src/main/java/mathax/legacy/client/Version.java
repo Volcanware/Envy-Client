@@ -33,11 +33,20 @@ public class Version {
         return FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata().getVersion().getFriendlyString();
     }
 
+    public boolean isHigherThan(Version version) {
+        for (int i = 0; i < 3; i++) {
+            if (numbers[i] > version.numbers[i]) return true;
+            if (numbers[i] < version.numbers[i]) return false;
+        }
+
+        return false;
+    }
+
     public static Integer getDev() {
         return 3;
     }
 
-    public static String getDevBuild() {
+    public static String getDevString() {
         Integer dev = getDev();
         if (dev == 0) {
             return "";
@@ -51,21 +60,12 @@ public class Version {
         if (dev == 0) {
             return "v" + get();
         } else {
-            return "v" + get() + " " + getDevBuild();
+            return "v" + get() + " " + getDevString();
         }
     }
 
     public static String getMinecraft(){
         return SharedConstants.getGameVersion().getName();
-    }
-
-    public boolean isHigherThan(Version version) {
-        for (int i = 0; i < 3; i++) {
-            if (numbers[i] > version.numbers[i]) return true;
-            if (numbers[i] < version.numbers[i]) return false;
-        }
-
-        return false;
     }
 
     public static Integer checkLatest() {
