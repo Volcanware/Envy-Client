@@ -141,6 +141,16 @@ public class CustomCrosshair extends Module {
         .build()
     );
 
+    private final Setting<Double> indicatorThickness = sgAttackIndicator.add(new DoubleSetting.Builder()
+        .name("thickness")
+        .description("The thickness of the indicator.")
+        .defaultValue(3)
+        .min(0)
+        .sliderMin(0)
+        .sliderMax(25)
+        .build()
+    );
+
     private final Setting<Double> indicatorOutline = sgAttackIndicator.add(new DoubleSetting.Builder()
         .name("outline")
         .description("The outline of the indicator.")
@@ -157,7 +167,6 @@ public class CustomCrosshair extends Module {
         .defaultValue(new SettingColor(0, 0, 0))
         .build()
     );
-
 
     public CustomCrosshair() {
         super(Categories.Render, Items.COMPASS, "custom-crosshair", "Renders a customizable crosshair instead of the Minecraft one");
@@ -198,8 +207,8 @@ public class CustomCrosshair extends Module {
         if (mc.options.attackIndicator.equals(AttackIndicator.CROSSHAIR) && mc.player.getAttackCooldownProgress(0) < 1) {
             float width = 30;
             if (mc.player.getAttackCooldownProgress(0) > 0)
-                fillAndBorder(matrixStack, x - 15, y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 10, x - 15 + (width * mc.player.getAttackCooldownProgress(0)), y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 14, Color.fromRGBA(indicatorOutlineColor.get().r, indicatorOutlineColor.get().g, indicatorOutlineColor.get().b, indicatorOutlineColor.get().a), Color.fromRGBA(indicatorColor.get().r, indicatorColor.get().g, indicatorColor.get().b, indicatorColor.get().a), indicatorOutline.get().floatValue());
-            fillAndBorder(matrixStack, x - 15, y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 10, x + 15, y + gap.get().floatValue() + size.get().floatValue() + thickness.get().floatValue() + 14, Color.fromRGBA(indicatorOutlineColor.get().r, indicatorOutlineColor.get().g, indicatorOutlineColor.get().b, indicatorOutlineColor.get().a), Color.fromRGBA(indicatorColor.get().r, indicatorColor.get().g, indicatorColor.get().b, indicatorColor.get().a), indicatorOutline.get().floatValue());
+                fillAndBorder(matrixStack, x - 15, y + gap.get().floatValue() + size.get().floatValue() + indicatorThickness.get().floatValue() + 10, x - 15 + (width * mc.player.getAttackCooldownProgress(0)), y + gap.get().floatValue() + size.get().floatValue() + indicatorThickness.get().floatValue() + 14, Color.fromRGBA(indicatorOutlineColor.get().r, indicatorOutlineColor.get().g, indicatorOutlineColor.get().b, indicatorOutlineColor.get().a), Color.fromRGBA(indicatorColor.get().r, indicatorColor.get().g, indicatorColor.get().b, indicatorColor.get().a), indicatorOutline.get().floatValue());
+            fillAndBorder(matrixStack, x - 15, y + gap.get().floatValue() + size.get().floatValue() + indicatorThickness.get().floatValue() + 10, x + 15, y + gap.get().floatValue() + size.get().floatValue() + indicatorThickness.get().floatValue() + 14, Color.fromRGBA(indicatorOutlineColor.get().r, indicatorOutlineColor.get().g, indicatorOutlineColor.get().b, indicatorOutlineColor.get().a), Color.fromRGBA(indicatorColor.get().r, indicatorColor.get().g, indicatorColor.get().b, indicatorColor.get().a), indicatorOutline.get().floatValue());
         }
 
         if (!timer.passedMs(20 / spinSpeed.get())) return;

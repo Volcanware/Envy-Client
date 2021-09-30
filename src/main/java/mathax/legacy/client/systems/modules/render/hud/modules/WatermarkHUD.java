@@ -14,8 +14,8 @@ import mathax.legacy.client.settings.SettingGroup;
 import net.minecraft.util.Identifier;
 
 public class WatermarkHUD extends TripleTextHUDElement {
-    private final Color visiblityColor = new Color(255, 255, 255, 255);
-    private static final Identifier mathaxTexture = new Identifier("mathaxlegacy", "textures/icons/icon.png");
+    private static final Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/icons/icon.png");
+    private final Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
 
     private String versionString = "";
 
@@ -109,9 +109,9 @@ public class WatermarkHUD extends TripleTextHUDElement {
         }
         int h = (int) box.height;
 
-        GL.bindTexture(mathaxTexture);
+        GL.bindTexture(MATHAX_LOGO);
         Renderer2D.TEXTURE.begin();
-        Renderer2D.TEXTURE.texQuad(x, y, w, h, visiblityColor);
+        Renderer2D.TEXTURE.texQuad(x, y, w, h, TEXTURE_COLOR);
         Renderer2D.TEXTURE.render(null);
     }
 

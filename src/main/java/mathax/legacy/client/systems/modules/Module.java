@@ -37,6 +37,7 @@ public abstract class Module implements ISerializable<Module> {
 
     public boolean serialize = true;
     public boolean runInMainMenu = false;
+    public boolean autoSubscribe = true;
 
     public final Keybind keybind = Keybind.none();
     public boolean toggleOnBindRelease = false;
@@ -66,13 +67,13 @@ public abstract class Module implements ISerializable<Module> {
             settings.onActivated();
 
             if (runInMainMenu || Utils.canUpdate()) {
-                MatHaxLegacy.EVENT_BUS.subscribe(this);
+                if (autoSubscribe) MatHaxLegacy.EVENT_BUS.subscribe(this);
                 onActivate();
             }
         }
         else {
             if (runInMainMenu || Utils.canUpdate()) {
-                MatHaxLegacy.EVENT_BUS.unsubscribe(this);
+                if (autoSubscribe) MatHaxLegacy.EVENT_BUS.unsubscribe(this);
                 onDeactivate();
             }
 

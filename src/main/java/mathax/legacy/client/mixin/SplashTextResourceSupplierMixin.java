@@ -33,6 +33,7 @@ public class SplashTextResourceSupplierMixin {
 
             // MEME SPLASHES
             Formatting.YELLOW + "cope",
+            Formatting.YELLOW + "I am funny -HiIAmFunny",
             Formatting.YELLOW + "IntelliJ IDEa",
             Formatting.YELLOW + "I <3 nns",
             Formatting.YELLOW + "haha 69",

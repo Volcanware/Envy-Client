@@ -65,7 +65,7 @@ public class ProxiesScreen extends WindowScreen {
             WHorizontalList ipList = table.add(theme.horizontalList()).expandCellX().widget();
             ipList.spacing = 0;
 
-            ipList.add(theme.label(proxy.ip));
+            ipList.add(theme.label(proxy.address));
             ipList.add(theme.label(":")).widget().color = theme.textSecondaryColor();
             ipList.add(theme.label(Integer.toString(proxy.port)));
 
@@ -136,8 +136,8 @@ public class ProxiesScreen extends WindowScreen {
 
             //   IP
             general.add(theme.label("IP:"));
-            WTextBox ip = general.add(theme.textBox(proxy.ip)).minWidth(400).expandX().widget();
-            ip.action = () -> proxy.ip = ip.get();
+            WTextBox ip = general.add(theme.textBox(proxy.address)).minWidth(400).expandX().widget();
+            ip.action = () -> proxy.address = ip.get();
             general.row();
 
             //   Port
@@ -167,7 +167,7 @@ public class ProxiesScreen extends WindowScreen {
 
             WButton addSave = add(theme.button(isNew ? "Add" : "Save")).expandX().widget();
             addSave.action = () -> {
-                if (proxy.isValid() && (!isNew || Proxies.get().add(proxy))) {
+                if (proxy.resolveAddress() && (!isNew || Proxies.get().add(proxy))) {
                     onClose();
                 }
             };

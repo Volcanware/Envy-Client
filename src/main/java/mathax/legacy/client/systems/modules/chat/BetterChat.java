@@ -106,6 +106,13 @@ public class BetterChat extends Module {
         .build()
     );
 
+    public final Setting<Boolean> emojiFix = sgGeneral.add(new BoolSetting.Builder()
+        .name("emoji-fix")
+        .description("Fixes Minecraft emojis.")
+        .defaultValue(true)
+        .build()
+    );
+
     // Filter
 
     private final Setting<Boolean> antiSpam = sgFilter.add(new BoolSetting.Builder()
@@ -195,11 +202,11 @@ public class BetterChat extends Module {
     }
 
     @EventHandler
-    private void onMessageRecieve(ReceiveMessageEvent event) {
+    private void onMessageReceive(ReceiveMessageEvent event) {
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).getVisibleMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
 
-        Text message = event.message;
+        Text message = event.getMessage();
 
         if (filterRegex.get()) {
             for (int i = 0; i < regexFilters.get().size(); i++) {
@@ -212,7 +219,6 @@ public class BetterChat extends Module {
                     regexFilters.get().remove(i);
                     continue;
                 }
-
 
                 if (p.matcher(message.getString()).find()) {
                     event.cancel();
@@ -244,6 +250,7 @@ public class BetterChat extends Module {
         for (int i = 0; i < antiSpamDepth.get(); i++) {
             if (antiSpam.get()) {
                 Text antiSpammed = appendAntiSpam(message, i);
+
                 if (antiSpammed != null) {
                     message = antiSpammed;
                     ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().remove(i);
@@ -252,8 +259,7 @@ public class BetterChat extends Module {
             }
         }
 
-        event.cancel();
-        ((IChatHud) mc.inGameHud.getChatHud()).add(message, event.id, mc.inGameHud.getTicks(), false);
+        event.setMessage(message);
     }
 
     private Text appendAntiSpam(Text text, int index) {
@@ -308,6 +314,11 @@ public class BetterChat extends Module {
     @EventHandler
     private void onMessageSend(SendMessageEvent event) {
         String message = event.message;
+
+        if (emojiFix.get()) {
+            message = applyEmojiFix(message);
+            event.message = message;
+        }
 
         if (annoy.get()) message = applyAnnoy(message);
 
@@ -418,6 +429,21 @@ public class BetterChat extends Module {
         String fourteen = thirteen.replace("S", "$");
         String fifteen = fourteen.replace("T", "7");
         return fifteen.replace("t", "7");
+    }
+
+    // Emoji Fix
+
+    public static String applyEmojiFix(String msg) {
+        if (msg.contains("😄")) msg = msg.replace("😄", "☺");
+        if (msg.contains(":sad:")) msg = msg.replace(":sad:", "☹");
+        if (msg.contains("❤️")) msg = msg.replace("❤️", "❤");
+        if (msg.contains("💀")) msg = msg.replace("💀", "☠");
+        if (msg.contains("⭐")) msg = msg.replace("⭐", "★");
+        if (msg.contains(":flower:")) msg = msg.replace(":flower:", "❀");
+        if (msg.contains("⛏")) msg = msg.replace("⛏", "⛏");
+        if (msg.contains("♿")) msg = msg.replace("♿", "♿");
+        if (msg.contains(":lightning:")) msg = msg.replace(":lightning:", "⚡");
+        return msg;
     }
 
     // GreenChat and Suffix

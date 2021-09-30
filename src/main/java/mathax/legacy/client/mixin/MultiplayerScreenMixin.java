@@ -90,7 +90,7 @@ public class MultiplayerScreenMixin extends Screen {
         Proxy proxy = Proxies.get().getEnabled();
 
         String proxiesleft = proxy != null ? "Using proxy" + " " : "Not using a proxy";
-        String proxiesRight = proxy != null ? "(" + proxy.name + ") " + proxy.ip + ":" + proxy.port : null;
+        String proxiesRight = proxy != null ? "(" + proxy.name + ") " + proxy.adress + ":" + proxy.port : null;
 
         drawStringWithShadow(matrices, textRenderer, proxiesleft, (int)x, (int)y, GRAY);
         if (proxiesRight != null) drawStringWithShadow(matrices, textRenderer, proxiesRight, (int)x + textRenderer.getWidth(proxiesleft), (int)y, WHITE);

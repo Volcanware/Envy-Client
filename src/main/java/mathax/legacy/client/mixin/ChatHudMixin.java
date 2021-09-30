@@ -37,18 +37,27 @@ public abstract class ChatHudMixin implements IChatHud {
     private static final Identifier MATHAXLEGACY_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/chat/mathaxlegacy.png");
     private static final Identifier BARITONE_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/chat/baritone.png");
 
-    @Shadow
-    @Final
-    private List<ChatHudLine<OrderedText>> visibleMessages;
-
-    @Shadow
-    private int scrolledLines;
+    @Shadow @Final private List<ChatHudLine<OrderedText>> visibleMessages;
+    @Shadow private int scrolledLines;
 
     @Shadow protected abstract void addMessage(Text message, int messageId, int timestamp, boolean refresh);
 
+    @Unique private boolean skipOnAddMessage;
+
     @Inject(at = @At("HEAD"), method = "addMessage(Lnet/minecraft/text/Text;I)V", cancellable = true)
     private void onAddMessage(Text text, int id, CallbackInfo info) {
-        if (MatHaxLegacy.EVENT_BUS.post(ReceiveMessageEvent.get(text, id)).isCancelled()) info.cancel();
+        if (skipOnAddMessage) return;
+
+        ReceiveMessageEvent event = MatHaxLegacy.EVENT_BUS.post(ReceiveMessageEvent.get(text, id));
+
+        if (event.isCancelled()) info.cancel();
+        else if (event.isModified()) {
+            info.cancel();
+
+            skipOnAddMessage = true;
+            addMessage(event.getMessage(), id);
+            skipOnAddMessage = false;
+        }
     }
 
     @Redirect(method = "addMessage(Lnet/minecraft/text/Text;IIZ)V", at = @At(value = "INVOKE", target = "Ljava/util/List;size()I"))
@@ -102,6 +111,9 @@ public abstract class ChatHudMixin implements IChatHud {
     private static double getMessageOpacityMultiplier(int age) {
         throw new AssertionError();
     }
+
+    @Shadow
+    protected abstract void addMessage(Text message, int messageId);
 
     private void drawIcon(MatrixStack matrices, String line, int y, float opacity) {
         if (MATHAXLEGACY_PREFIX_REGEX.matcher(line).find()) {

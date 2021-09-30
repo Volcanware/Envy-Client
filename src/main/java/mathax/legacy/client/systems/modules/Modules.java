@@ -454,6 +454,7 @@ public class Modules extends System<Modules> {
         add(new Phase());
         add(new ReverseStep());
         add(new SafeWalk());
+        add(new SafeWalk());
         add(new Scaffold());
         add(new Slippy());
         add(new Sneak());

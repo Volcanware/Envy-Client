@@ -162,9 +162,9 @@ public class MatHaxLegacy implements ClientModInitializer {
         LOG.info(logprefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
     }
 
-    public void titleIconManager(Integer process) {
+    public void titleIconManager(Integer progress) {
         final Window window = MinecraftClient.getInstance().getWindow();
-        switch (process) {
+        switch (progress) {
             case 1:
                 window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/window/icon128.png"));
                 window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " is being loaded...");

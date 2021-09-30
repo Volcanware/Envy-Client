@@ -9,6 +9,7 @@ import mathax.legacy.client.events.game.WindowResizedEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.gui.WidgetScreen;
 import mathax.legacy.client.mixininterface.IMinecraftClient;
+import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.gui.screen.Screen;
@@ -41,10 +42,13 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
 
     @Unique private boolean doItemUseCalled;
     @Unique private boolean rightClick;
+    @Unique private long lastTime;
+    @Unique private boolean firstFrame;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
         MatHaxLegacy.INSTANCE.onInitializeClient();
+        firstFrame = true;
     }
 
     @Inject(method = "updateWindowTitle()V", at = @At("HEAD"), cancellable = true)
@@ -117,6 +121,21 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
     @Inject(method = "onResolutionChanged", at = @At("TAIL"))
     private void onResolutionChanged(CallbackInfo info) {
         MatHaxLegacy.EVENT_BUS.post(WindowResizedEvent.get());
+    }
+
+    // Time delta
+
+    @Inject(method = "render", at = @At("HEAD"))
+    private void onRender(CallbackInfo info) {
+        long time = System.currentTimeMillis();
+
+        if (firstFrame) {
+            lastTime = time;
+            firstFrame = false;
+        }
+
+        Utils.frameTime = (time - lastTime) / 1000.0;
+        lastTime = time;
     }
 
     // Interface
