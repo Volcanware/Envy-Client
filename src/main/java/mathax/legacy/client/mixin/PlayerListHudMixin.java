@@ -21,13 +21,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerListHud.class)
 public class PlayerListHudMixin {
-    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
-
-    private Color textureColor = new Color(255, 255, 255, 255);
-
-    private int x = 0;
-    private int y = 0;
-    private PlayerListEntry playerListEntry = null;
 
     @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Ljava/lang/Math;min(II)I", ordinal = 0), index = 1)
     private int modifyCount(int count) {

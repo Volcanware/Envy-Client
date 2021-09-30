@@ -21,7 +21,7 @@ public class Installer {
         }
 
         // Icon
-        ImageIcon icon = createImageIcon("/assets/mathaxlegacy/textures/icons/window/icon64.png", "MatHax Legacy");
+        ImageIcon icon = createImageIcon("/assets/mathaxlegacy/textures/icons/icon64.png", "MatHax Legacy");
 
         // Colors & Fonts
         // TODO: Load Comfortaa font and make it work. :)

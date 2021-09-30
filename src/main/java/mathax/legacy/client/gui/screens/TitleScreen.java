@@ -51,7 +51,7 @@ public class TitleScreen extends Screen {
     private int copyrightTextWidth;
     private int copyrightTextX;
 
-    private static final Identifier LOGO = new Identifier("mathaxlegacy", "textures/title/logo.png");
+    private static final Identifier LOGO = new Identifier("mathaxlegacy", "textures/icons/icon.png");
     private static final Identifier BACKGROUND = new Identifier("mathaxlegacy", "textures/title/background.png");
     private static final Identifier ACCESSIBILITY_ICON_TEXTURE = new Identifier("minecraft", "textures/gui/accessibility.png");
 

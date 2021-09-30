@@ -38,8 +38,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CombatInfoHUD extends HUDElement {
-    private final Color visiblityColor = new Color(255, 255, 255, 255);
-    private static final Identifier mathaxLogo = new Identifier("mathaxlegacy", "textures/icons/icon.png");
+    private static final Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/icons/icon.png");
+    private final Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
 
     private PlayerEntity playerEntity;
 
@@ -219,9 +219,9 @@ public class CombatInfoHUD extends HUDElement {
 
             if (playerEntity.getUuidAsString().equals(MatHaxLegacy.devUUID) || playerEntity.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) {
                 nameText += "     " + playerEntity.getEntityName();
-                GL.bindTexture(mathaxLogo);
+                GL.bindTexture(MATHAX_LOGO);
                 Renderer2D.TEXTURE.begin();
-                Renderer2D.TEXTURE.texQuad(x, y, 16, 16, visiblityColor);
+                Renderer2D.TEXTURE.texQuad(x, y, 16, 16, TEXTURE_COLOR);
                 Renderer2D.TEXTURE.render(null);
             } else
                 nameText += playerEntity.getEntityName();
