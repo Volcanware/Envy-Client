@@ -16,9 +16,13 @@ minecraft {
 
 repositories {
     maven {
-		name = "meteor-maven"
-		url = "https://maven.meteordev.org"
-	}
+        name = "jitpack"
+        url = "https://jitpack.io"
+    }
+    maven {
+        name = "meteor-maven"
+        url = "https://maven.meteordev.org"
+    }
     maven {
         name = "meteor-maven-snapshots"
         url = "https://maven.meteordev.org/snapshots"
@@ -59,9 +63,9 @@ dependencies {
     modImplementation "baritone:baritone:${project.baritone_version}"
     include "baritone:baritone:${project.baritone_version}"
 
-    // Seed .locate features
-    modImplementation 'com.github.hube12:SEED:master-SNAPSHOT'
-    include 'com.github.hube12:SEED:master-SNAPSHOT'
+    // Seed
+    modImplementation "com.github.hube12:SEED:${project.seed_version}"
+    include "com.github.hube12:SEED:${project.seed_version}"
 
     // Dependencies
     dependency "com.github.Vatuu:discord-rpc:${project.discord_version}"
