@@ -91,7 +91,7 @@ public class Version {
             return latestVer.replace("\n", "");
         }
     }
-    
+
     // TODO: PROMPT BROKEN
     public static void checkForUpdate(boolean dontDisable) {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
@@ -107,21 +107,16 @@ public class Version {
                 }
                 YesNoPrompt.create()
                     .title("New Update")
-                    .message("A new version of MatHax Legacy has been released.")
+                    .message("A new version of MatHax Legacy has been released!")
                     .message("\n")
                     .message("Your version: " + Version.getStylized())
                     .message("Latest version: v" + Version.getLatest())
                     .message("\n")
                     .message("Do you want to update?")
+                    .message("Using old versions of MatHax Legacy is not recommended and could report in issues.")
                     .onYes(() -> {
                         Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
                     })
-                    .onNo(() -> OkPrompt.create()
-                        .title("Are you sure?")
-                        .message("Using old versions of MatHax Legacy is not recommended")
-                        .message("and could report in issues.")
-                        .id("new-update-no")
-                        .show())
                     .id(id)
                     .show();
             case 2:
