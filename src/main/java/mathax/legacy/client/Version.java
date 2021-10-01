@@ -1,6 +1,7 @@
 package mathax.legacy.client;
 
 import mathax.legacy.client.utils.network.HTTP;
+import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.render.prompts.OkPrompt;
 import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
 import net.fabricmc.loader.api.FabricLoader;
@@ -92,7 +93,7 @@ public class Version {
         }
     }
 
-    // TODO: PROMPT BROKEN
+    // TODO: PROMPT GLITCHING OUT AND APPEARING AGAIN ON OKPROMPT [ISSUE IN METEOR TOO]
     public static void checkForUpdate(boolean dontDisable) {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
         switch (Version.checkLatest()) {
@@ -101,24 +102,33 @@ public class Version {
                 return;
             case 1:
                 MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.getStylized() + "! You can download the newest version on " + MatHaxLegacy.URL + "Download!");
-                String id = "new-update";
-                if (dontDisable) {
-                    id += "-dont-disable";
-                }
-                YesNoPrompt.create()
-                    .title("New Update")
-                    .message("A new version of MatHax Legacy has been released!")
-                    .message("\n")
-                    .message("Your version: " + Version.getStylized())
-                    .message("Latest version: v" + Version.getLatest())
-                    .message("\n")
-                    .message("Do you want to update?")
-                    .message("Using old versions of MatHax Legacy is not recommended and could report in issues.")
-                    .onYes(() -> {
-                        Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
-                    })
-                    .id(id)
-                    .show();
+                MatHaxExecutor.execute(() -> {
+                    String id = "new-update";
+                    if (dontDisable) {
+                        id += "-dont-disable";
+                    }
+
+                    YesNoPrompt.create()
+                        .title("New Update")
+                        .message("A new version of MatHax Legacy has been released!")
+                        .message("\n")
+                        .message("Your version: %s", Version.getStylized())
+                        .message("Latest version: v%s", Version.getLatest())
+                        .message("\n")
+                        .message("Do you want to update?")
+                        .message("Using old versions of MatHax Legacy is not recommended and could report in issues.")
+                        /*.onNo(() -> OkPrompt.create()
+                            .title("Are you sure?")
+                            .message("Using old versions of MatHax Legacy is not recommended")
+                            .message("and could report in issues.")
+                            .id("new-update-no")
+                            .show())*/
+                        .onYes(() -> {
+                            Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
+                        })
+                        .id(id)
+                        .show();
+                });
             case 2:
                 if (getDev() == 0) {
                     MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "!");
