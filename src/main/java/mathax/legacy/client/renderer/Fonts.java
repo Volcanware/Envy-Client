@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fonts {
-    private static final String[] BUILTIN_FONTS = { "JetBrains Mono.ttf", "Comfortaa.ttf", "Tw Cen MT.ttf", "Pixelation.ttf" };
+    private static final String[] BUILTIN_FONTS = { "Comfortaa.ttf", "Verdana.ttf", "Tw Cen MT.ttf", "Pixelation.ttf", "JetBrains Mono.ttf" };
     public static final String DEFAULT_FONT = "Comfortaa";
     private static final File FONTS_FOLDER = new File(MatHaxLegacy.FOLDER, "Fonts");
 

@@ -53,7 +53,7 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
 
     @Override
     public void init() {
-        File iconsFolder = new File(new File(MatHaxLegacy.FOLDER, "Icons"), "WayPoints");
+        File iconsFolder = new File(MatHaxLegacy.FOLDER, "WayPoint-Icons");
         iconsFolder.mkdirs();
 
         for (String builtinIcon : BUILTIN_ICONS) {
