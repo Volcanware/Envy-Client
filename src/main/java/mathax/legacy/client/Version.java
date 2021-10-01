@@ -91,7 +91,8 @@ public class Version {
             return latestVer.replace("\n", "");
         }
     }
-
+    
+    // TODO: PROMPT BROKEN
     public static void checkForUpdate(boolean dontDisable) {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
         switch (Version.checkLatest()) {
@@ -108,7 +109,7 @@ public class Version {
                     .title("New Update")
                     .message("A new version of MatHax Legacy has been released.")
                     .message("\n")
-                    .message("Your version: v" + Version.getStylized())
+                    .message("Your version: " + Version.getStylized())
                     .message("Latest version: v" + Version.getLatest())
                     .message("\n")
                     .message("Do you want to update?")
