@@ -23,7 +23,8 @@ public class ActiveModulesHUD extends HUDElement {
     private double prevX, prevY;
     private double prevTextLength;
     private Color prevColor = new Color();
-
+    private long lastColorUpdate;
+    
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
@@ -150,7 +151,8 @@ public class ActiveModulesHUD extends HUDElement {
             return;
         }
 
-        rainbowHue1 += rainbowSpeed.get() * renderer.delta;
+        rainbowHue1 += rainbowSpeed.get() * (System.currentTimeMillis() - lastColorUpdate) / 100D;
+        lastColorUpdate = System.currentTimeMillis();
         if (rainbowHue1 > 1) rainbowHue1 -= 1;
         else if (rainbowHue1 < -1) rainbowHue1 += 1;
 
