@@ -480,6 +480,7 @@ public class Modules extends System<Modules> {
         add(new EntityOwner());
         add(new ESP());
         add(new FakePlayer());
+        add(new InteractionMenu());
         add(new Freecam());
         add(new FreeLook());
         add(new Fullbright());
@@ -578,6 +579,7 @@ public class Modules extends System<Modules> {
         add(new Swarm());
         add(new StayHydrated());
         add(new TPSSync());
+        add(new Twerk());
         add(new VanillaSpoof());
     }
 

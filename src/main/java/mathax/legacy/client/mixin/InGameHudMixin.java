@@ -47,8 +47,12 @@ public abstract class InGameHudMixin {
     }
 
     @Redirect(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIIIII)V"))
-    public void customCrosshair(InGameHud inGameHud, MatrixStack matrices, int x, int y, int u, int v, int width, int height) {
-        if (!Modules.get().isActive(CustomCrosshair.class)) inGameHud.drawTexture(matrices, x, y, u, v, width, height);
+    public void redirectRenderCrosshair(InGameHud inGameHud, MatrixStack matrices, int x, int y, int u, int v, int width, int height) {
+        CustomCrosshair customCrosshair = Modules.get().get(CustomCrosshair.class);
+
+        if (!customCrosshair.isActive()) {
+            inGameHud.drawTexture(matrices, x, y, u, v, width, height);
+        }
     }
 
     @Inject(method = "renderStatusEffectOverlay", at = @At("HEAD"), cancellable = true)

@@ -69,6 +69,10 @@ public class Version {
         return SharedConstants.getGameVersion().getName();
     }
 
+    public static Integer getMinecraftProtocol(){
+        return SharedConstants.getGameVersion().getProtocolVersion();
+    }
+
     public static Integer checkLatest() {
         String apiLatestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
         if (apiLatestVer == null) {

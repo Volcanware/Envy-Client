@@ -297,9 +297,8 @@ public class HudTab extends Tab {
                 renderBackground(matrices);
 
                 Utils.unscaledProjection();
-                hud.onRender(Render2DEvent.get(0, 0, delta, null));
-            }
-            else {
+                hud.onRender(Render2DEvent.get(0, 0, delta, matrices));
+            } else {
                 Utils.unscaledProjection();
                 if (!hud.isActive()) hud.onRender(Render2DEvent.get(0, 0, delta, matrices));
             }

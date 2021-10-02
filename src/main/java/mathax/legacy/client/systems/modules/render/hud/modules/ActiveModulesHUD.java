@@ -24,7 +24,7 @@ public class ActiveModulesHUD extends HUDElement {
     private double prevTextLength;
     private Color prevColor = new Color();
     private long lastColorUpdate;
-    
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General

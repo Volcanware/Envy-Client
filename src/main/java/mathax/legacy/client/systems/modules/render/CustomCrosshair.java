@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.bus.EventHandler;
 import mathax.legacy.client.events.render.Render2DEvent;
-import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
@@ -24,8 +23,8 @@ import net.minecraft.util.math.Vec3f;
 /*/ https://github.com/DustinRepo/JexClient/blob/main/src/main/java/me/dustin/jex/feature/mod/impl/render/Crosshair.java /*/
 /*/                                                                                                                      /*/
 
+//TODO: Fix indicator being small and crosshair not appearing sometimes.
 public class CustomCrosshair extends Module {
-    private float x, y;
     private int spinAmount;
     private final Timer timer = new Timer();
 
@@ -173,14 +172,10 @@ public class CustomCrosshair extends Module {
     }
 
     @EventHandler
-    public void onTick(TickEvent.Post event) {
-        x = mc.getWindow().getWidth() / 2;
-        y = mc.getWindow().getHeight() / 2;
-    }
-
-    @EventHandler
     private void onRender2D(Render2DEvent event) {
-        MatrixStack matrixStack = event.matrixStack;
+        MatrixStack matrixStack = event.matrices;
+        float x = mc.getWindow().getWidth() / 2;
+        float y = mc.getWindow().getHeight() / 2;
 
         // Spin
         if (spin.get()) {
@@ -206,8 +201,10 @@ public class CustomCrosshair extends Module {
         // Attack Indicator
         if (mc.options.attackIndicator.equals(AttackIndicator.CROSSHAIR) && mc.player.getAttackCooldownProgress(0) < 1) {
             float width = 30;
-            if (mc.player.getAttackCooldownProgress(0) > 0)
+            if (mc.player.getAttackCooldownProgress(0) > 0) {
                 fillAndBorder(matrixStack, x - 15, y + gap.get().floatValue() + size.get().floatValue() + indicatorThickness.get().floatValue() + 10, x - 15 + (width * mc.player.getAttackCooldownProgress(0)), y + gap.get().floatValue() + size.get().floatValue() + indicatorThickness.get().floatValue() + 14, 0x00000000, Color.fromRGBA(indicatorColor.get().r, indicatorColor.get().g, indicatorColor.get().b, indicatorColor.get().a), indicatorOutline.get().floatValue());
+            }
+
             fillAndBorder(matrixStack, x - 15, y + gap.get().floatValue() + size.get().floatValue() + indicatorThickness.get().floatValue() + 10, x + 15, y + gap.get().floatValue() + size.get().floatValue() + indicatorThickness.get().floatValue() + 14, Color.fromRGBA(indicatorOutlineColor.get().r, indicatorOutlineColor.get().g, indicatorOutlineColor.get().b, indicatorOutlineColor.get().a), 0x00ffffff, indicatorOutline.get().floatValue());
         }
 

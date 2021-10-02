@@ -293,9 +293,6 @@ public class Utils {
         if (mc.getCurrentServerEntry() != null) {
             // Multiplayer
             String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
-            if (SystemUtils.IS_OS_WINDOWS) {
-                name = name.replace(":", "_");
-            }
             if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
                 return "Playing on " + name;
             } else {
@@ -323,9 +320,6 @@ public class Utils {
         if (mc.getCurrentServerEntry() != null) {
             // Multiplayer
             String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
-            if (SystemUtils.IS_OS_WINDOWS) {
-                name = name.replace(":", "_");
-            }
             if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
                 return name;
             } else {

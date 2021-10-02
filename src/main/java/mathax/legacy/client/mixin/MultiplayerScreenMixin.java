@@ -3,6 +3,8 @@ package mathax.legacy.client.mixin;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.Version;
 import mathax.legacy.client.gui.GuiThemes;
+import mathax.legacy.client.gui.screens.ServerManagerScreen;
+import mathax.legacy.client.mixininterface.IMultiplayerScreen;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.systems.proxies.Proxy;
 import mathax.legacy.client.utils.misc.LastServerInfo;
@@ -11,6 +13,7 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.proxies.Proxies;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
+import net.minecraft.client.gui.screen.multiplayer.MultiplayerServerListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.util.math.MatrixStack;
@@ -23,10 +26,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/*/                                            /*/
+/*/ Server Finder & CleanUp by JFronny         /*/
+/*/ https://github.com/JFronny/MeteorAdditions /*/
+/*/                                            /*/
+
 @Mixin(MultiplayerScreen.class)
-public class MultiplayerScreenMixin extends Screen {
+public abstract class MultiplayerScreenMixin extends Screen implements IMultiplayerScreen {
     private final int WHITE = Color.fromRGBA(255, 255, 255, 255);
     private final int GRAY = Color.fromRGBA(175, 175, 175, 255);
+
+    @Shadow protected MultiplayerServerListWidget serverListWidget;
 
     @Shadow
     @Final
@@ -46,6 +56,10 @@ public class MultiplayerScreenMixin extends Screen {
 
         addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, new LiteralText("Accounts"), button -> {
             client.setScreen(GuiThemes.get().accountsScreen());
+        }));
+
+        addDrawableChild(new ButtonWidget(width - 75 - 2 - 75 - 2 - 75 - 2, 2, 75, 20, new LiteralText("Servers"), button -> {
+            client.setScreen(new ServerManagerScreen(GuiThemes.get(), (MultiplayerScreen) (Object) this));
         }));
 
         if (LastServerInfo.getLastServer() != null) {
@@ -94,6 +108,11 @@ public class MultiplayerScreenMixin extends Screen {
 
         drawStringWithShadow(matrices, textRenderer, proxiesleft, (int)x, (int)y, GRAY);
         if (proxiesRight != null) drawStringWithShadow(matrices, textRenderer, proxiesRight, (int)x + textRenderer.getWidth(proxiesleft), (int)y, WHITE);
+    }
+
+    @Override
+    public MultiplayerServerListWidget getServerListWidget() {
+        return serverListWidget;
     }
 
     @Inject(at = {@At("HEAD")},

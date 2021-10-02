@@ -13,7 +13,7 @@ import java.util.Map;
 public class Waypoint implements ISerializable<Waypoint> {
     public String name = "MatHax on top!";
     public String icon = "Square";
-    public SettingColor color = new SettingColor(225, 25, 25);
+    public SettingColor color = new SettingColor(230, 75, 100);
 
     public int x, y, z;
 
