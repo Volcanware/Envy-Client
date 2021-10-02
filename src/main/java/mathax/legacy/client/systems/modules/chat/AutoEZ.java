@@ -408,6 +408,7 @@ public class AutoEZ extends Module {
     private static List<String> getPopMessage() {
         return Arrays.asList(
             "%popped_player% just got popped by MatHax Legacy!",
+            "Keep popping %popped_player%! MatHax Legacy owns you!",
             "%popped_player%'s totem just got ended by MatHax Legacy!",
             "%popped_player% just lost 1 totem thanks to MatHax Legacy!",
             "I just easily popped %popped_player% using MatHax Legacy!"

@@ -148,6 +148,12 @@ public class DiscordRPC extends Module {
                         return "In main menu";
                     } else if (MinecraftClient.getInstance().currentScreen instanceof MultiplayerScreen) {
                         return "In server selection";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ServerManagerScreen) {
+                        return "In server selection";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof ServerFinderScreen) {
+                        return "Using server finder";
+                    } else if (MinecraftClient.getInstance().currentScreen instanceof CleanUpScreen) {
+                        return "Using server cleanup";
                     } else if (MinecraftClient.getInstance().currentScreen instanceof ConnectScreen) {
                         return "Connecting to " + Utils.getNakedActivity();
                     } else if (MinecraftClient.getInstance().currentScreen instanceof DisconnectedScreen) {
