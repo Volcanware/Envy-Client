@@ -380,7 +380,7 @@ public class Nametags extends Module {
         NametagUtils.begin(pos);
 
         boolean showDev = false;
-        String gwText = "    ";
+        String gwText = "      ";
         if (player.getUuidAsString().equals(MatHaxLegacy.devUUID) || player.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) showDev = true;
 
         // Gamemode

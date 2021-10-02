@@ -368,6 +368,7 @@ public class AutoEZ extends Module {
 
         if (!(entity instanceof PlayerEntity)) return;
 
+        if (entity == mc.player) return;
         if (mc.player.distanceTo(entity) > 8) return;
         if (Friends.get().isFriend(((PlayerEntity) entity)) && totemIgnoreFriends.get()) return;
 

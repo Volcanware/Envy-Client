@@ -480,12 +480,12 @@ public class Modules extends System<Modules> {
         add(new EntityOwner());
         add(new ESP());
         add(new FakePlayer());
-        add(new InteractionMenu());
         add(new Freecam());
         add(new FreeLook());
         add(new Fullbright());
         add(new HandView());
         add(new HoleESP());
+        add(new InteractionMenu());
         add(new ItemHighlight());
         add(new ItemPhysics());
         add(new LightOverlay());

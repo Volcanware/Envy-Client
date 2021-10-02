@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.misc;
+package mathax.legacy.client.systems.modules.render;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.MatHaxLegacy;
@@ -58,14 +58,14 @@ public class InteractionMenu extends Module {
     public final Setting<SettingColor> selectedDotColor = sgStyle.add(new ColorSetting.Builder()
         .name("selected-dot-color")
         .description("Color of the dot when selected.")
-        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
+        .defaultValue(new SettingColor(255, 25, 25))
         .build()
     );
 
     public final Setting<SettingColor> dotColor = sgStyle.add(new ColorSetting.Builder()
         .name("dot-color")
         .description("Color of the dot when.")
-        .defaultValue(new SettingColor(0, 155, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
@@ -91,7 +91,7 @@ public class InteractionMenu extends Module {
     );
 
     public InteractionMenu() {
-        super(Categories.Misc, Items.ARMOR_STAND,"interaction-menu","An interaction screen when looking at an entity");
+        super(Categories.Render, Items.ARMOR_STAND,"interaction-menu","An interaction screen when looking at an entity");
     }
 
     public void onKey() {
