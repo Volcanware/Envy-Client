@@ -455,7 +455,7 @@ public class Nametags extends Module {
         double hY = -heightDown;
 
         if (showDev) hX += text.getHeight();
-        
+
         if (displayGameMode.get()) hX = text.render(gmText, hX, hY, GOLD, true);
         hX = text.render(name, hX, hY, nameColor, true);
 
