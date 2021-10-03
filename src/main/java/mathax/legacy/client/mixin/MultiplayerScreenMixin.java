@@ -88,14 +88,14 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
         int loggedDeveloperLength = textRenderer.getWidth(loggedDeveloper);
 
         // Logged in as
-        drawStringWithShadow(matrices, textRenderer, loggedInAs, 2, 2, GRAY);
-        drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, 2, GRAY);
-        drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, 2, WHITE);
+        drawStringWithShadow(matrices, textRenderer, loggedInAs, 2, (int) y, GRAY);
+        drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, (int) y, GRAY);
+        drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, (int) y, WHITE);
         if (!(Modules.get() == null) && !Modules.get().isActive(NameProtect.class) && (client.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || client.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) {
-            drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, 2, GRAY);
-            drawStringWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, 2, GRAY);
-            drawStringWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, 2, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
-            drawStringWithShadow(matrices, textRenderer, loggedCloseDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + loggedDeveloperLength + 2, 2, GRAY);
+            drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, (int) y, GRAY);
+            drawStringWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, (int) y, GRAY);
+            drawStringWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, (int) y, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
+            drawStringWithShadow(matrices, textRenderer, loggedCloseDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + loggedDeveloperLength + 2, (int) y, GRAY);
         }
 
         y += textRenderer.fontHeight + 2;
@@ -106,8 +106,8 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
         String proxiesleft = proxy != null ? "Using proxy" + " " : "Not using a proxy";
         String proxiesRight = proxy != null ? "(" + proxy.name + ") " + proxy.address + ":" + proxy.port : null;
 
-        drawStringWithShadow(matrices, textRenderer, proxiesleft, (int)x, (int)y, GRAY);
-        if (proxiesRight != null) drawStringWithShadow(matrices, textRenderer, proxiesRight, (int)x + textRenderer.getWidth(proxiesleft), (int)y, WHITE);
+        drawStringWithShadow(matrices, textRenderer, proxiesleft, (int)x, (int) y, GRAY);
+        if (proxiesRight != null) drawStringWithShadow(matrices, textRenderer, proxiesRight, (int)x + textRenderer.getWidth(proxiesleft), (int) y, WHITE);
     }
 
     @Override

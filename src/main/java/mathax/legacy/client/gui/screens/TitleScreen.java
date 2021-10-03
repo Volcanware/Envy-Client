@@ -136,7 +136,7 @@ public class TitleScreen extends Screen {
         float yOffset = -1.0f * (((float) mouseY - (float) height / 2.0f) / ((float) height / 18.0f));
 
         int backgroundX = ((int)xOffset - 16) * 3;
-        int backgroundY = ((int)yOffset - 16) * 2;
+        int backgroundY = ((int) yOffset - 16) * 2;
         int width1 = width / 2;
 
         double width2 = width * 1.2;
@@ -168,6 +168,9 @@ public class TitleScreen extends Screen {
             }
 
             String minecraftVersion = "Minecraft " + SharedConstants.getGameVersion().getName() + ("release".equalsIgnoreCase(client.getVersionType()) ? "" : " - " + client.getVersionType());
+
+            float y = 2;
+            float y2 = y + textRenderer.fontHeight + y;
 
             String space = " ";
             int spaceLength = textRenderer.getWidth(space);
@@ -207,33 +210,33 @@ public class TitleScreen extends Screen {
 
             drawStringWithShadow(matrices, textRenderer, COPYRIGHT, copyrightTextX, height - 10, WHITE);
 
-            drawStringWithShadow(matrices, textRenderer, loggedInAs, 2, 2, GRAY);
-            drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, 2, GRAY);
-            drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, 2, WHITE);
+            drawStringWithShadow(matrices, textRenderer, loggedInAs, 2, (int) y, GRAY);
+            drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, (int) y, GRAY);
+            drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, (int) y, WHITE);
 
             if (!(Modules.get() == null) && !Modules.get().isActive(NameProtect.class) && (client.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || client.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) {
-                drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, 2, GRAY);
-                drawStringWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, 2, GRAY);
-                drawStringWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, 2, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
-                drawStringWithShadow(matrices, textRenderer, loggedCloseDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + loggedDeveloperLength + 2, 2, GRAY);
+                drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, (int) y, GRAY);
+                drawStringWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, (int) y, GRAY);
+                drawStringWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, (int) y, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
+                drawStringWithShadow(matrices, textRenderer, loggedCloseDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + loggedDeveloperLength + 2, (int) y, GRAY);
             }
 
             int watermarkPreviousWidth = 0;
-            drawStringWithShadow(matrices, textRenderer, watermarkName, width - watermarkFullLength - 2, 2, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
+            drawStringWithShadow(matrices, textRenderer, watermarkName, width - watermarkFullLength - 2, (int) y, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
             watermarkPreviousWidth += watermarkNameLength;
-            drawStringWithShadow(matrices, textRenderer, space, width - watermarkFullLength + watermarkPreviousWidth - 2, 2, WHITE);
+            drawStringWithShadow(matrices, textRenderer, space, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, WHITE);
             watermarkPreviousWidth += spaceLength;
-            drawStringWithShadow(matrices, textRenderer, watermarkVersion, width - watermarkFullLength + watermarkPreviousWidth - 2, 2, GRAY);
+            drawStringWithShadow(matrices, textRenderer, watermarkVersion, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, GRAY);
 
             int authorPreviousWidth = 0;
-            drawStringWithShadow(matrices, textRenderer, authorBy, width - authorFullLength - 2, 16, GRAY);
+            drawStringWithShadow(matrices, textRenderer, authorBy, width - authorFullLength - 2, (int) y2, GRAY);
             authorPreviousWidth += authorByLength;
-            drawStringWithShadow(matrices, textRenderer, space, width - authorFullLength + authorPreviousWidth - 2, 16, GRAY);
+            drawStringWithShadow(matrices, textRenderer, space, width - authorFullLength + authorPreviousWidth - 2, (int) y2, GRAY);
             authorPreviousWidth += spaceLength;
-            drawStringWithShadow(matrices, textRenderer, authorName, width - authorFullLength + authorPreviousWidth - 2, 16, WHITE);
+            drawStringWithShadow(matrices, textRenderer, authorName, width - authorFullLength + authorPreviousWidth - 2, (int) y2, WHITE);
 
-            drawStringWithShadow(matrices, textRenderer, proxyUsing, 2, 16, GRAY);
-            if (proxyDetails != null) drawStringWithShadow(matrices, textRenderer, proxyDetails, 2 + proxiesLeftWidth, 16, WHITE);
+            drawStringWithShadow(matrices, textRenderer, proxyUsing, 2, (int) y2, GRAY);
+            if (proxyDetails != null) drawStringWithShadow(matrices, textRenderer, proxyDetails, 2 + proxiesLeftWidth, (int) y2, WHITE);
 
             if (mouseX > copyrightTextX && mouseX < copyrightTextX + copyrightTextWidth && mouseY > height - 10 && mouseY < height) {
                 fill(matrices, copyrightTextX, height - 1, copyrightTextX + copyrightTextWidth, height, WHITE);
