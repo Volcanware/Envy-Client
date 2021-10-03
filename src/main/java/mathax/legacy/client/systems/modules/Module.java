@@ -154,6 +154,7 @@ public abstract class Module implements ISerializable<Module> {
         tag.putBoolean("toggleOnKeyRelease", toggleOnBindRelease);
         tag.put("settings", settings.toTag());
 
+        tag.putBoolean("toggleMessage", toggleMessage);
         tag.putBoolean("toggleToast", toggleToast);
         tag.putBoolean("active", active);
         tag.putBoolean("visible", visible);
@@ -173,6 +174,7 @@ public abstract class Module implements ISerializable<Module> {
         NbtElement settingsTag = tag.get("settings");
         if (settingsTag instanceof NbtCompound) settings.fromTag((NbtCompound) settingsTag);
 
+        toggleMessage(tag.getBoolean("toggleMessage"));
         toggleToast(tag.getBoolean("toggleToast"));
         boolean active = tag.getBoolean("active");
         if (active != isActive()) toggle();
