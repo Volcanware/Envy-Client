@@ -39,10 +39,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
 import java.util.*;
 
-/*/                                                                                                              /*/
+/*/--------------------------------------------------------------------------------------------------------------/*/
 /*/ Taken from Orion Meteor Addon and edited by Matejko06                                                        /*/
 /*/ https://github.com/GhostTypes/orion/blob/main/src/main/java/me/ghosttypes/orion/modules/main/AnchorAura.java /*/
-/*/                                                                                                              /*/
+/*/--------------------------------------------------------------------------------------------------------------/*/
 
 public class Nametags extends Module {
     private static final Identifier MATHAX_ICON = new Identifier("mathaxlegacy", "textures/icons/icon.png");

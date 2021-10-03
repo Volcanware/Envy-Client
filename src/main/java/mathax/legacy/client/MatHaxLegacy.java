@@ -49,11 +49,11 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.lang.invoke.MethodHandles;
 
-/*/                                                                              /*/
+/*/------------------------------------------------------------------------------/*/
 /*/ THIS CLIENT IS AN RECODED VERSION OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/
 /*/ https://meteorclient.com                                                     /*/
 /*/ https://github.com/MeteorDevelopment/meteor-client                           /*/
-/*/                                                                              /*/
+/*/------------------------------------------------------------------------------/*/
 
 public class MatHaxLegacy implements ClientModInitializer {
     public static MatHaxLegacy INSTANCE;

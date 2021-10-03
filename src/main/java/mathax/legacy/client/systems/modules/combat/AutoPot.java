@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/*/                                                                                                              /*/
+/*/--------------------------------------------------------------------------------------------------------------/*/
 /*/ Taken from Meteor Rejects and edited by Matejko06                                                            /*/
 /*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/cloudburst/rejects/modules/AutoPot.java /*/
-/*/                                                                                                              /*/
+/*/--------------------------------------------------------------------------------------------------------------/*/
 
 public class AutoPot extends Module {
     private final List<Class<? extends Module>> wasAura = new ArrayList<>();

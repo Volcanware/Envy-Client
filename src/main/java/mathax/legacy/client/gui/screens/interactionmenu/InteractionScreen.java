@@ -38,13 +38,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
-/*/                                                                                                                                     /*/
+/*/-------------------------------------------------------------------------------------------------------------------------------------/*/
 /*/ Used from Meteor Rejects                                                                                                            /*/
 /*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/cloudburst/rejects/modules/InteractionMenu.java                /*/
-/*/                                                                                                                                     /*/
 /*/ Originally ported from BleachHack                                                                                                   /*/
 /*/ https://github.com/BleachDrinker420/BleachHack/blob/master/BleachHack-Fabric-1.17/src/main/java/bleach/hack/gui/EntityMenuScreen.ja /*/
-/*/                                                                                                                                     /*/
+/*/-------------------------------------------------------------------------------------------------------------------------------------/*/
 
 // TODO: Add Custom Font support. InteractionScreenFontUtils.class
 public class InteractionScreen extends Screen {

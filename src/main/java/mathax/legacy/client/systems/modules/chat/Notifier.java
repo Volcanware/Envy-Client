@@ -35,10 +35,10 @@ import java.util.UUID;
 
 import static mathax.legacy.client.utils.player.ChatUtils.formatCoords;
 
-/*/                                                                                                              /*/
+/*/--------------------------------------------------------------------------------------------------------------/*/
 /*/ Burrow & Armor taken from Orion Meteor Addon and modified by Matejko06                                       /*/
 /*/ https://github.com/GhostTypes/orion/blob/main/src/main/java/me/ghosttypes/orion/modules/main/AnchorAura.java /*/
-/*/                                                                                                              /*/
+/*/--------------------------------------------------------------------------------------------------------------/*/
 
 public class Notifier extends Module {
     private static String entityName;

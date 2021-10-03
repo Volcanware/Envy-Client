@@ -40,10 +40,10 @@ import net.minecraft.world.explosion.Explosion;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/*/                                                                                                                               /*/
+/*/-------------------------------------------------------------------------------------------------------------------------------/*/
 /*/ Enhanced mode by l1tecorejz                                                                                                   /*/
 /*/ https://github.com/l1tecorejz/Perfect-Auto-Totem/blob/main/src/main/java/meteordevelopment/addons/L1tE/modules/AutoTotem.java /*/
-/*/                                                                                                                               /*/
+/*/-------------------------------------------------------------------------------------------------------------------------------/*/
 
 public class AutoTotem extends Module {
     private final AtomicBoolean shouldWaitNextTick = new AtomicBoolean(false);

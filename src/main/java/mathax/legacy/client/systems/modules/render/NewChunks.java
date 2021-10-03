@@ -22,10 +22,10 @@ import net.minecraft.world.chunk.WorldChunk;
 
 import java.util.*;
 
-/*/                         /*/
-/*/ Ported from BleachHack. /*/
-/*/ https://bleachhack.org  /*/
-/*/                         /*/
+/*/------------------------/*/
+/*/ Ported from BleachHack /*/
+/*/ https://bleachhack.org /*/
+/*/------------------------/*/
 
 public class NewChunks extends Module {
     private final Set<ChunkPos> newChunks = Collections.synchronizedSet(new HashSet<>());

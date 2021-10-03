@@ -18,10 +18,10 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 
-/*/                                                                                                                      /*/
+/*/----------------------------------------------------------------------------------------------------------------------/*/
 /*/ Used from Jex Client and highly modified by Matejko06                                                                /*/
 /*/ https://github.com/DustinRepo/JexClient/blob/main/src/main/java/me/dustin/jex/feature/mod/impl/render/Crosshair.java /*/
-/*/                                                                                                                      /*/
+/*/----------------------------------------------------------------------------------------------------------------------/*/
 
 //TODO: Fix indicator being small on big monitors.
 public class CustomCrosshair extends Module {

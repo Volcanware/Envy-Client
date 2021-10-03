@@ -22,10 +22,10 @@ import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-/*/                                                                                                                 /*/
+/*/-----------------------------------------------------------------------------------------------------------------/*/
 /*/ Taken from Meteor Rejects                                                                                       /*/
 /*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/cloudburst/rejects/modules/AntiVanish.java /*/
-/*/                                                                                                                 /*/
+/*/-----------------------------------------------------------------------------------------------------------------/*/
 
 public class AntiVanish extends Module {
     private final Queue<UUID> toLookup = new ConcurrentLinkedQueue<UUID>();

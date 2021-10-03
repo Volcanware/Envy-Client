@@ -25,10 +25,10 @@ import net.minecraft.nbt.NbtString;
 import java.util.HashMap;
 import java.util.Optional;
 
-/*/                                                                                                                      /*/
+/*/----------------------------------------------------------------------------------------------------------------------/*/
 /*/ Used from Meteor Rejects                                                                                             /*/
 /*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/cloudburst/rejects/modules/InteractionMenu.java /*/
-/*/                                                                                                                      /*/
+/*/----------------------------------------------------------------------------------------------------------------------/*/
 
 public class InteractionMenu extends Module {
     public final HashMap<String,String> messages = new HashMap<>();
