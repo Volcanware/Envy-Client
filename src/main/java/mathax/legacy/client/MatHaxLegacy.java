@@ -64,8 +64,8 @@ public class MatHaxLegacy implements ClientModInitializer {
     public static final File FOLDER = new File(FabricLoader.getInstance().getGameDir().toString(), "MatHax/Legacy");
     public static final File VERSION_FOLDER = new File(FOLDER + "/" + Version.getMinecraft());
 
-    public final Color MATHAX_COLOR = new Color(230, 75, 100);
-    public final int MATHAX_COLOR_INT = Color.fromRGBA(230, 75, 100, 255);
+    public final Color MATHAX_COLOR = new Color(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b);
+    public final int MATHAX_COLOR_INT = Color.fromRGBA(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255);
     public final Color MATHAX_BACKGROUND_COLOR = new Color(30, 30, 45);
     public final int MATHAX_BACKGROUND_COLOR_INT = Color.fromRGBA(30, 30, 45, 255);
 

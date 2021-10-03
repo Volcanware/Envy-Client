@@ -167,6 +167,8 @@ public class CustomCrosshair extends Module {
         .build()
     );
 
+    //TODO: Still vanishes or moves somewhere else sometimes.
+
     public CustomCrosshair() {
         super(Categories.Render, Items.COMPASS, "custom-crosshair", "Renders a customizable crosshair instead of the Minecraft one.");
     }

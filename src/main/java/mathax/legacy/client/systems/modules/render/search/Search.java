@@ -2,6 +2,7 @@ package mathax.legacy.client.systems.modules.render.search;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.BlockUpdateEvent;
 import mathax.legacy.client.events.world.ChunkDataEvent;
@@ -52,7 +53,7 @@ public class Search extends Module {
     private final Setting<SBlockData> defaultBlockConfig = sgGeneral.add(new GenericSetting.Builder<SBlockData>()
         .name("default-block-config")
         .description("Default block config.")
-        .defaultValue(new SBlockData(ShapeMode.Lines, new SettingColor(230, 75, 100), new SettingColor(230, 75, 100, 75), true, new SettingColor(230, 75, 100)))
+        .defaultValue(new SBlockData(ShapeMode.Lines, new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b), new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 75), true, new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b)))
         .build()
     );
 

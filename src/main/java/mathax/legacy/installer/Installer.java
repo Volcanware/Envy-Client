@@ -1,86 +1,65 @@
 package mathax.legacy.installer;
 
+
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
+//TODO: Rewrite to Installer.
 public class Installer {
-    public static final Color MATHAX_COLOR = new Color(230, 75, 100);
-    public static final Color MATHAX_BACKGROUND_COLOR = new Color(30, 30, 45);
-
-    //TODO: MAKE THIS SHIT AN INSTALLER
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
 
-        // Icon
-        ImageIcon icon = createImageIcon("/assets/mathaxlegacy/textures/icons/icon64.png", "MatHax Legacy");
-
-        // Colors & Fonts
-        // TODO: Load Comfortaa font and make it work. :)
-        UIManager.put("OptionPane.background", MATHAX_BACKGROUND_COLOR);
-        UIManager.put("Panel.background", MATHAX_BACKGROUND_COLOR);
-        UIManager.put("Button.background", MATHAX_COLOR);
-        UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Comfortaa", Font.BOLD, 16)));
-        UIManager.put("Panel.messageFont", new FontUIResource(new Font("Comfortaa", Font.BOLD, 16)));
-        UIManager.put("Button.font", new FontUIResource(new Font("Comfortaa", Font.BOLD, 16)));
-        UIManager.put("OptionPane.messageForeground", MATHAX_COLOR);
-        UIManager.put("Panel.messageForeground", MATHAX_COLOR);
-        UIManager.put("Button.foreground", MATHAX_BACKGROUND_COLOR);
-
-        // Options
         int option = JOptionPane.showOptionDialog(
             null,
-            "\nHow to install:\nPut this .jar file to your mods folder and run Fabric for Minecraft version specified in the jar name.\n\n",
+            "To install MatHax Legacy, you need to put it in your mods folder and run Fabric for the Minecraft version specified in the jar name.",
             "MatHax Legacy",
             JOptionPane.YES_NO_CANCEL_OPTION,
             JOptionPane.ERROR_MESSAGE,
-            icon,
-            new String[]{"Download Fabric", "Open mods folder", "MatHax Website", "MatHax Discord"},
+            null,
+            new String[] { "Fabric Download", "Mods Folder", "MatHax Website", "MatHax Discord" },
             null
         );
 
-        switch (option) {
-            case 0:
-                openUrl("https://fabricmc.net/use/");
-            case 1:
-                String os = System.getProperty("os.name").toLowerCase();
+        if (option == 0) {
+            openUrl("http://fabricmc.net");
+        } else if (option == 1) {
+            String os = System.getProperty("os.name").toLowerCase();
 
-                try {
-                    if (os.contains("win")) {
-                        if (Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
-                            String path = System.getenv("AppData") + "/.minecraft/mods";
-                            new File(path).mkdirs();
-                            Desktop.getDesktop().open(new File(path));
-                        }
-                    } else if (os.contains("mac")) {
-                        String path = System.getProperty("user.home") + "/Library/Application Support/minecraft/mods";
+            try {
+                if (os.contains("win")) {
+                    if (Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
+                        String path = System.getenv("AppData") + "/.minecraft/mods";
                         new File(path).mkdirs();
-                        ProcessBuilder pb = new ProcessBuilder("open", path);
-                        Process process = pb.start();
-                    } else if (os.contains("nix") || os.contains("nux")) {
-                        String path = System.getProperty("user.home") + "/.minecraft";
-                        new File(path).mkdirs();
-                        Runtime.getRuntime().exec("xdg-open \"" + path + "\"");
+                        Desktop.getDesktop().open(new File(path));
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } else if (os.contains("mac")) {
+                    String path = System.getProperty("user.home") + "/Library/Application Support/minecraft/mods";
+                    new File(path).mkdirs();
+                    ProcessBuilder pb = new ProcessBuilder("open", path);
+                    Process process = pb.start();
+                } else if (os.contains("nix") || os.contains("nux")) {
+                    String path = System.getProperty("user.home") + "/.minecraft";
+                    new File(path).mkdirs();
+                    Runtime.getRuntime().exec("xdg-open \"" + path + "\"");
                 }
-            case 2:
-                openUrl("https://mathaxclient.xyz");
-            case 3:
-                openUrl("https://mathaxclient.xyz/Discord");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (option == 2) {
+            openUrl("https://mathaxclient.xyz/");
+        } else if (option == 3) {
+            openUrl("https://mathaxclient.xyz/Discord/");
         }
     }
 
-    // URL
     public static void openUrl(String url) {
         String os = System.getProperty("os.name").toLowerCase();
 
@@ -96,17 +75,6 @@ public class Installer {
             }
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    // ICON
-    protected static ImageIcon createImageIcon(String path, String description) {
-        URL imgURL = Installer.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL, description);
-        } else {
-            System.err.println("Couldn't find icon: " + path);
-            return null;
         }
     }
 }

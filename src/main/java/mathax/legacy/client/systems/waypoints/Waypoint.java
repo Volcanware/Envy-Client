@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.waypoints;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.renderer.GL;
 import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.utils.misc.ISerializable;
@@ -11,9 +12,9 @@ import net.minecraft.nbt.NbtCompound;
 import java.util.Map;
 
 public class Waypoint implements ISerializable<Waypoint> {
-    public String name = "MatHax on top!";
+    public String name = "popbob's base";
     public String icon = "Square";
-    public SettingColor color = new SettingColor(230, 75, 100);
+    public SettingColor color = new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b);
 
     public int x, y, z;
 
