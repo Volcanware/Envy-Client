@@ -16,7 +16,7 @@ import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.render.NametagUtils;
 import mathax.legacy.client.utils.render.color.Color;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.HorseBaseEntity;
 import net.minecraft.entity.passive.TameableEntity;

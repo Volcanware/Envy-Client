@@ -1,7 +1,7 @@
-package mathax.legacy.client.bus;
+package mathax.legacy.client.eventbus;
 
-import mathax.legacy.client.bus.listeners.IListener;
-import mathax.legacy.client.bus.listeners.LambdaListener;
+import mathax.legacy.client.eventbus.listeners.IListener;
+import mathax.legacy.client.eventbus.listeners.LambdaListener;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

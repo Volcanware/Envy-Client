@@ -4,7 +4,7 @@ import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.mixin.BlockHitResultAccessor;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.util.math.Direction;

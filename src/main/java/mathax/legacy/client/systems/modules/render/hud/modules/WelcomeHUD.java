@@ -41,11 +41,6 @@ public class WelcomeHUD extends TripleTextHUDElement {
     @Override
     protected String getLeft() {
         switch (message.get()) {
-            case Welcome -> {
-                if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Legacy, ";
-                if ((mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) return "Welcome to MatHax Legacy, Developer ";
-                else return "Welcome to MatHax Legacy, ";
-            }
             case Using -> {
                 if (Modules.get().isActive(NameProtect.class)) return "You are using MatHax Legacy, ";
                 if ((mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) return "You are using MatHax Legacy, Developer ";

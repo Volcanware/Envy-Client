@@ -13,7 +13,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.render.AlignmentX;
 import mathax.legacy.client.utils.render.AlignmentY;
 import mathax.legacy.client.utils.render.color.SettingColor;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.render.hud.modules.*;
 import net.minecraft.item.Items;

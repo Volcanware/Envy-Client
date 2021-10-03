@@ -7,7 +7,7 @@ import mathax.legacy.client.events.game.GameJoinedEvent;
 import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.events.mathax.ActiveModulesChangedEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.combat.AutoLog;
 import mathax.legacy.client.systems.modules.movement.GUIMove;

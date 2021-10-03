@@ -16,7 +16,7 @@ import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerEntity;
 import mathax.legacy.client.utils.player.ArmorUtils;
 import mathax.legacy.client.utils.player.ChatUtils;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

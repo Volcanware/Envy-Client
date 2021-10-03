@@ -1,6 +1,6 @@
 package mathax.legacy.client.events;
 
-import mathax.legacy.client.bus.ICancellable;
+import mathax.legacy.client.eventbus.ICancellable;
 
 public class Cancellable implements ICancellable {
     private boolean cancelled = false;

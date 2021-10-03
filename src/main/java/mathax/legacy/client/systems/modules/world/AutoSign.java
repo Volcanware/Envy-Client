@@ -8,7 +8,7 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.settings.StringSetting;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.utils.misc.Placeholders;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.gui.screen.ingame.SignEditScreen;

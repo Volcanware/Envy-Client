@@ -7,7 +7,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.Rotations;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;

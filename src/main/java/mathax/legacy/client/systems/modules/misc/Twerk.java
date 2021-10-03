@@ -1,6 +1,6 @@
 package mathax.legacy.client.systems.modules.misc;
 
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.IntSetting;
 import mathax.legacy.client.settings.Setting;

@@ -1,6 +1,6 @@
 package mathax.legacy.client.utils.player;
 
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.utils.Utils;
 import net.minecraft.entity.player.PlayerEntity;

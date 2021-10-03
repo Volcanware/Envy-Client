@@ -1,7 +1,7 @@
-package mathax.legacy.client.gui.screens;
+package mathax.legacy.client.gui.screens.interactionmenu;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.GuiThemes;

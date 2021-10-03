@@ -8,8 +8,8 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.utils.network.PacketUtils;
-import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.bus.EventPriority;
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.eventbus.EventPriority;
 import net.minecraft.item.Items;
 import net.minecraft.network.Packet;
 

@@ -11,7 +11,7 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.waypoints.Waypoint;
 import mathax.legacy.client.systems.waypoints.Waypoints;
 import mathax.legacy.client.utils.misc.UnorderedArrayList;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 
 import java.util.List;
 

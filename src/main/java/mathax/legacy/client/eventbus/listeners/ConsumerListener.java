@@ -1,6 +1,6 @@
-package mathax.legacy.client.bus.listeners;
+package mathax.legacy.client.eventbus.listeners;
 
-import mathax.legacy.client.bus.EventPriority;
+import mathax.legacy.client.eventbus.EventPriority;
 
 import java.util.function.Consumer;
 

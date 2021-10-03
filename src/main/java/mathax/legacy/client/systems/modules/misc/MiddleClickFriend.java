@@ -13,7 +13,7 @@ import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.utils.misc.Placeholders;
 import mathax.legacy.client.utils.misc.input.KeyAction;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.utils.render.ToastSystem;
 import net.minecraft.entity.player.PlayerEntity;

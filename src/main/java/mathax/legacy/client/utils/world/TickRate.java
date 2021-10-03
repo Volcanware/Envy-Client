@@ -4,7 +4,7 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.game.GameJoinedEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 
 import java.util.Arrays;

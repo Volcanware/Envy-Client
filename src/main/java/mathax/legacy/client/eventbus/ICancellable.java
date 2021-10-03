@@ -1,4 +1,4 @@
-package mathax.legacy.client.bus;
+package mathax.legacy.client.eventbus;
 
 /**
  * Cancellable events need to implement this interface.

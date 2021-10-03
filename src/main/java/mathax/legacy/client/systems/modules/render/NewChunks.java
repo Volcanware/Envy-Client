@@ -1,6 +1,6 @@
 package mathax.legacy.client.systems.modules.render;
 
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.gui.GuiTheme;

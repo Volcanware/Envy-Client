@@ -6,7 +6,7 @@ import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.entity.Target;
 import mathax.legacy.client.utils.misc.Pool;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.BlockPos;

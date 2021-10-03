@@ -10,7 +10,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.Freecam;
 import mathax.legacy.client.utils.misc.input.KeyAction;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.item.Items;
 
 public class AirJump extends Module {

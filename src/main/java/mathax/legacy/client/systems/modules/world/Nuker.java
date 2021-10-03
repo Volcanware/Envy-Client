@@ -7,7 +7,7 @@ import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.Pool;
 import mathax.legacy.client.utils.world.BlockIterator;
 import mathax.legacy.client.utils.world.BlockUtils;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Items;

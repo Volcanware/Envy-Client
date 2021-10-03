@@ -1,7 +1,7 @@
 package mathax.legacy.client.systems.modules.chat;
 
-import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.bus.EventPriority;
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.eventbus.EventPriority;
 import mathax.legacy.client.events.game.ReceiveMessageEvent;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;

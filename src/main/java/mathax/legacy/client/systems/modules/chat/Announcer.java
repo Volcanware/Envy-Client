@@ -7,7 +7,7 @@ import mathax.legacy.client.events.entity.player.PickItemsEvent;
 import mathax.legacy.client.events.entity.player.PlaceBlockEvent;
 import mathax.legacy.client.events.game.OpenScreenEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Categories;

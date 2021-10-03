@@ -1,6 +1,6 @@
 package mathax.legacy.client.systems.modules.render;
 
-import mathax.legacy.client.bus.EventPriority;
+import mathax.legacy.client.eventbus.EventPriority;
 import mathax.legacy.client.events.entity.TookDamageEvent;
 import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.events.game.OpenScreenEvent;
@@ -15,7 +15,7 @@ import mathax.legacy.client.utils.misc.Vec3;
 import mathax.legacy.client.utils.misc.input.Input;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.player.Rotations;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.item.Items;
 import net.minecraft.util.hit.BlockHitResult;

@@ -1,4 +1,4 @@
-package mathax.legacy.client.gui.screens;
+package mathax.legacy.client.gui.screens.servermanager;
 
 import mathax.legacy.client.Version;
 import mathax.legacy.client.gui.GuiTheme;
@@ -7,14 +7,13 @@ import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.pressable.WCheckbox;
 import mathax.legacy.client.mixininterface.IMultiplayerScreen;
 import mathax.legacy.client.utils.render.color.Color;
-import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerServerListWidget;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.util.Formatting;
 
-public class CleanUpScreen extends WindowScreen {
+public class ServerCleanUpScreen extends WindowScreen {
     private final MultiplayerScreen multiplayerScreen;
     private WCheckbox removeAll;
     private WCheckbox removeFailed;
@@ -23,7 +22,7 @@ public class CleanUpScreen extends WindowScreen {
     private WCheckbox removeGriefMe;
     private WCheckbox rename;
 
-    public CleanUpScreen(GuiTheme theme, MultiplayerScreen multiplayerScreen, Screen parent) {
+    public ServerCleanUpScreen(GuiTheme theme, MultiplayerScreen multiplayerScreen, Screen parent) {
         super(theme, "Clean Up");
         this.multiplayerScreen = multiplayerScreen;
         this.parent = parent;

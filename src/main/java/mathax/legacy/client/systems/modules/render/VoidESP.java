@@ -11,7 +11,7 @@ import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.utils.world.Dimension;
 import mathax.legacy.client.utils.world.Dir;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;

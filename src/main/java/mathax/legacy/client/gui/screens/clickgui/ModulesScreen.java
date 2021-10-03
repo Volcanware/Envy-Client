@@ -1,4 +1,4 @@
-package mathax.legacy.client.gui.screens;
+package mathax.legacy.client.gui.screens.clickgui;
 
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.tabs.TabScreen;

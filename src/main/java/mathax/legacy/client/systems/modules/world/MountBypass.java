@@ -4,7 +4,7 @@ import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.mixininterface.IPlayerInteractEntityC2SPacket;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.entity.passive.AbstractDonkeyEntity;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;

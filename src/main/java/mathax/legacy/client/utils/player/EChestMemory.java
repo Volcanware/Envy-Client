@@ -3,7 +3,7 @@ package mathax.legacy.client.utils.player;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.game.OpenScreenEvent;
 import mathax.legacy.client.events.world.BlockActivateEvent;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.block.EnderChestBlock;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.inventory.Inventory;

@@ -14,7 +14,7 @@ import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.SortPriority;
 import mathax.legacy.client.utils.entity.TargetUtils;
 import mathax.legacy.client.utils.render.color.SettingColor;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;

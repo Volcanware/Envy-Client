@@ -2,7 +2,7 @@ package mathax.legacy.client.systems.modules.player;
 
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.mixin.PlayerMoveC2SPacketAccessor;
 import mathax.legacy.client.settings.BoolSetting;
 import mathax.legacy.client.settings.Setting;

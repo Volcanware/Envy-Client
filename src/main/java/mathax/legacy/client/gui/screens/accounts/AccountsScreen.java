@@ -1,4 +1,4 @@
-package mathax.legacy.client.gui.screens;
+package mathax.legacy.client.gui.screens.accounts;
 
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WindowScreen;

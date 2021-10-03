@@ -16,7 +16,7 @@ import mathax.legacy.client.systems.modules.combat.CrystalAura;
 import mathax.legacy.client.systems.modules.combat.KillAura;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.player.InvUtils;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;

@@ -3,7 +3,7 @@ package mathax.legacy.client.utils.misc;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.game.ResourcePacksReloadedEvent;
 import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.sound.WeightedSoundSet;
 import net.minecraft.enchantment.Enchantment;

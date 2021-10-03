@@ -1,4 +1,4 @@
-package mathax.legacy.client.gui.screens;
+package mathax.legacy.client.gui.screens.servermanager;
 
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WindowScreen;
@@ -22,7 +22,7 @@ public class ServerManagerScreen extends WindowScreen {
     public void initWidgets() {
         WHorizontalList l = add(theme.horizontalList()).expandX().widget();
         addButton(l, "Find Servers", () -> new ServerFinderScreen(theme, multiplayerScreen, this));
-        addButton(l, "Clean Up", () -> new CleanUpScreen(theme, multiplayerScreen, this));
+        addButton(l, "Clean Up", () -> new ServerCleanUpScreen(theme, multiplayerScreen, this));
     }
 
     private void addButton(WContainer c, String text, IGetter<Screen> action) {

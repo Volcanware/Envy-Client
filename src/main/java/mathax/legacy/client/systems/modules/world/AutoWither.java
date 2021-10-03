@@ -1,7 +1,7 @@
 package mathax.legacy.client.systems.modules.world;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.ShapeMode;

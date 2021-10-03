@@ -7,7 +7,7 @@ import mathax.legacy.client.gui.WidgetScreen;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.bus.listeners.ConsumerListener;
+import mathax.legacy.client.eventbus.listeners.ConsumerListener;
 import mathax.legacy.client.renderer.Framebuffer;
 import mathax.legacy.client.renderer.GL;
 import mathax.legacy.client.renderer.PostProcessRenderer;

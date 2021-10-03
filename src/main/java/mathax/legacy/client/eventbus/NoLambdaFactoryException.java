@@ -1,4 +1,4 @@
-package mathax.legacy.client.bus;
+package mathax.legacy.client.eventbus;
 
 /**
  * Thrown when an {@link IEventBus} can't find a registered lambda factory to use.

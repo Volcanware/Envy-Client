@@ -9,7 +9,7 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.Freecam;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.input.Input;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.ingame.*;

@@ -1,6 +1,6 @@
-package mathax.legacy.client.bus.listeners;
+package mathax.legacy.client.eventbus.listeners;
 
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 
 import java.lang.invoke.LambdaMetafactory;
 import java.lang.invoke.MethodHandle;

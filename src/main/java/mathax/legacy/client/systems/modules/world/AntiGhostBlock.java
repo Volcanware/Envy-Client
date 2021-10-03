@@ -1,6 +1,6 @@
 package mathax.legacy.client.systems.modules.world;
 
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.entity.player.BreakBlockEvent;
 import mathax.legacy.client.events.entity.player.PlaceBlockEvent;
 import mathax.legacy.client.events.game.GameLeftEvent;

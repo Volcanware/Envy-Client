@@ -1,7 +1,7 @@
 package mathax.legacy.client.systems.modules.movement;
 
 import io.netty.util.internal.ConcurrentSet;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.entity.player.PlayerMoveEvent;
 import mathax.legacy.client.events.entity.player.SendMovementPacketsEvent;
 import mathax.legacy.client.events.packets.PacketEvent;

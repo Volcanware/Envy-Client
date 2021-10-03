@@ -8,7 +8,7 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.mixin.StatusEffectInstanceAccessor;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Items;
 

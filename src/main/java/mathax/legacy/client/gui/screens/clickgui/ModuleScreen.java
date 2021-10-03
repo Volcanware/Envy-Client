@@ -1,4 +1,4 @@
-package mathax.legacy.client.gui.screens;
+package mathax.legacy.client.gui.screens.clickgui;
 
 import mathax.legacy.client.events.mathax.ModuleBindChangedEvent;
 import mathax.legacy.client.gui.GuiTheme;
@@ -13,7 +13,7 @@ import mathax.legacy.client.gui.widgets.pressable.WCheckbox;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.nbt.NbtCompound;
 

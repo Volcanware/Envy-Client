@@ -4,7 +4,7 @@ import mathax.legacy.client.events.render.RenderItemEntityEvent;
 import mathax.legacy.client.mixininterface.IItemEntity;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;

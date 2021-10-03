@@ -2,7 +2,6 @@ package mathax.legacy.client.systems.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import mathax.legacy.client.Version;
 import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.utils.Utils;
 import net.minecraft.command.CommandSource;

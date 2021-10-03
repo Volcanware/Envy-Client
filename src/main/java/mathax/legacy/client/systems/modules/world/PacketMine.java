@@ -13,7 +13,7 @@ import mathax.legacy.client.utils.player.FindItemResult;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.Rotations;
 import mathax.legacy.client.utils.render.color.SettingColor;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

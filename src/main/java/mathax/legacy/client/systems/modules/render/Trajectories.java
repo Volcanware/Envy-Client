@@ -9,7 +9,7 @@ import mathax.legacy.client.utils.entity.ProjectileEntitySimulator;
 import mathax.legacy.client.utils.misc.Pool;
 import mathax.legacy.client.utils.misc.Vec3;
 import mathax.legacy.client.utils.render.color.SettingColor;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;

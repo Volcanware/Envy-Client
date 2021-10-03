@@ -3,7 +3,7 @@ package mathax.legacy.client.systems.modules.render;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.screens.InteractionScreen;
+import mathax.legacy.client.gui.screens.interactionmenu.InteractionScreen;
 import mathax.legacy.client.gui.widgets.WWidget;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.input.WTextBox;

@@ -2,7 +2,7 @@ package mathax.legacy.client.utils.player;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.entity.player.PlayerMoveEvent;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

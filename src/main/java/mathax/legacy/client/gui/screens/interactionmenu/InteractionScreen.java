@@ -1,9 +1,9 @@
-package mathax.legacy.client.gui.screens;
+package mathax.legacy.client.gui.screens.interactionmenu;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.mathax.KeyEvent;
 import mathax.legacy.client.mixin.EntityAccessor;
 import mathax.legacy.client.systems.modules.Modules;
@@ -171,7 +171,7 @@ public class InteractionScreen extends Screen {
             try {
                 stack[index[0]] = ((EndermanEntity)e).getCarriedBlock().getBlock().asItem().getDefaultStack();
                 index[0]++;
-            } catch (NullPointerException ex) {}
+            } catch (NullPointerException ignored) {}
         }
 
         if (Saddleable.class.isInstance(e)) {

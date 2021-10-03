@@ -6,7 +6,7 @@ import mathax.legacy.client.systems.modules.world.Timer;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.world.TickRate;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.item.Items;
 
 public class TPSSync extends Module {

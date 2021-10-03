@@ -1,7 +1,7 @@
 package mathax.legacy.client.systems.modules.chat;
 
 import mathax.legacy.client.events.entity.EntityAddedEvent;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.BoolSetting;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;

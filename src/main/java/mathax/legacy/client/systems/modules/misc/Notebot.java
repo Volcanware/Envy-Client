@@ -8,7 +8,7 @@ import mathax.legacy.client.gui.widgets.WLabel;
 import mathax.legacy.client.gui.widgets.WWidget;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Module;

@@ -4,7 +4,7 @@ import baritone.api.BaritoneAPI;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.systems.commands.arguments.EnumArgumentType;

@@ -7,8 +7,8 @@ import mathax.legacy.client.systems.System;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import mathax.legacy.client.utils.misc.input.KeyAction;
-import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.bus.EventPriority;
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.eventbus.EventPriority;
 import net.minecraft.nbt.NbtCompound;
 
 import java.util.ArrayList;

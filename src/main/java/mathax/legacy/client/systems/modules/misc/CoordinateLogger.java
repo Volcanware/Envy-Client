@@ -1,6 +1,6 @@
 package mathax.legacy.client.systems.modules.misc;
 
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.settings.BoolSetting;
 import mathax.legacy.client.settings.DoubleSetting;

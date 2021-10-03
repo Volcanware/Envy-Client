@@ -298,16 +298,6 @@ public class Utils {
         return (float)Math.round(mc.player.getHealth() + mc.player.getAbsorptionAmount());
     }
 
-    public static String getDiscordPlayerHealth() {
-        if (!Modules.get().get(DiscordRPC.class).playerHealth.get()) return "";
-        if (mc.world == null) return "";
-        if (mc.player == null) return "";
-        if (mc.player.isDead()) return " | Dead";
-        if (mc.player.isCreative()) return " | Creative Mode";
-        if (mc.player.isSpectator()) return " | Spectator Mode";
-        return " | " + Math.round(mc.player.getHealth() + mc.player.getAbsorptionAmount()) + " HP";
-    }
-
     public static String nameToTitle(String name) {
         String title = Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
         title = title.replace("Esp", "ESP");

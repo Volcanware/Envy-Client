@@ -1,4 +1,4 @@
-package mathax.legacy.client.bus;
+package mathax.legacy.client.eventbus;
 
 /**
  * Default event priorities.

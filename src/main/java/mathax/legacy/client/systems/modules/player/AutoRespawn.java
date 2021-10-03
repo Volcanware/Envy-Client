@@ -5,8 +5,8 @@ import mathax.legacy.client.systems.modules.render.WaypointsModule;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.bus.EventPriority;
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.eventbus.EventPriority;
 import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.item.Items;
 

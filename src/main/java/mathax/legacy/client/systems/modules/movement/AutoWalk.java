@@ -9,8 +9,8 @@ import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.misc.input.Input;
 import mathax.legacy.client.utils.world.GoalDirection;
-import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.bus.EventPriority;
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.eventbus.EventPriority;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.item.Items;
 

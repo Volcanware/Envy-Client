@@ -7,7 +7,7 @@ import mathax.legacy.client.utils.entity.SortPriority;
 import mathax.legacy.client.utils.entity.TargetUtils;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.world.BlockUtils;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;

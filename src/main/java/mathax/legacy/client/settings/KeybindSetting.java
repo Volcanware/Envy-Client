@@ -6,8 +6,8 @@ import mathax.legacy.client.events.mathax.MouseButtonEvent;
 import mathax.legacy.client.gui.widgets.WKeybind;
 import mathax.legacy.client.utils.misc.Keybind;
 import mathax.legacy.client.utils.misc.input.KeyAction;
-import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.bus.EventPriority;
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.eventbus.EventPriority;
 import net.minecraft.nbt.NbtCompound;
 
 import java.util.function.Consumer;

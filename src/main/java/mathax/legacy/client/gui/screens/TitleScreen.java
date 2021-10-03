@@ -35,7 +35,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
@@ -60,7 +59,6 @@ public class TitleScreen extends Screen {
 
     private final boolean doBackgroundFade;
     private long backgroundFadeStart;
-
 
     public TitleScreen() {
         this(false);
@@ -90,13 +88,13 @@ public class TitleScreen extends Screen {
 
         copyrightTextWidth = textRenderer.getWidth(COPYRIGHT);
         copyrightTextX = width - copyrightTextWidth - 2;
+
         int j = height / 4 + 48;
         int spacingY = 24;
 
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> {
-            client.setScreen(new SelectWorldScreen(this));
-        }));
         boolean bl = client.isMultiplayerEnabled();
+
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
         ButtonWidget.TooltipSupplier tooltipSupplier = bl ? ButtonWidget.EMPTY : new ButtonWidget.TooltipSupplier() {
             private final Text MULTIPLAYER_DISABLED_TEXT = new TranslatableText("title.multiplayer.disabled");
 
@@ -114,36 +112,16 @@ public class TitleScreen extends Screen {
             Screen screen = client.options.skipMultiplayerWarning ? new MultiplayerScreen(this) : new MultiplayerWarningScreen(this);
             client.setScreen(screen);
         }, tooltipSupplier))).active = bl;
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 2) + (spacingY / 2), 200, 20, new LiteralText("MatHax Website"), (button) -> {
-            Util.getOperatingSystem().open(MatHaxLegacy.URL);
-        }));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 3) + (spacingY / 2), 200, 20, new LiteralText("MatHax Discord"), (button) -> {
-            Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord");
-        }));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 4) + (spacingY / 2), 98, 20, new LiteralText("Click GUI"), (button) -> {
-            Tabs.get().get(0).openScreen(GuiThemes.get());
-        }));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 4) + (spacingY / 2), 98, 20, new LiteralText("Check for Update"), (button) -> {
-            Version.checkForUpdate(true);
-        }));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 5) + (spacingY / 2), 98, 20, new LiteralText("Proxies"), (button) -> {
-            client.setScreen(GuiThemes.get().proxiesScreen());
-        }));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 5) + (spacingY / 2), 98, 20, new LiteralText("Accounts"), (button) -> {
-            client.setScreen(GuiThemes.get().accountsScreen());
-        }));
-        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, j + (spacingY * 7), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> {
-            client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager()));
-        }, new TranslatableText("narrator.button.language")));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 7), 98, 20, new TranslatableText("menu.options"), (button) -> {
-            client.setScreen(new OptionsScreen(this, client.options));
-        }));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 7), 98, 20, new TranslatableText("menu.quit"), (button) -> {
-            client.scheduleStop();
-        }));
-        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, j + (spacingY * 7), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> {
-            client.setScreen(new AccessibilityOptionsScreen(this, client.options));
-        }, new TranslatableText("narrator.button.accessibility")));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 2) + (spacingY / 2), 200, 20, new LiteralText("MatHax Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 3) + (spacingY / 2), 200, 20, new LiteralText("MatHax Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 4) + (spacingY / 2), 98, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 4) + (spacingY / 2), 98, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 5) + (spacingY / 2), 98, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 5) + (spacingY / 2), 98, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
+        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, j + (spacingY * 7), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, j + (spacingY * 7), 98, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
+        addDrawableChild(new ButtonWidget(width / 2 + 2, j + (spacingY * 7), 98, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
+        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, j + (spacingY * 7), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -151,25 +129,31 @@ public class TitleScreen extends Screen {
             backgroundFadeStart = Util.getMeasuringTimeMs();
         }
 
-        int width1 = width / 2;
-        double width2 = width * 1.2;
-        double height2 = height * 1.2;
         float fade = doBackgroundFade ? (float)(Util.getMeasuringTimeMs() - backgroundFadeStart) / 1000.0F : 1.0F;
         float xOffset = -1.0f * (((float) mouseX - (float) width / 2.0f) / ((float) width / 32.0f));
         float yOffset = -1.0f * (((float) mouseY - (float) height / 2.0f) / ((float) height / 18.0f));
+
         int backgroundX = ((int)xOffset - 16) * 3;
         int backgroundY = ((int)yOffset - 16) * 2;
+        int width1 = width / 2;
+
+        double width2 = width * 1.2;
+        double height2 = height * 1.2;
+
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, BACKGROUND);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, doBackgroundFade ? (float)MathHelper.ceil(MathHelper.clamp(fade, 0.0F, 1.0F)) : 1.0F);
         drawTexture(matrices, backgroundX, backgroundY, (int)width2, (int)height2, 0.0F, 0.0F, 16, 128, 16, 128);
+
         float fade2 = doBackgroundFade ? MathHelper.clamp(fade - 1.0F, 0.0F, 1.0F) : 1.0F;
         int ceil = MathHelper.ceil(fade2 * 255.0F) << 24;
+
         if ((ceil & -67108864) != 0) {
             RenderSystem.setShaderTexture(0, LOGO);
             drawTexture(matrices, width1 - 64, 15, 0.0F, 0.0F, 128, 128, 128, 128);
+
             if (splashText != null) {
                 matrices.push();
                 matrices.translate(width1 + 56, 100.0D, 0.0D);
@@ -191,6 +175,7 @@ public class TitleScreen extends Screen {
             String loggedOpenDeveloper = "[";
             String loggedDeveloper = "Developer";
             String loggedCloseDeveloper = "]";
+
             int loggedInAsLength = textRenderer.getWidth(loggedInAs);
             int loggedNameLength = textRenderer.getWidth(loggedName);
             int loggedOpenDeveloperLength = textRenderer.getWidth(loggedOpenDeveloper);
@@ -198,12 +183,14 @@ public class TitleScreen extends Screen {
 
             String watermarkName = "MatHax Legacy";
             String watermarkVersion = Version.getStylized();
+
             int watermarkNameLength = textRenderer.getWidth(watermarkName);
             int watermarkVersionLength = textRenderer.getWidth(watermarkVersion);
             int watermarkFullLength = watermarkNameLength + spaceLength + watermarkVersionLength;
 
             String authorBy = "By";
             String authorName = "Matejko06";
+
             int authorByLength = textRenderer.getWidth(authorBy);
             int authorNameLength = textRenderer.getWidth(authorName);
             int authorFullLength = authorByLength + spaceLength + authorNameLength;
@@ -215,6 +202,7 @@ public class TitleScreen extends Screen {
             drawStringWithShadow(matrices, textRenderer, loggedInAs, 2, 2, GRAY);
             drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, 2, GRAY);
             drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, 2, WHITE);
+
             if (!(Modules.get() == null) && !Modules.get().isActive(NameProtect.class) && (client.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || client.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) {
                 drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, 2, GRAY);
                 drawStringWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, 2, GRAY);
@@ -240,12 +228,9 @@ public class TitleScreen extends Screen {
                 fill(matrices, copyrightTextX, height - 1, copyrightTextX + copyrightTextWidth, height, WHITE);
             }
 
-            Iterator iterator = children().iterator();
-
-            while(iterator.hasNext()) {
-                Element element = (Element)iterator.next();
+            for (Element element : children()) {
                 if (element instanceof ClickableWidget) {
-                    ((ClickableWidget)element).setAlpha(255);
+                    ((ClickableWidget) element).setAlpha(255);
                 }
             }
 
@@ -260,9 +245,8 @@ public class TitleScreen extends Screen {
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (super.mouseClicked(mouseX, mouseY, button)) {
-            return true;
-        } else {
+        if (super.mouseClicked(mouseX, mouseY, button)) return true;
+        else {
             if (mouseX > (double)copyrightTextX && mouseX < (double)(copyrightTextX + copyrightTextWidth) && mouseY > (double)(height - 10) && mouseY < (double)height) {
                 client.setScreen(new CreditsScreen(false, Runnables.doNothing()));
             }

@@ -5,7 +5,7 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.mathax.KeyEvent;
 import mathax.legacy.client.systems.commands.arguments.PlayerArgumentType;
 import mathax.legacy.client.systems.commands.Command;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.LiteralText;
 

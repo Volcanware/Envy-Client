@@ -4,8 +4,8 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.Pool;
-import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.bus.EventPriority;
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.eventbus.EventPriority;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 

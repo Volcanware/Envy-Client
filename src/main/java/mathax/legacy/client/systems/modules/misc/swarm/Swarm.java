@@ -10,7 +10,7 @@ import mathax.legacy.client.gui.widgets.containers.WVerticalList;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.item.Items;
 import net.minecraft.util.Util;

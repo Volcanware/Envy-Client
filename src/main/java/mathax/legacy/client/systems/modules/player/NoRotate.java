@@ -4,7 +4,7 @@ import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.mixin.PlayerPositionLookS2CPacketAccessor;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 

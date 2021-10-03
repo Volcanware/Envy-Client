@@ -1,4 +1,4 @@
-package mathax.legacy.client.bus.listeners;
+package mathax.legacy.client.eventbus.listeners;
 
 /**
  * Base type for all listeners.

@@ -132,8 +132,6 @@ public class NotebotUtils {
 
     public static boolean isValidInstrumentNbsFile(byte type, InstrumentType instrument) {
         switch (instrument) {
-            case Any:
-                return true;
 
             case NotDrums: {
                 if (type == 2) return false; //basedrum
@@ -174,8 +172,6 @@ public class NotebotUtils {
 
     public static boolean isValidIntrumentTextFile(int type, InstrumentType instrument) {
         switch (instrument) {
-            case Any:
-                return true;
 
             case NotDrums: {
                 if (type == 1)

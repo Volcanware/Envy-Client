@@ -7,7 +7,7 @@ import mathax.legacy.client.mixininterface.IRaycastContext;
 import mathax.legacy.client.mixininterface.IVec3d;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerEntity;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;

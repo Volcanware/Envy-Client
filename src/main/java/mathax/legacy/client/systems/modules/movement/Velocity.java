@@ -10,7 +10,7 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.mixin.EntityVelocityUpdateS2CPacketAccessor;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 

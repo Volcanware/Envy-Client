@@ -10,7 +10,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.world.Timer;
 import mathax.legacy.client.utils.player.PlayerUtils;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.entity.MovementType;
 import net.minecraft.item.Items;

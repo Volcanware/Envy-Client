@@ -1,7 +1,7 @@
 package mathax.legacy.client.utils.world;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.mixininterface.IVec3d;
 import mathax.legacy.client.utils.Utils;

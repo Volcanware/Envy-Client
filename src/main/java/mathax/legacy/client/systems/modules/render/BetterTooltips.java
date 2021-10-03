@@ -13,7 +13,7 @@ import mathax.legacy.client.utils.misc.ByteCountDataOutput;
 import mathax.legacy.client.utils.misc.Keybind;
 import mathax.legacy.client.utils.player.EChestMemory;
 import mathax.legacy.client.utils.render.color.Color;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.utils.tooltip.*;
 import net.minecraft.block.entity.BannerPattern;

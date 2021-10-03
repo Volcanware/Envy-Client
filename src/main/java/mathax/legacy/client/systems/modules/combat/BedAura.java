@@ -16,7 +16,7 @@ import mathax.legacy.client.utils.player.*;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.utils.world.BlockUtils;
 import mathax.legacy.client.utils.world.CardinalDirection;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Material;

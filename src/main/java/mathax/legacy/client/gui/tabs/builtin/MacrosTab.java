@@ -1,7 +1,7 @@
 package mathax.legacy.client.gui.tabs.builtin;
 
-import mathax.legacy.client.bus.EventHandler;
-import mathax.legacy.client.bus.EventPriority;
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.eventbus.EventPriority;
 import mathax.legacy.client.events.mathax.KeyEvent;
 import mathax.legacy.client.events.mathax.MouseButtonEvent;
 import mathax.legacy.client.gui.GuiTheme;

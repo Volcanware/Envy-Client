@@ -8,7 +8,7 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.combat.AutoTotem;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.SlotUtils;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

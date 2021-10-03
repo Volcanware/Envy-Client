@@ -13,7 +13,7 @@ import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.render.RenderUtils;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.render.color.SettingColor;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;

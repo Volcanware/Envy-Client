@@ -5,7 +5,7 @@ import mathax.legacy.client.events.entity.EntityAddedEvent;
 import mathax.legacy.client.events.render.Render2DEvent;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.renderer.text.TextRenderer;

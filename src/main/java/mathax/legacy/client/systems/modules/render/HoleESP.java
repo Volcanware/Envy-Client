@@ -2,7 +2,7 @@ package mathax.legacy.client.systems.modules.render;
 
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.mixin.AbstractBlockAccessor;
 import mathax.legacy.client.renderer.Renderer3D;
 import mathax.legacy.client.systems.modules.Module;

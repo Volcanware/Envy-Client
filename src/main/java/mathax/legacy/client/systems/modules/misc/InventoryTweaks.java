@@ -6,7 +6,7 @@ import mathax.legacy.client.events.mathax.KeyEvent;
 import mathax.legacy.client.events.mathax.MouseButtonEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.bus.EventHandler;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.mixin.CloseHandledScreenC2SPacketAccessor;
 import mathax.legacy.client.mixin.HandledScreenAccessor;
 import mathax.legacy.client.systems.modules.Module;
