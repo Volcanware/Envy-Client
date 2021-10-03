@@ -9,6 +9,8 @@ import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.tabs.Tabs;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
+import mathax.legacy.client.systems.proxies.Proxies;
+import mathax.legacy.client.systems.proxies.Proxy;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.Element;
@@ -181,6 +183,12 @@ public class TitleScreen extends Screen {
             int loggedOpenDeveloperLength = textRenderer.getWidth(loggedOpenDeveloper);
             int loggedDeveloperLength = textRenderer.getWidth(loggedDeveloper);
 
+            Proxy proxy = Proxies.get().getEnabled();
+            String proxyUsing = proxy != null ? "Using proxy" + " " : "Not using a proxy";
+            String proxyDetails = proxy != null ? "(" + proxy.name + ") " + proxy.address + ":" + proxy.port : null;
+
+            int proxiesLeftWidth = textRenderer.getWidth(proxyUsing);
+
             String watermarkName = "MatHax Legacy";
             String watermarkVersion = Version.getStylized();
 
@@ -223,6 +231,9 @@ public class TitleScreen extends Screen {
             drawStringWithShadow(matrices, textRenderer, space, width - authorFullLength + authorPreviousWidth - 2, 16, GRAY);
             authorPreviousWidth += spaceLength;
             drawStringWithShadow(matrices, textRenderer, authorName, width - authorFullLength + authorPreviousWidth - 2, 16, WHITE);
+
+            drawStringWithShadow(matrices, textRenderer, proxyUsing, 2, 16, GRAY);
+            if (proxyDetails != null) drawStringWithShadow(matrices, textRenderer, proxyDetails, 2 + proxiesLeftWidth, 16, WHITE);
 
             if (mouseX > copyrightTextX && mouseX < copyrightTextX + copyrightTextWidth && mouseY > height - 10 && mouseY < height) {
                 fill(matrices, copyrightTextX, height - 1, copyrightTextX + copyrightTextWidth, height, WHITE);
