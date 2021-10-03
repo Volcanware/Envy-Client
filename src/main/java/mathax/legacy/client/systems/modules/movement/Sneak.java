@@ -10,10 +10,6 @@ import mathax.legacy.client.systems.modules.render.Freecam;
 import net.minecraft.item.Items;
 
 public class Sneak extends Module {
-    public enum Mode {
-        Packet,
-        Vanilla
-    }
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -24,7 +20,7 @@ public class Sneak extends Module {
     );
 
     public Sneak() {
-        super(Categories.Movement, Items.LEATHER_BOOTS, "sneak", "Makes you sneak automatically");
+        super(Categories.Movement, Items.LEATHER_BOOTS, "sneak", "Makes you sneak automatically.");
     }
 
     public boolean doPacket() {
@@ -33,5 +29,10 @@ public class Sneak extends Module {
 
     public boolean doVanilla() {
         return isActive() && !Modules.get().isActive(Freecam.class) && mode.get() == Mode.Vanilla;
+    }
+
+    public enum Mode {
+        Packet,
+        Vanilla
     }
 }

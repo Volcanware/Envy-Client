@@ -17,7 +17,7 @@ public class WatermarkHUD extends TripleTextHUDElement {
     private static final Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/icons/icon.png");
     private final Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
 
-    private String versionString = "";
+    private String versionString;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -53,7 +53,7 @@ public class WatermarkHUD extends TripleTextHUDElement {
         return Version.getStylized();
     }
 
-    public String getEnd() {
+    protected String getEnd() {
         return getNewUpdate();
     }
 
@@ -62,22 +62,28 @@ public class WatermarkHUD extends TripleTextHUDElement {
         if (mode.get() == Mode.Text) {
             double textWidth = renderer.textWidth(getLeft()) + renderer.textWidth(getRight()) + renderer.textWidth(getEnd());
             box.setSize(textWidth, renderer.textHeight());
+
             double x = box.getX();
             double y = box.getY();
+
             renderer.text(getLeft(), x, y, hud.primaryColor.get());
             renderer.text(getRight(), x + renderer.textWidth(getLeft()), y, hud.secondaryColor.get());
             renderer.text(getEnd(), x + textWidth - renderer.textWidth(getEnd()), y, hud.primaryColor.get());
         } else if (mode.get() == Mode.Icon) {
             double width = renderer.textHeight() * scale.get();
             double height = renderer.textHeight() * scale.get();
+
             box.setSize(width,  height);
         } else {
             double textWidth = renderer.textWidth(getLeft()) + renderer.textWidth(getRight()) + renderer.textWidth(getEnd());
             double width = renderer.textHeight();
             double height = renderer.textHeight();
+
             box.setSize(width + textWidth, height);
+
             double x = box.getX();
             double y = box.getY();
+
             renderer.text(getLeft(), x + renderer.textHeight(), y, hud.primaryColor.get());
             renderer.text(getRight(), x + renderer.textHeight() + renderer.textWidth(getLeft()), y, hud.secondaryColor.get());
             renderer.text(getEnd(), x + renderer.textHeight() + textWidth - renderer.textWidth(getEnd()), y, hud.primaryColor.get());
@@ -86,8 +92,9 @@ public class WatermarkHUD extends TripleTextHUDElement {
 
     @Override
     public void render(HUDRenderer renderer) {
-        double x = 0;
-        double y = 0;
+        double x;
+        double y;
+
         switch (mode.get()) {
             case Icon:
                 x = box.getX();
@@ -116,17 +123,17 @@ public class WatermarkHUD extends TripleTextHUDElement {
     }
 
     public String getNewUpdate() {
+        if (versionString == null) versionString = "";
+
         if (!Version.checkedForLatest) {
             Version.checkedForLatest = true;
             switch (Version.checkLatest()) {
-                case 0:
-                    versionString = " [Could not get Latest Version]";
-                case 1:
-                    versionString = " [Outdated | Latest Version: v" + Version.getLatest() + "]";
-                case 2:
-                    versionString = "";
+                case 0 -> versionString = " [Could not get Latest Version]";
+                case 1 -> versionString = " [Outdated | Latest Version: v" + Version.getLatest() + "]";
+                case 2 -> versionString = "";
             }
         }
+
         return versionString;
     }
 

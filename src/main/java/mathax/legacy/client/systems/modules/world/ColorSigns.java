@@ -38,6 +38,6 @@ public class ColorSigns extends Module {
     private void checkWarning() {
         String brand = mc.player.getServerBrand();
         if (brand == null) return;
-        if (brand.contains("Paper")) warning("You are on a paper server. Color signs won't work here");
+        if (brand.contains("Paper")) warning("You are on a paper server. Color signs won't work here.");
     }
 }

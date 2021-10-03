@@ -8,10 +8,12 @@ import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.player.InvUtils;
+import mathax.legacy.client.utils.render.ToastSystem;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.util.Formatting;
 
 public class ChestSwap extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -37,6 +39,7 @@ public class ChestSwap extends Module {
     @Override
     public void onActivate() {
         swap();
+
         if (!stayOn.get()) toggle();
     }
 
@@ -48,13 +51,9 @@ public class ChestSwap extends Module {
     public void swap() {
         Item currentItem = mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem();
 
-        if (currentItem == Items.ELYTRA) {
-            equipChestplate();
-        } else if (currentItem instanceof ArmorItem && ((ArmorItem) currentItem).getSlotType() == EquipmentSlot.CHEST) {
-            equipElytra();
-        } else {
-            if (!equipChestplate()) equipElytra();
-        }
+        if (currentItem == Items.ELYTRA) equipChestplate();
+        else if (currentItem instanceof ArmorItem && ((ArmorItem) currentItem).getSlotType() == EquipmentSlot.CHEST) equipElytra();
+        else if (!equipChestplate()) equipElytra();
     }
 
     private boolean equipChestplate() {
@@ -126,7 +125,13 @@ public class ChestSwap extends Module {
     @Override
     public void sendToggledToast(String name, Module module) {
         if (stayOn.get()) super.sendToggledToast(name, module);
-        else if (Config.get().chatCommandsInfo) return; //TODO toast
+        else if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(module.icon, module.category.color, title, null, Formatting.GRAY + "Has been triggered."));
+    }
+
+    public enum Notification {
+        Chat,
+        Toast,
+        Both
     }
 
     public enum Chestplate {

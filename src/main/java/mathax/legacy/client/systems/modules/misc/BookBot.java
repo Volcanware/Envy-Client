@@ -97,7 +97,7 @@ public class BookBot extends Module {
     );
 
     public BookBot() {
-        super(Categories.Misc, Items.WRITABLE_BOOK, "book-bot", "Automatically writes in books");
+        super(Categories.Misc, Items.WRITABLE_BOOK, "book-bot", "Automatically writes in books.");
 
         if (!file.exists()) {
             file = null;

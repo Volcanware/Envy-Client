@@ -40,7 +40,7 @@ public class AutoClicker extends Module {
     );
 
     public AutoClicker() {
-        super(Categories.Misc, Items.STONE_BUTTON, "auto-clicker", "Automatically clicks");
+        super(Categories.Misc, Items.STONE_BUTTON, "auto-clicker", "Automatically clicks.");
     }
 
     @Override

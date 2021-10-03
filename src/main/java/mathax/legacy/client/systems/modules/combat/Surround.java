@@ -30,10 +30,14 @@ import java.util.List;
 public class Surround extends Module {
     private final Pool<RenderSurroundBlock> renderSurroundBlockPool = new Pool<>(RenderSurroundBlock::new);
     private final List<RenderSurroundBlock> renderSurroundBlocks = new ArrayList<>();
+
     private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
+
     private boolean return_;
+
     boolean underHeightPlaced = false;
     boolean doubleHeightPlaced = false;
+
     private boolean p1;
     private boolean p6;
     private boolean p7;
@@ -145,7 +149,7 @@ public class Surround extends Module {
     );
 
     public Surround() {
-        super(Categories.Combat, Items.OBSIDIAN, "surround", "Surrounds you in blocks to prevent you from taking lots of damage");
+        super(Categories.Combat, Items.OBSIDIAN, "surround", "Surrounds you in blocks to prevent you from taking lots of damage.");
     }
 
     @Override

@@ -41,7 +41,7 @@ public class EntitySpeed extends Module {
     );
 
     public EntitySpeed() {
-        super(Categories.Movement, Items.DIAMOND_HORSE_ARMOR, "entity-speed", "Makes you go faster when riding entities");
+        super(Categories.Movement, Items.DIAMOND_HORSE_ARMOR, "entity-speed", "Makes you go faster when riding entities.");
     }
 
     @EventHandler

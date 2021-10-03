@@ -57,7 +57,7 @@ public class AutoSign extends Module {
     );
 
     public AutoSign() {
-        super(Categories.World, Items.OAK_SIGN, "auto-sign", "Automatically writes signs");
+        super(Categories.World, Items.OAK_SIGN, "auto-sign", "Automatically writes signs.");
     }
 
     private String getDate() {

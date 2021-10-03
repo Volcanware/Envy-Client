@@ -45,7 +45,7 @@ public class Swarm extends Module {
     );
 
     public Swarm() {
-        super(Categories.Misc, Items.BEEHIVE, "Swarm", "Allows you to control multiple instances of MatHax Legacy from one central host");
+        super(Categories.Misc, Items.BEEHIVE, "Swarm", "Allows you to control multiple instances of MatHax Legacy from one central host.");
     }
 
     @Override

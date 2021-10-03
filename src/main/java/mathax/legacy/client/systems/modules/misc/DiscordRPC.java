@@ -7,6 +7,7 @@ import mathax.legacy.client.gui.screens.*;
 import mathax.legacy.client.gui.screens.TitleScreen;
 import mathax.legacy.client.gui.screens.settings.ColorSettingScreen;
 import mathax.legacy.client.gui.tabs.builtin.*;
+import mathax.legacy.client.mixin.MinecraftServerAccessor;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
@@ -15,7 +16,6 @@ import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.render.PeekScreen;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRichPresence;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.StatsScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
@@ -28,6 +28,7 @@ import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.realms.gui.screen.RealmsScreen;
 import net.minecraft.item.Items;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,7 +65,7 @@ public class DiscordRPC extends Module {
     );
 
     public DiscordRPC() {
-        super(Categories.Misc, Items.COMMAND_BLOCK, "discord-RPC", "Shows MatHax Legacy as your Discord status");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "discord-rpc", "Shows MatHax Legacy as your Discord status.");
 
         runInMainMenu = true;
     }
@@ -74,28 +75,28 @@ public class DiscordRPC extends Module {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Enabling Discord Rich Presence...");
         net.arikia.dev.drpc.DiscordRPC.discordInitialize(APP_ID, handlers, true, STEAM_ID);
         rpc.startTimestamp = System.currentTimeMillis() / 1000;
-        rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-        rpc.state = Placeholders.apply("%activity%");
+        rpc.details = applyPlaceholder("%version% | %username%" + Utils.getDiscordPlayerHealth());
+        rpc.state = applyPlaceholder("%activity%");
         rpc.largeImageKey = "logo";
         rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
         applySmallImage();
-        rpc.smallImageText = Placeholders.apply("%activity%");
+        rpc.smallImageText = applyPlaceholder("%activity%");
         rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
         rpc.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
-        rpc.partySize = MinecraftClient.getInstance().getNetworkHandler() != null ? MinecraftClient.getInstance().getNetworkHandler().getPlayerList().size() : 1;
+        rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
         rpc.partyMax = 1;
         net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
         new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 net.arikia.dev.drpc.DiscordRPC.discordRunCallbacks();
                 try {
-                    rpc.details = Placeholders.apply("%version% | %username%" + Utils.getDiscordPlayerHealth());
-                    rpc.state = Placeholders.apply("%activity%");
+                    rpc.details = applyPlaceholder("%version% | %username%" + Utils.getDiscordPlayerHealth());
+                    rpc.state = applyPlaceholder("%activity%");
                     rpc.largeImageKey = "logo";
                     rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
                     applySmallImage();
-                    rpc.smallImageText = Placeholders.apply("%activity%");
-                    rpc.partySize = MinecraftClient.getInstance().getNetworkHandler() != null ? MinecraftClient.getInstance().getNetworkHandler().getPlayerList().size() : 1;
+                    rpc.smallImageText = applyPlaceholder("%activity%");
+                    rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
                     rpc.partyMax = 1;
                     net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
                 } catch (Exception e2) {
@@ -127,90 +128,142 @@ public class DiscordRPC extends Module {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Discord Rich Presence disabled!");
     }
 
-    private static class Placeholders  {
-        private static final Pattern pattern = Pattern.compile("(%activity%|%version%|%username%|%health%)");
+    private static final Pattern pattern = Pattern.compile("(%activity%|%version%|%username%|%health%)");
 
-        public static String apply(String string) {
-            Matcher matcher = pattern.matcher(string);
-            StringBuffer sb = new StringBuffer(string.length());
+    public String applyPlaceholder(String string) {
+        Matcher matcher = pattern.matcher(string);
+        StringBuffer sb = new StringBuffer(string.length());
 
-            while (matcher.find()) {
-                matcher.appendReplacement(sb, getReplacement(matcher.group(1)));
-            }
-            matcher.appendTail(sb);
-
-            return sb.toString();
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, getReplacement(matcher.group(1)));
         }
+        matcher.appendTail(sb);
 
-        private static String getReplacement(String placeholder) {
-            switch (placeholder) {
-                case "%activity%":
-                    if (MinecraftClient.getInstance() == null || MinecraftClient.getInstance().getOverlay() instanceof SplashOverlay) return "Minecraft is loading...";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof TitleScreen || MinecraftClient.getInstance().currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) return "In main menu";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof MultiplayerScreen || MinecraftClient.getInstance().currentScreen instanceof ServerManagerScreen) return "In server selection";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof ServerFinderScreen) return "Using server finder";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof CleanUpScreen) return "Using server cleanup";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof ConnectScreen || MinecraftClient.getInstance().currentScreen instanceof DirectConnectScreen) return "Connecting to " + Utils.getNakedActivity();
-                    else if (MinecraftClient.getInstance().currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + Utils.getNakedActivity();
-                    else if (MinecraftClient.getInstance().currentScreen instanceof GameMenuScreen) return "Game paused on " + Utils.getNakedActivity();
-                    else if (MinecraftClient.getInstance().currentScreen instanceof PeekScreen) return "Using .peek on " + Utils.getNakedActivity();
-                    else if (MinecraftClient.getInstance().currentScreen instanceof StatsScreen) return "Viewing stats";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof ModulesScreen) return "In click gui";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof ModuleScreen) return "Editing module " + ((ModuleScreen) MinecraftClient.getInstance().currentScreen).module.title;
-                    else if (MinecraftClient.getInstance().currentScreen instanceof OptionsScreen) return "Changing Minecraft settings";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof AccessibilityOptionsScreen) return "Changing Minecraft accessibility settings";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof ChatOptionsScreen) return "Changing Minecraft chat settings";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof SoundOptionsScreen) return "Changing Minecraft sound settings";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof LanguageOptionsScreen) return "Changing Minecraft language";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof VideoOptionsScreen) return "Changing Minecraft video settings";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof SkinOptionsScreen) return "Changing Minecraft skin settings";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof PackScreen) return "Changing resourcepack";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof ControlsOptionsScreen) return "Changing Minecraft keybinds";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof NarratorOptionsScreen) return "Changing Narrator settings";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof SelectWorldScreen) return "In world selection";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof EditWorldScreen) return "Editing a world";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof CreateWorldScreen || MinecraftClient.getInstance().currentScreen instanceof EditGameRulesScreen) return "Creating a new world";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof LevelLoadingScreen) return "Loading a world";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof SaveLevelScreen) return "Saving a world";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof AddServerScreen) return "Adding a server";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof BaritoneTab.BaritoneScreen) return "Configuring Baritone";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof ConfigTab.ConfigScreen) return "Editing Config";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof EnemiesTab.EnemiesScreen) return "Editing Enemies";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof FriendsTab.FriendsScreen) return "Editing Friends";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof GuiTab.GuiScreen) return "Editing GUI";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof HudTab.HudScreen || MinecraftClient.getInstance().currentScreen instanceof HudElementScreen) return "Editing HUD";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof MacrosTab.MacrosScreen) return "Configuring Macros";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof MacrosTab.MacroEditorScreen) return "Configuring a Macro";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof ProfilesTab.ProfilesScreen) return "Changing profiles";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof ColorSettingScreen) return "Changing color";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof AccountsScreen) return "In account manager";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof AddAlteningAccountScreen) return "Adding Altening account";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof AddCrackedAccountScreen) return "Adding cracked account";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof AddPremiumAccountScreen) return "Adding premium account";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof ProxiesScreen) return "Editing proxies";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof CreditsScreen) return  "Reading credits";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof RealmsScreen) return  "Browsing Realms";
-                    else if (MinecraftClient.getInstance().currentScreen instanceof WidgetScreen) return  "Browsing MatHax Legacy's GUI";
-                    else {
-                        if (MinecraftClient.getInstance().currentScreen != null) {
-                            String className = MinecraftClient.getInstance().currentScreen.getClass().getName();
+        return sb.toString();
+    }
 
-                            if (className.contains("me.jellysquid.mods.sodium.client")) rpc.state = "Changing Sodium video settings";
-                            else if (className.contains("com.terraformersmc.modmenu.gui")) rpc.state = "Viewing loaded mods";
-                        }
+    private String getReplacement(String placeholder) {
+        switch (placeholder) {
+            case "%activity%":
+                if (mc == null || mc.getOverlay() instanceof SplashOverlay) return "Minecraft is loading...";
+                else if (mc.currentScreen instanceof TitleScreen || mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) return "In main menu";
+                else if (mc.currentScreen instanceof MultiplayerScreen || mc.currentScreen instanceof ServerManagerScreen) return "In server selection";
+                else if (mc.currentScreen instanceof ServerFinderScreen) return "Using server finder";
+                else if (mc.currentScreen instanceof CleanUpScreen) return "Using server cleanup";
+                else if (mc.currentScreen instanceof ConnectScreen || mc.currentScreen instanceof DirectConnectScreen) return "Connecting to " + getNakedActivity();
+                else if (mc.currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + getNakedActivity();
+                else if (mc.currentScreen instanceof GameMenuScreen) return "Game paused on " + getNakedActivity();
+                else if (mc.currentScreen instanceof PeekScreen) return "Using .peek on " + getNakedActivity();
+                else if (mc.currentScreen instanceof StatsScreen) return "Viewing stats";
+                else if (mc.currentScreen instanceof ModulesScreen) return "In click gui";
+                else if (mc.currentScreen instanceof ModuleScreen) return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title;
+                else if (mc.currentScreen instanceof OptionsScreen) return "Changing Minecraft settings";
+                else if (mc.currentScreen instanceof AccessibilityOptionsScreen) return "Changing Minecraft accessibility settings";
+                else if (mc.currentScreen instanceof ChatOptionsScreen) return "Changing Minecraft chat settings";
+                else if (mc.currentScreen instanceof SoundOptionsScreen) return "Changing Minecraft sound settings";
+                else if (mc.currentScreen instanceof LanguageOptionsScreen) return "Changing Minecraft language";
+                else if (mc.currentScreen instanceof VideoOptionsScreen) return "Changing Minecraft video settings";
+                else if (mc.currentScreen instanceof SkinOptionsScreen) return "Changing Minecraft skin settings";
+                else if (mc.currentScreen instanceof PackScreen) return "Changing resourcepack";
+                else if (mc.currentScreen instanceof ControlsOptionsScreen) return "Changing Minecraft keybinds";
+                else if (mc.currentScreen instanceof NarratorOptionsScreen) return "Changing Narrator settings";
+                else if (mc.currentScreen instanceof SelectWorldScreen) return "In world selection";
+                else if (mc.currentScreen instanceof EditWorldScreen) return "Editing a world";
+                else if (mc.currentScreen instanceof CreateWorldScreen || mc.currentScreen instanceof EditGameRulesScreen) return "Creating a new world";
+                else if (mc.currentScreen instanceof LevelLoadingScreen) return "Loading a world";
+                else if (mc.currentScreen instanceof SaveLevelScreen) return "Saving a world";
+                else if (mc.currentScreen instanceof AddServerScreen) return "Adding a server";
+                else if (mc.currentScreen instanceof BaritoneTab.BaritoneScreen) return "Configuring Baritone";
+                else if (mc.currentScreen instanceof ConfigTab.ConfigScreen) return "Editing Config";
+                else if (mc.currentScreen instanceof EnemiesTab.EnemiesScreen) return "Editing Enemies";
+                else if (mc.currentScreen instanceof FriendsTab.FriendsScreen) return "Editing Friends";
+                else if (mc.currentScreen instanceof GuiTab.GuiScreen) return "Editing GUI";
+                else if (mc.currentScreen instanceof HudTab.HudScreen || mc.currentScreen instanceof HudElementScreen) return "Editing HUD";
+                else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) return "Configuring Macros";
+                else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) return "Configuring a Macro";
+                else if (mc.currentScreen instanceof ProfilesTab.ProfilesScreen) return "Changing profiles";
+                else if (mc.currentScreen instanceof ColorSettingScreen) return "Changing color";
+                else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
+                else if (mc.currentScreen instanceof AddAlteningAccountScreen) return "Adding Altening account";
+                else if (mc.currentScreen instanceof AddCrackedAccountScreen) return "Adding cracked account";
+                else if (mc.currentScreen instanceof AddPremiumAccountScreen) return "Adding premium account";
+                else if (mc.currentScreen instanceof ProxiesScreen) return "Editing proxies";
+                else if (mc.currentScreen instanceof CreditsScreen) return  "Reading credits";
+                else if (mc.currentScreen instanceof RealmsScreen) return  "Browsing Realms";
+                else if (mc.currentScreen instanceof WidgetScreen) return  "Browsing MatHax Legacy's GUI";
+                else {
+                    if (mc.currentScreen != null) {
+                        String className = mc.currentScreen.getClass().getName();
 
-                        if (MinecraftClient.getInstance().world != null) {
-                            return Utils.getActivity();
-                        }
+                        if (className.contains("me.jellysquid.mods.sodium.client")) rpc.state = "Changing Sodium video settings";
+                        else if (className.contains("com.terraformersmc.modmenu.gui")) rpc.state = "Viewing loaded mods";
                     }
-                case "%version%":
-                    return Version.getStylized();
-                case "%username%":
-                    return MinecraftClient.getInstance().getSession().getUsername();
-                default:
-                    return "In " + MinecraftClient.getInstance().currentScreen.getTitle().toString();
+
+                    if (mc.world != null) {
+                        return getActivity();
+                    }
+                }
+            case "%version%":
+                return Version.getStylized();
+            case "%username%":
+                return mc.getSession().getUsername();
+            default:
+                return "In " + mc.currentScreen.getTitle().getString();
+        }
+    }
+
+    public String getActivity() {
+
+        if (mc.getCurrentServerEntry() != null) {
+            // Multiplayer
+            String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
+                return "Playing on " + name;
+            } else {
+                return "Playing on a server";
             }
         }
+
+        if ((mc.getServer()) == null) return "Could not get server/world";
+        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Could not get server/world";
+
+        if (mc.isInSingleplayer()) {
+            // Singleplayer
+            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
+            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) {
+                folder = folder.getParentFile();
+            }
+            return "Playing singleplayer (" + folder.getName() + ")";
+        }
+
+        return "Could not get server/world";
+    }
+
+    public String getNakedActivity() {
+
+        if (mc.getCurrentServerEntry() != null) {
+            // Multiplayer
+            String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
+                return name;
+            } else {
+                return "a server";
+            }
+        }
+
+        if ((mc.getServer()) == null) return "Unknown";
+        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Unknown";
+
+        if (mc.isInSingleplayer()) {
+            // Singleplayer
+            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
+            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) {
+                folder = folder.getParentFile();
+            }
+            return "singleplayer (" + folder.getName() + ")";
+        }
+
+        return "Unknown";
     }
 
     private static void applySmallImage() {

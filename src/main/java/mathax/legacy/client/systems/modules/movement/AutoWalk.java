@@ -52,7 +52,7 @@ public class AutoWalk extends Module {
     );
 
     public AutoWalk() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "auto-walk", "Automatically walks forward");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "auto-walk", "Automatically walks forward.");
     }
 
     @Override

@@ -50,19 +50,23 @@ import java.util.List;
 
 
 public class Notebot extends Module {
-    private final List<BlockPos> possibleBlockPos = new ArrayList<>();
-    private Stage stage = Stage.None;
-    private boolean isPlaying = false;
     private final List<ImmutablePair<Integer,Integer>> song = new ArrayList<>();
     private final List<Integer> uniqueNotes = new ArrayList<>();
-    private final HashMap<Integer, BlockPos> blockPositions = new HashMap<>();
     private final List<BlockPos> scannedNoteblocks = new ArrayList<>();
+    private final List<BlockPos> possibleBlockPos = new ArrayList<>();
+    private final HashMap<Integer, BlockPos> blockPositions = new HashMap<>();
+
+    private WLabel status;
+
+    private Stage stage = Stage.None;
+
+    private boolean noSongsFound = true;
+    private boolean isPlaying = false;
+
     private int currentNote = 0;
     private int currentIndex = 0;
     private int offset = 0;
     private int ticks = 0;
-    private boolean noSongsFound = true;
-    private WLabel status;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render",false);
@@ -125,7 +129,7 @@ public class Notebot extends Module {
     );
 
     public Notebot() {
-        super(Categories.Misc, Items.NOTE_BLOCK, "notebot", "Plays noteblocks nicely");
+        super(Categories.Misc, Items.NOTE_BLOCK, "notebot", "Plays noteblocks nicely.");
 
         for (int y = -5; y < 5; y++) {
             for (int x = -5; x < 5; x++) {

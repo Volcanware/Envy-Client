@@ -31,14 +31,19 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 
 public class InstaAutoCity extends Module {
-    private int delayLeft;
-    private boolean mining;
-    private BlockPos mineTarget;
-    private PlayerEntity target;
     static final boolean assertionsDisabled = !InstaAutoCity.class.desiredAssertionStatus();
+
     private Direction direction;
-    private int count;
+
+    private PlayerEntity target;
+
     private BlockPos targetBlockPos;
+    private BlockPos mineTarget;
+
+    private boolean mining;
+
+    private int delayLeft;
+    private int count;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
@@ -145,7 +150,7 @@ public class InstaAutoCity extends Module {
     );
 
     public InstaAutoCity() {
-        super(Categories.Combat, Items.DIAMOND_PICKAXE, "insta-auto-city", "Automatically instamines the closest city block");
+        super(Categories.Combat, Items.DIAMOND_PICKAXE, "insta-auto-city", "Automatically instamines the closest city block.");
     }
 
     @Override

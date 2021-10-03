@@ -32,6 +32,9 @@ import net.minecraft.world.RaycastContext;
 import java.util.function.Predicate;
 
 public class NoFall extends Module {
+    private boolean placedWater;
+    private int preBaritoneFallHeight;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
@@ -57,11 +60,8 @@ public class NoFall extends Module {
         .build()
     );
 
-    private boolean placedWater;
-    private int preBaritoneFallHeight;
-
     public NoFall() {
-        super(Categories.Movement, Items.FEATHER, "no-fall", "Attempts to prevent you from taking fall damage");
+        super(Categories.Movement, Items.FEATHER, "no-fall", "Attempts to prevent you from taking fall damage.");
     }
 
     @Override

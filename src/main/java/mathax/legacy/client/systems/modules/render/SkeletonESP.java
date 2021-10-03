@@ -46,7 +46,7 @@ public class SkeletonESP extends Module {
     );
 
     public SkeletonESP() {
-        super(Categories.Render, Items.SKELETON_SKULL, "skeleton-ESP", "Spooky scary skeleton");
+        super(Categories.Render, Items.SKELETON_SKULL, "skeleton-esp", "Spooky scary skeleton.");
     }
 
     @EventHandler

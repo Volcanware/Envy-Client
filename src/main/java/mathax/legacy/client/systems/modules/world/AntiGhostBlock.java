@@ -23,8 +23,10 @@ import java.util.List;
 
 public class AntiGhostBlock extends Module {
     private final HashMap<BlockPos, Long> blocks = new HashMap<>();
-    private long lastRequest = 0L;
+
     private final boolean lock = false;
+
+    private long lastRequest = 0L;
 
     SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -49,7 +51,7 @@ public class AntiGhostBlock extends Module {
     );
 
     public AntiGhostBlock() {
-        super(Categories.World, Items.BARRIER, "anti-ghost-block", "Automatically tries to remove ghost blocks");
+        super(Categories.World, Items.BARRIER, "anti-ghost-block", "Automatically tries to remove ghost blocks.");
     }
 
     private void tick(List list, long l, BlockPos blockPos, Long l2) {

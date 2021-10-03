@@ -169,7 +169,7 @@ public class Notifier extends Module {
     );
 
     public Notifier() {
-        super(Categories.Chat, Items.PAPER, "notifier", "Notifies you or others of different events");
+        super(Categories.Chat, Items.PAPER, "notifier", "Notifies you or others of different events.");
     }
 
     // Visual Range

@@ -32,7 +32,7 @@ public class AntiVanish extends Module {
     private long lastTick = 0;
 
     public AntiVanish() {
-        super(Categories.Chat, Items.WHITE_STAINED_GLASS, "anti-vanish", "Notifies you when someone uses /vanish");
+        super(Categories.Chat, Items.WHITE_STAINED_GLASS, "anti-vanish", "Notifies you when someone uses /vanish.");
     }
 
     @Override

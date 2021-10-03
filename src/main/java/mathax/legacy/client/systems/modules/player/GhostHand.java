@@ -20,7 +20,7 @@ public class GhostHand extends Module {
     private final List<BlockPos> posList = new ArrayList<>();
 
     public GhostHand() {
-        super(Categories.Player, Items.ENDER_CHEST, "ghost-hand", "Opens containers through walls");
+        super(Categories.Player, Items.ENDER_CHEST, "ghost-hand", "Opens containers through walls.");
     }
 
     @EventHandler

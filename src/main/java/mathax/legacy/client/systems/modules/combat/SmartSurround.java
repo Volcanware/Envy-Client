@@ -18,9 +18,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 
 public class SmartSurround extends Module {
-    private int rPosX;
-    private int rPosZ;
     private Entity crystal;
+
+    private int rPosX, rPosZ;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -39,7 +39,7 @@ public class SmartSurround extends Module {
     );
 
     public SmartSurround() {
-        super(Categories.Combat, Items.OBSIDIAN, "smart-surround", "Attempts to save you from crystals automatically");
+        super(Categories.Combat, Items.OBSIDIAN, "smart-surround", "Attempts to save you from crystals automatically.");
     }
 
     @EventHandler

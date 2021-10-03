@@ -46,7 +46,7 @@ import java.util.*;
 
 public class Nametags extends Module {
     private static final Identifier MATHAX_ICON = new Identifier("mathaxlegacy", "textures/icons/icon.png");
-    private Color textureColor = new Color(255, 255, 255, 255);
+    private Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
 
     private final Color WHITE = new Color(255, 255, 255);
     private final Color RED = new Color(255, 25, 25);
@@ -251,7 +251,7 @@ public class Nametags extends Module {
     );
 
     public Nametags() {
-        super(Categories.Render, Items.NAME_TAG, "nametags", "Displays customizable nametags above players");
+        super(Categories.Render, Items.NAME_TAG, "nametags", "Displays customizable nametags above players.");
     }
 
     @Override
@@ -563,7 +563,7 @@ public class Nametags extends Module {
             GL.bindTexture(MATHAX_ICON);
             Renderer2D.TEXTURE.begin();
             double textHeight = text.getHeight() / 2;
-            Renderer2D.TEXTURE.texQuad(-width / 2 + 2, -textHeight * 2, 16, 16, textureColor);
+            Renderer2D.TEXTURE.texQuad(-width / 2 + 2, -textHeight * 2, 16, 16, TEXTURE_COLOR);
             Renderer2D.TEXTURE.render(null);
         }
 

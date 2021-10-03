@@ -100,7 +100,7 @@ public class HighwayBuilder extends Module {
         .build()
     );
 
-    //TODO: Place the block under the side first, like my surround fix. Some servers blocks sides without it...
+    //TODO: Place the block under the side first, like my surround fix. Some servers block sides without it...
     /*private final Setting<Boolean> underSides = sgGeneral.add(new BoolSetting.Builder()
         .name("under-sides")
         .description("Places blocks under the side blocks. [Some servers blocks sides without it]")
@@ -227,7 +227,7 @@ public class HighwayBuilder extends Module {
     );
 
     public HighwayBuilder() {
-        super(Categories.World, Items.OBSIDIAN, "highway-builder", "Automatically builds highways");
+        super(Categories.World, Items.OBSIDIAN, "highway-builder", "Automatically builds highways.");
     }
 
     @Override

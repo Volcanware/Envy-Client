@@ -26,9 +26,10 @@ import net.minecraft.util.registry.Registry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AutoExtinguish extends Module {
-    private boolean hasPlacedWater = false;
-    private BlockPos blockPos = null;
     private boolean doesWaterBucketWork = true;
+    private boolean hasPlacedWater = false;
+
+    private BlockPos blockPos = null;
 
     private static final StatusEffect FIRE_RESISTANCE = Registry.STATUS_EFFECT.get(new Identifier("fire_resistance"));
 
@@ -59,6 +60,7 @@ public class AutoExtinguish extends Module {
         .sliderMax(6)
         .build()
     );
+
     private final Setting<Integer> maxBlockPerTick = sgGeneral.add(new IntSetting.Builder()
         .name("block-per-tick")
         .description("Maximum amount of Blocks to extinguish per tick.")
@@ -67,18 +69,21 @@ public class AutoExtinguish extends Module {
         .sliderMax(50)
         .build()
     );
+
     private final Setting<Boolean> waterBucket = sgBucket.add(new BoolSetting.Builder()
         .name("water")
-        .description("Automatically places water when you are on fire. (and don't have fire resistance)")
+        .description("Automatically places water when you are on fire and don't have fire resistance.")
         .defaultValue(false)
         .build()
     );
+
     private final Setting<Boolean> center = sgBucket.add(new BoolSetting.Builder()
         .name("center")
         .description("Automatically centers you when placing water.")
         .defaultValue(false)
         .build()
     );
+
     private final Setting<Boolean> onGround = sgBucket.add(new BoolSetting.Builder()
         .name("on-ground")
         .description("Only place when you are on ground.")
@@ -87,7 +92,7 @@ public class AutoExtinguish extends Module {
     );
 
     public AutoExtinguish() {
-        super(Categories.World, Items.CAMPFIRE, "auto-extinguish", "Automatically extinguishes fire around you");
+        super(Categories.World, Items.CAMPFIRE, "auto-extinguish", "Automatically extinguishes fire around you.");
     }
 
     @EventHandler

@@ -26,7 +26,7 @@ public class AirJump extends Module {
     );
 
     public AirJump() {
-        super(Categories.Movement, Items.BARRIER, "air-jump", "Lets you jump in the air");
+        super(Categories.Movement, Items.BARRIER, "air-jump", "Lets you jump in the air.");
     }
 
     @Override

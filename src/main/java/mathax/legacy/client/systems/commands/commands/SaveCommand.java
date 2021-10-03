@@ -10,7 +10,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 public class SaveCommand extends Command {
 
     public SaveCommand() {
-        super("save", "Saves all current settings");
+        super("save", "Saves all current settings.");
     }
 
     @Override

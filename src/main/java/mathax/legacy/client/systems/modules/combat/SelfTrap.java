@@ -23,7 +23,9 @@ import java.util.List;
 
 public class SelfTrap extends Module {
     private final List<BlockPos> placePositions = new ArrayList<>();
+
     private boolean placed;
+
     private int delay;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -101,12 +103,12 @@ public class SelfTrap extends Module {
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The color of the lines of the blocks being rendered.")
-        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
     public SelfTrap(){
-        super(Categories.Combat, Items.OBSIDIAN, "self-trap", "Places obsidian above your head");
+        super(Categories.Combat, Items.OBSIDIAN, "self-trap", "Places obsidian above your head.");
     }
 
     @Override

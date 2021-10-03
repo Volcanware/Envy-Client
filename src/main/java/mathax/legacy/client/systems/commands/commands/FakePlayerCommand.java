@@ -15,7 +15,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 public class FakePlayerCommand extends Command {
 
     public FakePlayerCommand(){
-        super("fake-player", "Manages fake players that you can use for testing");
+        super("fake-player", "Manages fake players that you can use for testing.");
     }
 
     @Override

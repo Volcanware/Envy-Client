@@ -22,8 +22,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 
 public class Tracers extends Module {
-    private int count;
     private final Color distanceColor = new Color(255, 255, 255);
+
+    private int count;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAppearance = settings.createGroup("Appearance");
@@ -133,7 +134,7 @@ public class Tracers extends Module {
     );
 
     public Tracers() {
-        super(Categories.Render, Items.WHITE_STAINED_GLASS, "tracers", "Displays tracer lines to specified entities");
+        super(Categories.Render, Items.WHITE_STAINED_GLASS, "tracers", "Displays tracer lines to specified entities.");
     }
 
     @EventHandler

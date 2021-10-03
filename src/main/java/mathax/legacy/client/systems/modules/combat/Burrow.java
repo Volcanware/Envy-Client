@@ -24,6 +24,7 @@ import net.minecraft.util.math.Direction;
 
 public class Burrow extends Module {
     private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
+
     private boolean shouldBurrow;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -98,7 +99,7 @@ public class Burrow extends Module {
     );
 
     public Burrow() {
-        super(Categories.Combat, Items.OBSIDIAN, "burrow", "Attempts to clip you into a block");
+        super(Categories.Combat, Items.OBSIDIAN, "burrow", "Attempts to clip you into a block.");
     }
 
     @Override

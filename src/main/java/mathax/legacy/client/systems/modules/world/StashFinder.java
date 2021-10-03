@@ -75,7 +75,7 @@ public class StashFinder extends Module {
     );
 
     public StashFinder() {
-        super(Categories.World, Items.RED_SHULKER_BOX, "stash-finder", "Searches loaded chunks for storage blocks. Saves to <your minecraft folder>/MatHax/Legacy/Stashes folder");
+        super(Categories.World, Items.RED_SHULKER_BOX, "stash-finder", "Searches loaded chunks for storage blocks. Saves to <your minecraft folder>/MatHax/Legacy/Stashes folder.");
     }
 
     @Override

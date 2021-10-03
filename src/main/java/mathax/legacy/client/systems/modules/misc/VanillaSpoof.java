@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 
 public class VanillaSpoof extends Module {
     public VanillaSpoof() {
-        super(Categories.Misc, Items.COMMAND_BLOCK, "vanilla-spoof", "When connecting to a server it spoofs the client name to be 'vanilla'");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "vanilla-spoof", "When connecting to a server it spoofs the client name to be 'vanilla'.");
 
         MatHaxLegacy.EVENT_BUS.subscribe(new Listener());
     }

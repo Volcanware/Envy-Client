@@ -46,7 +46,7 @@ public class AutoMend extends Module {
     );
 
     public AutoMend() {
-        super(Categories.Player, Items.EXPERIENCE_BOTTLE, "auto-mend", "Automatically replaces items in your offhand with mending when fully repaired");
+        super(Categories.Player, Items.EXPERIENCE_BOTTLE, "auto-mend", "Automatically replaces items in your offhand with mending when fully repaired.");
     }
 
     @Override

@@ -9,41 +9,39 @@ import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.Freecam;
-import mathax.legacy.client.utils.misc.EnhancedTimer;
 import net.minecraft.item.Items;
 
 public class Twerk extends Module {
     private boolean hasTwerked = false;
 
-    private final EnhancedTimer onTwerk = new EnhancedTimer();
+    private int timer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
 
-    private final Setting<Integer> twerkDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("Delay")
-        .description("Delay between twerks in ticks.")
-        .defaultValue(5)
+    private final Setting<Integer> speed = sgGeneral.add(new IntSetting.Builder()
+        .name("speed")
+        .description("The speed of twerking.")
+        .defaultValue(1)
+        .min(1)
         .sliderMin(1)
-        .sliderMax(10)
+        .sliderMax(100)
         .build()
     );
 
     public Twerk() {
-        super(Categories.Misc, Items.DRIED_KELP, "Twerk", "Makes you twerk like Miley Cyrus");
+        super(Categories.Misc, Items.DRIED_KELP, "Twerk", "Makes you twerk like Miley Cyrus.");
     }
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        if (!hasTwerked && !mc.player.isSneaking()) {
-            onTwerk.reset();
-            hasTwerked = true;
-        }
+        timer++;
+        if (timer < 10 - speed.get()) return;
 
-        if (onTwerk.passedTicks(twerkDelay.get()) && hasTwerked) {
-            hasTwerked = false;
-        }
+        hasTwerked = !hasTwerked;
+
+        timer = -1;
     }
 
     public boolean doVanilla() {
@@ -51,8 +49,12 @@ public class Twerk extends Module {
     }
 
     @Override
+    public void onActivate() {
+        timer = 0;
+    }
+
+    @Override
     public void onDeactivate() {
         hasTwerked = false;
-        onTwerk.reset();
     }
 }

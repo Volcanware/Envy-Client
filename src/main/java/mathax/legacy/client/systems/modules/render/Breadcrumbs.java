@@ -53,7 +53,7 @@ public class Breadcrumbs extends Module {
     );
 
     public Breadcrumbs() {
-        super(Categories.Render, Items.BREAD, "breadcrumbs", "Displays a trail behind where you have walked");
+        super(Categories.Render, Items.BREAD, "breadcrumbs", "Displays a trail behind where you have walked.");
     }
 
     @Override

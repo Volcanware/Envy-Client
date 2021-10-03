@@ -81,7 +81,7 @@ public class CoordinateLogger extends Module {
     );
 
     public CoordinateLogger() {
-        super(Categories.Misc, Items.COMPASS, "coordinate-logger", "Logs coordinates of various events. Doesn't work on Spigot/Paper servers");
+        super(Categories.Misc, Items.COMPASS, "coordinate-logger", "Logs coordinates of various events. Doesn't work on Spigot/Paper servers.");
     }
 
     @EventHandler

@@ -27,7 +27,7 @@ import static net.minecraft.command.CommandSource.suggestMatching;
 public class EnemiesCommand extends Command {
 
     public EnemiesCommand() {
-        super("enemies", "Manages enemies", "enemy");
+        super("enemies", "Manages enemies.", "enemy");
     }
 
     @Override

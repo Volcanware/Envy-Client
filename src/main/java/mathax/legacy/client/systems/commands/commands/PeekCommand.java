@@ -2,6 +2,7 @@ package mathax.legacy.client.systems.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import mathax.legacy.client.Version;
 import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.utils.Utils;
 import net.minecraft.command.CommandSource;
@@ -15,7 +16,7 @@ public class PeekCommand extends Command {
     private static final SimpleCommandExceptionType NOT_HOLDING_SHULKER_BOX = new SimpleCommandExceptionType(new LiteralText("You must be holding a storage block with items in it."));
 
     public PeekCommand() {
-        super("peek", "Lets you see what's inside storage block items");
+        super("peek", "Lets you see what's inside storage block items.");
     }
 
     @Override

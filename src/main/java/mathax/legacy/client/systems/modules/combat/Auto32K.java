@@ -74,7 +74,7 @@ public class Auto32K extends Module {
     );
 
     public Auto32K(){
-        super(Categories.Combat, Items.HOPPER, "auto-32K", "Automatically attacks other players with a 32K weapon");
+        super(Categories.Combat, Items.HOPPER, "auto-32k", "Automatically attacks other players with a 32K weapon.");
     }
 
     @Override

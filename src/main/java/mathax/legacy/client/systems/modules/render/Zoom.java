@@ -59,7 +59,7 @@ public class Zoom extends Module {
     );
 
     public Zoom() {
-        super(Categories.Render, Items.SPYGLASS, "zoom", "Zooms your view");
+        super(Categories.Render, Items.SPYGLASS, "zoom", "Zooms your view.");
         autoSubscribe = false;
     }
 

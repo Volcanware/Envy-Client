@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 public class AutoSmelter extends Module {
+    private Map<Item, Integer> fuelTimeMap;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<List<Item>> fuelItems = sgGeneral.add(new ItemListSetting.Builder()
@@ -49,10 +51,8 @@ public class AutoSmelter extends Module {
         .build()
     );
 
-    private Map<Item, Integer> fuelTimeMap;
-
     public AutoSmelter() {
-        super(Categories.World, Items.FURNACE, "auto-smelter", "Automatically smelts items from your inventory");
+        super(Categories.World, Items.FURNACE, "auto-smelter", "Automatically smelts items from your inventory.");
     }
 
     private boolean fuelItemFilter(Item item) {

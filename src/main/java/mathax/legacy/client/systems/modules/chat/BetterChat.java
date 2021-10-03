@@ -198,7 +198,7 @@ public class BetterChat extends Module {
     );
 
     public BetterChat() {
-        super(Categories.Chat, Items.DROPPER, "better-chat", "Improves your chat experience in various ways");
+        super(Categories.Chat, Items.DROPPER, "better-chat", "Improves your chat experience in various ways.");
     }
 
     @EventHandler

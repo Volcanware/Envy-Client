@@ -80,11 +80,8 @@ public class Version {
         } else {
             Version latestVer = new Version(apiLatestVer.replace("\n", ""));
             Version currentVer = new Version(Version.get());
-            if (latestVer.isHigherThan(currentVer)) {
-                return 1;
-            } else {
-                return 2;
-            }
+            if (latestVer.isHigherThan(currentVer)) return 1;
+            else return 2;
         }
     }
 

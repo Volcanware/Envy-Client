@@ -24,7 +24,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 public class ProfilesCommand extends Command {
 
     public ProfilesCommand() {
-        super("profiles", "Loads and saves profiles");
+        super("profiles", "Loads and saves profiles.");
     }
 
     @Override

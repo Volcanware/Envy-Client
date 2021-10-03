@@ -14,7 +14,7 @@ import net.minecraft.util.shape.VoxelShapes;
 public class Prone extends Module {
 
     public Prone() {
-        super(Categories.Movement, Items.WATER_BUCKET, "prone", "Become prone on demand");
+        super(Categories.Movement, Items.WATER_BUCKET, "prone", "Become prone on demand.");
     }
 
     @EventHandler

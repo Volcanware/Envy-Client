@@ -19,6 +19,16 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Nuker extends Module {
+    private final Pool<BlockPos.Mutable> blockPosPool = new Pool<>(BlockPos.Mutable::new);
+    private final List<BlockPos.Mutable> blocks = new ArrayList<>();
+
+    private final BlockPos.Mutable lastBlockPos = new BlockPos.Mutable();
+
+    private boolean firstBlock;
+
+    private int timer;
+    private int noBlockTimer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgWhitelist = settings.createGroup("Whitelist");
 
@@ -77,17 +87,8 @@ public class Nuker extends Module {
         .build()
     );
 
-    private final Pool<BlockPos.Mutable> blockPosPool = new Pool<>(BlockPos.Mutable::new);
-    private final List<BlockPos.Mutable> blocks = new ArrayList<>();
-
-    private boolean firstBlock;
-    private final BlockPos.Mutable lastBlockPos = new BlockPos.Mutable();
-
-    private int timer;
-    private int noBlockTimer;
-
     public Nuker() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "nuker", "Breaks blocks around you");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "nuker", "Breaks blocks around you.");
     }
 
     @Override

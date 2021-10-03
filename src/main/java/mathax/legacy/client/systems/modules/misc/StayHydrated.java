@@ -41,7 +41,7 @@ public class StayHydrated extends Module {
     );
 
     public StayHydrated() {
-        super(Categories.Misc, Items.WATER_BUCKET, "stay-hydrated", "Notifies you when its time to drink #StayHydrated");
+        super(Categories.Misc, Items.WATER_BUCKET, "stay-hydrated", "Notifies you when its time to drink. #StayHydrated");
 
         runInMainMenu = true;
     }

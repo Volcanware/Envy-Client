@@ -19,6 +19,7 @@ import net.minecraft.util.Hand;
 
 public class AutoShearer extends Module {
     private Entity entity;
+
     private boolean offHand;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -46,7 +47,7 @@ public class AutoShearer extends Module {
     );
 
     public AutoShearer() {
-        super(Categories.World, Items.SHEARS, "auto-shearer", "Automatically shears sheep");
+        super(Categories.World, Items.SHEARS, "auto-shearer", "Automatically shears sheep.");
     }
 
     @Override

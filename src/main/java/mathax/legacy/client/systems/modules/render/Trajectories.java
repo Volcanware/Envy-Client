@@ -76,7 +76,7 @@ public class Trajectories extends Module {
     );
 
     public Trajectories() {
-        super(Categories.Render, Items.ENDER_PEARL, "trajectories", "Predicts the trajectory of throwable items");
+        super(Categories.Render, Items.ENDER_PEARL, "trajectories", "Predicts the trajectory of throwable items.");
     }
 
     private boolean itemFilter(Item item) {

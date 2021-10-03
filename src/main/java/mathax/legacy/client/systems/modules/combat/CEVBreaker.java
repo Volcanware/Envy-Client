@@ -29,11 +29,13 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
 public class CEVBreaker extends Module {
-    int pause;
-    boolean firtDone;
-    boolean isDone;
-    static final boolean assertionsDisabled = !CEVBreaker.class.desiredAssertionStatus();
-    BlockPos pos;
+    private static final boolean assertionsDisabled = !CEVBreaker.class.desiredAssertionStatus();
+
+    private BlockPos pos;
+
+    private int pause;
+
+    private boolean isDone;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
@@ -98,7 +100,7 @@ public class CEVBreaker extends Module {
     //TODO: Explodes crystals without mining, fix :)))))
 
     public CEVBreaker() {
-        super(Categories.Combat, Items.END_CRYSTAL, "CEV-breaker", "Places obsidian on top of people and explodes crystals on top of their heads after destroying the obsidian");
+        super(Categories.Combat, Items.END_CRYSTAL, "CEV-breaker", "Places obsidian on top of people and explodes crystals on top of their heads after destroying the obsidian.");
     }
 
     @EventHandler
@@ -108,8 +110,10 @@ public class CEVBreaker extends Module {
                 --pause;
             } else {
                 pause = delay.get();
+
                 SortPriority sortPriority = SortPriority.LowestDistance;
                 PlayerEntity target = TargetUtils.getPlayerTarget(7.0, sortPriority);
+
                 if (target != null) {
                     BlockPos blockPos;
                     BlockPos blockPos1 = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 2, target.getBlockPos().getZ());
@@ -117,17 +121,21 @@ public class CEVBreaker extends Module {
                         BlockPos blockPos2 = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 3, target.getBlockPos().getZ());
                         if (mc.world.getBlockState(blockPos1).isAir() || mc.world.getBlockState(blockPos1).getBlock() == Blocks.OBSIDIAN) {
                             int n = EnhancedInvUtils.findItemInHotbar(Items.IRON_PICKAXE);
+
                             if (n == -1) {
                                 n = EnhancedInvUtils.findItemInHotbar(Items.NETHERITE_PICKAXE);
                             }
+
                             if (n == -1) {
                                 n = EnhancedInvUtils.findItemInHotbar(Items.DIAMOND_PICKAXE);
                             }
+
                             if (n == -1) {
                                 error("Can't find any pickaxe in hotbar, disabling...", new Object[0]);
                                 toggle();
                             } else {
                                 if (mc.world.getBlockState(blockPos1).getBlock() != Blocks.OBSIDIAN) placeBlock(blockPos1, EnhancedInvUtils.findItemInHotbar(Items.OBSIDIAN), rotate.get());
+
                                 if (!equalsBlockPos(pos, blockPos1)) {
                                     pos = blockPos1;
                                     EnhancedInvUtils.swap(n);
@@ -137,15 +145,18 @@ public class CEVBreaker extends Module {
                                     isDone = false;
                                 } else if (isDone) {
                                     EndCrystalEntity endCrystalEntity = null;
+
                                     for (Object object : mc.world.getEntities()) {
                                         if (!(object instanceof EndCrystalEntity) || !equalsBlockPos(((EndCrystalEntity) object).getBlockPos(), blockPos2)) continue;
                                         endCrystalEntity = (EndCrystalEntity)object;
                                         break;
                                     }
+
                                     if (endCrystalEntity != null) {
                                         if (rotate.get()) {
                                             Rotations.rotate(Rotations.getYaw(endCrystalEntity), Rotations.getPitch(endCrystalEntity));
                                         }
+
                                         int n2 = mc.player.getInventory().selectedSlot;
                                         EnhancedInvUtils.swap(n);
                                         mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, pos, Direction.UP));
@@ -237,7 +248,6 @@ public class CEVBreaker extends Module {
     public void onActivate() {
         pos = null;
         isDone = false;
-        firtDone = false;
         pause = 0;
     }
 

@@ -17,13 +17,15 @@ public class Blink extends Module {
     private int timer = 0;
 
     public Blink() {
-        super(Categories.Movement, Items.TINTED_GLASS, "blink", "Allows you to essentially teleport while suspending motion updates");
+        super(Categories.Movement, Items.TINTED_GLASS, "blink", "Allows you to essentially teleport while suspending motion updates.");
     }
 
-    @Override
+    //TODO: Make modules not attack blink clone & make its color the same as own color in ESP's.
+
+    /*@Override
     public void onActivate() {
         BlinkPlayerCloneManager.add();
-    }
+    }*/
 
     @Override
     public void onDeactivate() {
@@ -33,7 +35,7 @@ public class Blink extends Module {
             timer = 0;
         }
 
-        BlinkPlayerCloneManager.clear();
+        //BlinkPlayerCloneManager.clear();
     }
 
     @EventHandler

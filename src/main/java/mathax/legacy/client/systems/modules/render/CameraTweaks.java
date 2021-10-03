@@ -61,7 +61,7 @@ public class CameraTweaks extends Module {
     );
 
     public CameraTweaks() {
-        super(Categories.Render, Items.COMMAND_BLOCK, "camera-tweaks", "Allows modification of the third person camera");
+        super(Categories.Render, Items.COMMAND_BLOCK, "camera-tweaks", "Allows modification of the third person camera.");
     }
 
     @Override

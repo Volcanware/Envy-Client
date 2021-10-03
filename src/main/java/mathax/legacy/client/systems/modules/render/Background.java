@@ -30,12 +30,12 @@ public class Background extends Module {
 
     // General
 
-    /*private final Setting<BackgroundMode> backgroundMode = sgGeneral.add(new EnumSetting.Builder<BackgroundMode>()
+    private final Setting<BackgroundMode> backgroundMode = sgGeneral.add(new EnumSetting.Builder<BackgroundMode>()
         .name("mode")
         .description("Which mode the blur should use.")
         .defaultValue(BackgroundMode.Blur)
         .build()
-    );*/
+    );
 
     private final Setting<Integer> fadeTime = sgGeneral.add(new IntSetting.Builder()
         .name("fade-time")
@@ -48,10 +48,10 @@ public class Background extends Module {
 
     // Blur
 
-    private final Setting<Mode> blurMode = sgBlur.add(new EnumSetting.Builder<Mode>()
+    private final Setting<BlurMode> blurMode = sgBlur.add(new EnumSetting.Builder<BlurMode>()
         .name("mode")
         .description("Which mode the blur should use.")
-        .defaultValue(Mode.Fancy)
+        .defaultValue(BlurMode.Fancy)
         .build()
     );
 
@@ -132,8 +132,8 @@ public class Background extends Module {
 
         if (!enabled) return;
 
-        //switch (backgroundMode.get()) {
-            //case Blur:
+        switch (backgroundMode.get()) {
+            case Blur:
             // Initialize shader and framebuffer if running for the first time
             if (shader == null) {
                 shader = new Shader("background/blur.vert", "background/blur.frag");
@@ -168,13 +168,13 @@ public class Background extends Module {
             shader.set("u_Direction", 1.0, 0.0);
             PostProcessRenderer.render();
 
-            if (blurMode.get() == Mode.Fancy) fbo2.bind();
+            if (blurMode.get() == BlurMode.Fancy) fbo2.bind();
             else fbo2.unbind();
             GL.bindTexture(fbo1.texture);
             shader.set("u_Direction", 0.0, 1.0);
             PostProcessRenderer.render();
 
-            if (blurMode.get() == Mode.Fancy) {
+            if (blurMode.get() == BlurMode.Fancy) {
                 fbo1.bind();
                 GL.bindTexture(fbo2.texture);
                 shader.set("u_Direction", 1.0, 0.0);
@@ -187,7 +187,7 @@ public class Background extends Module {
             }
 
             PostProcessRenderer.endRender();
-        //}
+        }
     }
 
     private boolean shouldRender() {
@@ -202,11 +202,11 @@ public class Background extends Module {
         return false;
     }
 
-    /*public enum BackgroundMode {
+    public enum BackgroundMode {
         Blur
-    }*/
+    }
 
-    public enum Mode {
+    public enum BlurMode {
         Fancy,
         Fast
     }

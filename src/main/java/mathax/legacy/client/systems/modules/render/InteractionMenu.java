@@ -91,7 +91,7 @@ public class InteractionMenu extends Module {
     );
 
     public InteractionMenu() {
-        super(Categories.Render, Items.ARMOR_STAND,"interaction-menu","An interaction screen when looking at an entity");
+        super(Categories.Render, Items.ARMOR_STAND,"interaction-menu","An interaction screen when looking at an entity.");
     }
 
     public void onKey() {

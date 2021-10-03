@@ -36,7 +36,6 @@ public class Commands extends System<Commands> {
         add(new VClipCommand());
         add(new HClipCommand());
         add(new ClearChatCommand());
-        add(new ClickGUICommand());
         add(new DismountCommand());
         add(new DamageCommand());
         add(new DropCommand());

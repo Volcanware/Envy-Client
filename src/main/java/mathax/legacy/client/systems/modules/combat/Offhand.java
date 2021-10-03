@@ -20,8 +20,10 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
 public class Offhand extends Module {
     private final AutoTotem autoTotem = Modules.get().get(AutoTotem.class);
+
     private boolean isClicking;
     private boolean sentMessage;
+
     private Item currentItem;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -69,7 +71,7 @@ public class Offhand extends Module {
     );
 
     public Offhand() {
-        super(Categories.Combat, Items.ENCHANTED_GOLDEN_APPLE, "offhand", "Allows you to hold specified items in your offhand");
+        super(Categories.Combat, Items.ENCHANTED_GOLDEN_APPLE, "offhand", "Allows you to hold specified items in your offhand.");
     }
 
     @Override

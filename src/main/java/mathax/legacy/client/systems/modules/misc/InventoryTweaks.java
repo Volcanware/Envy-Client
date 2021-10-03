@@ -33,6 +33,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class InventoryTweaks extends Module {
     private InventorySorter sorter;
+
     private boolean invOpened;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -153,7 +154,7 @@ public class InventoryTweaks extends Module {
     );
 
     public InventoryTweaks() {
-        super(Categories.Misc, Items.CHEST, "inventory-tweaks", "Various inventory related utilities");
+        super(Categories.Misc, Items.CHEST, "inventory-tweaks", "Various inventory related utilities.");
     }
 
     @Override

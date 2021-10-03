@@ -38,7 +38,7 @@ public class AutoJump extends Module {
     );
 
     public AutoJump() {
-        super(Categories.Movement, Items.BARRIER, "auto-jump", "Automatically jumps");
+        super(Categories.Movement, Items.BARRIER, "auto-jump", "Automatically jumps.");
     }
 
     private boolean jump() {

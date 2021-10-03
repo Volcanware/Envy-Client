@@ -28,6 +28,12 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.shape.VoxelShape;
 
 public class EChestFarmer extends Module {
+    private final VoxelShape SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
+
+    private BlockPos target;
+
+    private int startCount, prevSlot;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -93,13 +99,8 @@ public class EChestFarmer extends Module {
         .build()
     );
 
-    private final VoxelShape SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
-
-    private BlockPos target;
-    private int startCount, prevSlot;
-
     public EChestFarmer() {
-        super(Categories.World, Items.ENDER_CHEST, "EChest-farmer", "Places and breaks EChests to farm obsidian");
+        super(Categories.World, Items.ENDER_CHEST, "EChest-farmer", "Places and breaks EChests to farm obsidian.");
     }
 
     @Override

@@ -71,7 +71,7 @@ public class LiquidFiller extends Module {
     );
 
     public LiquidFiller() {
-        super(Categories.World, Items.WATER_BUCKET, "liquid-filler", "Places blocks inside of liquid source blocks within range of you");
+        super(Categories.World, Items.WATER_BUCKET, "liquid-filler", "Places blocks inside of liquid source blocks within range of you.");
     }
 
     @Override

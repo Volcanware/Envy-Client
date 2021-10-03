@@ -22,6 +22,11 @@ import net.minecraft.item.ToolItem;
 import java.util.function.Predicate;
 
 public class AutoTool extends Module {
+    private boolean wasPressed;
+    private boolean shouldSwitch;
+    private int ticks;
+    private int bestSlot;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<EnchantPreference> prefer = sgGeneral.add(new EnumSetting.Builder<EnchantPreference>()
@@ -69,13 +74,8 @@ public class AutoTool extends Module {
         .build()
     ));
 
-    private boolean wasPressed;
-    private boolean shouldSwitch;
-    private int ticks;
-    private int bestSlot;
-
     public AutoTool() {
-        super(Categories.Player, Items.DIAMOND_HOE, "auto-tool", "Automatically switches to the most effective tool when performing an action");
+        super(Categories.Player, Items.DIAMOND_HOE, "auto-tool", "Automatically switches to the most effective tool when performing an action.");
     }
 
     @EventHandler

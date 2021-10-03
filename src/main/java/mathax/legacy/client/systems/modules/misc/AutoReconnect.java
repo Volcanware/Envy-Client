@@ -20,6 +20,6 @@ public class AutoReconnect extends Module {
     );
 
     public AutoReconnect() {
-        super(Categories.Misc, Items.REPEATER, "auto-reconnect", "Automatically reconnects when disconnected from a server");
+        super(Categories.Misc, Items.REPEATER, "auto-reconnect", "Automatically reconnects when disconnected from a server.");
     }
 }

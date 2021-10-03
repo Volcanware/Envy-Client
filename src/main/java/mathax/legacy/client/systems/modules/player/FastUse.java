@@ -37,7 +37,7 @@ public class FastUse extends Module {
     );
 
     public FastUse() {
-        super(Categories.Player, Items.PLAYER_HEAD, "fast-use", "Allows you to use items at very high speeds");
+        super(Categories.Player, Items.PLAYER_HEAD, "fast-use", "Allows you to use items at very high speeds.");
     }
 
     @EventHandler

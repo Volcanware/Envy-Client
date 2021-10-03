@@ -16,7 +16,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 public class ModulesCommand extends Command {
 
     public ModulesCommand() {
-        super("modules", "Displays a list of all modules", "features");
+        super("modules", "Displays a list of all modules.", "features");
     }
 
     @Override

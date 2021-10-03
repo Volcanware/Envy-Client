@@ -13,7 +13,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 public class HClipCommand extends Command {
 
     public HClipCommand() {
-        super("hclip", "Lets you clip through blocks horizontally");
+        super("hclip", "Lets you clip through blocks horizontally.");
     }
 
     @Override

@@ -74,7 +74,7 @@ public class LightOverlay extends Module {
     );
 
     public LightOverlay() {
-        super(Categories.Render, Items.YELLOW_STAINED_GLASS, "light-overlay", "Shows blocks where mobs can spawn");
+        super(Categories.Render, Items.YELLOW_STAINED_GLASS, "light-overlay", "Shows blocks where mobs can spawn.");
     }
 
     @EventHandler

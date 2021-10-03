@@ -53,7 +53,7 @@ public class AutoBreed extends Module {
     );
 
     public AutoBreed() {
-        super(Categories.World, Items.WHEAT, "auto-breed", "Automatically breeds specified animals");
+        super(Categories.World, Items.WHEAT, "auto-breed", "Automatically breeds specified animals.");
     }
 
     @Override

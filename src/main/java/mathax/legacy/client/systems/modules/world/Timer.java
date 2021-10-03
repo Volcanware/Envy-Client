@@ -29,7 +29,7 @@ public class Timer extends Module {
     );
 
     public Timer() {
-        super(Categories.World, Items.CLOCK, "timer", "Changes the speed of everything in your game");
+        super(Categories.World, Items.CLOCK, "timer", "Changes the speed of everything in your game.");
     }
 
     public double getMultiplier() {

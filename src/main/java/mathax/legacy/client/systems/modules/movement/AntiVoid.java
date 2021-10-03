@@ -12,6 +12,7 @@ import mathax.legacy.client.bus.EventHandler;
 import net.minecraft.item.Items;
 
 public class AntiVoid extends Module {
+    private boolean wasFlightEnabled, hasRun;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -23,10 +24,8 @@ public class AntiVoid extends Module {
         .build()
     );
 
-    private boolean wasFlightEnabled, hasRun;
-
     public AntiVoid() {
-        super(Categories.Movement, Items.BARRIER, "anti-void", "Attempts to prevent you from falling into the void");
+        super(Categories.Movement, Items.BARRIER, "anti-void", "Attempts to prevent you from falling into the void.");
     }
 
     @Override

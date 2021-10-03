@@ -124,7 +124,7 @@ public class AutoTotem extends Module {
     );
 
     public AutoTotem() {
-        super(Categories.Combat, Items.TOTEM_OF_UNDYING, "auto-totem", "Automatically equips a totem in your offhand");
+        super(Categories.Combat, Items.TOTEM_OF_UNDYING, "auto-totem", "Automatically equips a totem in your offhand.");
     }
 
     @Override

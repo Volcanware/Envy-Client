@@ -37,7 +37,7 @@ public class ServerCommand extends Command {
     private Integer ticks = 0;
 
     public ServerCommand() {
-        super("server", "Prints server information");
+        super("server", "Prints server information.");
     }
 
     @Override

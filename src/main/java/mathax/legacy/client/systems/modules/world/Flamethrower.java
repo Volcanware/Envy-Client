@@ -22,6 +22,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class Flamethrower extends Module {
     private Entity entity;
+
     private int ticks = 0;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -78,7 +79,7 @@ public class Flamethrower extends Module {
     );
 
     public Flamethrower() {
-        super(Categories.World, Items.FIRE_CHARGE, "flamethrower", "Ignites every alive piece of food");
+        super(Categories.World, Items.FIRE_CHARGE, "flamethrower", "Ignites every alive piece of food.");
     }
 
     @Override

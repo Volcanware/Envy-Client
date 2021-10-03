@@ -29,6 +29,15 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Scaffold extends Module {
+    private final Pool<RenderBlock> renderBlockPool = new Pool<>(RenderBlock::new);
+    private final List<RenderBlock> renderBlocks = new ArrayList<>();
+
+    private final BlockPos.Mutable bp = new BlockPos.Mutable();
+    private final BlockPos.Mutable prevBp = new BlockPos.Mutable();
+
+    private boolean lastWasSneaking;
+    private double lastSneakingY;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -114,17 +123,8 @@ public class Scaffold extends Module {
         .build()
     );
 
-    private final Pool<RenderBlock> renderBlockPool = new Pool<>(RenderBlock::new);
-    private final List<RenderBlock> renderBlocks = new ArrayList<>();
-
-    private final BlockPos.Mutable bp = new BlockPos.Mutable();
-    private final BlockPos.Mutable prevBp = new BlockPos.Mutable();
-
-    private boolean lastWasSneaking;
-    private double lastSneakingY;
-
     public Scaffold() {
-        super(Categories.Movement, Items.COBBLESTONE, "scaffold", "Automatically places blocks under you");
+        super(Categories.Movement, Items.COBBLESTONE, "scaffold", "Automatically places blocks under you.");
     }
 
     @Override

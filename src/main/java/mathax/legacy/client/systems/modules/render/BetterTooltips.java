@@ -159,7 +159,7 @@ public class BetterTooltips extends Module {
     );
 
     public BetterTooltips() {
-        super(Categories.Render, Items.BOOK, "better-tooltips", "Displays more useful tooltips for certain items");
+        super(Categories.Render, Items.BOOK, "better-tooltips", "Displays more useful tooltips for certain items.");
     }
 
     @EventHandler

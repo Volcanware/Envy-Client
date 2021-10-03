@@ -13,6 +13,9 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.util.math.Vec3d;
 
 public class Flight extends Module {
+    private boolean flip;
+    private float lastYaw;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAntiKick = settings.createGroup("Anti Kick");
 
@@ -68,12 +71,12 @@ public class Flight extends Module {
         .build()
     );
 
-    public Flight() {
-        super(Categories.Movement, Items.COMMAND_BLOCK, "flight", "FLYYYyy! No Fall is recommended with this module");
-    }
-
     private int delayLeft = delay.get();
     private int offLeft = offTime.get();
+
+    public Flight() {
+        super(Categories.Movement, Items.COMMAND_BLOCK, "flight", "FLYYYyy! No Fall is recommended with this module.");
+    }
 
     @Override
     public void onActivate() {
@@ -93,9 +96,6 @@ public class Flight extends Module {
             mc.player.getAbilities().allowFlying = false;
         }
     }
-
-    private boolean flip;
-    private float lastYaw;
 
     @EventHandler
     private void onPreTick(TickEvent.Pre event) {

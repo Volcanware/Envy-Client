@@ -22,6 +22,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StorageESP extends Module {
+    private final Color lineColor = new Color(0, 0, 0, 0);
+    private final Color sideColor = new Color(0, 0, 0, 0);
+
+    private boolean render;
+
+    private int count;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<List<BlockEntityType<?>>> storageBlocks = sgGeneral.add(new StorageBlockListSetting.Builder()
@@ -96,13 +103,8 @@ public class StorageESP extends Module {
         .build()
     );
 
-    private final Color lineColor = new Color(0, 0, 0, 0);
-    private final Color sideColor = new Color(0, 0, 0, 0);
-    private boolean render;
-    private int count;
-
     public StorageESP() {
-        super(Categories.Render, Items.SHULKER_BOX, "storage-ESP", "Renders all specified storage blocks");
+        super(Categories.Render, Items.SHULKER_BOX, "storage-esp", "Renders all specified storage blocks.");
     }
 
     private void getTileEntityColor(BlockEntity blockEntity) {

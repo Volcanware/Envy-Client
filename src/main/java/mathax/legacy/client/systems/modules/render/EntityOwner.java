@@ -56,7 +56,7 @@ public class EntityOwner extends Module {
     );
 
     public EntityOwner() {
-        super(Categories.Render, Items.NAME_TAG, "entity-owner", "Displays the name of the player who owns the entity near you");
+        super(Categories.Render, Items.NAME_TAG, "entity-owner", "Displays the name of the player who owns the entity near you.");
     }
 
     @Override

@@ -19,6 +19,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 public class InstaMine extends Module {
+    private final BlockPos.Mutable blockPos = new BlockPos.Mutable(0, -1, 0);
+
+    private Direction direction;
+
+    private int ticks;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -75,13 +81,8 @@ public class InstaMine extends Module {
         .build()
     );
 
-    private int ticks;
-
-    private final BlockPos.Mutable blockPos = new BlockPos.Mutable(0, -1, 0);
-    private Direction direction;
-
     public InstaMine() {
-        super(Categories.Player, Items.DIAMOND_PICKAXE, "insta-mine", "Attempts to instantly mine blocks");
+        super(Categories.Player, Items.DIAMOND_PICKAXE, "insta-mine", "Attempts to instantly mine blocks.");
     }
 
     @Override

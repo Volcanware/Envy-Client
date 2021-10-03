@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.combat;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.mixin.AbstractBlockAccessor;
@@ -33,6 +34,7 @@ public class HoleFiller extends Module {
     private final Pool<Hole> holePool = new Pool<>(Hole::new);
     private final List<Hole> holes = new ArrayList<>();
     private final byte NULL = 0;
+
     private int timer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -106,33 +108,33 @@ public class HoleFiller extends Module {
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The side color of the target block rendering.")
-        .defaultValue(new SettingColor(197, 137, 232, 10))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 75))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The line color of the target block rendering.")
-        .defaultValue(new SettingColor(197, 137, 232))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
     private final Setting<SettingColor> nextSideColor = sgRender.add(new ColorSetting.Builder()
         .name("next-side-color")
         .description("The side color of the next block to be placed.")
-        .defaultValue(new SettingColor(227, 196, 245, 10))
+        .defaultValue(new SettingColor(225, 200, 245, 75))
         .build()
     );
 
     private final Setting<SettingColor> nextLineColor = sgRender.add(new ColorSetting.Builder()
         .name("next-line-color")
         .description("The line color of the next block to be placed.")
-        .defaultValue(new SettingColor(227, 196, 245))
+        .defaultValue(new SettingColor(225, 200, 245))
         .build()
     );
 
     public HoleFiller() {
-        super(Categories.Combat, Items.OBSIDIAN, "hole-filler", "Fills holes with specified blocks");
+        super(Categories.Combat, Items.OBSIDIAN, "hole-filler", "Fills holes with specified blocks.");
     }
 
     @Override
@@ -211,7 +213,7 @@ public class HoleFiller extends Module {
             boolean isFirst = hole == holes.get(0);
 
             Color side = isFirst ? nextSideColor.get() : sideColor.get();
-            Color line = isFirst ? nextSideColor.get() : sideColor.get();
+            Color line = isFirst ? nextLineColor.get() : lineColor.get();
 
             event.renderer.box(hole.blockPos, side, line, shapeMode.get(), hole.exclude);
         }

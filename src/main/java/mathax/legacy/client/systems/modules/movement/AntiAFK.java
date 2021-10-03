@@ -139,7 +139,7 @@ public class AntiAFK extends Module {
     );
 
     public AntiAFK() {
-        super(Categories.Movement, Items.COMMAND_BLOCK, "anti-AFK", "Performs different actions to prevent getting kicked for AFK reasons");
+        super(Categories.Movement, Items.COMMAND_BLOCK, "anti-afk", "Performs different actions to prevent getting kicked for AFK reasons.");
     }
 
     @Override

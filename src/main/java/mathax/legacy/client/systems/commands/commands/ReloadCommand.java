@@ -11,7 +11,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 public class ReloadCommand extends Command {
 
     public ReloadCommand() {
-        super("reload", "Reloads the config, modules, friends, enemies, macros, accounts and capes");
+        super("reload", "Reloads the config, modules, friends, enemies, macros, accounts and capes.");
     }
 
     @Override

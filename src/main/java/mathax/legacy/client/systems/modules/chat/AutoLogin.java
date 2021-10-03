@@ -28,7 +28,7 @@ public class AutoLogin extends Module {
     }};
 
     public AutoLogin() {
-        super(Categories.Chat, Items.COMPASS, "auto-login", "Automatically logs into servers that use /login");
+        super(Categories.Chat, Items.COMPASS, "auto-login", "Automatically logs into servers that use /login.");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

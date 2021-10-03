@@ -288,60 +288,6 @@ public class Utils {
         return "";
     }
 
-    public static String getActivity() {
-
-        if (mc.getCurrentServerEntry() != null) {
-            // Multiplayer
-            String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
-            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
-                return "Playing on " + name;
-            } else {
-                return "Playing on a server";
-            }
-        }
-
-        if ((mc.getServer()) == null) return "Could not get server/world";
-        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Could not get server/world";
-
-        if (mc.isInSingleplayer()) {
-            // Singleplayer
-            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
-            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) {
-                folder = folder.getParentFile();
-            }
-            return "Playing singleplayer (" + folder.getName() + ")";
-        }
-
-        return "Could not get server/world";
-    }
-
-    public static String getNakedActivity() {
-
-        if (mc.getCurrentServerEntry() != null) {
-            // Multiplayer
-            String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
-            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
-                return name;
-            } else {
-                return "a server";
-            }
-        }
-
-        if ((mc.getServer()) == null) return "Unknown";
-        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Unknown";
-
-        if (mc.isInSingleplayer()) {
-            // Singleplayer
-            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
-            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) {
-                folder = folder.getParentFile();
-            }
-            return "singleplayer (" + folder.getName() + ")";
-        }
-
-        return "Unknown";
-    }
-
     public static Float getPlayerHealth() {
         if (!Modules.get().get(DiscordRPC.class).playerHealth.get()) return 0f;
         if (mc.world == null) return 0f;
@@ -363,7 +309,19 @@ public class Utils {
     }
 
     public static String nameToTitle(String name) {
-        return Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+        String title = Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+        title = title.replace("Esp", "ESP");
+        title = title.replace("Tp", "TP");
+        title = title.replace("Tps", "TPS");
+        title = title.replace("Gui", "GUI");
+        title = title.replace("Hud", "HUD");
+        title = title.replace("Fov", "FOV");
+        title = title.replace("Ez", "EZ");
+        title = title.replace("Rpc", "RPC");
+        title = title.replace("Cpu", "CPU");
+        title = title.replace("Afk", "AFK");
+        title = title.replace("32k", "32K");
+        return title;
     }
 
     public static String getKeyName(int key) {

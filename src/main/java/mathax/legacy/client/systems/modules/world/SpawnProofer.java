@@ -20,6 +20,7 @@ import java.util.List;
 public class SpawnProofer extends Module {
     private final Pool<BlockPos.Mutable> spawnPool = new Pool<>(BlockPos.Mutable::new);
     private final List<BlockPos.Mutable> spawns = new ArrayList<>();
+
     private int ticksWaited;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -64,7 +65,7 @@ public class SpawnProofer extends Module {
     );
 
     public SpawnProofer() {
-        super(Categories.World, Items.SPAWNER, "spawn-proofer", "Automatically spawnproofs unlit areas");
+        super(Categories.World, Items.SPAWNER, "spawn-proofer", "Automatically spawnproofs unlit areas.");
     }
 
     @EventHandler
@@ -77,7 +78,7 @@ public class SpawnProofer extends Module {
         // Find slot
         FindItemResult block = InvUtils.findInHotbar(itemStack -> blocks.get().contains(Block.getBlockFromItem(itemStack.getItem())));
         if (!block.found()) {
-            error("Found none of the chosen blocks in hotbar");
+            error("Found none of the chosen blocks in hotbar, disabling...");
             toggle();
             return;
         }

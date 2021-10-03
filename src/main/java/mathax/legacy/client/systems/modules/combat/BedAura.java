@@ -34,10 +34,15 @@ import net.minecraft.util.math.Vec3d;
 
 public class BedAura extends Module {
     private CardinalDirection direction;
+
     private PlayerEntity target;
+
     private BlockPos placePos, breakPos;
+
     private Item slotItem;
+
     private boolean safetyToggled;
+
     private int timer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -244,7 +249,7 @@ public class BedAura extends Module {
     );
 
     public BedAura() {
-        super(Categories.Combat, Items.RED_BED, "bed-aura", "Automatically places and explodes beds in the Nether and End");
+        super(Categories.Combat, Items.RED_BED, "bed-aura", "Automatically places and explodes beds in the Nether and the End.");
     }
 
     @Override

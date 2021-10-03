@@ -110,6 +110,7 @@ public class AutoWither extends Module {
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
         .build()
     );
+
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The line color of the target block rendering.")
@@ -118,7 +119,7 @@ public class AutoWither extends Module {
     );
 
     public AutoWither() {
-        super(Categories.World, Items.WITHER_SKELETON_SKULL, "auto-wither", "Automatically builds withers");
+        super(Categories.World, Items.WITHER_SKELETON_SKULL, "auto-wither", "Automatically builds withers.");
     }
 
     @Override

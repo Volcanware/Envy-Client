@@ -35,8 +35,11 @@ public class AutoPot extends Module {
         AnchorAura.class,
         BedAura.class
     };
+
     private float prevPitch;
+
     private int slot, prevSlot;
+
     private boolean drinking, splashing, pitched;
     private boolean wasBaritone;
 
@@ -147,7 +150,7 @@ public class AutoPot extends Module {
     );
 
     public AutoPot() {
-        super(Categories.Combat, Items.POTION, "auto-pot", "Automatically uses Potions");
+        super(Categories.Combat, Items.POTION, "auto-pot", "Automatically uses potions.");
     }
 
     @Override

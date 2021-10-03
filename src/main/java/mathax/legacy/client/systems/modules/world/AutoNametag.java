@@ -39,7 +39,7 @@ public class AutoNametag extends Module {
 
     private final Setting<SortPriority> priority = sgGeneral.add(new EnumSetting.Builder<SortPriority>()
         .name("priority")
-        .description("Priority sort")
+        .description("Priority sort.")
         .defaultValue(SortPriority.LowestDistance)
         .build()
     );
@@ -59,7 +59,7 @@ public class AutoNametag extends Module {
     );
 
     public AutoNametag() {
-        super(Categories.World, Items.NAME_TAG, "auto-nametag", "Automatically uses nametags on entities without a nametag. WILL nametag ALL entities in the specified distance");
+        super(Categories.World, Items.NAME_TAG, "auto-nametag", "Automatically uses nametags on entities without a nametag. WILL nametag ALL entities in the specified distance.");
     }
 
     @EventHandler

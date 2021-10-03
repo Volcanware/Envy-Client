@@ -33,7 +33,9 @@ import java.util.List;
 
 public class KillAura extends Module {
     private final List<Entity> targets = new ArrayList<>();
+
     private int hitDelayTimer, randomDelayTimer, switchTimer;
+
     private boolean wasPathing;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -207,7 +209,7 @@ public class KillAura extends Module {
     );
 
     public KillAura() {
-        super(Categories.Combat, Items.DIAMOND_SWORD, "kill-aura", "Attacks specified entities around you");
+        super(Categories.Combat, Items.DIAMOND_SWORD, "kill-aura", "Attacks specified entities around you.");
     }
 
     @Override

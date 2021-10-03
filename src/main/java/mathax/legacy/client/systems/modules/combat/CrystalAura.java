@@ -2,7 +2,6 @@ package mathax.legacy.client.systems.modules.combat;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import it.unimi.dsi.fastutil.ints.*;
-import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.entity.EntityAddedEvent;
 import mathax.legacy.client.events.entity.EntityRemovedEvent;
@@ -18,7 +17,6 @@ import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.Target;
 import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerManager;
@@ -35,7 +33,6 @@ import mathax.legacy.client.bus.EventPriority;
 import mathax.legacy.client.settings.*;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -530,7 +527,7 @@ public class CrystalAura extends Module {
     );
 
     public CrystalAura() {
-        super(Categories.Combat, Items.END_CRYSTAL, "crystal-aura", "Automatically places and attacks crystals");
+        super(Categories.Combat, Items.END_CRYSTAL, "crystal-aura", "Automatically places and attacks crystals.");
     }
 
     @Override

@@ -116,7 +116,7 @@ public class VeinMiner extends Module {
     );
 
     public VeinMiner() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "vein-miner", "Mines all nearby blocks with this type");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "vein-miner", "Mines all nearby blocks with this type.");
     }
 
     @Override

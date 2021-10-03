@@ -26,7 +26,7 @@ public class PluginsCommand extends Command {
     private Integer ticks = 0;
 
     public PluginsCommand() {
-        super("plugins", "Prints server plugins");
+        super("plugins", "Prints server plugins.");
     }
 
     @Override

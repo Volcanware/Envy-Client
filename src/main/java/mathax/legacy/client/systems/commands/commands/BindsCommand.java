@@ -19,7 +19,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 public class BindsCommand extends Command {
 
     public BindsCommand() {
-        super("binds", "List of all bound modules");
+        super("binds", "List of all bound modules.");
     }
 
     @Override

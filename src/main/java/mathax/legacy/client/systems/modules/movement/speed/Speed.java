@@ -17,6 +17,8 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
 public class Speed extends Module {
+    private SpeedMode currentMode;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<SpeedModes> speedMode = sgGeneral.add(new EnumSetting.Builder<SpeedModes>()
@@ -88,10 +90,8 @@ public class Speed extends Module {
         .build()
     );
 
-    private SpeedMode currentMode;
-
     public Speed() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "speed", "Modifies your movement speed when moving");
+        super(Categories.Movement, Items.DIAMOND_BOOTS, "speed", "Modifies your movement speed when moving.");
 
         onSpeedModeChanged(speedMode.get());
     }

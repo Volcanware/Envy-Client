@@ -33,7 +33,7 @@ public class ItemHighlight extends Module {
     );
 
     public ItemHighlight() {
-        super(Categories.Render, Items.PURPLE_STAINED_GLASS_PANE, "item-highlight", "Highlights selected items when in guis");
+        super(Categories.Render, Items.PURPLE_STAINED_GLASS_PANE, "item-highlight", "Highlights selected items when in GUIs.");
     }
 
     public int getColor(ItemStack stack) {

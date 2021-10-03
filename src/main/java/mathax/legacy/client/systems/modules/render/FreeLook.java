@@ -63,7 +63,7 @@ public class FreeLook extends Module {
     );
 
     public FreeLook() {
-        super(Categories.Render, Items.PLAYER_HEAD, "free-look", "Allows more rotation options in third person");
+        super(Categories.Render, Items.PLAYER_HEAD, "free-look", "Allows more rotation options in third person-");
     }
 
     @Override

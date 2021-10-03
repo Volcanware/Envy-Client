@@ -23,7 +23,7 @@ import net.minecraft.util.math.Vec3f;
 /*/ https://github.com/DustinRepo/JexClient/blob/main/src/main/java/me/dustin/jex/feature/mod/impl/render/Crosshair.java /*/
 /*/                                                                                                                      /*/
 
-//TODO: Fix indicator being small and crosshair not appearing sometimes.
+//TODO: Fix indicator being small on big monitors.
 public class CustomCrosshair extends Module {
     private int spinAmount;
     private final Timer timer = new Timer();
@@ -168,7 +168,7 @@ public class CustomCrosshair extends Module {
     );
 
     public CustomCrosshair() {
-        super(Categories.Render, Items.COMPASS, "custom-crosshair", "Renders a customizable crosshair instead of the Minecraft one");
+        super(Categories.Render, Items.COMPASS, "custom-crosshair", "Renders a customizable crosshair instead of the Minecraft one.");
     }
 
     @EventHandler

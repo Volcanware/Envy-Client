@@ -122,7 +122,7 @@ public class PacketMine extends Module {
     );
 
     public PacketMine() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "packet-mine", "Sends packets to mine blocks without the mining animation");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "packet-mine", "Sends packets to mine blocks without the mining animation.");
     }
 
     @Override

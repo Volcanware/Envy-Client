@@ -70,6 +70,7 @@ public class Ambience extends Module {
     );
 
     // World
+
     public final Setting<Boolean> customGrassColor = sgWorld.add(new BoolSetting.Builder()
         .name("custom-grass-color")
         .description("Whether the grass color should be changed.")
@@ -139,7 +140,7 @@ public class Ambience extends Module {
     );
 
     public Ambience() {
-        super(Categories.World, Items.RED_STAINED_GLASS, "ambience", "Change the color of various pieces of the environment");
+        super(Categories.World, Items.RED_STAINED_GLASS, "ambience", "Change the color of various pieces of the environment.");
     }
 
     @Override

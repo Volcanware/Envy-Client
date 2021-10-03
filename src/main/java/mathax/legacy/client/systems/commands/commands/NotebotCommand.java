@@ -31,7 +31,7 @@ public class NotebotCommand extends Command {
     List<List<Integer>> song = new ArrayList<>();
 
     public NotebotCommand() {
-        super("notebot", "Allows you load notebot files");
+        super("notebot", "Allows you load notebot files.");
     }
 
     @Override

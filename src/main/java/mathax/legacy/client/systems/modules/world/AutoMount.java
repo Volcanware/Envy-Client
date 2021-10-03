@@ -41,62 +41,62 @@ public class AutoMount extends Module {
 
     private final Setting<Boolean> horses = sgMount.add(new BoolSetting.Builder()
         .name("horse")
-        .description("Horse")
+        .description("Mounts Horses.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> donkeys = sgMount.add(new BoolSetting.Builder()
         .name("donkey")
-        .description("Donkey")
+        .description("Mounts Donkeys.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> mules = sgMount.add(new BoolSetting.Builder()
         .name("mule")
-        .description("Mule")
+        .description("Mounts Mules.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> skeletonHorse = sgMount.add(new BoolSetting.Builder()
         .name("skeleton-horse")
-        .description("Skeleton Horse")
+        .description("Mounts Skeleton Horses.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> llamas = sgMount.add(new BoolSetting.Builder()
         .name("llama")
-        .description("Llama")
+        .description("Mounts Llamas.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> pigs = sgMount.add(new BoolSetting.Builder()
         .name("pig")
-        .description("Pig")
+        .description("Mounts Pigs.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> boats = sgMount.add(new BoolSetting.Builder()
         .name("boat")
-        .description("Boat")
+        .description("Mounts Boats.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> minecarts = sgMount.add(new BoolSetting.Builder()
         .name("minecart")
-        .description("Minecart")
+        .description("Mounts Minecarts.")
         .defaultValue(false)
         .build()
     );
 
     public AutoMount() {
-        super(Categories.World, Items.SADDLE, "auto-mount", "Automatically mounts entities");
+        super(Categories.World, Items.SADDLE, "auto-mount", "Automatically mounts entities.");
     }
 
     @EventHandler
