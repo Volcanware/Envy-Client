@@ -71,14 +71,14 @@ public class ModuleScreen extends WindowScreen {
         bottom.add(theme.label("Toggle message: "));
         WCheckbox messageToggle = bottom.add(theme.checkbox(module.isMessageEnabled())).expandCellX().widget();
         messageToggle.action = () -> {
-            if (module.isMessageEnabled() != messageToggle.checked) module.toggleMessage(messageToggle.checked);
+            if (module.isMessageEnabled() != messageToggle.checked) module.setToggleMessage(messageToggle.checked);
         };
 
         // Toasts
         bottom.add(theme.label("Toggle toast: "));
         WCheckbox toastToggle = bottom.add(theme.checkbox(module.isToastEnabled())).widget();
         toastToggle.action = () -> {
-            if (module.isToastEnabled() != toastToggle.checked) module.toggleToast(toastToggle.checked);
+            if (module.isToastEnabled() != toastToggle.checked) module.setToggleToast(toastToggle.checked);
         };
 
         // Bottom 2

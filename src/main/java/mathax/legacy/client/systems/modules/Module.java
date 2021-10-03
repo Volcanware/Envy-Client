@@ -120,7 +120,7 @@ public abstract class Module implements ISerializable<Module> {
         return visible;
     }
 
-    public void toggleMessage(boolean toggleMessage) {
+    public void setToggleMessage(boolean toggleMessage) {
         this.toggleMessage = toggleMessage;
     }
 
@@ -128,7 +128,7 @@ public abstract class Module implements ISerializable<Module> {
         return toggleMessage;
     }
 
-    public void toggleToast(boolean toggleToast) {
+    public void setToggleToast(boolean toggleToast) {
         this.toggleToast = toggleToast;
     }
 
@@ -174,8 +174,8 @@ public abstract class Module implements ISerializable<Module> {
         NbtElement settingsTag = tag.get("settings");
         if (settingsTag instanceof NbtCompound) settings.fromTag((NbtCompound) settingsTag);
 
-        toggleMessage(tag.getBoolean("toggleMessage"));
-        toggleToast(tag.getBoolean("toggleToast"));
+        setToggleMessage(tag.getBoolean("toggleMessage"));
+        setToggleToast(tag.getBoolean("toggleToast"));
         boolean active = tag.getBoolean("active");
         if (active != isActive()) toggle();
         setVisible(tag.getBoolean("visible"));
