@@ -46,7 +46,7 @@ import java.util.*;
 
 public class Nametags extends Module {
     private static final Identifier MATHAX_ICON = new Identifier("mathaxlegacy", "textures/icons/icon.png");
-    private Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
+    private final Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
 
     private final Color WHITE = new Color(255, 255, 255);
     private final Color RED = new Color(255, 25, 25);
@@ -141,13 +141,6 @@ public class Nametags extends Module {
 
     //Players
 
-    private final Setting<Boolean> displayTotemPops = sgPlayers.add(new BoolSetting.Builder()
-        .name("show-pops")
-        .description("Show the players pops.")
-        .defaultValue(true)
-        .build()
-    );
-
     private final Setting<Boolean> displayItems = sgPlayers.add(new BoolSetting.Builder()
         .name("show-items")
         .description("Displays armor and hand items above the name tags.")
@@ -223,7 +216,7 @@ public class Nametags extends Module {
     private final Setting<Boolean> displayGameMode = sgPlayers.add(new BoolSetting.Builder()
         .name("gamemode")
         .description("Shows the player's game mode.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 
@@ -237,6 +230,13 @@ public class Nametags extends Module {
     private final Setting<Boolean> displayDistance = sgPlayers.add(new BoolSetting.Builder()
         .name("distance")
         .description("Shows the distance between you and the player.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> displayTotemPops = sgPlayers.add(new BoolSetting.Builder()
+        .name("pops")
+        .description("Show the players totem pops.")
         .defaultValue(true)
         .build()
     );
@@ -380,7 +380,6 @@ public class Nametags extends Module {
         NametagUtils.begin(pos);
 
         boolean showDev = false;
-        String gwText = "      ";
         if (player.getUuidAsString().equals(MatHaxLegacy.devUUID) || player.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) showDev = true;
 
         // Gamemode
@@ -431,7 +430,6 @@ public class Nametags extends Module {
         String popText = " [" + getPops(player) + "]";
 
         // Calc widths
-        double devWidth = text.getWidth(gwText, true);
         double gmWidth = text.getWidth(gmText, true);
         double nameWidth = text.getWidth(name, true);
         double healthWidth = text.getWidth(healthText, true);
@@ -440,7 +438,7 @@ public class Nametags extends Module {
         double popWidth = text.getWidth(popText, true);
         double width = nameWidth + healthWidth;
 
-        if (showDev) width += devWidth;
+        if (showDev) width += text.getHeight();
         if (displayGameMode.get()) width += gmWidth;
         if (displayPing.get()) width += pingWidth;
         if (displayDistance.get()) width += distWidth;
@@ -456,7 +454,8 @@ public class Nametags extends Module {
         double hX = -widthHalf;
         double hY = -heightDown;
 
-        if (showDev) hX = text.render(gwText, hX, hY, RED, true);
+        if (showDev) hX += text.getHeight();
+        
         if (displayGameMode.get()) hX = text.render(gmText, hX, hY, GOLD, true);
         hX = text.render(name, hX, hY, nameColor, true);
 

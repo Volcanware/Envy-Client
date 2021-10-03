@@ -99,10 +99,12 @@ public class WatermarkHUD extends TripleTextHUDElement {
             case Icon:
                 x = box.getX();
                 y = box.getY();
+
                 drawIcon((int) x, (int) y, 0);
             case Both:
                 x = box.getX();
                 y = box.getY();
+
                 double textWidth = renderer.textWidth(getLeft()) + renderer.textWidth(getRight()) + renderer.textWidth(getEnd());
                 drawIcon((int) x, (int) y, (int) textWidth);
         }
@@ -110,10 +112,12 @@ public class WatermarkHUD extends TripleTextHUDElement {
 
     private void drawIcon(int x, int y, int textWidth) {
         int w = 0;
+
         switch (mode.get()) {
             case Icon -> w = (int) box.width;
             case Both -> w = (int) box.width - textWidth;
         }
+
         int h = (int) box.height;
 
         GL.bindTexture(MATHAX_LOGO);
