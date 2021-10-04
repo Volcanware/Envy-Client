@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
+import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
 import mathax.legacy.client.utils.Utils;
@@ -16,9 +17,63 @@ public class ServerBrandHUD extends TripleTextHUDElement {
 
     @Override
     protected String getRight() {
-        if (!Utils.canUpdate()) return "None";
+        return getServerBrand();
+    }
 
-        return mc.player.getServerBrand().replace("§a", "").replace("§b", "").replace("§c", "").replace("§d", "").replace("§e", "").replace("§1", "").replace("§2", "").replace("§3", "").replace("§4", "").replace("§5", "").replace("§6", "").replace("§7", "").replace("§8", "").replace("§9", "").replace("§k", "").replace("§l", "").replace("§m", "").replace("§n", "").replace("§o", "").replace("§r", "").replace("&a", "").replace("&b", "").replace("&c", "").replace("&d", "").replace("&e", "").replace("&1", "").replace("&2", "").replace("&3", "").replace("&4", "").replace("&5", "").replace("&6", "").replace("&7", "").replace("&8", "").replace("&9", "").replace("&k", "").replace("&l", "").replace("&m", "").replace("&n", "").replace("&o", "").replace("&r", "");
+    private String getServerBrand() {
+        if (!Utils.canUpdate() || mc.player.getServerBrand() == null) return "None";
+
+        String brand = mc.player.getServerBrand();
+
+        if (!Config.get().customFont) brand = removeColors(brand);
+
+        return brand;
+    }
+    
+    private String removeColors(String brand) {
+
+        brand = brand.replace("§a", "");
+        brand = brand.replace("§b", "");
+        brand = brand.replace("§c", "");
+        brand = brand.replace("§d", "");
+        brand = brand.replace("§e", "");
+        brand = brand.replace("§1", "");
+        brand = brand.replace("§2", "");
+        brand = brand.replace("§3", "");
+        brand = brand.replace("§4", "");
+        brand = brand.replace("§5", "");
+        brand = brand.replace("§6", "");
+        brand = brand.replace("§7", "");
+        brand = brand.replace("§8", "");
+        brand = brand.replace("§9", "");
+        brand = brand.replace("§k", "");
+        brand = brand.replace("§l", "");
+        brand = brand.replace("§m", "");
+        brand = brand.replace("§n", "");
+        brand = brand.replace("§o", "");
+        brand = brand.replace("§r", "");
+        brand = brand.replace("&a", "");
+        brand = brand.replace("&b", "");
+        brand = brand.replace("&c", "");
+        brand = brand.replace("&d", "");
+        brand = brand.replace("&e", "");
+        brand = brand.replace("&1", "");
+        brand = brand.replace("&2", "");
+        brand = brand.replace("&3", "");
+        brand = brand.replace("&4", "");
+        brand = brand.replace("&5", "");
+        brand = brand.replace("&6", "");
+        brand = brand.replace("&7", "");
+        brand = brand.replace("&8", "");
+        brand = brand.replace("&9", "");
+        brand = brand.replace("&k", "");
+        brand = brand.replace("&l", "");
+        brand = brand.replace("&m", "");
+        brand = brand.replace("&n", "");
+        brand = brand.replace("&o", "");
+        brand = brand.replace("&r", "");
+
+        return brand;
     }
 
     @Override
