@@ -23,20 +23,25 @@ public class CapesModule extends Module {
 
     private final Setting<Boolean> autoReload = sgGeneral.add(new BoolSetting.Builder()
         .name("auto-reload")
-        .description("Automatically reloads capes every 10 minutes.")
+        .description("Automatically reloads MatHax capes every 10 minutes.")
         .defaultValue(true)
         .build()
     );
 
     public CapesModule() {
-        super(Categories.Misc, Items.CAKE, "capes", "When enabled you will see very cool MatHax cape on users which have them.");
+        super(Categories.Misc, Items.CAKE, "capes", "When enabled you will see very cool MatHax cape on users which have it.");
     }
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
+        if (!autoReload.get()) {
+            timer = 0;
+            return;
+        }
+
         if (timer > 12000) {
             timer = 0;
-            Capes.reload();
+            Capes.init();
         }
 
         timer++;
@@ -58,9 +63,9 @@ public class CapesModule extends Module {
 
         WButton reload = w.add(theme.button("Reload")).widget();
         reload.action = () -> {
-            if (isActive()) Capes.reload();
+            if (isActive()) Capes.init();
         };
-        w.add(theme.label("Reloads all MatHax capes from MatHax API."));
+        w.add(theme.label("Reloads the capes from the MatHax API."));
 
         return w;
     }

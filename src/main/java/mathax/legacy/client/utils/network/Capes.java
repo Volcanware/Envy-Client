@@ -67,10 +67,6 @@ public class Capes {
         TO_REMOVE.clear();
     }
 
-    public static void reload() {
-        init();
-    }
-
     public static Identifier get(PlayerEntity player) {
         if (Modules.get().isActive(CapesModule.class)) {
             String capeName = OWNERS.get(player.getUuid());
