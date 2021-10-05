@@ -148,21 +148,16 @@ public class Tracers extends Module {
 
             if (distance.get()) {
                 color = getColorFromDistance(entity);
-            }
-            else if (entity instanceof PlayerEntity) {
-                if (entity.equals(MinecraftClient.getInstance().getCameraEntity())) {
-                    color = PlayerUtils.getPlayerColor(((PlayerEntity) entity), selfColor.get());
-                } else {
-                    color = PlayerUtils.getPlayerColor(((PlayerEntity) entity), playersColor.get());
-                }
-            }
-            else {
+            } else if (entity instanceof PlayerEntity) {
+                if (entity.equals(MinecraftClient.getInstance().getCameraEntity())) color = PlayerUtils.getPlayerColor(((PlayerEntity) entity), selfColor.get());
+                else color = PlayerUtils.getPlayerColor(((PlayerEntity) entity), playersColor.get());
+            } else {
                 color = switch (entity.getType().getSpawnGroup()) {
-                    case CREATURE                                                  -> animalsColor.get();
+                    case CREATURE -> animalsColor.get();
                     case WATER_AMBIENT, WATER_CREATURE, UNDERGROUND_WATER_CREATURE -> waterAnimalsColor.get();
-                    case MONSTER                                                   -> monstersColor.get();
-                    case AMBIENT                                                   -> ambientColor.get();
-                    default                                                        -> miscColor.get();
+                    case MONSTER -> monstersColor.get();
+                    case AMBIENT -> ambientColor.get();
+                    default -> miscColor.get();
                 };
             }
 
@@ -196,8 +191,7 @@ public class Tracers extends Module {
         if (percent < 0.5) {
             r = 255;
             g = (int) (255 * percent / 0.5);  // Closer to 0.5, closer to yellow (255,255,0)
-        }
-        else {
+        } else {
             g = 255;
             r = 255 - (int) (255 * (percent - 0.5) / 0.5); // Closer to 1.0, closer to green (0,255,0)
         }

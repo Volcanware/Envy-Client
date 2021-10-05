@@ -29,7 +29,7 @@ public class ServerBrandHUD extends TripleTextHUDElement {
 
         return brand;
     }
-    
+
     private String removeColors(String brand) {
 
         brand = brand.replace("§a", "");
