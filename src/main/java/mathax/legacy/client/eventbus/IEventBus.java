@@ -9,7 +9,7 @@ import mathax.legacy.client.eventbus.listeners.LambdaListener;
 public interface IEventBus {
     /**
      * Registers a lambda factory to use with the specified package.
-     * @param packagePrefix Package prefix that this factory will be used for, eg "mathax.legacy.client.bus"
+     * @param packagePrefix Package prefix that this factory will be used for, eg "mathax.legacy.client.eventbus"
      * @param factory The factory to use
      */
     void registerLambdaFactory(String packagePrefix, LambdaListener.Factory factory);

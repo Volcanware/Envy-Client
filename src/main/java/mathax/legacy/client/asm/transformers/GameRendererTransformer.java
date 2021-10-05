@@ -50,7 +50,7 @@ public class GameRendererTransformer extends AsmTransformer {
     }
 
     private void generateEventCall(InsnList insns, AbstractInsnNode loadPreviousFov) {
-        insns.add(new FieldInsnNode(Opcodes.GETSTATIC, "mathax/legacy/client/MatHaxLegacy", "EVENT_BUS", "Lmathax/legacy/client/bus/IEventBus;"));
+        insns.add(new FieldInsnNode(Opcodes.GETSTATIC, "mathax/legacy/client/MatHaxLegacy", "EVENT_BUS", "Lmathax/legacy/client/eventbus/IEventBus;"));
         insns.add(loadPreviousFov);
         insns.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "mathax/legacy/client/events/render/GetFovEvent", "get", "(D)Lmathax/legacy/client/events/render/GetFovEvent;"));
         insns.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE, "mathax/legacy/client/eventbus/IEventBus", "post", "(Ljava/lang/Object;)Ljava/lang/Object;"));
