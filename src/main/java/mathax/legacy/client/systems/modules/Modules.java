@@ -25,6 +25,7 @@ import mathax.legacy.client.systems.modules.movement.speed.Speed;
 import mathax.legacy.client.systems.modules.player.*;
 import mathax.legacy.client.systems.modules.render.*;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
+import mathax.legacy.client.systems.modules.render.marker.Marker;
 import mathax.legacy.client.systems.modules.render.search.Search;
 import mathax.legacy.client.systems.modules.world.*;
 import mathax.legacy.client.systems.modules.world.Timer;
@@ -490,6 +491,7 @@ public class Modules extends System<Modules> {
         add(new ItemPhysics());
         add(new LightOverlay());
         add(new LogoutSpots());
+        add(new Marker());
         add(new Nametags());
         add(new NewChunks());
         add(new NoBob());

@@ -10,10 +10,6 @@ import net.minecraft.util.math.BlockPos;
 public class CuboidMarker extends BaseMarker {
     public static final String type = "Cuboid";
 
-    public enum Mode {
-        Full
-    }
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
@@ -80,5 +76,9 @@ public class CuboidMarker extends BaseMarker {
         int maxZ = Math.max(pos1.get().getZ(), pos2.get().getZ());
 
         event.renderer.box(minX, minY, minZ, maxX + 1, maxY + 1, maxZ + 1, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
+    }
+
+    public enum Mode {
+        Full
     }
 }

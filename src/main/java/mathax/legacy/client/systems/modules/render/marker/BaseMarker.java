@@ -16,6 +16,8 @@ public abstract class BaseMarker implements ISerializable<BaseMarker> {
 
     protected final SettingGroup sgBase = settings.createGroup("Base");
 
+    // Base
+
     public final Setting<String> name = sgBase.add(new StringSetting.Builder()
         .name("name")
         .description("Custom name for this marker.")
