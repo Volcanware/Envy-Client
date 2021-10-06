@@ -40,7 +40,7 @@ public class HUD extends Module {
         .defaultValue(1)
         .min(0.75)
         .sliderMin(0.75)
-        .sliderMax(4)
+        .sliderMax(5)
         .build()
     );
 
@@ -227,13 +227,13 @@ public class HUD extends Module {
     public WWidget getWidget(GuiTheme theme) {
         WHorizontalList list = theme.horizontalList();
 
+        /*WButton editor = list.add(theme.button("Editor")).widget();
+        editor.action = () -> { };
+        list.add(theme.label("Opens the HUD editor."));*/
+
         WButton reset = list.add(theme.button("Reset")).widget();
         reset.action = this.reset;
         list.add(theme.label("Resets positions (do this after changing scale)."));
-
-        /*WButton editor = list.add(theme.button("Editor")).widget();
-        editor.action =
-        list.add(theme.label("Opens the editor of HUD modules."));*/
 
         return list;
     }

@@ -30,11 +30,14 @@ import java.util.*;
 public class NewChunks extends Module {
     private final Set<ChunkPos> newChunks = Collections.synchronizedSet(new HashSet<>());
     private final Set<ChunkPos> oldChunks = Collections.synchronizedSet(new HashSet<>());
+
     private static final Direction[] searchDirs = new Direction[] { Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH, Direction.UP };
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgNewChunks = settings.createGroup("New Chunks");
     private final SettingGroup sgOldChunks = settings.createGroup("Old Chunks");
+
+    // General
 
     private final Setting<Boolean> remove = sgGeneral.add(new BoolSetting.Builder()
         .name("remove")
@@ -94,10 +97,7 @@ public class NewChunks extends Module {
         WHorizontalList w = theme.horizontalList();
 
         WButton remove = w.add(theme.button("Remove")).widget();
-        remove.action = () -> {
-            newChunks.clear();
-            oldChunks.clear();
-        };
+        remove.action = () -> { newChunks.clear(); oldChunks.clear(); };
         w.add(theme.label("Removes all cached chunks."));
 
         return w;
