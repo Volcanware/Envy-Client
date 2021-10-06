@@ -60,8 +60,7 @@ public abstract class WSection extends WVerticalList {
 
             actualWidth = width;
             actualHeight = height;
-        }
-        else {
+        } else {
             width = actualWidth;
             height = forcedHeight;
 

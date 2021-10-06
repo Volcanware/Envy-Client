@@ -32,8 +32,7 @@ public class EndermanLook extends Module {
             if (mc.player.getAbilities().creativeMode || !shouldLook()) return;
 
             Rotations.rotate(mc.player.getYaw(), 90, -75, null);
-        }
-        else {
+        } else {
             for (Entity entity : mc.world.getEntities()) {
                 if (!(entity instanceof EndermanEntity)) continue;
                 EndermanEntity enderman = (EndermanEntity) entity;

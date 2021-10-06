@@ -183,8 +183,7 @@ public class Notifier extends Module {
                 entityName = event.entity.getEntityName();
                 ChatUtils.sendMsg(event.entity.getId() + 100, Formatting.GRAY, "(highlight)%s(default) has entered your visual range!", entityName);
             }
-        }
-        else {
+        } else {
             entityName = event.entity.getType().getName().getString();
             entityPos = event.entity.getPos().toString();
             MutableText text = new LiteralText(entityName).formatted(Formatting.WHITE);

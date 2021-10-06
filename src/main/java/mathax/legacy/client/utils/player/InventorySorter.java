@@ -42,8 +42,7 @@ public class InventorySorter {
 
         if (timer >= delay) {
             timer = 0;
-        }
-        else {
+        } else {
             timer++;
             return false;
         }
@@ -171,8 +170,7 @@ public class InventorySorter {
         if (slot.inventory instanceof PlayerInventory && (!(screen instanceof CreativeInventoryScreen) || ((ISlot) slot).getId() > 8)) {
             if (SlotUtils.isHotbar(i)) return InvPart.Hotbar;
             else if (SlotUtils.isMain(i)) return InvPart.Player;
-        }
-        else if (screen instanceof GenericContainerScreen && slot.inventory instanceof SimpleInventory) {
+        } else if (screen instanceof GenericContainerScreen && slot.inventory instanceof SimpleInventory) {
             return InvPart.Main;
         }
 

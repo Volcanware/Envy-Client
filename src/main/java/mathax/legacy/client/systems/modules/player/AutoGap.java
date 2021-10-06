@@ -151,8 +151,7 @@ public class AutoGap extends Module {
             else {
                 stopEating();
             }
-        }
-        else {
+        } else {
             // If we are not eating check if we should start eating
             if (shouldEat()) {
                 // Try to find a valid slot

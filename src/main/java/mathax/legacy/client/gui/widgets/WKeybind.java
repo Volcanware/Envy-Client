@@ -43,7 +43,6 @@ public class WKeybind extends WHorizontalList {
             keybind.set(isKey, value);
             reset();
 
-            if (action != null) action.run();
             return true;
         }
 

@@ -112,8 +112,7 @@ public class Quiver extends Module {
         if (!charging) {
             InvUtils.move().from(arrowSlots.get(0)).to(9);
             mc.options.keyUse.setPressed(true);
-        }
-        else {
+        } else {
             if (BowItem.getPullProgress(mc.player.getItemUseTime()) >= 0.12) {
                 int targetSlot = arrowSlots.get(0);
                 arrowSlots.remove(0);

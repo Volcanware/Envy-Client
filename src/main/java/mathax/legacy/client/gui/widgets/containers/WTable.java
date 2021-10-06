@@ -31,8 +31,7 @@ public class WTable extends WContainer {
             List<Cell<?>> row = new ArrayList<>();
             row.add(cell);
             rows.add(row);
-        }
-        else rows.get(rowI).add(cell);
+        } else rows.get(rowI).add(cell);
 
         return cell;
     }

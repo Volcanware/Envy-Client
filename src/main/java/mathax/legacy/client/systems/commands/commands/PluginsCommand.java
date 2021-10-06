@@ -99,8 +99,7 @@ public class PluginsCommand extends Command {
     private String formatName(String name) {
         if (ANTICHEAT_LIST.contains(name)) {
             return String.format("%s%s(default)", Formatting.RED, name);
-        }
-        else if (name.contains("exploit") || name.contains("cheat") || name.contains("illegal")) {
+        } else if (name.contains("exploit") || name.contains("cheat") || name.contains("illegal")) {
             return String.format("%s%s(default)", Formatting.RED, name);
         }
 

@@ -22,8 +22,7 @@ public abstract class WButton extends WPressable {
 
             width = pad + textWidth + pad;
             height = pad + theme.textHeight() + pad;
-        }
-        else {
+        } else {
             double s = theme.textHeight();
 
             width = pad + s + pad;

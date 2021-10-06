@@ -279,8 +279,7 @@ public class BetterChat extends Module {
 
         if (oldMessage.equals(newMessage)) {
             return parsed.append(new LiteralText(" (2)").formatted(Formatting.GRAY));
-        }
-        else {
+        } else {
             Matcher matcher = Pattern.compile(".*(\\([0-9]+\\)$)").matcher(oldMessage);
 
             if (!matcher.matches()) return null;

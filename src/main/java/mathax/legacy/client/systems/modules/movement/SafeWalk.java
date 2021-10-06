@@ -55,8 +55,7 @@ public class SafeWalk extends Module {
         if (event.type != CollisionShapeEvent.CollisionType.BLOCK) return;
         if (blocks.get().contains(event.state.getBlock())) {
             event.shape = VoxelShapes.fullCube();
-        }
-        else if (magma.get() && !mc.player.isSneaking()
+        } else if (magma.get() && !mc.player.isSneaking()
             && event.state.isAir()
             && mc.world.getBlockState(event.pos.down()).getBlock() == Blocks.MAGMA_BLOCK) {
             event.shape = VoxelShapes.fullCube();

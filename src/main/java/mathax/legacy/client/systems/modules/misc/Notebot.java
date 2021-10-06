@@ -191,11 +191,9 @@ public class Notebot extends Module {
 
         if (stage == Stage.SetUp) {
             onTickSetup();
-        }
-        else if (stage == Stage.Tune) {
+        } else if (stage == Stage.Tune) {
             onTickTune();
-        }
-        else if (stage == Stage.Preview || stage == Stage.Playing) {
+        } else if (stage == Stage.Preview || stage == Stage.Playing) {
             if (!isPlaying) return;
 
             if (mc.player == null || currentIndex >= song.size()) {
@@ -306,8 +304,7 @@ public class Notebot extends Module {
         if (mc.player == null) return;
         if (mc.player.getAbilities().creativeMode && stage != Stage.Preview) {
             error("You need to be in survival mode.");
-        }
-        else if (stage == Stage.Preview || stage == Stage.Playing) {
+        } else if (stage == Stage.Preview || stage == Stage.Playing) {
             isPlaying = true;
             info("Playing.");
         } else {

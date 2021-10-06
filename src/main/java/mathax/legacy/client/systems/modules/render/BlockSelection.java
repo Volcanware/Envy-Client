@@ -80,8 +80,7 @@ public class BlockSelection extends Module {
                 double x = side == Direction.WEST ? box.minX : box.maxX;
                 event.renderer.sideVertical(bp.getX() + x, bp.getY() + box.minY, bp.getZ() + box.minZ, bp.getX() + x, bp.getY() + box.maxY, bp.getZ() + box.maxZ, sideColor.get(), lineColor.get(), shapeMode.get());
             }
-        }
-        else {
+        } else {
             if (advanced.get()) {
                 if (shapeMode.get() == ShapeMode.Both || shapeMode.get() == ShapeMode.Lines) {
                     shape.forEachEdge((minX, minY, minZ, maxX, maxY, maxZ) -> {

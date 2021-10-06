@@ -765,8 +765,7 @@ public class CrystalAura extends Module {
             } else {
                 attacked = false;
             }
-        }
-        else {
+        } else {
             attackCrystal(crystal);
             breakTimer = breakDelay.get();
         }
@@ -959,8 +958,7 @@ public class CrystalAura extends Module {
             renderTimer = renderTime.get();
             renderPos.set(result.getBlockPos());
             renderDamage = damage;
-        }
-        else {
+        } else {
             // Place support block
             BlockUtils.place(supportBlock, item, false, 0, renderSwing.get(), true, false);
             placeTimer += supportDelay.get();
@@ -993,8 +991,7 @@ public class CrystalAura extends Module {
         if (serverYaw < targetYaw) {
             if (delta < 180) yaw += yawSteps.get();
             else yaw -= yawSteps.get();
-        }
-        else {
+        } else {
             if (delta < 180) yaw -= yawSteps.get();
             else yaw += yawSteps.get();
         }
@@ -1067,8 +1064,7 @@ public class CrystalAura extends Module {
         if (fast) {
             PlayerEntity target = getNearestTarget();
             if (!(smartDelay.get() && breaking && target.hurtTime > 0)) damage = DamageUtils.crystalDamage(target, vec3d, predictMovement.get(), obsidianPos, ignoreTerrain.get());
-        }
-        else {
+        } else {
             for (PlayerEntity target : targets) {
                 if (smartDelay.get() && breaking && target.hurtTime > 0) continue;
 

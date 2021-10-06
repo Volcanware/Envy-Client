@@ -14,8 +14,7 @@ public class FieldInfo {
 
             if (owner != null) this.owner = mappings.mapClassName("intermediary", ownerDot).replace('.', '/');
             if (name != null && descriptor != null) this.name = mappings.mapFieldName("intermediary", ownerDot, name, descriptor.toString(false, false));
-        }
-        else {
+        } else {
             this.owner = owner;
             this.name = name;
         }

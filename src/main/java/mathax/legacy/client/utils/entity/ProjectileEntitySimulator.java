@@ -36,28 +36,21 @@ public class ProjectileEntitySimulator {
             if (charge <= 0) return false;
 
             set(user, 0, charge * 3, simulated, 0.05000000074505806, 0.6, accurate, tickDelta);
-        }
-        else if (item instanceof CrossbowItem) {
+        } else if (item instanceof CrossbowItem) {
             if (!CrossbowItem.isCharged(itemStack)) return false;
 
             set(user, 0, CrossbowItemAccessor.getSpeed(itemStack), simulated, 0.05000000074505806, 0.6, accurate, tickDelta);
-        }
-        else if (item instanceof FishingRodItem) {
+        } else if (item instanceof FishingRodItem) {
             setFishingBobber(user, tickDelta);
-        }
-        else if (item instanceof TridentItem) {
+        } else if (item instanceof TridentItem) {
             set(user, 0, 2.5, simulated, 0.05000000074505806, 0.99, accurate, tickDelta);
-        }
-        else if (item instanceof SnowballItem || item instanceof EggItem || item instanceof EnderPearlItem) {
+        } else if (item instanceof SnowballItem || item instanceof EggItem || item instanceof EnderPearlItem) {
             set(user, 0, 1.5, simulated, 0.03, 0.8, accurate, tickDelta);
-        }
-        else if (item instanceof ExperienceBottleItem) {
+        } else if (item instanceof ExperienceBottleItem) {
             set(user, -20, 0.7, simulated, 0.07, 0.8, accurate, tickDelta);
-        }
-        else if (item instanceof ThrowablePotionItem) {
+        } else if (item instanceof ThrowablePotionItem) {
             set(user, -20, 0.5, simulated, 0.05, 0.8, accurate, tickDelta);
-        }
-        else {
+        } else {
             return false;
         }
 
@@ -76,8 +69,7 @@ public class ProjectileEntitySimulator {
             x = -Math.sin(yaw * 0.017453292) * Math.cos(pitch * 0.017453292);
             y = -Math.sin((pitch + roll) * 0.017453292);
             z = Math.cos(yaw * 0.017453292) * Math.cos(pitch * 0.017453292);
-        }
-        else {
+        } else {
             Vec3d vec3d = user.getOppositeRotationVector(1.0F);
             Quaternion quaternion = new Quaternion(new Vec3f(vec3d), (float) simulated, true);
             Vec3d vec3d2 = user.getRotationVec(1.0F);

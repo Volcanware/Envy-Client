@@ -46,8 +46,7 @@ public abstract class ClientPlayerInteractionManagerMixin implements IClientPlay
     private void onClickSlot(int syncId, int slotId, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo info) {
         if (actionType == SlotActionType.THROW && slotId >= 0 && slotId < player.currentScreenHandler.slots.size()) {
             if (MatHaxLegacy.EVENT_BUS.post(DropItemsEvent.get(player.currentScreenHandler.slots.get(slotId).getStack())).isCancelled()) info.cancel();
-        }
-        else if (slotId == -999) {
+        } else if (slotId == -999) {
             // Clicking outside of inventory
             if (MatHaxLegacy.EVENT_BUS.post(DropItemsEvent.get(player.currentScreenHandler.getCursorStack())).isCancelled()) info.cancel();
         }

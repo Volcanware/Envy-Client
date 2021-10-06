@@ -185,8 +185,7 @@ public class SBlock {
 
         if (neighbours == 0) {
             event.renderer.box(x1, y1, z1, x2, y2, z2, sideColor, lineColor, shapeMode, 0);
-        }
-        else {
+        } else {
             // Lines
             if (shapeMode.lines()) {
                 // Vertical, BA_LE

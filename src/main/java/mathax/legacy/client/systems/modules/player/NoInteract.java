@@ -231,8 +231,7 @@ public class NoInteract extends Module {
         if (entityInteractMode.get() == ListMode.BlackList &&
             entityInteract.get().getBoolean(entity.getType())) {
             return false;
-        }
-        else return entityInteractMode.get() != ListMode.WhiteList ||
+        } else return entityInteractMode.get() != ListMode.WhiteList ||
             entityInteract.get().getBoolean(entity.getType());
     }
 

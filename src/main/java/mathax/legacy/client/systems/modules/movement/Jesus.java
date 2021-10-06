@@ -200,8 +200,7 @@ public class Jesus extends Module {
     private void onCanWalkOnFluid(CanWalkOnFluidEvent event) {
         if ((event.fluid == Fluids.WATER || event.fluid == Fluids.FLOWING_WATER) && waterShouldBeSolid()) {
             event.walkOnFluid = true;
-        }
-        else if ((event.fluid == Fluids.LAVA || event.fluid == Fluids.FLOWING_LAVA) && lavaShouldBeSolid()) {
+        } else if ((event.fluid == Fluids.LAVA || event.fluid == Fluids.FLOWING_LAVA) && lavaShouldBeSolid()) {
             event.walkOnFluid = true;
         }
     }
@@ -211,8 +210,7 @@ public class Jesus extends Module {
         if (event.type != CollisionShapeEvent.CollisionType.FLUID) return;
         if (event.state.getMaterial() == Material.WATER && !mc.player.isTouchingWater() && waterShouldBeSolid()) {
             event.shape = VoxelShapes.fullCube();
-        }
-        else if (event.state.getMaterial() == Material.LAVA && !mc.player.isInLava() && lavaShouldBeSolid()) {
+        } else if (event.state.getMaterial() == Material.LAVA && !mc.player.isInLava() && lavaShouldBeSolid()) {
             event.shape = VoxelShapes.fullCube();
         }
     }
@@ -251,8 +249,7 @@ public class Jesus extends Module {
         Packet<?> newPacket;
         if (packet instanceof PlayerMoveC2SPacket.PositionAndOnGround) {
             newPacket = new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, true);
-        }
-        else {
+        } else {
             newPacket = new PlayerMoveC2SPacket.Full(x, y, z, packet.getYaw(0), packet.getPitch(0), true);
         }
 

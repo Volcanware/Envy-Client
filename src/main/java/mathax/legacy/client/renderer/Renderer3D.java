@@ -66,8 +66,7 @@ public class Renderer3D {
             lines.line(trb, trf);
             lines.line(tlb, trb);
             lines.line(tlf, trf);
-        }
-        else {
+        } else {
             // Bottom to top
             if (Dir.isNot(excludeDir, Dir.WEST) && Dir.isNot(excludeDir, Dir.NORTH)) lines.line(blb, tlb);
             if (Dir.isNot(excludeDir, Dir.WEST) && Dir.isNot(excludeDir, Dir.SOUTH)) lines.line(blf, tlf);
@@ -175,8 +174,7 @@ public class Renderer3D {
 
             // Top
             triangles.quad(tlb, tlf, trf, trb);
-        }
-        else {
+        } else {
             // Bottom to top
             if (Dir.isNot(excludeDir, Dir.WEST)) triangles.quad(blb, blf, tlf, tlb);
             if (Dir.isNot(excludeDir, Dir.EAST)) triangles.quad(brb, trb, trf, brf);

@@ -83,12 +83,10 @@ public class BetterTab extends Module {
 
         if (playerListEntry.getProfile().getId().toString().equals(mc.player.getGameProfile().getId().toString()) && self.get()) {
             color = selfColor.get();
-        }
-        else if (friends.get() && Friends.get().get(playerListEntry.getProfile().getName()) != null) {
+        } else if (friends.get() && Friends.get().get(playerListEntry.getProfile().getName()) != null) {
             Friend friend = Friends.get().get(playerListEntry.getProfile().getName());
             if (friend != null) color = Friends.get().color;
-        }
-        else if (enemies.get() && Enemies.get().get(playerListEntry.getProfile().getName()) != null) {
+        } else if (enemies.get() && Enemies.get().get(playerListEntry.getProfile().getName()) != null) {
             Enemy enemy = Enemies.get().get(playerListEntry.getProfile().getName());
             if (enemy != null) color = Enemies.get().color;
         }

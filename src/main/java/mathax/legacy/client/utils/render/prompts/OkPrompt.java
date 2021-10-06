@@ -73,8 +73,7 @@ public class OkPrompt {
 
         if (!RenderSystem.isOnRenderThread()) {
             RenderSystem.recordRenderCall(() -> mc.setScreen(new PromptScreen(theme)));
-        }
-        else {
+        } else {
             mc.setScreen(new PromptScreen(theme));
         }
     }

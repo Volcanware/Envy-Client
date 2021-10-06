@@ -106,8 +106,7 @@ public class AutoReplenish extends Module {
                 ItemStack stack = mc.player.getOffHandStack();
                 checkSlot(SlotUtils.OFFHAND, stack);
             }
-        }
-        else {
+        } else {
             tickDelayLeft--;
         }
     }

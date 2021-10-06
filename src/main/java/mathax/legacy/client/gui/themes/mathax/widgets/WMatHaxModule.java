@@ -76,8 +76,7 @@ public class WMatHaxModule extends WPressable implements MatHaxWidget {
 
         if (theme.moduleAlignment.get() == AlignmentX.Center) {
             x += w / 2 - titleWidth / 2;
-        }
-        else if (theme.moduleAlignment.get() == AlignmentX.Right) {
+        } else if (theme.moduleAlignment.get() == AlignmentX.Right) {
             x += w - titleWidth;
         }
 

@@ -106,8 +106,7 @@ public class ServerCommand extends Command {
                     new LiteralText("Copy to clipboard")
                 ))
             );
-        }
-        else {
+        } else {
             ipText = new LiteralText(Formatting.GRAY + server.address);
             ipText.setStyle(ipText.getStyle()
                 .withClickEvent(new ClickEvent(
@@ -219,8 +218,7 @@ public class ServerCommand extends Command {
     private String formatName(String name) {
         if (ANTICHEAT_LIST.contains(name)) {
             return String.format("%s%s(default)", Formatting.RED, name);
-        }
-        else if (name.contains("exploit") || name.contains("cheat") || name.contains("illegal")) {
+        } else if (name.contains("exploit") || name.contains("cheat") || name.contains("illegal")) {
             return String.format("%s%s(default)", Formatting.RED, name);
         }
 

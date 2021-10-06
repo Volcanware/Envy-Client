@@ -211,8 +211,7 @@ public abstract class WidgetScreen extends Screen {
 
         if (control && keyCode == GLFW_KEY_C && toClipboard()) {
             return true;
-        }
-        else if (control && keyCode == GLFW_KEY_V && fromClipboard()) {
+        } else if (control && keyCode == GLFW_KEY_V && fromClipboard()) {
             reload();
             return true;
         }

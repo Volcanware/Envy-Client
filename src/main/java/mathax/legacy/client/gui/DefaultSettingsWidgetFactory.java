@@ -4,10 +4,7 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import mathax.legacy.client.gui.renderer.GuiRenderer;
 import mathax.legacy.client.gui.utils.SettingsWidgetFactory;
-import mathax.legacy.client.gui.widgets.input.WDoubleEdit;
-import mathax.legacy.client.gui.widgets.input.WDropdown;
-import mathax.legacy.client.gui.widgets.input.WIntEdit;
-import mathax.legacy.client.gui.widgets.input.WTextBox;
+import mathax.legacy.client.gui.widgets.input.*;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
 import mathax.legacy.client.gui.widgets.pressable.WCheckbox;
 import mathax.legacy.client.gui.screens.settings.*;
@@ -21,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static mathax.legacy.client.utils.Utils.mc;
 
 public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
     protected interface Factory {
@@ -57,6 +56,8 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
         factories.put(StorageBlockListSetting.class, (table, setting) -> storageBlockListW(table, (StorageBlockListSetting) setting));
         factories.put(BlockDataSetting.class, (table, setting) -> blockDataW(table, (BlockDataSetting<?>) setting));
         factories.put(PotionSetting.class, (table, setting) -> potionW(table, (PotionSetting) setting));
+        factories.put(StringListSetting.class, (table, setting) -> stringListW(table, (StringListSetting) setting));
+        factories.put(BlockPosSetting.class, (table, setting) -> blockPosW(table, (BlockPosSetting) setting));
     }
 
     @Override
@@ -80,6 +81,11 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
         return list;
     }
 
+    // If a different theme uses has different heights of widgets this can method can be overwritten to account for it in the setting titles
+    protected double settingTitleTopMargin() {
+        return 6;
+    }
+
     private void group(WVerticalList list, SettingGroup group, String filter, List<RemoveInfo> removeInfoList) {
         WSection section = list.add(theme.section(group.name, group.sectionExpanded)).expandX().widget();
         section.action = () -> group.sectionExpanded = section.isExpanded();
@@ -98,7 +104,7 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
                 removeInfo.markRowForRemoval();
             }
 
-            table.add(theme.label(setting.title)).widget().tooltip = setting.description;
+            table.add(theme.label(setting.title)).top().marginTop(settingTitleTopMargin()).widget().tooltip = setting.description;
 
             Factory factory = factories.get(setting.getClass());
             if (factory != null) factory.create(table, setting);
@@ -142,7 +148,7 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
     }
 
     private void intW(WTable table, IntSetting setting) {
-        WIntEdit edit = table.add(theme.intEdit(setting.get(), setting.getSliderMin(), setting.getSliderMax())).expandX().widget();
+        WIntEdit edit = table.add(theme.intEdit(setting.get(), setting.getSliderMin(), setting.getSliderMax(), setting.noSlider)).expandX().widget();
         edit.min = setting.min;
         edit.max = setting.max;
 
@@ -154,7 +160,7 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
     }
 
     private void doubleW(WTable table, DoubleSetting setting) {
-        WDoubleEdit edit = theme.doubleEdit(setting.get(), setting.getSliderMin(), setting.getSliderMax());
+        WDoubleEdit edit = theme.doubleEdit(setting.get(), setting.getSliderMin(), setting.getSliderMax(), setting.noSlider);
         edit.min = setting.min;
         edit.max = setting.max;
         edit.decimalPlaces = setting.decimalPlaces;
@@ -178,6 +184,11 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
         reset(table, setting, () -> textBox.set(setting.get()));
     }
 
+    private void stringListW(WTable table, StringListSetting setting) {
+        WTable wtable = table.add(theme.table()).widget();
+        StringListSetting.fillTable(theme, wtable, setting);
+    }
+
     private <T extends Enum<?>> void enumW(WTable table, EnumSetting<T> setting) {
         WDropdown<T> dropdown = table.add(theme.dropdown(setting.get())).expandCellX().widget();
         dropdown.action = () -> setting.set(dropdown.get());
@@ -194,7 +205,7 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
 
     private void genericW(WTable table, GenericSetting<?> setting) {
         WButton edit = table.add(theme.button(GuiRenderer.EDIT)).widget();
-        edit.action = () -> Utils.mc.setScreen(setting.get().createScreen(theme));
+        edit.action = () -> mc.setScreen(setting.get().createScreen(theme));
 
         reset(table, setting, null);
     }
@@ -205,7 +216,7 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
         WQuad quad = list.add(theme.quad(setting.get())).widget();
 
         WButton edit = list.add(theme.button(GuiRenderer.EDIT)).widget();
-        edit.action = () -> Utils.mc.setScreen(new ColorSettingScreen(theme, setting));
+        edit.action = () -> mc.setScreen(new ColorSettingScreen(theme, setting));
 
         reset(table, setting, () -> quad.color = setting.get());
     }
@@ -226,14 +237,24 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
             BlockSettingScreen screen = new BlockSettingScreen(theme, setting);
             screen.onClosed(() -> item.set(setting.get().asItem().getDefaultStack()));
 
-            Utils.mc.setScreen(screen);
+            mc.setScreen(screen);
         };
 
         reset(table, setting, () -> item.set(setting.get().asItem().getDefaultStack()));
     }
 
+    private void blockPosW(WTable table, BlockPosSetting setting) {
+        WBlockPosEdit edit = table.add(theme.blockPosEdit(setting.get())).expandX().widget();
+
+        edit.actionOnRelease = () -> {
+            if (!setting.set(edit.get())) edit.set(setting.get());
+        };
+
+        reset(table, setting, () -> edit.set(setting.get()));
+    }
+
     private void blockListW(WTable table, BlockListSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new BlockListSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new BlockListSettingScreen(theme, setting)));
     }
 
     private void itemW(WTable table, ItemSetting setting) {
@@ -246,55 +267,55 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
             ItemSettingScreen screen = new ItemSettingScreen(theme, setting);
             screen.onClosed(() -> item.set(setting.get().getDefaultStack()));
 
-            Utils.mc.setScreen(screen);
+            mc.setScreen(screen);
         };
 
         reset(table, setting, () -> item.set(setting.get().getDefaultStack()));
     }
 
     private void itemListW(WTable table, ItemListSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new ItemListSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new ItemListSettingScreen(theme, setting)));
     }
 
     private void entityTypeListW(WTable table, EntityTypeListSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new EntityTypeListSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new EntityTypeListSettingScreen(theme, setting)));
     }
 
     private void enchantmentListW(WTable table, EnchantmentListSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new EnchantmentListSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new EnchantmentListSettingScreen(theme, setting)));
     }
 
     private void moduleListW(WTable table, ModuleListSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new ModuleListSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new ModuleListSettingScreen(theme, setting)));
     }
 
     private void packetListW(WTable table, PacketListSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new PacketBoolSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new PacketBoolSettingScreen(theme, setting)));
     }
 
     private void particleTypeListW(WTable table, ParticleTypeListSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new ParticleTypeListSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new ParticleTypeListSettingScreen(theme, setting)));
     }
 
     private void soundEventListW(WTable table, SoundEventListSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new SoundEventListSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new SoundEventListSettingScreen(theme, setting)));
     }
 
     private void statusEffectAmplifierMapW(WTable table, StatusEffectAmplifierMapSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new StatusEffectAmplifierMapSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new StatusEffectAmplifierMapSettingScreen(theme, setting)));
     }
 
     private void statusEffectListW(WTable table, StatusEffectListSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new StatusEffectListSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new StatusEffectListSettingScreen(theme, setting)));
     }
 
     private void storageBlockListW(WTable table, StorageBlockListSetting setting) {
-        selectW(table, setting, () -> Utils.mc.setScreen(new StorageBlockListSettingScreen(theme, setting)));
+        selectW(table, setting, () -> mc.setScreen(new StorageBlockListSettingScreen(theme, setting)));
     }
 
     private void blockDataW(WTable table, BlockDataSetting<?> setting) {
         WButton button = table.add(theme.button(GuiRenderer.EDIT)).expandCellX().widget();
-        button.action = () -> Utils.mc.setScreen(new BlockDataSettingScreen(theme, setting));
+        button.action = () -> mc.setScreen(new BlockDataSettingScreen(theme, setting));
 
         reset(table, setting, null);
     }
@@ -308,7 +329,7 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
             WidgetScreen screen = new PotionSettingScreen(theme, setting);
             screen.onClosed(() -> item.set(setting.get().potion));
 
-            Utils.mc.setScreen(screen);
+            mc.setScreen(screen);
         };
 
         reset(list, setting, () -> item.set(setting.get().potion));

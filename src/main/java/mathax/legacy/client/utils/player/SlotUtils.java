@@ -133,12 +133,10 @@ public class SlotUtils {
             int strength = ((LlamaEntity) entity).getStrength();
             if (isHotbar(i)) return (2 + 3 * strength) + 28 + i;
             if (isMain(i)) return (2 + 3 * strength) + 1 + (i - 9);
-        }
-        else if (entity instanceof HorseEntity || entity instanceof SkeletonHorseEntity || entity instanceof ZombieHorseEntity) {
+        } else if (entity instanceof HorseEntity || entity instanceof SkeletonHorseEntity || entity instanceof ZombieHorseEntity) {
             if (isHotbar(i)) return 29 + i;
             if (isMain(i)) return 2 + (i - 9);
-        }
-        else if (entity instanceof AbstractDonkeyEntity) {
+        } else if (entity instanceof AbstractDonkeyEntity) {
             boolean chest = ((AbstractDonkeyEntity) entity).hasChest();
             if (isHotbar(i)) return (chest ? 44 : 29) + i;
             if (isMain(i)) return (chest ? 17 : 2) + (i - 9);

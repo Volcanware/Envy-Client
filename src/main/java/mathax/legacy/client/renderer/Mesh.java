@@ -101,8 +101,7 @@ public class Mesh {
 
             cameraX = camera.x;
             cameraZ = camera.z;
-        }
-        else {
+        } else {
             cameraX = 0;
             cameraZ = 0;
         }

@@ -45,8 +45,7 @@ public abstract class WView extends WVerticalList {
             }
 
             if (couldScroll) moveAfterPositionWidgets = true;
-        }
-        else {
+        } else {
             actualHeight = height;
             scroll = 0;
             targetScroll = 0;
@@ -143,8 +142,7 @@ public abstract class WView extends WVerticalList {
         else if (targetScroll > scroll) {
             scroll += Math.round(theme.scale(delta * 300 + delta * 100 * (Math.abs(targetScroll - scroll) / 10)));
             if (scroll > targetScroll) scroll = targetScroll;
-        }
-        else if (targetScroll < scroll) {
+        } else if (targetScroll < scroll) {
             scroll -= Math.round(theme.scale(delta * 300 + delta * 100 * (Math.abs(targetScroll - scroll) / 10)));
             if (scroll < targetScroll) scroll = targetScroll;
         }

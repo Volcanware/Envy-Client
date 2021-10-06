@@ -145,8 +145,7 @@ public class SelfTrap extends Module {
             }
 
             delay = 0;
-        }
-        else delay++;
+        } else delay++;
     }
 
     @EventHandler

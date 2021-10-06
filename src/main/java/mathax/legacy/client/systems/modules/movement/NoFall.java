@@ -96,8 +96,7 @@ public class NoFall extends Module {
             if (result != null && result.getType() == HitResult.Type.BLOCK) {
                 ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(true);
             }
-        }
-        else {
+        } else {
             ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(true);
         }
     }

@@ -70,8 +70,7 @@ public abstract class Module implements ISerializable<Module> {
                 if (autoSubscribe) MatHaxLegacy.EVENT_BUS.subscribe(this);
                 onActivate();
             }
-        }
-        else {
+        } else {
             if (runInMainMenu || Utils.canUpdate()) {
                 if (autoSubscribe) MatHaxLegacy.EVENT_BUS.unsubscribe(this);
                 onDeactivate();

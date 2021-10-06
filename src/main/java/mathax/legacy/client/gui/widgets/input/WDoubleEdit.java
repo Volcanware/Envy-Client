@@ -20,18 +20,22 @@ public class WDoubleEdit extends WHorizontalList {
     private WTextBox textBox;
     private WSlider slider;
 
-    public WDoubleEdit(double value, double sliderMin, double sliderMax) {
+    public WDoubleEdit(double value, double sliderMin, double sliderMax, boolean noSlider) {
         this.value = value;
         this.sliderMin = sliderMin;
         this.sliderMax = sliderMax;
 
-        if (sliderMin == 0 && sliderMax == 0) noSlider = true;
+        if (noSlider || (sliderMin == 0 && sliderMax == 0)) this.noSlider = true;
      }
 
     @Override
     public void init() {
         textBox = add(theme.textBox(valueString(), this::filter)).minWidth(75).widget();
-        if (!noSlider) slider = add(theme.slider(value, sliderMin, sliderMax)).minWidth(small ? 200 - 75 - spacing : 200).centerY().expandX().widget();
+
+        if (noSlider) {
+            add(theme.button("+")).widget().action = () -> setButton(get() + 1);
+            add(theme.button("-")).widget().action = () -> setButton(get() - 1);
+        } else slider = add(theme.slider(value, sliderMin, sliderMax)).minWidth(small ? 200 - 75 - spacing : 200).centerY().expandX().widget();
 
         textBox.actionOnUnfocused = () -> {
             double lastValue = value;
@@ -79,12 +83,10 @@ public class WDoubleEdit extends WHorizontalList {
         if (c == '-' && text.isEmpty()) {
             good = true;
             validate = false;
-        }
-        else if (c == '.' && !text.contains(".")) {
+        } else if (c == '.' && !text.contains(".")) {
             good = true;
             if (text.isEmpty()) validate = false;
-        }
-        else good = Character.isDigit(c);
+        } else good = Character.isDigit(c);
 
         if (good && validate) {
             try {
@@ -95,6 +97,22 @@ public class WDoubleEdit extends WHorizontalList {
         }
 
         return good;
+    }
+
+    private void setButton(double v) {
+        if (this.value == v) return;
+
+        if (min != null && v < min) this.value = min;
+        else if (max != null && v > max) this.value = max;
+        else this.value = v;
+
+        if (this.value == v) {
+            textBox.set(valueString());
+            if (slider != null) slider.set(this.value);
+
+            if (action != null) action.run();
+            if (actionOnRelease != null) actionOnRelease.run();
+        }
     }
 
     public double get() {

@@ -31,8 +31,7 @@ public class Pitch40 extends ElytraFlightMode {
 
         if (pitchingDown && mc.player.getY() <= elytraFly.pitch40lowerBounds.get()) {
             pitchingDown = false;
-        }
-        else if (!pitchingDown && mc.player.getY() >= elytraFly.pitch40upperBounds.get()) {
+        } else if (!pitchingDown && mc.player.getY() >= elytraFly.pitch40upperBounds.get()) {
             pitchingDown = true;
         }
 

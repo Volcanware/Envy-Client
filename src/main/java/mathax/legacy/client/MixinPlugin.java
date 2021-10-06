@@ -61,8 +61,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (mixinClassName.endsWith("NamespaceResourceManagerMixin") || mixinClassName.endsWith("ReloadableResourceManagerImplMixin")) {
             return !isResourceLoaderPresent;
-        }
-        else if (mixinClassName.endsWith("PlayerEntityRendererMixin")) {
+        } else if (mixinClassName.endsWith("PlayerEntityRendererMixin")) {
             return !isOriginsPresent;
         }
 

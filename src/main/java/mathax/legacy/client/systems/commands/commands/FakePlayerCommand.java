@@ -52,7 +52,6 @@ public class FakePlayerCommand extends Command {
         if (!Modules.get().isActive(FakePlayer.class)) {
             error("The FakePlayer module must be enabled.");
             return false;
-        }
-        else return true;
+        } else return true;
     }
 }

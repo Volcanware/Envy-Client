@@ -71,8 +71,7 @@ public class AutoMend extends Module {
 
                 toggle();
             }
-        }
-        else {
+        } else {
             InvUtils.move().from(slot).toOffhand();
             didMove = true;
         }
