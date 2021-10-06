@@ -94,7 +94,7 @@ public class PacketFly extends Module {
 
     private final Setting<Integer> downDelay = sgBypass.add(new IntSetting.Builder()
         .name("Down Delay")
-        .description("How often you move down when not flying upwards. (ticks)")
+        .description("How often you move down when not flying upwards in ticks.")
         .defaultValue(4)
         .sliderMin(1)
         .sliderMax(30)
@@ -105,7 +105,7 @@ public class PacketFly extends Module {
 
     private final Setting<Integer> downDelayFlying = sgBypass.add(new IntSetting.Builder()
         .name("Down Delay (Flying)")
-        .description("How often you move down when flying upwards. (ticks)")
+        .description("How often you move down when flying upwards in ticks.")
         .defaultValue(10)
         .sliderMin(1)
         .sliderMax(30)
