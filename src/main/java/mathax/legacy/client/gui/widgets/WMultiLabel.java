@@ -43,8 +43,7 @@ public abstract class WMultiLabel extends WLabel {
                 iInLine = 0;
 
                 i--;
-            }
-            else {
+            } else {
                 if (iInLine > 0) {
                     sb.append(' ');
                     lineWidth += spaceWidth;

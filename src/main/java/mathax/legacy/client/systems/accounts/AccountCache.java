@@ -31,8 +31,7 @@ public class AccountCache implements ISerializable<AccountCache> {
 
             if (skinUrl.equals("steve")) {
                 skin = ImageIO.read(mc.getResourceManager().getResource(new Identifier("mathaxlegacy", "textures/steve.png")).getInputStream());
-            }
-            else {
+            } else {
                 skin = ImageIO.read(HTTP.get(skinUrl).sendInputStream());
             }
 

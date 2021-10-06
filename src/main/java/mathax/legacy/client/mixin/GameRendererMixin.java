@@ -177,8 +177,7 @@ public abstract class GameRendererMixin {
             if (highwayBuilder) {
                 cameraE.setYaw(camera.getYaw());
                 cameraE.setPitch(camera.getPitch());
-            }
-            else {
+            } else {
                 ((IVec3d) cameraE.getPos()).set(x, y, z);
                 cameraE.prevX = prevX;
                 cameraE.prevY = prevY;

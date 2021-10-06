@@ -127,8 +127,7 @@ public abstract class WSlider extends WWidget {
         if (scrollHandleMouseOver) {
             if (parent instanceof WIntEdit) {
                 set(value + amount);
-            }
-            else {
+            } else {
                 set(value + 0.05 * amount);
             }
 

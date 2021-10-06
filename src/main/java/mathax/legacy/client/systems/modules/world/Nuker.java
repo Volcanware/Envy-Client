@@ -144,8 +144,7 @@ public class Nuker extends Module {
                 // If no block was found for long enough then set firstBlock flag to true to not wait before breaking another again
                 if (noBlockTimer++ >= delay.get()) firstBlock = true;
                 return;
-            }
-            else {
+            } else {
                 noBlockTimer = 0;
             }
 

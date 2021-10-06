@@ -65,12 +65,10 @@ public class AutoShearer extends Module {
             boolean findNewShears = false;
             if (mc.player.getInventory().getMainHandStack().getItem() instanceof ShearsItem) {
                 if (antiBreak.get() && mc.player.getInventory().getMainHandStack().getDamage() >= mc.player.getInventory().getMainHandStack().getMaxDamage() - 1) findNewShears = true;
-            }
-            else if (mc.player.getInventory().offHand.get(0).getItem() instanceof ShearsItem) {
+            } else if (mc.player.getInventory().offHand.get(0).getItem() instanceof ShearsItem) {
                 if (antiBreak.get() && mc.player.getInventory().offHand.get(0).getDamage() >= mc.player.getInventory().offHand.get(0).getMaxDamage() - 1) findNewShears = true;
                 else offHand = true;
-            }
-            else {
+            } else {
                 findNewShears = true;
             }
 

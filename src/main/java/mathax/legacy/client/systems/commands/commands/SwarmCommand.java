@@ -39,8 +39,7 @@ public class SwarmCommand extends Command {
             Swarm swarm = Modules.get().get(Swarm.class);
             if (swarm.isActive()) {
                 swarm.close();
-            }
-            else {
+            } else {
                 throw SWARM_NOT_ACTIVE.create();
             }
 
@@ -83,8 +82,7 @@ public class SwarmCommand extends Command {
                 else if (swarm.isWorker()) {
                     info("Connected to (highlight)%s", swarm.worker.getConnection());
                 }
-            }
-            else {
+            } else {
                 throw SWARM_NOT_ACTIVE.create();
             }
 
@@ -100,8 +98,7 @@ public class SwarmCommand extends Command {
                 else if (swarm.isWorker()) {
                     error("The follow host command must be used by the host.");
                 }
-            }
-            else {
+            } else {
                 throw SWARM_NOT_ACTIVE.create();
             }
 
@@ -117,8 +114,7 @@ public class SwarmCommand extends Command {
                 else if (swarm.isWorker() && playerEntity != null) {
                     BaritoneAPI.getProvider().getPrimaryBaritone().getFollowProcess().follow(entity -> entity.getEntityName().equalsIgnoreCase(playerEntity.getEntityName()));
                 }
-            }
-            else {
+            } else {
                 throw SWARM_NOT_ACTIVE.create();
             }
             return SINGLE_SUCCESS;
@@ -157,8 +153,7 @@ public class SwarmCommand extends Command {
                 else if (swarm.isWorker()) {
                     runInfinityMiner();
                 }
-            }
-            else {
+            } else {
                 throw SWARM_NOT_ACTIVE.create();
             }
             return SINGLE_SUCCESS;
@@ -173,8 +168,7 @@ public class SwarmCommand extends Command {
                     Modules.get().get(InfinityMiner.class).targetBlock.set(context.getArgument("target", BlockStateArgument.class).getBlockState().getBlock());
                     runInfinityMiner();
                 }
-            }
-            else {
+            } else {
                 throw SWARM_NOT_ACTIVE.create();
             }
             return SINGLE_SUCCESS;
@@ -190,8 +184,7 @@ public class SwarmCommand extends Command {
                     Modules.get().get(InfinityMiner.class).repairBlock.set(context.getArgument("repair", BlockStateArgument.class).getBlockState().getBlock());
                     runInfinityMiner();
                 }
-            }
-            else {
+            } else {
                 throw SWARM_NOT_ACTIVE.create();
             }
             return SINGLE_SUCCESS;
@@ -205,8 +198,7 @@ public class SwarmCommand extends Command {
                 else if (swarm.isWorker()) {
                     Modules.get().get(InfinityMiner.class).autoLogOut.set(BoolArgumentType.getBool(context, "logout"));
                 }
-            }
-            else {
+            } else {
                 throw SWARM_NOT_ACTIVE.create();
             }
             return SINGLE_SUCCESS;

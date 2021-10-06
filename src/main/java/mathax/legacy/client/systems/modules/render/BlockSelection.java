@@ -73,12 +73,10 @@ public class BlockSelection extends Module {
         if (oneSide.get()) {
             if (side == Direction.UP || side == Direction.DOWN) {
                 event.renderer.sideHorizontal(bp.getX() + box.minX, bp.getY() + (side == Direction.DOWN ? box.minY : box.maxY), bp.getZ() + box.minZ, bp.getX() + box.maxX, bp.getZ() + box.maxZ, sideColor.get(), lineColor.get(), shapeMode.get());
-            }
-            else if (side == Direction.SOUTH || side == Direction.NORTH) {
+            } else if (side == Direction.SOUTH || side == Direction.NORTH) {
                 double z = side == Direction.NORTH ? box.minZ : box.maxZ;
                 event.renderer.sideVertical(bp.getX() + box.minX, bp.getY() + box.minY, bp.getZ() + z, bp.getX() + box.maxX, bp.getY() + box.maxY, bp.getZ() + z, sideColor.get(), lineColor.get(), shapeMode.get());
-            }
-            else {
+            } else {
                 double x = side == Direction.WEST ? box.minX : box.maxX;
                 event.renderer.sideVertical(bp.getX() + x, bp.getY() + box.minY, bp.getZ() + box.minZ, bp.getX() + x, bp.getY() + box.maxY, bp.getZ() + box.maxZ, sideColor.get(), lineColor.get(), shapeMode.get());
             }
@@ -96,8 +94,7 @@ public class BlockSelection extends Module {
                         render(event, bp, b);
                     }
                 }
-            }
-            else {
+            } else {
                 render(event, bp, box);
             }
         }

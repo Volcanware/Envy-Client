@@ -50,8 +50,7 @@ public class LambdaListener implements IListener {
                 lookupConstructor.setAccessible(true);
                 lookup = lookupConstructor.newInstance(klass);
                 lookupConstructor.setAccessible(a);
-            }
-            else {
+            } else {
                 lookup = factory.create(privateLookupInMethod, klass);
             }
 
@@ -63,8 +62,7 @@ public class LambdaListener implements IListener {
             if (isStatic) {
                 methodHandle = lookup.findStatic(klass, name, methodType);
                 invokedType = MethodType.methodType(Consumer.class);
-            }
-            else {
+            } else {
                 methodHandle = lookup.findVirtual(klass, name, methodType);
                 invokedType = MethodType.methodType(Consumer.class, klass);
             }
@@ -104,8 +102,7 @@ public class LambdaListener implements IListener {
 
             if (isJava1dot8) {
                 lookupConstructor = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
-            }
-            else {
+            } else {
                 privateLookupInMethod = MethodHandles.class.getDeclaredMethod("privateLookupIn", Class.class, MethodHandles.Lookup.class);
             }
         } catch (NoSuchMethodException e) {

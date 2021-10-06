@@ -31,8 +31,7 @@ public class VanillaSpoof extends Module {
 
             if (id.equals(CustomPayloadC2SPacket.BRAND)) {
                 packet.setData(new PacketByteBuf(Unpooled.buffer()).writeString("vanilla"));
-            }
-            else if (StringUtils.containsIgnoreCase(packet.getData().toString(StandardCharsets.UTF_8), "fabric")) {
+            } else if (StringUtils.containsIgnoreCase(packet.getData().toString(StandardCharsets.UTF_8), "fabric")) {
                 event.cancel();
             }
         }

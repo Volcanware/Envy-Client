@@ -182,8 +182,7 @@ public class EntityTypeListSettingScreen extends WindowScreen {
                 if (monstersT.cells.size() > 0) monsters.setExpanded(true);
                 if (ambientT.cells.size() > 0) ambient.setExpanded(true);
                 if (miscT.cells.size() > 0) misc.setExpanded(true);
-            }
-            else {
+            } else {
                 if (animalsT.cells.size() > 0) animals.setExpanded(false);
                 if (waterAnimalsT.cells.size() > 0) waterAnimals.setExpanded(false);
                 if (monstersT.cells.size() > 0) monsters.setExpanded(false);

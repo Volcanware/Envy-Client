@@ -22,8 +22,7 @@ public class Descriptor {
 
             if (map && component.startsWith("L") && component.endsWith(";")) {
                 sb.append('L').append(mappings.mapClassName("intermediary", component.substring(1, component.length() - 1).replace('/', '.')).replace('.', '/')).append(';');
-            }
-            else sb.append(component);
+            } else sb.append(component);
         }
 
         return sb.toString();

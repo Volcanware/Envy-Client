@@ -312,8 +312,7 @@ public class PacketMine extends Module {
 
                     mining = true;
                 }
-            }
-            else {
+            } else {
                 timer--;
             }
         }

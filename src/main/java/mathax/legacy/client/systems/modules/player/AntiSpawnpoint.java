@@ -44,8 +44,7 @@ public class AntiSpawnpoint extends Module {
             if (BlockIsBed && IsOverWorld) {
                 mc.player.swingHand(Hand.MAIN_HAND);
                 mc.player.updatePosition(blockPos.getX(),blockPos.up().getY(),blockPos.getZ());
-            }
-            else if (BlockIsAnchor && IsNetherWorld) {
+            } else if (BlockIsAnchor && IsNetherWorld) {
                 mc.player.swingHand(Hand.MAIN_HAND);
             }
         }

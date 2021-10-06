@@ -206,8 +206,7 @@ public class Trajectories extends Module {
                 }
 
                 points.add(vec3s.get().set(result.getPos()));
-            }
-            else if (result.getType() == HitResult.Type.ENTITY) {
+            } else if (result.getType() == HitResult.Type.ENTITY) {
                 entity = ((EntityHitResult) result).getEntity();
 
                 points.add(vec3s.get().set(result.getPos()).add(0, entity.getHeight() / 2, 0));

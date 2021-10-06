@@ -255,8 +255,7 @@ public class CombatInfoHUD extends HUDElement {
             if (Friends.get().isFriend(playerEntity)) {
                 friendText = "Friend";
                 friendColor = Friends.get().color;
-            }
-            else {
+            } else {
                 boolean naked = true;
 
                 for (int position = 3; position >= 0; position--) {

@@ -7,13 +7,13 @@
   "authors": [
     "Matejko06"
   ],
+  "icon": "assets/mathaxlegacy/textures/icons/icon.png",
+  "license": "GPL-3.0",
   "contact": {
     "homepage": "https://mathaxclient.xyz",
     "discord": "https://mathaxclient.xyz/Discord",
     "issues": "https://mathaxclient.xyz/Discord"
   },
-  "license": "GPL-3.0",
-  "icon": "assets/mathaxlegacy/textures/icons/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [

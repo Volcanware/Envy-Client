@@ -126,8 +126,7 @@ public class EChestFarmer extends Module {
 
             if (state.getMaterial().isReplaceable() || state.getBlock() == Blocks.ENDER_CHEST) {
                 target = ((BlockHitResult) mc.crosshairTarget).getBlockPos().up();
-            }
-            else return;
+            } else return;
         }
 
         // Disable if the block is too far away

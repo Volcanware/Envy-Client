@@ -611,8 +611,7 @@ public class CrystalAura extends Module {
             if (ticks > 3) {
                 it.remove();
                 removed.remove(id);
-            }
-            else {
+            } else {
                 waitingToExplode.put(id, ticks + 1);
             }
         }
@@ -763,8 +762,7 @@ public class CrystalAura extends Module {
                 Rotations.rotate(yaw, pitch, 50, () -> attackCrystal(crystal));
 
                 breakTimer = breakDelay.get();
-            }
-            else {
+            } else {
                 attacked = false;
             }
         }
@@ -903,8 +901,7 @@ public class CrystalAura extends Module {
 
                     placeTimer += placeDelay.get();
                 }
-            }
-            else {
+            } else {
                 placeCrystal(result, bestDamage.get(), isSupport.get() ? bestBlockPos.get() : null);
                 placeTimer += placeDelay.get();
             }

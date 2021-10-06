@@ -21,8 +21,7 @@ public abstract class AddAccountScreen extends WindowScreen {
             if (timer > 2) {
                 add.set(getNext(add));
                 timer = 0;
-            }
-            else {
+            } else {
                 timer++;
             }
         }

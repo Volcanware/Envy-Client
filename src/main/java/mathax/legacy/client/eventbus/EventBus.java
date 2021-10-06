@@ -128,8 +128,7 @@ public class EventBus implements IEventBus {
         if (l != null) {
             if (staticOnly) {
                 if (listener.isStatic()) l.remove(listener);
-            }
-            else l.remove(listener);
+            } else l.remove(listener);
         }
     }
 

@@ -76,8 +76,7 @@ public class SBlock {
 
             if (firstGroup == null) {
                 firstGroup = neighbour.group;
-            }
-            else {
+            } else {
                 if (firstGroup != neighbour.group) firstGroup.merge(neighbour.group);
             }
         }

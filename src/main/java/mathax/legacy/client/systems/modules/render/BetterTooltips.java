@@ -180,8 +180,7 @@ public class BetterTooltips extends Module {
                         }
                     }
                 }
-            }
-            else if (event.itemStack.getItem().isFood()) {
+            } else if (event.itemStack.getItem().isFood()) {
                 FoodComponent food = event.itemStack.getItem().getFoodComponent();
                 if (food != null) {
                     food.getStatusEffects().forEach((e) -> {

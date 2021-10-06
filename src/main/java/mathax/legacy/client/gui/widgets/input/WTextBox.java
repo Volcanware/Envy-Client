@@ -53,8 +53,7 @@ public abstract class WTextBox extends WWidget {
 
                     runAction();
                 }
-            }
-            else {
+            } else {
                 double overflowWidth = getOverflowWidthForRender();
                 double relativeMouseX = mouseX - x + overflowWidth;
                 double pad = pad();

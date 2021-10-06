@@ -181,8 +181,7 @@ public class HudTab extends Tab {
                         selectedElements.add(module);
                     }
                 }
-            }
-            else if (dragging) {
+            } else if (dragging) {
                 for (HUDElement element : selectedElements) {
                     element.box.addPos(mouseX - lastMouseX, mouseY - lastMouseY);
                 }

@@ -34,8 +34,7 @@ public class GameRendererTransformer extends AsmTransformer {
                 method.instructions.insert(insn, insns);
                 method.instructions.remove(insn);
                 injectionCount++;
-            }
-            else if (insn instanceof FieldInsnNode in && fovField.equals(in)) {
+            } else if (insn instanceof FieldInsnNode in && fovField.equals(in)) {
                 InsnList insns = new InsnList();
 
                 insns.add(new VarInsnNode(Opcodes.DSTORE, method.maxLocals));

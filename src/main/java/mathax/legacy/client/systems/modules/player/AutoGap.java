@@ -290,8 +290,7 @@ public class AutoGap extends Module {
             if (currentItem == null) {
                 slot = i;
                 currentItem = item;
-            }
-            else {
+            } else {
                 // Skip if current item and item are the same
                 if (currentItem == item) continue;
 
