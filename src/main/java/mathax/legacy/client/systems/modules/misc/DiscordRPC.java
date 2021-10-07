@@ -21,6 +21,7 @@ import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.utils.misc.LastServerInfo;
 import mathax.legacy.client.utils.render.PeekScreen;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRichPresence;
@@ -243,6 +244,15 @@ public class DiscordRPC extends Module {
     }
 
     private String getNakedWorldActivity() {
+
+        // Disconnected etc...
+        if (!mc.isInSingleplayer() && mc.getCurrentServerEntry() != null && LastServerInfo.getLastServer() != null) {
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
+                return LastServerInfo.getLastServer().address;
+            } else {
+                return "a server";
+            }
+        }
 
         // Multiplayer
         if (mc.getCurrentServerEntry() != null) {
