@@ -26,7 +26,7 @@ public class Shader {
 
         String vertError = GL.compileShader(vert);
         if (vertError != null) {
-            MatHaxLegacy.LOG.error(MatHaxLegacy.logprefix + "Failed to compile vertex shader (" + vertPath + "): " + vertError);
+            MatHaxLegacy.LOG.error(MatHaxLegacy.logPrefix + "Failed to compile vertex shader (" + vertPath + "): " + vertError);
             throw new RuntimeException("[MatHax Legacy] Failed to compile vertex shader (" + vertPath + "): " + vertError);
         }
 
@@ -35,7 +35,7 @@ public class Shader {
 
         String fragError = GL.compileShader(frag);
         if (fragError != null) {
-            MatHaxLegacy.LOG.error(MatHaxLegacy.logprefix + "Failed to compile fragment shader (" + fragPath + "): " + fragError);
+            MatHaxLegacy.LOG.error(MatHaxLegacy.logPrefix + "Failed to compile fragment shader (" + fragPath + "): " + fragError);
             throw new RuntimeException("[MatHax Legacy] Failed to compile fragment shader (" + fragPath + "): " + fragError);
         }
 
@@ -43,7 +43,7 @@ public class Shader {
 
         String programError = GL.linkProgram(id, vert, frag);
         if (programError != null) {
-            MatHaxLegacy.LOG.error(MatHaxLegacy.logprefix + "Failed to link program: " + programError);
+            MatHaxLegacy.LOG.error(MatHaxLegacy.logPrefix + "Failed to link program: " + programError);
             throw new RuntimeException("[MatHax Legacy] Failed to link program: " + programError);
 
         }

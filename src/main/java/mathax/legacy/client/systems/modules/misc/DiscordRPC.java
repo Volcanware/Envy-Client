@@ -77,7 +77,7 @@ public class DiscordRPC extends Module {
 
     @Override
     public void onActivate() {
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Enabling Discord Rich Presence...");
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Enabling Discord Rich Presence...");
         net.arikia.dev.drpc.DiscordRPC.discordInitialize(APP_ID, handlers, true, STEAM_ID);
         rpc.startTimestamp = System.currentTimeMillis() / 1000;
         rpc.details = Version.getStylized() + " | " + getUsername() + getPlayerHealth();
@@ -114,23 +114,23 @@ public class DiscordRPC extends Module {
                 }
             }
         }, "RPC-Callback-Handler").start();
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Discord Rich Presence enabled!");
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Discord Rich Presence enabled!");
     }
 
     @Override
     public void onDeactivate() {
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Disabling Discord Rich Presence...");
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Disabling Discord Rich Presence...");
         net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
         net.arikia.dev.drpc.DiscordRPC.discordShutdown();
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Discord Rich Presence disabled!");
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Discord Rich Presence disabled!");
     }
 
     // For shutdown hook
     public static void deactivate() {
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Disabling Discord Rich Presence...");
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Disabling Discord Rich Presence...");
         net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
         net.arikia.dev.drpc.DiscordRPC.discordShutdown();
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Discord Rich Presence disabled!");
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Discord Rich Presence disabled!");
     }
 
     private String getActivity() {

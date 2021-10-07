@@ -52,7 +52,7 @@ public class AccountCache implements ISerializable<AccountCache> {
             headTexture = new Texture(8, 8, head, Texture.Format.RGB, Texture.Filter.Nearest, Texture.Filter.Nearest);
             return true;
         } catch (Exception e) {
-            MatHaxLegacy.LOG.error(MatHaxLegacy.logprefix + "Failed to read skin url (" + skinUrl + ")");
+            MatHaxLegacy.LOG.error(MatHaxLegacy.logPrefix + "Failed to read skin url (" + skinUrl + ")");
             e.printStackTrace();
             return false;
         }

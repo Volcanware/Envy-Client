@@ -36,9 +36,9 @@ public class NBSDecoder {
             if (length != 0) return parseClassic(dis, decodeFile, length);
             else return parseOpenNBS(dis, decodeFile);
         } catch (FileNotFoundException e) {
-            LOG.error(MatHaxLegacy.logprefix + e.getStackTrace());
+            LOG.error(MatHaxLegacy.logPrefix + e.getStackTrace());
         } catch (IOException e) {
-            LOG.error(MatHaxLegacy.logprefix + e.getStackTrace());
+            LOG.error(MatHaxLegacy.logPrefix + e.getStackTrace());
         }
         return null;
     }

@@ -55,12 +55,12 @@ public class Systems {
     }
 
     public static void save(File folder) {
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Systems are saving...");
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems are saving...");
         long start = java.lang.System.currentTimeMillis();
 
         for (System<?> system : systems.values()) system.save(folder);
 
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Systems saved in %time% milliseconds.".replace("%time%", String.valueOf(java.lang.System.currentTimeMillis() - start)));
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems saved in %time% milliseconds.".replace("%time%", String.valueOf(java.lang.System.currentTimeMillis() - start)));
     }
 
     public static void save() {
@@ -72,7 +72,7 @@ public class Systems {
     }
 
     public static void load(File folder) {
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Systems are loading...");
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems are loading...");
         long start = java.lang.System.currentTimeMillis();
 
         for (Runnable task : preLoadTasks) task.run();
@@ -81,7 +81,7 @@ public class Systems {
             if (system != config) system.load(folder);
         }
 
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Systems loaded in %time% milliseconds.".replace("%time%", String.valueOf(java.lang.System.currentTimeMillis() - start)));
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems loaded in %time% milliseconds.".replace("%time%", String.valueOf(java.lang.System.currentTimeMillis() - start)));
     }
 
     public static void load() {

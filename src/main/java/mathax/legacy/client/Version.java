@@ -1,7 +1,6 @@
 package mathax.legacy.client;
 
 import mathax.legacy.client.utils.network.HTTP;
-import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.render.prompts.OkPrompt;
 import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
 import net.fabricmc.loader.api.FabricLoader;
@@ -97,12 +96,12 @@ public class Version {
 
     // TODO: PROMPT GLITCHING OUT AND APPEARING AGAIN ON OKPROMPT [ISSUE IN METEOR TOO]
     public static void checkForUpdate(boolean dontDisable) {
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Checking for latest version of MatHax Legacy!");
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Checking for latest version of MatHax Legacy!");
         switch (Version.checkLatest()) {
             case 0:
-                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "Could not check for latest version!");
+                MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Could not check for latest version!");
             case 1:
-                MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.getStylized() + "! You can download the newest version on " + MatHaxLegacy.URL + "Download!");
+                MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.getStylized() + "! You can download the newest version on " + MatHaxLegacy.URL + "Download!");
 
                 String id = "new-update";
                 if (dontDisable) id += "-dont-disable";
@@ -130,7 +129,7 @@ public class Version {
                     .show();
             case 2:
                 if (getDev() == 0) {
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "!");
+                    MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "!");
                     if (dontDisable) {
                         OkPrompt.create()
                             .title("No New Update")
@@ -142,7 +141,7 @@ public class Version {
                             .show();
                     }
                 } else {
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logprefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "! [Developer builds do not get update notifications about another developer build of the version they are a developer build of!]");
+                    MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "! [Developer builds do not get update notifications about another developer build of the version they are a developer build of!]");
                     if (dontDisable) {
                         OkPrompt.create()
                             .title("No New Update Found")

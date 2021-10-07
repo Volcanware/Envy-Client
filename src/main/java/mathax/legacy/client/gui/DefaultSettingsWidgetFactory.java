@@ -11,7 +11,6 @@ import mathax.legacy.client.gui.screens.settings.*;
 import mathax.legacy.client.gui.widgets.*;
 import mathax.legacy.client.gui.widgets.containers.*;
 import mathax.legacy.client.settings.*;
-import mathax.legacy.client.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;

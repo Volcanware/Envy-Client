@@ -1,8 +1,6 @@
 package mathax.legacy.client.settings;
 
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtInt;
-import net.minecraft.nbt.NbtIntArray;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.List;

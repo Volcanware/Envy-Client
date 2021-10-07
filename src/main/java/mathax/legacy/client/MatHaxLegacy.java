@@ -43,11 +43,14 @@ import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.util.Window;
+import net.minecraft.util.Formatting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
+import java.util.Arrays;
+import java.util.List;
 
 /*/------------------------------------------------------------------------------/*/
 /*/ THIS CLIENT IS AN RECODED VERSION OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/
@@ -70,13 +73,37 @@ public class MatHaxLegacy implements ClientModInitializer {
     public final int MATHAX_BACKGROUND_COLOR_INT = Color.fromRGBA(30, 30, 45, 255);
 
     public static final Logger LOG = LogManager.getLogger();
-    public static String logprefix = "[MatHax Legacy] ";
+    public static String logPrefix = "[MatHax Legacy] ";
 
     public static String devUUID = "3e24ef27-e66d-45d2-bf4b-2c7ade68ff47";
     public static String devOfflineUUID = "7c73f844-73c3-3a7d-9978-004ba0a6436e";
 
     public static final String URL = "https://mathaxclient.xyz/";
     public static final String API_URL = "https://api.mathaxclient.xyz/";
+
+    public static List<String> getMatHaxSplashes() {
+        return Arrays.asList(
+
+            // SPLASHES
+            Formatting.RED + "MatHax on top!",
+            Formatting.GRAY + "Matejko06 " + Formatting.RED + "based god",
+            Formatting.RED + "MatHaxClient.xyz",
+            Formatting.RED + "MatHaxClient.xyz/Discord",
+
+            // MEME SPLASHES
+            Formatting.YELLOW + "cope",
+            Formatting.YELLOW + "I am funny -HiIAmFunny",
+            Formatting.YELLOW + "IntelliJ IDEa",
+            Formatting.YELLOW + "I <3 nns",
+            Formatting.YELLOW + "haha 69",
+            Formatting.YELLOW + "420 XDDDDDD",
+            Formatting.YELLOW + "ayy",
+            Formatting.YELLOW + "too ez",
+            Formatting.YELLOW + "owned",
+            Formatting.YELLOW + "your mom :joy:",
+            Formatting.YELLOW + "BOOM BOOM BOOM!"
+        );
+    }
 
     @Override
     public void onInitializeClient() {
@@ -85,12 +112,12 @@ public class MatHaxLegacy implements ClientModInitializer {
             return;
         }
 
-        LOG.info(logprefix + "Initializing MatHax Legacy " + Version.getStylized() + "...");
+        LOG.info(logPrefix + "Initializing MatHax Legacy " + Version.getStylized() + "...");
         Utils.mc = MinecraftClient.getInstance();
         Utils.mc.execute(() -> titleIconManager(1));
         EVENT_BUS.registerLambdaFactory("mathax.legacy.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
-        LOG.info(logprefix + "10% initialized!");
+        LOG.info(logPrefix + "10% initialized!");
         Systems.addPreLoadTask(() -> {
             if (!Modules.get().getFile().exists()) {
                 Modules.get().get(CapesModule.class).toggle(); // CAPES
@@ -107,32 +134,32 @@ public class MatHaxLegacy implements ClientModInitializer {
         Tabs.init();
         GL.init();
 
-        LOG.info(logprefix + "20% initialized!");
+        LOG.info(logPrefix + "20% initialized!");
         Shaders.init();
         Renderer2D.init();
         Outlines.init();
 
-        LOG.info(logprefix + "30% initialized!");
+        LOG.info(logPrefix + "30% initialized!");
         RainbowColors.init();
         MatHaxExecutor.init();
 
-        LOG.info(logprefix + "40% initialized!");
+        LOG.info(logPrefix + "40% initialized!");
         BlockIterator.init();
         EChestMemory.init();
         Rotations.init();
 
-        LOG.info(logprefix + "50% initialized!");
+        LOG.info(logPrefix + "50% initialized!");
         Names.init();
         FakeClientPlayer.init();
         PostProcessRenderer.init();
 
-        LOG.info(logprefix + "60% initialized!");
+        LOG.info(logPrefix + "60% initialized!");
         GuiThemes.init();
         Fonts.init();
         DamageUtils.init();
         BlockUtils.init();
 
-        LOG.info(logprefix + "70% initialized!");
+        LOG.info(logPrefix + "70% initialized!");
         Modules.REGISTERING_CATEGORIES = true;
         Categories.register();
         Modules.REGISTERING_CATEGORIES = false;
@@ -143,23 +170,23 @@ public class MatHaxLegacy implements ClientModInitializer {
             GuiThemes.save();
         }));
 
-        LOG.info(logprefix + "80% initialized!");
+        LOG.info(logPrefix + "80% initialized!");
         Fonts.load();
         GuiRenderer.init();
         GuiThemes.postInit();
         Utils.mc.execute(() -> titleIconManager(2));
 
-        LOG.info(logprefix + "90% initialized!");
+        LOG.info(logPrefix + "90% initialized!");
         Capes.init();
         EVENT_BUS.subscribe(this);
         EVENT_BUS.post(new ClientInitialisedEvent()); // TODO: This is there just for compatibility
         Modules.get().sortModules();
         Systems.load();
 
-        LOG.info(logprefix + "100% initialized!");
+        LOG.info(logPrefix + "100% initialized!");
         Utils.mc.execute(() -> titleIconManager(3));
 
-        LOG.info(logprefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
+        LOG.info(logPrefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
     }
 
     public void titleIconManager(Integer progress) {

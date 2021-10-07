@@ -3,7 +3,6 @@ package mathax.legacy.client.mixin;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render2DEvent;
-import mathax.legacy.client.systems.modules.render.CustomCrosshair;
 import mathax.legacy.client.systems.modules.render.NoRender;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
@@ -46,14 +45,14 @@ public abstract class InGameHudMixin {
         client.getProfiler().pop();
     }
 
-    @Redirect(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIIIII)V"))
+    /*@Redirect(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIIIII)V"))
     public void redirectRenderCrosshair(InGameHud inGameHud, MatrixStack matrices, int x, int y, int u, int v, int width, int height) {
         CustomCrosshair customCrosshair = Modules.get().get(CustomCrosshair.class);
 
         if (!customCrosshair.isActive()) {
             inGameHud.drawTexture(matrices, x, y, u, v, width, height);
         }
-    }
+    }*/
 
     @Inject(method = "renderStatusEffectOverlay", at = @At("HEAD"), cancellable = true)
     private void onRenderStatusEffectOverlay(CallbackInfo info) {
