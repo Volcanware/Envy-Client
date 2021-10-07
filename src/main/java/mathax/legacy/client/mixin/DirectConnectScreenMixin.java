@@ -15,19 +15,18 @@ import net.minecraft.client.network.ServerInfo;
 import net.minecraft.text.Text;
 
 @Mixin(DirectConnectScreen.class)
-public class DirectConnectScreenMixin extends Screen
-{
+public class DirectConnectScreenMixin extends Screen {
+
 	@Shadow
-	@Final
-	private ServerInfo serverEntry;
+    @Final
+    private ServerInfo serverEntry;
 
 	private DirectConnectScreenMixin(Text title) {
         super(title);
 	}
 
 	@Inject(at = {@At("TAIL")}, method = {"saveAndClose()V"})
-	private void onSaveAndClose(CallbackInfo ci)
-	{
+	private void onSaveAndClose(CallbackInfo ci) {
         Version.checkedForLatest = false;
 
 		LastServerInfo.setLastServer(serverEntry);
