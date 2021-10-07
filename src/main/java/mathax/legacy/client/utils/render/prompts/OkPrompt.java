@@ -90,7 +90,7 @@ public class OkPrompt {
             for (String line : messages) add(theme.label(line)).expandX();
             add(theme.horizontalSeparator()).expandX();
 
-            if (id.equals(id + "-dont-disable")) {
+            if (id.contains("-dont-disable")) {
                 WHorizontalList list = add(theme.horizontalList()).expandX().widget();
                 WButton okButton = list.add(theme.button("Ok")).expandX().widget();
                 okButton.action = () -> {
