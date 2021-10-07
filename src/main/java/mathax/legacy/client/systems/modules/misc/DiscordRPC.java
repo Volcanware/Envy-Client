@@ -220,11 +220,8 @@ public class DiscordRPC extends Module {
         if (mc.getCurrentServerEntry() != null) {
             String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
 
-            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
-                return "Playing on " + name;
-            } else {
-                return "Playing on a server";
-            }
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return "Playing on " + name;
+            else return "Playing on a server";
         }
 
         if ((mc.getServer()) == null) return "Could not get server/world";
@@ -233,9 +230,7 @@ public class DiscordRPC extends Module {
         // Singleplayer
         if (mc.isInSingleplayer()) {
             File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
-            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) {
-                folder = folder.getParentFile();
-            }
+            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) folder = folder.getParentFile();
 
             return "Playing singleplayer (" + folder.getName() + ")";
         }
@@ -247,22 +242,16 @@ public class DiscordRPC extends Module {
 
         // Disconnected etc...
         if (!mc.isInSingleplayer() && mc.getCurrentServerEntry() != null && LastServerInfo.getLastServer() != null) {
-            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
-                return LastServerInfo.getLastServer().address;
-            } else {
-                return "a server";
-            }
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return LastServerInfo.getLastServer().address;
+            else return "a server";
         }
 
         // Multiplayer
         if (mc.getCurrentServerEntry() != null) {
             String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
 
-            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) {
-                return name;
-            } else {
-                return "a server";
-            }
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return name;
+            else return "a server";
         }
 
         if ((mc.getServer()) == null) return "Unknown";
@@ -271,9 +260,7 @@ public class DiscordRPC extends Module {
         // Singleplayer
         if (mc.isInSingleplayer()) {
             File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
-            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) {
-                folder = folder.getParentFile();
-            }
+            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) folder = folder.getParentFile();
 
             return "singleplayer (" + folder.getName() + ")";
         }
