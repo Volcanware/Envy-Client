@@ -90,17 +90,26 @@ public class OkPrompt {
             for (String line : messages) add(theme.label(line)).expandX();
             add(theme.horizontalSeparator()).expandX();
 
-            WHorizontalList checkboxContainer = add(theme.horizontalList()).expandX().widget();
-            WCheckbox dontShowAgainCheckbox = checkboxContainer.add(theme.checkbox(false)).widget();
-            checkboxContainer.add(theme.label("Don't show this again.")).expandX();
+            if (id.equals(id + "-dont-disable")) {
+                WHorizontalList list = add(theme.horizontalList()).expandX().widget();
+                WButton okButton = list.add(theme.button("Ok")).expandX().widget();
+                okButton.action = () -> {
+                    onOk.run();
+                    onClose();
+                };
+            } else {
+                WHorizontalList checkboxContainer = add(theme.horizontalList()).expandX().widget();
+                WCheckbox dontShowAgainCheckbox = checkboxContainer.add(theme.checkbox(false)).widget();
+                checkboxContainer.add(theme.label("Don't show this again.")).expandX();
 
-            WHorizontalList list = add(theme.horizontalList()).expandX().widget();
-            WButton okButton = list.add(theme.button("Ok")).expandX().widget();
-            okButton.action = () -> {
-                if (dontShowAgainCheckbox.checked) Config.get().dontShowAgainPrompts.add(id);
-                onOk.run();
-                onClose();
-            };
+                WHorizontalList list = add(theme.horizontalList()).expandX().widget();
+                WButton okButton = list.add(theme.button("Ok")).expandX().widget();
+                okButton.action = () -> {
+                    if (dontShowAgainCheckbox.checked) Config.get().dontShowAgainPrompts.add(id);
+                    onOk.run();
+                    onClose();
+                };
+            }
         }
     }
 }
