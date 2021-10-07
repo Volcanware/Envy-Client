@@ -137,6 +137,7 @@ public class Version {
                             .message("\n")
                             .message("Your version: %s", Version.getStylized())
                             .message("Latest version: v%s", Version.getLatest())
+                            .message("\n")
                             .id("no-update-dont-disable")
                             .show();
                     }
@@ -151,6 +152,7 @@ public class Version {
                             .message("\n")
                             .message("Your version: %s", Version.getStylized())
                             .message("Latest version: v%s", Version.getLatest())
+                            .message("\n")
                             .id("no-update-dont-disable")
                             .show();
                     }
