@@ -82,7 +82,7 @@ public class Version {
 
     public static String getLatest() {
         String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
-        
+
         if (latestVer == null) return "NULL";
         else return latestVer.replace("\n", "");
     }
