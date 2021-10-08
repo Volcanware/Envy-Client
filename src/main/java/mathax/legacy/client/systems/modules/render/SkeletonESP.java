@@ -53,6 +53,7 @@ public class SkeletonESP extends Module {
     private void onRender(Render3DEvent event) {
         MatrixStack matrixStack = event.matrices;
         float g = event.tickDelta;
+
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         RenderSystem.disableTexture();
         RenderSystem.enableBlend();
@@ -60,17 +61,16 @@ public class SkeletonESP extends Module {
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(MinecraftClient.isFabulousGraphicsOrBetter());
         RenderSystem.enableCull();
+
         mc.world.getEntities().forEach(entity -> {
             if (!(entity instanceof PlayerEntity)) return;
             if (mc.options.getPerspective() == Perspective.FIRST_PERSON && !Modules.get().isActive(Freecam.class) && mc.player == entity) return;
             int rotationHoldTicks = Config.get().rotationHoldTicks;
 
-            Color skeletonColor = new Color(255, 255, 255);
-            if (entity.getUuidAsString().equals(mc.player.getUuidAsString())) {
-                skeletonColor = PlayerUtils.getPlayerColor((PlayerEntity)entity, skeletonSelfColorSetting.get());
-            } else {
-                skeletonColor = PlayerUtils.getPlayerColor((PlayerEntity)entity, skeletonColorSetting.get());
-            }
+            Color skeletonColor = null;
+            if (entity.getUuidAsString().equals(mc.player.getUuidAsString())) skeletonColor = PlayerUtils.getPlayerColor((PlayerEntity)entity, skeletonSelfColorSetting.get());
+            else skeletonColor = PlayerUtils.getPlayerColor((PlayerEntity)entity, skeletonColorSetting.get());
+
             PlayerEntity playerEntity = (PlayerEntity) entity;
 
             Vec3d footPos = getEntityRenderPosition(playerEntity, g);

@@ -399,7 +399,7 @@ public class Nametags extends Module {
         // Name
         String name;
         Color nameColor = PlayerUtils.getPlayerColor(player, names.get());
-        if (self.get() && player.getUuidAsString().equals(mc.getSession().getUuid())) nameColor = selfColor.get();
+        if (self.get() && player.getUuidAsString().equals(mc.player.getUuidAsString())) nameColor = selfColor.get();
 
         if (player == mc.player) name = Modules.get().get(NameProtect.class).getName(player.getEntityName());
         else name = player.getEntityName();
