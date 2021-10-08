@@ -28,6 +28,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.*;
 
+// TODO: Fix random swings.
+
 public class SkeletonESP extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
