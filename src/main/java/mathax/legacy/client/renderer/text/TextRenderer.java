@@ -1,6 +1,5 @@
 package mathax.legacy.client.renderer.text;
 
-import mathax.legacy.client.renderer.Fonts;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.client.util.math.MatrixStack;

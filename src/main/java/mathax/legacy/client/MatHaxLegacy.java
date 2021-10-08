@@ -13,6 +13,7 @@ import mathax.legacy.client.eventbus.EventBus;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.eventbus.IEventBus;
 import mathax.legacy.client.renderer.*;
+import mathax.legacy.client.renderer.text.Fonts;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.misc.CapesModule;

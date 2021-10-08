@@ -1,8 +1,7 @@
-package mathax.legacy.client.renderer;
+package mathax.legacy.client.renderer.text;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.WidgetScreen;
-import mathax.legacy.client.renderer.text.CustomTextRenderer;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.files.StreamUtils;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fonts {
-    private static final String[] BUILTIN_FONTS = { "Comfortaa.ttf", "Verdana.ttf", "Arial.ttf", "Roboto.ttf", "Raleway.ttf", "Comic Sans.ttf", "Tw Cen MT.ttf", "Pixelation.ttf", "JetBrains Mono.ttf" };
+    private static final String[] BUILTIN_FONTS = { "Comfortaa.ttf", "Verdana.ttf", "Arial.ttf", "Roboto.ttf", "Raleway.ttf", "Lato.ttf", "Comic Sans.ttf", "Tw Cen MT.ttf", "Pixelation.ttf", "JetBrains Mono.ttf" };
     public static final String DEFAULT_FONT = "Comfortaa";
     private static final File FONTS_FOLDER = new File(MatHaxLegacy.FOLDER, "Fonts");
 
