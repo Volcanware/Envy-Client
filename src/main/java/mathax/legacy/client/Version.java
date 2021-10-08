@@ -43,25 +43,21 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 1;
+        return 2;
     }
 
     public static String getDevString() {
         Integer dev = getDev();
-        if (dev == 0) {
-            return "";
-        } else {
-            return "Dev-" + dev;
-        }
+
+        if (dev == 0) return "";
+        else return "Dev-" + dev;
     }
 
     public static String getStylized() {
         Integer dev = getDev();
-        if (dev == 0) {
-            return "v" + get();
-        } else {
-            return "v" + get() + " " + getDevString();
-        }
+
+        if (dev == 0) return "v" + get();
+        else return "v" + get() + " " + getDevString();
     }
 
     public static String getMinecraft(){
@@ -74,9 +70,8 @@ public class Version {
 
     public static Integer checkLatest() {
         String latestVersion = getLatest();
-        if (latestVersion.equals(null) || latestVersion.equals("NULL")) {
-            return 0;
-        } else {
+        if (latestVersion.equals(null) || latestVersion.equals("NULL")) return 0;
+        else {
             Version latestVer = new Version(latestVersion);
             Version currentVer = new Version(get());
             if (latestVer.isHigherThan(currentVer)) return 1;
@@ -87,11 +82,9 @@ public class Version {
 
     public static String getLatest() {
         String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
-        if (latestVer == null) {
-            return "NULL";
-        } else {
-            return latestVer.replace("\n", "");
-        }
+        
+        if (latestVer == null) return "NULL";
+        else return latestVer.replace("\n", "");
     }
 
     // TODO: PROMPT GLITCHING OUT AND APPEARING AGAIN ON OKPROMPT [ISSUE IN METEOR TOO]
