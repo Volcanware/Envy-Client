@@ -147,7 +147,7 @@ public class Version {
                         OkPrompt.create()
                             .title("No New Update Found")
                             .message("Developer builds do not get update notifications")
-                            .message("about another developer buildof the")
+                            .message("about another developer build of the")
                             .message("version they are a developer build of!")
                             .message("\n")
                             .message("Your version: %s", Version.getStylized())

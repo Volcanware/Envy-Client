@@ -37,7 +37,7 @@ public abstract class InGameHudMixin {
 
         Utils.unscaledProjection();
 
-        MatHaxLegacy.EVENT_BUS.post(Render2DEvent.get(scaledWidth, scaledHeight, tickDelta, matrixStack));
+        MatHaxLegacy.EVENT_BUS.post(Render2DEvent.get(scaledWidth, scaledHeight, tickDelta));
 
         Utils.scaledProjection();
         RenderSystem.applyModelViewMatrix();

@@ -47,20 +47,20 @@ public class SwarmCommand extends Command {
         }));
 
         builder.then(literal("join")
-                .then(argument("ip", StringArgumentType.string())
-                        .then(argument("port", IntegerArgumentType.integer(0, 65535))
-                                .executes(context -> {
-                                        Swarm swarm = Modules.get().get(Swarm.class);
-                                        if (!swarm.isActive()) swarm.toggle();
+            .then(argument("ip", StringArgumentType.string())
+                .then(argument("port", IntegerArgumentType.integer(0, 65535))
+                    .executes(context -> {
+                        Swarm swarm = Modules.get().get(Swarm.class);
+                        if (!swarm.isActive()) swarm.toggle();
 
-                                        swarm.close();
-                                        swarm.mode.set(Swarm.Mode.Worker);
-                                        swarm.worker = new SwarmWorker(StringArgumentType.getString(context, "ip"), IntegerArgumentType.getInteger(context, "port"));
+                        swarm.close();
+                        swarm.mode.set(Swarm.Mode.Worker);
+                        swarm.worker = new SwarmWorker(StringArgumentType.getString(context, "ip"), IntegerArgumentType.getInteger(context, "port"));
 
-                                        return SINGLE_SUCCESS;
-                                })
-                        )
+                        return SINGLE_SUCCESS;
+                    })
                 )
+            )
         );
 
         builder.then(literal("connections").executes(context -> {

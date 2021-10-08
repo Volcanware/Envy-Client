@@ -41,6 +41,7 @@ import java.io.File;
 public class DiscordRPC extends Module {
     private static final String APP_ID = "878967665501306920";
     private static final String STEAM_ID = "";
+
     private static final DiscordRichPresence rpc = new DiscordRichPresence();
     private static final DiscordEventHandlers handlers = new DiscordEventHandlers();
 

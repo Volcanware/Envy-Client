@@ -114,7 +114,9 @@ public class MatHaxLegacy implements ClientModInitializer {
 
         LOG.info(logPrefix + "Initializing MatHax Legacy " + Version.getStylized() + "...");
         Utils.mc = MinecraftClient.getInstance();
-        Utils.mc.execute(() -> titleIconManager(1));
+        final Window window = MinecraftClient.getInstance().getWindow();
+        window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
+        window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
         EVENT_BUS.registerLambdaFactory("mathax.legacy.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
         LOG.info(logPrefix + "10% initialized!");
@@ -174,7 +176,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         Fonts.load();
         GuiRenderer.init();
         GuiThemes.postInit();
-        Utils.mc.execute(() -> titleIconManager(2));
+        window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
 
         LOG.info(logPrefix + "90% initialized!");
         Capes.init();
@@ -184,22 +186,9 @@ public class MatHaxLegacy implements ClientModInitializer {
         Systems.load();
 
         LOG.info(logPrefix + "100% initialized!");
-        Utils.mc.execute(() -> titleIconManager(3));
+        window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft());
 
         LOG.info(logPrefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
-    }
-
-    public void titleIconManager(Integer progress) {
-        final Window window = MinecraftClient.getInstance().getWindow();
-        switch (progress) {
-            case 1:
-                window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
-                window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
-            case 2:
-                window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
-            case 3:
-                window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft());
-        }
     }
 
     @EventHandler

@@ -135,7 +135,7 @@ public class BetterTooltips extends Module {
         .build()
     );
 
-    // Extras
+    // Other
 
     public final Setting<Boolean> byteSize = sgOther.add(new BoolSetting.Builder()
         .name("byte-size")
@@ -208,7 +208,6 @@ public class BetterTooltips extends Module {
                         event.list.add(1, new LiteralText(String.format("%sBees: %s%d%s.",
                             Formatting.GRAY, Formatting.YELLOW, beesTag.size(), Formatting.GRAY)));
                     }
-
                 }
             }
         }
@@ -265,8 +264,7 @@ public class BetterTooltips extends Module {
         // Map preview
         else if (event.itemStack.getItem() == Items.FILLED_MAP && previewMaps()) {
             Integer mapId = FilledMapItem.getMapId(event.itemStack);
-            if (mapId != null)
-                event.tooltipData = new MapTooltipComponent(mapId);
+            if (mapId != null) event.tooltipData = new MapTooltipComponent(mapId);
         }
 
         // Book preview
@@ -274,23 +272,15 @@ public class BetterTooltips extends Module {
             || event.itemStack.getItem() == Items.WRITTEN_BOOK)
             && previewBooks()) {
             Text page = getFirstPage(event.itemStack);
-            if (page != null) {
-                event.tooltipData = new BookTooltipComponent(page);
-            }
+            if (page != null) event.tooltipData = new BookTooltipComponent(page);
         }
 
         // Banner preview
-        else if (event.itemStack.getItem() instanceof BannerItem && previewBanners()) {
-            event.tooltipData = new BannerTooltipComponent(event.itemStack);
-        } else if (event.itemStack.getItem() instanceof BannerPatternItem patternItem && previewBanners()) {
-            event.tooltipData = new BannerTooltipComponent(createBannerFromPattern(
-                patternItem.getPattern()
-            ));
-        } else if (event.itemStack.getItem() == Items.SHIELD && previewBanners()) {
+        else if (event.itemStack.getItem() instanceof BannerItem && previewBanners()) event.tooltipData = new BannerTooltipComponent(event.itemStack);
+        else if (event.itemStack.getItem() instanceof BannerPatternItem patternItem && previewBanners()) event.tooltipData = new BannerTooltipComponent(createBannerFromPattern(patternItem.getPattern()));
+        else if (event.itemStack.getItem() == Items.SHIELD && previewBanners()) {
             ItemStack banner = createBannerFromShield(event.itemStack);
-            if (banner != null) {
-                event.tooltipData = new BannerTooltipComponent(banner);
-            }
+            if (banner != null) event.tooltipData = new BannerTooltipComponent(banner);
         }
 
         // Fish peek
@@ -308,9 +298,7 @@ public class BetterTooltips extends Module {
     public void applyCompactShulkerTooltip(ItemStack stack, List<Text> tooltip) {
         NbtCompound tag = stack.getSubNbt("BlockEntityTag");
         if (tag != null) {
-            if (tag.contains("LootTable", 8)) {
-                tooltip.add(new LiteralText("???????"));
-            }
+            if (tag.contains("LootTable", 8)) tooltip.add(new LiteralText("???????"));
 
             if (tag.contains("Items", 9)) {
                 DefaultedList<ItemStack> items = DefaultedList.ofSize(27, ItemStack.EMPTY);
@@ -331,25 +319,18 @@ public class BetterTooltips extends Module {
                     tooltip.add(mutableText);
                 });
 
-                if (counts.size() > 5) {
-                    tooltip.add((new TranslatableText("container.shulkerBox.more", counts.size() - 5)).formatted(Formatting.ITALIC));
-                }
+                if (counts.size() > 5) tooltip.add((new TranslatableText("container.shulkerBox.more", counts.size() - 5)).formatted(Formatting.ITALIC));
             }
         }
     }
 
     private MutableText getStatusText(StatusEffectInstance effect) {
         MutableText text = new TranslatableText(effect.getTranslationKey());
-        if (effect.getAmplifier() != 0) {
-            text.append(String.format(" %d (%s)", effect.getAmplifier() + 1, StatusEffectUtil.durationToString(effect, 1)));
-        } else {
-            text.append(String.format(" (%s)", StatusEffectUtil.durationToString(effect, 1)));
-        }
-        if (effect.getEffectType().isBeneficial()) {
-            return text.formatted(Formatting.BLUE);
-        } else {
-            return text.formatted(Formatting.RED);
-        }
+        if (effect.getAmplifier() != 0) text.append(String.format(" %d (%s)", effect.getAmplifier() + 1, StatusEffectUtil.durationToString(effect, 1)));
+        else text.append(String.format(" (%s)", StatusEffectUtil.durationToString(effect, 1)));
+
+        if (effect.getEffectType().isBeneficial()) return text.formatted(Formatting.BLUE);
+        else return text.formatted(Formatting.RED);
     }
 
     private Text getFirstPage(ItemStack stack) {
@@ -370,10 +351,7 @@ public class BetterTooltips extends Module {
     }
 
     private ItemStack createBannerFromShield(ItemStack item) {
-        if (!item.hasNbt()
-            || !item.getNbt().contains("BlockEntityTag")
-            || !item.getNbt().getCompound("BlockEntityTag").contains("Base"))
-            return null;
+        if (!item.hasNbt() || !item.getNbt().contains("BlockEntityTag") || !item.getNbt().getCompound("BlockEntityTag").contains("Base")) return null;
         NbtList listNbt = (new BannerPattern.Patterns()).add(BannerPattern.BASE, ShieldItem.getColor(item)).toNbt();
         NbtCompound nbt = item.getOrCreateSubNbt("BlockEntityTag");
         ItemStack bannerItem = new ItemStack(Items.GRAY_BANNER);

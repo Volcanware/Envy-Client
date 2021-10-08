@@ -211,7 +211,7 @@ public class HUD extends Module {
     public void onRender(Render2DEvent event) {
         if (mc.options.debugEnabled || mc.options.hudHidden) return;
 
-        RENDERER.begin(scale.get(), event.tickDelta, false);
+        RENDERER.begin(scale.get(), event.frameTime, false);
 
         for (HUDElement element : elements) {
             if (element.active || HudTab.INSTANCE.isScreen(mc.currentScreen) || mc.currentScreen instanceof HudElementScreen) {
