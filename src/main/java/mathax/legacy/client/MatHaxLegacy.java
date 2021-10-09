@@ -225,7 +225,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         // Click GUI
         if (event.action == KeyAction.Press && KeyBinds.OPEN_CLICK_GUI.matchesKey(event.key, 0)) {
             if (Utils.mc.getOverlay() instanceof SplashOverlay) return;
-            if (!Utils.canUpdate() && Utils.canOpenClickGUI()) openClickGUI();
+            if (Utils.canOpenClickGUI()) openClickGUI();
         }
     }
 
@@ -233,7 +233,7 @@ public class MatHaxLegacy implements ClientModInitializer {
     private void onMouseButton(MouseButtonEvent event) {
         // Click GUI
         if (event.action == KeyAction.Press && event.button != GLFW.GLFW_MOUSE_BUTTON_LEFT && KeyBinds.OPEN_CLICK_GUI.matchesMouse(event.button)) {
-            if (!Utils.canUpdate() && Utils.canOpenClickGUI()) openClickGUI();
+            if (Utils.canOpenClickGUI()) openClickGUI();
         }
     }
 

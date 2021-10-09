@@ -43,19 +43,15 @@ public abstract class HeldItemRendererMixin {
         Hand hand = MoreObjects.firstNonNull(Utils.mc.player.preferredHand, Hand.MAIN_HAND);
 
         if (module.isActive()) {
-            if (hand == Hand.OFF_HAND && !Utils.mc.player.getOffHandStack().isEmpty()) {
-                return swingProgress + module.offSwing.get().floatValue();
-            }
-            if (hand == Hand.MAIN_HAND && !Utils.mc.player.getMainHandStack().isEmpty()) {
-                return swingProgress + module.mainSwing.get().floatValue();
-            }
+            if (hand == Hand.OFF_HAND && !Utils.mc.player.getOffHandStack().isEmpty()) return swingProgress + module.offSwing.get().floatValue();
+            if (hand == Hand.MAIN_HAND && !Utils.mc.player.getMainHandStack().isEmpty()) return swingProgress + module.mainSwing.get().floatValue();
         }
 
         return swingProgress;
     }
 
     @Inject(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformation$Mode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"))
-    private void handView(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
+    private void renderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         if (!item.isEmpty()) Modules.get().get(HandView.class).transform(matrices);
     }
 }
