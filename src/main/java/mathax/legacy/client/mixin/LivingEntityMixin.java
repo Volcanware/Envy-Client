@@ -60,9 +60,8 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasNoGravity()Z"))
     private boolean travelHasNoGravityProxy(LivingEntity self) {
-        if (self.hasStatusEffect(StatusEffects.LEVITATION) && Modules.get().isActive(AntiLevitation.class)) {
-            return !Modules.get().get(AntiLevitation.class).isApplyGravity();
-        }
+        if (self.hasStatusEffect(StatusEffects.LEVITATION) && Modules.get().isActive(AntiLevitation.class)) return !Modules.get().get(AntiLevitation.class).isApplyGravity();
+
         return self.hasNoGravity();
     }
 
@@ -74,9 +73,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "onEquipStack", at = @At("HEAD"), cancellable = true)
     private void onEquipStack(ItemStack stack, CallbackInfo info) {
-        if ((Object) this == Utils.mc.player && Modules.get().get(OffhandCrash.class).isAntiCrash()) {
-            info.cancel();
-        }
+        if ((Object) this == Utils.mc.player && Modules.get().get(OffhandCrash.class).isAntiCrash()) info.cancel();
     }
 
     @ModifyArg(method = "swingHand(Lnet/minecraft/util/Hand;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;swingHand(Lnet/minecraft/util/Hand;Z)V"))
@@ -86,6 +83,7 @@ public abstract class LivingEntityMixin extends Entity {
             if (handView.swingMode.get() == HandView.SwingMode.None) return hand;
             return handView.swingMode.get() == HandView.SwingMode.Offhand ? Hand.OFF_HAND : Hand.MAIN_HAND;
         }
+
         return hand;
     }
 }

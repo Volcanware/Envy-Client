@@ -98,8 +98,7 @@ public class FriendsCommand extends Command {
 
         @Override
         public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-            return suggestMatching(mc.getNetworkHandler().getPlayerList().stream()
-                    .map(entry -> entry.getProfile().getName()).collect(Collectors.toList()), builder);
+            return suggestMatching(mc.getNetworkHandler().getPlayerList().stream().map(entry -> entry.getProfile().getName()).collect(Collectors.toList()), builder);
         }
 
         @Override

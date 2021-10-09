@@ -209,9 +209,8 @@ public abstract class WidgetScreen extends Screen {
 
         boolean control = MinecraftClient.IS_SYSTEM_MAC ? modifiers == GLFW_MOD_SUPER : modifiers == GLFW_MOD_CONTROL;
 
-        if (control && keyCode == GLFW_KEY_C && toClipboard()) {
-            return true;
-        } else if (control && keyCode == GLFW_KEY_V && fromClipboard()) {
+        if (control && keyCode == GLFW_KEY_C && toClipboard()) return true;
+        else if (control && keyCode == GLFW_KEY_V && fromClipboard()) {
             reload();
             return true;
         }

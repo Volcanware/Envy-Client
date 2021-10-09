@@ -228,7 +228,7 @@ public class AutoEZ extends Module {
         popMessages.clear();
 
         if (tag.contains("killMessages")) {
-            NbtList killMessagesTag = tag.getList("messages", 8);
+            NbtList killMessagesTag = tag.getList("killMessages", 8);
             for (NbtElement killMessageTag : killMessagesTag) killMessages.add(killMessageTag.asString());
         } else {
             killMessages.add("haha %killed_player% is a noob! EZZz");
@@ -258,7 +258,8 @@ public class AutoEZ extends Module {
 
     @EventHandler
     public void onPacketReadMessage(PacketEvent.Receive event) {
-        if (killMessages.isEmpty() || !kills.get()) return;
+        if (!kills.get()) return;
+        if (killMessages.isEmpty() && mode.get() == Mode.Custom) return;
         if (event.packet instanceof GameMessageS2CPacket) {
             String msg = ((GameMessageS2CPacket) event.packet).getMessage().getString();
             for (PlayerEntity player : mc.world.getPlayers()) {
@@ -358,7 +359,8 @@ public class AutoEZ extends Module {
 
     @EventHandler
     private void onReceivePacket(PacketEvent.Receive event) {
-        if (popMessages.isEmpty() || !totems.get()) return;
+        if (!totems.get()) return;
+        if (popMessages.isEmpty() && totemMode.get() == Mode.Custom) return;
         if (!(event.packet instanceof EntityStatusS2CPacket)) return;
 
         EntityStatusS2CPacket p = (EntityStatusS2CPacket) event.packet;

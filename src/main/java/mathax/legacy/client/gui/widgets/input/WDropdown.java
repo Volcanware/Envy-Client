@@ -143,9 +143,7 @@ public abstract class WDropdown<T> extends WPressable {
     public boolean onMouseScrolled(double amount) {
         if (super.onMouseScrolled(amount)) return true;
 
-        if (expanded) {
-            return root.mouseScrolled(amount);
-        }
+        if (expanded) return root.mouseScrolled(amount);
 
         return false;
     }

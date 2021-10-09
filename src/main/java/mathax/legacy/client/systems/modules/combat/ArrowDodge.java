@@ -141,17 +141,14 @@ public class ArrowDodge extends Module {
         BlockPos blockPos = null;
         for (Box futureArrowHitbox : futureArrowHitboxes) {
             Box newPlayerPos = playerHitbox.offset(velocity);
-            if (futureArrowHitbox.intersects(newPlayerPos)) {
-                return false;
-            }
+            if (futureArrowHitbox.intersects(newPlayerPos)) return false;
+
             blockPos = mc.player.getBlockPos().add(velocity.x, velocity.y, velocity.z);
-            if (mc.world.getBlockState(blockPos).getCollisionShape(mc.world, blockPos) != VoxelShapes.empty()) {
-                return false;
-            }
+            if (mc.world.getBlockState(blockPos).getCollisionShape(mc.world, blockPos) != VoxelShapes.empty()) return false;
         }
-        if (groundCheck.get() && blockPos != null) {
-            return mc.world.getBlockState(blockPos.down()).getCollisionShape(mc.world, blockPos.down()) != VoxelShapes.empty();
-        }
+
+        if (groundCheck.get() && blockPos != null) return mc.world.getBlockState(blockPos.down()).getCollisionShape(mc.world, blockPos.down()) != VoxelShapes.empty();
+
         return true;
     }
 

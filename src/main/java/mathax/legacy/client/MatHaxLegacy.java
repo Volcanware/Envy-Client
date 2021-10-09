@@ -122,8 +122,6 @@ public class MatHaxLegacy implements ClientModInitializer {
         window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
         window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
         EVENT_BUS.registerLambdaFactory("mathax.legacy.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
-
-        LOG.info(logPrefix + "10% initialized!");
         Systems.addPreLoadTask(() -> {
             if (!Modules.get().getFile().exists()) {
                 Modules.get().get(CapesModule.class).toggle(); // CAPES
@@ -139,33 +137,21 @@ public class MatHaxLegacy implements ClientModInitializer {
         });
         Tabs.init();
         GL.init();
-
-        LOG.info(logPrefix + "20% initialized!");
         Shaders.init();
         Renderer2D.init();
         Outlines.init();
-
-        LOG.info(logPrefix + "30% initialized!");
         RainbowColors.init();
         MatHaxExecutor.init();
-
-        LOG.info(logPrefix + "40% initialized!");
         BlockIterator.init();
         EChestMemory.init();
         Rotations.init();
-
-        LOG.info(logPrefix + "50% initialized!");
         Names.init();
         FakeClientPlayer.init();
         PostProcessRenderer.init();
-
-        LOG.info(logPrefix + "60% initialized!");
         GuiThemes.init();
         Fonts.init();
         DamageUtils.init();
         BlockUtils.init();
-
-        LOG.info(logPrefix + "70% initialized!");
         Modules.REGISTERING_CATEGORIES = true;
         Categories.register();
         Modules.REGISTERING_CATEGORIES = false;
@@ -175,23 +161,16 @@ public class MatHaxLegacy implements ClientModInitializer {
             Systems.save();
             GuiThemes.save();
         }));
-
-        LOG.info(logPrefix + "80% initialized!");
         Fonts.load();
         GuiRenderer.init();
         GuiThemes.postInit();
         window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
-
-        LOG.info(logPrefix + "90% initialized!");
         Capes.init();
         EVENT_BUS.subscribe(this);
         EVENT_BUS.post(new ClientInitialisedEvent()); // TODO: This is there just for compatibility
         Modules.get().sortModules();
         Systems.load();
-
-        LOG.info(logPrefix + "100% initialized!");
         window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft());
-
         LOG.info(logPrefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
     }
 

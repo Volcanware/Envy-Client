@@ -40,7 +40,12 @@ public class WIntEdit extends WHorizontalList {
             if (textBox.get().isEmpty()) value = 0;
             else if (textBox.get().equals("-")) value = -0;
             else value = Integer.parseInt(textBox.get());
+            if (min != null && this.min >= 0 && value < 0) value = 0;
 
+            if (min != null && value < min) value = min;
+            else if (max != null && value > max) value = max;
+
+            textBox.set(String.valueOf(value));
             if (slider != null) slider.set(value);
 
             if (value != lastValue) {
@@ -67,14 +72,11 @@ public class WIntEdit extends WHorizontalList {
 
     private boolean filter(String text, char c) {
         boolean good;
-        boolean validate = true;
 
-        if (c == '-' && text.isEmpty()) {
-            good = true;
-            validate = false;
-        } else good = Character.isDigit(c);
+        if (c == '-' && text.isEmpty()) good = true;
+        else good = Character.isDigit(c);
 
-        if (good && validate) {
+        if (good && (c != '-')) {
             try {
                 Integer.parseInt(text + c);
             } catch (NumberFormatException ignored) {

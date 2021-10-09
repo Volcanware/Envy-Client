@@ -118,9 +118,7 @@ public class GL {
     public static String compileShader(int shader) {
         GlStateManager.glCompileShader(shader);
 
-        if (GlStateManager.glGetShaderi(shader, GL_COMPILE_STATUS) == GL_FALSE) {
-            return GlStateManager.glGetShaderInfoLog(shader, 512);
-        }
+        if (GlStateManager.glGetShaderi(shader, GL_COMPILE_STATUS) == GL_FALSE) return GlStateManager.glGetShaderInfoLog(shader, 512);
 
         return null;
     }
@@ -134,9 +132,7 @@ public class GL {
         GlStateManager.glAttachShader(program, fragShader);
         GlStateManager.glLinkProgram(program);
 
-        if (GlStateManager.glGetProgrami(program, GL_LINK_STATUS) == GL_FALSE) {
-            return GlStateManager.glGetProgramInfoLog(program, 512);
-        }
+        if (GlStateManager.glGetProgrami(program, GL_LINK_STATUS) == GL_FALSE) return GlStateManager.glGetProgramInfoLog(program, 512);
 
         return null;
     }

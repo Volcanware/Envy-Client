@@ -151,88 +151,53 @@ public class NoInteract extends Module {
     }
 
     private boolean shouldAttackBlock(BlockPos blockPos) {
-        if (blockMineMode.get() == ListMode.WhiteList &&
-            blockMine.get().contains(mc.world.getBlockState(blockPos).getBlock())) {
-            return false;
-        }
+        if (blockMineMode.get() == ListMode.WhiteList && blockMine.get().contains(mc.world.getBlockState(blockPos).getBlock())) return false;
 
-        return blockMineMode.get() != ListMode.BlackList ||
-            !blockMine.get().contains(mc.world.getBlockState(blockPos).getBlock());
+        return blockMineMode.get() != ListMode.BlackList || !blockMine.get().contains(mc.world.getBlockState(blockPos).getBlock());
     }
 
     private boolean shouldInteractBlock(BlockHitResult hitResult, Hand hand) {
         // Hand Interactions
-        if (blockInteractHand.get() == HandMode.Both ||
-            (blockInteractHand.get() == HandMode.Mainhand && hand == Hand.MAIN_HAND) ||
-            (blockInteractHand.get() == HandMode.Offhand && hand == Hand.OFF_HAND)) {
-            return false;
-        }
+        if (blockInteractHand.get() == HandMode.Both || (blockInteractHand.get() == HandMode.Mainhand && hand == Hand.MAIN_HAND) || (blockInteractHand.get() == HandMode.Offhand && hand == Hand.OFF_HAND)) return false;
 
         // Blocks
-        if (blockInteractMode.get() == ListMode.BlackList &&
-            blockInteract.get().contains(mc.world.getBlockState(hitResult.getBlockPos()).getBlock())) {
-            return false;
-        }
+        if (blockInteractMode.get() == ListMode.BlackList && blockInteract.get().contains(mc.world.getBlockState(hitResult.getBlockPos()).getBlock())) return false;
 
-        return blockInteractMode.get() != ListMode.WhiteList ||
-            blockInteract.get().contains(mc.world.getBlockState(hitResult.getBlockPos()).getBlock());
+        return blockInteractMode.get() != ListMode.WhiteList || blockInteract.get().contains(mc.world.getBlockState(hitResult.getBlockPos()).getBlock());
     }
 
     private boolean shouldAttackEntity(Entity entity) {
         // Friends
-        if ((friends.get() == InteractMode.Both || friends.get() == InteractMode.Hit) &&
-            entity instanceof PlayerEntity && !Friends.get().shouldAttack((PlayerEntity) entity)) {
-            return false;
-        }
+        if ((friends.get() == InteractMode.Both || friends.get() == InteractMode.Hit) && entity instanceof PlayerEntity && !Friends.get().shouldAttack((PlayerEntity) entity)) return false;
 
         // Babies
-        if ((babies.get() == InteractMode.Both || babies.get() == InteractMode.Hit) &&
-            entity instanceof AnimalEntity && ((AnimalEntity) entity).isBaby()) {
-            return false;
-        }
+        if ((babies.get() == InteractMode.Both || babies.get() == InteractMode.Hit) && entity instanceof AnimalEntity && ((AnimalEntity) entity).isBaby()) return false;
 
         // NameTagged
         if ((nametagged.get() == InteractMode.Both || nametagged.get() == InteractMode.Hit) && entity.hasCustomName()) return false;
 
         // Entities
-        if (entityHitMode.get() == ListMode.BlackList &&
-            entityHit.get().getBoolean(entity.getType())) {
-            return false;
-        }
+        if (entityHitMode.get() == ListMode.BlackList && entityHit.get().getBoolean(entity.getType())) return false;
 
-        else return entityHitMode.get() != ListMode.WhiteList ||
-            entityHit.get().getBoolean(entity.getType());
+        else return entityHitMode.get() != ListMode.WhiteList || entityHit.get().getBoolean(entity.getType());
     }
 
     private boolean shouldInteractEntity(Entity entity, Hand hand) {
         // Hand Interactions
-        if (entityInteractHand.get() == HandMode.Both ||
-            (entityInteractHand.get() == HandMode.Mainhand && hand == Hand.MAIN_HAND) ||
-            (entityInteractHand.get() == HandMode.Offhand && hand == Hand.OFF_HAND)) {
-            return false;
-        }
+        if (entityInteractHand.get() == HandMode.Both || (entityInteractHand.get() == HandMode.Mainhand && hand == Hand.MAIN_HAND) || (entityInteractHand.get() == HandMode.Offhand && hand == Hand.OFF_HAND)) return false;
 
         // Friends
-        if ((friends.get() == InteractMode.Both || friends.get() == InteractMode.Interact) &&
-            entity instanceof PlayerEntity && !Friends.get().shouldAttack((PlayerEntity) entity)) {
-            return false;
-        }
+        if ((friends.get() == InteractMode.Both || friends.get() == InteractMode.Interact) && entity instanceof PlayerEntity && !Friends.get().shouldAttack((PlayerEntity) entity)) return false;
 
         // Babies
-        if ((babies.get() == InteractMode.Both || babies.get() == InteractMode.Interact) &&
-            entity instanceof AnimalEntity && ((AnimalEntity) entity).isBaby()) {
-            return false;
-        }
+        if ((babies.get() == InteractMode.Both || babies.get() == InteractMode.Interact) && entity instanceof AnimalEntity && ((AnimalEntity) entity).isBaby()) return false;
 
         // NameTagged
         if ((nametagged.get() == InteractMode.Both || nametagged.get() == InteractMode.Interact) && entity.hasCustomName()) return false;
 
         // Entities
-        if (entityInteractMode.get() == ListMode.BlackList &&
-            entityInteract.get().getBoolean(entity.getType())) {
-            return false;
-        } else return entityInteractMode.get() != ListMode.WhiteList ||
-            entityInteract.get().getBoolean(entity.getType());
+        if (entityInteractMode.get() == ListMode.BlackList && entityInteract.get().getBoolean(entity.getType())) return false;
+        else return entityInteractMode.get() != ListMode.WhiteList || entityInteract.get().getBoolean(entity.getType());
     }
 
     public enum HandMode {

@@ -82,9 +82,7 @@ public class AutoMend extends Module {
 
         if (itemStack.isEmpty()) return false;
 
-        if (EnchantmentHelper.getLevel(Enchantments.MENDING, itemStack) > 0) {
-            return itemStack.getDamage() != 0;
-        }
+        if (EnchantmentHelper.getLevel(Enchantments.MENDING, itemStack) > 0) return itemStack.getDamage() != 0;
 
         return !force.get();
     }

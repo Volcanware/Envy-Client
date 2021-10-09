@@ -176,59 +176,39 @@ public class CEVBreaker extends Module {
 
     private boolean placeCrystal(PlayerEntity playerEntity, BlockPos blockPos) {
         BlockPos blockPos1 = new BlockPos(playerEntity.getBlockPos().getX(), playerEntity.getBlockPos().getY() + 3, playerEntity.getBlockPos().getZ());
-        if (!BlockUtils.canPlace(blockPos1, true)) {
-            return false;
-        }
-        if (!assertionsDisabled && mc.world == null) {
-            throw new AssertionError();
-        }
-        if (!mc.world.getBlockState(blockPos1).isAir()) {
-            return false;
-        }
+        if (!BlockUtils.canPlace(blockPos1, true)) return false;
+        if (!assertionsDisabled && mc.world == null) throw new AssertionError();
+        if (!mc.world.getBlockState(blockPos1).isAir()) return false;
         int n = EnhancedInvUtils.findItemInHotbar(Items.END_CRYSTAL);
         if (n == -1) {
             error("Can't find crystals in your hotbar, disabling...", new Object[0]);
             toggle();
             return false;
         }
+
         interact(blockPos, n, Direction.UP);
         return true;
     }
 
     public boolean equalsBlockPos(BlockPos blockPos, BlockPos blockPos1) {
-        if (blockPos == null || blockPos1 == null) {
-            return false;
-        }
-        if (blockPos.getX() != blockPos1.getX()) {
-            return false;
-        }
-        if (blockPos.getY() != blockPos1.getY()) {
-            return false;
-        }
+        if (blockPos == null || blockPos1 == null) return false;
+        if (blockPos.getX() != blockPos1.getX()) return false;
+        if (blockPos.getY() != blockPos1.getY()) return false;
+
         return blockPos.getZ() == blockPos1.getZ();
     }
 
     @EventHandler
     private void BlockUpdate(PacketEvent.Receive receive) {
-        if (!(receive.packet instanceof BlockUpdateS2CPacket)) {
-            return;
-        }
+        if (!(receive.packet instanceof BlockUpdateS2CPacket)) return;
         BlockUpdateS2CPacket blockUpdateS2CPacket = (BlockUpdateS2CPacket)receive.packet;
-        if (equalsBlockPos(blockUpdateS2CPacket.getPos(), pos) && blockUpdateS2CPacket.getState().isAir()) {
-            isDone = true;
-        }
+        if (equalsBlockPos(blockUpdateS2CPacket.getPos(), pos) && blockUpdateS2CPacket.getState().isAir()) isDone = true;
     }
 
     public boolean placeBlock(BlockPos blockPos, int n, boolean bl) {
-        if (n == -1) {
-            return false;
-        }
-        if (!BlockUtils.canPlace(blockPos, true)) {
-            return false;
-        }
-        if (!assertionsDisabled && mc.player == null) {
-            throw new AssertionError();
-        }
+        if (n == -1) return false;
+        if (!BlockUtils.canPlace(blockPos, true)) return false;
+        if (!assertionsDisabled && mc.player == null) throw new AssertionError();
         int n2 = mc.player.getInventory().selectedSlot;
         EnhancedInvUtils.swap(n);
         if (bl) {
@@ -236,9 +216,8 @@ public class CEVBreaker extends Module {
             ((IVec3d)rotationPos).set(blockPos.getY() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
             Rotations.rotate(Rotations.getYaw(rotationPos), Rotations.getPitch(rotationPos));
         }
-        if (!assertionsDisabled && mc.interactionManager == null) {
-            throw new AssertionError();
-        }
+
+        if (!assertionsDisabled && mc.interactionManager == null) throw new AssertionError();
         mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), Direction.UP, blockPos, true));
         EnhancedInvUtils.swap(n2);
         return true;
@@ -252,21 +231,15 @@ public class CEVBreaker extends Module {
     }
 
     public void attackEntity(EndCrystalEntity endCrystalEntity) {
-        if (!assertionsDisabled && mc.interactionManager == null) {
-            throw new AssertionError();
-        }
+        if (!assertionsDisabled && mc.interactionManager == null) throw new AssertionError();
         mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack( endCrystalEntity, mc.player.isSneaking()));
     }
 
     public void interact(BlockPos blockPos, int n, Direction direction) {
-        if (!assertionsDisabled && mc.player == null) {
-            throw new AssertionError();
-        }
+        if (!assertionsDisabled && mc.player == null) throw new AssertionError();
         int n2 = mc.player.getInventory().selectedSlot;
         EnhancedInvUtils.swap(n);
-        if (!assertionsDisabled && mc.interactionManager == null) {
-            throw new AssertionError();
-        }
+        if (!assertionsDisabled && mc.interactionManager == null) throw new AssertionError();
         mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), direction, blockPos, true));
         EnhancedInvUtils.swap(n2);
     }

@@ -41,6 +41,7 @@ public class LocateCommand extends Command {
                 Utils.nameToTitle(o.toString().replaceAll("_", "-")))
             );
         }
+        
         return new LiteralText("Not found.");
     });
 

@@ -352,11 +352,8 @@ public class AnchorAura extends Module {
                 return;
             }
         }
-        if (sentBurrowMine && PlayerUtils.isBurrowed(target, true)) {
-            return;
-        } else {
-            sentBurrowMine = false;
-        }
+        if (sentBurrowMine && PlayerUtils.isBurrowed(target, true)) return;
+        else sentBurrowMine = false;
 
         if (breakDelayLeft >= breakDelay.get()) {
             BlockPos breakPos = findBreakPos(target.getBlockPos());
