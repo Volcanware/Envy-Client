@@ -19,6 +19,6 @@ public class TitleScreenMixin extends Screen {
 
     @Inject(method = "init()V", at = @At("HEAD"))
     private void init(CallbackInfo info) {
-        MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen());
+        MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen(true));
     }
 }

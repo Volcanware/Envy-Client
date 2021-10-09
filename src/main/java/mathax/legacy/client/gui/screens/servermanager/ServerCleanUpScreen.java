@@ -19,7 +19,7 @@ public class ServerCleanUpScreen extends WindowScreen {
     private WCheckbox removeFailed;
     private WCheckbox removeOutdated;
     private WCheckbox removeUnknown;
-    private WCheckbox removeGriefMe;
+    private WCheckbox removeFound;
     private WCheckbox rename;
 
     public ServerCleanUpScreen(GuiTheme theme, MultiplayerScreen multiplayerScreen, Screen parent) {
@@ -42,8 +42,8 @@ public class ServerCleanUpScreen extends WindowScreen {
         table.add(theme.label("Failed Ping"));
         removeFailed = table.add(theme.checkbox(true)).widget();
         table.row();
-        table.add(theme.label("\"Server finder\" Servers"));
-        removeGriefMe = table.add(theme.checkbox(false)).widget();
+        table.add(theme.label("\"Server Finder\" Servers"));
+        removeFound = table.add(theme.checkbox(false)).widget();
         table.row();
         table.add(theme.label("Everything")).widget().color = new Color(255, 0, 0);
         removeAll = table.add(theme.checkbox(false)).widget();
@@ -64,7 +64,7 @@ public class ServerCleanUpScreen extends WindowScreen {
         if (rename.checked)
             for (int i = 0; i < multiplayerScreen.getServerList().size(); i++) {
                 ServerInfo server = multiplayerScreen.getServerList().get(i);
-                server.name = "Server finder " + (i + 1);
+                server.name = "Server Finder " + (i + 1);
             }
 
         saveServerList();
@@ -80,7 +80,7 @@ public class ServerCleanUpScreen extends WindowScreen {
 
         if (removeFailed.checked && isFailedPing(server)) return true;
 
-        return removeGriefMe.checked && isGriefMeServer(server);
+        return removeFound.checked && isFoundServer(server);
     }
 
     private boolean isUnknownHost(ServerInfo server) {
@@ -99,8 +99,8 @@ public class ServerCleanUpScreen extends WindowScreen {
         return server.ping != -2L && server.ping < 0L;
     }
 
-    private boolean isGriefMeServer(ServerInfo server) {
-        return server.name != null && server.name.startsWith("Server finder ");
+    private boolean isFoundServer(ServerInfo server) {
+        return server.name != null && server.name.startsWith("Server Finder ");
     }
 
     private void saveServerList() {

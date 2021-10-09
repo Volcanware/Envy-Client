@@ -5,6 +5,7 @@ import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.events.mathax.CharTypedEvent;
 import mathax.legacy.client.events.mathax.ClientInitialisedEvent;
 import mathax.legacy.client.events.mathax.KeyEvent;
+import mathax.legacy.client.events.mathax.MouseButtonEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.renderer.GuiRenderer;
@@ -47,6 +48,7 @@ import net.minecraft.client.util.Window;
 import net.minecraft.util.Formatting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
@@ -90,6 +92,7 @@ public class MatHaxLegacy implements ClientModInitializer {
             Formatting.GRAY + "Matejko06 " + Formatting.RED + "based god",
             Formatting.RED + "MatHaxClient.xyz",
             Formatting.RED + "MatHaxClient.xyz/Discord",
+            Formatting.RED + Version.getStylized(),
 
             // MEME SPLASHES
             Formatting.YELLOW + "cope",
@@ -193,17 +196,6 @@ public class MatHaxLegacy implements ClientModInitializer {
     }
 
     @EventHandler
-    private void onGameJoined(GameJoinedEvent event) {
-        Version.checkedForLatest = false;
-    }
-
-    @EventHandler
-    private void onGameLeft(GameLeftEvent event) {
-        Version.checkedForLatest = false;
-        Systems.save();
-    }
-
-    @EventHandler
     private void onTick(TickEvent.Post event) {
         Capes.tick();
 
@@ -218,11 +210,30 @@ public class MatHaxLegacy implements ClientModInitializer {
     }
 
     @EventHandler
+    private void onGameJoined(GameJoinedEvent event) {
+        Version.checkedForLatest = false;
+    }
+
+    @EventHandler
+    private void onGameLeft(GameLeftEvent event) {
+        Version.checkedForLatest = false;
+        Systems.save();
+    }
+
+    @EventHandler
     private void onKey(KeyEvent event) {
         // Click GUI
         if (event.action == KeyAction.Press && KeyBinds.OPEN_CLICK_GUI.matchesKey(event.key, 0)) {
             if (Utils.mc.getOverlay() instanceof SplashOverlay) return;
-            if (!Utils.canUpdate() && Utils.isWhitelistedScreen() || Utils.mc.currentScreen == null) openClickGUI();
+            if (!Utils.canUpdate() && Utils.canOpenClickGUI()) openClickGUI();
+        }
+    }
+
+    @EventHandler
+    private void onMouseButton(MouseButtonEvent event) {
+        // Click GUI
+        if (event.action == KeyAction.Press && event.button != GLFW.GLFW_MOUSE_BUTTON_LEFT && KeyBinds.OPEN_CLICK_GUI.matchesMouse(event.button)) {
+            if (!Utils.canUpdate() && Utils.canOpenClickGUI()) openClickGUI();
         }
     }
 

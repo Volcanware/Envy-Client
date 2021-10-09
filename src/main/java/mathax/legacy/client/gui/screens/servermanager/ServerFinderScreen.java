@@ -159,7 +159,7 @@ public class ServerFinderScreen extends WindowScreen {
                     working++;
 
                     if (!isServerInList(pingers.get(i).getServerIP())) {
-                        multiplayerScreen.getServerList().add(new ServerInfo("Server finder " + working, pingers.get(i).getServerIP(), false));
+                        multiplayerScreen.getServerList().add(new ServerInfo("Server Finder " + working, pingers.get(i).getServerIP(), false));
                         multiplayerScreen.getServerList().saveFile();
                         ((IMultiplayerScreen)multiplayerScreen).getServerListWidget().setSelected(null);
                         ((IMultiplayerScreen)multiplayerScreen).getServerListWidget().setServers(multiplayerScreen.getServerList());
