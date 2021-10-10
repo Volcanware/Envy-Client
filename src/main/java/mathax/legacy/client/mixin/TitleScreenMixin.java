@@ -22,9 +22,13 @@ public class TitleScreenMixin extends Screen {
     private void init(CallbackInfo info) {
         if (firstTimeTitleScreen) {
             firstTimeTitleScreen = false;
-            MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen(true));
+            initTitleScreen(true);
         }
 
-        MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen(false));
+        initTitleScreen(false);
+    }
+
+    private void initTitleScreen(boolean fade) {
+        MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen(fade));
     }
 }

@@ -241,8 +241,8 @@ public class TitleScreen extends Screen {
                 }
             }
 
-            if (!Version.checkedForLatestTitle) {
-                Version.checkedForLatestTitle = true;
+            if (Version.didntCheckForLatestTitle) {
+                Version.didntCheckForLatestTitle = false;
 
                 Version.checkForUpdate(false);
             }

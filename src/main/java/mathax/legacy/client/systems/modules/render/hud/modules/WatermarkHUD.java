@@ -129,8 +129,8 @@ public class WatermarkHUD extends TripleTextHUDElement {
     public String getNewUpdate() {
         if (versionString == null) versionString = "";
 
-        if (!Version.checkedForLatest) {
-            Version.checkedForLatest = true;
+        if (Version.didntCheckForLatest) {
+            Version.didntCheckForLatest = false;
             switch (Version.checkLatest()) {
                 case 0 -> versionString = " [Could not get Latest Version]";
                 case 1 -> versionString = " [Outdated | Latest Version: v" + Version.getLatest() + "]";

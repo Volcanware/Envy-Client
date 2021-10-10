@@ -8,8 +8,8 @@ import net.minecraft.SharedConstants;
 import net.minecraft.util.Util;
 
 public class Version {
-    public static boolean checkedForLatestTitle = false;
-    public static boolean checkedForLatest = false;
+    public static boolean didntCheckForLatestTitle = false;
+    public static boolean didntCheckForLatest = false;
     private final String string;
     private final int[] numbers;
 

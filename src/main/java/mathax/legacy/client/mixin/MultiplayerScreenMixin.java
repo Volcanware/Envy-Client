@@ -48,7 +48,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
 
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
-        Version.checkedForLatest = false;
+        Version.didntCheckForLatest = true;
 
         addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> {
             client.setScreen(GuiThemes.get().proxiesScreen());
