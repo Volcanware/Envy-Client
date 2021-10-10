@@ -12,7 +12,7 @@ import net.minecraft.text.Text;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin extends Screen {
-    private boolean canFade = true;
+    private static boolean firstTimeTitleScreen = true;
 
     protected TitleScreenMixin(Text title) {
         super(title);
@@ -20,12 +20,11 @@ public class TitleScreenMixin extends Screen {
 
     @Inject(method = "init()V", at = @At("HEAD"))
     private void init(CallbackInfo info) {
-        boolean fade;
+        if (firstTimeTitleScreen) {
+            firstTimeTitleScreen = false;
+            MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen(true));
+        }
 
-        if (canFade) {
-            canFade = false;
-            fade = true;
-        } else fade = false;
-        MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen(fade));
+        MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen(false));
     }
 }
