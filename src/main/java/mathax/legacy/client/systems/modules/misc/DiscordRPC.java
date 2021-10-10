@@ -187,18 +187,14 @@ public class DiscordRPC extends Module {
                 else if (className.contains("com.terraformersmc.modmenu.gui")) rpc.state = "Viewing loaded mods";
             }
 
-            if (mc.world != null) {
-                return getWorldActivity();
-            }
+            if (mc.world != null) return getWorldActivity();
         }
 
         return "Unknown Activity";
     }
 
     private String getUsername() {
-        NameProtect nameProtect = Modules.get().get(NameProtect.class);
-
-        if (nameProtect.isActive()) return Modules.get().get(NameProtect.class).getName(mc.getSession().getUsername());
+        if (Modules.get().isActive(NameProtect.class)) return Modules.get().get(NameProtect.class).getName(mc.getSession().getUsername());
         else return mc.getSession().getUsername();
     }
 
