@@ -40,7 +40,6 @@ public class EXPThrower extends Module {
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (autoToggle.get()) {
-
             boolean shouldThrow = false;
 
             for (ItemStack itemStack : mc.player.getInventory().armor) {
@@ -72,9 +71,8 @@ public class EXPThrower extends Module {
     }
 
     private void throwExp(FindItemResult exp) {
-        if (exp.isOffhand()) {
-            mc.interactionManager.interactItem(mc.player, mc.world, Hand.OFF_HAND);
-        } else {
+        if (exp.isOffhand()) mc.interactionManager.interactItem(mc.player, mc.world, Hand.OFF_HAND);
+        else {
             InvUtils.swap(exp.getSlot(), true);
             mc.interactionManager.interactItem(mc.player, mc.world, Hand.MAIN_HAND);
             InvUtils.swapBack();
