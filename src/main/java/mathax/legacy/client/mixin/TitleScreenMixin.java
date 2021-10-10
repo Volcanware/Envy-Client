@@ -12,6 +12,7 @@ import net.minecraft.text.Text;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin extends Screen {
+    private boolean canFade = true;
 
     protected TitleScreenMixin(Text title) {
         super(title);
@@ -19,6 +20,7 @@ public class TitleScreenMixin extends Screen {
 
     @Inject(method = "init()V", at = @At("HEAD"))
     private void init(CallbackInfo info) {
-        MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen(true));
+        MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen(canFade));
+        canFade = false;
     }
 }
