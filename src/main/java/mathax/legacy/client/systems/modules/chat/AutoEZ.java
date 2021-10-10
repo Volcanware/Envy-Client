@@ -1,4 +1,3 @@
-
 package mathax.legacy.client.systems.modules.chat;
 
 import mathax.legacy.client.eventbus.EventHandler;
@@ -37,7 +36,7 @@ public class AutoEZ extends Module {
     private final List<String> popMessages = new ArrayList<>();
 
     private String newKillMsgText = "%killed_player%";
-    private String newPopMsgText = "%killed_player%";
+    private String newPopMsgText = "%popped_player%";
 
     private boolean canSendPop = true;
     private int ticks;
