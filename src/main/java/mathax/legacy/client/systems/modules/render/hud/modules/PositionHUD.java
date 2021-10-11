@@ -1,5 +1,8 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
+import mathax.legacy.client.settings.BoolSetting;
+import mathax.legacy.client.settings.Setting;
+import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.Freecam;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
@@ -16,6 +19,22 @@ public class PositionHUD extends HUDElement {
     private double left2Width;
     private String right2;
 
+    private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    private final Setting<Boolean> accurate = sgGeneral.add(new BoolSetting.Builder()
+        .name("accurate")
+        .description("Shows position with decimal points.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> oppositeDimension = sgGeneral.add(new BoolSetting.Builder()
+        .name("opposite-dimension")
+        .description("Displays the coords of the opposite dimension (Nether or Overworld).")
+        .defaultValue(true)
+        .build()
+    );
+
     public PositionHUD(HUD hud) {
         super(hud, "position", "Displays your coordinates in the world", true);
     }
@@ -24,29 +43,49 @@ public class PositionHUD extends HUDElement {
     public void update(HUDRenderer renderer) {
         left1Width = renderer.textWidth(left1);
         left2 = null;
+        right2 = null;
+
+        double height = renderer.textHeight();
+        if (oppositeDimension.get()) height = height * 2 + 2;
 
         if (isInEditor()) {
-            right1 = "0,0 0,0 0,0";
-            box.setSize(left1Width + renderer.textWidth(right1), renderer.textHeight() * 2 + 2);
+            right1 = "0, 0, 0";
+            if (accurate.get()) right1 = "0,0 0,0 0,0";
+            box.setSize(left1Width + renderer.textWidth(right1), height);
             return;
         }
 
         Freecam freecam = Modules.get().get(Freecam.class);
 
-        double x1 = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().x : mc.player.getX();
-        double y1 = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().y - mc.player.getEyeHeight(mc.player.getPose()) : mc.player.getY();
-        double z1 = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().z : mc.player.getZ();
+        double x, y, z;
 
-        right1 = String.format("%.1f %.1f %.1f", x1, y1, z1);
+        if (accurate.get()) {
+            x = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().x : mc.player.getX();
+            y = freecam.isActive() ?
+                mc.gameRenderer.getCamera().getPos().y - mc.player.getEyeHeight(mc.player.getPose()) :
+                mc.player.getY();
+            z = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().z : mc.player.getZ();
 
-        switch (PlayerUtils.getDimension()) {
-            case Overworld -> {
-                left2 = "Nether XYZ ";
-                right2 = String.format("%.1f %.1f %.1f", x1 / 8.0, y1, z1 / 8.0);
-            }
-            case Nether -> {
-                left2 = "Overworld XYZ ";
-                right2 = String.format("%.1f %.1f %.1f", x1 * 8.0, y1, z1 * 8.0);
+            right1 = String.format("%.1f %.1f %.1f", x, y, z);
+        }
+        else {
+            x = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getX() : mc.player.getBlockX();
+            y = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getY() : mc.player.getBlockY();
+            z = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getZ() : mc.player.getBlockZ();
+
+            right1 = String.format("%d %d %d", (int) x, (int) y, (int) z);
+        }
+
+        if (oppositeDimension.get()) {
+            switch (PlayerUtils.getDimension()) {
+                case Overworld -> {
+                    left2 = "Nether XYZ: ";
+                    right2 = String.format("%.1f %.1f %.1f", x / 8.0, y, z / 8.0);
+                }
+                case Nether -> {
+                    left2 = "Overworld XYZ: ";
+                    right2 = String.format("%.1f %.1f %.1f", x * 8.0, y, z * 8.0);
+                }
             }
         }
 
@@ -57,7 +96,7 @@ public class PositionHUD extends HUDElement {
             width = Math.max(width, left2Width + renderer.textWidth(right2));
         }
 
-        box.setSize(width, renderer.textHeight() * 2 + 2);
+        box.setSize(width, height);
     }
 
     @Override
@@ -65,13 +104,14 @@ public class PositionHUD extends HUDElement {
         double x = box.getX();
         double y = box.getY();
 
+        double xOffset = box.alignX(left1Width + renderer.textWidth(right1));
+        double yOffset = 0;
+
         if (left2 != null) {
             renderer.text(left2, x, y, hud.primaryColor.get());
             renderer.text(right2, x + left2Width, y, hud.secondaryColor.get());
+            yOffset = renderer.textHeight() + 2;
         }
-
-        double xOffset = box.alignX(left1Width + renderer.textWidth(right1));
-        double yOffset = renderer.textHeight() + 2;
 
         renderer.text(left1, x + xOffset, y + yOffset, hud.primaryColor.get());
         renderer.text(right1, x + xOffset + left1Width, y + yOffset, hud.secondaryColor.get());

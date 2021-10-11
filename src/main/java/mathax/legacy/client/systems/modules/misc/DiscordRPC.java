@@ -156,7 +156,7 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof ChatOptionsScreen) return "Changing Minecraft chat settings";
         else if (mc.currentScreen instanceof SoundOptionsScreen) return "Changing Minecraft sound settings";
         else if (mc.currentScreen instanceof LanguageOptionsScreen) return "Changing Minecraft language";
-        else if (className.contains("me.jellysquid.mods.sodium.client")) rpc.state = "Changing Sodium video settings";
+        else if (className.contains("me.jellysquid.mods.sodium.client")) return "Changing Sodium video settings";
         else if (mc.currentScreen instanceof VideoOptionsScreen) return "Changing Minecraft video settings";
         else if (mc.currentScreen instanceof SkinOptionsScreen) return "Changing Minecraft skin settings";
         else if (mc.currentScreen instanceof ControlsOptionsScreen) return "Changing Minecraft keybinds";
@@ -172,7 +172,7 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof ConfigTab.ConfigScreen) return "Editing Config";
         else if (mc.currentScreen instanceof EnemiesTab.EnemiesScreen) return "Editing Enemies";
         else if (mc.currentScreen instanceof FriendsTab.FriendsScreen) return "Editing Friends";
-        else if (className.contains("com.terraformersmc.modmenu.gui")) rpc.state = "Viewing loaded mods";
+        else if (className.contains("com.terraformersmc.modmenu.gui")) return "Viewing loaded mods";
         else if (mc.currentScreen instanceof GuiTab.GuiScreen) return "Editing GUI";
         else if (mc.currentScreen instanceof HudTab.HudScreen || mc.currentScreen instanceof HudElementScreen) return "Editing HUD";
         else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) return "Configuring Macros";

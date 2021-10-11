@@ -56,7 +56,8 @@ public class EnchantmentListSetting extends Setting<List<Enchantment>> {
 
         NbtList valueTag = new NbtList();
         for (Enchantment ench : get()) {
-            valueTag.add(NbtString.of(Registry.ENCHANTMENT.getId(ench).toString()));
+            Identifier id = Registry.ENCHANTMENT.getId(ench);
+            if (id != null) valueTag.add(NbtString.of(id.toString()));
         }
         tag.put("value", valueTag);
 
@@ -69,7 +70,8 @@ public class EnchantmentListSetting extends Setting<List<Enchantment>> {
 
         NbtList valueTag = tag.getList("value", 8);
         for (NbtElement tagI : valueTag) {
-            get().add(Registry.ENCHANTMENT.get(new Identifier(tagI.asString())));
+            Enchantment enchantment = Registry.ENCHANTMENT.get(new Identifier(tagI.asString()));
+            if (enchantment != null) get().add(enchantment);
         }
 
         changed();
