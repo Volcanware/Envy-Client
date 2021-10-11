@@ -135,6 +135,10 @@ public class DiscordRPC extends Module {
     }
 
     private String getActivity() {
+        if (mc.currentScreen == null) return "Unknown Activity";
+
+        String className = mc.currentScreen.getClass().getName();
+
         if (mc == null || mc.getOverlay() instanceof SplashOverlay) return "Minecraft is loading...";
         else if (mc.currentScreen instanceof TitleScreen || mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) return "In main menu";
         else if (mc.currentScreen instanceof MultiplayerScreen || mc.currentScreen instanceof ServerManagerScreen) return "In server selection";
@@ -152,6 +156,7 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof ChatOptionsScreen) return "Changing Minecraft chat settings";
         else if (mc.currentScreen instanceof SoundOptionsScreen) return "Changing Minecraft sound settings";
         else if (mc.currentScreen instanceof LanguageOptionsScreen) return "Changing Minecraft language";
+        else if (className.contains("me.jellysquid.mods.sodium.client")) rpc.state = "Changing Sodium video settings";
         else if (mc.currentScreen instanceof VideoOptionsScreen) return "Changing Minecraft video settings";
         else if (mc.currentScreen instanceof SkinOptionsScreen) return "Changing Minecraft skin settings";
         else if (mc.currentScreen instanceof ControlsOptionsScreen) return "Changing Minecraft keybinds";
@@ -167,6 +172,7 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof ConfigTab.ConfigScreen) return "Editing Config";
         else if (mc.currentScreen instanceof EnemiesTab.EnemiesScreen) return "Editing Enemies";
         else if (mc.currentScreen instanceof FriendsTab.FriendsScreen) return "Editing Friends";
+        else if (className.contains("com.terraformersmc.modmenu.gui")) rpc.state = "Viewing loaded mods";
         else if (mc.currentScreen instanceof GuiTab.GuiScreen) return "Editing GUI";
         else if (mc.currentScreen instanceof HudTab.HudScreen || mc.currentScreen instanceof HudElementScreen) return "Editing HUD";
         else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) return "Configuring Macros";
@@ -179,16 +185,7 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof ProxiesScreen) return "Editing proxies";
         else if (mc.currentScreen instanceof CreditsScreen) return "Reading credits";
         else if (mc.currentScreen instanceof RealmsScreen) return "Browsing Realms";
-        else {
-            if (mc.currentScreen != null) {
-                String className = mc.currentScreen.getClass().getName();
-
-                if (className.contains("me.jellysquid.mods.sodium.client")) rpc.state = "Changing Sodium video settings";
-                else if (className.contains("com.terraformersmc.modmenu.gui")) rpc.state = "Viewing loaded mods";
-            }
-
-            if (mc.world != null) return getWorldActivity();
-        }
+        else if (mc.world != null) return getWorldActivity();
 
         return "Unknown Activity";
     }

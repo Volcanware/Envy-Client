@@ -46,12 +46,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /*/-------------------------------------------------------------------------------------------------------------------------------/*/
 
 public class AutoTotem extends Module {
-    private final AtomicBoolean shouldWaitNextTick = new AtomicBoolean(false);
-    private static final double damage = (float)((int)((1 + 1) / 2.0D * 7.0D * 12.0D + 1.0D));
     private static final Explosion iexplosion = new Explosion(null, null, 0, 0, 0, 6.0F, false, Explosion.DestructionType.DESTROY);
+
+    private final AtomicBoolean shouldWaitNextTick = new AtomicBoolean(false);
+
     private boolean shouldOverrideTotem, shouldClickBlank;
-    private int selectedSlot = 0;
     public boolean locked;
+
+    private static final double damage = (float)((int)((1 + 1) / 2.0D * 7.0D * 12.0D + 1.0D));
+
+    private int selectedSlot = 0;
     private int totems, ticks;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -141,9 +145,7 @@ public class AutoTotem extends Module {
                 int totem_id = getTotemId();
                 if (totem_id == -1) return;
 
-                if (version.get() == Versions.mc_1_12) {
-                    return;
-                }
+                if (version.get() == Versions.mc_1_12) return;
 
                 InvUtils.swap(totem_id, selectedSlot);
 
@@ -164,9 +166,7 @@ public class AutoTotem extends Module {
                     return;
                 }
 
-                if (event.packet instanceof UpdateSelectedSlotC2SPacket packet) {
-                    selectedSlot = packet.getSelectedSlot();
-                }
+                if (event.packet instanceof UpdateSelectedSlotC2SPacket packet) selectedSlot = packet.getSelectedSlot();
         }
     }
 
@@ -184,9 +184,7 @@ public class AutoTotem extends Module {
 
                 locked = mode.get() == Mode.Strict || (mode.get() == Mode.Smart && (low || elytras));
 
-                if (locked && mc.player.getOffHandStack().getItem() != Items.TOTEM_OF_UNDYING) {
-                    InvUtils.move().from(result.getSlot()).toOffhand();
-                }
+                if (locked && mc.player.getOffHandStack().getItem() != Items.TOTEM_OF_UNDYING) InvUtils.move().from(result.getSlot()).toOffhand();
 
                 ticks = 0;
                 return;
@@ -198,18 +196,13 @@ public class AutoTotem extends Module {
 
                 if (shouldWaitNextTick.getAndSet(false)) return;
 
-                ItemStack
-                    offhandStack = mc.player.getInventory().getStack(40),
-                    cursorStack = mc.player.currentScreenHandler.getCursorStack();
+                ItemStack offhandStack = mc.player.getInventory().getStack(40), cursorStack = mc.player.currentScreenHandler.getCursorStack();
 
-                final boolean
-                    isHoldingTotem = cursorStack.getItem() == Items.TOTEM_OF_UNDYING,
-                    isTotemInOffhand = offhandStack.getItem() == Items.TOTEM_OF_UNDYING;
+                final boolean isHoldingTotem = cursorStack.getItem() == Items.TOTEM_OF_UNDYING, isTotemInOffhand = offhandStack.getItem() == Items.TOTEM_OF_UNDYING;
                 boolean canClickOffhand = mc.player.currentScreenHandler instanceof PlayerScreenHandler;
 
                 if (isTotemInOffhand && !shouldOverrideTotem()) {
-                    if (!(mc.currentScreen instanceof HandledScreen) &&
-                        (shouldClickBlank || (version.get() != Versions.mc_1_12 && isHoldingTotem))) {
+                    if (!(mc.currentScreen instanceof HandledScreen) && (shouldClickBlank || (version.get() != Versions.mc_1_12 && isHoldingTotem))) {
                         shouldClickBlank = false;
 
                         for (Slot slot : mc.player.currentScreenHandler.slots) {
@@ -238,8 +231,7 @@ public class AutoTotem extends Module {
                 if (version.get() == Versions.mc_1_12 && !canClickOffhand) {
                     ItemStack mainhand_stack = mc.player.getInventory().getStack(selectedSlot);
                     if (mainhand_stack.getItem() == Items.TOTEM_OF_UNDYING) {
-                        mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket
-                            (PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, BlockPos.ORIGIN, Direction.DOWN));
+                        mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, BlockPos.ORIGIN, Direction.DOWN));
                         return;
                     }
 
@@ -259,6 +251,7 @@ public class AutoTotem extends Module {
 
                         InvUtils.clickId(InvUtils.getFirstHotbarSlotId() + selectedSlot);
                     }
+
                     return;
                 }
 
@@ -290,16 +283,11 @@ public class AutoTotem extends Module {
                     if (mc.player.currentScreenHandler instanceof PlayerScreenHandler) return;
                     if (packet.getStatus() != 35 || packet.getEntity(mc.world) != mc.player) return;
 
-                    if (mc.player.getMainHandStack().getItem() != Items.TOTEM_OF_UNDYING && // inaccurate
-                        mc.player.getOffHandStack().getItem() == Items.TOTEM_OF_UNDYING)
-                        mc.player.getOffHandStack().decrement(1);
+                    if (mc.player.getMainHandStack().getItem() != Items.TOTEM_OF_UNDYING && mc.player.getOffHandStack().getItem() == Items.TOTEM_OF_UNDYING) mc.player.getOffHandStack().decrement(1);
                 }
-                else if (event.packet instanceof UpdateSelectedSlotS2CPacket packet) {
-                    selectedSlot = packet.getSlot();
-                }
-                else if (event.packet instanceof OpenScreenS2CPacket || event.packet instanceof CloseScreenS2CPacket) {
-                    shouldOverrideTotem = true;
-                }
+
+                else if (event.packet instanceof UpdateSelectedSlotS2CPacket packet) selectedSlot = packet.getSlot();
+                else if (event.packet instanceof OpenScreenS2CPacket || event.packet instanceof CloseScreenS2CPacket) shouldOverrideTotem = true;
         }
     }
 
@@ -323,9 +311,7 @@ public class AutoTotem extends Module {
     }
 
     private boolean shouldOverrideTotem() {
-        return shouldOverrideTotem && (version.get() == Versions.mc_1_16 ||
-            (!(mc.player.currentScreenHandler instanceof PlayerScreenHandler) &&
-                version.get() == Versions.mc_1_17));
+        return shouldOverrideTotem && (version.get() == Versions.mc_1_16 || (!(mc.player.currentScreenHandler instanceof PlayerScreenHandler) && version.get() == Versions.mc_1_17));
     }
 
     private boolean smartCheck() {
@@ -356,15 +342,13 @@ public class AutoTotem extends Module {
             mc.player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
 
         float f = 2.0F + (float) attribute_instance.getValue() / 4.0F;
-        float g = (float) MathHelper.clamp((float) mc.player.getArmor() - damage2 / f,
-            (float) mc.player.getArmor() * 0.2F, 20.0F);
+        float g = (float) MathHelper.clamp((float) mc.player.getArmor() - damage2 / f, (float) mc.player.getArmor() * 0.2F, 20.0F);
         damage2 *= 1 - g / 25.0F;
 
         // Reduce by enchants
         ((IExplosion) iexplosion).set(mc.player.getPos(), 6.0F, false);
 
-        int protLevel =
-            EnchantmentHelper.getProtectionAmount(mc.player.getArmorItems(), DamageSource.explosion(iexplosion));
+        int protLevel = EnchantmentHelper.getProtectionAmount(mc.player.getArmorItems(), DamageSource.explosion(iexplosion));
         if (protLevel > 20) protLevel = 20;
 
         damage2 *= 1 - (protLevel / 25.0);

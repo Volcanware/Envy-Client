@@ -303,6 +303,8 @@ public class Utils {
         title = title.replace("Esp", "ESP");
         title = title.replace("Tp", "TP");
         title = title.replace("Tps", "TPS");
+        title = title.replace("Xp", "XP");
+        title = title.replace("Exp", "EXP");
         title = title.replace("Gui", "GUI");
         title = title.replace("Hud", "HUD");
         title = title.replace("Fov", "FOV");
