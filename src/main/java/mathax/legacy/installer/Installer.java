@@ -48,8 +48,7 @@ public class Installer {
         );
 
         switch (option) {
-            case 0:
-                openUrl("https://fabricmc.net/use/");
+            case 0: openUrl("https://fabricmc.net/use/");
             case 1:
                 String os = System.getProperty("os.name").toLowerCase();
 
@@ -73,10 +72,8 @@ public class Installer {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            case 2:
-                openUrl("https://mathaxclient.xyz");
-            case 3:
-                openUrl("https://mathaxclient.xyz/Discord");
+            case 2: openUrl("https://mathaxclient.xyz");
+            case 3: openUrl("https://mathaxclient.xyz/Discord");
         }
     }
 
