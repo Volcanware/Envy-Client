@@ -298,12 +298,14 @@ public class Utils {
 
     public static String nameToTitle(String name) {
         name = Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
-        
+
         String title = name.replace("Esp", "ESP");
         title = title.replace("Tps", "TPS");
         title = title.replace("Tp", "TP");
         title = title.replace("Xp", "XP");
         title = title.replace("Exp", "EXP");
+        title = title.replace("EXPlosion", "Explosion");
+        title = title.replace("EXPand", "Expand");
         title = title.replace("Gui", "GUI");
         title = title.replace("Hud", "HUD");
         title = title.replace("Fov", "FOV");

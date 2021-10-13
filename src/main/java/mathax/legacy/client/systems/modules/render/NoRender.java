@@ -95,7 +95,7 @@ public class NoRender extends Module {
         .build()
     );
 
-    private final Setting<Boolean> noGuiBackground = sgOverlay.add(new BoolSetting.Builder()
+    private final Setting<Boolean> noGUIBackground = sgOverlay.add(new BoolSetting.Builder()
         .name("gui-background")
         .description("Disables rendering of the GUI background overlay.")
         .defaultValue(true)
@@ -333,8 +333,8 @@ public class NoRender extends Module {
         return isActive() && noVignette.get();
     }
 
-    public boolean noGuiBackground() {
-        return isActive() && noGuiBackground.get();
+    public boolean noGUIBackground() {
+        return isActive() && noGUIBackground.get();
     }
 
     public boolean noTotemAnimation() {
