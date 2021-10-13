@@ -57,7 +57,7 @@ public class BedAura extends Module {
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
         .name("delay")
         .description("The delay between placing beds in ticks.")
-        .defaultValue(4)
+        .defaultValue(7)
         .min(0)
         .sliderMax(20)
         .build()
@@ -90,7 +90,7 @@ public class BedAura extends Module {
 
     private final Setting<Boolean> targetFeet = sgTargeting.add(new BoolSetting.Builder()
         .name("target-feet")
-        .description("Targets player feet to bypass a few anticheats.")
+        .description("Targets player feet.")
         .defaultValue(false)
         .build()
     );
