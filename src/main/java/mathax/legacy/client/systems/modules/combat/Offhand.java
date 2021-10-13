@@ -104,9 +104,11 @@ public class Offhand extends Module {
             FindItemResult item = InvUtils.find(itemStack -> itemStack.getItem() == currentItem.item, hotbar.get() ? 0 : 9, 35);
 
             // No offhand item
-            if (!item.found() && !sentMessage) {
-                warning("Chosen item not found.");
-                sentMessage = true;
+            if (!item.found()) {
+                if (!sentMessage) {
+                    warning("Chosen item not found.");
+                    sentMessage = true;
+                }
             }
 
             // Swap to offhand
