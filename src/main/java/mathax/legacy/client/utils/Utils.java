@@ -270,18 +270,16 @@ public class Utils {
         if (mc.isInSingleplayer()) {
             // Singleplayer
             File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
-            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) {
-                folder = folder.getParentFile();
-            }
+            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) folder = folder.getParentFile();
+         
             return folder.getName();
         }
 
         if (mc.getCurrentServerEntry() != null) {
             // Multiplayer
             String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
-            if (SystemUtils.IS_OS_WINDOWS) {
-                name = name.replace(":", "_");
-            }
+            if (SystemUtils.IS_OS_WINDOWS) name = name.replace(":", "_");
+            
             return name;
         }
 
@@ -299,8 +297,9 @@ public class Utils {
     }
 
     public static String nameToTitle(String name) {
-        String title = Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
-        title = title.replace("Esp", "ESP");
+        String name = Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+        
+        title = name.replace("Esp", "ESP");
         title = title.replace("Tps", "TPS");
         title = title.replace("Tp", "TP");
         title = title.replace("Xp", "XP");
@@ -314,6 +313,7 @@ public class Utils {
         title = title.replace("Afk", "AFK");
         title = title.replace("32k", "32K");
         title = title.replace("Echest", "EChest");
+        
         return title;
     }
 
