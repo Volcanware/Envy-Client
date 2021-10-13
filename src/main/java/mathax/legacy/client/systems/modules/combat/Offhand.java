@@ -83,27 +83,19 @@ public class Offhand extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        // Not working AT mods
         if (autoTotem.mode.get() == AutoTotem.Mode.Strict && autoTotem.isActive()) {
             info("(highlight)" + title + "(default) does not work with (highlight)" + autoTotem.title + "(default) set to (highlight)Strict(default) mode, disabling...");
             toggle();
             return;
-        } else if (autoTotem.mode.get() == AutoTotem.Mode.Enhanced && autoTotem.isActive()) {
-            info("(highlight)" + title + "(default) currently does not work with (highlight)" + autoTotem.title + "(default) set to (highlight)Enhanced(default) mode, disabling...");
-            toggle();
-            return;
         }
 
-        // TEST
-        if (autoTotem.mode.get() == AutoTotem.Mode.Smart && autoTotem.isActive() && mc.player.getHealth() + mc.player.getAbsorptionAmount() - PlayerUtils.possibleHealthReductions(autoTotem.explosion.get(), autoTotem.fall.get()) <= autoTotem.health.get()) return;
+        if (autoTotem.mode.get() != AutoTotem.Mode.Strict && autoTotem.isActive() && PlayerUtils.getTotalHealth() - PlayerUtils.possibleHealthReductions(autoTotem.explosion.get(), autoTotem.fall.get()) <= autoTotem.health.get()) return;
 
         // Sword Gap
-        if ((mc.player.getMainHandStack().getItem() instanceof SwordItem
-            || mc.player.getMainHandStack().getItem() instanceof AxeItem) && swordGap.get()) currentItem = Item.EGap;
+        if ((mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem) && swordGap.get()) currentItem = Item.EGap;
 
             // Ca and mining
-        else if ((Modules.get().isActive(CrystalAura.class) && crystalCa.get())
-            || mc.interactionManager.isBreakingBlock() && crystalMine.get()) currentItem = Item.Crystal;
+        else if ((Modules.get().isActive(CrystalAura.class) && crystalCa.get()) || mc.interactionManager.isBreakingBlock() && crystalMine.get()) currentItem = Item.Crystal;
 
         else currentItem = item.get();
 
@@ -112,11 +104,9 @@ public class Offhand extends Module {
             FindItemResult item = InvUtils.find(itemStack -> itemStack.getItem() == currentItem.item, hotbar.get() ? 0 : 9, 35);
 
             // No offhand item
-            if (!item.found()) {
-                if (!sentMessage) {
-                    warning("Chosen item not found.");
-                    sentMessage = true;
-                }
+            if (!item.found() && !sentMessage) {
+                warning("Chosen item not found.");
+                sentMessage = true;
             }
 
             // Swap to offhand
@@ -131,9 +121,7 @@ public class Offhand extends Module {
             if (autoTotem.isActive()) {
                 FindItemResult totem = InvUtils.find(itemStack -> itemStack.getItem() == Items.TOTEM_OF_UNDYING, hotbar.get() ? 0 : 9, 35);
 
-                if (totem.found() && !totem.isOffhand()) {
-                    InvUtils.move().from(totem.getSlot()).toOffhand();
-                }
+                if (totem.found() && !totem.isOffhand()) InvUtils.move().from(totem.getSlot()).toOffhand();
             } else {
                 FindItemResult empty = InvUtils.find(ItemStack::isEmpty, hotbar.get() ? 0 : 9, 35);
                 if (empty.found()) InvUtils.move().fromOffhand().to(empty.getSlot());
@@ -147,10 +135,7 @@ public class Offhand extends Module {
     }
 
     private boolean usableItem() {
-        return mc.player.getMainHandStack().getItem() == Items.BOW
-            || mc.player.getMainHandStack().getItem() == Items.TRIDENT
-            || mc.player.getMainHandStack().getItem() == Items.CROSSBOW
-            || mc.player.getMainHandStack().getItem().isFood();
+        return mc.player.getMainHandStack().getItem() == Items.BOW || mc.player.getMainHandStack().getItem() == Items.TRIDENT || mc.player.getMainHandStack().getItem() == Items.CROSSBOW || mc.player.getMainHandStack().getItem().isFood();
     }
 
     @Override

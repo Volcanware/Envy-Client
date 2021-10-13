@@ -71,14 +71,14 @@ public class Speed extends Module {
     public final Setting<Boolean> inLiquids = sgGeneral.add(new BoolSetting.Builder()
         .name("in-liquids")
         .description("Uses speed when in lava or water.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 
     public final Setting<Boolean> whenSneaking = sgGeneral.add(new BoolSetting.Builder()
         .name("when-sneaking")
         .description("Uses speed when sneaking.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 

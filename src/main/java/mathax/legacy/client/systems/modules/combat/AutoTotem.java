@@ -7,6 +7,7 @@ import mathax.legacy.client.mixininterface.IExplosion;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.player.FindItemResult;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;
@@ -46,7 +47,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /*/-------------------------------------------------------------------------------------------------------------------------------/*/
 
 public class AutoTotem extends Module {
-    private static final Explosion iexplosion = new Explosion(null, null, 0, 0, 0, 6.0F, false, Explosion.DestructionType.DESTROY);
+    private static final Explosion iExplosion = new Explosion(null, null, 0, 0, 0, 6.0F, false, Explosion.DestructionType.DESTROY);
 
     private final AtomicBoolean shouldWaitNextTick = new AtomicBoolean(false);
 
@@ -59,6 +60,8 @@ public class AutoTotem extends Module {
     private int totems, ticks;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    // General
 
     public final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
@@ -73,25 +76,17 @@ public class AutoTotem extends Module {
         .defaultValue(0)
         .min(0)
         .sliderMax(10)
-        .visible(() -> mode.get() == Mode.Strict || mode.get() == Mode.Smart)
+        .visible(() -> mode.get() != Mode.Enhanced)
         .build()
     );
 
     public final Setting<Integer> health = sgGeneral.add(new IntSetting.Builder()
         .name("health")
-        .description("The health to hold a totem at.")
+        .description("The health to hold a totem at. (36 to disable)")
         .defaultValue(10)
         .min(0).max(36)
         .sliderMax(36)
-        .visible(() -> mode.get() == Mode.Smart)
-        .build()
-    );
-
-    private final Setting<Boolean> elytra = sgGeneral.add(new BoolSetting.Builder()
-        .name("elytra")
-        .description("Will always hold a totem when flying with elytra.")
-        .defaultValue(true)
-        .visible(() -> mode.get() == Mode.Smart)
+        .visible(() -> mode.get() != Mode.Strict)
         .build()
     );
 
@@ -99,7 +94,15 @@ public class AutoTotem extends Module {
         .name("explosion")
         .description("Will hold a totem when explosion damage could kill you.")
         .defaultValue(true)
-        .visible(() -> mode.get() == Mode.Smart)
+        .visible(() -> mode.get() != Mode.Strict)
+        .build()
+    );
+
+    private final Setting<Boolean> elytra = sgGeneral.add(new BoolSetting.Builder()
+        .name("elytra")
+        .description("Will always hold a totem when flying with elytra.")
+        .defaultValue(true)
+        .visible(() -> mode.get() != Mode.Strict)
         .build()
     );
 
@@ -107,7 +110,7 @@ public class AutoTotem extends Module {
         .name("fall")
         .description("Will hold a totem when fall damage could kill you.")
         .defaultValue(true)
-        .visible(() -> mode.get() == Mode.Smart)
+        .visible(() -> mode.get() != Mode.Strict)
         .build()
     );
 
@@ -119,7 +122,7 @@ public class AutoTotem extends Module {
         .build()
     );
 
-    private final Setting<Boolean> close_screen = sgGeneral.add(new BoolSetting.Builder()
+    private final Setting<Boolean> closeScreen = sgGeneral.add(new BoolSetting.Builder()
         .name("close-screen")
         .description("Closes any screen handler while putting totem in offhand.")
         .defaultValue(false)
@@ -172,15 +175,16 @@ public class AutoTotem extends Module {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onTick(TickEvent.Pre event) {
+        FindItemResult result = InvUtils.find(Items.TOTEM_OF_UNDYING);
+        totems = result.getCount();
+
+        boolean low = PlayerUtils.getTotalHealth() - PlayerUtils.possibleHealthReductions(explosion.get(), fall.get()) <= health.get();
+        boolean elytras = elytra.get() && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA && mc.player.isFallFlying();
+
         switch (mode.get()) {
             case Strict, Smart:
-            FindItemResult result = InvUtils.find(Items.TOTEM_OF_UNDYING);
-            totems = result.getCount();
-
             if (totems <= 0) locked = false;
             else if (ticks >= delay.get()) {
-                boolean low = mc.player.getHealth() + mc.player.getAbsorptionAmount() - PlayerUtils.possibleHealthReductions(explosion.get(), fall.get()) <= health.get();
-                boolean elytras = elytra.get() && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA && mc.player.isFallFlying();
 
                 locked = mode.get() == Mode.Strict || (mode.get() == Mode.Smart && (low || elytras));
 
@@ -192,9 +196,13 @@ public class AutoTotem extends Module {
 
             ticks++;
             case Enhanced:
+                if (totems <= 0) locked = false;
+
                 if (mc.player.currentScreenHandler instanceof CreativeInventoryScreen.CreativeScreenHandler) return;
 
-                if (shouldWaitNextTick.getAndSet(false)) return;
+                locked = low || elytras;
+
+                if (shouldWaitNextTick.getAndSet(false) || !locked) return;
 
                 ItemStack offhandStack = mc.player.getInventory().getStack(40), cursorStack = mc.player.currentScreenHandler.getCursorStack();
 
@@ -218,8 +226,8 @@ public class AutoTotem extends Module {
                 final int totem_id = getTotemId();
                 if (totem_id == -1 && !isHoldingTotem) return;
 
-                if (!canClickOffhand && close_screen.get() && mc.player.getInventory().count(Items.TOTEM_OF_UNDYING) < 1) {
-                    mc.player.closeHandledScreen();
+                if (!canClickOffhand && closeScreen.get() && mc.player.getInventory().count(Items.TOTEM_OF_UNDYING) < 1) {
+                mc.player.closeHandledScreen();
                     canClickOffhand = true;
                 }
 
@@ -279,6 +287,8 @@ public class AutoTotem extends Module {
 
                 ticks = 0;
             case Enhanced:
+                if (PlayerUtils.getTotalHealth() > health.get() && Modules.get().isActive(Offhand.class)) return;
+
                 if (event.packet instanceof EntityStatusS2CPacket packet) {
                     if (mc.player.currentScreenHandler instanceof PlayerScreenHandler) return;
                     if (packet.getStatus() != 35 || packet.getEntity(mc.world) != mc.player) return;
@@ -318,7 +328,7 @@ public class AutoTotem extends Module {
         if (mc.player.isFallFlying()) return false;
         if (getLatency() >= 125) return false;
 
-        float health = getHealth();
+        double health = PlayerUtils.getTotalHealth();
         if (health < 10.0F) return false;
 
         if (mc.player.fallDistance > 3.f && health - mc.player.fallDistance * 0.5 <= 2.0F) return false;
@@ -338,26 +348,20 @@ public class AutoTotem extends Module {
 
         damage2 *= resistance_coefficient;
 
-        EntityAttributeInstance attribute_instance =
-            mc.player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
+        EntityAttributeInstance attribute_instance = mc.player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
 
         float f = 2.0F + (float) attribute_instance.getValue() / 4.0F;
         float g = (float) MathHelper.clamp((float) mc.player.getArmor() - damage2 / f, (float) mc.player.getArmor() * 0.2F, 20.0F);
         damage2 *= 1 - g / 25.0F;
 
-        // Reduce by enchants
-        ((IExplosion) iexplosion).set(mc.player.getPos(), 6.0F, false);
+        ((IExplosion) iExplosion).set(mc.player.getPos(), 6.0F, false);
 
-        int protLevel = EnchantmentHelper.getProtectionAmount(mc.player.getArmorItems(), DamageSource.explosion(iexplosion));
+        int protLevel = EnchantmentHelper.getProtectionAmount(mc.player.getArmorItems(), DamageSource.explosion(iExplosion));
         if (protLevel > 20) protLevel = 20;
 
         damage2 *= 1 - (protLevel / 25.0);
 
         return health - damage2 > 2.0F;
-    }
-
-    private float getHealth() {
-        return mc.player.getHealth() + mc.player.getAbsorptionAmount();
     }
 
     private long getLatency() {

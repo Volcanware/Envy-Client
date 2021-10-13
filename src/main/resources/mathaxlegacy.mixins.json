@@ -85,6 +85,7 @@
     "HeldItemRendererMixin",
     "HorseBaseEntityMixin",
     "HorseScreenHandlerAccessor",
+    "ICustomPayloadC2SPacketAccessor",
     "IdentifierAccessor",
     "InGameHudMixin",
     "InGameOverlayRendererMixin",

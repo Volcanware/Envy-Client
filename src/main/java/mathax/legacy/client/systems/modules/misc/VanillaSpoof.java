@@ -4,6 +4,7 @@ import io.netty.buffer.Unpooled;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.mixin.CustomPayloadC2SPacketAccessor;
+import mathax.legacy.client.mixin.ICustomPayloadC2SPacketAccessor;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.eventbus.EventHandler;
@@ -25,14 +26,11 @@ public class VanillaSpoof extends Module {
     private class Listener {
         @EventHandler
         private void onPacketSend(PacketEvent.Send event) {
-            if (!isActive() || !(event.packet instanceof CustomPayloadC2SPacket)) return;
-            CustomPayloadC2SPacketAccessor packet = (CustomPayloadC2SPacketAccessor) event.packet;
-            Identifier id = packet.getChannel();
-
-            if (id.equals(CustomPayloadC2SPacket.BRAND)) {
-                packet.setData(new PacketByteBuf(Unpooled.buffer()).writeString("vanilla"));
-            } else if (StringUtils.containsIgnoreCase(packet.getData().toString(StandardCharsets.UTF_8), "fabric")) {
-                event.cancel();
+            if (!isActive()) return;
+            if (event.packet instanceof CustomPayloadC2SPacket packet) {
+                ICustomPayloadC2SPacketAccessor accessor = (ICustomPayloadC2SPacketAccessor) packet;
+                if (accessor.getChannel().equals(CustomPayloadC2SPacket.BRAND)) accessor.setData(new PacketByteBuf(Unpooled.buffer()).writeString("vanilla"));
+                else if (accessor.getData().toString(StandardCharsets.UTF_8).toLowerCase().contains("fabric")) event.setCancelled(true);
             }
         }
     }

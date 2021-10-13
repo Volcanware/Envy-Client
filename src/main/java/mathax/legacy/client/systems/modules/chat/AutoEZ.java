@@ -3,12 +3,6 @@ package mathax.legacy.client.systems.modules.chat;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.widgets.WWidget;
-import mathax.legacy.client.gui.widgets.containers.WTable;
-import mathax.legacy.client.gui.widgets.input.WTextBox;
-import mathax.legacy.client.gui.widgets.pressable.WMinus;
-import mathax.legacy.client.gui.widgets.pressable.WPlus;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
@@ -20,24 +14,11 @@ import mathax.legacy.client.utils.misc.Placeholders;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
 import net.minecraft.network.packet.s2c.play.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class AutoEZ extends Module {
-    private final List<String> killMessages = new ArrayList<>();
-    private final List<String> popMessages = new ArrayList<>();
-
-    private String newKillMsgText = "%killed_player%";
-    private String newPopMsgText = "%popped_player%";
-
     private boolean canSendPop = true;
     private int ticks;
 
@@ -55,25 +36,33 @@ public class AutoEZ extends Module {
         .build()
     );
 
-    private final Setting<Mode> mode = sgKills.add(new EnumSetting.Builder<Mode>()
+    private final Setting<Mode> killMode = sgKills.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Determines what messages to use.")
         .defaultValue(Mode.MatHax)
         .build()
     );
 
-    private final Setting<MessageStyle> messageStyle = sgKills.add(new EnumSetting.Builder<MessageStyle>()
+    private final Setting<MessageStyle> killMessageStyle = sgKills.add(new EnumSetting.Builder<MessageStyle>()
         .name("style")
         .description("Determines what message style to use.")
         .defaultValue(MessageStyle.EZ)
-        .visible(() -> mode.get() == Mode.MatHax)
+        .visible(() -> killMode.get() == Mode.MatHax)
         .build()
     );
 
-    private final Setting<Boolean> ignoreFriends = sgKills.add(new BoolSetting.Builder()
+    private final Setting<Boolean> killIgnoreFriends = sgKills.add(new BoolSetting.Builder()
         .name("ignore-friends")
         .description("Ignores friends.")
         .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<List<String>> killMessages = sgKills.add(new StringListSetting.Builder()
+        .name("messages")
+        .description("Custom messages when you kill someone.")
+        .defaultValue(Arrays.asList("haha %killed_player% is a noob! EZZz", "I just raped %killed_player%!", "I just ended %killed_player%!", "I just EZZz'd %killed_player%!", "I just fucked %killed_player%!", "Take the L nerd %killed_player%! You just got ended!", "I just nae nae'd %killed_player%!", "I am too good for %killed_player%!"))
+        .visible(() -> killMode.get() == Mode.Custom)
         .build()
     );
 
@@ -100,157 +89,16 @@ public class AutoEZ extends Module {
         .build()
     );
 
+    private final Setting<List<String>> totemMessages = sgTotemPops.add(new StringListSetting.Builder()
+        .name("messages")
+        .description("Custom messages when you pop someone.")
+        .defaultValue(Arrays.asList("%popped_player% just lost 1 totem thanks to my skill!", "I just ended %popped_player%'s totem!", "I just popped %popped_player%!", "I just easily popped %popped_player%!"))
+        .visible(() -> totemMode.get() == Mode.Custom)
+        .build()
+    );
+
     public AutoEZ() {
         super(Categories.Chat, Items.LIGHTNING_ROD, "auto-ez", "Announces EASY when you kill or pop someone.");
-    }
-
-    @Override
-    public WWidget getWidget(GuiTheme theme) {
-        WTable table = theme.table();
-        killMessagesFillTable(theme, table);
-        table.row();
-        popMessagesFillTable(theme, table);
-
-        return table;
-    }
-
-    private void killMessagesFillTable(GuiTheme theme, WTable table) {
-        table.add(theme.horizontalSeparator("Custom Kill Messages")).expandX();
-        table.row();
-
-        // Messages
-        killMessages.removeIf(String::isEmpty);
-
-        for (int i = 0; i < killMessages.size(); i++) {
-            int msgI = i;
-            String killMessage = killMessages.get(i);
-
-            WTextBox textBox = table.add(theme.textBox(killMessage)).expandX().widget();
-            textBox.action = () -> killMessages.set(msgI, textBox.get());
-
-            WMinus delete = table.add(theme.minus()).widget();
-            delete.action = () -> {
-                killMessages.remove(msgI);
-
-                table.clear();
-                killMessagesFillTable(theme, table);
-            };
-
-            table.row();
-        }
-
-        if (!killMessages.isEmpty()) {
-            table.add(theme.horizontalSeparator()).expandX();
-            table.row();
-        }
-
-        // New Message
-        WTextBox textBox = table.add(theme.textBox(newKillMsgText)).minWidth(100).expandX().widget();
-        textBox.action = () -> newKillMsgText = textBox.get();
-
-        WPlus add = table.add(theme.plus()).widget();
-        add.action = () -> {
-            killMessages.add(newKillMsgText);
-            newKillMsgText = "%killed_player%";
-
-            table.clear();
-            killMessagesFillTable(theme, table);
-        };
-    }
-
-    private void popMessagesFillTable(GuiTheme theme, WTable table) {
-        table.add(theme.horizontalSeparator("Custom Pop Messages")).expandX();
-        table.row();
-
-        // Messages
-        popMessages.removeIf(String::isEmpty);
-
-        for (int i = 0; i < popMessages.size(); i++) {
-            int msgI = i;
-            String popMessage = popMessages.get(i);
-
-            WTextBox textBox = table.add(theme.textBox(popMessage)).expandX().widget();
-            textBox.action = () -> popMessages.set(msgI, textBox.get());
-
-            WMinus delete = table.add(theme.minus()).widget();
-            delete.action = () -> {
-                popMessages.remove(msgI);
-
-                table.clear();
-                popMessagesFillTable(theme, table);
-            };
-
-            table.row();
-        }
-
-        if (!popMessages.isEmpty()) {
-            table.add(theme.horizontalSeparator()).expandX();
-            table.row();
-        }
-
-        // New Message
-        WTextBox textBox = table.add(theme.textBox(newPopMsgText)).minWidth(100).expandX().widget();
-        textBox.action = () -> newPopMsgText = textBox.get();
-
-        WPlus add = table.add(theme.plus()).widget();
-        add.action = () -> {
-            popMessages.add(newPopMsgText);
-            newPopMsgText = "%popped_player%";
-
-            table.clear();
-            popMessagesFillTable(theme, table);
-        };
-    }
-
-    @Override
-    public NbtCompound toTag() {
-        NbtCompound tag = super.toTag();
-
-        killMessages.removeIf(String::isEmpty);
-        NbtList killMessagesTag = new NbtList();
-
-        popMessages.removeIf(String::isEmpty);
-        NbtList popMessagesTag = new NbtList();
-
-        for (String killMessage : killMessages) killMessagesTag.add(NbtString.of(killMessage));
-        tag.put("killMessages", killMessagesTag);
-
-        for (String popMessage : popMessages) popMessagesTag.add(NbtString.of(popMessage));
-        tag.put("popMessages", popMessagesTag);
-
-        return tag;
-    }
-
-    @Override
-    public Module fromTag(NbtCompound tag) {
-        killMessages.clear();
-        popMessages.clear();
-
-        if (tag.contains("killMessages")) {
-            NbtList killMessagesTag = tag.getList("killMessages", 8);
-            for (NbtElement killMessageTag : killMessagesTag) killMessages.add(killMessageTag.asString());
-        } else {
-            killMessages.add("haha %killed_player% is a noob! EZZz");
-            killMessages.add("I just raped %killed_player%!");
-            killMessages.add("I just ended %killed_player%!");
-            killMessages.add("I just EZZz'd %killed_player%!");
-            killMessages.add("I just fucked %killed_player%!");
-            killMessages.add("Take the L nerd %killed_player%! You just got ended!");
-            killMessages.add("I just nae nae'd %killed_player%!");
-            killMessages.add("I am too good for %killed_player%!");
-        }
-
-        if (tag.contains("popMessages")) {
-            NbtList popMessagesTag = tag.getList("popMessages", 8);
-            for (NbtElement popMessageTag : popMessagesTag) popMessages.add(popMessageTag.asString());
-        } else {
-            popMessages.add("%popped_player% just lost 1 totem thanks to my skill!");
-            popMessages.add("I just ended %popped_player%'s totem!");
-            popMessages.add("I just popped %popped_player%!");
-            popMessages.add("I just easily popped %popped_player%!");
-        }
-
-        return super.fromTag(tag);
     }
 
     // Kills
@@ -258,7 +106,7 @@ public class AutoEZ extends Module {
     @EventHandler
     public void onPacketReadMessage(PacketEvent.Receive event) {
         if (!kills.get()) return;
-        if (killMessages.isEmpty() && mode.get() == Mode.Custom) return;
+        if (killMessages.get().isEmpty() && killMode.get() == Mode.Custom) return;
         if (event.packet instanceof GameMessageS2CPacket) {
             String msg = ((GameMessageS2CPacket) event.packet).getMessage().getString();
             for (PlayerEntity player : mc.world.getPlayers()) {
@@ -271,14 +119,14 @@ public class AutoEZ extends Module {
                             if (Modules.get().isActive(CrystalAura.class)) {
                                 if (!Modules.get().isActive(CEVBreaker.class)) {
                                     if (mc.player.distanceTo(player) < Modules.get().get(CrystalAura.class).targetRange.get()) {
-                                        if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                        if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
                                         if (EntityUtils.getGameMode(player).isCreative()) return;
                                         String message = getMessageStyle();
                                         mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
                                     }
                                 } else {
                                     if (mc.player.distanceTo(player) < 5) {
-                                        if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                        if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
                                         if (EntityUtils.getGameMode(player).isCreative()) return;
                                         String message = getMessageStyle();
                                         mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
@@ -286,7 +134,7 @@ public class AutoEZ extends Module {
                                 }
                             } else {
                                 if (mc.player.distanceTo(player) < 7) {
-                                    if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                    if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
                                     if (EntityUtils.getGameMode(player).isCreative()) return;
                                     String message = getMessageStyle();
                                     mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
@@ -294,7 +142,7 @@ public class AutoEZ extends Module {
                             }
                         } else {
                             if (mc.player.distanceTo(player) < 8) {
-                                if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
                                 if (EntityUtils.getGameMode(player).isCreative()) return;
                                 String message = getMessageStyle();
                                 mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
@@ -303,14 +151,14 @@ public class AutoEZ extends Module {
                     } else {
                         if ((msg.contains("bed") || msg.contains("[Intentional Game Design]")) && (Modules.get().isActive(BedAura.class))) {
                             if ((mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get())) {
-                                if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
                                 if (EntityUtils.getGameMode(player).isCreative()) return;
                                 String message = getMessageStyle();
                                 mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
                             }
                         } else if ((msg.contains("anchor") || msg.contains("[Intentional Game Design]")) && Modules.get().isActive(AnchorAura.class)) {
                             if (mc.player.distanceTo(player) < Modules.get().get(AnchorAura.class).targetRange.get()) {
-                                if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+                                if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
                                 if (EntityUtils.getGameMode(player).isCreative()) return;
                                 String message = getMessageStyle();
                                 mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
@@ -323,12 +171,12 @@ public class AutoEZ extends Module {
     }
 
     public String getMessageStyle() {
-        return switch (mode.get()) {
-            case MatHax -> switch (messageStyle.get()) {
+        return switch (killMode.get()) {
+            case MatHax -> switch (killMessageStyle.get()) {
                 case EZ -> getMessage().get(random.nextInt(getMessage().size()));
                 case GG -> getGGMessage().get(random.nextInt(getGGMessage().size()));
             };
-            case Custom -> killMessages.get(random.nextInt(killMessages.size()));
+            case Custom -> killMessages.get().get(random.nextInt(killMessages.get().size()));
         };
     }
 
@@ -359,13 +207,13 @@ public class AutoEZ extends Module {
     @EventHandler
     private void onReceivePacket(PacketEvent.Receive event) {
         if (!totems.get()) return;
-        if (popMessages.isEmpty() && totemMode.get() == Mode.Custom) return;
+        if (totemMessages.get().isEmpty() && totemMode.get() == Mode.Custom) return;
         if (!(event.packet instanceof EntityStatusS2CPacket)) return;
 
-        EntityStatusS2CPacket p = (EntityStatusS2CPacket) event.packet;
-        if (p.getStatus() != 35) return;
+        EntityStatusS2CPacket packet = (EntityStatusS2CPacket) event.packet;
+        if (packet.getStatus() != 35) return;
 
-        Entity entity = p.getEntity(mc.world);
+        Entity entity = packet.getEntity(mc.world);
 
         if (!(entity instanceof PlayerEntity)) return;
 
@@ -375,7 +223,7 @@ public class AutoEZ extends Module {
 
         if (EntityUtils.getGameMode(mc.player).isCreative()) return;
         if (canSendPop) {
-            String message = getPopMessageStyle();
+            String message = getTotemMessageStyle();
             mc.player.sendChatMessage(Placeholders.apply(message).replace("%popped_player%", entity.getName().getString()));
             canSendPop = false;
         }
@@ -399,14 +247,14 @@ public class AutoEZ extends Module {
         }
     }
 
-    public String getPopMessageStyle() {
+    public String getTotemMessageStyle() {
         return switch (totemMode.get()) {
-            case MatHax -> getPopMessage().get(random.nextInt(getPopMessage().size()));
-            case Custom -> popMessages.get(random.nextInt(popMessages.size()));
+            case MatHax -> getTotemMessage().get(random.nextInt(getTotemMessage().size()));
+            case Custom -> totemMessages.get().get(random.nextInt(totemMessages.get().size()));
         };
     }
 
-    private static List<String> getPopMessage() {
+    private static List<String> getTotemMessage() {
         return Arrays.asList(
             "%popped_player% just got popped by MatHax Legacy!",
             "Keep popping %popped_player%! MatHax Legacy owns you!",

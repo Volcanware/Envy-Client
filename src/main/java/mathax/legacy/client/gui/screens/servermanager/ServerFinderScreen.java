@@ -92,8 +92,7 @@ public class ServerFinderScreen extends WindowScreen {
             for (int change : changes)
                 for (int i2 = 0; i2 <= 255; i2++)
                 {
-                    if (state == ServerFinderState.CANCELLED)
-                        return;
+                    if (state == ServerFinderState.CANCELLED) return;
 
                     int[] ipParts2 = ipParts.clone();
                     ipParts2[2] = ipParts[2] + change & 0xff;
@@ -105,16 +104,14 @@ public class ServerFinderScreen extends WindowScreen {
                     pinger.ping(ip);
                     pingers.add(pinger);
                     while (pingers.size() >= maxThreads) {
-                        if (state == ServerFinderState.CANCELLED)
-                            return;
+                        if (state == ServerFinderState.CANCELLED) return;
 
                         updatePingers(pingers);
                     }
                 }
 
             while (pingers.size() > 0) {
-                if (state == ServerFinderState.CANCELLED)
-                    return;
+                if (state == ServerFinderState.CANCELLED) return;
 
                 updatePingers(pingers);
             }
@@ -176,7 +173,7 @@ public class ServerFinderScreen extends WindowScreen {
         super.onClose();
     }
 
-    enum ServerFinderState {
+    public enum ServerFinderState {
         NOT_RUNNING(""),
         SEARCHING("Searching..."),
         RESOLVING("Resolving..."),
