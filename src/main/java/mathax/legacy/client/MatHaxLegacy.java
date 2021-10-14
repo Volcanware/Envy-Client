@@ -130,6 +130,8 @@ public class MatHaxLegacy implements ClientModInitializer {
                 Modules.get().get(DiscordRPC.class).setVisible(false); // DISCORD RPC
                 Modules.get().get(Background.class).toggle(); // BACKGROUND
                 Modules.get().get(Background.class).setVisible(false); // BACKGROUND
+                Modules.get().get(MiddleClickFriend.class).toggle(); // MIDDLE CLICK FRIEND
+                Modules.get().get(MiddleClickFriend.class).setVisible(false); // MIDDLE CLICK FRIEND
                 Modules.get().get(HUD.class).toggle(); // HUD
                 Modules.get().get(HUD.class).setVisible(false); // HUD
                 Modules.get().get(HUD.class).reset.run(); // DEFAULT HUD LOCATIONS AND TOGGLES
