@@ -60,7 +60,7 @@ public class Systems {
 
         for (System<?> system : systems.values()) system.save(folder);
 
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems saved in %time% milliseconds.".replace("%time%", String.valueOf(java.lang.System.currentTimeMillis() - start)));
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems saved in {} milliseconds.", java.lang.System.currentTimeMillis() - start);
     }
 
     public static void save() {
@@ -81,7 +81,7 @@ public class Systems {
             if (system != config) system.load(folder);
         }
 
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems loaded in %time% milliseconds.".replace("%time%", String.valueOf(java.lang.System.currentTimeMillis() - start)));
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems loaded in {} milliseconds.", java.lang.System.currentTimeMillis() - start);
     }
 
     public static void load() {

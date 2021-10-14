@@ -145,17 +145,17 @@ public class AutoTotem extends Module {
         switch (mode.get()) {
             case Strict, Smart: return;
             case Enhanced:
-                int totem_id = getTotemId();
-                if (totem_id == -1) return;
+                int totemID = getTotemId();
+                if (totemID == -1) return;
 
                 if (version.get() == Versions.mc_1_12) return;
 
-                InvUtils.swap(totem_id, selectedSlot);
+                InvUtils.swap(totemID, selectedSlot);
 
-                totem_id = getTotemId();
-                if (totem_id == -1) return;
+                totemID = getTotemId();
+                if (totemID == -1) return;
 
-                InvUtils.swap(totem_id, 40);
+                InvUtils.swap(totemID, 40);
         }
     }
 
@@ -223,8 +223,8 @@ public class AutoTotem extends Module {
                     return;
                 }
 
-                final int totem_id = getTotemId();
-                if (totem_id == -1 && !isHoldingTotem) return;
+                final int totemID = getTotemId();
+                if (totemID == -1 && !isHoldingTotem) return;
 
                 if (!canClickOffhand && closeScreen.get() && mc.player.getInventory().count(Items.TOTEM_OF_UNDYING) < 1) {
                 mc.player.closeHandledScreen();
@@ -237,8 +237,8 @@ public class AutoTotem extends Module {
                 }
 
                 if (version.get() == Versions.mc_1_12 && !canClickOffhand) {
-                    ItemStack mainhand_stack = mc.player.getInventory().getStack(selectedSlot);
-                    if (mainhand_stack.getItem() == Items.TOTEM_OF_UNDYING) {
+                    ItemStack mainhandStack = mc.player.getInventory().getStack(selectedSlot);
+                    if (mainhandStack.getItem() == Items.TOTEM_OF_UNDYING) {
                         mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, BlockPos.ORIGIN, Direction.DOWN));
                         return;
                     }
@@ -249,7 +249,7 @@ public class AutoTotem extends Module {
                     }
                 }
 
-                if (totem_id == -1) {
+                if (totemID == -1) {
                     if (isHoldingTotem) {
                         for (Slot slot : mc.player.currentScreenHandler.slots) {
                             if (!slot.getStack().isEmpty()) continue;
@@ -264,13 +264,12 @@ public class AutoTotem extends Module {
                 }
 
                 if (version.get() == Versions.mc_1_12) {
-                    InvUtils.clickId(totem_id);
+                    InvUtils.clickId(totemID);
                     shouldClickBlank = true;
                     return;
                 }
 
-                InvUtils.swap(totem_id, 40);
-
+                InvUtils.swap(totemID, 40);
                 shouldOverrideTotem = !isTotemInOffhand;
         }
     }
@@ -306,13 +305,13 @@ public class AutoTotem extends Module {
     }
 
     private int getTotemId() {
-        final int hotbar_start = InvUtils.getFirstHotbarSlotId();
-        for (int i = hotbar_start; i < hotbar_start + 9; ++i) {
+        final int hotbarStart = InvUtils.getFirstHotbarSlotId();
+        for (int i = hotbarStart; i < hotbarStart + 9; ++i) {
             if (mc.player.currentScreenHandler.getSlot(i).getStack().getItem() != Items.TOTEM_OF_UNDYING) continue;
             return i;
         }
 
-        for (int i = 0; i < hotbar_start; ++i) {
+        for (int i = 0; i < hotbarStart; ++i) {
             if (mc.player.currentScreenHandler.getSlot(i).getStack().getItem() != Items.TOTEM_OF_UNDYING) continue;
             return i;
         }
@@ -324,7 +323,7 @@ public class AutoTotem extends Module {
         return shouldOverrideTotem && (version.get() == Versions.mc_1_16 || (!(mc.player.currentScreenHandler instanceof PlayerScreenHandler) && version.get() == Versions.mc_1_17));
     }
 
-    private boolean smartCheck() {
+    /*private boolean smartCheck() {
         if (mc.player.isFallFlying()) return false;
         if (getLatency() >= 125) return false;
 
@@ -333,10 +332,10 @@ public class AutoTotem extends Module {
 
         if (mc.player.fallDistance > 3.f && health - mc.player.fallDistance * 0.5 <= 2.0F) return false;
 
-        double resistance_coefficient = 1.d;
+        double resistanceCoefficient = 1.d;
         if (mc.player.hasStatusEffect(StatusEffects.RESISTANCE)) {
-            resistance_coefficient -= (mc.player.getStatusEffect(StatusEffects.RESISTANCE).getAmplifier() + 1) * 0.2;
-            if (resistance_coefficient <= 0.d) return true;
+            resistanceCoefficient -= (mc.player.getStatusEffect(StatusEffects.RESISTANCE).getAmplifier() + 1) * 0.2;
+            if (resistanceCoefficient <= 0.d) return true;
         }
 
         double damage2 = damage;
@@ -346,11 +345,11 @@ public class AutoTotem extends Module {
             case HARD -> damage2 *= 1.5d;
         }
 
-        damage2 *= resistance_coefficient;
+        damage2 *= resistanceCoefficient;
 
-        EntityAttributeInstance attribute_instance = mc.player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
+        EntityAttributeInstance attributeInstance = mc.player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
 
-        float f = 2.0F + (float) attribute_instance.getValue() / 4.0F;
+        float f = 2.0F + (float) attributeInstance.getValue() / 4.0F;
         float g = (float) MathHelper.clamp((float) mc.player.getArmor() - damage2 / f, (float) mc.player.getArmor() * 0.2F, 20.0F);
         damage2 *= 1 - g / 25.0F;
 
@@ -367,7 +366,7 @@ public class AutoTotem extends Module {
     private long getLatency() {
         PlayerListEntry playerListEntry = mc.player.networkHandler.getPlayerListEntry(mc.player.getUuid());
         return playerListEntry != null ? playerListEntry.getLatency() : 0L;
-    }
+    }*/
 
     @Override
     public String getInfoString() {
