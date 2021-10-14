@@ -39,7 +39,7 @@ public class Zoom extends Module {
     private final Setting<Double> scrollSensitivity = sgGeneral.add(new DoubleSetting.Builder()
         .name("scroll-sensitivity")
         .description("Allows you to change zoom value using scroll wheel. 0 to disable.")
-        .defaultValue(1)
+        .defaultValue(0)
         .min(0)
         .build()
     );
@@ -54,7 +54,7 @@ public class Zoom extends Module {
     private final Setting<Boolean> cinematic = sgGeneral.add(new BoolSetting.Builder()
         .name("cinematic")
         .description("Enables cinematic camera.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 
