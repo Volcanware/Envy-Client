@@ -299,7 +299,8 @@ public class Utils {
     public static String nameToTitle(String name) {
         name = Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
 
-        String title = name.replace("Esp", "ESP");
+        String title = name.replace("Mathax", "MatHax");
+        title = title.replace("Esp", "ESP");
         title = title.replace("Tps", "TPS");
         title = title.replace("Tp", "TP");
         title = title.replace("Xp", "XP");
