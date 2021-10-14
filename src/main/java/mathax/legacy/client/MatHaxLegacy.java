@@ -126,17 +126,22 @@ public class MatHaxLegacy implements ClientModInitializer {
         EVENT_BUS.registerLambdaFactory("mathax.legacy.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
         Systems.addPreLoadTask(() -> {
             if (!Modules.get().getFile().exists()) {
+                // ACTIVATE
                 Modules.get().get(CapesModule.class).toggle(); // CAPES
-                Modules.get().get(CapesModule.class).setVisible(false); // CAPES
                 Modules.get().get(DiscordRPC.class).toggle(); // DISCORD RPC
-                Modules.get().get(DiscordRPC.class).setVisible(false); // DISCORD RPC
                 Modules.get().get(Background.class).toggle(); // BACKGROUND
-                Modules.get().get(Background.class).setVisible(false); // BACKGROUND
                 Modules.get().get(MiddleClickFriend.class).toggle(); // MIDDLE CLICK FRIEND
-                Modules.get().get(MiddleClickFriend.class).setVisible(false); // MIDDLE CLICK FRIEND
                 Modules.get().get(HUD.class).toggle(); // HUD
+                
+                // VISIBILITY
+                Modules.get().get(CapesModule.class).setVisible(false); // CAPES
+                Modules.get().get(DiscordRPC.class).setVisible(false); // DISCORD RPC
+                Modules.get().get(Background.class).setVisible(false); // BACKGROUND
+                Modules.get().get(MiddleClickFriend.class).setVisible(false); // MIDDLE CLICK FRIEND
                 Modules.get().get(HUD.class).setVisible(false); // HUD
-                Modules.get().get(HUD.class).reset.run(); // DEFAULT HUD LOCATIONS AND TOGGLES
+
+                // RESET HUD LOCATIONS
+                Modules.get().get(HUD.class).reset.run(); // HUD
             }
         });
         Tabs.init();
