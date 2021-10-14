@@ -19,6 +19,7 @@ import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.misc.CapesModule;
 import mathax.legacy.client.systems.modules.misc.DiscordRPC;
+import mathax.legacy.client.systems.modules.misc.MiddleClickFriend;
 import mathax.legacy.client.systems.modules.render.Background;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.utils.misc.FakeClientPlayer;
@@ -106,6 +107,7 @@ public class MatHaxLegacy implements ClientModInitializer {
             Formatting.YELLOW + "owned",
             Formatting.YELLOW + "your mom :joy:",
             Formatting.YELLOW + "BOOM BOOM BOOM!"
+
         );
     }
 
