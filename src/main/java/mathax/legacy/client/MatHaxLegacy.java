@@ -67,7 +67,6 @@ public class MatHaxLegacy implements ClientModInitializer {
     public static final IEventBus EVENT_BUS = new EventBus();
     public static Screen screenToOpen;
 
-    public static final File MCCONFIG_FOLDER = new File(net.fabricmc.loader.FabricLoader.INSTANCE.getConfigDirectory(), "/MatHax/Legacy");
     public static final File FOLDER = new File(FabricLoader.getInstance().getGameDir().toString(), "MatHax/Legacy");
     public static final File VERSION_FOLDER = new File(FOLDER + "/" + Version.getMinecraft());
 
