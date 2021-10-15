@@ -93,6 +93,15 @@ public class Version {
         switch (Version.checkLatest()) {
             case 0:
                 MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Could not check for latest version!");
+                if (dontDisable) {
+                    OkPrompt.create()
+                        .title("Update Check Failed")
+                        .message("Could not get latest MatHax version from the API!")
+                        .message("\n")
+                        .message("Your version: %s", Version.getStylized())
+                        .id("no-update-found-dont-disable")
+                        .show();
+                }
             case 1:
                 MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.getStylized() + "! You can download the newest version on " + MatHaxLegacy.URL + "Download!");
 
@@ -130,7 +139,6 @@ public class Version {
                             .message("\n")
                             .message("Your version: %s", Version.getStylized())
                             .message("Latest version: v%s", Version.getLatest())
-                            .message("\n")
                             .id("no-update-dont-disable")
                             .show();
                     }
@@ -145,7 +153,6 @@ public class Version {
                             .message("\n")
                             .message("Your version: %s", Version.getStylized())
                             .message("Latest version: v%s", Version.getLatest())
-                            .message("\n")
                             .id("no-update-dont-disable")
                             .show();
                     }
