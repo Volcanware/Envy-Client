@@ -26,7 +26,7 @@ public class DirectConnectScreenMixin extends Screen {
 	}
 
 	@Inject(at = {@At("TAIL")}, method = {"saveAndClose()V"})
-	private void onSaveAndClose(CallbackInfo ci) {
+	private void onSaveAndClose(CallbackInfo info) {
         Version.didntCheckForLatest = true;
 
 		LastServerInfo.setLastServer(serverEntry);

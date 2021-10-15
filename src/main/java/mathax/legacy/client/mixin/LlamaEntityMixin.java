@@ -13,7 +13,7 @@ import net.minecraft.entity.passive.LlamaEntity;
 @Mixin(LlamaEntity.class)
 public class LlamaEntityMixin {
     @Inject(method = "canBeControlledByRider", at = @At("HEAD"), cancellable = true)
-    public void canBeControlledByRider(CallbackInfoReturnable<Boolean> ci) {
-        if (Modules.get().get(EntityControl.class).isActive()) ci.setReturnValue(true);
+    public void canBeControlledByRider(CallbackInfoReturnable<Boolean> info) {
+        if (Modules.get().get(EntityControl.class).isActive()) info.setReturnValue(true);
     }
 }

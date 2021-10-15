@@ -48,7 +48,7 @@ public abstract class CommandSuggestorMixin {
             at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false),
             cancellable = true,
             locals = LocalCapture.CAPTURE_FAILHARD)
-    public void onRefresh(CallbackInfo ci, String string, StringReader reader) {
+    public void onRefresh(CallbackInfo info, String string, StringReader reader) {
         String prefix = Config.get().prefix;
         int length = prefix.length();
         if (reader.canRead(length) && reader.getString().startsWith(prefix, reader.getCursor())) {
@@ -56,20 +56,17 @@ public abstract class CommandSuggestorMixin {
             assert this.client.player != null;
             // Pretty much copy&paste from the refresh method
             CommandDispatcher<CommandSource> commandDispatcher = Commands.get().getDispatcher();
-            if (this.parse == null) {
-                this.parse = commandDispatcher.parse(reader, Commands.get().getCommandSource());
-            }
+            if (this.parse == null) this.parse = commandDispatcher.parse(reader, Commands.get().getCommandSource());
 
             int cursor = textField.getCursor();
             if (cursor >= 1 && (this.window == null || !this.completingSuggestions)) {
                 this.pendingSuggestions = commandDispatcher.getCompletionSuggestions(this.parse, cursor);
                 this.pendingSuggestions.thenRun(() -> {
-                    if (this.pendingSuggestions.isDone()) {
-                        this.show();
-                    }
+                    if (this.pendingSuggestions.isDone()) this.show();
                 });
             }
-            ci.cancel();
+
+            info.cancel();
         }
     }
 

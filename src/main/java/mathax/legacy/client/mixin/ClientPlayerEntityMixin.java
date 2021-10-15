@@ -71,6 +71,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
             } catch (CommandSyntaxException e) {
                 ChatUtils.error(e.getMessage());
             }
+
             info.cancel();
         }
     }

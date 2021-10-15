@@ -17,7 +17,7 @@ public class SplashTextResourceSupplierMixin {
     private final List<String> mathaxSplashes = MatHaxLegacy.getMatHaxSplashes();
 
     @Inject(method = "get", at = @At("HEAD"), cancellable = true)
-    private void onApply(CallbackInfoReturnable<String> cir) {
-        cir.setReturnValue(mathaxSplashes.get(random.nextInt(mathaxSplashes.size())));
+    private void onApply(CallbackInfoReturnable<String> info) {
+        info.setReturnValue(mathaxSplashes.get(random.nextInt(mathaxSplashes.size())));
     }
 }

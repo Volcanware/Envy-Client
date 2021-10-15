@@ -10,8 +10,6 @@ import java.util.function.Supplier;
 @Mixin(Registry.class)
 public class RegistryMixin<T> {
     @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/Bootstrap;ensureBootstrapped(Ljava/util/function/Supplier;)V"))
-    private void idk(Supplier<String> callerGetter) {
-        // TODO: Probably extremely retarded but seems to work
-       // nothing :trolla:
+    private void init(Supplier<String> callerGetter) {
     }
 }

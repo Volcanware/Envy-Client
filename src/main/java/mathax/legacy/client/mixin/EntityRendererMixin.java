@@ -32,9 +32,9 @@ public abstract class EntityRendererMixin<T extends Entity> implements IEntityRe
     }
 
     @Inject(method = "shouldRender", at = @At("HEAD"), cancellable = true)
-    private void shouldRender(T entity, Frustum frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
-        if (Modules.get().get(NoRender.class).noEntity(entity)) cir.cancel();
-        if (Modules.get().get(NoRender.class).noFallingBlocks() && entity instanceof FallingBlockEntity) cir.cancel();
+    private void shouldRender(T entity, Frustum frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> info) {
+        if (Modules.get().get(NoRender.class).noEntity(entity)) info.cancel();
+        if (Modules.get().get(NoRender.class).noFallingBlocks() && entity instanceof FallingBlockEntity) info.cancel();
     }
 
     @Inject(method = "getSkyLight", at = @At("RETURN"), cancellable = true)

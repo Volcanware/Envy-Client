@@ -32,7 +32,7 @@ public class SodiumBlockRendererMixin {
     @Shadow @Final private BiomeColorBlender biomeColorBlender;
 
     @Inject(method = "renderQuad", at = @At(value = "HEAD"), cancellable = true)
-    private void onRenderQuad(BlockRenderView world, BlockState state, BlockPos pos, BlockPos origin, ModelVertexSink vertices, IndexBufferBuilder indices, Vec3d blockOffset, ModelQuadColorProvider<BlockState> colorProvider, BakedQuad bakedQuad, QuadLightData light, ChunkModelBuilder model, CallbackInfo ci) {
+    private void onRenderQuad(BlockRenderView world, BlockState state, BlockPos pos, BlockPos origin, ModelVertexSink vertices, IndexBufferBuilder indices, Vec3d blockOffset, ModelQuadColorProvider<BlockState> colorProvider, BakedQuad bakedQuad, QuadLightData light, ChunkModelBuilder model, CallbackInfo info) {
         WallHack wallHack = Modules.get().get(WallHack.class);
         Xray xray = Modules.get().get(Xray.class);
 
@@ -40,18 +40,15 @@ public class SodiumBlockRendererMixin {
             if (wallHack.blocks.get().contains(state.getBlock())) {
                 int alpha;
 
-                if (xray.isActive()) {
-                    alpha = xray.opacity.get();
-                } else {
-                    alpha = wallHack.opacity.get();
-                }
+                if (xray.isActive()) alpha = xray.opacity.get();
+                else alpha = wallHack.opacity.get();
 
                 whRenderQuad(world, state, pos, origin, vertices, indices, blockOffset, colorProvider, bakedQuad, light, model, alpha);
-                ci.cancel();
+                info.cancel();
             }
         } else if(xray.isActive() && !wallHack.isActive() && xray.isBlocked(state.getBlock())) {
             whRenderQuad(world, state, pos, origin, vertices, indices, blockOffset, colorProvider, bakedQuad, light, model, xray.opacity.get());
-            ci.cancel();
+            info.cancel();
         }
     }
 

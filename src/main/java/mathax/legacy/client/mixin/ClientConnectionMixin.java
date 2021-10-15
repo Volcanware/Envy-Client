@@ -31,7 +31,7 @@ public class ClientConnectionMixin {
     }
 
     @Inject(method = "disconnect", at = @At("HEAD"))
-    private void disconnect(Text disconnectReason, CallbackInfo ci) {
+    private void disconnect(Text disconnectReason, CallbackInfo info) {
         if (Modules.get().get(HighwayBuilder.class).isActive()) {
             MutableText text = new LiteralText(String.format("\n\n%s[%sHighway Builder%s] Statistics:", Formatting.GRAY, Formatting.BLUE, Formatting.GRAY)).append("\n");
             text.append(Modules.get().get(HighwayBuilder.class).getStatsText());
@@ -46,8 +46,8 @@ public class ClientConnectionMixin {
     }
 
     @Inject(method = "exceptionCaught", at = @At("HEAD"), cancellable = true)
-    private void exceptionCaught(ChannelHandlerContext context, Throwable throwable, CallbackInfo ci) {
-        if (throwable instanceof IOException && Modules.get().isActive(AntiPacketKick.class)) ci.cancel();
+    private void exceptionCaught(ChannelHandlerContext context, Throwable throwable, CallbackInfo info) {
+        if (throwable instanceof IOException && Modules.get().isActive(AntiPacketKick.class)) info.cancel();
     }
 
     @Inject(at = @At("HEAD"), method = "send(Lnet/minecraft/network/Packet;)V", cancellable = true)

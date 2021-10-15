@@ -56,11 +56,6 @@ public class PlayerListHudMixin {
             int color = latency < 150 ? 0x00E970 : latency < 300 ? 0xE7D020 : 0xD74238;
             String text = latency + "ms";
             textRenderer.drawWithShadow(matrices, text, (float) x + width - textRenderer.getWidth(text), (float) y, color);
-        } else {
-            /*if ((mc.getSession().getUsername().equals("Matejko06"))) && betterTab.isActive()) {
-
-            }*/
-            renderLatencyIcon(matrices, width, x, y, entry);
-        }
+        } else renderLatencyIcon(matrices, width, x, y, entry);
     }
 }

@@ -51,7 +51,6 @@ public abstract class WorldRendererMixin {
     @Inject(method = "render", at = @At("HEAD"))
     private void onRenderHead(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
         Utils.minimumLightLevel = Modules.get().get(Fullbright.class).getMinimumLightLevel();
-
         Outlines.beginRender();
     }
 

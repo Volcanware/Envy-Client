@@ -22,8 +22,8 @@ public abstract class ItemEntityRendererMixin {
     @Shadow @Final private ItemRenderer itemRenderer;
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    private void render(ItemEntity itemEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
+    private void render(ItemEntity itemEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info) {
         RenderItemEntityEvent event = MatHaxLegacy.EVENT_BUS.post(RenderItemEntityEvent.get(itemEntity, f, g, matrixStack, vertexConsumerProvider, i, random, itemRenderer));
-        if (event.isCancelled()) ci.cancel();
+        if (event.isCancelled()) info.cancel();
     }
 }

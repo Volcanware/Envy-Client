@@ -67,7 +67,7 @@ public abstract class ChatHudMixin implements IChatHud {
     }
 
     @Inject(method = "render", at = @At("TAIL"))
-    private void onRender(MatrixStack matrices, int tickDelta, CallbackInfo ci) {
+    private void onRender(MatrixStack matrices, int tickDelta, CallbackInfo info) {
         if (!Modules.get().get(BetterChat.class).displayPlayerHeads()) return;
         if (mc.options.chatVisibility == ChatVisibility.HIDDEN) return;
         int maxLineCount = mc.inGameHud.getChatHud().getVisibleLineCount();
@@ -94,6 +94,7 @@ public abstract class ChatHudMixin implements IChatHud {
                 }
             }
         }
+
         RenderSystem.disableBlend();
         matrices.pop();
     }
@@ -173,10 +174,9 @@ public abstract class ChatHudMixin implements IChatHud {
         for (String part : message.split("(§.)|[^\\w]")) {
             if (part.isBlank()) continue;
             PlayerListEntry p = mc.getNetworkHandler().getPlayerListEntry(part);
-            if (p != null) {
-                return p.getSkinTexture();
-            }
+            if (p != null) return p.getSkinTexture();
         }
+
         return null;
     }
 }

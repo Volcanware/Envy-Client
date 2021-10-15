@@ -32,8 +32,6 @@ public class SodiumFluidRendererMixin {
     private void onCalculateQuadColors(ModelQuadView quad, BlockRenderView world, BlockPos pos, LightPipeline lighter, Direction dir, float brightness, ModelQuadColorProvider<FluidState> handler, FluidState fluidState, CallbackInfo info) {
         Ambience ambience = Modules.get().get(Ambience.class);
 
-        if (ambience.isActive() && ambience.customLavaColor.get() && fluidState.isIn(FluidTags.LAVA)) {
-            Arrays.fill(quadColors, ColorARGB.toABGR(ambience.lavaColor.get().getPacked()));
-        }
+        if (ambience.isActive() && ambience.customLavaColor.get() && fluidState.isIn(FluidTags.LAVA)) Arrays.fill(quadColors, ColorARGB.toABGR(ambience.lavaColor.get().getPacked()));
     }
 }

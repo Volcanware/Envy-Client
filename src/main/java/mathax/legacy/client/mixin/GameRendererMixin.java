@@ -47,10 +47,8 @@ public abstract class GameRendererMixin {
     @Unique private Renderer3D renderer;
 
     @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
-    private void injectBobView(MatrixStack matrixStack, float f, CallbackInfo callbackInfo) {
-        if(Modules.get().isActive(NoBob.class)) {
-            callbackInfo.cancel();
-        }
+    private void injectBobView(MatrixStack matrixStack, float f, CallbackInfo info) {
+        if(Modules.get().isActive(NoBob.class)) info.cancel();
     }
 
     @Inject(method = "renderWorld", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", args = { "ldc=hand" }), locals = LocalCapture.CAPTURE_FAILSOFT)
@@ -94,6 +92,7 @@ public abstract class GameRendererMixin {
 
             return entity.raycast(maxDistance, tickDelta, true);
         }
+
         return entity.raycast(maxDistance, tickDelta, includeFluids);
     }
 
@@ -104,9 +103,7 @@ public abstract class GameRendererMixin {
 
     @Inject(method = "showFloatingItem", at = @At("HEAD"), cancellable = true)
     private void onShowFloatingItem(ItemStack floatingItem, CallbackInfo info) {
-        if (floatingItem.getItem() == Items.TOTEM_OF_UNDYING && Modules.get().get(NoRender.class).noTotemAnimation()) {
-            info.cancel();
-        }
+        if (floatingItem.getItem() == Items.TOTEM_OF_UNDYING && Modules.get().get(NoRender.class).noTotemAnimation()) info.cancel();
     }
 
     @Redirect(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;lerp(FFF)F"))

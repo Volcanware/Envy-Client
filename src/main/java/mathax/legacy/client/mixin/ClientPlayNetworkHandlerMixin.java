@@ -64,14 +64,14 @@ public abstract class ClientPlayNetworkHandlerMixin {
     }
 
     @Inject(method = "onEntitiesDestroy", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/packet/s2c/play/EntitiesDestroyS2CPacket;getEntityIds()Lit/unimi/dsi/fastutil/ints/IntList;"))
-    private void onEntitiesDestroy(EntitiesDestroyS2CPacket packet, CallbackInfo ci) {
+    private void onEntitiesDestroy(EntitiesDestroyS2CPacket packet, CallbackInfo info) {
         for(int id : packet.getEntityIds()) {
             MatHaxLegacy.EVENT_BUS.post(EntityDestroyEvent.get(client.world.getEntityById(id)));
         }
     }
 
     @Inject(method = "onExplosion", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkThreadUtils;forceMainThread(Lnet/minecraft/network/Packet;Lnet/minecraft/network/listener/PacketListener;Lnet/minecraft/util/thread/ThreadExecutor;)V", shift = At.Shift.AFTER))
-    private void onExplosionVelocity(ExplosionS2CPacket packet, CallbackInfo ci) {
+    private void onExplosionVelocity(ExplosionS2CPacket packet, CallbackInfo info) {
         Velocity velocity = Modules.get().get(Velocity.class); //Velocity for explosions
         if (!velocity.explosions.get()) return;
 

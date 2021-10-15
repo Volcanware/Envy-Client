@@ -58,8 +58,8 @@ public abstract class ClientPlayerInteractionManagerMixin implements IClientPlay
     }
 
     @Inject(method = "interactBlock", at = @At("HEAD"), cancellable = true)
-    public void interactBlock(ClientPlayerEntity player, ClientWorld world, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
-        if (MatHaxLegacy.EVENT_BUS.post(InteractBlockEvent.get(player.getMainHandStack().isEmpty() ? Hand.OFF_HAND : hand, hitResult)).isCancelled()) cir.setReturnValue(ActionResult.FAIL);
+    public void interactBlock(ClientPlayerEntity player, ClientWorld world, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> info) {
+        if (MatHaxLegacy.EVENT_BUS.post(InteractBlockEvent.get(player.getMainHandStack().isEmpty() ? Hand.OFF_HAND : hand, hitResult)).isCancelled()) info.setReturnValue(ActionResult.FAIL);
     }
 
     @Inject(method = "attackEntity", at = @At("HEAD"), cancellable = true)

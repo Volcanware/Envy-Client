@@ -61,7 +61,6 @@ public abstract class LivingEntityMixin extends Entity {
     @Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasNoGravity()Z"))
     private boolean travelHasNoGravityProxy(LivingEntity self) {
         if (self.hasStatusEffect(StatusEffects.LEVITATION) && Modules.get().isActive(AntiLevitation.class)) return !Modules.get().get(AntiLevitation.class).isApplyGravity();
-
         return self.hasNoGravity();
     }
 

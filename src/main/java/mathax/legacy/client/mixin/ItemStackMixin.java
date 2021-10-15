@@ -24,16 +24,12 @@ import java.util.List;
 public abstract class ItemStackMixin {
     @Inject(method = "getTooltip", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onGetTooltip(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> info, List<Text> list) {
-        if (Utils.canUpdate()) {
-            MatHaxLegacy.EVENT_BUS.post(ItemStackTooltipEvent.get((ItemStack) (Object) this, list));
-        }
+        if (Utils.canUpdate()) MatHaxLegacy.EVENT_BUS.post(ItemStackTooltipEvent.get((ItemStack) (Object) this, list));
     }
 
     @Inject(method = "finishUsing", at = @At("HEAD"))
     private void onFinishUsing(World world, LivingEntity user, CallbackInfoReturnable<ItemStack> info) {
-        if (user == Utils.mc.player) {
-            MatHaxLegacy.EVENT_BUS.post(FinishUsingItemEvent.get((ItemStack) (Object) this));
-        }
+        if (user == Utils.mc.player) MatHaxLegacy.EVENT_BUS.post(FinishUsingItemEvent.get((ItemStack) (Object) this));
     }
 
     @Inject(method = "onStoppedUsing", at = @At("HEAD"))

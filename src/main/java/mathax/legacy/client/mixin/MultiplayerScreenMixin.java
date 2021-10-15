@@ -50,22 +50,14 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
     private void onInit(CallbackInfo info) {
         Version.didntCheckForLatest = true;
 
-        addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> {
-            client.setScreen(GuiThemes.get().proxiesScreen());
-        }));
+        addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> client.setScreen(GuiThemes.get().proxiesScreen())));
 
-        addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, new LiteralText("Accounts"), button -> {
-            client.setScreen(GuiThemes.get().accountsScreen());
-        }));
+        addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, new LiteralText("Accounts"), button -> client.setScreen(GuiThemes.get().accountsScreen())));
 
-        addDrawableChild(new ButtonWidget(width - 75 - 2 - 75 - 2 - 75 - 2, 2, 75, 20, new LiteralText("Servers"), button -> {
-            client.setScreen(new ServerManagerScreen(GuiThemes.get(), (MultiplayerScreen) (Object) this));
-        }));
+        addDrawableChild(new ButtonWidget(width - 75 - 2 - 75 - 2 - 75 - 2, 2, 75, 20, new LiteralText("Servers"), button -> client.setScreen(new ServerManagerScreen(GuiThemes.get(), (MultiplayerScreen) (Object) this))));
 
         if (LastServerInfo.getLastServer() != null) {
-            addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> {
-                LastServerInfo.reconnect(parent);
-            }));
+            addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> LastServerInfo.reconnect(parent)));
         }
     }
 
@@ -88,6 +80,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
         int loggedDeveloperLength = textRenderer.getWidth(loggedDeveloper);
 
         // Logged in as
+
         drawStringWithShadow(matrices, textRenderer, loggedInAs, 2, (int) y, GRAY);
         drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, (int) y, GRAY);
         drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, (int) y, WHITE);
@@ -101,6 +94,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
         y += textRenderer.fontHeight + 2;
 
         // Proxy
+
         Proxy proxy = Proxies.get().getEnabled();
 
         String proxiesleft = proxy != null ? "Using proxy" + " " : "Not using a proxy";
@@ -115,10 +109,8 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
         return serverListWidget;
     }
 
-    @Inject(at = {@At("HEAD")},
-        method = {"connect(Lnet/minecraft/client/network/ServerInfo;)V"})
-    private void onConnect(ServerInfo entry, CallbackInfo ci)
-    {
+    @Inject(at = {@At("HEAD")}, method = {"connect(Lnet/minecraft/client/network/ServerInfo;)V"})
+    private void onConnect(ServerInfo entry, CallbackInfo info) {
         LastServerInfo.setLastServer(entry);
     }
 }

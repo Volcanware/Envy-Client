@@ -28,17 +28,15 @@ public class PlayerEntityMixin {
 
     @Inject(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("HEAD"), cancellable = true)
     private void onDropItem(ItemStack stack, boolean bl, boolean bl2, CallbackInfoReturnable<ItemEntity> info) {
-        if (Utils.mc.world.isClient) {
-            if (MatHaxLegacy.EVENT_BUS.post(DropItemsEvent.get(stack)).isCancelled()) info.cancel();
-        }
+        if (Utils.mc.world.isClient) if (MatHaxLegacy.EVENT_BUS.post(DropItemsEvent.get(stack)).isCancelled()) info.cancel();
     }
 
     @Inject(method = "getBlockBreakingSpeed", at = @At(value = "RETURN"), cancellable = true)
-    public void onGetBlockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> cir) {
+    public void onGetBlockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> info) {
         SpeedMine module = Modules.get().get(SpeedMine.class);
         if (!module.isActive() || module.mode.get() != SpeedMine.Mode.Normal) return;
 
-        cir.setReturnValue((float) (cir.getReturnValue() * module.modifier.get()));
+        info.setReturnValue((float) (info.getReturnValue() * module.modifier.get()));
     }
 
     @Inject(method = "jump", at = @At("HEAD"), cancellable = true)

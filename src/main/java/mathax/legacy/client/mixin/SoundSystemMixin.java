@@ -14,7 +14,6 @@ public class SoundSystemMixin {
     @Inject(method = "play(Lnet/minecraft/client/sound/SoundInstance;)V", at = @At("HEAD"), cancellable = true)
     private void onPlay(SoundInstance soundInstance, CallbackInfo info) {
         PlaySoundEvent event = MatHaxLegacy.EVENT_BUS.post(PlaySoundEvent.get(soundInstance));
-
         if (event.isCancelled()) info.cancel();
     }
 }

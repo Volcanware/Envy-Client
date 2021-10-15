@@ -13,7 +13,7 @@ import java.io.*;
 
 public class SplashUtils extends ResourceTexture {
 
-    protected final Identifier location;
+    private final Identifier location;
 
     public SplashUtils(Identifier location) {
         super(location);
@@ -42,7 +42,7 @@ public class SplashUtils extends ResourceTexture {
                 throw throwable;
             }
 
-            if (inputStream != null) inputStream.close();
+            inputStream.close();
             return textureData;
         } catch (IOException ioException) {
             return new TextureData(ioException);

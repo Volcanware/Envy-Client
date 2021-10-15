@@ -36,24 +36,21 @@ public abstract class AbstractQuadRendererMixin {
     @SuppressWarnings("UnresolvedMixinReference")
     @Inject(method = "bufferQuad(Lnet/fabricmc/fabric/impl/client/indigo/renderer/mesh/MutableQuadViewImpl;Lnet/minecraft/class_1921;)V",
     at = @At("HEAD"), cancellable = true, remap = false)
-    private void onBufferQuad(MutableQuadViewImpl quad, RenderLayer renderLayer, CallbackInfo ci) {
+    private void onBufferQuad(MutableQuadViewImpl quad, RenderLayer renderLayer, CallbackInfo info) {
         WallHack wallHack = Modules.get().get(WallHack.class);
         Xray xray = Modules.get().get(Xray.class);
 
         if(wallHack.isActive() && wallHack.blocks.get().contains(blockInfo.blockState.getBlock())) {
             int alpha;
 
-            if(xray.isActive()) {
-                alpha = xray.opacity.get();
-            } else {
-                alpha = wallHack.opacity.get();
-            }
+            if(xray.isActive()) alpha = xray.opacity.get();
+            else alpha = wallHack.opacity.get();
 
             whBufferQuad(bufferFunc.apply(renderLayer), quad, matrix(), overlay(), normalMatrix(), normalVec, alpha);
-            ci.cancel();
+            info.cancel();
         } else if(xray.isActive() && !wallHack.isActive() && xray.isBlocked(blockInfo.blockState.getBlock())) {
             whBufferQuad(bufferFunc.apply(renderLayer), quad, matrix(), overlay(), normalMatrix(), normalVec, xray.opacity.get());
-            ci.cancel();
+            info.cancel();
         }
     }
 
@@ -62,9 +59,8 @@ public abstract class AbstractQuadRendererMixin {
     private static void whBufferQuad(VertexConsumer buff, MutableQuadViewImpl quad, Matrix4f matrix, int overlay, Matrix3f normalMatrix, Vec3f normalVec, int alpha) {
         final boolean useNormals = quad.hasVertexNormals();
 
-        if (useNormals) {
-            quad.populateMissingNormals();
-        } else {
+        if (useNormals) quad.populateMissingNormals();
+        else {
             final Vec3f faceNormal = quad.faceNormal();
             normalVec.set(faceNormal.getX(), faceNormal.getY(), faceNormal.getZ());
             normalVec.transform(normalMatrix);

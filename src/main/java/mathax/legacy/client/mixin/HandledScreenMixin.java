@@ -57,13 +57,13 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
 
     // Middle click open
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
-    private void mouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {
+    private void mouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> info) {
         BetterTooltips toolips = Modules.get().get(BetterTooltips.class);
 
         if (button == GLFW.GLFW_MOUSE_BUTTON_MIDDLE && focusedSlot != null && !focusedSlot.getStack().isEmpty() && Utils.mc.player.currentScreenHandler.getCursorStack().isEmpty() && toolips.middleClickOpen()) {
             ItemStack itemStack = focusedSlot.getStack();
             if (Utils.hasItems(itemStack) || itemStack.getItem() == Items.ENDER_CHEST) {
-                cir.setReturnValue(Utils.openContainer(focusedSlot.getStack(), ITEMS, false));
+                info.setReturnValue(Utils.openContainer(focusedSlot.getStack(), ITEMS, false));
             }
         }
     }

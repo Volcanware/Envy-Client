@@ -11,20 +11,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(FoliageColors.class)
 public class FoliageColorsMixin {
     @Inject(method = "getBirchColor", at = @At("HEAD"), cancellable = true)
-    private static void onGetBirchColor(CallbackInfoReturnable<Integer> cir) {
+    private static void onGetBirchColor(CallbackInfoReturnable<Integer> info) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if(ambience.isActive() && ambience.customFoliageColor.get()) {
-            cir.setReturnValue(ambience.foliageColor.get().getPacked());
-            cir.cancel();
+            info.setReturnValue(ambience.foliageColor.get().getPacked());
+            info.cancel();
         }
     }
 
     @Inject(method = "getSpruceColor", at = @At("HEAD"), cancellable = true)
-    private static void onGetSpruceColor(CallbackInfoReturnable<Integer> cir) {
+    private static void onGetSpruceColor(CallbackInfoReturnable<Integer> info) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if(ambience.isActive() && ambience.customFoliageColor.get()) {
-            cir.setReturnValue(ambience.foliageColor.get().getPacked());
-            cir.cancel();
+            info.setReturnValue(ambience.foliageColor.get().getPacked());
+            info.cancel();
         }
     }
 }

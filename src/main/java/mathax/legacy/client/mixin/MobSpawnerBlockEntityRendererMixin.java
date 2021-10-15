@@ -11,7 +11,7 @@ import net.minecraft.client.render.block.entity.MobSpawnerBlockEntityRenderer;
 @Mixin(MobSpawnerBlockEntityRenderer.class)
 public class MobSpawnerBlockEntityRendererMixin {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    private void onRender(CallbackInfo ci) {
-        if (Modules.get().get(NoRender.class).noMobInSpawner()) ci.cancel();
+    private void onRender(CallbackInfo info) {
+        if (Modules.get().get(NoRender.class).noMobInSpawner()) info.cancel();
     }
 }

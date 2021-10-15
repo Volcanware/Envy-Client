@@ -31,23 +31,23 @@ public class BannerBlockEntityRendererMixin {
     @Shadow private ModelPart crossbar;
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    private void render(BannerBlockEntity bannerBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, CallbackInfo ci) {
+    private void render(BannerBlockEntity bannerBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, CallbackInfo info) {
         if (bannerBlockEntity.getWorld() != null) { //Don't modify banners in item form
             NoRender.BannerRenderMode renderMode = Modules.get().get(NoRender.class).getBannerRenderMode();
-            if (renderMode == NoRender.BannerRenderMode.None) ci.cancel();
+            if (renderMode == NoRender.BannerRenderMode.None) info.cancel();
             else if (renderMode == NoRender.BannerRenderMode.Pillar) {
                 BlockState blockState = bannerBlockEntity.getCachedState();
                 if (blockState.getBlock() instanceof BannerBlock) { //Floor banner
                     this.pillar.visible = true;
                     this.crossbar.visible = false;
                     renderPillar(bannerBlockEntity, matrixStack, vertexConsumerProvider, i, j);
-                }
-                else { //Wall banner
+                } else { //Wall banner
                     this.pillar.visible = false;
                     this.crossbar.visible = true;
                     renderCrossbar(bannerBlockEntity, matrixStack, vertexConsumerProvider, i, j);
                 }
-                ci.cancel();
+
+                info.cancel();
             }
         }
     }

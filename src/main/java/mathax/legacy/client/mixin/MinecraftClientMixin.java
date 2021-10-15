@@ -61,9 +61,7 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
         OpenScreenEvent.getOpenedScreen event = new OpenScreenEvent.getOpenedScreen(screen);
         MatHaxLegacy.EVENT_BUS.post(event);
 
-        if (event.isCancelled()) {
-            info.cancel();
-        }
+        if (event.isCancelled()) info.cancel();
     }
 
     @Inject(at = @At("HEAD"), method = "tick")
@@ -92,9 +90,7 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
 
     @Inject(method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;)V", at = @At("HEAD"))
     private void onDisconnect(Screen screen, CallbackInfo info) {
-        if (world != null) {
-            MatHaxLegacy.EVENT_BUS.post(GameLeftEvent.get());
-        }
+        if (world != null) MatHaxLegacy.EVENT_BUS.post(GameLeftEvent.get());
     }
 
     @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)

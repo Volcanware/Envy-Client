@@ -40,14 +40,12 @@ public class TridentItemMixin {
     @Redirect(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isTouchingWaterOrRain()Z"))
     private boolean isInWaterUse(PlayerEntity playerEntity) {
         TridentBoost tridentBoost = Modules.get().get(TridentBoost.class);
-
         return tridentBoost.allowOutOfWater() || Utils.mc.player.isTouchingWaterOrRain();
     }
 
     @Redirect(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isTouchingWaterOrRain()Z"))
     private boolean isInWaterPostUse(PlayerEntity playerEntity) {
         TridentBoost tridentBoost = Modules.get().get(TridentBoost.class);
-
         return tridentBoost.allowOutOfWater() || Utils.mc.player.isTouchingWaterOrRain();
     }
 }

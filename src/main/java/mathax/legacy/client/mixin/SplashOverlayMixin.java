@@ -33,9 +33,9 @@ public abstract class SplashOverlayMixin {
     private static final Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/splash/splash.png");
 
     @Inject(method = "init(Lnet/minecraft/client/MinecraftClient;)V", at = @At("HEAD"), cancellable = true)
-    private static void init(MinecraftClient client, CallbackInfo callbackInfo) {
+    private static void init(MinecraftClient client, CallbackInfo info) {
         client.getTextureManager().registerTexture(LOGO, new SplashUtils(MATHAX_LOGO));
-        callbackInfo.cancel();
+        info.cancel();
     }
 
     // Background
@@ -46,7 +46,7 @@ public abstract class SplashOverlayMixin {
     private static IntSupplier BRAND_ARGB;
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
-    private static void adjustBg(CallbackInfo ci) {
+    private static void adjustBg(CallbackInfo info) {
         BRAND_ARGB = () -> 0x1e1e2d;
     }
 

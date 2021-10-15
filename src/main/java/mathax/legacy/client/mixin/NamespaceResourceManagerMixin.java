@@ -15,8 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class NamespaceResourceManagerMixin {
     @Inject(method = "getResource", at = @At("HEAD"), cancellable = true)
     private void onGetResource(Identifier id, CallbackInfoReturnable<Resource> info) {
-        if (id.getNamespace().equals("mathaxlegacy")) {
-            info.setReturnValue(new ResourceImpl("MatHax Legacy", id, MatHaxLegacy.class.getResourceAsStream("/assets/mathaxlegacy/" + id.getPath()), null));
-        }
+        if (id.getNamespace().equals("mathaxlegacy")) info.setReturnValue(new ResourceImpl("MatHax Legacy", id, MatHaxLegacy.class.getResourceAsStream("/assets/mathaxlegacy/" + id.getPath()), null));
     }
 }

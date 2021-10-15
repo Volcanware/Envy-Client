@@ -28,7 +28,6 @@ public class CanvasWorldRendererMixin {
     @Inject(method = "renderWorld", at = @At("HEAD"))
     private void onRenderHead(MatrixStack viewMatrixStack, float tickDelta, long frameStartNanos, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f projectionMatrix, CallbackInfo info) {
         Utils.minimumLightLevel = Modules.get().get(Fullbright.class).getMinimumLightLevel();
-
         Outlines.beginRender();
     }
 

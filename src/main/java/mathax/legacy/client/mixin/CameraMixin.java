@@ -32,9 +32,7 @@ public abstract class CameraMixin {
 
     @Inject(method = "clipToSpace", at = @At("HEAD"), cancellable = true)
     private void onClipToSpace(double desiredCameraDistance, CallbackInfoReturnable<Double> info) {
-        if (Modules.get().get(CameraTweaks.class).clip()) {
-            info.setReturnValue(desiredCameraDistance);
-        }
+        if (Modules.get().get(CameraTweaks.class).clip()) info.setReturnValue(desiredCameraDistance);
     }
 
     @Inject(method = "update", at = @At("HEAD"))
@@ -44,9 +42,7 @@ public abstract class CameraMixin {
 
     @Inject(method = "update", at = @At("TAIL"))
     private void onUpdateTail(BlockView area, Entity focusedEntity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo info) {
-        if (Modules.get().isActive(Freecam.class)) {
-            this.thirdPerson = true;
-        }
+        if (Modules.get().isActive(Freecam.class)) this.thirdPerson = true;
     }
 
     @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;setPos(DDD)V"))
