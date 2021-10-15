@@ -133,12 +133,12 @@ public class WorldGenUtils {
             } catch (Exception | Error ex) {
                 LOG.error(ex);
             }
+
             if (pos != null) return pos;
         }
         if (mc.player != null) {
             ItemStack stack = mc.player.getStackInHand(Hand.MAIN_HAND);
-            if (stack.getItem() != Items.FILLED_MAP)
-                stack = mc.player.getStackInHand(Hand.OFF_HAND);
+            if (stack.getItem() != Items.FILLED_MAP) stack = mc.player.getStackInHand(Hand.OFF_HAND);
             if (stack.getItem() == Items.FILLED_MAP) {
                 try {
                     pos = locateFeatureMap(feature, stack);
@@ -148,17 +148,20 @@ public class WorldGenUtils {
                 if (pos != null) return pos;
             }
         }
+
         try {
             pos = locateFeatureEntities(feature);
         } catch (Exception | Error ex) {
             LOG.error(ex);
         }
+
         if (pos != null) return pos;
         try {
             pos = locateFeatureBlocks(feature);
         } catch (Exception | Error ex) {
             LOG.error(ex);
         }
+
         return pos;
     }
 
@@ -180,9 +183,7 @@ public class WorldGenUtils {
                     .getPlayerContext(),
                 blocks,64,10,32);
         if (posList.isEmpty()) return null;
-        if (posList.size() < 5) {
-            ChatUtils.warning("Locate", "Only %d block(s) found. This search might be a false positive.", posList.size());
-        }
+        if (posList.size() < 5) ChatUtils.warning("Locate", "Only %d block(s) found. This search might be a false positive.", posList.size());
         return posList.get(0);
     }
 
@@ -192,10 +193,10 @@ public class WorldGenUtils {
         if (mc.world == null) return null;
         for (Entity e: mc.world.getEntities()) {
             for (Class<? extends Entity> clazz: entities) {
-                if (clazz.isInstance(e))
-                    return e.getBlockPos();
+                if (clazz.isInstance(e)) return e.getBlockPos();
             }
         }
+
         return null;
     }
 
@@ -280,35 +281,26 @@ public class WorldGenUtils {
     }
 
     private static Dimension getDimension(Feature feature) {
-        switch (feature) {
-            case buried_treasure -> { return Dimension.OVERWORLD; }
-            case mansion -> { return Dimension.OVERWORLD; }
-            case stronghold -> { return Dimension.OVERWORLD; }
-            case nether_fortress -> { return Dimension.NETHER; }
-            case ocean_monument -> { return Dimension.OVERWORLD; }
-            case bastion_remnant -> { return Dimension.NETHER; }
-            case slime_chunk -> { return Dimension.OVERWORLD; }
-            case village -> { return Dimension.OVERWORLD; }
-            case mineshaft -> { return Dimension.OVERWORLD; }
-            case end_city -> { return Dimension.END; }
-            case desert_pyramid -> { return Dimension.OVERWORLD; }
-            default -> { return Dimension.OVERWORLD; }
-        }
+        return switch (feature) {
+            case nether_fortress, bastion_remnant -> Dimension.NETHER;
+            case end_city -> Dimension.END;
+            default -> Dimension.OVERWORLD;
+        };
     }
 
     private static Structure<?, ?> getStructure(Feature feature, MCVersion version) {
         switch (feature) {
-            case buried_treasure -> { return new BuriedTreasure(version); }
-            case mansion -> { return new Mansion(version); }
-            case stronghold -> { return new Stronghold(version); }
-            case nether_fortress -> { return new Fortress(version); }
-            case ocean_monument -> { return new Monument(version); }
-            case bastion_remnant -> { return new BastionRemnant(version); }
-            case end_city -> { return new EndCity(version); }
-            case village -> { return new Village(version); }
-            case mineshaft -> { return new Mineshaft(version); }
-            case desert_pyramid -> { return new DesertPyramid(version); }
-            default -> { return null;}
+            case buried_treasure: return new BuriedTreasure(version);
+            case mansion: return new Mansion(version);
+            case stronghold: return new Stronghold(version);
+            case nether_fortress: return new Fortress(version);
+            case ocean_monument: return new Monument(version);
+            case bastion_remnant: return new BastionRemnant(version);
+            case end_city: return new EndCity(version);
+            case village: return new Village(version);
+            case mineshaft: return new Mineshaft(version);
+            case desert_pyramid: return new DesertPyramid(version);
+            default: return null;
         }
     }
 
@@ -324,13 +316,9 @@ public class WorldGenUtils {
         String nameTag = displayTag.getString("Name");
         if (!nameTag.contains("translate")) return false;
 
-        if (feature == Feature.buried_treasure) {
-            return nameTag.contains("filled_map.buried_treasure");
-        } else if (feature == Feature.ocean_monument) {
-            return nameTag.contains("filled_map.monument");
-        } else if (feature == Feature.mansion) {
-            return nameTag.contains("filled_map.mansion");
-        }
+        if (feature == Feature.buried_treasure) return nameTag.contains("filled_map.buried_treasure");
+        else if (feature == Feature.ocean_monument) return nameTag.contains("filled_map.monument");
+        else if (feature == Feature.mansion) return nameTag.contains("filled_map.mansion");
         return false;
     }
 

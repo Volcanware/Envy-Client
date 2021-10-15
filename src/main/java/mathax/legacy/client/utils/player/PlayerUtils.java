@@ -15,7 +15,6 @@ import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.misc.text.TextUtils;
 import mathax.legacy.client.utils.world.BlockUtils;
 import mathax.legacy.client.utils.world.Dimension;
-import mathax.legacy.client.utils.world.EnhancedBlockUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BedBlockEntity;
@@ -70,7 +69,7 @@ public class PlayerUtils {
 
     public static boolean placeBlock(BlockPos blockPos, Hand hand, boolean bl, boolean bl2) {
         if (!BlockUtils.canPlace(blockPos)) return false;
-    
+
         for (Direction direction : Direction.values()) {
             BlockPos blockPos1 = blockPos.offset(direction);
             Direction direction1 = direction.getOpposite();
@@ -84,7 +83,7 @@ public class PlayerUtils {
             return true;
         }
         if (!bl2) return false;
-        
+
         ((IVec3d)hitPos).set(blockPos);
         mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(hitPos, Direction.UP, blockPos, false));
         if (bl) mc.player.swingHand(hand);
@@ -244,10 +243,15 @@ public class PlayerUtils {
         return air < 2;
     }
 
+    public static boolean isInHole2(PlayerEntity p) {
+        BlockPos pos = p.getBlockPos();
+        return !mc.world.getBlockState(pos.add(1, 0, 0)).isAir() && !mc.world.getBlockState(pos.add(-1, 0, 0)).isAir() && !mc.world.getBlockState(pos.add(0, 0, 1)).isAir() && !mc.world.getBlockState(pos.add(0, 0, -1)).isAir() && !mc.world.getBlockState(pos.add(0, -1, 0)).isAir();
+    }
+
     public static boolean isBurrowed(PlayerEntity p, boolean holeCheck) {
         BlockPos pos = p.getBlockPos();
-        if (holeCheck && !EnhancedBlockUtils.isInHole(p)) return false;
-        return BlockUtils.getBlock(pos) == Blocks.ENDER_CHEST || BlockUtils.getBlock(pos) == Blocks.OBSIDIAN || EnhancedBlockUtils.isAnvilBlock(pos);
+        if (holeCheck && !isInHole2(p)) return false;
+        return BlockUtils.getBlock(pos) == Blocks.ENDER_CHEST || BlockUtils.getBlock(pos) == Blocks.OBSIDIAN || BlockUtils.isAnvilBlock(pos);
     }
 
     public static boolean isWebbed(PlayerEntity player) {
@@ -295,9 +299,7 @@ public class PlayerUtils {
                 // Check for players holding swords
                 else if (entity instanceof PlayerEntity && damageTaken < DamageUtils.getSwordDamage((PlayerEntity) entity, true)) {
                     if (!Friends.get().isFriend((PlayerEntity) entity) && mc.player.getPos().distanceTo(entity.getPos()) < 5) {
-                        if (((PlayerEntity) entity).getActiveItem().getItem() instanceof SwordItem) {
-                            damageTaken = DamageUtils.getSwordDamage((PlayerEntity) entity, true);
-                        }
+                        if (((PlayerEntity) entity).getActiveItem().getItem() instanceof SwordItem) damageTaken = DamageUtils.getSwordDamage((PlayerEntity) entity, true);
                     }
                 }
             }

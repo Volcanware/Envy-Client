@@ -40,9 +40,8 @@ public class InventorySorter {
         if (invalid) return true;
         if (currentActionI >= actions.size()) return true;
 
-        if (timer >= delay) {
-            timer = 0;
-        } else {
+        if (timer >= delay) timer = 0;
+        else {
             timer++;
             return false;
         }
@@ -102,9 +101,7 @@ public class InventorySorter {
                     slot.itemStack = ItemStack.EMPTY;
 
                     if (slotToStackTo.itemStack.getCount() >= slotToStackTo.itemStack.getMaxCount()) slotToStackTo = null;
-                }
-                // Handle state when combining the two stacks produces leftovers
-                else {
+                } else { // Handle state when combining the two stacks produces leftovers
                     int needed = slotToStackTo.itemStack.getMaxCount() - slotToStackTo.itemStack.getCount();
 
                     slotToStackTo.itemStack = new ItemStack(slotToStackTo.itemStack.getItem(), slotToStackTo.itemStack.getMaxCount());
@@ -170,9 +167,7 @@ public class InventorySorter {
         if (slot.inventory instanceof PlayerInventory && (!(screen instanceof CreativeInventoryScreen) || ((ISlot) slot).getId() > 8)) {
             if (SlotUtils.isHotbar(i)) return InvPart.Hotbar;
             else if (SlotUtils.isMain(i)) return InvPart.Player;
-        } else if (screen instanceof GenericContainerScreen && slot.inventory instanceof SimpleInventory) {
-            return InvPart.Main;
-        }
+        } else if (screen instanceof GenericContainerScreen && slot.inventory instanceof SimpleInventory) return InvPart.Main;
 
         return InvPart.Invalid;
     }

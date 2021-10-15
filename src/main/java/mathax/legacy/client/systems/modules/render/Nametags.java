@@ -19,6 +19,7 @@ import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.misc.Vec3;
+import mathax.legacy.client.utils.player.ArmorUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.render.NametagUtils;
 import mathax.legacy.client.utils.render.RenderUtils;
@@ -660,14 +661,14 @@ public class Nametags extends Module {
         NametagUtils.end();
     }
 
-    private ItemStack getItem(PlayerEntity entity, int index) {
+    private ItemStack getItem(PlayerEntity player, int index) {
         return switch (index) {
-            case 0 -> entity.getMainHandStack();
-            case 1 -> entity.getInventory().armor.get(3);
-            case 2 -> entity.getInventory().armor.get(2);
-            case 3 -> entity.getInventory().armor.get(1);
-            case 4 -> entity.getInventory().armor.get(0);
-            case 5 -> entity.getOffHandStack();
+            case 0 -> player.getMainHandStack();
+            case 1 -> ArmorUtils.getArmor(player, 3);
+            case 2 -> ArmorUtils.getArmor(player, 2);
+            case 3 -> ArmorUtils.getArmor(player, 1);
+            case 4 -> ArmorUtils.getArmor(player, 0);
+            case 5 -> player.getOffHandStack();
             default -> ItemStack.EMPTY;
         };
     }

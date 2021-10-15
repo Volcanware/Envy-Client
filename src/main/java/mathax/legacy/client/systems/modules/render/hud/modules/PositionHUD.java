@@ -9,7 +9,6 @@ import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDElement;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
 import mathax.legacy.client.utils.player.PlayerUtils;
-import net.minecraft.util.Formatting;
 
 public class PositionHUD extends HUDElement {
     private final String left1 = "XYZ ";

@@ -83,9 +83,8 @@ public class Rotations {
 
             i++;
         } else if (lastRotation != null) {
-            if (lastRotationTimer >= Config.get().rotationHoldTicks) {
-                resetLastRotation();
-            } else {
+            if (lastRotationTimer >= Config.get().rotationHoldTicks) resetLastRotation();
+            else {
                 setupMovementPacketRotation(lastRotation);
                 sentLastRotation = true;
 
@@ -132,9 +131,7 @@ public class Rotations {
 
             rotations.clear();
             i = 0;
-        } else if (sentLastRotation) {
-            resetPreRotation();
-        }
+        } else if (sentLastRotation) resetPreRotation();
     }
 
     private static void resetPreRotation() {

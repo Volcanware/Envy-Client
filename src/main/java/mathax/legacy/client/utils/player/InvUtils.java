@@ -35,20 +35,17 @@ public class InvUtils {
             for (Item item : items) {
                 if (itemStack.getItem() == item) return true;
             }
+
             return false;
         });
     }
 
-    public static FindItemResult findInHotbar(Predicate<ItemStack> isGood) {
-        if (isGood.test(Utils.mc.player.getOffHandStack())) {
-            return new FindItemResult(SlotUtils.OFFHAND, mc.player.getOffHandStack().getCount());
-        }
+    public static FindItemResult findInHotbar(Predicate<ItemStack> itemStackPredicate) {
+        if (itemStackPredicate.test(Utils.mc.player.getOffHandStack())) return new FindItemResult(SlotUtils.OFFHAND, mc.player.getOffHandStack().getCount());
 
-        if (isGood.test(mc.player.getMainHandStack())) {
-            return new FindItemResult(mc.player.getInventory().selectedSlot, mc.player.getMainHandStack().getCount());
-        }
+        if (itemStackPredicate.test(mc.player.getMainHandStack())) return new FindItemResult(mc.player.getInventory().selectedSlot, mc.player.getMainHandStack().getCount());
 
-        return find(isGood, 0, 8);
+        return find(itemStackPredicate, 0, 8);
     }
 
     public static FindItemResult find(Item... items) {
@@ -60,17 +57,17 @@ public class InvUtils {
         });
     }
 
-    public static FindItemResult find(Predicate<ItemStack> isGood) {
-        return find(isGood, 0, mc.player.getInventory().size());
+    public static FindItemResult find(Predicate<ItemStack> itemStackPredicate) {
+        return find(itemStackPredicate, 0, mc.player.getInventory().size());
     }
 
-    public static FindItemResult find(Predicate<ItemStack> isGood, int start, int end) {
+    public static FindItemResult find(Predicate<ItemStack> itemStackPredicate, int start, int end) {
         int slot = -1, count = 0;
 
         for (int i = start; i <= end; i++) {
             ItemStack stack = mc.player.getInventory().getStack(i);
 
-            if (isGood.test(stack)) {
+            if (itemStackPredicate.test(stack)) {
                 if (slot == -1) slot = i;
                 count += stack.getCount();
             }
@@ -100,6 +97,7 @@ public class InvUtils {
             ItemStack itemStack = mc.player.getInventory().getStack(i);
             if (itemStack == null || itemStack.getItem() instanceof AirBlockItem) emptySlots++;
         }
+
         return emptySlots;
     }
 

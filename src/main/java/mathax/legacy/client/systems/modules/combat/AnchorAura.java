@@ -15,7 +15,6 @@ import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.utils.world.BlockUtils;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
-import mathax.legacy.client.utils.world.EnhancedBlockUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowableFluid;
@@ -325,7 +324,7 @@ public class AnchorAura extends Module {
 
         //Anti Self Trap
         if (breakSelfTrap.get() && !sentTrapMine) {
-            if (findBreakPos(target.getBlockPos()) == null && findPlacePos(target.getBlockPos()) == null && EnhancedBlockUtils.isTrapBlock(target.getBlockPos().up(2))) {
+            if (findBreakPos(target.getBlockPos()) == null && findPlacePos(target.getBlockPos()) == null && BlockUtils.isTrapBlock(target.getBlockPos().up(2))) {
                 FindItemResult pick = InvUtils.findPick();
                 if (pick.found()) {
                     InvUtils.updateSlot(pick.getSlot());
@@ -336,7 +335,7 @@ public class AnchorAura extends Module {
                 }
             }
         }
-        if (sentTrapMine && !EnhancedBlockUtils.isTrapBlock(target.getBlockPos().up(2))) {
+        if (sentTrapMine && !BlockUtils.isTrapBlock(target.getBlockPos().up(2))) {
             if (fastPlaceAfter.get()) { placeDelayLeft = 0; breakDelayLeft = 0; }
             sentTrapMine = false;
         }

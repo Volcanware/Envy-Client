@@ -12,12 +12,12 @@ public class Dir {
 
     public static byte get(Direction dir) {
         return switch (dir) {
-            case UP    -> UP;
-            case DOWN  -> DOWN;
+            case UP -> UP;
+            case DOWN -> DOWN;
             case NORTH -> NORTH;
             case SOUTH -> SOUTH;
-            case WEST  -> WEST;
-            case EAST  -> EAST;
+            case WEST -> WEST;
+            case EAST -> EAST;
         };
     }
 

@@ -28,9 +28,7 @@ public class PathFinder {
             return nextBlock;
         } else if (!isSolidFloor(nextBlock.blockPos) && isAirAbove(nextBlock.blockPos)) {
             int drop = getDrop(nextBlock.blockPos);
-            if (getDrop(nextBlock.blockPos) < 3) {
-                nextBlock = new PathBlock(new BlockPos(nextBlock.blockPos.getX(), nextBlock.blockPos.getY() - drop, nextBlock.blockPos.getZ()));
-            }
+            if (getDrop(nextBlock.blockPos) < 3) nextBlock = new PathBlock(new BlockPos(nextBlock.blockPos.getX(), nextBlock.blockPos.getY() - drop, nextBlock.blockPos.getZ()));
         }
 
         return nextBlock;
@@ -42,12 +40,12 @@ public class PathFinder {
             drop++;
             pos = new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ());
         }
+
         return drop;
     }
 
     public boolean isAirAbove(BlockPos blockPos) {
-        if (!getBlockStateAtPos(blockPos.getX(), blockPos.getY(), blockPos.getZ()).isAir())
-            return false;
+        if (!getBlockStateAtPos(blockPos.getX(), blockPos.getY(), blockPos.getZ()).isAir()) return false;
         return getBlockStateAtPos(blockPos.getX(), blockPos.getY() + 1, blockPos.getZ()).isAir();
     }
 
@@ -58,6 +56,7 @@ public class PathFinder {
             nextPos = new Vec3d((int) (mc.player.getX() + multiplier * Math.cos(Math.toRadians(mc.player.getYaw()))), (int) (mc.player.getY()), (int) (mc.player.getZ() + multiplier * Math.sin(Math.toRadians(mc.player.getYaw()))));
             multiplier += .1;
         }
+
         return nextPos;
     }
 
@@ -68,11 +67,10 @@ public class PathFinder {
         int yaw = 0;
         int direction = getDirection();
         double tan = (tPos.z - pPos.z) / (tPos.x - pPos.x);
-        if (direction == QUAD_1)
-            yaw = (int) (Math.PI / 2 - Math.atan(tan));
-        else if (direction == QUAD_2)
-            yaw = (int) (-1 * Math.PI / 2 - Math.atan(tan));
+        if (direction == QUAD_1) yaw = (int) (Math.PI / 2 - Math.atan(tan));
+        else if (direction == QUAD_2) yaw = (int) (-1 * Math.PI / 2 - Math.atan(tan));
         else return direction;
+
         return yaw;
     }
 
@@ -80,32 +78,26 @@ public class PathFinder {
         if (target == null || mc.player == null) return 0;
         Vec3d targetPos = target.getPos();
         Vec3d playerPos = mc.player.getPos();
-        if (targetPos.x == playerPos.x && targetPos.z > playerPos.z)
-            return SOUTH;
-        if (targetPos.x == playerPos.x && targetPos.z < playerPos.z)
-            return NORTH;
-        if (targetPos.x < playerPos.x)
-            return QUAD_1;
-        if (targetPos.x > playerPos.x)
-            return QUAD_2;
+        if (targetPos.x == playerPos.x && targetPos.z > playerPos.z) return SOUTH;
+        if (targetPos.x == playerPos.x && targetPos.z < playerPos.z) return NORTH;
+        if (targetPos.x < playerPos.x) return QUAD_1;
+        if (targetPos.x > playerPos.x) return QUAD_2;
+
         return 0;
     }
 
     public BlockState getBlockStateAtPos(BlockPos pos) {
-        if (mc.world != null)
-            return mc.world.getBlockState(pos);
+        if (mc.world != null) return mc.world.getBlockState(pos);
         return null;
     }
 
     public BlockState getBlockStateAtPos(int x, int y, int z) {
-        if (mc.world != null)
-            return mc.world.getBlockState(new BlockPos(x, y, z));
+        if (mc.world != null) return mc.world.getBlockState(new BlockPos(x, y, z));
         return null;
     }
 
     public Block getBlockAtPos(BlockPos pos) {
-        if (mc.world != null)
-            return mc.world.getBlockState(pos).getBlock();
+        if (mc.world != null) return mc.world.getBlockState(pos).getBlock();
         return null;
     }
 
@@ -122,9 +114,7 @@ public class PathFinder {
     }
 
     public void lookAtDestination(PathBlock pathBlock) {
-        if (mc.player != null) {
-            mc.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(pathBlock.blockPos.getX(), pathBlock.blockPos.getY() + mc.player.getStandingEyeHeight(), pathBlock.blockPos.getZ()));
-        }
+        if (mc.player != null) mc.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(pathBlock.blockPos.getX(), pathBlock.blockPos.getY() + mc.player.getStandingEyeHeight(), pathBlock.blockPos.getZ()));
     }
 
     @EventHandler
@@ -132,14 +122,11 @@ public class PathFinder {
         if (target != null && mc.player != null) {
             if (mc.player.distanceTo(target) > 3) {
                 if (currentPathBlock == null) currentPathBlock = getNextPathBlock();
-                if (mc.player.getPos().distanceTo(new Vec3d(currentPathBlock.blockPos.getX(), currentPathBlock.blockPos.getY(), currentPathBlock.blockPos.getZ())) < .1)
-                    currentPathBlock = getNextPathBlock();
+                if (mc.player.getPos().distanceTo(new Vec3d(currentPathBlock.blockPos.getX(), currentPathBlock.blockPos.getY(), currentPathBlock.blockPos.getZ())) < .1) currentPathBlock = getNextPathBlock();
                 lookAtDestination(currentPathBlock);
-                if (!mc.options.keyForward.isPressed())
-                    mc.options.keyForward.setPressed(true);
+                if (!mc.options.keyForward.isPressed()) mc.options.keyForward.setPressed(true);
             } else {
-                if (mc.options.keyForward.isPressed())
-                    mc.options.keyForward.setPressed(false);
+                if (mc.options.keyForward.isPressed()) mc.options.keyForward.setPressed(false);
                 path.clear();
                 currentPathBlock = null;
             }
@@ -182,6 +169,5 @@ public class PathFinder {
             block = getBlockAtPos(pos);
             blockState = getBlockStateAtPos(blockPos);
         }
-
     }
 }

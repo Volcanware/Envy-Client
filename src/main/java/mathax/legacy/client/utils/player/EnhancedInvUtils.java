@@ -41,9 +41,8 @@ public class EnhancedInvUtils {
 
     public static Hand getHand(Item item) {
         Hand hand = Hand.MAIN_HAND;
-        if (mc.player.getInventory().getMainHandStack().getItem() == item) {
-            hand = Hand.MAIN_HAND;
-        }
+        if (mc.player.getInventory().getMainHandStack().getItem() == item) hand = Hand.MAIN_HAND;
+
         return hand;
     }
 
@@ -56,52 +55,47 @@ public class EnhancedInvUtils {
     }
 
     public static int invIndexToSlotId(int n) {
-        if (n < 9 && n != -1) {
-            return 44 - (8 - n);
-        }
+        if (n < 9 && n != -1) return 44 - (8 - n);
+
         return n;
     }
 
     public static Hand getHand(Predicate<ItemStack> predicate) {
         Hand hand = null;
-        if (predicate.test(mc.player.getMainHandStack())) {
-            hand = Hand.MAIN_HAND;
-        } else if (predicate.test(mc.player.getOffHandStack())) {
-            hand = Hand.OFF_HAND;
-        }
+        if (predicate.test(mc.player.getMainHandStack())) hand = Hand.MAIN_HAND;
+        else if (predicate.test(mc.player.getOffHandStack())) hand = Hand.OFF_HAND;
+
         return hand;
     }
 
     public static FindItemResult findItemWithCount(Item item) {
         findItemResult.slot = -1;
         findItemResult.count = 0;
+
         for (int i = 0; i < mc.player.getInventory().selectedSlot; ++i) {
             ItemStack itemStack = mc.player.getInventory().getStack(i);
             if (itemStack.getItem() != item) continue;
-            if (!findItemResult.found()) {
-                findItemResult.slot = i;
-            }
+            if (!findItemResult.found()) findItemResult.slot = i;
             findItemResult.count += item.getMaxCount();
             if (-2 <= 0) continue;
             return null;
         }
+
         return findItemResult;
     }
 
     private static int findItem(Item item, Predicate<ItemStack> predicate, int n) {
         for (int i = 0; i < n; ++i) {
             ItemStack itemStack = mc.player.getInventory().getStack(i);
-            if (itemStack != null && itemStack.getItem() != item || !predicate.test(itemStack))
-                continue;
+            if (itemStack != null && itemStack.getItem() != item || !predicate.test(itemStack)) continue;
             return i;
         }
+
         return -1;
     }
 
     public static void swap(int n) {
-        if (n != mc.player.getInventory().selectedSlot && n >= 0 && n < 9) {
-            mc.player.getInventory().selectedSlot = n;
-        }
+        if (n != mc.player.getInventory().selectedSlot && n >= 0 && n < 9) mc.player.getInventory().selectedSlot = n;
     }
 
     public static int findItemInHotbar(Item item) {
@@ -122,15 +116,13 @@ public class EnhancedInvUtils {
             moveQueue.clear();
             return;
         }
+
         if (!mc.player.getInventory().isEmpty() && mc.currentScreen == null && mc.player.getInventory().size() == 46) {
             int n = findItemWithCount((Item) mc.player.getMainHandStack().getItem()).slot;
-            if (n == -1) {
-                n = mc.player.getInventory().selectedSlot;
-            }
-            if (n != -1) {
-                clickSlot(invIndexToSlotId(n), 0, SlotActionType.PICKUP);
-            }
+            if (n == -1) n = mc.player.getInventory().selectedSlot;
+            if (n != -1) clickSlot(invIndexToSlotId(n), 0, SlotActionType.PICKUP);
         }
+
         if (!moveQueue.isEmpty() && mc.player.getInventory().size() == 46) {
             currentMove = moveQueue.remove();
             clickSlot(unpackLongFrom(currentMove), 0, SlotActionType.PICKUP);

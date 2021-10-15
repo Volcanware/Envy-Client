@@ -3,7 +3,6 @@ package mathax.legacy.client.systems.modules.misc;
 import io.netty.buffer.Unpooled;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.packets.PacketEvent;
-import mathax.legacy.client.mixin.CustomPayloadC2SPacketAccessor;
 import mathax.legacy.client.mixin.ICustomPayloadC2SPacketAccessor;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
@@ -11,8 +10,6 @@ import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
-import net.minecraft.util.Identifier;
-import org.apache.commons.lang3.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 

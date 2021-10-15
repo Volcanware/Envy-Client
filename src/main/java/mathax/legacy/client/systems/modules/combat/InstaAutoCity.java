@@ -18,7 +18,6 @@ import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.Rotations;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.utils.world.BlockUtils;
-import mathax.legacy.client.utils.world.EnhancedBlockUtils;
 import mathax.legacy.client.utils.world.CityUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -155,9 +154,7 @@ public class InstaAutoCity extends Module {
 
     @Override
     public void onDeactivate() {
-        if (mineTarget != null) {
-            mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, mineTarget, direction));
-        }
+        if (mineTarget != null) mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, mineTarget, direction));
         mineTarget = null;
         target = null;
     }
@@ -170,65 +167,45 @@ public class InstaAutoCity extends Module {
         if (target != null && CityUtils.getTargetBlock(target) != null) {
             Vec3d vec3d = new Vec3d(mc.player.getPos().x, mc.player.getPos().y + 1.0, mc.player.getPos().z);
             Vec3d vec3d1 = new Vec3d(CityUtils.getTargetBlock(target).getX(), CityUtils.getTargetBlock(target).getY(), CityUtils.getTargetBlock(target).getZ());
-            if (vec3d.distanceTo(vec3d1) <= range.get()) {
-                mineTarget = CityUtils.getTargetBlock(target);
-            }
+            if (vec3d.distanceTo(vec3d1) <= range.get()) mineTarget = CityUtils.getTargetBlock(target);
         }
+
         if (mineTarget != null && target != null) {
             if (mc.player.squaredDistanceTo(mineTarget.getX(), mineTarget.getY(), mineTarget.getZ()) > range.get()) {
                 if (autoToggle.get()) {
-                    if (chatInfo.get()) {
-                        info("Target block out of reach, disabling...");
-                    }
+                    if (chatInfo.get()) info("Target block out of reach, disabling...");
                     toggle();
                     return;
                 }
             }
-            if (chatInfo.get()) {
-                info("Attempting to city " + Formatting.WHITE + target.getGameProfile().getName() + Formatting.GRAY + "...");
-            }
+
+            if (chatInfo.get()) info("Attempting to city " + Formatting.WHITE + target.getGameProfile().getName() + Formatting.GRAY + "...");
             targetBlockPos = target.getBlockPos();
             int n = InvUtils.findInHotbar(Items.BARRIER).getSlot();
-            if (ironPickaxe.get() && n == -1) {
-                n = InvUtils.findInHotbar(Items.IRON_PICKAXE).getSlot();
-            }
+            if (ironPickaxe.get() && n == -1) n = InvUtils.findInHotbar(Items.IRON_PICKAXE).getSlot();
+            if (n == -1) n = InvUtils.findInHotbar(Items.NETHERITE_PICKAXE).getSlot();
+            if (n == -1) n = InvUtils.findInHotbar(Items.DIAMOND_PICKAXE).getSlot();
+            if (mc.player.getAbilities().creativeMode) n = mc.player.getInventory().selectedSlot;
             if (n == -1) {
-                n = InvUtils.findInHotbar(Items.NETHERITE_PICKAXE).getSlot();
-            }
-            if (n == -1) {
-                n = InvUtils.findInHotbar(Items.DIAMOND_PICKAXE).getSlot();
-            }
-            if (mc.player.getAbilities().creativeMode) {
-                n = mc.player.getInventory().selectedSlot;
-            }
-            if (n == -1) {
-                if (chatInfo.get()) {
-                    info("No pickaxe found, disabling...");
-                }
+                if (chatInfo.get()) info("No pickaxe found, disabling...");
                 toggle();
                 return;
             }
+
             if (support.get()) {
                 int n2 = InvUtils.findInHotbar((Item[]) new Item[]{Items.OBSIDIAN}).getSlot();
                 BlockPos blockPos = mineTarget.down(1);
-                if (!BlockUtils.canPlace(blockPos) && mc.world.getBlockState(blockPos).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK && chatInfo.get()) {
-                    info("Couldn't place support block, mining anyway.");
-                } else if (n2 == -1) {
-                    if (chatInfo.get()) {
-                        info("No obsidian found for support, mining anyway.");
-                    }
-                } else {
-                    EnhancedBlockUtils.place(blockPos, Hand.MAIN_HAND, n2, rotate.get(), 0, true);
-                }
+                if (!BlockUtils.canPlace(blockPos) && mc.world.getBlockState(blockPos).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK && chatInfo.get()) info("Couldn't place support block, mining anyway.");
+                else if (n2 == -1) if (chatInfo.get()) info("No obsidian found for support, mining anyway.");
+                else BlockUtils.placeEnhanced(blockPos, Hand.MAIN_HAND, n2, rotate.get(), 0, true);
             }
+
             mc.player.getInventory().selectedSlot = n;
         } else {
             mineTarget = null;
             target = null;
             if (autoToggle.get()) {
-                if (chatInfo.get()) {
-                    info("No target block found, disabling...");
-                }
+                if (chatInfo.get()) info("No target block found, disabling...");
                 toggle();
             }
         }
@@ -236,22 +213,17 @@ public class InstaAutoCity extends Module {
 
     private void doMine() {
         --delayLeft;
+
         if (!mining) {
-            if (rotate.get()) {
-                Rotations.rotate(Rotations.getYaw(mineTarget), Rotations.getPitch(mineTarget));
-            }
-            if (swing.get()) {
-                mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
-            } else {
-                mc.player.swingHand(Hand.MAIN_HAND);
-            }
+            if (rotate.get()) Rotations.rotate(Rotations.getYaw(mineTarget), Rotations.getPitch(mineTarget));
+            if (swing.get()) mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
+            else mc.player.swingHand(Hand.MAIN_HAND);
             mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, mineTarget, direction));
             mining = true;
         }
+
         if (delayLeft <= 0) {
-            if (rotate.get()) {
-                Rotations.rotate(Rotations.getYaw(mineTarget), Rotations.getPitch(mineTarget));
-            }
+            if (rotate.get()) Rotations.rotate(Rotations.getYaw(mineTarget), Rotations.getPitch(mineTarget));
             mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
             mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, mineTarget, direction));
             delayLeft = delay.get();
@@ -264,28 +236,18 @@ public class InstaAutoCity extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre pre) {
-        if (!assertionsDisabled && mc.world == null) {
-            throw new AssertionError();
-        }
+        if (!assertionsDisabled && mc.world == null) throw new AssertionError();
+
         if (autoToggle.get()) {
-            direction = EnhancedBlockUtils.rayTraceCheck(mineTarget, true);
-            if (!mc.world.isAir(mineTarget)) {
-                doMine();
-            } else {
-                ++count;
-            }
-            if (target == null || !target.isAlive() || count >= toggle.get() || !mineTarget.isWithinDistance(mc.player.getPos(), range.get()) || target.getBlockPos() != targetBlockPos) {
-                toggle();
-            }
+            direction = BlockUtils.rayTraceCheck(mineTarget, true);
+            if (!mc.world.isAir(mineTarget)) doMine();
+            else ++count;
+            if (target == null || !target.isAlive() || count >= toggle.get() || !mineTarget.isWithinDistance(mc.player.getPos(), range.get()) || target.getBlockPos() != targetBlockPos) toggle();
         } else {
             if (target == null) return;
-            direction = EnhancedBlockUtils.rayTraceCheck(mineTarget, true);
-            if (!mc.world.isAir(mineTarget)) {
-                doMine();
-            }
-            if (target == null || !target.isAlive() || !mineTarget.isWithinDistance(mc.player.getPos(), range.get()) || target.getBlockPos() != targetBlockPos) {
-                toggle();
-            }
+            direction = BlockUtils.rayTraceCheck(mineTarget, true);
+            if (!mc.world.isAir(mineTarget)) doMine();
+            if (target == null || !target.isAlive() || !mineTarget.isWithinDistance(mc.player.getPos(), range.get()) || target.getBlockPos() != targetBlockPos) toggle();
         }
     }
 

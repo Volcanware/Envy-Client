@@ -36,7 +36,7 @@ public class DamageCalcUtils {
         double damage = (impact * impact + impact) / 2 * 7 * (6 * 2) + 1;
 
         // Multiply damage by difficulty
-        damage = getDamageForDifficulty(damage);
+        damage = DamageUtils.getDamageForDifficulty(damage);
 
         // Reduce by resistance
         damage = resistanceReduction(player, damage);
@@ -63,7 +63,7 @@ public class DamageCalcUtils {
         double damage = (impact * impact + impact) / 2 * 7 * (5 * 2) + 1;
 
         // Multiply damage by difficulty
-        damage = getDamageForDifficulty(damage);
+        damage = DamageUtils.getDamageForDifficulty(damage);
 
         // Reduce by resistance
         damage = resistanceReduction(player, damage);
@@ -90,17 +90,11 @@ public class DamageCalcUtils {
         // Get sword damage
         double damage = 0;
         if (charged) {
-            if (entity.getActiveItem().getItem() == Items.DIAMOND_SWORD) {
-                damage += 7;
-            } else if (entity.getActiveItem().getItem() == Items.GOLDEN_SWORD) {
-                damage += 4;
-            } else if (entity.getActiveItem().getItem() == Items.IRON_SWORD) {
-                damage += 6;
-            } else if (entity.getActiveItem().getItem() == Items.STONE_SWORD) {
-                damage += 5;
-            } else if (entity.getActiveItem().getItem() == Items.WOODEN_SWORD) {
-                damage += 4;
-            }
+            if (entity.getActiveItem().getItem() == Items.DIAMOND_SWORD) damage += 7;
+            else if (entity.getActiveItem().getItem() == Items.GOLDEN_SWORD) damage += 4;
+            else if (entity.getActiveItem().getItem() == Items.IRON_SWORD) damage += 6;
+            else if (entity.getActiveItem().getItem() == Items.STONE_SWORD) damage += 5;
+            else if (entity.getActiveItem().getItem() == Items.WOODEN_SWORD) damage += 4;
             damage *= 1.5;
         }
 
@@ -126,15 +120,6 @@ public class DamageCalcUtils {
         damage = normalProtReduction(entity, damage);
 
         return damage < 0 ? 0 : damage;
-    }
-
-    private static double getDamageForDifficulty(double damage) {
-        switch (mc.world.getDifficulty()) {
-            case PEACEFUL: return 0;
-            case EASY:     return Math.min(damage / 2.0F + 1.0F, damage);
-            case HARD:     return damage * 3.0F / 2.0F;
-            default:       return damage;
-        }
     }
 
     private static double normalProtReduction(Entity player, double damage) {

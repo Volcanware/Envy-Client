@@ -32,6 +32,7 @@ public class EChestMemory {
             echestOpenedState = 2;
             return;
         }
+
         if (echestOpenedState == 0) return;
 
         if (!(mc.currentScreen instanceof GenericContainerScreen)) return;

@@ -54,9 +54,7 @@ public class EntityTooltipComponent implements MatHaxTooltipData, TooltipCompone
     protected void renderEntity(MatrixStack matrices, int x, int y) {
         if (mc.player == null) return;
         float size = 24;
-        if (Math.max(entity.getWidth(), entity.getHeight()) > 1.0) {
-            size /= Math.max(entity.getWidth(), entity.getHeight());
-        }
+        if (Math.max(entity.getWidth(), entity.getHeight()) > 1.0) size /= Math.max(entity.getWidth(), entity.getHeight());
         DiffuseLighting.disableGuiDepthLighting();
         matrices.push();
         int yOffset = 16;

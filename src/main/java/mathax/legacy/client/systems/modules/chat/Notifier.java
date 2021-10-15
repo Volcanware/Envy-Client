@@ -41,15 +41,11 @@ import static mathax.legacy.client.utils.player.ChatUtils.formatCoords;
 /*/--------------------------------------------------------------------------------------------------------------/*/
 
 public class Notifier extends Module {
-    private static String entityName;
-    private static String entityPos;
 
     private boolean alertedHelm;
     private boolean alertedChest;
     private boolean alertedLegs;
     private boolean alertedBoots;
-
-    private int burrowMsgWait;
 
     public static List<PlayerEntity> burrowedPlayers = new ArrayList<>();
 
@@ -178,6 +174,7 @@ public class Notifier extends Module {
     private void onEntityAdded(EntityAddedEvent event) {
         if (event.entity.getUuid().equals(mc.player.getUuid()) || !entities.get().getBoolean(event.entity.getType()) || !visualRange.get() || this.event.get() == Event.Despawn) return;
 
+        String entityName;
         if (event.entity instanceof PlayerEntity) {
             if ((!visualRangeIgnoreFriends.get() || !Friends.get().isFriend(((PlayerEntity) event.entity))) && (!visualRangeIgnoreFakes.get() || !(event.entity instanceof FakePlayerEntity))) {
                 entityName = event.entity.getEntityName();
@@ -185,7 +182,7 @@ public class Notifier extends Module {
             }
         } else {
             entityName = event.entity.getType().getName().getString();
-            entityPos = event.entity.getPos().toString();
+            String entityPos = event.entity.getPos().toString();
             MutableText text = new LiteralText(entityName).formatted(Formatting.WHITE);
             text.append(new LiteralText(" has spawned at ").formatted(Formatting.GRAY));
             text.append(entityPos);
@@ -221,7 +218,7 @@ public class Notifier extends Module {
         alertedChest = false;
         alertedLegs = false;
         alertedBoots = false;
-        burrowMsgWait = 0;
+        int burrowMsgWait = 0;
     }
 
     @EventHandler
@@ -265,23 +262,27 @@ public class Notifier extends Module {
                         warning("Your helmet has low durability!");
                         alertedHelm = true;
                     }
+
                     if (ArmorUtils.isChestplate(armorPiece) && !alertedChest) {
                         warning("Your chestplate has low durability!");
                         alertedChest = true;
                     }
-                    if (ArmorUtils.isLegs(armorPiece) && !alertedLegs) {
+
+                    if (ArmorUtils.isLeggings(armorPiece) && !alertedLegs) {
                         warning("Your leggings habe low durability!");
                         alertedLegs = true;
                     }
+
                     if (ArmorUtils.isBoots(armorPiece) && !alertedBoots) {
                         warning("Your boots have low durability!");
                         alertedBoots = true;
                     }
                 }
+
                 if (!ArmorUtils.checkThreshold(armorPiece, threshold.get())) {
                     if (ArmorUtils.isHelmet(armorPiece) && alertedHelm) alertedHelm = false;
                     if (ArmorUtils.isChestplate(armorPiece) && alertedChest) alertedChest = false;
-                    if (ArmorUtils.isLegs(armorPiece) && alertedLegs) alertedLegs = false;
+                    if (ArmorUtils.isLeggings(armorPiece) && alertedLegs) alertedLegs = false;
                     if (ArmorUtils.isBoots(armorPiece) && alertedBoots) alertedBoots = false;
                 }
             }
