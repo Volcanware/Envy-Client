@@ -57,8 +57,7 @@ public abstract class SplashOverlayMixin {
         return 0;
     }
 
-    @Redirect(method = "renderProgressBar",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/BackgroundHelper$ColorMixer;getArgb(IIII)I"))
+    @Redirect(method = "renderProgressBar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/BackgroundHelper$ColorMixer;getArgb(IIII)I"))
     private int progressBarBorderProxy(int a, int r, int g, int b, MatrixStack matrices, int x1, int y1, int x2, int y2, float opacity) {
 
         // Bar background
