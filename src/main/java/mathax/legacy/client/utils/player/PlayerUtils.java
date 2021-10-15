@@ -47,12 +47,10 @@ public class PlayerUtils {
     private static final Color color = new Color();
 
     public static void swingHand(boolean offhand) {
-        if (offhand) {
-            mc.player.swingHand(Hand.OFF_HAND);
-        } else {
-            mc.player.swingHand(Hand.MAIN_HAND);
-        }
+        if (offhand) mc.player.swingHand(Hand.OFF_HAND);
+        else mc.player.swingHand(Hand.MAIN_HAND);
     }
+
     public static boolean isPlayerMoving(PlayerEntity p) {
         return p.forwardSpeed != 0 || p.sidewaysSpeed != 0;
     }
@@ -62,9 +60,7 @@ public class PlayerUtils {
     }
 
     public static boolean placeBlock(BlockPos blockPos, int n, Hand hand, boolean bl) {
-        if (n == -1) {
-            return false;
-        }
+        if (n == -1) return false;
         int n2 = mc.player.getInventory().selectedSlot;
         mc.player.getInventory().selectedSlot = n;
         boolean bl2 = placeBlock(blockPos, hand, true, bl);
@@ -73,9 +69,8 @@ public class PlayerUtils {
     }
 
     public static boolean placeBlock(BlockPos blockPos, Hand hand, boolean bl, boolean bl2) {
-        if (!BlockUtils.canPlace(blockPos)) {
-            return false;
-        }
+        if (!BlockUtils.canPlace(blockPos)) return false;
+    
         for (Direction direction : Direction.values()) {
             BlockPos blockPos1 = blockPos.offset(direction);
             Direction direction1 = direction.getOpposite();
@@ -84,20 +79,15 @@ public class PlayerUtils {
             boolean bl3 = mc.player.input.sneaking;
             mc.player.input.sneaking = false;
             mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(hitPos, direction1, blockPos1, false));
-            if (bl) {
-                mc.player.swingHand(hand);
-            }
+            if (bl) mc.player.swingHand(hand);
             mc.player.input.sneaking = bl3;
             return true;
         }
-        if (!bl2) {
-            return false;
-        }
+        if (!bl2) return false;
+        
         ((IVec3d)hitPos).set(blockPos);
         mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(hitPos, Direction.UP, blockPos, false));
-        if (bl) {
-            mc.player.swingHand(hand);
-        }
+        if (bl) mc.player.swingHand(hand);
         return true;
     }
 
@@ -246,9 +236,7 @@ public class PlayerUtils {
 
                     BlockState blockState1 = mc.world.getBlockState(blockPos.offset(direction).offset(dir));
 
-                    if (blockState1.getBlock() != Blocks.BEDROCK && blockState1.getBlock() != Blocks.OBSIDIAN) {
-                        return false;
-                    }
+                    if (blockState1.getBlock() != Blocks.BEDROCK && blockState1.getBlock() != Blocks.OBSIDIAN) return false;
                 }
             }
         }
@@ -302,9 +290,8 @@ public class PlayerUtils {
         if (entities) {
             for (Entity entity : mc.world.getEntities()) {
                 // Check for end crystals
-                if (entity instanceof EndCrystalEntity && damageTaken < DamageUtils.crystalDamage(mc.player, entity.getPos())) {
-                    damageTaken = DamageUtils.crystalDamage(mc.player, entity.getPos());
-                }
+                if (entity instanceof EndCrystalEntity && damageTaken < DamageUtils.crystalDamage(mc.player, entity.getPos())) damageTaken = DamageUtils.crystalDamage(mc.player, entity.getPos());
+
                 // Check for players holding swords
                 else if (entity instanceof PlayerEntity && damageTaken < DamageUtils.getSwordDamage((PlayerEntity) entity, true)) {
                     if (!Friends.get().isFriend((PlayerEntity) entity) && mc.player.getPos().distanceTo(entity.getPos()) < 5) {
@@ -321,9 +308,7 @@ public class PlayerUtils {
                     BlockPos bp = blockEntity.getPos();
                     Vec3d pos = new Vec3d(bp.getX(), bp.getY(), bp.getZ());
 
-                    if (blockEntity instanceof BedBlockEntity && damageTaken < DamageUtils.bedDamage(mc.player, pos)) {
-                        damageTaken = DamageUtils.bedDamage(mc.player, pos);
-                    }
+                    if (blockEntity instanceof BedBlockEntity && damageTaken < DamageUtils.bedDamage(mc.player, pos)) damageTaken = DamageUtils.bedDamage(mc.player, pos);
                 }
             }
         }
@@ -333,9 +318,7 @@ public class PlayerUtils {
             if (!Modules.get().isActive(NoFall.class) && mc.player.fallDistance > 3) {
                 double damage = mc.player.fallDistance * 0.5;
 
-                if (damage > damageTaken && !EntityUtils.isAboveWater(mc.player)) {
-                    damageTaken = damage;
-                }
+                if (damage > damageTaken && !EntityUtils.isAboveWater(mc.player)) damageTaken = damage;
             }
         }
 

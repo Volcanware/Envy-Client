@@ -9,6 +9,7 @@ import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDElement;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
 import mathax.legacy.client.utils.player.PlayerUtils;
+import net.minecraft.util.Formatting;
 
 public class PositionHUD extends HUDElement {
     private final String left1 = "XYZ ";
@@ -49,9 +50,20 @@ public class PositionHUD extends HUDElement {
         if (oppositeDimension.get()) height = height * 2 + 2;
 
         if (isInEditor()) {
-            right1 = "0, 0, 0";
-            if (accurate.get()) right1 = "0,0 0,0 0,0";
-            box.setSize(left1Width + renderer.textWidth(right1), height);
+            right1 = accurate.get() ? "0,0 0,0 0,0" : "0, 0, 0";
+            if (oppositeDimension.get()) {
+                left2 = "Editor XYZ ";
+                right2 = right1;
+            }
+
+            double widthEditor = left1Width + renderer.textWidth(right1);
+
+            if (left2 != null) {
+                left2Width = renderer.textWidth(left2);
+                widthEditor = Math.max(widthEditor, left2Width + renderer.textWidth(right2));
+            }
+
+            box.setSize(widthEditor, height);
             return;
         }
 
@@ -61,9 +73,7 @@ public class PositionHUD extends HUDElement {
 
         if (accurate.get()) {
             x = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().x : mc.player.getX();
-            y = freecam.isActive() ?
-                mc.gameRenderer.getCamera().getPos().y - mc.player.getEyeHeight(mc.player.getPose()) :
-                mc.player.getY();
+            y = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().y - mc.player.getEyeHeight(mc.player.getPose()) : mc.player.getY();
             z = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().z : mc.player.getZ();
 
             right1 = String.format("%.1f %.1f %.1f", x, y, z);
@@ -79,11 +89,11 @@ public class PositionHUD extends HUDElement {
         if (oppositeDimension.get()) {
             switch (PlayerUtils.getDimension()) {
                 case Overworld -> {
-                    left2 = "Nether XYZ: ";
+                    left2 = "Nether XYZ ";
                     right2 = String.format("%.1f %.1f %.1f", x / 8.0, y, z / 8.0);
                 }
                 case Nether -> {
-                    left2 = "Overworld XYZ: ";
+                    left2 = "Overworld XYZ ";
                     right2 = String.format("%.1f %.1f %.1f", x * 8.0, y, z * 8.0);
                 }
             }
@@ -105,12 +115,11 @@ public class PositionHUD extends HUDElement {
         double y = box.getY();
 
         double xOffset = box.alignX(left1Width + renderer.textWidth(right1));
-        double yOffset = 0;
+        double yOffset = oppositeDimension.get() ? renderer.textHeight() + 2 : 0;
 
         if (left2 != null) {
             renderer.text(left2, x, y, hud.primaryColor.get());
             renderer.text(right2, x + left2Width, y, hud.secondaryColor.get());
-            yOffset = renderer.textHeight() + 2;
         }
 
         renderer.text(left1, x + xOffset, y + yOffset, hud.primaryColor.get());
