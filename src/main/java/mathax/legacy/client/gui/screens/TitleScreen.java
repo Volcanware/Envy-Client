@@ -150,7 +150,6 @@ public class TitleScreen extends Screen {
             }
 
             drawTexture(matrices, widthHalf - (logoScale / 2), 15, 0.0F, 0.0F, logoScale, logoScale, logoScale, logoScale);
-
             if (splashText != null) {
                 matrices.push();
                 matrices.translate(splashX, splashY, 0);
