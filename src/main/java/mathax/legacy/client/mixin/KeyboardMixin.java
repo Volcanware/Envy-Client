@@ -1,8 +1,8 @@
 package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.events.mathax.CharTypedEvent;
-import mathax.legacy.client.events.mathax.KeyEvent;
+import mathax.legacy.client.events.mathaxlegacy.CharTypedEvent;
+import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
 import mathax.legacy.client.gui.GuiKeyEvents;
 import mathax.legacy.client.gui.WidgetScreen;
 import mathax.legacy.client.utils.misc.input.Input;

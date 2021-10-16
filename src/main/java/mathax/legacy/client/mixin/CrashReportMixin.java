@@ -1,6 +1,6 @@
 package mathax.legacy.client.mixin;
 
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Category;
 import mathax.legacy.client.systems.modules.Modules;

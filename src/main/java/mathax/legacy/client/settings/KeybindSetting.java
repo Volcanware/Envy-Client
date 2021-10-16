@@ -1,8 +1,8 @@
 package mathax.legacy.client.settings;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.events.mathax.KeyEvent;
-import mathax.legacy.client.events.mathax.MouseButtonEvent;
+import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
+import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
 import mathax.legacy.client.gui.widgets.WKeybind;
 import mathax.legacy.client.utils.misc.Keybind;
 import mathax.legacy.client.utils.misc.input.KeyAction;

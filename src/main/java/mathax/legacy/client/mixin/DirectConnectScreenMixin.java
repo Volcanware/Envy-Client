@@ -1,6 +1,6 @@
 package mathax.legacy.client.mixin;
 
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.utils.misc.LastServerInfo;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

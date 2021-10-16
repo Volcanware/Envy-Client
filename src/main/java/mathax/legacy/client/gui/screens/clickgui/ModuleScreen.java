@@ -1,6 +1,6 @@
 package mathax.legacy.client.gui.screens.clickgui;
 
-import mathax.legacy.client.events.mathax.ModuleBindChangedEvent;
+import mathax.legacy.client.events.mathaxlegacy.ModuleBindChangedEvent;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WindowScreen;
 import mathax.legacy.client.gui.utils.Cell;

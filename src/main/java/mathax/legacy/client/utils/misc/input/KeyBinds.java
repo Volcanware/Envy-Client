@@ -1,6 +1,6 @@
 package mathax.legacy.client.utils.misc.input;
 
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.mixin.KeyBindingAccessor;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;

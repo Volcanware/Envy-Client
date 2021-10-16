@@ -1,7 +1,7 @@
 package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.screens.*;
 import mathax.legacy.client.gui.screens.TitleScreen;
 import mathax.legacy.client.gui.screens.accounts.AccountsScreen;

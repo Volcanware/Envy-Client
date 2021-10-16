@@ -1,6 +1,6 @@
 package mathax.legacy.client.systems.modules.chat;
 
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.widgets.WWidget;

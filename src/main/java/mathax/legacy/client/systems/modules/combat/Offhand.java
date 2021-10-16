@@ -1,6 +1,6 @@
 package mathax.legacy.client.systems.modules.combat;
 
-import mathax.legacy.client.events.mathax.MouseButtonEvent;
+import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.BoolSetting;
 import mathax.legacy.client.settings.EnumSetting;

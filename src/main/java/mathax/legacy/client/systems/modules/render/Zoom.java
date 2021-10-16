@@ -1,7 +1,7 @@
 package mathax.legacy.client.systems.modules.render;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.events.mathax.MouseScrollEvent;
+import mathax.legacy.client.events.mathaxlegacy.MouseScrollEvent;
 import mathax.legacy.client.events.render.GetFovEvent;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;

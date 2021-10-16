@@ -2,8 +2,8 @@ package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.events.entity.DropItemsEvent;
 import mathax.legacy.client.events.game.OpenScreenEvent;
-import mathax.legacy.client.events.mathax.KeyEvent;
-import mathax.legacy.client.events.mathax.MouseButtonEvent;
+import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
+import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.eventbus.EventHandler;

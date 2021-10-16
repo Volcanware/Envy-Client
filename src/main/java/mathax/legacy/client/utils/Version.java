@@ -1,5 +1,6 @@
-package mathax.legacy.client;
+package mathax.legacy.client.utils;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.render.prompts.OkPrompt;
 import mathax.legacy.client.utils.render.prompts.YesNoPrompt;

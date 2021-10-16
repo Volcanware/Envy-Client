@@ -1,6 +1,6 @@
 package mathax.legacy.client.mixin;
 
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.util.math.MatrixStack;

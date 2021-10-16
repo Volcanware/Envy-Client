@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.eventbus.EventHandler;
-import mathax.legacy.client.events.mathax.KeyEvent;
+import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
 import mathax.legacy.client.mixin.EntityAccessor;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.InteractionMenu;

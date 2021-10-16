@@ -5,7 +5,7 @@ import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
 import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.settings.DoubleSetting;
 import mathax.legacy.client.settings.EnumSetting;

@@ -1,4 +1,4 @@
-package mathax.legacy.client.events.mathax;
+package mathax.legacy.client.events.mathaxlegacy;
 
 public class ActiveModulesChangedEvent {
     private static final ActiveModulesChangedEvent INSTANCE = new ActiveModulesChangedEvent();

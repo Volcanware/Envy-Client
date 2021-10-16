@@ -1,4 +1,4 @@
-package mathax.legacy.client.events.mathax;
+package mathax.legacy.client.events.mathaxlegacy;
 
 import mathax.legacy.client.events.Cancellable;
 import mathax.legacy.client.utils.misc.input.KeyAction;

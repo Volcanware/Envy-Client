@@ -5,7 +5,7 @@ import baritone.api.pathing.goals.GoalBlock;
 import com.google.common.collect.Lists;
 import mathax.legacy.client.events.game.GameJoinedEvent;
 import mathax.legacy.client.events.game.GameLeftEvent;
-import mathax.legacy.client.events.mathax.ActiveModulesChangedEvent;
+import mathax.legacy.client.events.mathaxlegacy.ActiveModulesChangedEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.systems.modules.Module;

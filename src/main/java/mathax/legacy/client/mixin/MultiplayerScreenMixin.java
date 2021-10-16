@@ -1,7 +1,7 @@
 package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.screens.servermanager.ServerManagerScreen;
 import mathax.legacy.client.mixininterface.IMultiplayerScreen;

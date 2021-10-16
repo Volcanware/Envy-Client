@@ -1,6 +1,6 @@
 package mathax.legacy.client.systems.modules.player;
 
-import mathax.legacy.client.events.mathax.KeyEvent;
+import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
 import mathax.legacy.client.events.world.PlaySoundEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Categories;

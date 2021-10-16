@@ -1,6 +1,6 @@
 package mathax.legacy.client.utils.misc;
 
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.utils.Utils;
 
 import java.util.regex.Matcher;

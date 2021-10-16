@@ -1,8 +1,8 @@
 package mathax.legacy.client.systems.macros;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.events.mathax.KeyEvent;
-import mathax.legacy.client.events.mathax.MouseButtonEvent;
+import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
+import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
 import mathax.legacy.client.systems.System;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.utils.misc.NbtUtils;

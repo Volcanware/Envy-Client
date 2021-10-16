@@ -1,6 +1,6 @@
 package mathax.legacy.client.systems.modules.misc;
 
-import mathax.legacy.client.events.mathax.MouseButtonEvent;
+import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
 import mathax.legacy.client.settings.BoolSetting;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;

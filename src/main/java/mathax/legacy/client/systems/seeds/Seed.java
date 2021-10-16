@@ -2,7 +2,7 @@ package mathax.legacy.client.systems.seeds;
 
 import kaptainwutax.mcutils.version.MCVersion;
 
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtLong;
 import net.minecraft.nbt.NbtString;

@@ -1,4 +1,4 @@
-package mathax.legacy.client.events.mathax;
+package mathax.legacy.client.events.mathaxlegacy;
 
 @Deprecated
 public class ClientInitialisedEvent {

@@ -1,6 +1,6 @@
 package mathax.legacy.client.systems.modules.movement;
 
-import mathax.legacy.client.events.mathax.KeyEvent;
+import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.BoolSetting;
 import mathax.legacy.client.settings.Setting;

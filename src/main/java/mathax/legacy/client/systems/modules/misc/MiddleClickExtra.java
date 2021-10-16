@@ -2,7 +2,7 @@ package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.events.entity.player.FinishUsingItemEvent;
 import mathax.legacy.client.events.entity.player.StoppedUsingItemEvent;
-import mathax.legacy.client.events.mathax.MouseButtonEvent;
+import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.BoolSetting;
 import mathax.legacy.client.settings.EnumSetting;

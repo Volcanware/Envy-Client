@@ -4,7 +4,7 @@ import com.google.common.util.concurrent.Runnables;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.tabs.Tabs;
 import mathax.legacy.client.systems.modules.Modules;
@@ -84,41 +84,49 @@ public class TitleScreen extends Screen {
     }
 
     protected void init() {
+        // Splash Loader
+
         if (splashText == null) splashText = client.getSplashTextLoader().get();
+
+        // Copyright
 
         copyrightTextWidth = textRenderer.getWidth(COPYRIGHT);
         copyrightTextX = width - copyrightTextWidth - 2;
 
+        // Buttons
+
         int y = height / 4 + 48;
         int spacingY = 24;
 
-        boolean bl = client.isMultiplayerEnabled();
-
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
-        ButtonWidget.TooltipSupplier tooltipSupplier = bl ? ButtonWidget.EMPTY : new ButtonWidget.TooltipSupplier() {
-            private final Text MULTIPLAYER_DISABLED_TEXT = new TranslatableText("title.multiplayer.disabled");
-
-            public void onTooltip(ButtonWidget buttonWidget, MatrixStack matrixStack, int i, int j) {
-                if (!buttonWidget.active) {
-                    renderOrderedTooltip(matrixStack, client.textRenderer.wrapLines(MULTIPLAYER_DISABLED_TEXT, Math.max(width / 2 - 43, 170)), i, j);
-                }
-            }
-
-            public void supply(Consumer<Text> consumer) {
-                consumer.accept(MULTIPLAYER_DISABLED_TEXT);
-            }
-        };
-        (addDrawableChild(new ButtonWidget(width / 2 - 100, y + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> { Screen screen = client.options.skipMultiplayerWarning ? new MultiplayerScreen(this) : new MultiplayerWarningScreen(this); client.setScreen(screen); }, tooltipSupplier))).active = bl;
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 2) + (spacingY / 2), 200, 20, new LiteralText("MatHax Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 3) + (spacingY / 2), 200, 20, new LiteralText("MatHax Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4) + (spacingY / 2), 98, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, y + (spacingY * 4) + (spacingY / 2), 98, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 5) + (spacingY / 2), 98, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, y + (spacingY * 5) + (spacingY / 2), 98, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
-        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, y + (spacingY * 7), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 7), 98, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
-        addDrawableChild(new ButtonWidget(width / 2 + 2, y + (spacingY * 7), 98, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
-        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, y + (spacingY * 7), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
+        MatHaxLegacy.LOG.info(client.options.guiScale);
+        if (client.options.guiScale < 3) {
+            addDrawableChild(new ButtonWidget(width / 2 - 100, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
+            addDrawableChild(new ButtonWidget(width / 2 - 100, y + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> client.setScreen(new MultiplayerScreen(this))));
+            addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 2) + (spacingY / 2), 200, 20, new LiteralText("MatHax Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
+            addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 3) + (spacingY / 2), 200, 20, new LiteralText("MatHax Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
+            addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4) + (spacingY / 2), 100, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
+            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 4) + (spacingY / 2), 100, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
+            addDrawableChild(new ButtonWidget(width / 2 - 102, y + (spacingY * 5) + (spacingY / 2), 100, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
+            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 5) + (spacingY / 2), 100, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
+            addDrawableChild(new TexturedButtonWidget(width / 2 - 124, y + (spacingY * 7), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
+            addDrawableChild(new ButtonWidget(width / 2 - 102, y + (spacingY * 7), 100, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
+            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 7), 100, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
+            addDrawableChild(new TexturedButtonWidget(width / 2 + 104, y + (spacingY * 7), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
+        } else {
+            y = y - 24;
+            addDrawableChild(new ButtonWidget(width / 2 - 204, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
+            addDrawableChild(new ButtonWidget(width / 2 + 4, y, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> client.setScreen(new MultiplayerScreen(this))));
+            addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 2), 200, 20, new LiteralText("MatHax Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
+            addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 2), 200, 20, new LiteralText("MatHax Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
+            addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4) + (spacingY / 2), 100, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
+            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 4) + (spacingY / 2), 100, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
+            addDrawableChild(new ButtonWidget(width / 2 - 102, y + (spacingY * 5) + (spacingY / 2), 100, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
+            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 5) + (spacingY / 2), 100, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
+            addDrawableChild(new TexturedButtonWidget(width / 2 - 124, y + (spacingY * 7), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
+            addDrawableChild(new ButtonWidget(width / 2 - 102, y + (spacingY * 7), 100, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
+            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 7), 100, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
+            addDrawableChild(new TexturedButtonWidget(width / 2 + 104, y + (spacingY * 7), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
+        }
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -128,7 +136,7 @@ public class TitleScreen extends Screen {
         float xOffset = -1.0f * (((float) mouseX - (float) width / 2.0f) / ((float) width / 32.0f));
         float yOffset = -1.0f * (((float) mouseY - (float) height / 2.0f) / ((float) height / 18.0f));
 
-        int backgroundX = ((int)xOffset - 16) * 3;
+        int backgroundX = ((int) xOffset - 16) * 3;
         int backgroundY = ((int) yOffset - 16) * 2;
         int widthHalf = width / 2;
 
@@ -147,12 +155,22 @@ public class TitleScreen extends Screen {
 
         if ((ceil & -67108864) != 0) {
             RenderSystem.setShaderTexture(0, LOGO);
-            drawTexture(matrices, widthHalf - 64, 15, 0.0F, 0.0F, 128, 128, 128, 128);
+            int logoScale, splashX, splashY;
+            if (client.options.guiScale < 3) {
+                logoScale = 128;
+                splashX = widthHalf + 56;
+                splashY = 100;
+            } else {
+                logoScale = 64;
+                splashX = widthHalf + 28;
+                splashY = 75;
+            }
+            drawTexture(matrices, widthHalf - (logoScale / 2), 15, 0.0F, 0.0F, logoScale, logoScale, logoScale, logoScale);
 
             if (splashText != null) {
                 matrices.push();
-                matrices.translate(widthHalf + 56, 100.0D, 0.0D);
-                matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-20.0F));
+                matrices.translate(splashX, splashY, 0);
+                matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-15.0F));
                 float h = 1.8F - MathHelper.abs(MathHelper.sin((float) (Util.getMeasuringTimeMs() % 1000L) / 1000.0F * 6.2831855F) * 0.1F);
                 h = h * 100.0F / (float) (textRenderer.getWidth(splashText) + 32);
                 matrices.scale(h, h, h);

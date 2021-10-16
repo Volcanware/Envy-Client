@@ -1,6 +1,6 @@
 package mathax.legacy.client.gui.screens.servermanager;
 
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WindowScreen;
 import mathax.legacy.client.gui.widgets.containers.WTable;

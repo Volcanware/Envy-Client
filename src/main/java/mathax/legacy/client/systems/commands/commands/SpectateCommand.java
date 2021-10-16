@@ -2,7 +2,7 @@ package mathax.legacy.client.systems.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.events.mathax.KeyEvent;
+import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
 import mathax.legacy.client.systems.commands.arguments.PlayerArgumentType;
 import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.eventbus.EventHandler;

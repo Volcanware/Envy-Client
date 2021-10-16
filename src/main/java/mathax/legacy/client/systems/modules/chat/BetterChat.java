@@ -2,7 +2,7 @@ package mathax.legacy.client.systems.modules.chat;
 
 import it.unimi.dsi.fastutil.chars.Char2CharArrayMap;
 import it.unimi.dsi.fastutil.chars.Char2CharMap;
-import mathax.legacy.client.Version;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.events.game.ReceiveMessageEvent;
 import mathax.legacy.client.events.game.SendMessageEvent;
 import mathax.legacy.client.mixin.ChatHudAccessor;

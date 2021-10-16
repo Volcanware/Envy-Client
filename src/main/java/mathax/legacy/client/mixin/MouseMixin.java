@@ -1,8 +1,8 @@
 package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.events.mathax.MouseButtonEvent;
-import mathax.legacy.client.events.mathax.MouseScrollEvent;
+import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
+import mathax.legacy.client.events.mathaxlegacy.MouseScrollEvent;
 import mathax.legacy.client.systems.modules.render.FreeLook;
 import mathax.legacy.client.systems.modules.render.Freecam;
 import mathax.legacy.client.utils.misc.input.Input;
