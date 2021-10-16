@@ -29,6 +29,7 @@ import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.misc.input.KeyBinds;
 import mathax.legacy.client.utils.network.Capes;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
+import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.utils.player.DamageUtils;
 import mathax.legacy.client.utils.player.EChestMemory;
 import mathax.legacy.client.utils.player.Rotations;
@@ -175,6 +176,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         GuiThemes.postInit();
         window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
         Capes.init();
+        ChatUtils.init();
         EVENT_BUS.subscribe(this);
         EVENT_BUS.post(new ClientInitialisedEvent()); // TODO: This is there just for compatibility
         Modules.get().sortModules();

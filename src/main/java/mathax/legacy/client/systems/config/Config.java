@@ -20,7 +20,6 @@ public class Config extends System<Config> {
     public boolean useTeamColor = ConfigTab.useTeamColor.get();
 
     public String prefix = ConfigTab.prefix.get();
-    public boolean rainbowPrefix = ConfigTab.rainbowPrefix.get();
     public boolean openChatOnPrefix = ConfigTab.openChatOnPrefix.get();
     public boolean chatCommandsInfo = ConfigTab.chatCommandsInfo.get();
     public boolean deleteChatCommandsInfo = ConfigTab.deleteChatCommandsInfo.get();
@@ -45,7 +44,6 @@ public class Config extends System<Config> {
         tag.putDouble("rainbowSpeed", RainbowColors.GLOBAL.getSpeed());
         tag.putInt("rotationHoldTicks", rotationHoldTicks);
         tag.putBoolean("useTeamColor", useTeamColor);
-        tag.putBoolean("rainbowPrefix", rainbowPrefix);
         tag.putString("prefix", prefix);
         tag.putBoolean("openChatOnPrefix", openChatOnPrefix);
         tag.putBoolean("chatCommandsInfo", chatCommandsInfo);
@@ -66,7 +64,6 @@ public class Config extends System<Config> {
         useTeamColor = getBoolean(tag, "useTeamColor", ConfigTab.useTeamColor);
 
         prefix = getString(tag, "prefix", ConfigTab.prefix);
-        rainbowPrefix = getBoolean(tag, "rainbowPrefix", ConfigTab.rainbowPrefix);
         openChatOnPrefix = getBoolean(tag, "openChatOnPrefix", ConfigTab.openChatOnPrefix);
         chatCommandsInfo = getBoolean(tag, "chatCommandsInfo", ConfigTab.chatCommandsInfo);
         deleteChatCommandsInfo = getBoolean(tag, "deleteChatCommandsInfo", ConfigTab.deleteChatCommandsInfo);

@@ -87,15 +87,6 @@ public class ConfigTab extends Tab {
         .build()
     );
 
-    public static final Setting<Boolean> rainbowPrefix = sgChat.add(new BoolSetting.Builder()
-        .name("rainbow-prefix")
-        .description("Makes the [MatHax Legacy] prefix on chat info rainbow.")
-        .defaultValue(false)
-        .onChanged(aBoolean -> Config.get().rainbowPrefix = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().rainbowPrefix))
-        .build()
-    );
-
     public static final Setting<Boolean> openChatOnPrefix = sgChat.add(new BoolSetting.Builder()
         .name("open-chat-on-prefix")
         .description("Open chat when command prefix is pressed. Works like pressing '/' in vanilla.")

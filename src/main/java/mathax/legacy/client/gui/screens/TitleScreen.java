@@ -25,6 +25,8 @@ import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
+import net.minecraft.client.realms.gui.screen.RealmsMainScreen;
+import net.minecraft.client.realms.gui.screen.RealmsNotificationsScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
@@ -47,6 +49,8 @@ import java.util.function.Consumer;
 public class TitleScreen extends Screen {
     private final int WHITE = Color.fromRGBA(255, 255, 255, 255);
     private final int GRAY = Color.fromRGBA(175, 175, 175, 255);
+
+    private Screen realmsNotificationGui;
 
     public static final String COPYRIGHT = "Copyright Mojang AB. Do not distribute!";
     private int copyrightTextWidth;
@@ -83,6 +87,22 @@ public class TitleScreen extends Screen {
         return false;
     }
 
+    private void switchToRealms() {
+        client.setScreen(new RealmsMainScreen(this));
+    }
+
+    private boolean areRealmsNotificationsEnabled() {
+        return client.options.realmsNotifications && realmsNotificationGui != null;
+    }
+
+    public void removed() {
+        if (realmsNotificationGui != null) realmsNotificationGui.removed();
+    }
+
+    public void tick() {
+        if (areRealmsNotificationsEnabled()) realmsNotificationGui.tick();
+    }
+
     protected void init() {
         // Splash Loader
 
@@ -93,23 +113,30 @@ public class TitleScreen extends Screen {
         copyrightTextWidth = textRenderer.getWidth(COPYRIGHT);
         copyrightTextX = width - copyrightTextWidth - 2;
 
+        // Realms
+
+        client.setConnectedToRealms(false);
+        if (client.options.realmsNotifications && realmsNotificationGui == null) realmsNotificationGui = new RealmsNotificationsScreen();
+        if (areRealmsNotificationsEnabled()) realmsNotificationGui.init(client, width, height);
+
         // Buttons
 
         int y = height / 4 + 36;
         int spacingY = 24;
 
-        addDrawableChild(new ButtonWidget(width / 2 - 204, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
-        addDrawableChild(new ButtonWidget(width / 2 + 4, y, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> client.setScreen(new MultiplayerScreen(this))));
-        addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 2) - (spacingY / 2), 200, 20, new LiteralText("Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
-        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 2) - (spacingY / 2), 200, 20, new LiteralText("Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
-        addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 3) - (spacingY / 2), 96, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 3) - (spacingY / 2), 96, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
-        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 3) - (spacingY / 2), 96, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
-        addDrawableChild(new ButtonWidget(width / 2 + 108, y + (spacingY * 3) - (spacingY / 2), 96, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
-        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, y + (spacingY * 4), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4), 96, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
-        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 4), 96, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
-        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, y + (spacingY * 4), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
+        addDrawableChild(new ButtonWidget(width / 2 - 204, y + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> client.setScreen(new MultiplayerScreen(this))));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y + spacingY, 200, 20, new TranslatableText("menu.online"), (button) -> switchToRealms()));
+        addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 3) - (spacingY / 2), 200, 20, new LiteralText("Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 3) - (spacingY / 2), 200, 20, new LiteralText("Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
+        addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 4) - (spacingY / 2), 96, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4) - (spacingY / 2), 96, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 4) - (spacingY / 2), 96, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
+        addDrawableChild(new ButtonWidget(width / 2 + 108, y + (spacingY * 4) - (spacingY / 2), 96, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
+        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, y + (spacingY * 5), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 5), 96, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 5), 96, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
+        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, y + (spacingY * 5    ), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -249,12 +276,14 @@ public class TitleScreen extends Screen {
             }
 
             super.render(matrices, mouseX, mouseY, delta);
+            if (areRealmsNotificationsEnabled() && fade2 >= 1.0F) realmsNotificationGui.render(matrices, mouseX, mouseY, delta);
         }
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (super.mouseClicked(mouseX, mouseY, button)) return true;
-        else if (mouseX > (double)copyrightTextX && mouseX < (double)(copyrightTextX + copyrightTextWidth) && mouseY > (double)(height - 10) && mouseY < (double)height) client.setScreen(new CreditsScreen(false, Runnables.doNothing()));
+        else if (areRealmsNotificationsEnabled() && realmsNotificationGui.mouseClicked(mouseX, mouseY, button)) return true;
+        else if (mouseX > (double) copyrightTextX && mouseX < (double) (copyrightTextX + copyrightTextWidth) && mouseY > (double) (height - 10) && mouseY < (double) height) client.setScreen(new CreditsScreen(false, Runnables.doNothing()));
         return false;
     }
 }

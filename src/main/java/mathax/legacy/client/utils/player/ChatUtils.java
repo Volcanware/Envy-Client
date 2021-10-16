@@ -1,19 +1,49 @@
 package mathax.legacy.client.utils.player;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.utils.render.color.RainbowColor;
-import mathax.legacy.client.utils.render.color.RainbowColors;
 import mathax.legacy.client.mixin.ChatHudAccessor;
 import mathax.legacy.client.systems.config.Config;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 import static mathax.legacy.client.utils.Utils.mc;
 
 public class ChatUtils {
-    private static final RainbowColor RAINBOW = new RainbowColor();
+    private static final List<Pair<String, Supplier<Text>>> customPrefixes = new ArrayList<>();
+    private static String forcedPrefixClassName;
+
+    private static Text PREFIX;
+
+    public static void init() {
+        PREFIX = new LiteralText("")
+            .setStyle(Style.EMPTY.withFormatting(Formatting.GRAY))
+            .append("[")
+            .append(new LiteralText("MatHax Legacy").setStyle(Style.EMPTY.withColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.getPacked())))
+            .append("] ");
+    }
+
+    /** Registers a custom prefix to be used when calling from a class in the specified package. When null is returned from the supplier the default MatHax Legacy prefix is used. */
+    public static void registerCustomPrefix(String packageName, Supplier<Text> supplier) {
+        for (Pair<String, Supplier<Text>> pair : customPrefixes) {
+            if (pair.getLeft().equals(packageName)) {
+                pair.setRight(supplier);
+                return;
+            }
+        }
+
+        customPrefixes.add(new Pair<>(packageName, supplier));
+    }
+
+    public static void forceNextPrefixClass(Class<?> klass) {
+        forcedPrefixClassName = klass.getName();
+    }
 
     // Default
     public static void info(String message, Object... args) {
@@ -21,7 +51,7 @@ public class ChatUtils {
     }
 
     public static void info(String prefix, String message, Object... args) {
-        sendMsg(0, prefix, Formatting.DARK_RED, Formatting.GRAY, message, args);
+        sendMsg(0, prefix, Formatting.LIGHT_PURPLE, Formatting.GRAY, message, args);
     }
 
     // Warning
@@ -30,7 +60,7 @@ public class ChatUtils {
     }
 
     public static void warning(String prefix, String message, Object... args) {
-        sendMsg(0, prefix, Formatting.DARK_RED, Formatting.YELLOW, message, args);
+        sendMsg(0, prefix, Formatting.LIGHT_PURPLE, Formatting.YELLOW, message, args);
     }
 
     // Error
@@ -39,7 +69,7 @@ public class ChatUtils {
     }
 
     public static void error(String prefix, String message, Object... args) {
-        sendMsg(0, prefix, Formatting.DARK_RED, Formatting.RED, message, args);
+        sendMsg(0, prefix, Formatting.LIGHT_PURPLE, Formatting.RED, message, args);
     }
 
     // Misc
@@ -48,7 +78,7 @@ public class ChatUtils {
     }
 
     public static void sendMsg(String prefix, Text message) {
-        sendMsg(0, prefix, Formatting.DARK_RED, message);
+        sendMsg(0, prefix, Formatting.LIGHT_PURPLE, message);
     }
 
     public static void sendMsg(Formatting color, String message, Object... args) {
@@ -73,7 +103,7 @@ public class ChatUtils {
         if (mc.world == null) return;
 
         BaseText message = new LiteralText("");
-        message.append(getMatHaxPrefix());
+        message.append(getPrefix());
         if (prefixTitle != null) message.append(getCustomPrefix(prefixTitle, prefixColor));
         message.append(msg);
 
@@ -97,37 +127,42 @@ public class ChatUtils {
         return prefix;
     }
 
-    private static BaseText getMatHaxPrefix() {
-        BaseText mathax = new LiteralText("");
-        BaseText prefix = new LiteralText("");
-
-        RAINBOW.setSpeed(RainbowColors.GLOBAL.getSpeed());
-
-        if (Config.get().rainbowPrefix) {
-            mathax.append(new LiteralText("M").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("a").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("t").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("H").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("a").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("x").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText(" ").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("L").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("e").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("g").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("a").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("c").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("y").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-        } else {
-            mathax = new LiteralText("MatHax Legacy");
-            mathax.setStyle(mathax.getStyle().withColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
+    private static Text getPrefix() {
+        if (customPrefixes.isEmpty()) {
+            forcedPrefixClassName = null;
+            return PREFIX;
         }
 
-        prefix.setStyle(prefix.getStyle().withFormatting(Formatting.GRAY));
-        prefix.append("[");
-        prefix.append(mathax);
-        prefix.append("] ");
+        boolean foundChatUtils = false;
+        String className = null;
 
-        return prefix;
+        if (forcedPrefixClassName != null) {
+            className = forcedPrefixClassName;
+            forcedPrefixClassName = null;
+        }
+        else {
+            for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+                if (foundChatUtils) {
+                    if (!element.getClassName().equals(ChatUtils.class.getName())) {
+                        className = element.getClassName();
+                        break;
+                    }
+                } else {
+                    if (element.getClassName().equals(ChatUtils.class.getName())) foundChatUtils = true;
+                }
+            }
+        }
+
+        if (className == null) return PREFIX;
+
+        for (Pair<String, Supplier<Text>> pair : customPrefixes) {
+            if (className.startsWith(pair.getLeft())) {
+                Text prefix = pair.getRight().get();
+                return prefix != null ? prefix : PREFIX;
+            }
+        }
+
+        return PREFIX;
     }
 
     private static String formatMsg(String format, Formatting defaultColor, Object... args) {
