@@ -136,6 +136,7 @@ public class WorldGenUtils {
 
             if (pos != null) return pos;
         }
+
         if (mc.player != null) {
             ItemStack stack = mc.player.getStackInHand(Hand.MAIN_HAND);
             if (stack.getItem() != Items.FILLED_MAP) stack = mc.player.getStackInHand(Hand.OFF_HAND);
