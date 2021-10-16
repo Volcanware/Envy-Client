@@ -119,14 +119,14 @@ public class AutoTrap extends Module {
     private final Setting<SettingColor> nextSideColor = sgRender.add(new ColorSetting.Builder()
         .name("next-side-color")
         .description("The side color of the next block to be placed.")
-        .defaultValue(new SettingColor(150, 150, 75, 75))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b, 75))
         .build()
     );
 
     private final Setting<SettingColor> nextLineColor = sgRender.add(new ColorSetting.Builder()
         .name("next-line-color")
         .description("The line color of the next block to be placed.")
-        .defaultValue(new SettingColor(150, 150, 75))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b))
         .build()
     );
 
@@ -190,7 +190,7 @@ public class AutoTrap extends Module {
             boolean isFirst = pos.equals(placePositions.get(placePositions.size() - 1));
 
             Color side = isFirst ? nextSideColor.get() : sideColor.get();
-            Color line = isFirst ? nextSideColor.get() : sideColor.get();
+            Color line = isFirst ? nextLineColor.get() : lineColor.get();
 
             event.renderer.box(pos, side, line, shapeMode.get(), 0);
         }
