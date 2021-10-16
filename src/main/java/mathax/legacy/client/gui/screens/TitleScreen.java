@@ -95,38 +95,21 @@ public class TitleScreen extends Screen {
 
         // Buttons
 
-        int y = height / 4 + 48;
+        int y = height / 4 + 36;
         int spacingY = 24;
 
-        MatHaxLegacy.LOG.info(client.options.guiScale);
-        if (client.options.guiScale < 3) {
-            addDrawableChild(new ButtonWidget(width / 2 - 100, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
-            addDrawableChild(new ButtonWidget(width / 2 - 100, y + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> client.setScreen(new MultiplayerScreen(this))));
-            addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 2) + (spacingY / 2), 200, 20, new LiteralText("MatHax Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
-            addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 3) + (spacingY / 2), 200, 20, new LiteralText("MatHax Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
-            addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4) + (spacingY / 2), 100, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
-            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 4) + (spacingY / 2), 100, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
-            addDrawableChild(new ButtonWidget(width / 2 - 102, y + (spacingY * 5) + (spacingY / 2), 100, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
-            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 5) + (spacingY / 2), 100, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
-            addDrawableChild(new TexturedButtonWidget(width / 2 - 124, y + (spacingY * 7), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
-            addDrawableChild(new ButtonWidget(width / 2 - 102, y + (spacingY * 7), 100, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
-            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 7), 100, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
-            addDrawableChild(new TexturedButtonWidget(width / 2 + 104, y + (spacingY * 7), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
-        } else {
-            y = y - 24;
-            addDrawableChild(new ButtonWidget(width / 2 - 204, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
-            addDrawableChild(new ButtonWidget(width / 2 + 4, y, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> client.setScreen(new MultiplayerScreen(this))));
-            addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 2), 200, 20, new LiteralText("MatHax Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
-            addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 2), 200, 20, new LiteralText("MatHax Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
-            addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4) + (spacingY / 2), 100, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
-            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 4) + (spacingY / 2), 100, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
-            addDrawableChild(new ButtonWidget(width / 2 - 102, y + (spacingY * 5) + (spacingY / 2), 100, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
-            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 5) + (spacingY / 2), 100, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
-            addDrawableChild(new TexturedButtonWidget(width / 2 - 124, y + (spacingY * 7), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
-            addDrawableChild(new ButtonWidget(width / 2 - 102, y + (spacingY * 7), 100, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
-            addDrawableChild(new ButtonWidget(width / 2, y + (spacingY * 7), 100, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
-            addDrawableChild(new TexturedButtonWidget(width / 2 + 104, y + (spacingY * 7), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
-        }
+        addDrawableChild(new ButtonWidget(width / 2 - 204, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> client.setScreen(new MultiplayerScreen(this))));
+        addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 2) - (spacingY / 2), 200, 20, new LiteralText("Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 2) - (spacingY / 2), 200, 20, new LiteralText("Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
+        addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 3) - (spacingY / 2), 96, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 3) - (spacingY / 2), 96, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 3) - (spacingY / 2), 96, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
+        addDrawableChild(new ButtonWidget(width / 2 + 108, y + (spacingY * 3) - (spacingY / 2), 96, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
+        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, y + (spacingY * 4), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4), 96, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 4), 96, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
+        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, y + (spacingY * 4), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -165,6 +148,7 @@ public class TitleScreen extends Screen {
                 splashX = widthHalf + 28;
                 splashY = 75;
             }
+
             drawTexture(matrices, widthHalf - (logoScale / 2), 15, 0.0F, 0.0F, logoScale, logoScale, logoScale, logoScale);
 
             if (splashText != null) {
