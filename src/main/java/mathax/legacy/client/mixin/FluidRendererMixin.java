@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(FluidRenderer.class)
 public class FluidRendererMixin {
+
     /**
      * @author Walaryne
      */
@@ -22,9 +23,7 @@ public class FluidRendererMixin {
         Ambience ambience = Modules.get().get(Ambience.class);
 
         if (ambience.isActive() && ambience.customLavaColor.get()) {
-            if (state.isIn(FluidTags.LAVA)) {
-                return ambience.lavaColor.get().getPacked();
-            }
+            if (state.isIn(FluidTags.LAVA)) return ambience.lavaColor.get().getPacked();
         }
 
         return color;

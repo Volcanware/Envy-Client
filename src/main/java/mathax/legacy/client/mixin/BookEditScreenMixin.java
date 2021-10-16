@@ -73,6 +73,7 @@ public abstract class BookEditScreenMixin extends Screen {
             } catch (IllegalArgumentException ignored) {
                 return;
             }
+
             DataInputStream in = new DataInputStream(new ByteArrayInputStream(bytes));
 
             try {

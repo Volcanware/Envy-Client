@@ -53,16 +53,16 @@ public class SBlock {
     }
 
     public SBlock getSideBlock(int side) {
-        switch (side) {
-            case FO: return search.getBlock(x, y, z + 1);
-            case BA: return search.getBlock(x, y, z - 1);
-            case LE: return search.getBlock(x - 1, y, z);
-            case RI: return search.getBlock(x + 1, y, z);
-            case TO: return search.getBlock(x, y + 1, z);
-            case BO: return search.getBlock(x, y - 1, z);
-        }
+        return switch (side) {
+            case FO -> search.getBlock(x, y, z + 1);
+            case BA -> search.getBlock(x, y, z - 1);
+            case LE -> search.getBlock(x - 1, y, z);
+            case RI -> search.getBlock(x + 1, y, z);
+            case TO -> search.getBlock(x, y + 1, z);
+            case BO -> search.getBlock(x, y - 1, z);
+            default -> null;
+        };
 
-        return null;
     }
 
     private void assignGroup() {
@@ -74,16 +74,11 @@ public class SBlock {
             SBlock neighbour = getSideBlock(side);
             if (neighbour == null || neighbour.group == null) continue;
 
-            if (firstGroup == null) {
-                firstGroup = neighbour.group;
-            } else {
-                if (firstGroup != neighbour.group) firstGroup.merge(neighbour.group);
-            }
+            if (firstGroup == null) firstGroup = neighbour.group;
+            else if (firstGroup != neighbour.group) firstGroup.merge(neighbour.group);
         }
 
-        if (firstGroup == null) {
-            firstGroup = search.newGroup(state.getBlock());
-        }
+        if (firstGroup == null) firstGroup = search.newGroup(state.getBlock());
 
         firstGroup.add(this);
     }
@@ -183,89 +178,67 @@ public class SBlock {
         Color lineColor = blockData.lineColor;
         Color sideColor = blockData.sideColor;
 
-        if (neighbours == 0) {
-            event.renderer.box(x1, y1, z1, x2, y2, z2, sideColor, lineColor, shapeMode, 0);
-        } else {
+        if (neighbours == 0) event.renderer.box(x1, y1, z1, x2, y2, z2, sideColor, lineColor, shapeMode, 0);
+        else {
             // Lines
             if (shapeMode.lines()) {
                 // Vertical, BA_LE
-                if (((neighbours & LE) != LE && (neighbours & BA) != BA) || ((neighbours & LE) == LE && (neighbours & BA) == BA && (neighbours & BA_LE) != BA_LE)) {
-                    event.renderer.line(x1, y1, z1, x1, y2, z1, lineColor);
-                }
+                if (((neighbours & LE) != LE && (neighbours & BA) != BA) || ((neighbours & LE) == LE && (neighbours & BA) == BA && (neighbours & BA_LE) != BA_LE)) event.renderer.line(x1, y1, z1, x1, y2, z1, lineColor);
+
                 // Vertical, FO_LE
-                if (((neighbours & LE) != LE && (neighbours & FO) != FO) || ((neighbours & LE) == LE && (neighbours & FO) == FO && (neighbours & FO_LE) != FO_LE)) {
-                    event.renderer.line(x1, y1, z2, x1, y2, z2, lineColor);
-                }
+                if (((neighbours & LE) != LE && (neighbours & FO) != FO) || ((neighbours & LE) == LE && (neighbours & FO) == FO && (neighbours & FO_LE) != FO_LE)) event.renderer.line(x1, y1, z2, x1, y2, z2, lineColor);
+
                 // Vertical, BA_RI
-                if (((neighbours & RI) != RI && (neighbours & BA) != BA) || ((neighbours & RI) == RI && (neighbours & BA) == BA && (neighbours & BA_RI) != BA_RI)) {
-                    event.renderer.line(x2, y1, z1, x2, y2, z1, lineColor);
-                }
+                if (((neighbours & RI) != RI && (neighbours & BA) != BA) || ((neighbours & RI) == RI && (neighbours & BA) == BA && (neighbours & BA_RI) != BA_RI)) event.renderer.line(x2, y1, z1, x2, y2, z1, lineColor);
+
                 // Vertical, FO_RI
-                if (((neighbours & RI) != RI && (neighbours & FO) != FO) || ((neighbours & RI) == RI && (neighbours & FO) == FO && (neighbours & FO_RI) != FO_RI)) {
-                    event.renderer.line(x2, y1, z2, x2, y2, z2, lineColor);
-                }
+                if (((neighbours & RI) != RI && (neighbours & FO) != FO) || ((neighbours & RI) == RI && (neighbours & FO) == FO && (neighbours & FO_RI) != FO_RI)) event.renderer.line(x2, y1, z2, x2, y2, z2, lineColor);
 
                 // Horizontal bottom, BA_LE - BA_RI
-                if (((neighbours & BA) != BA && (neighbours & BO) != BO) || ((neighbours & BA) != BA && (neighbours & BO_BA) == BO_BA)) {
-                    event.renderer.line(x1, y1, z1, x2, y1, z1, lineColor);
-                }
+                if (((neighbours & BA) != BA && (neighbours & BO) != BO) || ((neighbours & BA) != BA && (neighbours & BO_BA) == BO_BA)) event.renderer.line(x1, y1, z1, x2, y1, z1, lineColor);
+
                 // Horizontal bottom, FO_LE - FO_RI
-                if (((neighbours & FO) != FO && (neighbours & BO) != BO) || ((neighbours & FO) != FO && (neighbours & BO_FO) == BO_FO)) {
-                    event.renderer.line(x1, y1, z2, x2, y1, z2, lineColor);
-                }
+                if (((neighbours & FO) != FO && (neighbours & BO) != BO) || ((neighbours & FO) != FO && (neighbours & BO_FO) == BO_FO)) event.renderer.line(x1, y1, z2, x2, y1, z2, lineColor);
+
                 // Horizontal top, BA_LE - BA_RI
-                if (((neighbours & BA) != BA && (neighbours & TO) != TO) || ((neighbours & BA) != BA && (neighbours & TO_BA) == TO_BA)) {
-                    event.renderer.line(x1, y2, z1, x2, y2, z1, lineColor);
-                }
+                if (((neighbours & BA) != BA && (neighbours & TO) != TO) || ((neighbours & BA) != BA && (neighbours & TO_BA) == TO_BA)) event.renderer.line(x1, y2, z1, x2, y2, z1, lineColor);
+
                 // Horizontal top, FO_LE - FO_RI
-                if (((neighbours & FO) != FO && (neighbours & TO) != TO) || ((neighbours & FO) != FO && (neighbours & TO_FO) == TO_FO)) {
-                    event.renderer.line(x1, y2, z2, x2, y2, z2, lineColor);
-                }
+                if (((neighbours & FO) != FO && (neighbours & TO) != TO) || ((neighbours & FO) != FO && (neighbours & TO_FO) == TO_FO)) event.renderer.line(x1, y2, z2, x2, y2, z2, lineColor);
 
                 // Horizontal bottom, BA_LE - FO_LE
-                if (((neighbours & LE) != LE && (neighbours & BO) != BO) || ((neighbours & LE) != LE && (neighbours & BO_LE) == BO_LE)) {
-                    event.renderer.line(x1, y1, z1, x1, y1, z2, lineColor);
-                }
+                if (((neighbours & LE) != LE && (neighbours & BO) != BO) || ((neighbours & LE) != LE && (neighbours & BO_LE) == BO_LE)) event.renderer.line(x1, y1, z1, x1, y1, z2, lineColor);
+
                 // Horizontal bottom, BA_RI - FO_RI
-                if (((neighbours & RI) != RI && (neighbours & BO) != BO) || ((neighbours & RI) != RI && (neighbours & BO_RI) == BO_RI)) {
-                    event.renderer.line(x2, y1, z1, x2, y1, z2, lineColor);
-                }
+                if (((neighbours & RI) != RI && (neighbours & BO) != BO) || ((neighbours & RI) != RI && (neighbours & BO_RI) == BO_RI)) event.renderer.line(x2, y1, z1, x2, y1, z2, lineColor);
+
                 // Horizontal top, BA_LE - FO_LE
-                if (((neighbours & LE) != LE && (neighbours & TO) != TO) || ((neighbours & LE) != LE && (neighbours & TO_LE) == TO_LE)) {
-                    event.renderer.line(x1, y2, z1, x1, y2, z2, lineColor);
-                }
+                if (((neighbours & LE) != LE && (neighbours & TO) != TO) || ((neighbours & LE) != LE && (neighbours & TO_LE) == TO_LE)) event.renderer.line(x1, y2, z1, x1, y2, z2, lineColor);
+
                 // Horizontal top, BA_RI - FO_RI
-                if (((neighbours & RI) != RI && (neighbours & TO) != TO) || ((neighbours & RI) != RI && (neighbours & TO_RI) == TO_RI)) {
-                    event.renderer.line(x2, y2, z1, x2, y2, z2, lineColor);
-                }
+                if (((neighbours & RI) != RI && (neighbours & TO) != TO) || ((neighbours & RI) != RI && (neighbours & TO_RI) == TO_RI)) event.renderer.line(x2, y2, z1, x2, y2, z2, lineColor);
             }
 
             // Sides
             if (shapeMode.sides()) {
                 // Bottom
-                if ((neighbours & BO) != BO) {
-                    event.renderer.quadHorizontal(x1, y1, z1, x2, z2, sideColor);
-                }
+                if ((neighbours & BO) != BO) event.renderer.quadHorizontal(x1, y1, z1, x2, z2, sideColor);
+
                 // Top
-                if ((neighbours & TO) != TO) {
-                    event.renderer.quadHorizontal(x1, y2, z1, x2, z2, sideColor);
-                }
+                if ((neighbours & TO) != TO) event.renderer.quadHorizontal(x1, y2, z1, x2, z2, sideColor);
+
                 // Front
-                if ((neighbours & FO) != FO) {
-                    event.renderer.quadVertical(x1, y1, z2, x2, y2, z2, sideColor);
-                }
+                if ((neighbours & FO) != FO) event.renderer.quadVertical(x1, y1, z2, x2, y2, z2, sideColor);
+
                 // Back
-                if ((neighbours & BA) != BA) {
-                    event.renderer.quadVertical(x1, y1, z1, x2, y2, z1, sideColor);
-                }
+                if ((neighbours & BA) != BA) event.renderer.quadVertical(x1, y1, z1, x2, y2, z1, sideColor);
+
                 // Right
-                if ((neighbours & RI) != RI) {
-                    event.renderer.quadVertical(x2, y1, z1, x2, y2, z2, sideColor);
-                }
+                if ((neighbours & RI) != RI) event.renderer.quadVertical(x2, y1, z1, x2, y2, z2, sideColor);
+
                 // Left
-                if ((neighbours & LE) != LE) {
-                    event.renderer.quadVertical(x1, y1, z1, x1, y2, z2, sideColor);
-                }
+                if ((neighbours & LE) != LE) event.renderer.quadVertical(x1, y1, z1, x1, y2, z2, sideColor);
+
             }
         }
     }

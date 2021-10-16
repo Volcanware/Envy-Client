@@ -1,7 +1,5 @@
 package mathax.legacy.client.mixin.indigo;
 
-import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.systems.modules.render.Xray;
 import net.fabricmc.fabric.impl.client.indigo.renderer.render.TerrainRenderContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;

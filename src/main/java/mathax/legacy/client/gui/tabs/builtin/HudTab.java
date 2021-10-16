@@ -326,9 +326,7 @@ public class HudTab extends Tab {
                     }
                 }
 
-                if (selecting) {
-                    renderQuad(mouseStartX, mouseStartY, mouseX - mouseStartX, mouseY - mouseStartY, HOVER_BG_COLOR, HOVER_OL_COLOR);
-                }
+                if (selecting) renderQuad(mouseStartX, mouseStartY, mouseX - mouseStartX, mouseY - mouseStartY, HOVER_BG_COLOR, HOVER_OL_COLOR);
             }
 
             Renderer2D.COLOR.render(new MatrixStack());

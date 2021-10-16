@@ -33,7 +33,7 @@ public abstract class DisconnectedScreenMixin extends Screen {
     }
 
     @Inject(method = "init", at = @At("TAIL"))
-    private void onRenderBackground(CallbackInfo info) {
+    private void onInit(CallbackInfo info) {
         if (LastServerInfo.getLastServer() != null) {
             int x = width / 2 - 100;
             int y = Math.min((height / 2 + reasonHeight / 2) + 32, height - 30);
