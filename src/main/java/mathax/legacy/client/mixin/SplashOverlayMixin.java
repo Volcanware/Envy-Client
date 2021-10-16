@@ -1,10 +1,12 @@
 package mathax.legacy.client.mixin;
 
+import mathax.legacy.client.renderer.Texture;
 import mathax.legacy.client.utils.splash.PreviewSplashOverlay;
-import mathax.legacy.client.utils.splash.SplashUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.SplashOverlay;
+import net.minecraft.client.texture.AbstractTexture;
+import net.minecraft.client.texture.ResourceTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
@@ -26,15 +28,16 @@ public abstract class SplashOverlayMixin {
 
     // Logo
 
+    @Mutable
     @Shadow
     @Final
     static Identifier LOGO;
 
-    private static final Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/splash/splash.png");
+    private static Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/splash/splash.png");
 
     @Inject(method = "init(Lnet/minecraft/client/MinecraftClient;)V", at = @At("HEAD"), cancellable = true)
     private static void init(MinecraftClient client, CallbackInfo info) {
-        client.getTextureManager().registerTexture(LOGO, new SplashUtils(MATHAX_LOGO));
+        LOGO = MATHAX_LOGO;
         info.cancel();
     }
 
