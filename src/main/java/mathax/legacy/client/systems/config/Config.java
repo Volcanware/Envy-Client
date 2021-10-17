@@ -20,9 +20,11 @@ public class Config extends System<Config> {
     public boolean useTeamColor = ConfigTab.useTeamColor.get();
 
     public String prefix = ConfigTab.prefix.get();
+    public boolean rainbowPrefix = ConfigTab.rainbowPrefix.get();
     public boolean openChatOnPrefix = ConfigTab.openChatOnPrefix.get();
     public boolean chatCommandsInfo = ConfigTab.chatCommandsInfo.get();
     public boolean deleteChatCommandsInfo = ConfigTab.deleteChatCommandsInfo.get();
+
     public boolean chatCommandsToast = ConfigTab.chatCommandsToast.get();
     public boolean playSoundToast = ConfigTab.playSoundToast.get();
 
@@ -41,13 +43,16 @@ public class Config extends System<Config> {
         NbtCompound tag = new NbtCompound();
         tag.putString("font", font);
         tag.putBoolean("customFont", customFont);
-        tag.putDouble("rainbowSpeed", RainbowColors.GLOBAL.getSpeed());
         tag.putInt("rotationHoldTicks", rotationHoldTicks);
         tag.putBoolean("useTeamColor", useTeamColor);
+
         tag.putString("prefix", prefix);
         tag.putBoolean("openChatOnPrefix", openChatOnPrefix);
+        tag.putBoolean("rainbowPrefix", rainbowPrefix);
+        tag.putDouble("rainbowSpeed", RainbowColors.GLOBAL.getSpeed());
         tag.putBoolean("chatCommandsInfo", chatCommandsInfo);
         tag.putBoolean("deleteChatCommandsInfo", deleteChatCommandsInfo);
+
         tag.putBoolean("chatCommandsToast", chatCommandsToast);
         tag.putBoolean("playSoundToast", playSoundToast);
 
@@ -59,14 +64,16 @@ public class Config extends System<Config> {
     public Config fromTag(NbtCompound tag) {
         font = getString(tag, "font", ConfigTab.font);
         customFont = getBoolean(tag, "customFont", ConfigTab.customFont);
-        RainbowColors.GLOBAL.setSpeed(tag.contains("rainbowSpeed") ? tag.getDouble("rainbowSpeed") : ConfigTab.rainbowSpeed.getDefaultValue() / 100);
         rotationHoldTicks = getInt(tag, "rotationHoldTicks", ConfigTab.rotationHoldTicks);
         useTeamColor = getBoolean(tag, "useTeamColor", ConfigTab.useTeamColor);
 
         prefix = getString(tag, "prefix", ConfigTab.prefix);
         openChatOnPrefix = getBoolean(tag, "openChatOnPrefix", ConfigTab.openChatOnPrefix);
+        rainbowPrefix = getBoolean(tag, "rainbowPrefix", ConfigTab.rainbowPrefix);
+        RainbowColors.GLOBAL.setSpeed(tag.contains("rainbowSpeed") ? tag.getDouble("rainbowSpeed") : ConfigTab.rainbowSpeed.getDefaultValue() / 100);
         chatCommandsInfo = getBoolean(tag, "chatCommandsInfo", ConfigTab.chatCommandsInfo);
         deleteChatCommandsInfo = getBoolean(tag, "deleteChatCommandsInfo", ConfigTab.deleteChatCommandsInfo);
+
         chatCommandsToast = getBoolean(tag, "chatCommandsToast", ConfigTab.chatCommandsToast);
         playSoundToast = getBoolean(tag, "playSoundToast", ConfigTab.playSoundToast);
 

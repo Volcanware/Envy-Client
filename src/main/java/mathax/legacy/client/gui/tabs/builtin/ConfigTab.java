@@ -46,18 +46,6 @@ public class ConfigTab extends Tab {
         .build()
     );
 
-    public static final Setting<Double> rainbowSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("rainbow-speed")
-        .description("The global rainbow speed.")
-        .min(0).max(10)
-        .sliderMax(5)
-        .defaultValue(0.5)
-        .decimalPlaces(2)
-        .onChanged(value -> RainbowColors.GLOBAL.setSpeed(value / 100))
-        .onModuleActivated(setting -> setting.set(RainbowColors.GLOBAL.getSpeed() * 100))
-        .build()
-    );
-
     public static final Setting<Integer> rotationHoldTicks = sgGeneral.add(new IntSetting.Builder()
         .name("rotation-hold")
         .description("Hold long to hold server side rotation when not sending any packets.")
@@ -76,11 +64,23 @@ public class ConfigTab extends Tab {
         .build()
     );
 
+    public static final Setting<Double> rainbowSpeed = sgGeneral.add(new DoubleSetting.Builder()
+        .name("rainbow-speed")
+        .description("The global rainbow speed.")
+        .min(0).max(10)
+        .sliderMax(5)
+        .defaultValue(0.5)
+        .decimalPlaces(2)
+        .onChanged(value -> RainbowColors.GLOBAL.setSpeed(value / 100))
+        .onModuleActivated(setting -> setting.set(RainbowColors.GLOBAL.getSpeed() * 100))
+        .build()
+    );
+
     // Chat
 
     public static final Setting<String> prefix = sgChat.add(new StringSetting.Builder()
         .name("prefix")
-        .description("Prefix.")
+        .description("The command prefix.")
         .defaultValue(".")
         .onChanged(s -> Config.get().prefix = s)
         .onModuleActivated(stringSetting -> stringSetting.set(Config.get().prefix))
@@ -96,6 +96,15 @@ public class ConfigTab extends Tab {
         .build()
     );
 
+    public static final Setting<Boolean> rainbowPrefix = sgChat.add(new BoolSetting.Builder()
+        .name("rainbow-prefix")
+        .description("Makes the [MatHax Legacy] prefix in chat info rainbow.")
+        .defaultValue(false)
+        .onChanged(aBoolean -> Config.get().rainbowPrefix = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().rainbowPrefix))
+        .build()
+    );
+
     public static final Setting<Boolean> chatCommandsInfo = sgChat.add(new BoolSetting.Builder()
         .name("chat-commands-info")
         .description("Sends a chat message when you use chat commands (eg toggling module, changing a setting, etc).")
@@ -107,7 +116,7 @@ public class ConfigTab extends Tab {
 
     public static final Setting<Boolean> deleteChatCommandsInfo = sgChat.add(new BoolSetting.Builder()
         .name("delete-chat-commands-info")
-        .description("Delete previous chat messages.")
+        .description("Deletes previous chat messages.")
         .defaultValue(true)
         .onChanged(aBoolean -> Config.get().deleteChatCommandsInfo = aBoolean)
         .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().deleteChatCommandsInfo))
