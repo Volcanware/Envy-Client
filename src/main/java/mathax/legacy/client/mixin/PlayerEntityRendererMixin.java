@@ -41,10 +41,10 @@ public class PlayerEntityRendererMixin {
     }
 
     @Redirect(method = "renderArm", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;II)V", ordinal = 1))
-    private void redirectRenderArm(ModelPart modelPart, MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
+    private void redirectRenderSleeve(ModelPart modelPart, MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
         Chams chams = Modules.get().get(Chams.class);
 
-        //if (Modules.get().isActive(HandView.class)) return;
+        if (Modules.get().isActive(HandView.class)) return;
 
         if (chams.isActive() && chams.hand.get()) {
             Color color = chams.handColor.get();

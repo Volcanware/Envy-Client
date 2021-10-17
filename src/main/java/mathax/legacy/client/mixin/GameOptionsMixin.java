@@ -20,7 +20,11 @@ import java.io.File;
 
 @Mixin(GameOptions.class)
 public class GameOptionsMixin {
-    @Shadow @Final @Mutable public KeyBinding[] keysAll;
+
+    @Shadow
+    @Final
+    @Mutable
+    public KeyBinding[] keysAll;
 
     @Inject(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/client/option/GameOptions;keysAll:[Lnet/minecraft/client/option/KeyBinding;", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
     private void onInitAfterKeysAll(MinecraftClient client, File optionsFile, CallbackInfo info) {
