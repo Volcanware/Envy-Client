@@ -193,9 +193,7 @@ public class MatHaxLegacy implements ClientModInitializer {
             screenToOpen = null;
         }
 
-        if (Utils.canUpdate()) {
-            Utils.mc.player.getActiveStatusEffects().values().removeIf(statusEffectInstance -> statusEffectInstance.getDuration() <= 0);
-        }
+        if (Utils.canUpdate()) Utils.mc.player.getActiveStatusEffects().values().removeIf(statusEffectInstance -> statusEffectInstance.getDuration() <= 0);
     }
 
     @EventHandler
@@ -221,9 +219,7 @@ public class MatHaxLegacy implements ClientModInitializer {
     @EventHandler
     private void onMouseButton(MouseButtonEvent event) {
         // Click GUI
-        if (event.action == KeyAction.Press && event.button != GLFW.GLFW_MOUSE_BUTTON_LEFT && KeyBinds.OPEN_CLICK_GUI.matchesMouse(event.button)) {
-            if (Utils.canOpenClickGUI()) openClickGUI();
-        }
+        if (event.action == KeyAction.Press && event.button != GLFW.GLFW_MOUSE_BUTTON_LEFT && KeyBinds.OPEN_CLICK_GUI.matchesMouse(event.button) && Utils.canOpenClickGUI()) openClickGUI();
     }
 
     private void openClickGUI() {
