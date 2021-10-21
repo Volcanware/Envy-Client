@@ -160,7 +160,7 @@ public class ColorSettingScreen extends WindowScreen {
         double b = 0;
         boolean calculated = false;
 
-        if(brightnessQuad.saturation <= 0.0) {
+        if (brightnessQuad.saturation <= 0.0) {
             r = brightnessQuad.value;
             g = brightnessQuad.value;
             b = brightnessQuad.value;
@@ -258,7 +258,7 @@ public class ColorSettingScreen extends WindowScreen {
             double delta = max - min;
 
             value = max / 255;
-            if(delta == 0){
+            if (delta == 0){
                 saturation = 0;
             }else {
                 saturation = delta / max;
@@ -439,7 +439,7 @@ public class ColorSettingScreen extends WindowScreen {
             int i;
 
             hh = hueAngle;
-            if(hh >= 360.0) hh = 0.0;
+            if (hh >= 360.0) hh = 0.0;
             hh /= 60.0;
             i = (int) hh;
             ff = hh - i;

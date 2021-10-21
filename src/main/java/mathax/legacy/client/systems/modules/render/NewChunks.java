@@ -28,10 +28,16 @@ import java.util.*;
 /*/------------------------/*/
 
 public class NewChunks extends Module {
+    private static final Direction[] searchDirs = new Direction[] {
+        Direction.EAST,
+        Direction.NORTH,
+        Direction.WEST,
+        Direction.SOUTH,
+        Direction.UP
+    };
+
     private final Set<ChunkPos> newChunks = Collections.synchronizedSet(new HashSet<>());
     private final Set<ChunkPos> oldChunks = Collections.synchronizedSet(new HashSet<>());
-
-    private static final Direction[] searchDirs = new Direction[] { Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH, Direction.UP };
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgNewChunks = settings.createGroup("New Chunks");
@@ -117,8 +123,8 @@ public class NewChunks extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
-        if ((newChunksLineColor.get().a > 3 || newChunksFillColor.get().a > 3) && newChunksToggle.get()) {
+    private void onRender3D(Render3DEvent event) {
+        if (newChunksToggle.get()) {
             synchronized (newChunks) {
                 for (ChunkPos c : newChunks) {
                     if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) {
@@ -128,7 +134,7 @@ public class NewChunks extends Module {
             }
         }
 
-        if ((oldChunksLineColor.get().a > 3 || oldChunksFillColor.get().a > 3) && oldChunksToggle.get()){
+        if (oldChunksToggle.get()){
             synchronized (oldChunks) {
                 for (ChunkPos c : oldChunks) {
                     if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) {
@@ -183,7 +189,7 @@ public class NewChunks extends Module {
                 chunk.loadFromPacket(null, packet.getReadBuffer(), new NbtCompound(), packet.getVerticalStripBitmask());
 
                 for (int x = 0; x < 16; x++) {
-                    for (int y = 0; y < mc.world.getHeight(); y++) {
+                    for (int y = mc.world.getBottomY(); y < mc.world.getTopY(); y++) {
                         for (int z = 0; z < 16; z++) {
                             FluidState fluid = chunk.getFluidState(x, y, z);
 

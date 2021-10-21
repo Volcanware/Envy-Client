@@ -40,15 +40,15 @@ public abstract class AbstractQuadRendererMixin {
         WallHack wallHack = Modules.get().get(WallHack.class);
         Xray xray = Modules.get().get(Xray.class);
 
-        if(wallHack.isActive() && wallHack.blocks.get().contains(blockInfo.blockState.getBlock())) {
+        if (wallHack.isActive() && wallHack.blocks.get().contains(blockInfo.blockState.getBlock())) {
             int alpha;
 
-            if(xray.isActive()) alpha = xray.opacity.get();
+            if (xray.isActive()) alpha = xray.opacity.get();
             else alpha = wallHack.opacity.get();
 
             whBufferQuad(bufferFunc.apply(renderLayer), quad, matrix(), overlay(), normalMatrix(), normalVec, alpha);
             info.cancel();
-        } else if(xray.isActive() && !wallHack.isActive() && xray.isBlocked(blockInfo.blockState.getBlock())) {
+        } else if (xray.isActive() && !wallHack.isActive() && xray.isBlocked(blockInfo.blockState.getBlock())) {
             whBufferQuad(bufferFunc.apply(renderLayer), quad, matrix(), overlay(), normalMatrix(), normalVec, xray.opacity.get());
             info.cancel();
         }

@@ -79,7 +79,7 @@ public abstract class ChatHudMixin implements IChatHud {
         matrices.push();
         matrices.translate(2, -0.1f, 10);
         RenderSystem.enableBlend();
-        for(int m = 0; m + this.scrolledLines < this.visibleMessages.size() && m < maxLineCount; ++m) {
+        for (int m = 0; m + this.scrolledLines < this.visibleMessages.size() && m < maxLineCount; ++m) {
             ChatHudLine<OrderedText> chatHudLine = this.visibleMessages.get(m + this.scrolledLines);
             if (chatHudLine != null) {
                 int x = tickDelta - chatHudLine.getCreationTick();

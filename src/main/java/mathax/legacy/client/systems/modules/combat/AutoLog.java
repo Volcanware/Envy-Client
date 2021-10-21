@@ -98,13 +98,13 @@ public class AutoLog extends Module {
         }
         if (mc.player.getHealth() <= health.get()) {
             mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(new LiteralText("[AutoLog] Health was lower than " + health.get() + ".")));
-            if(smartToggle.get()) {
+            if (smartToggle.get()) {
                 toggle();
                 enableHealthListener();
             }
         }
 
-        if(smart.get() && mc.player.getHealth() + mc.player.getAbsorptionAmount() - PlayerUtils.possibleHealthReductions() < health.get()){
+        if (smart.get() && mc.player.getHealth() + mc.player.getAbsorptionAmount() - PlayerUtils.possibleHealthReductions() < health.get()){
             mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(new LiteralText("[AutoLog] Health was going to be lower than " + health.get() + ".")));
             if (toggleOff.get()) toggle();
         }

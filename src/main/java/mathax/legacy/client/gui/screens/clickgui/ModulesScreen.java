@@ -16,9 +16,8 @@ import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.Pair;
 
-import java.util.List;
+import java.util.Set;
 
 public class ModulesScreen extends TabScreen {
 
@@ -63,14 +62,14 @@ public class ModulesScreen extends TabScreen {
     protected void createSearchW(WContainer w, String text) {
         if (!text.isEmpty()) {
             // Titles
-            List<Pair<Module, Integer>> modules = Modules.get().searchTitles(text);
+            Set<Module> modules = Modules.get().searchTitles(text);
 
             if (modules.size() > 0) {
                 WSection section = w.add(theme.section("Modules")).expandX().widget();
                 section.spacing = 0;
 
-                for (Pair<Module, Integer> pair : modules) {
-                    section.add(theme.module(pair.getLeft())).expandX();
+                for (Module module : modules) {
+                    section.add(theme.module(module)).expandX();
                 }
             }
 
@@ -81,8 +80,8 @@ public class ModulesScreen extends TabScreen {
                 WSection section = w.add(theme.section("Settings")).expandX().widget();
                 section.spacing = 0;
 
-                for (Pair<Module, Integer> pair : modules) {
-                    section.add(theme.module(pair.getLeft())).expandX();
+                for (Module module : modules) {
+                    section.add(theme.module(module)).expandX();
                 }
             }
         }

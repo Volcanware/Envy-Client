@@ -98,11 +98,11 @@ public class Auto32K extends Module {
                 sortedBlocks.sort(Comparator.comparingDouble(value -> mc.player.squaredDistanceTo(value.getX(), value.getY(), value.getZ())));
                 Iterator<BlockPos> sortedIterator = sortedBlocks.iterator();
                 BlockPos bestBlock = null;
-                if(sortedIterator.hasNext()) bestBlock = sortedIterator.next();
+                if (sortedIterator.hasNext()) bestBlock = sortedIterator.next();
 
                 if (bestBlock != null) {
                     while (!BlockUtils.place(bestBlock, findHopper,true,100,false)) {
-                        if(sortedIterator.hasNext()) {
+                        if (sortedIterator.hasNext()) {
                             bestBlock = sortedIterator.next().up();
                         }else break;
                     }
@@ -125,7 +125,7 @@ public class Auto32K extends Module {
                     return;
                 if (phase == 0) {
                     bestBlock = findValidBlocksDispenser();
-                    if(bestBlock == null) return;
+                    if (bestBlock == null) return;
                     if (!BlockUtils.place(bestBlock.add(x, 0, z), hopperSlot, true, 100, false)) {
                         error("Failed to place.");
                         toggle();
@@ -169,7 +169,7 @@ public class Auto32K extends Module {
                     phase += 1;
                 }
             }
-        }else if(phase == 8) {
+        }else if (phase == 8) {
             if (mc.currentScreen instanceof HopperScreen) {
                 if (fillHopper.get() && !throwawayItems.get().isEmpty()) {
                     int slot = -1;
@@ -206,7 +206,7 @@ public class Auto32K extends Module {
                     }
                 }
                 if (dropSlot != -1) InvUtils.drop().slot(dropSlot);
-                if(autoMove.get() && manage){
+                if (autoMove.get() && manage){
                     int slot2 = mc.player.getInventory().getEmptySlot();
                     if (slot2 < 9 && slot2 != -1 && EnchantmentHelper.getLevel(Enchantments.SHARPNESS, mc.player.currentScreenHandler.getSlot(0).getStack()) > 5) {
                         InvUtils.move().fromId(0).to(slot2 - 4);
@@ -214,7 +214,7 @@ public class Auto32K extends Module {
                         InvUtils.drop().slotId(0);
                     }
                 }
-                if(slot != -1) {
+                if (slot != -1) {
                     mc.player.getInventory().selectedSlot = slot - 32;
                 }
             } else toggle();
@@ -224,9 +224,9 @@ public class Auto32K extends Module {
     private List<BlockPos> findValidBlocksHopper(){
         Iterator<BlockPos> allBlocks = getRange(mc.player.getBlockPos(), placeRange.get()).iterator();
         List<BlockPos> validBlocks = new ArrayList<>();
-        for(BlockPos i = null; allBlocks.hasNext(); i = allBlocks.next()){
-            if(i == null) continue;
-            if(!mc.world.getBlockState(i).getMaterial().isReplaceable()
+        for (BlockPos i = null; allBlocks.hasNext(); i = allBlocks.next()){
+            if (i == null) continue;
+            if (!mc.world.getBlockState(i).getMaterial().isReplaceable()
                 && (mc.world.getBlockState(i.up()).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up().getX(), i.up().getY(), i.up().getZ(), i.up().getX() + 1.0D, i.up().getY() + 2.0D, i.up().getZ() + 1.0D)).isEmpty())
                 && mc.world.getBlockState(i.up(2)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(2).getX(), i.up(2).getY(), i.up(2).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty()){
                 validBlocks.add(i);
@@ -239,9 +239,9 @@ public class Auto32K extends Module {
         List<BlockPos> allBlocksNotSorted = getRange(mc.player.getBlockPos(), placeRange.get());
         allBlocksNotSorted.sort(Comparator.comparingDouble(value -> mc.player.squaredDistanceTo(value.getX(), value.getY(), value.getZ())));
         Iterator<BlockPos> allBlocks = allBlocksNotSorted.iterator();
-        for(BlockPos i = null; allBlocks.hasNext(); i = allBlocks.next()){
-            if(i == null) continue;
-            if(!mc.world.getBlockState(i).getMaterial().isReplaceable()
+        for (BlockPos i = null; allBlocks.hasNext(); i = allBlocks.next()){
+            if (i == null) continue;
+            if (!mc.world.getBlockState(i).getMaterial().isReplaceable()
                 && (mc.world.getBlockState(i.up()).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up().getX(), i.up().getY(), i.up().getZ(), i.up().getX() + 1.0D, i.up().getY() + 2.0D, i.up().getZ() + 1.0D)).isEmpty())
                 && (mc.world.getBlockState(i.up(2)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(2).getX(), i.up(2).getY(), i.up(2).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty())
                 && (mc.world.getBlockState(i.up(3)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(3).getX(), i.up(3).getY(), i.up(3).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty())){
@@ -280,9 +280,9 @@ public class Auto32K extends Module {
 
     private List<BlockPos> getRange(BlockPos player, double range){
         List<BlockPos> allBlocks = new ArrayList<>();
-        for(double i = player.getX() - range; i < player.getX() + range; i++){
-            for(double j = player.getZ() - range; j < player.getZ() + range; j++){
-                for(int k = player.getY() - 3; k < player.getY() + 3; k++){
+        for (double i = player.getX() - range; i < player.getX() + range; i++){
+            for (double j = player.getZ() - range; j < player.getZ() + range; j++){
+                for (int k = player.getY() - 3; k < player.getY() + 3; k++){
                     BlockPos x = new BlockPos(i, k, j);
                     allBlocks.add(x);
                 }

@@ -197,7 +197,7 @@ public class Notebot extends Module {
             if (!isPlaying) return;
 
             if (mc.player == null || currentIndex >= song.size()) {
-                if(repeatMode.get()){
+                if (repeatMode.get()){
                     pause();
                 } else {
                     stop();

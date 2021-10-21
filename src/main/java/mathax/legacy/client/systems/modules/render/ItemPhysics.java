@@ -127,7 +127,7 @@ public class ItemPhysics extends Module {
             event.matrixStack.translate(r, x, y);
         }
 
-        for(int u = 0; u < renderCount; ++u) {
+        for (int u = 0; u < renderCount; ++u) {
             event.matrixStack.push();
             if (u > 0) {
                 if (hasDepthInGui) {

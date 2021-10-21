@@ -17,10 +17,11 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public abstract class Module implements ISerializable<Module> {
+public abstract class Module implements ISerializable<Module>, Comparable<Module> {
     protected final MinecraftClient mc;
 
     public final Category category;
@@ -188,6 +189,11 @@ public abstract class Module implements ISerializable<Module> {
         if (o == null || getClass() != o.getClass()) return false;
         Module module = (Module) o;
         return Objects.equals(name, module.name);
+    }
+
+    @Override
+    public int compareTo(@NotNull Module o) {
+        return name.compareTo(o.name);
     }
 
     @Override

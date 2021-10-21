@@ -82,7 +82,7 @@ public abstract class BookEditScreenMixin extends Screen {
                 NbtList listTag = tag.getList("pages", 8).copy();
 
                 pages.clear();
-                for(int i = 0; i < listTag.size(); ++i) {
+                for (int i = 0; i < listTag.size(); ++i) {
                     pages.add(listTag.getString(i));
                 }
 

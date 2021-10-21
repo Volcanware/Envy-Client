@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules;
 
+import com.google.common.collect.Ordering;
 import com.mojang.serialization.Lifecycle;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.game.GameJoinedEvent;
@@ -30,6 +31,7 @@ import mathax.legacy.client.systems.modules.render.search.Search;
 import mathax.legacy.client.systems.modules.world.*;
 import mathax.legacy.client.systems.modules.world.Timer;
 import mathax.legacy.client.utils.Utils;
+import mathax.legacy.client.utils.misc.ValueComparableMap;
 import mathax.legacy.client.utils.misc.input.Input;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.player.ChatUtils;
@@ -150,35 +152,30 @@ public class Modules extends System<Modules> {
         }
     }
 
-    public List<Pair<Module, Integer>> searchTitles(String text) {
-        List<Pair<Module, Integer>> modules = new ArrayList<>();
+    public Set<Module> searchTitles(String text) {
+        Map<Module, Integer> modules = new ValueComparableMap<>(Ordering.natural().reverse());
 
         for (Module module : this.moduleInstances.values()) {
             int words = Utils.search(module.title, text);
-            if (words > 0) modules.add(new Pair<>(module, words));
+            if (words > 0) modules.put(module, modules.getOrDefault(module, 0) + words);
         }
 
-        modules.sort(Comparator.comparingInt(value -> -value.getRight()));
-        return modules;
+        return modules.keySet();
     }
 
-    public List<Pair<Module, Integer>> searchSettingTitles(String text) {
-        List<Pair<Module, Integer>> modules = new ArrayList<>();
+    public Set<Module> searchSettingTitles(String text) {
+        Map<Module, Integer> modules = new ValueComparableMap<>(Ordering.natural().reverse());
 
         for (Module module : this.moduleInstances.values()) {
             for (SettingGroup sg : module.settings) {
                 for (Setting<?> setting : sg) {
                     int words = Utils.search(setting.title, text);
-                    if (words > 0) {
-                        modules.add(new Pair<>(module, words));
-                        break;
-                    }
+                    if (words > 0) modules.put(module, modules.getOrDefault(module, 0) + words);
                 }
             }
         }
 
-        modules.sort(Comparator.comparingInt(value -> -value.getRight()));
-        return modules;
+        return modules.keySet();
     }
 
     void addActive(Module module) {
@@ -513,6 +510,8 @@ public class Modules extends System<Modules> {
     }
 
     private void initWorld() {
+        add(new CEVBreaker());
+
         add(new AirPlace());
         add(new Ambience());
         add(new AntiCactus());

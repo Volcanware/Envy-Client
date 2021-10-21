@@ -40,10 +40,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(at = @At("TAIL"), method = "onGameJoin")
     private void onGameJoinTail(GameJoinS2CPacket packet, CallbackInfo info) {
-        if (worldNotNull) {
-            MatHaxLegacy.EVENT_BUS.post(GameLeftEvent.get());
-        }
-
+        if (worldNotNull) MatHaxLegacy.EVENT_BUS.post(GameLeftEvent.get());
         MatHaxLegacy.EVENT_BUS.post(GameJoinedEvent.get());
     }
 
@@ -65,7 +62,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "onEntitiesDestroy", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/packet/s2c/play/EntitiesDestroyS2CPacket;getEntityIds()Lit/unimi/dsi/fastutil/ints/IntList;"))
     private void onEntitiesDestroy(EntitiesDestroyS2CPacket packet, CallbackInfo info) {
-        for(int id : packet.getEntityIds()) {
+        for (int id : packet.getEntityIds()) {
             MatHaxLegacy.EVENT_BUS.post(EntityDestroyEvent.get(client.world.getEntityById(id)));
         }
     }

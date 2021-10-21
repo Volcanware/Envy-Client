@@ -31,7 +31,7 @@ public class AntiSpawnpoint extends Module {
     @EventHandler
     private void onSendPacket(PacketEvent.Send event) {
         if (mc.world == null) return;
-        if(!(event.packet instanceof PlayerInteractBlockC2SPacket)) return;
+        if (!(event.packet instanceof PlayerInteractBlockC2SPacket)) return;
 
 
         BlockPos blockPos = ((PlayerInteractBlockC2SPacket) event.packet).getBlockHitResult().getBlockPos();
@@ -49,7 +49,7 @@ public class AntiSpawnpoint extends Module {
             }
         }
 
-        if((BlockIsBed && IsOverWorld)||(BlockIsAnchor && IsNetherWorld)) {
+        if ((BlockIsBed && IsOverWorld)||(BlockIsAnchor && IsNetherWorld)) {
             event.cancel();
         }
     }

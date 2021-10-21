@@ -9,6 +9,7 @@ import mathax.legacy.client.mixininterface.IVec3d;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.SortPriority;
 import mathax.legacy.client.utils.entity.TargetUtils;
 import mathax.legacy.client.utils.player.*;
@@ -60,6 +61,24 @@ public class CEVBreaker extends Module {
         .build()
     );
 
+    private final Setting<Boolean> antiSuicide = sgGeneral.add(new BoolSetting.Builder()
+        .name("anti-suicide")
+        .description("Will not place and break crystals if they will kill you.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> maxDamage = sgGeneral.add(new DoubleSetting.Builder()
+        .name("max-damage")
+        .description("Maximum damage crystals can deal to yourself.")
+        .defaultValue(6)
+        .min(0)
+        .max(36)
+        .sliderMax(36)
+        .visible(antiSuicide::get)
+        .build()
+    );
+
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
         .name("rotate")
         .description("Sends rotation packets to the server when placing.")
@@ -97,18 +116,29 @@ public class CEVBreaker extends Module {
         .build()
     );
 
-    //TODO: Explodes crystals without mining, fix :)))))
-
     public CEVBreaker() {
         super(Categories.Combat, Items.END_CRYSTAL, "CEV-breaker", "Places obsidian on top of people and explodes crystals on top of their heads after destroying the obsidian.");
     }
 
+    @Override
+    public void onActivate() {
+        pos = null;
+        isDone = false;
+        pause = 0;
+    }
+
     @EventHandler
-    private void onTick(TickEvent.Pre pre) {
+    private void BlockUpdate(PacketEvent.Receive event) {
+        if (!(event.packet instanceof BlockUpdateS2CPacket)) return;
+        BlockUpdateS2CPacket blockUpdateS2CPacket = (BlockUpdateS2CPacket) event.packet;
+        if (equalsBlockPos(blockUpdateS2CPacket.getPos(), pos) && blockUpdateS2CPacket.getState().isAir()) isDone = true;
+    }
+
+    @EventHandler
+    public void onTick(TickEvent.Pre pre) {
         if (mc.world != null && mc.player != null) {
-            if (pause > 0) {
-                --pause;
-            } else {
+            if (pause > 0) --pause;
+            else {
                 pause = delay.get();
 
                 SortPriority sortPriority = SortPriority.LowestDistance;
@@ -119,52 +149,58 @@ public class CEVBreaker extends Module {
                     BlockPos blockPos1 = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 2, target.getBlockPos().getZ());
                     if (mc.player.distanceTo(target) <= range.get() && mc.world.getBlockState(blockPos = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 1, target.getBlockPos().getZ())).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK) {
                         BlockPos blockPos2 = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 3, target.getBlockPos().getZ());
+                        if (mc.world.getBlockState(blockPos1).getBlock() == Blocks.BEDROCK && !mc.player.isCreative()) {
+                            error("Can't break bedrock, disabling...");
+                            toggle();
+                            return;
+                        }
+
                         if (mc.world.getBlockState(blockPos1).isAir() || mc.world.getBlockState(blockPos1).getBlock() == Blocks.OBSIDIAN) {
                             int n = EnhancedInvUtils.findItemInHotbar(Items.IRON_PICKAXE);
-
-                            if (n == -1) {
-                                n = EnhancedInvUtils.findItemInHotbar(Items.NETHERITE_PICKAXE);
-                            }
-
-                            if (n == -1) {
-                                n = EnhancedInvUtils.findItemInHotbar(Items.DIAMOND_PICKAXE);
-                            }
-
-                            if (n == -1) {
-                                error("Can't find any pickaxe in hotbar, disabling...", new Object[0]);
+                            if (n == -1) n = EnhancedInvUtils.findItemInHotbar(Items.NETHERITE_PICKAXE);
+                            if (n == -1) n = EnhancedInvUtils.findItemInHotbar(Items.DIAMOND_PICKAXE);
+                            if (n == -1 && !mc.player.isCreative()) {
+                                error("Can't find any pickaxe in hotbar, disabling...");
                                 toggle();
                             } else {
-                                if (mc.world.getBlockState(blockPos1).getBlock() != Blocks.OBSIDIAN) placeBlock(blockPos1, EnhancedInvUtils.findItemInHotbar(Items.OBSIDIAN), rotate.get());
+                                EndCrystalEntity endCrystalEntity = null;
+                                for (Object object : mc.world.getEntities()) {
+                                    if (!(object instanceof EndCrystalEntity) || !equalsBlockPos(((EndCrystalEntity) object).getBlockPos(), blockPos2)) continue;
+                                    endCrystalEntity = (EndCrystalEntity)object;
+                                    break;
+                                }
 
-                                if (!equalsBlockPos(pos, blockPos1)) {
-                                    pos = blockPos1;
+                                if (!equalsBlockPos(pos, blockPos1)) pos = blockPos1;
+                                if (mc.world.getBlockState(blockPos1).getBlock() != Blocks.OBSIDIAN && endCrystalEntity == null) placeBlock(pos, EnhancedInvUtils.findItemInHotbar(Items.OBSIDIAN), rotate.get());
+                                if (mc.world.getBlockState(blockPos1).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos1).getBlock() != Blocks.BEDROCK && endCrystalEntity != null) isDone = true;
+                                if (mc.world.getBlockState(blockPos1).getBlock() == Blocks.OBSIDIAN && endCrystalEntity == null) {
+                                    place(target, blockPos1);
+                                    isDone = false;
+                                }
+
+                                if (endCrystalEntity != null) {
+                                    double selfDamage = DamageUtils.crystalDamage(mc.player, endCrystalEntity.getPos(), false, endCrystalEntity.getBlockPos(), true);
+                                    if (selfDamage > maxDamage.get() || (antiSuicide.get() && selfDamage >= EntityUtils.getTotalHealth(mc.player))) return;
+                                }
+
+                                if (canPlace(pos, endCrystalEntity)) {
                                     EnhancedInvUtils.swap(n);
+
                                     mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, pos, Direction.UP));
                                     mc.player.swingHand(Hand.MAIN_HAND);
                                     mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, pos, Direction.UP));
+
+                                    isDone = true;
+                                } else if (canAttack(endCrystalEntity)) {
+                                    if (rotate.get()) Rotations.rotate(Rotations.getYaw(endCrystalEntity), Rotations.getPitch(endCrystalEntity));
+                                    int n2 = mc.player.getInventory().selectedSlot;
+
+                                    EnhancedInvUtils.swap(n);
+                                    mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, pos, Direction.UP));
+                                    EnhancedInvUtils.swap(n2);
+
+                                    attack(endCrystalEntity);
                                     isDone = false;
-                                } else if (isDone) {
-                                    EndCrystalEntity endCrystalEntity = null;
-
-                                    for (Object object : mc.world.getEntities()) {
-                                        if (!(object instanceof EndCrystalEntity) || !equalsBlockPos(((EndCrystalEntity) object).getBlockPos(), blockPos2)) continue;
-                                        endCrystalEntity = (EndCrystalEntity)object;
-                                        break;
-                                    }
-
-                                    if (endCrystalEntity != null) {
-                                        if (rotate.get()) {
-                                            Rotations.rotate(Rotations.getYaw(endCrystalEntity), Rotations.getPitch(endCrystalEntity));
-                                        }
-
-                                        int n2 = mc.player.getInventory().selectedSlot;
-                                        EnhancedInvUtils.swap(n);
-                                        mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, pos, Direction.UP));
-                                        EnhancedInvUtils.swap(n2);
-                                        attackEntity(endCrystalEntity);
-                                    } else {
-                                        placeCrystal(target, blockPos1);
-                                    }
                                 }
                             }
                         }
@@ -174,40 +210,24 @@ public class CEVBreaker extends Module {
         }
     }
 
-    private boolean placeCrystal(PlayerEntity playerEntity, BlockPos blockPos) {
+    private void place(PlayerEntity playerEntity, BlockPos blockPos) {
         BlockPos blockPos1 = new BlockPos(playerEntity.getBlockPos().getX(), playerEntity.getBlockPos().getY() + 3, playerEntity.getBlockPos().getZ());
-        if (!BlockUtils.canPlace(blockPos1, true)) return false;
+        if (!BlockUtils.canPlace(blockPos1, true)) return;
         if (!assertionsDisabled && mc.world == null) throw new AssertionError();
-        if (!mc.world.getBlockState(blockPos1).isAir()) return false;
+        if (!mc.world.getBlockState(blockPos1).isAir()) return;
         int n = EnhancedInvUtils.findItemInHotbar(Items.END_CRYSTAL);
         if (n == -1) {
-            error("Can't find crystals in your hotbar, disabling...", new Object[0]);
+            error("Can't find crystals in your hotbar, disabling...");
             toggle();
-            return false;
+            return;
         }
 
         interact(blockPos, n, Direction.UP);
-        return true;
     }
 
-    public boolean equalsBlockPos(BlockPos blockPos, BlockPos blockPos1) {
-        if (blockPos == null || blockPos1 == null) return false;
-        if (blockPos.getX() != blockPos1.getX()) return false;
-        if (blockPos.getY() != blockPos1.getY()) return false;
-
-        return blockPos.getZ() == blockPos1.getZ();
-    }
-
-    @EventHandler
-    private void BlockUpdate(PacketEvent.Receive receive) {
-        if (!(receive.packet instanceof BlockUpdateS2CPacket)) return;
-        BlockUpdateS2CPacket blockUpdateS2CPacket = (BlockUpdateS2CPacket)receive.packet;
-        if (equalsBlockPos(blockUpdateS2CPacket.getPos(), pos) && blockUpdateS2CPacket.getState().isAir()) isDone = true;
-    }
-
-    public boolean placeBlock(BlockPos blockPos, int n, boolean bl) {
-        if (n == -1) return false;
-        if (!BlockUtils.canPlace(blockPos, true)) return false;
+    private void placeBlock(BlockPos blockPos, int n, boolean bl) {
+        if (n == -1) return;
+        if (!BlockUtils.canPlace(blockPos, true)) return;
         if (!assertionsDisabled && mc.player == null) throw new AssertionError();
         int n2 = mc.player.getInventory().selectedSlot;
         EnhancedInvUtils.swap(n);
@@ -220,22 +240,30 @@ public class CEVBreaker extends Module {
         if (!assertionsDisabled && mc.interactionManager == null) throw new AssertionError();
         mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), Direction.UP, blockPos, true));
         EnhancedInvUtils.swap(n2);
-        return true;
     }
 
-    @Override
-    public void onActivate() {
-        pos = null;
-        isDone = false;
-        pause = 0;
+    private boolean equalsBlockPos(BlockPos blockPos, BlockPos blockPos1) {
+        if (blockPos == null || blockPos1 == null) return false;
+        if (blockPos.getX() != blockPos1.getX()) return false;
+        if (blockPos.getY() != blockPos1.getY()) return false;
+
+        return blockPos.getZ() == blockPos1.getZ();
     }
 
-    public void attackEntity(EndCrystalEntity endCrystalEntity) {
+    private boolean canPlace(BlockPos blockPos, EndCrystalEntity endCrystalEntity) {
+        return !isDone && endCrystalEntity == null && mc.world.getBlockState(blockPos).getBlock() == Blocks.OBSIDIAN && mc.world.getBlockState(pos).getBlock() != Blocks.BEDROCK;
+    }
+
+    private boolean canAttack(EndCrystalEntity endCrystalEntity) {
+        return isDone && endCrystalEntity != null && mc.world.getBlockState(pos).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(pos).getBlock() != Blocks.BEDROCK;
+    }
+
+    private void attack(EndCrystalEntity endCrystalEntity) {
         if (!assertionsDisabled && mc.interactionManager == null) throw new AssertionError();
         mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack( endCrystalEntity, mc.player.isSneaking()));
     }
 
-    public void interact(BlockPos blockPos, int n, Direction direction) {
+    private void interact(BlockPos blockPos, int n, Direction direction) {
         if (!assertionsDisabled && mc.player == null) throw new AssertionError();
         int n2 = mc.player.getInventory().selectedSlot;
         EnhancedInvUtils.swap(n);
@@ -245,7 +273,7 @@ public class CEVBreaker extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    public void onRender(Render3DEvent event) {
         if (!render.get() || pos == null) return;
         event.renderer.box(pos, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
     }

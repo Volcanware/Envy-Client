@@ -62,11 +62,11 @@ public abstract class WSlider extends WWidget {
         double x = this.x + s2 + valueWidth - height / 2;
         handleMouseOver =  mouseX >= x && mouseX <= x + height && mouseY >= y && mouseY <= y + height;
 
-        if(!scrollHandleMouseOver) {
+        if (!scrollHandleMouseOver) {
             scrollHandleX = x;
             scrollHandleY = y;
             scrollHandleH = height;
-            if(handleMouseOver) {
+            if (handleMouseOver) {
                 scrollHandleMouseOver = true;
             }
         } else {

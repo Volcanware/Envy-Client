@@ -228,7 +228,7 @@ public class VeinMiner extends Module {
         if (foundBlockPositions.contains(pos)) return;
         foundBlockPositions.add(pos);
         if (Utils.distance(mc.player.getX() - 0.5, mc.player.getY() + mc.player.getEyeHeight(mc.player.getPose()), mc.player.getZ() - 0.5, pos.getX(), pos.getY(), pos.getZ()) > mc.interactionManager.getReachDistance()) return;
-        for(Vec3i neighbourOffset: blockNeighbours) {
+        for (Vec3i neighbourOffset: blockNeighbours) {
             BlockPos neighbour = pos.add(neighbourOffset);
             if (mc.world.getBlockState(neighbour).getBlock().asItem() == item) {
                 MyBlock block = blockPool.get();

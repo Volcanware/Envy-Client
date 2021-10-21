@@ -34,8 +34,6 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "onStoppedUsing", at = @At("HEAD"))
     private void onStoppedUsing(World world, LivingEntity user, int remainingUseTicks, CallbackInfo info) {
-        if (user == Utils.mc.player) {
-            MatHaxLegacy.EVENT_BUS.post(StoppedUsingItemEvent.get((ItemStack) (Object) this));
-        }
+        if (user == Utils.mc.player) MatHaxLegacy.EVENT_BUS.post(StoppedUsingItemEvent.get((ItemStack) (Object) this));
     }
 }

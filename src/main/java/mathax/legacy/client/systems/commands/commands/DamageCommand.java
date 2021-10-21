@@ -45,7 +45,7 @@ public class DamageCommand extends Command {
 
         Vec3d pos = mc.player.getPos();
 
-        for(int i = 0; i < 80; i++) {
+        for (int i = 0; i < 80; i++) {
             sendPositionPacket(pos.x, pos.y + amount + 2.1, pos.z, false);
             sendPositionPacket(pos.x, pos.y + 0.05, pos.z, false);
         }

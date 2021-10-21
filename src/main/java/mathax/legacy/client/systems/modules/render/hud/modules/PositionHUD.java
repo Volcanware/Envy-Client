@@ -30,7 +30,7 @@ public class PositionHUD extends HUDElement {
 
     private final Setting<Boolean> oppositeDimension = sgGeneral.add(new BoolSetting.Builder()
         .name("opposite-dimension")
-        .description("Displays the coords of the opposite dimension (Nether or Overworld).")
+        .description("Displays the coordinates of the opposite dimension (Nether or Overworld).")
         .defaultValue(true)
         .build()
     );
@@ -67,7 +67,6 @@ public class PositionHUD extends HUDElement {
         }
 
         Freecam freecam = Modules.get().get(Freecam.class);
-
         double x, y, z;
 
         if (accurate.get()) {
@@ -76,8 +75,7 @@ public class PositionHUD extends HUDElement {
             z = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().z : mc.player.getZ();
 
             right1 = String.format("%.1f %.1f %.1f", x, y, z);
-        }
-        else {
+        } else {
             x = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getX() : mc.player.getBlockX();
             y = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getY() : mc.player.getBlockY();
             z = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getZ() : mc.player.getBlockZ();
@@ -89,11 +87,11 @@ public class PositionHUD extends HUDElement {
             switch (PlayerUtils.getDimension()) {
                 case Overworld -> {
                     left2 = "Nether XYZ ";
-                    right2 = String.format("%.1f %.1f %.1f", x / 8.0, y, z / 8.0);
+                    right2 = accurate.get() ? String.format("%.1f %.1f %.1f", x / 8.0, y, z / 8.0) : String.format("%d %d %d", (int) x / 8, (int) y, (int) z / 8);
                 }
                 case Nether -> {
                     left2 = "Overworld XYZ ";
-                    right2 = String.format("%.1f %.1f %.1f", x * 8.0, y, z * 8.0);
+                    right2 = accurate.get() ? String.format("%.1f %.1f %.1f", x * 8.0, y, z * 8.0) : String.format("%d %d %d", (int) x * 8, (int) y, (int) z / 8);
                 }
             }
         }

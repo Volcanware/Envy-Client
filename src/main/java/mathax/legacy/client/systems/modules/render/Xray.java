@@ -44,7 +44,7 @@ public class Xray extends Module {
         .max(255)
         .sliderMax(255)
         .onChanged(onChanged -> {
-            if(this.isActive()) {
+            if (this.isActive()) {
                 mc.worldRenderer.reload();
             }
         })

@@ -23,7 +23,7 @@ public class WallHack extends Module {
         .max(255)
         .sliderMax(255)
         .onChanged(onChanged -> {
-            if(this.isActive()) {
+            if (this.isActive()) {
                 mc.worldRenderer.reload();
             }
         })
@@ -35,7 +35,7 @@ public class WallHack extends Module {
         .description("What blocks should be targeted for Wall Hack.")
         .defaultValue(new ArrayList<>())
         .onChanged(onChanged -> {
-            if(this.isActive()) {
+            if (this.isActive()) {
                 mc.worldRenderer.reload();
             }
         })
@@ -69,7 +69,7 @@ public class WallHack extends Module {
 
     @EventHandler
     private void onChunkOcclusion(ChunkOcclusionEvent event) {
-        if(!occludeChunks.get()) {
+        if (!occludeChunks.get()) {
             event.cancel();
         }
     }

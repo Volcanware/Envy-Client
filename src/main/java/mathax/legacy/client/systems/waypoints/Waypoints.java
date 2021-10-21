@@ -139,7 +139,7 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
             double dist = PlayerUtils.distanceToCamera(x, y, z);
             if (dist > waypoint.maxVisibleDistance) continue;
             double scale = /*0.01 * */waypoint.scale;
-            //if(dist > 8) scale *= dist / 8;
+            //if (dist > 8) scale *= dist / 8;
 
             double a = 1;
             if (dist < 10) {
