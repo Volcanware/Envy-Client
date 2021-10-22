@@ -15,7 +15,7 @@ import mathax.legacy.client.settings.Settings;
 import mathax.legacy.client.systems.accounts.Account;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.misc.ISerializable;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.misc.Names;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.gui.widgets.*;
@@ -170,11 +170,11 @@ public abstract class GuiTheme implements ISerializable<GuiTheme> {
         return w(new WBlockPosEdit(value));
     }
 
-    public WKeybind keybind(Keybind keybind) {
-        return keybind(keybind, Keybind.none());
+    public WKeybind keybind(KeyBind keybind) {
+        return keybind(keybind, KeyBind.none());
     }
 
-    public WKeybind keybind(Keybind keybind, Keybind defaultValue) {
+    public WKeybind keybind(KeyBind keybind, KeyBind defaultValue) {
         return w(new WKeybind(keybind, defaultValue));
     }
 

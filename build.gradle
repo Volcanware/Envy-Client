@@ -15,10 +15,13 @@ minecraft {
 }
 
 repositories {
+    // GitHub
     maven {
         name = "jitpack"
         url = "https://jitpack.io"
     }
+
+    // Meteor
     maven {
         name = "meteor-maven"
         url = "https://maven.meteordev.org"
@@ -27,9 +30,10 @@ repositories {
         name = "meteor-maven-snapshots"
         url = "https://maven.meteordev.org/snapshots"
     }
+
     jcenter()
 
-    // For Canvas
+    // Canvas
     maven {
         name = "dblsaiko"
         url = "https://maven.dblsaiko.net/"
@@ -57,7 +61,9 @@ dependencies {
     }
 
     // Canvas for compatibility
-    modCompileOnly("grondag:canvas-mc117-1.17:1.0.+") { transitive = false }
+    modCompileOnly("grondag:canvas-mc117-1.17:1.0.+") {
+        transitive = false
+    }
 
     // Baritone (the fork is standalone baritone and the only change is a setting to build it as fabric mod instead of forge one)
     modImplementation "baritone:baritone:${project.baritone_version}"

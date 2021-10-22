@@ -11,7 +11,7 @@ import mathax.legacy.client.mixin.CloseHandledScreenC2SPacketAccessor;
 import mathax.legacy.client.mixin.HandledScreenAccessor;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.player.InvUtils;
@@ -85,11 +85,11 @@ public class InventoryTweaks extends Module {
         .build()
     );
 
-    private final Setting<Keybind> sortingKey = sgSorting.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> sortingKey = sgSorting.add(new KeybindSetting.Builder()
         .name("sorting-key")
         .description("Key to trigger the sort.")
         .visible(sortingEnabled::get)
-        .defaultValue(Keybind.fromButton(GLFW.GLFW_MOUSE_BUTTON_MIDDLE))
+        .defaultValue(KeyBind.fromButton(GLFW.GLFW_MOUSE_BUTTON_MIDDLE))
         .build()
     );
 

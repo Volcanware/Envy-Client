@@ -5,7 +5,7 @@ import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.entity.Entity;
@@ -46,7 +46,7 @@ public class ElytraBoost extends Module {
         .build()
     );
 
-    private final Setting<Keybind> keybind = sgGeneral.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> keybind = sgGeneral.add(new KeybindSetting.Builder()
         .name("keybind")
         .description("The keybind to boost.")
         .action(this::boost)

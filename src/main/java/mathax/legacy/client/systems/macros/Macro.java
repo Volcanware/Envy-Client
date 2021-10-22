@@ -1,7 +1,7 @@
 package mathax.legacy.client.systems.macros;
 
 import mathax.legacy.client.utils.misc.ISerializable;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -17,7 +17,7 @@ import static mathax.legacy.client.utils.Utils.mc;
 public class Macro implements ISerializable<Macro> {
     public String name = "";
     public List<String> messages = new ArrayList<>(1);
-    public Keybind keybind = Keybind.none();
+    public KeyBind keybind = KeyBind.none();
 
     public void addMessage(String command) {
         messages.add(command);

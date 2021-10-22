@@ -20,7 +20,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.Target;
 import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerManager;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.misc.Vec3;
 import mathax.legacy.client.utils.player.*;
 import mathax.legacy.client.utils.render.NametagUtils;
@@ -289,10 +289,10 @@ public class CrystalAura extends Module {
         .build()
     );
 
-    private final Setting<Keybind> forceFacePlace = sgFacePlace.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> forceFacePlace = sgFacePlace.add(new KeybindSetting.Builder()
         .name("force-face-place")
         .description("Starts face place when this button is pressed.")
-        .defaultValue(Keybind.none())
+        .defaultValue(KeyBind.none())
         .build()
     );
 

@@ -7,24 +7,24 @@ import net.minecraft.nbt.NbtCompound;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
-public class Keybind implements ISerializable<Keybind>, ICopyable<Keybind> {
+public class KeyBind implements ISerializable<KeyBind>, ICopyable<KeyBind> {
     private boolean isKey;
     private int value;
 
-    private Keybind(boolean isKey, int value) {
+    private KeyBind(boolean isKey, int value) {
         set(isKey, value);
     }
 
-    public static Keybind none() {
-        return new Keybind(true, -1);
+    public static KeyBind none() {
+        return new KeyBind(true, -1);
     }
 
-    public static Keybind fromKey(int key) {
-        return new Keybind(true, key);
+    public static KeyBind fromKey(int key) {
+        return new KeyBind(true, key);
     }
 
-    public static Keybind fromButton(int button) {
-        return new Keybind(false, button);
+    public static KeyBind fromButton(int button) {
+        return new KeyBind(false, button);
     }
 
     public int getValue() {
@@ -46,7 +46,7 @@ public class Keybind implements ISerializable<Keybind>, ICopyable<Keybind> {
     }
 
     @Override
-    public Keybind set(Keybind value) {
+    public KeyBind set(KeyBind value) {
         this.isKey = value.isKey;
         this.value = value.value;
 
@@ -71,8 +71,8 @@ public class Keybind implements ISerializable<Keybind>, ICopyable<Keybind> {
     }
 
     @Override
-    public Keybind copy() {
-        return new Keybind(isKey, value);
+    public KeyBind copy() {
+        return new KeyBind(isKey, value);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class Keybind implements ISerializable<Keybind>, ICopyable<Keybind> {
     }
 
     @Override
-    public Keybind fromTag(NbtCompound tag) {
+    public KeyBind fromTag(NbtCompound tag) {
         isKey = tag.getBoolean("isKey");
         value = tag.getInt("value");
 

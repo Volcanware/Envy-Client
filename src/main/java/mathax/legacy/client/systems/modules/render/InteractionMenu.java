@@ -13,7 +13,7 @@ import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import net.minecraft.client.render.debug.DebugRenderer;
 import net.minecraft.entity.Entity;
@@ -46,7 +46,7 @@ public class InteractionMenu extends Module {
         .build()
     );
 
-    public final Setting<Keybind> keybind = sgGeneral.add(new KeybindSetting.Builder()
+    public final Setting<KeyBind> keybind = sgGeneral.add(new KeybindSetting.Builder()
         .name("keybind")
         .description("The keybind to open.")
         .action(this::onKey)

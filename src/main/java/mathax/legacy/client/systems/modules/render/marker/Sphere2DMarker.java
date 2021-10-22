@@ -4,7 +4,7 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.settings.*;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.render.color.SettingColor;
@@ -102,18 +102,18 @@ public class Sphere2DMarker extends BaseMarker {
 
     // Keybinding
 
-    private final Setting<Keybind> nextLayerKey = sgKeybinding.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> nextLayerKey = sgKeybinding.add(new KeybindSetting.Builder()
         .name("next-layer-keybind")
-        .description("Keybind to increment layer")
+        .description("KeyBind to increment layer")
         .action(() -> {
             if (isVisible() && layer.get() < radius.get() * 2) layer.set(layer.get() + 1);
         })
         .build()
     );
 
-    private final Setting<Keybind> prevLayerKey = sgKeybinding.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> prevLayerKey = sgKeybinding.add(new KeybindSetting.Builder()
         .name("prev-layer-keybind")
-        .description("Keybind to increment layer")
+        .description("KeyBind to increment layer")
         .action(() -> {
             if (isVisible()) layer.set(layer.get() - 1);
         })

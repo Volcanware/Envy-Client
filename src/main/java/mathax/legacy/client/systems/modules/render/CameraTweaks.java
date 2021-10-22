@@ -5,7 +5,7 @@ import mathax.legacy.client.events.mathaxlegacy.MouseScrollEvent;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.eventbus.EventHandler;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.settings.*;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.item.Items;
@@ -52,11 +52,11 @@ public class CameraTweaks extends Module {
         .build()
     );
 
-    private final Setting<Keybind> scrollKeybind = sgScrolling.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> scrollKeybind = sgScrolling.add(new KeybindSetting.Builder()
         .name("scroll-keybind")
         .description("Makes it so a keybind needs to be pressed for scrolling to work.")
         .visible(scrollingEnabled::get)
-        .defaultValue(Keybind.none())
+        .defaultValue(KeyBind.none())
         .build()
     );
 

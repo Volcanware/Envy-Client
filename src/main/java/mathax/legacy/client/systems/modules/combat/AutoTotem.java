@@ -29,7 +29,7 @@ import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.explosion.Explosion;
+//import net.minecraft.world.explosion.Explosion;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -39,14 +39,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /*/-------------------------------------------------------------------------------------------------------------------------------/*/
 
 public class AutoTotem extends Module {
-    private static final Explosion iExplosion = new Explosion(null, null, 0, 0, 0, 6.0F, false, Explosion.DestructionType.DESTROY);
+    //private static final Explosion iExplosion = new Explosion(null, null, 0, 0, 0, 6.0F, false, Explosion.DestructionType.DESTROY);
 
     private final AtomicBoolean shouldWaitNextTick = new AtomicBoolean(false);
 
     private boolean shouldOverrideTotem, shouldClickBlank;
     public boolean locked;
 
-    private static final double damage = (float)((int)((1 + 1) / 2.0D * 7.0D * 12.0D + 1.0D));
+    //private static final double damage = (float)((int)((1 + 1) / 2.0D * 7.0D * 12.0D + 1.0D));
 
     private int selectedSlot = 0;
     private int totems, ticks;
@@ -374,6 +374,15 @@ public class AutoTotem extends Module {
     public enum Versions {
         mc_1_12,
         mc_1_16,
-        mc_1_17
+        mc_1_17;
+
+        @Override
+        public String toString() {
+            return switch (this) {
+                case mc_1_12 -> "1.12";
+                case mc_1_16 -> "1.16";
+                case mc_1_17 -> "1.17";
+            };
+        }
     }
 }

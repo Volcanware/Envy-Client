@@ -21,15 +21,16 @@ import mathax.legacy.client.systems.modules.misc.CapesModule;
 import mathax.legacy.client.systems.modules.misc.DiscordRPC;
 import mathax.legacy.client.systems.modules.misc.MiddleClickFriend;
 import mathax.legacy.client.systems.modules.render.Background;
+import mathax.legacy.client.systems.modules.render.Zoom;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.utils.misc.FakeClientPlayer;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.misc.Names;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.misc.input.KeyBinds;
 import mathax.legacy.client.utils.network.Capes;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
-import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.utils.player.DamageUtils;
 import mathax.legacy.client.utils.player.EChestMemory;
 import mathax.legacy.client.utils.player.Rotations;
@@ -139,7 +140,17 @@ public class MatHaxLegacy implements ClientModInitializer {
                 Modules.get().get(DiscordRPC.class).setVisible(false); // DISCORD RPC
                 Modules.get().get(Background.class).setVisible(false); // BACKGROUND
                 Modules.get().get(MiddleClickFriend.class).setVisible(false); // MIDDLE CLICK FRIEND
+                Modules.get().get(Zoom.class).setVisible(false); // HUD
                 Modules.get().get(HUD.class).setVisible(false); // HUD
+
+                // KEYBINDS
+                Modules.get().get(Zoom.class).keybind.set(KeyBind.fromKey(GLFW.GLFW_KEY_C));
+
+                // TOASTS
+                Modules.get().get(Zoom.class).setToggleToast(false);
+
+                // MESSAGES
+                Modules.get().get(Zoom.class).setToggleMessage(false);
 
                 // RESET HUD LOCATIONS
                 Modules.get().get(HUD.class).reset.run(); // HUD

@@ -3,7 +3,7 @@ package mathax.legacy.client.gui.widgets;
 import mathax.legacy.client.gui.renderer.GuiRenderer;
 import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 
 public class WKeybind extends WHorizontalList {
     public Runnable action;
@@ -11,11 +11,11 @@ public class WKeybind extends WHorizontalList {
 
     private WLabel label;
 
-    private final Keybind keybind;
-    private final Keybind defaultValue;
+    private final KeyBind keybind;
+    private final KeyBind defaultValue;
     private boolean listening;
 
-    public WKeybind(Keybind keybind, Keybind defaultValue) {
+    public WKeybind(KeyBind keybind, KeyBind defaultValue) {
         this.keybind = keybind;
         this.defaultValue = defaultValue;
     }

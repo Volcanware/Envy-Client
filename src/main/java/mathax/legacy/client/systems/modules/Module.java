@@ -7,7 +7,7 @@ import mathax.legacy.client.settings.Settings;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.ISerializable;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.utils.render.ToastSystem;
 import mathax.legacy.client.utils.render.color.Color;
@@ -40,7 +40,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     public boolean runInMainMenu = false;
     public boolean autoSubscribe = true;
 
-    public final Keybind keybind = Keybind.none();
+    public final KeyBind keybind = KeyBind.none();
     public boolean toggleOnBindRelease = false;
 
     public Module(Category category, Item icon, String name, String description) {

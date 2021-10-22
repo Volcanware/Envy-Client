@@ -10,7 +10,7 @@ import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.ByteCountDataOutput;
-import mathax.legacy.client.utils.misc.Keybind;
+import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.player.EChestMemory;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.eventbus.EventHandler;
@@ -58,10 +58,10 @@ public class BetterTooltips extends Module {
         .build()
     );
 
-    private final Setting<Keybind> keybind = sgGeneral.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> keybind = sgGeneral.add(new KeybindSetting.Builder()
         .name("keybind")
         .description("The bind for keybind mode.")
-        .defaultValue(Keybind.fromKey(GLFW_KEY_LEFT_ALT))
+        .defaultValue(KeyBind.fromKey(GLFW_KEY_LEFT_ALT))
         .visible(() -> displayWhen.get() == DisplayWhen.Keybind)
         .build()
     );
