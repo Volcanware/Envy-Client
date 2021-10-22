@@ -56,7 +56,7 @@ public class ArmorHUD extends HUDElement {
     );
 
     public ArmorHUD(HUD hud) {
-        super(hud, "armor", "Displays information about your armor", true);
+        super(hud, "armor", "Displays information about your armor.", true);
     }
 
     @Override
