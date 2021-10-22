@@ -28,8 +28,15 @@ public class LookingAtHUD extends TripleTextHUDElement {
 
     private final Setting<Boolean> waterLogged = sgGeneral.add(new BoolSetting.Builder()
         .name("waterlogged-status")
-        .description("Displays if a block is waterlogged or not")
+        .description("Displays if a block is waterlogged or not.")
         .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> showUUID = sgGeneral.add(new BoolSetting.Builder()
+        .name("uuid")
+        .description("Displays the uuid of an entity.")
+        .defaultValue(false)
         .build()
     );
 
@@ -51,13 +58,9 @@ public class LookingAtHUD extends TripleTextHUDElement {
 
             String result = Names.get(mc.world.getBlockState(pos).getBlock());
 
-            if (position.get()) {
-                result += String.format(" (%d, %d, %d)", pos.getX(), pos.getY(), pos.getZ());
-            }
+            if (position.get()) result += String.format(" (%d, %d, %d)", pos.getX(), pos.getY(), pos.getZ());
 
-            if (waterLogged.get() && mc.world.getFluidState(pos).isIn(FluidTags.WATER)) {
-                result += " (water logged)";
-            }
+            if (waterLogged.get() && mc.world.getFluidState(pos).isIn(FluidTags.WATER)) result += " (water logged)";
         }
 
         else if (mc.crosshairTarget.getType() == HitResult.Type.ENTITY) {
@@ -65,15 +68,13 @@ public class LookingAtHUD extends TripleTextHUDElement {
 
             String result;
             if (target instanceof PlayerEntity) result = ((PlayerEntity) target).getGameProfile().getName();
-            else result = target.getEntityName();
+            else result = target.getName().getString();
 
-            if (position.get()) {
-                result += String.format(" (%d, %d, %d)", target.getBlockX(), target.getBlockY(), target.getBlockZ());
-            }
+            if (position.get()) result += String.format(" (%d, %d, %d)", target.getBlockX(), target.getBlockY(), target.getBlockZ());
 
-            if (waterLogged.get() && target.isTouchingWater()) {
-                result += " (in water)";
-            }
+            if (waterLogged.get() && target.isTouchingWater()) result += " (in water)";
+
+            if (showUUID.get()) result += String.format(" (%s)", target.getUuidAsString());
 
             return result;
         }
