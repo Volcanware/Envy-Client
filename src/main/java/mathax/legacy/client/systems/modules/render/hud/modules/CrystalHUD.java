@@ -21,12 +21,13 @@ public class CrystalHUD extends HUDElement {
         .description("The scale.")
         .defaultValue(2)
         .min(1)
-        .sliderMin(1).sliderMax(5)
+        .sliderMin(1)
+        .sliderMax(5)
         .build()
     );
 
     public CrystalHUD(HUD hud) {
-        super(hud, "crystal", "Displays the amount of crystals in your inventory", true);
+        super(hud, "crystal", "Displays the amount of crystals in your inventory.", true);
     }
 
     @Override

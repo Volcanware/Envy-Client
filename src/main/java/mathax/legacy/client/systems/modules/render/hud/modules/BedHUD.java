@@ -27,7 +27,7 @@ public class BedHUD extends HUDElement {
     );
 
     public BedHUD(HUD hud) {
-        super(hud, "bed", "Displays the amount of beds in your inventory", true);
+        super(hud, "bed", "Displays the amount of beds in your inventory.", true);
     }
 
     @Override

@@ -6,7 +6,7 @@ import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
 
 public class BreakingBlockHUD extends TripleTextHUDElement {
     public BreakingBlockHUD(HUD hud) {
-        super(hud, "breaking-block", "Displays percentage of the block you are breaking", true);
+        super(hud, "breaking-block", "Displays percentage of the block you are breaking.", true);
     }
 
     @Override

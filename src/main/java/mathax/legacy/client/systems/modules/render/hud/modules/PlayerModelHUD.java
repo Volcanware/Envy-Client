@@ -43,8 +43,10 @@ public class PlayerModelHUD extends HUDElement {
         .name("custom-yaw")
         .description("Custom yaw for when copy yaw is off.")
         .defaultValue(0)
-        .min(-180).max(180)
-        .sliderMin(-180).sliderMax(180)
+        .min(-180)
+        .max(180)
+        .sliderMin(-180)
+        .sliderMax(180)
         .visible(() -> !copyYaw.get())
         .build()
     );
@@ -53,8 +55,10 @@ public class PlayerModelHUD extends HUDElement {
         .name("custom-pitch")
         .description("Custom pitch for when copy pitch is off.")
         .defaultValue(0)
-        .min(-180).max(180)
-        .sliderMin(-180).sliderMax(180)
+        .min(-180)
+        .max(180)
+        .sliderMin(-180)
+        .sliderMax(180)
         .visible(() -> !copyPitch.get())
         .build()
     );
@@ -75,7 +79,7 @@ public class PlayerModelHUD extends HUDElement {
     );
 
     public PlayerModelHUD(HUD hud) {
-        super(hud, "player-model", "Displays a model of your player", true);
+        super(hud, "player-model", "Displays a model of your player.", true);
     }
 
     @Override

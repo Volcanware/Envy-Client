@@ -93,7 +93,7 @@ public class TextRadarHUD extends HUDElement {
     );
 
     public TextRadarHUD(HUD hud) {
-        super(hud, "text-radar", "Displays names and stats on players in your render distance", true);
+        super(hud, "text-radar", "Displays names and stats on players in your render distance.", true);
     }
 
     @EventHandler

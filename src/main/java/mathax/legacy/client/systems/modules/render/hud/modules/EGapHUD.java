@@ -21,12 +21,13 @@ public class EGapHUD extends HUDElement {
         .description("The scale.")
         .defaultValue(2)
         .min(1)
-        .sliderMin(1).sliderMax(5)
+        .sliderMin(1)
+        .sliderMax(5)
         .build()
     );
 
     public EGapHUD(HUD hud) {
-        super(hud, "e-gap", "Displays the amount of e-gaps in your inventory", true);
+        super(hud, "e-gap", "Displays the amount of e-gaps in your inventory.", true);
     }
 
     @Override
@@ -39,10 +40,7 @@ public class EGapHUD extends HUDElement {
         double x = box.getX();
         double y = box.getY();
 
-        if (isInEditor()) {
-            RenderUtils.drawItem(Items.ENCHANTED_GOLDEN_APPLE.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        } else if (InvUtils.find(Items.ENCHANTED_GOLDEN_APPLE).getCount() > 0) {
-            RenderUtils.drawItem(new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, InvUtils.find(Items.ENCHANTED_GOLDEN_APPLE).getCount()), (int) x, (int) y, scale.get(), true);
-        }
+        if (isInEditor()) RenderUtils.drawItem(Items.ENCHANTED_GOLDEN_APPLE.getDefaultStack(), (int) x, (int) y, scale.get(), true);
+        else if (InvUtils.find(Items.ENCHANTED_GOLDEN_APPLE).getCount() > 0) RenderUtils.drawItem(new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, InvUtils.find(Items.ENCHANTED_GOLDEN_APPLE).getCount()), (int) x, (int) y, scale.get(), true);
     }
 }

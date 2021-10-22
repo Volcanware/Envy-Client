@@ -36,7 +36,7 @@ public class PositionHUD extends HUDElement {
     );
 
     public PositionHUD(HUD hud) {
-        super(hud, "position", "Displays your coordinates in the world", true);
+        super(hud, "position", "Displays your coordinates in the world.", true);
     }
 
     @Override

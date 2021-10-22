@@ -48,7 +48,7 @@ public class InventoryViewerHUD extends HUDElement {
     );
 
     public InventoryViewerHUD(HUD hud) {
-        super(hud, "inventory-viewer", "Displays your inventory", true);
+        super(hud, "inventory-viewer", "Displays your inventory.", true);
 
         editorInv = new ItemStack[9 * 3];
         editorInv[0] = Items.TOTEM_OF_UNDYING.getDefaultStack();

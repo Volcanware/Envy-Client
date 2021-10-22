@@ -46,7 +46,7 @@ public class ModuleInfoHUD extends HUDElement {
     );
 
     public ModuleInfoHUD(HUD hud) {
-        super(hud, "module-info", "Shows activity information about specified modules", true);
+        super(hud, "module-info", "Shows activity information about specified modules.", true);
     }
 
     @Override

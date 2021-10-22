@@ -6,7 +6,7 @@ import mathax.legacy.client.utils.Utils;
 
 public class SpeedHUD extends TripleTextHUDElement {
     public SpeedHUD(HUD hud) {
-        super(hud, "speed", "Displays your horizontal speed", true);
+        super(hud, "speed", "Displays your horizontal speed.", true);
     }
 
     @Override

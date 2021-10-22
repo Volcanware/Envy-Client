@@ -98,7 +98,7 @@ public class ActiveModulesHUD extends HUDElement {
     );
 
     public ActiveModulesHUD(HUD hud) {
-        super(hud, "active-modules", "Displays your active modules", true);
+        super(hud, "active-modules", "Displays your active modules.", true);
     }
 
     @Override
@@ -222,7 +222,6 @@ public class ActiveModulesHUD extends HUDElement {
 
             if (index > 0) {
                 if (index < modules.size() - 1) {
-
                     Renderer2D.COLOR.quad(x - 2 - outlineWidth.get(), y, outlineWidth.get(), renderer.textHeight() + 2, prevColor, prevColor, color, color); // Left quad
                     Renderer2D.COLOR.quad(x + textLength + 2, y, outlineWidth.get(), renderer.textHeight() + 2, prevColor, prevColor, color, color); // Right quad
                 }
