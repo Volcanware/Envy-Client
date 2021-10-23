@@ -111,6 +111,7 @@ public class ModuleScreen extends WindowScreen {
         keybind.reset();
     }
 
+    @Override
     public boolean toClipboard() {
         return NbtUtils.toClipboard(module.title, module.toTag());
     }
