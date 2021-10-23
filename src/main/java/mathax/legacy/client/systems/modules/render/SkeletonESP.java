@@ -28,7 +28,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.*;
 
-// TODO: Fix random swings.
+// TODO: Fix random swings & bed broken.
 
 public class SkeletonESP extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
