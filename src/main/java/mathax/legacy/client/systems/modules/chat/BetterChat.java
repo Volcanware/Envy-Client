@@ -57,7 +57,7 @@ public class BetterChat extends Module {
     public final Setting<FancyType> fancyType = sgGeneral.add(new EnumSetting.Builder<FancyType>()
         .name("fancy-type")
         .description("Determines what font or style to use in the your messages.")
-        .defaultValue(FancyType.FullWidth)
+        .defaultValue(FancyType.Full_Width)
         .visible(fancy::get)
         .build()
     );
@@ -192,7 +192,7 @@ public class BetterChat extends Module {
     private final Setting<SuffixFont> suffixFont = sgSuffix.add(new EnumSetting.Builder<SuffixFont>()
         .name("suffix-font")
         .description("Determines what font to use in the suffix.")
-        .defaultValue(SuffixFont.FullWidth)
+        .defaultValue(SuffixFont.Full_Width)
         .build()
     );
 
@@ -321,10 +321,10 @@ public class BetterChat extends Module {
         if (annoy.get()) message = applyAnnoy(message);
 
         if (fancy.get()) {
-            if (fancyType.get() == FancyType.FullWidth) {
+            if (fancyType.get() == FancyType.Full_Width) {
                 message = applyFull(message);
             }
-            if (fancyType.get() == FancyType.SmallCAPS) {
+            if (fancyType.get() == FancyType.Small_CAPS) {
                 message = applySmall(message);
             }
             if (fancyType.get() == FancyType.UwU) {
@@ -452,24 +452,15 @@ public class BetterChat extends Module {
 
     public String getSuffix() {
         if (suffix.get()) {
-            if (suffixFont.get() == SuffixFont.FullWidth) {
-                return applyFull(getSuffixString());
-            } else if (suffixFont.get() == SuffixFont.SmallCAPS) {
-                return applySmall(getSuffixString());
-            } else {
-                return getSuffixString();
-            }
-        } else {
-            return "";
-        }
+            if (suffixFont.get() == SuffixFont.Full_Width) return applyFull(getSuffixString());
+            else if (suffixFont.get() == SuffixFont.Small_CAPS) return applySmall(getSuffixString());
+            else return getSuffixString();
+        } else return "";
     }
 
     private String getSuffixString() {
-        if (suffixAppendVersion.get()) {
-            return " | MatHax Legacy " + Version.getStylized();
-        } else {
-            return " | MatHax Legacy";
-        }
+        if (suffixAppendVersion.get()) return " | MatHax Legacy " + Version.getStylized();
+        else return " | MatHax Legacy";
     }
 
     // Coords Protection
@@ -518,15 +509,25 @@ public class BetterChat extends Module {
     }
 
     public enum FancyType {
-        FullWidth,
-        SmallCAPS,
+        Full_Width,
+        Small_CAPS,
         UwU,
-        Leet
+        Leet;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 
     public enum SuffixFont {
         Normal,
-        FullWidth,
-        SmallCAPS
+        Full_Width,
+        Small_CAPS;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

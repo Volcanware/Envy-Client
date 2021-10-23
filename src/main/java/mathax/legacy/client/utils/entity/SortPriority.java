@@ -1,9 +1,14 @@
 package mathax.legacy.client.utils.entity;
 
 public enum SortPriority {
-    LowestDistance,
-    HighestDistance,
-    LowestHealth,
-    HighestHealth,
-    ClosestAngle
+    Lowest_Distance,
+    Highest_Distance,
+    Lowest_Health,
+    Highest_Health,
+    Closest_Angle;
+
+    @Override
+    public String toString() {
+        return super.toString().replace("_", " ");
+    }
 }

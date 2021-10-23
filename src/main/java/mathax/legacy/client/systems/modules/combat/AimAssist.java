@@ -33,7 +33,7 @@ public class AimAssist extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Entities to aim at.")
-        .defaultValue(Utils.asObject2BooleanOpenHashMap(EntityType.PLAYER))
+        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
         .build()
     );
 
@@ -55,7 +55,7 @@ public class AimAssist extends Module {
     private final Setting<SortPriority> priority = sgGeneral.add(new EnumSetting.Builder<SortPriority>()
         .name("priority")
         .description("How to select target from entities in range.")
-        .defaultValue(SortPriority.LowestHealth)
+        .defaultValue(SortPriority.Lowest_Health)
         .build()
     );
 

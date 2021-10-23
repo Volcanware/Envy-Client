@@ -25,11 +25,14 @@ import java.util.List;
 
 public class AutoArmor extends Module {
     private final Object2IntMap<Enchantment> enchantments = new Object2IntOpenHashMap<>();
+
     private final ArmorPiece[] armorPieces = new ArmorPiece[4];
+
     private final ArmorPiece helmet = new ArmorPiece(3);
     private final ArmorPiece chestplate = new ArmorPiece(2);
     private final ArmorPiece leggings = new ArmorPiece(1);
     private final ArmorPiece boots = new ArmorPiece(0);
+
     private int timer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -198,14 +201,19 @@ public class AutoArmor extends Module {
 
     public enum Protection {
         Protection(Enchantments.PROTECTION),
-        BlastProtection(Enchantments.BLAST_PROTECTION),
-        FireProtection(Enchantments.FIRE_PROTECTION),
-        ProjectileProtection(Enchantments.PROJECTILE_PROTECTION);
+        Blast_Protection(Enchantments.BLAST_PROTECTION),
+        Fire_Protection(Enchantments.FIRE_PROTECTION),
+        Projectile_Protection(Enchantments.PROJECTILE_PROTECTION);
 
         private final Enchantment enchantment;
 
         Protection(Enchantment enchantment) {
             this.enchantment = enchantment;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
         }
     }
 

@@ -41,6 +41,7 @@ public class Commands extends System<Commands> {
         add(new DropCommand());
         add(new EnchantCommand());
         add(new FakePlayerCommand());
+        add(new FOVCommand());
         add(new FriendsCommand());
         add(new EnemiesCommand());
         add(new CommandsCommand());
@@ -55,6 +56,7 @@ public class Commands extends System<Commands> {
         add(new ProfilesCommand());
         add(new ReloadCommand());
         add(new ResetCommand());
+        add(new RotationCommand());
         add(new SeedCommand());
         add(new SayCommand());
         add(new ServerCommand());

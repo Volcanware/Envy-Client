@@ -60,7 +60,7 @@ public class AnchorAura extends Module {
     private final Setting<SortPriority> targetPriority = sgGeneral.add(new EnumSetting.Builder<SortPriority>()
         .name("target-priority")
         .description("How to select the player to target.")
-        .defaultValue(SortPriority.LowestHealth)
+        .defaultValue(SortPriority.Lowest_Health)
         .build()
     );
 
@@ -132,7 +132,7 @@ public class AnchorAura extends Module {
     private final Setting<PlaceMode> placePositions = sgPlace.add(new EnumSetting.Builder<PlaceMode>()
         .name("placement-positions")
         .description("Where the Anchors will be placed on the entity.")
-        .defaultValue(PlaceMode.AboveAndBelow)
+        .defaultValue(PlaceMode.Above_and_Below)
         .visible(place::get)
         .build()
     );
@@ -419,7 +419,7 @@ public class AnchorAura extends Module {
             case Above:
                 if (isValidPlace(targetPlacePos.up(2))) return targetPlacePos.up(2);
                 break;
-            case AboveAndBelow:
+            case Above_and_Below:
                 if (isValidPlace(targetPlacePos.down())) return targetPlacePos.down();
                 else if (isValidPlace(targetPlacePos.up(2))) return targetPlacePos.up(2);
                 break;
@@ -486,8 +486,14 @@ public class AnchorAura extends Module {
 
     public enum PlaceMode {
         Above,
-        AboveAndBelow,
-        All
+        Above_and_Below,
+        All;
+
+        @Override
+        public String toString() {
+            if (this == Above_and_Below) return "Above & Below";
+            return super.toString();
+        }
     }
 
     public enum RotationMode {

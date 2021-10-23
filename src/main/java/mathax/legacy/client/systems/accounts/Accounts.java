@@ -75,7 +75,7 @@ public class Accounts extends System<Accounts> implements Iterable<Account<?>> {
                     case Cracked ->    new CrackedAccount(null).fromTag(t);
                     case Premium ->    new PremiumAccount(null, null).fromTag(t);
                     case Microsoft ->  new MicrosoftAccount(null).fromTag(t);
-                    case TheAltening -> new TheAlteningAccount(null).fromTag(t);
+                    case The_Altening -> new TheAlteningAccount(null).fromTag(t);
                 };
 
                 if (account.fetchHead()) return account;

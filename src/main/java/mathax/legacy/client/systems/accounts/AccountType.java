@@ -4,5 +4,10 @@ public enum AccountType {
     Cracked,
     Premium,
     Microsoft,
-    TheAltening
+    The_Altening;
+
+    @Override
+    public String toString() {
+        return super.toString().replace("_", " ");
+    }
 }

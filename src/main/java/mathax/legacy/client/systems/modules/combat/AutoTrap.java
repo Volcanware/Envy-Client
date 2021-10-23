@@ -47,7 +47,7 @@ public class AutoTrap extends Module {
     private final Setting<SortPriority> priority = sgGeneral.add(new EnumSetting.Builder<SortPriority>()
         .name("target-priority")
         .description("How to select the player to target.")
-        .defaultValue(SortPriority.LowestHealth)
+        .defaultValue(SortPriority.Lowest_Health)
         .build()
     );
 

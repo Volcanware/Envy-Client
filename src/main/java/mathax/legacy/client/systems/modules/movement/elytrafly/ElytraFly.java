@@ -215,25 +215,17 @@ public class ElytraFly extends Module {
     @Override
     public void onActivate() {
         currentMode.onActivate();
-        if ((chestSwap.get() == ChestSwapMode.Always || chestSwap.get() == ChestSwapMode.WaitForGround)
-                && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() != Items.ELYTRA) {
-            Modules.get().get(ChestSwap.class).swap();
-        }
+        if ((chestSwap.get() == ChestSwapMode.Always || chestSwap.get() == ChestSwapMode.Wait_for_Ground) && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() != Items.ELYTRA) Modules.get().get(ChestSwap.class).swap();
     }
 
     @Override
     public void onDeactivate() {
         if (autoPilot.get()) mc.options.keyForward.setPressed(false);
 
-        if (chestSwap.get() == ChestSwapMode.Always && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA) {
-            Modules.get().get(ChestSwap.class).swap();
-        } else if (chestSwap.get() == ChestSwapMode.WaitForGround) {
-            enableGroundListener();
-        }
+        if (chestSwap.get() == ChestSwapMode.Always && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA) Modules.get().get(ChestSwap.class).swap();
+        else if (chestSwap.get() == ChestSwapMode.Wait_for_Ground) enableGroundListener();
 
-        if (mc.player.isFallFlying() && instaDrop.get()) {
-            enableInstaDropListener();
-        }
+        if (mc.player.isFallFlying() && instaDrop.get()) enableInstaDropListener();
 
         currentMode.onDeactivate();
     }
@@ -266,11 +258,8 @@ public class ElytraFly extends Module {
             int chunkX = (int) ((mc.player.getX() + currentMode.velX) / 16);
             int chunkZ = (int) ((mc.player.getZ() + currentMode.velZ) / 16);
             if (dontGoIntoUnloadedChunks.get()) {
-                if (mc.world.getChunkManager().isChunkLoaded(chunkX, chunkZ)) {
-                    ((IVec3d) event.movement).set(currentMode.velX, currentMode.velY, currentMode.velZ);
-                } else {
-                    ((IVec3d) event.movement).set(0, currentMode.velY, 0);
-                }
+                if (mc.world.getChunkManager().isChunkLoaded(chunkX, chunkZ)) ((IVec3d) event.movement).set(currentMode.velX, currentMode.velY, currentMode.velZ);
+                else ((IVec3d) event.movement).set(0, currentMode.velY, 0);
             } else ((IVec3d) event.movement).set(currentMode.velX, currentMode.velY, currentMode.velZ);
 
             currentMode.onPlayerMove();
@@ -285,9 +274,7 @@ public class ElytraFly extends Module {
             Vec3d lookAheadPos = mc.player.getPos().add(mc.player.getVelocity().normalize().multiply(crashLookAhead.get()));
             RaycastContext raycastContext = new RaycastContext(mc.player.getPos(), new Vec3d(lookAheadPos.getX(), mc.player.getY(), lookAheadPos.getZ()), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player);
             BlockHitResult hitResult = mc.world.raycast(raycastContext);
-            if (hitResult != null && hitResult.getType() == HitResult.Type.BLOCK) {
-                ((IVec3d) event.movement).set(0, currentMode.velY, 0);
-            }
+            if (hitResult != null && hitResult.getType() == HitResult.Type.BLOCK) ((IVec3d) event.movement).set(0, currentMode.velY, 0);
         }
     }
 
@@ -303,12 +290,12 @@ public class ElytraFly extends Module {
 
     private void onModeChanged(ElytraFlightModes mode) {
         switch (mode) {
-            case Vanilla:   currentMode = new Vanilla(); break;
-            case Packet:    currentMode = new Packet(); break;
-            case Pitch40:
+            case Vanilla -> currentMode = new Vanilla();
+            case Packet -> currentMode = new Packet();
+            case Pitch40 -> {
                 currentMode = new Pitch40();
                 autoPilot.set(false); // Pitch 40 is an autopilot of its own
-                break;
+            }
         }
     }
 
@@ -367,7 +354,12 @@ public class ElytraFly extends Module {
     public enum ChestSwapMode {
         Always,
         Never,
-        WaitForGround
+        Wait_for_Ground;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 
     public enum AutoPilotMode {

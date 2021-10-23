@@ -67,7 +67,7 @@ public class MiddleClickExtra extends Module {
                 mc.interactionManager.interactItem(mc.player, mc.world, Hand.MAIN_HAND);
                 InvUtils.swapBack();
             }
-            case LongerSingleClick -> mc.interactionManager.interactItem(mc.player, mc.world, Hand.MAIN_HAND);
+            case Longer_Single_Click -> mc.interactionManager.interactItem(mc.player, mc.world, Hand.MAIN_HAND);
             case Longer -> {
                 mc.options.keyUse.setPressed(true);
                 isUsing = true;
@@ -80,9 +80,8 @@ public class MiddleClickExtra extends Module {
         if (isUsing) {
             boolean pressed = true;
 
-            if (mc.player.getMainHandStack().getItem() instanceof BowItem) {
-                pressed = BowItem.getPullProgress(mc.player.getItemUseTime()) < 1;
-            }
+            if (mc.player.getMainHandStack().getItem() instanceof BowItem) pressed = BowItem.getPullProgress(mc.player.getItemUseTime()) < 1;
+
 
             mc.options.keyUse.setPressed(pressed);
         }
@@ -108,15 +107,20 @@ public class MiddleClickExtra extends Module {
 
     private enum Type {
         Immediate,
-        LongerSingleClick,
-        Longer
+        Longer_Single_Click,
+        Longer;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 
     public enum Mode {
         Pearl(Items.ENDER_PEARL, Type.Immediate),
         Rocket(Items.FIREWORK_ROCKET, Type.Immediate),
 
-        Rod(Items.FISHING_ROD, Type.LongerSingleClick),
+        Rod(Items.FISHING_ROD, Type.Longer_Single_Click),
 
         Bow(Items.BOW, Type.Longer),
         Gap(Items.GOLDEN_APPLE, Type.Longer),

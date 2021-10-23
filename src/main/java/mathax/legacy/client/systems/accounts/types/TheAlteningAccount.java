@@ -22,7 +22,7 @@ public class TheAlteningAccount extends Account<TheAlteningAccount> {
     private static final String SERVICES = "https://api.minecraftservices.com";
 
     public TheAlteningAccount(String token) {
-        super(AccountType.TheAltening, token);
+        super(AccountType.The_Altening, token);
     }
 
     @Override

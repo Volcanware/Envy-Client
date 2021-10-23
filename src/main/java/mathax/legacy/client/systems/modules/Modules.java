@@ -471,7 +471,6 @@ public class Modules extends System<Modules> {
         add(new Chams());
         add(new CityESP());
         //add(new CustomCrosshair());
-        add(new CustomFOV());
         add(new EntityOwner());
         add(new ESP());
         add(new FakePlayer());

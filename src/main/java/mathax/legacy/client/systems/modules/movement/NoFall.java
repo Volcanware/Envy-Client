@@ -47,7 +47,7 @@ public class NoFall extends Module {
     private final Setting<PlaceMode> airPlaceMode = sgGeneral.add(new EnumSetting.Builder<PlaceMode>()
         .name("place-mode")
         .description("Whether place mode places before you die or before you take damage.")
-        .defaultValue(PlaceMode.BeforeDeath)
+        .defaultValue(PlaceMode.Before_Death)
         .visible(() -> mode.get() == Mode.AirPlace)
         .build()
     );
@@ -179,8 +179,8 @@ public class NoFall extends Module {
     }
 
     public enum PlaceMode {
-        BeforeDamage(height -> height > 2),
-        BeforeDeath(height -> height > Math.max(PlayerUtils.getTotalHealth(), 2));
+        Before_Damage(height -> height > 2),
+        Before_Death(height -> height > Math.max(PlayerUtils.getTotalHealth(), 2));
 
         private final Predicate<Float> fallHeight;
 
@@ -190,6 +190,11 @@ public class NoFall extends Module {
 
         public boolean test(float fallheight) {
             return fallHeight.test(fallheight);
+        };
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
         }
     }
 }

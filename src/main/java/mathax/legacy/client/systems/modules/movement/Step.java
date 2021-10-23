@@ -66,13 +66,10 @@ public class Step extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        boolean work = (activeWhen.get() == ActiveWhen.Always) || (activeWhen.get() == ActiveWhen.Sneaking && mc.player.isSneaking()) || (activeWhen.get() == ActiveWhen.NotSneaking && !mc.player.isSneaking());
+        boolean work = (activeWhen.get() == ActiveWhen.Always) || (activeWhen.get() == ActiveWhen.Sneaking && mc.player.isSneaking()) || (activeWhen.get() == ActiveWhen.Not_Sneaking && !mc.player.isSneaking());
         mc.player.setBoundingBox(mc.player.getBoundingBox().offset(0, 1, 0));
-        if (work && (!safeStep.get() || (getHealth() > stepHealth.get() && getHealth() - getExplosionDamage() > stepHealth.get()))){
-            mc.player.stepHeight = height.get().floatValue();
-        } else {
-            mc.player.stepHeight = prevStepHeight;
-        }
+        if (work && (!safeStep.get() || (getHealth() > stepHealth.get() && getHealth() - getExplosionDamage() > stepHealth.get()))) mc.player.stepHeight = height.get().floatValue();
+        else mc.player.stepHeight = prevStepHeight;
         mc.player.setBoundingBox(mc.player.getBoundingBox().offset(0, -1, 0));
     }
 
@@ -91,17 +88,18 @@ public class Step extends Module {
     private double getExplosionDamage(){
         assert mc.player != null;
         assert mc.world != null;
-        Optional<EndCrystalEntity> crystal = Streams.stream(mc.world.getEntities())
-            .filter(entity -> entity instanceof EndCrystalEntity)
-            .filter(Entity::isAlive)
-            .max(Comparator.comparingDouble(o -> DamageUtils.crystalDamage(mc.player, o.getPos())))
-            .map(entity -> (EndCrystalEntity) entity);
+        Optional<EndCrystalEntity> crystal = Streams.stream(mc.world.getEntities()).filter(entity -> entity instanceof EndCrystalEntity).filter(Entity::isAlive).max(Comparator.comparingDouble(o -> DamageUtils.crystalDamage(mc.player, o.getPos()))).map(entity -> (EndCrystalEntity) entity);
         return crystal.map(endCrystalEntity -> DamageUtils.crystalDamage(mc.player, endCrystalEntity.getPos())).orElse(0.0);
     }
 
     public enum ActiveWhen {
         Always,
         Sneaking,
-        NotSneaking
+        Not_Sneaking;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

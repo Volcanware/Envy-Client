@@ -21,7 +21,7 @@ public class ChestSwap extends Module {
     private final Setting<Chestplate> chestplate = sgGeneral.add(new EnumSetting.Builder<Chestplate>()
         .name("chestplate")
         .description("Which type of chestplate to swap to.")
-        .defaultValue(Chestplate.PreferNetherite)
+        .defaultValue(Chestplate.Prefer_Netherite)
         .build()
     );
 
@@ -76,18 +76,15 @@ public class ChestSwap extends Module {
                         breakLoop = true;
                     }
                     break;
-                case PreferDiamond:
+                case Prefer_Diamond:
                     if (item == Items.DIAMOND_CHESTPLATE) {
                         bestSlot = i;
                         breakLoop = true;
-                    } else if (item == Items.NETHERITE_CHESTPLATE) {
-                        bestSlot = i;
-                    }
+                    } else if (item == Items.NETHERITE_CHESTPLATE) bestSlot = i;
                     break;
-                case PreferNetherite:
-                    if (item == Items.DIAMOND_CHESTPLATE) {
-                        bestSlot = i;
-                    } else if (item == Items.NETHERITE_CHESTPLATE) {
+                case Prefer_Netherite:
+                    if (item == Items.DIAMOND_CHESTPLATE) bestSlot = i;
+                    else if (item == Items.NETHERITE_CHESTPLATE) {
                         bestSlot = i;
                         breakLoop = true;
                     }
@@ -128,16 +125,15 @@ public class ChestSwap extends Module {
         else if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(module.icon, module.category.color, title, null, Formatting.GRAY + "Has been triggered."));
     }
 
-    public enum Notification {
-        Chat,
-        Toast,
-        Both
-    }
-
     public enum Chestplate {
         Diamond,
         Netherite,
-        PreferDiamond,
-        PreferNetherite
+        Prefer_Diamond,
+        Prefer_Netherite;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

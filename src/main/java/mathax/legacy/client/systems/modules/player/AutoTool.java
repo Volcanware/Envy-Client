@@ -151,7 +151,7 @@ public class AutoTool extends Module {
         score += EnchantmentHelper.getLevel(Enchantments.MENDING, itemStack);
 
         if (enchantPreference == EnchantPreference.Fortune) score += EnchantmentHelper.getLevel(Enchantments.FORTUNE, itemStack);
-        if (enchantPreference == EnchantPreference.SilkTouch) score += EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, itemStack);
+        if (enchantPreference == EnchantPreference.Silk_Touch) score += EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, itemStack);
 
         return score;
     }
@@ -163,6 +163,11 @@ public class AutoTool extends Module {
     public enum EnchantPreference {
         None,
         Fortune,
-        SilkTouch
+        Silk_Touch;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

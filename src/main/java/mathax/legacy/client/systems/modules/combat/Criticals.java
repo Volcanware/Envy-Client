@@ -142,6 +142,11 @@ public class Criticals extends Module {
         Packet,
         Bypass,
         Jump,
-        MiniJump
+        Mini_Jump;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

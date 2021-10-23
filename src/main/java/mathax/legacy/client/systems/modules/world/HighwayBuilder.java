@@ -1489,7 +1489,12 @@ public class HighwayBuilder extends Module {
 
     public enum Floor {
         Replace,
-        PlaceMissing
+        Place_Missing;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 
     public enum Rotation {

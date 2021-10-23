@@ -189,7 +189,7 @@ public class CombatInfoHUD extends HUDElement {
             double y = box.getY();
 
             if (isInEditor()) playerEntity = FakeClientPlayer.getPlayer();
-            else playerEntity = TargetUtils.getPlayerTarget(range.get(), SortPriority.LowestDistance);
+            else playerEntity = TargetUtils.getPlayerTarget(range.get(), SortPriority.Lowest_Distance);
 
             if (playerEntity == null) return;
 

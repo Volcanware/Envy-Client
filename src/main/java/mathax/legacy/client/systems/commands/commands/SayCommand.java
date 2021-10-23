@@ -33,8 +33,8 @@ public class SayCommand extends Command {
 
                 if (Modules.get().get(BetterChat.class).fancy.get()) {
                     switch (Modules.get().get(BetterChat.class).fancyType.get()) {
-                        case FullWidth -> message = Modules.get().get(BetterChat.class).applyFull(message);
-                        case SmallCAPS -> message = Modules.get().get(BetterChat.class).applySmall(message);
+                        case Full_Width -> message = Modules.get().get(BetterChat.class).applyFull(message);
+                        case Small_CAPS -> message = Modules.get().get(BetterChat.class).applySmall(message);
                         case UwU -> message = Modules.get().get(BetterChat.class).applyUwU(message);
                         case Leet -> message = Modules.get().get(BetterChat.class).applyLeet(message);
                     }

@@ -97,7 +97,7 @@ public class StorageESP extends Module {
     private final Setting<Double> fadeDistance = sgGeneral.add(new DoubleSetting.Builder()
         .name("fade-distance")
         .description("The distance at which the color will fade.")
-        .defaultValue(6)
+        .defaultValue(0)
         .min(0)
         .sliderMax(12)
         .build()

@@ -47,7 +47,7 @@ public class KillAura extends Module {
     private final Setting<Weapon> weapon = sgGeneral.add(new EnumSetting.Builder<Weapon>()
         .name("weapon")
         .description("Only attacks an entity when a specified item is in your hand.")
-        .defaultValue(Weapon.Sword_And_Axe)
+        .defaultValue(Weapon.Sword_and_Axe)
         .build()
     );
 
@@ -109,7 +109,7 @@ public class KillAura extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgTargeting.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Entities to attack.")
-        .defaultValue(Utils.asObject2BooleanOpenHashMap(EntityType.PLAYER))
+        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
         .onlyAttackable()
         .build()
     );
@@ -135,7 +135,7 @@ public class KillAura extends Module {
     private final Setting<SortPriority> priority = sgTargeting.add(new EnumSetting.Builder<SortPriority>()
         .name("priority")
         .description("How to filter targets within range.")
-        .defaultValue(SortPriority.LowestHealth)
+        .defaultValue(SortPriority.Lowest_Health)
         .build()
     );
 
@@ -230,6 +230,7 @@ public class KillAura extends Module {
                 BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
                 wasPathing = false;
             }
+
             return;
         }
 
@@ -262,7 +263,7 @@ public class KillAura extends Module {
                     case Sword -> item instanceof SwordItem;
                     case Axe -> item instanceof AxeItem;
                     case Hoe -> item instanceof HoeItem;
-                    case Sword_And_Axe -> item instanceof SwordItem || item instanceof AxeItem;
+                    case Sword_and_Axe -> item instanceof SwordItem || item instanceof AxeItem;
                     case All_Three -> item instanceof SwordItem || item instanceof AxeItem || item instanceof HoeItem;
                     default -> true;
                 };
@@ -311,23 +312,18 @@ public class KillAura extends Module {
             return false;
         }
 
-
         if (smartDelay.get()) return mc.player.getAttackCooldownProgress(0.5f) >= 1;
 
         if (hitDelayTimer >= 0) {
             hitDelayTimer--;
             return false;
-        } else {
-            hitDelayTimer = hitDelay.get();
-        }
+        } else hitDelayTimer = hitDelay.get();
 
         if (randomDelayEnabled.get()) {
             if (randomDelayTimer > 0) {
                 randomDelayTimer--;
                 return false;
-            } else {
-                randomDelayTimer = (int) Math.round(Math.random() * randomDelayMax.get());
-            }
+            } else randomDelayTimer = (int) Math.round(Math.random() * randomDelayMax.get());
         }
 
         return true;
@@ -341,7 +337,6 @@ public class KillAura extends Module {
     }
 
     private void hitEntity(Entity target) {
-
         mc.interactionManager.attackEntity(mc.player, target);
         mc.player.swingHand(Hand.MAIN_HAND);
     }
@@ -355,7 +350,7 @@ public class KillAura extends Module {
             case Sword -> mc.player.getMainHandStack().getItem() instanceof SwordItem;
             case Axe -> mc.player.getMainHandStack().getItem() instanceof AxeItem;
             case Hoe -> mc.player.getMainHandStack().getItem() instanceof HoeItem;
-            case Sword_And_Axe -> mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem;
+            case Sword_and_Axe -> mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem;
             case All_Three -> mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem || mc.player.getMainHandStack().getItem() instanceof HoeItem;
             default -> true;
         };
@@ -376,14 +371,27 @@ public class KillAura extends Module {
         Sword,
         Axe,
         Hoe,
-        Sword_And_Axe,
+        Sword_and_Axe,
         All_Three,
-        Any
+        Any;
+
+        @Override
+        public String toString() {
+            if (this == Sword_and_Axe) return "Sword & Axe";
+            else if (this == All_Three) return "All Three";
+            return super.toString();
+        }
     }
 
     public enum RotationMode {
         Always,
         On_Hit,
-        None
+        None;
+
+        @Override
+        public String toString() {
+            if (this == On_Hit) return "On Hit";
+            return super.toString();
+        }
     }
 }

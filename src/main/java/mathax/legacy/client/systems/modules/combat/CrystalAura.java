@@ -111,7 +111,7 @@ public class CrystalAura extends Module {
     /*private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Entities to attack.")
-        .defaultValue(Utils.asObject2BooleanOpenHashMap(EntityType.PLAYER))
+        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
         .onlyAttackable()
         .build()
     );*/

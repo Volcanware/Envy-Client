@@ -51,7 +51,7 @@ public class WelcomeHUD extends TripleTextHUDElement {
                 if ((mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) return getTime() + ", Developer ";
                 else return getTime() + ", ";
             }
-            case RetardedTime -> {
+            case Retarded_Time -> {
                 if (Modules.get().isActive(NameProtect.class)) return getRetardedTime() + ", ";
                 if ((mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) return getRetardedTime() + ", Developer ";
                 else return getRetardedTime() + ", ";
@@ -125,7 +125,12 @@ public class WelcomeHUD extends TripleTextHUDElement {
         Welcome,
         Using,
         Time,
-        RetardedTime,
-        Sussy
+        Retarded_Time,
+        Sussy;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

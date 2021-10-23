@@ -141,7 +141,7 @@ public class CEVBreaker extends Module {
             else {
                 pause = delay.get();
 
-                SortPriority sortPriority = SortPriority.LowestDistance;
+                SortPriority sortPriority = SortPriority.Lowest_Distance;
                 PlayerEntity target = TargetUtils.getPlayerTarget(7.0, sortPriority);
 
                 if (target != null) {

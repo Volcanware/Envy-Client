@@ -62,11 +62,11 @@ public class TargetUtils {
 
     private static int sort(Entity e1, Entity e2, SortPriority priority) {
         return switch (priority) {
-            case LowestDistance -> Double.compare(e1.distanceTo(mc.player), e2.distanceTo(mc.player));
-            case HighestDistance -> invertSort(Double.compare(e1.distanceTo(mc.player), e2.distanceTo(mc.player)));
-            case LowestHealth -> sortHealth(e1, e2);
-            case HighestHealth -> invertSort(sortHealth(e1, e2));
-            case ClosestAngle -> sortAngle(e1, e2);
+            case Lowest_Distance -> Double.compare(e1.distanceTo(mc.player), e2.distanceTo(mc.player));
+            case Highest_Distance -> invertSort(Double.compare(e1.distanceTo(mc.player), e2.distanceTo(mc.player)));
+            case Lowest_Health -> sortHealth(e1, e2);
+            case Highest_Health -> invertSort(sortHealth(e1, e2));
+            case Closest_Angle -> sortAngle(e1, e2);
         };
     }
 

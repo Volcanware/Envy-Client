@@ -19,7 +19,7 @@ public class EndermanLook extends Module {
     private final Setting<Mode> lookMode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("look-mode")
         .description("How this module behaves.")
-        .defaultValue(Mode.LookAway)
+        .defaultValue(Mode.Look_Away)
         .build()
     );
 
@@ -28,7 +28,7 @@ public class EndermanLook extends Module {
     }
 
     public void onTick(TickEvent.Pre event) {
-        if (lookMode.get() == Mode.LookAway) {
+        if (lookMode.get() == Mode.Look_Away) {
             if (mc.player.getAbilities().creativeMode || !shouldLook()) return;
 
             Rotations.rotate(mc.player.getYaw(), 90, -75, null);
@@ -67,7 +67,12 @@ public class EndermanLook extends Module {
     }
 
     public enum Mode{
-        LookAt,
-        LookAway
+        Look_At,
+        Look_Away;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

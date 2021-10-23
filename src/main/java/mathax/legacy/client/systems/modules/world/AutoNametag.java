@@ -40,7 +40,7 @@ public class AutoNametag extends Module {
     private final Setting<SortPriority> priority = sgGeneral.add(new EnumSetting.Builder<SortPriority>()
         .name("priority")
         .description("Priority sort.")
-        .defaultValue(SortPriority.LowestDistance)
+        .defaultValue(SortPriority.Lowest_Distance)
         .build()
     );
 

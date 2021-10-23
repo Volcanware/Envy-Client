@@ -64,7 +64,7 @@ public class SelfWeb extends Module {
                 placeWeb();
                 break;
             case Smart:
-                if (TargetUtils.getPlayerTarget(range.get(), SortPriority.LowestDistance) != null) placeWeb();
+                if (TargetUtils.getPlayerTarget(range.get(), SortPriority.Lowest_Distance) != null) placeWeb();
                 break;
         }
     }
