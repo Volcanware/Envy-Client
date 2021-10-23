@@ -149,12 +149,8 @@ public class LongJump extends Module {
                     double xDir = Math.cos(Math.toRadians(dir + 90));
                     double zDir = Math.sin(Math.toRadians(dir + 90));
 
-                    if (!mc.world.isSpaceEmpty(mc.player.getBoundingBox().offset(0.0, mc.player.getVelocity().y, 0.0)) || mc.player.verticalCollision) {
-                        ((IVec3d) event.movement).setXZ(xDir * 0.29F, zDir * 0.29F);
-                    }
-                    if ((event.movement.getY() == .33319999363422365)) {
-                        ((IVec3d) event.movement).setXZ(xDir * vanillaBoostFactor.get(), zDir * vanillaBoostFactor.get());
-                    }
+                    if (!mc.world.isSpaceEmpty(mc.player.getBoundingBox().offset(0.0, mc.player.getVelocity().y, 0.0)) || mc.player.verticalCollision) ((IVec3d) event.movement).setXZ(xDir * 0.29F, zDir * 0.29F);
+                    if ((event.movement.getY() == .33319999363422365)) ((IVec3d) event.movement).setXZ(xDir * vanillaBoostFactor.get(), zDir * vanillaBoostFactor.get());
                 }
             }
             case Burst -> {
@@ -180,13 +176,10 @@ public class LongJump extends Module {
                     else if (stage == 2) {
                         final double difference = lastDist - getMoveSpeed();
                         moveSpeed = lastDist - difference;
-                    }
-                    else moveSpeed = lastDist - lastDist / 159;
+                    } else moveSpeed = lastDist - lastDist / 159;
 
                     setMoveSpeed(event, moveSpeed = Math.max(getMoveSpeed(), moveSpeed));
-                    if (!mc.player.verticalCollision && !mc.world.isSpaceEmpty(mc.player.getBoundingBox().offset(0.0, mc.player.getVelocity().y, 0.0)) && !mc.world.isSpaceEmpty(mc.player.getBoundingBox().offset(0.0, -0.4, 0.0))) {
-                        ((IVec3d) event.movement).setY(-0.001);
-                    }
+                    if (!mc.player.verticalCollision && !mc.world.isSpaceEmpty(mc.player.getBoundingBox().offset(0.0, mc.player.getVelocity().y, 0.0)) && !mc.world.isSpaceEmpty(mc.player.getBoundingBox().offset(0.0, -0.4, 0.0))) ((IVec3d) event.movement).setY(-0.001);
 
                     stage++;
                 }
@@ -220,14 +213,9 @@ public class LongJump extends Module {
                 else if (velocityY < -0.25 && velocityY > -0.32) updateY(velocityY * 0.8 * glideMultiplier.get());
                 else if (velocityY < -0.35 && velocityY > -0.8) updateY(velocityY * 0.98 * glideMultiplier.get());
 
-                if (airTicks - 1 >= 0 && airTicks - 1 < motion.length) {
-                    mc.player.setVelocity((forward * motion[(airTicks - 1)] * 3 * cos) * glideMultiplier.get(), mc.player.getVelocity().y, (forward * motion[(airTicks - 1)] * 3 * sin) * glideMultiplier.get());
-                }
-                else {
-                    mc.player.setVelocity(0, mc.player.getVelocity().y, 0);
-                }
-            }
-            else {
+                if (airTicks - 1 >= 0 && airTicks - 1 < motion.length) mc.player.setVelocity((forward * motion[(airTicks - 1)] * 3 * cos) * glideMultiplier.get(), mc.player.getVelocity().y, (forward * motion[(airTicks - 1)] * 3 * sin) * glideMultiplier.get());
+                else mc.player.setVelocity(0, mc.player.getVelocity().y, 0);
+            } else {
                 if (autoDisable.get() && jumped) {
                     jumped = false;
                     toggle();
@@ -235,12 +223,8 @@ public class LongJump extends Module {
                 }
                 airTicks = 0;
                 groundTicks += 1;
-                if (groundTicks <= 2) {
-                    mc.player.setVelocity(forward * 0.009999999776482582 * cos * glideMultiplier.get(), mc.player.getVelocity().y, forward * 0.009999999776482582 * sin * glideMultiplier.get());
-                }
-                else {
-                    mc.player.setVelocity(forward * 0.30000001192092896  * cos * glideMultiplier.get(), 0.42399999499320984, forward * 0.30000001192092896 * sin * glideMultiplier.get());
-                }
+                if (groundTicks <= 2) mc.player.setVelocity(forward * 0.009999999776482582 * cos * glideMultiplier.get(), mc.player.getVelocity().y, forward * 0.009999999776482582 * sin * glideMultiplier.get());
+                else mc.player.setVelocity(forward * 0.30000001192092896  * cos * glideMultiplier.get(), 0.42399999499320984, forward * 0.30000001192092896 * sin * glideMultiplier.get());
             }
         }
     }
@@ -255,20 +239,16 @@ public class LongJump extends Module {
         if (Utils.canUpdate()) {
             dir = mc.player.getYaw() + ((mc.player.forwardSpeed < 0) ? 180 : 0);
 
-            if (mc.player.sidewaysSpeed > 0) {
-                dir += -90F * ((mc.player.forwardSpeed < 0) ? -0.5F : ((mc.player.forwardSpeed > 0) ? 0.5F : 1F));
-            } else if (mc.player.sidewaysSpeed < 0) {
-                dir += 90F * ((mc.player.forwardSpeed < 0) ? -0.5F : ((mc.player.forwardSpeed > 0) ? 0.5F : 1F));
-            }
+            if (mc.player.sidewaysSpeed > 0) dir += -90F * ((mc.player.forwardSpeed < 0) ? -0.5F : ((mc.player.forwardSpeed > 0) ? 0.5F : 1F));
+            else if (mc.player.sidewaysSpeed < 0) dir += 90F * ((mc.player.forwardSpeed < 0) ? -0.5F : ((mc.player.forwardSpeed > 0) ? 0.5F : 1F));
         }
+
         return dir;
     }
 
     private double getMoveSpeed() {
         double base = 0.2873;
-        if (mc.player.hasStatusEffect(StatusEffects.SPEED)) {
-            base *= 1.0 + 0.2 * (mc.player.getStatusEffect(StatusEffects.SPEED).getAmplifier() + 1);
-        }
+        if (mc.player.hasStatusEffect(StatusEffects.SPEED)) base *= 1.0 + 0.2 * (mc.player.getStatusEffect(StatusEffects.SPEED).getAmplifier() + 1);
         return base;
     }
 
@@ -285,6 +265,7 @@ public class LongJump extends Module {
                 if (strafe > 0) yaw += ((forward > 0) ? -45 : 45);
                 else if (strafe < 0) yaw += ((forward > 0) ? 45 : -45);
             }
+
             strafe = 0;
             if (forward > 0) forward = 1;
             else if (forward < 0) forward = -1;
