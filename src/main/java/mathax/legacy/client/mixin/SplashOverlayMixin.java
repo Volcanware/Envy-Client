@@ -1,12 +1,9 @@
 package mathax.legacy.client.mixin;
 
-import mathax.legacy.client.renderer.Texture;
 import mathax.legacy.client.utils.splash.PreviewSplashOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.texture.AbstractTexture;
-import net.minecraft.client.texture.ResourceTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
