@@ -3,22 +3,23 @@ package mathax.legacy.client.gui.widgets.input;
 import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
 
 public class WIntEdit extends WHorizontalList {
-    public Runnable action;
-    public Runnable actionOnRelease;
-
-    public boolean noSlider;
-    public boolean small;
-
     private int value;
 
+    public final int min, max;
     private final int sliderMin, sliderMax;
-    public Integer min, max;
+    public boolean noSlider = false;
+    public boolean small = false;
+
+    public Runnable action;
+    public Runnable actionOnRelease;
 
     private WTextBox textBox;
     private WSlider slider;
 
-    public WIntEdit(int value, int sliderMin, int sliderMax, boolean noSlider) {
+    public WIntEdit(int value, int min, int max, int sliderMin, int sliderMax, boolean noSlider) {
         this.value = value;
+        this.min = min;
+        this.max = max;
         this.sliderMin = sliderMin;
         this.sliderMax = sliderMax;
 
@@ -40,12 +41,7 @@ public class WIntEdit extends WHorizontalList {
             if (textBox.get().isEmpty()) value = 0;
             else if (textBox.get().equals("-")) value = -0;
             else value = Integer.parseInt(textBox.get());
-            if (min != null && this.min >= 0 && value < 0) value = 0;
 
-            if (min != null && value < min) value = min;
-            else if (max != null && value > max) value = max;
-
-            textBox.set(String.valueOf(value));
             if (slider != null) slider.set(value);
 
             if (value != lastValue) {
@@ -72,11 +68,14 @@ public class WIntEdit extends WHorizontalList {
 
     private boolean filter(String text, char c) {
         boolean good;
+        boolean validate = true;
 
-        if (c == '-' && text.isEmpty()) good = true;
-        else good = Character.isDigit(c);
+        if (c == '-' && text.isEmpty()) {
+            good = true;
+            validate = false;
+        } else good = Character.isDigit(c);
 
-        if (good && (c != '-')) {
+        if (good && validate) {
             try {
                 Integer.parseInt(text + c);
             } catch (NumberFormatException ignored) {
@@ -90,8 +89,8 @@ public class WIntEdit extends WHorizontalList {
     private void setButton(int v) {
         if (this.value == v) return;
 
-        if (min != null && v < min) this.value = min;
-        else if (max != null && v > max) this.value = max;
+        if (v < min) this.value = min;
+        else if (v > max) this.value = max;
         else this.value = v;
 
         if (this.value == v) {

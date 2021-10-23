@@ -1,6 +1,5 @@
 package mathax.legacy.client.systems.modules.combat;
 
-import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import mathax.legacy.client.events.world.TickEvent;
@@ -56,7 +55,7 @@ public class AutoArmor extends Module {
     private final Setting<List<Enchantment>> avoidedEnchantments = sgGeneral.add(new EnchantmentListSetting.Builder()
         .name("avoided-enchantments")
         .description("Enchantments that should be avoided.")
-        .defaultValue(Lists.newArrayList(Enchantments.BINDING_CURSE, Enchantments.FROST_WALKER))
+        .defaultValue(Enchantments.BINDING_CURSE, Enchantments.FROST_WALKER)
         .build()
     );
 

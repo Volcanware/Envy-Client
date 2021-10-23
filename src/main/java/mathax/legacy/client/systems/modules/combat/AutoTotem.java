@@ -67,7 +67,6 @@ public class AutoTotem extends Module {
         .description("The ticks between slot movements.")
         .defaultValue(0)
         .min(0)
-        .sliderMax(10)
         .visible(() -> mode.get() != Mode.Enhanced)
         .build()
     );
@@ -76,7 +75,7 @@ public class AutoTotem extends Module {
         .name("health")
         .description("The health to hold a totem at. (36 to disable)")
         .defaultValue(10)
-        .min(0).max(36)
+        .range(0, 36)
         .sliderMax(36)
         .visible(() -> mode.get() != Mode.Strict)
         .build()

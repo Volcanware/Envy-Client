@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.player.Rotations;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
@@ -25,7 +24,26 @@ public class AutoBreed extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Entities to breed.")
-        .defaultValue(Utils.asO2BMap(EntityType.HORSE, EntityType.DONKEY, EntityType.COW, EntityType.MOOSHROOM, EntityType.SHEEP, EntityType.PIG, EntityType.CHICKEN, EntityType.WOLF, EntityType.CAT, EntityType.OCELOT, EntityType.RABBIT, EntityType.LLAMA, EntityType.TURTLE, EntityType.PANDA, EntityType.FOX, EntityType.BEE, EntityType.STRIDER, EntityType.HOGLIN))
+        .defaultValue(
+            EntityType.HORSE,
+            EntityType.DONKEY,
+            EntityType.COW,
+            EntityType.MOOSHROOM,
+            EntityType.SHEEP,
+            EntityType.PIG,
+            EntityType.CHICKEN,
+            EntityType.WOLF,
+            EntityType.CAT,
+            EntityType.OCELOT,
+            EntityType.RABBIT,
+            EntityType.LLAMA,
+            EntityType.TURTLE,
+            EntityType.PANDA,
+            EntityType.FOX,
+            EntityType.BEE,
+            EntityType.STRIDER,
+            EntityType.HOGLIN
+        )
         .onlyAttackable()
         .build()
     );
@@ -41,7 +59,7 @@ public class AutoBreed extends Module {
     private final Setting<Hand> hand = sgGeneral.add(new EnumSetting.Builder<Hand>()
         .name("hand-for-breeding")
         .description("The hand to use for breeding.")
-        .defaultValue(Hand.MAIN_HAND)
+        .defaultValue(Hand.Mainhand)
         .build()
     );
 
@@ -73,15 +91,26 @@ public class AutoBreed extends Module {
                     || (animal.isBaby() && !ignoreBabies.get())
                     || animalsFed.contains(animal)
                     || mc.player.distanceTo(animal) > range.get()
-                    || !animal.isBreedingItem(hand.get() == Hand.MAIN_HAND ? mc.player.getMainHandStack() : mc.player.getOffHandStack())) continue;
+                    || !animal.isBreedingItem(hand.get() == Hand.Mainhand ? mc.player.getMainHandStack() : mc.player.getOffHandStack())) continue;
 
             Rotations.rotate(Rotations.getYaw(entity), Rotations.getPitch(entity), -100, () -> {
-                mc.interactionManager.interactEntity(mc.player, animal, hand.get());
-                mc.player.swingHand(hand.get());
+                mc.interactionManager.interactEntity(mc.player, animal, hand.get().hand);
+                mc.player.swingHand(hand.get().hand);
                 animalsFed.add(animal);
             });
 
             return;
+        }
+    }
+
+    public enum Hand {
+        Mainhand(net.minecraft.util.Hand.MAIN_HAND),
+        Offhand(net.minecraft.util.Hand.OFF_HAND);
+
+        net.minecraft.util.Hand hand;
+
+        Hand(net.minecraft.util.Hand hand) {
+            this.hand = hand;
         }
     }
 }

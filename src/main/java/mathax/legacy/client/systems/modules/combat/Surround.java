@@ -23,7 +23,6 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -113,7 +112,7 @@ public class Surround extends Module {
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
         .name("block")
         .description("What blocks to use for surround.")
-        .defaultValue(Collections.singletonList(Blocks.OBSIDIAN))
+        .defaultValue(Blocks.OBSIDIAN)
         .filter(this::blockFilter)
         .build()
     );

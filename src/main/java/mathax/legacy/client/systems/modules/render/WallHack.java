@@ -9,7 +9,6 @@ import mathax.legacy.client.settings.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Items;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WallHack extends Module {
@@ -18,9 +17,8 @@ public class WallHack extends Module {
     public final Setting<Integer> opacity = sgGeneral.add(new IntSetting.Builder()
         .name("opacity")
         .description("The opacity for rendered blocks.")
-        .defaultValue(100)
-        .min(1)
-        .max(255)
+        .defaultValue(1)
+        .range(1, 255)
         .sliderMax(255)
         .onChanged(onChanged -> {
             if (this.isActive()) {
@@ -33,11 +31,9 @@ public class WallHack extends Module {
     public final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
         .name("blocks")
         .description("What blocks should be targeted for Wall Hack.")
-        .defaultValue(new ArrayList<>())
+        .defaultValue()
         .onChanged(onChanged -> {
-            if (this.isActive()) {
-                mc.worldRenderer.reload();
-            }
+            if (isActive()) mc.worldRenderer.reload();
         })
         .build()
     );

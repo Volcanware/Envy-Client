@@ -20,7 +20,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Xray extends Module {
@@ -29,7 +28,27 @@ public class Xray extends Module {
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
         .name("whitelist")
         .description("Which blocks to show x-rayed.")
-        .defaultValue(Arrays.asList(Blocks.COAL_ORE, Blocks.DEEPSLATE_COAL_ORE, Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE, Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.LAPIS_ORE, Blocks.DEEPSLATE_LAPIS_ORE, Blocks.REDSTONE_ORE, Blocks.DEEPSLATE_REDSTONE_ORE, Blocks.DIAMOND_ORE, Blocks.DEEPSLATE_DIAMOND_ORE, Blocks.EMERALD_ORE, Blocks.DEEPSLATE_EMERALD_ORE, Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE, Blocks.NETHER_GOLD_ORE, Blocks.NETHER_QUARTZ_ORE, Blocks.ANCIENT_DEBRIS))
+        .defaultValue(
+            Blocks.COAL_ORE,
+            Blocks.DEEPSLATE_COAL_ORE,
+            Blocks.IRON_ORE,
+            Blocks.DEEPSLATE_IRON_ORE,
+            Blocks.GOLD_ORE,
+            Blocks.DEEPSLATE_GOLD_ORE,
+            Blocks.LAPIS_ORE,
+            Blocks.DEEPSLATE_LAPIS_ORE,
+            Blocks.REDSTONE_ORE,
+            Blocks.DEEPSLATE_REDSTONE_ORE,
+            Blocks.DIAMOND_ORE,
+            Blocks.DEEPSLATE_DIAMOND_ORE,
+            Blocks.EMERALD_ORE,
+            Blocks.DEEPSLATE_EMERALD_ORE,
+            Blocks.COPPER_ORE,
+            Blocks.DEEPSLATE_COPPER_ORE,
+            Blocks.NETHER_GOLD_ORE,
+            Blocks.NETHER_QUARTZ_ORE,
+            Blocks.ANCIENT_DEBRIS
+        )
         .onChanged(v -> {
             if (isActive()) mc.worldRenderer.reload();
         })
@@ -40,13 +59,10 @@ public class Xray extends Module {
         .name("opacity")
         .description("The opacity for all other blocks.")
         .defaultValue(100)
-        .min(1)
-        .max(255)
+        .range(1, 255)
         .sliderMax(255)
         .onChanged(onChanged -> {
-            if (this.isActive()) {
-                mc.worldRenderer.reload();
-            }
+            if (isActive()) mc.worldRenderer.reload();
         })
         .build()
     );

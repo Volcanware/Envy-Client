@@ -376,9 +376,9 @@ public class Modules extends System<Modules> {
         add(new BowAimbot());
         add(new BowSpam());
         add(new Burrow());
+        add(new CEVBreaker());
         add(new Criticals());
         add(new CrystalAura());
-        //add(new CEVBreaker());
         add(new Hitboxes());
         add(new HoleFiller());
         add(new InstaAutoCity());
@@ -441,6 +441,7 @@ public class Modules extends System<Modules> {
         add(new GUIMove());
         add(new HighJump());
         add(new Jesus());
+        add(new LongJump());
         add(new NoFall());
         add(new NoSlow());
         add(new PacketFly());
@@ -506,8 +507,6 @@ public class Modules extends System<Modules> {
     }
 
     private void initWorld() {
-        add(new CEVBreaker());
-
         add(new AirPlace());
         add(new Ambience());
         add(new AntiCactus());

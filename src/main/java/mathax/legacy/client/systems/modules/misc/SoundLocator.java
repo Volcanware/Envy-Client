@@ -16,7 +16,6 @@ import net.minecraft.text.MutableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SoundLocator extends Module {
@@ -26,7 +25,6 @@ public class SoundLocator extends Module {
     private final Setting<List<SoundEvent>> sounds = sgGeneral.add(new SoundEventListSetting.Builder()
         .name("sounds")
         .description("Sounds to find.")
-        .defaultValue(new ArrayList<>(0))
         .build()
     );
 

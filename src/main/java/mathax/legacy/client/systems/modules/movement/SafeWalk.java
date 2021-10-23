@@ -29,7 +29,6 @@ public class SafeWalk extends Module {
         .name("blocks")
         .description("Which blocks to prevent on walking")
         .filter(this::blockFilter)
-        .defaultValue(List.of())
         .build()
     );
 

@@ -9,7 +9,6 @@ import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.misc.Vec3;
 import mathax.legacy.client.utils.player.PlayerUtils;
@@ -61,7 +60,7 @@ public class ESP extends Module {
         .description("The opacity of the shape fill.")
         .visible(() -> shapeMode.get() != ShapeMode.Lines)
         .defaultValue(80)
-        .min(0).max(255)
+        .range(0, 255)
         .sliderMax(255)
         .build()
     );
@@ -69,12 +68,10 @@ public class ESP extends Module {
     public final Setting<Integer> outlineWidth = sgGeneral.add(new IntSetting.Builder()
         .name("width")
         .description("The width of the shader outline.")
-        .defaultValue(2)
-        .min(1)
-        .max(10)
-        .sliderMin(1)
-        .sliderMax(5)
         .visible(() -> mode.get() == Mode.Shader)
+        .defaultValue(2)
+        .range(1, 10)
+        .sliderRange(1, 5)
         .build()
     );
 
@@ -90,7 +87,7 @@ public class ESP extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Select specific entities.")
-        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
+        .defaultValue(EntityType.PLAYER)
         .build()
     );
 

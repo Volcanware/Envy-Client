@@ -14,7 +14,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AutoReplenish extends Module {
@@ -28,8 +27,7 @@ public class AutoReplenish extends Module {
         .name("threshold")
         .description("The threshold of items left this actives at.")
         .defaultValue(8)
-        .min(1)
-        .sliderMax(63)
+        .sliderRange(1, 63)
         .build()
     );
 
@@ -38,7 +36,6 @@ public class AutoReplenish extends Module {
         .description("The tick delay to replenish your hotbar.")
         .defaultValue(1)
         .min(0)
-        .sliderMax(10)
         .build()
     );
 
@@ -66,11 +63,10 @@ public class AutoReplenish extends Module {
     private final Setting<List<Item>> excludedItems = sgGeneral.add(new ItemListSetting.Builder()
         .name("excluded-items")
         .description("Items that WILL NOT replenish.")
-        .defaultValue(new ArrayList<>())
         .build()
     );
 
-    public AutoReplenish(){
+    public AutoReplenish() {
         super(Categories.Player, Items.CHEST, "auto-replenish", "Automatically refills items in your hotbar, main hand, or offhand.");
 
         for (int i = 0; i < items.length; i++) items[i] = new ItemStack(Items.AIR);

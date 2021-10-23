@@ -27,7 +27,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class HoleFiller extends Module {
@@ -43,7 +42,7 @@ public class HoleFiller extends Module {
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
         .name("blocks")
         .description("Which blocks can be used to fill holes.")
-        .defaultValue(Collections.singletonList(Blocks.OBSIDIAN))
+        .defaultValue(Blocks.OBSIDIAN)
         .build()
     );
 
@@ -78,7 +77,6 @@ public class HoleFiller extends Module {
         .description("The ticks delay between placement.")
         .defaultValue(1)
         .min(0)
-        .sliderMax(10)
         .build()
     );
 

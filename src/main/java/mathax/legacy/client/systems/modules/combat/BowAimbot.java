@@ -2,7 +2,6 @@ package mathax.legacy.client.systems.modules.combat;
 
 import baritone.api.BaritoneAPI;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
-import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
@@ -37,8 +36,7 @@ public class BowAimbot extends Module {
         .name("range")
         .description("The maximum range the entity can be to aim at it.")
         .defaultValue(20)
-        .min(0)
-        .max(100)
+        .range(0, 100)
         .sliderMax(100)
         .build()
     );
@@ -46,7 +44,6 @@ public class BowAimbot extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Entities to attack.")
-        .defaultValue(new Object2BooleanOpenHashMap<>(0))
         .onlyAttackable()
         .build()
     );

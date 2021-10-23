@@ -20,7 +20,6 @@ public class ReverseStep extends Module {
         .description("How fast to fall in blocks per second.")
         .defaultValue(3)
         .min(0)
-        .sliderMax(10)
         .build()
     );
 
@@ -29,7 +28,6 @@ public class ReverseStep extends Module {
         .description("The maximum fall distance this setting will activate at.")
         .defaultValue(3)
         .min(0)
-        .sliderMax(10)
         .build()
     );
 

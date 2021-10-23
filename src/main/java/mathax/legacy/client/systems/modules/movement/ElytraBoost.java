@@ -34,8 +34,8 @@ public class ElytraBoost extends Module {
         .name("firework-duration")
         .description("The duration of the firework.")
         .defaultValue(0)
-        .min(0)
-        .max(255)
+        .range(0, 255)
+        .sliderMax(255)
         .build()
     );
 
@@ -46,7 +46,7 @@ public class ElytraBoost extends Module {
         .build()
     );
 
-    private final Setting<KeyBind> keybind = sgGeneral.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> keybind = sgGeneral.add(new KeyBindSetting.Builder()
         .name("keybind")
         .description("The keybind to boost.")
         .action(this::boost)
@@ -82,6 +82,7 @@ public class ElytraBoost extends Module {
 
     private void boost() {
         if (!Utils.canUpdate()) return;
+
         if (mc.player.isFallFlying() && mc.currentScreen == null) {
             ItemStack itemStack = Items.FIREWORK_ROCKET.getDefaultStack();
             itemStack.getOrCreateSubNbt("Fireworks").putByte("Flight", fireworkLevel.get().byteValue());

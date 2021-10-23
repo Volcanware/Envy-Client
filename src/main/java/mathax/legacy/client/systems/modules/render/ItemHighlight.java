@@ -12,7 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemHighlight extends Module {
@@ -21,7 +20,6 @@ public class ItemHighlight extends Module {
     private final Setting<List<Item>> items = sgGeneral.add(new ItemListSetting.Builder()
         .name("items")
         .description("Items to highlight.")
-        .defaultValue(new ArrayList<>())
         .build()
     );
 

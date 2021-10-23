@@ -44,7 +44,6 @@ public class Scaffold extends Module {
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
         .name("blocks")
         .description("Selected blocks.")
-        .defaultValue(new ArrayList<>())
         .build()
     );
 

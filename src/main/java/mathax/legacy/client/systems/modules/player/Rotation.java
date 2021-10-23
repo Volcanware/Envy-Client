@@ -45,10 +45,8 @@ public class Rotation extends Module {
         .name("pitch-angle")
         .description("Pitch angle in degrees.")
         .defaultValue(0)
-        .min(-90)
-        .max(90)
-        .sliderMin(-90)
-        .sliderMax(90)
+        .range(-90, 90)
+        .sliderRange(-90, 90)
         .build()
     );
 

@@ -17,7 +17,6 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.AbstractFurnaceScreenHandler;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +28,10 @@ public class AutoSmelter extends Module {
     private final Setting<List<Item>> fuelItems = sgGeneral.add(new ItemListSetting.Builder()
         .name("fuel-items")
         .description("Items to use as fuel")
-        .defaultValue(Arrays.asList(Items.COAL, Items.CHARCOAL))
+        .defaultValue(
+            Items.COAL,
+            Items.CHARCOAL
+        )
         .filter(this::fuelItemFilter)
         .bypassFilterWhenSavingAndLoading()
         .build()
@@ -38,7 +40,14 @@ public class AutoSmelter extends Module {
     private final Setting<List<Item>> smeltableItems = sgGeneral.add(new ItemListSetting.Builder()
         .name("smeltable-items")
         .description("Items to smelt")
-        .defaultValue(Arrays.asList(Items.IRON_ORE, Items.GOLD_ORE, Items.COPPER_ORE, Items.RAW_IRON, Items.RAW_COPPER, Items.RAW_GOLD))
+        .defaultValue(
+            Items.IRON_ORE,
+            Items.GOLD_ORE,
+            Items.COPPER_ORE,
+            Items.RAW_IRON,
+            Items.RAW_COPPER,
+            Items.RAW_GOLD
+        )
         .filter(this::smeltableItemFilter)
         .bypassFilterWhenSavingAndLoading()
         .build()

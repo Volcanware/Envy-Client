@@ -15,7 +15,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AutoMend extends Module {
@@ -26,7 +25,6 @@ public class AutoMend extends Module {
     private final Setting<List<Item>> blacklist = sgGeneral.add(new ItemListSetting.Builder()
         .name("blacklist")
         .description("Item blacklist.")
-        .defaultValue(new ArrayList<>(0))
         .filter(Item::isDamageable)
         .build()
     );

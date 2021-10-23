@@ -39,7 +39,7 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
         factories.put(ProvidedStringSetting.class, (table, setting) -> providedStringW(table, (ProvidedStringSetting) setting));
         factories.put(GenericSetting.class, (table, setting) -> genericW(table, (GenericSetting<?>) setting));
         factories.put(ColorSetting.class, (table, setting) -> colorW(table, (ColorSetting) setting));
-        factories.put(KeybindSetting.class, (table, setting) -> keybindW(table, (KeybindSetting) setting));
+        factories.put(KeyBindSetting.class, (table, setting) -> keybindW(table, (KeyBindSetting) setting));
         factories.put(BlockSetting.class, (table, setting) -> blockW(table, (BlockSetting) setting));
         factories.put(BlockListSetting.class, (table, setting) -> blockListW(table, (BlockListSetting) setting));
         factories.put(ItemSetting.class, (table, setting) -> itemW(table, (ItemSetting) setting));
@@ -147,9 +147,7 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
     }
 
     private void intW(WTable table, IntSetting setting) {
-        WIntEdit edit = table.add(theme.intEdit(setting.get(), setting.getSliderMin(), setting.getSliderMax(), setting.noSlider)).expandX().widget();
-        edit.min = setting.min;
-        edit.max = setting.max;
+        WIntEdit edit = table.add(theme.intEdit(setting.get(), setting.min, setting.max, setting.sliderMin, setting.sliderMax, setting.noSlider)).expandX().widget();
 
         edit.actionOnRelease = () -> {
             if (!setting.set(edit.get())) edit.set(setting.get());
@@ -159,11 +157,7 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
     }
 
     private void doubleW(WTable table, DoubleSetting setting) {
-        WDoubleEdit edit = theme.doubleEdit(setting.get(), setting.getSliderMin(), setting.getSliderMax(), setting.noSlider);
-        edit.min = setting.min;
-        edit.max = setting.max;
-        edit.decimalPlaces = setting.decimalPlaces;
-
+        WDoubleEdit edit = theme.doubleEdit(setting.get(), setting.min, setting.max, setting.sliderMin, setting.sliderMax, setting.decimalPlaces, setting.noSlider);
         table.add(edit).expandX();
 
         Runnable action = () -> {
@@ -220,8 +214,8 @@ public class DefaultSettingsWidgetFactory implements SettingsWidgetFactory {
         reset(table, setting, () -> quad.color = setting.get());
     }
 
-    private void keybindW(WTable table, KeybindSetting setting) {
-        WKeybind keybind = table.add(theme.keybind(setting.get(), setting.getDefaultValue())).expandX().widget();
+    private void keybindW(WTable table, KeyBindSetting setting) {
+        WKeyBind keybind = table.add(theme.keybind(setting.get(), setting.getDefaultValue())).expandX().widget();
         keybind.action = setting::changed;
         setting.widget = keybind;
     }

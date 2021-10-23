@@ -1,16 +1,17 @@
 package mathax.legacy.client.systems.modules.player;
 
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.settings.BoolSetting;
-import mathax.legacy.client.settings.EnumSetting;
-import mathax.legacy.client.settings.Setting;
-import mathax.legacy.client.settings.SettingGroup;
+import mathax.legacy.client.settings.*;
 import mathax.legacy.client.mixin.MinecraftClientAccessor;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+
+import java.util.List;
 
 public class FastUse extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -22,36 +23,47 @@ public class FastUse extends Module {
         .build()
     );
 
-    private final Setting<Boolean> exp = sgGeneral.add(new BoolSetting.Builder()
-        .name("XP")
-        .description("Fast-throws XP bottles if the mode is \"Some\".")
-        .defaultValue(false)
+    private final Setting<List<Item>> items = sgGeneral.add(new ItemListSetting.Builder()
+        .name("items")
+        .description("Which items should fast place work on in \"Some\" mode.")
+        .visible(() -> mode.get() == Mode.Some)
         .build()
     );
 
     private final Setting<Boolean> blocks = sgGeneral.add(new BoolSetting.Builder()
         .name("blocks")
-        .description("Fast-places blocks if the mode is \"Some\".")
+        .description("Fast-places blocks if the mode is \"Some\" mode.")
+        .visible(() -> mode.get() == Mode.Some)
         .defaultValue(false)
         .build()
     );
 
+    private final Setting<Integer> cooldown = sgGeneral.add(new IntSetting.Builder()
+        .name("cooldown")
+        .description("Fast-use cooldown in ticks.")
+        .defaultValue(0)
+        .min(0)
+        .sliderMax(4)
+        .build()
+    );
+
     public FastUse() {
-        super(Categories.Player, Items.PLAYER_HEAD, "fast-use", "Allows you to use items at very high speeds.");
+        super(Categories.Player, Items.STICK, "fast-use", "Allows you to use items at very high speeds.");
     }
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        switch (mode.get()) {
-            case All:
-                ((MinecraftClientAccessor) mc).setItemUseCooldown(0);
-                break;
-            case Some:
-                if ((exp.get() && (mc.player.getMainHandStack().getItem() == Items.EXPERIENCE_BOTTLE || mc.player.getOffHandStack().getItem() == Items.EXPERIENCE_BOTTLE))
-                        || (blocks.get() && (mc.player.getMainHandStack().getItem() instanceof BlockItem || mc.player.getOffHandStack().getItem() instanceof BlockItem)))
-                    ((MinecraftClientAccessor) mc).setItemUseCooldown(0);
-                break;
-        }
+        int cooldownTicks = Math.min(((MinecraftClientAccessor) mc).getItemUseCooldown(), cooldown.get());
+        if (mode.get() == Mode.All || shouldWorkSome()) ((MinecraftClientAccessor) mc).setItemUseCooldown(cooldownTicks);
+    }
+
+    private boolean shouldWorkSome() {
+        if (shouldWorkSome(mc.player.getMainHandStack())) return true;
+        return shouldWorkSome(mc.player.getOffHandStack());
+    }
+
+    private boolean shouldWorkSome(ItemStack itemStack) {
+        return (blocks.get() && itemStack.getItem() instanceof BlockItem) || items.get().contains(itemStack.getItem());
     }
 
     public enum Mode {

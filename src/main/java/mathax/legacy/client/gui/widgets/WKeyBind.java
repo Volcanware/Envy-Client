@@ -5,7 +5,7 @@ import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
 import mathax.legacy.client.utils.misc.KeyBind;
 
-public class WKeybind extends WHorizontalList {
+public class WKeyBind extends WHorizontalList {
     public Runnable action;
     public Runnable actionOnSet;
 
@@ -15,7 +15,7 @@ public class WKeybind extends WHorizontalList {
     private final KeyBind defaultValue;
     private boolean listening;
 
-    public WKeybind(KeyBind keybind, KeyBind defaultValue) {
+    public WKeyBind(KeyBind keybind, KeyBind defaultValue) {
         this.keybind = keybind;
         this.defaultValue = defaultValue;
     }

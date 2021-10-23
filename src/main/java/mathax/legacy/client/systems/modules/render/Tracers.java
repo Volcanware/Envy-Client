@@ -6,7 +6,6 @@ import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.Target;
 import mathax.legacy.client.utils.player.PlayerUtils;
@@ -35,7 +34,7 @@ public class Tracers extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Select specific entities.")
-        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
+        .defaultValue(EntityType.PLAYER)
         .build()
     );
 

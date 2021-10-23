@@ -11,8 +11,8 @@ import mathax.legacy.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
+import net.minecraft.particle.ParticleTypes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Trail extends Module {
@@ -21,7 +21,7 @@ public class Trail extends Module {
     private final Setting<List<ParticleType<?>>> particles = sgGeneral.add(new ParticleTypeListSetting.Builder()
         .name("particles")
         .description("Particles to draw.")
-        .defaultValue(new ArrayList<>(0))
+        .defaultValue(ParticleTypes.DRIPPING_OBSIDIAN_TEAR, ParticleTypes.CAMPFIRE_COSY_SMOKE)
         .build()
     );
 
@@ -38,7 +38,7 @@ public class Trail extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        if (pause.get() && mc.player.input.movementForward == 0f && mc.player.input.movementSideways == 0f && !mc.options.keyJump.isPressed()) return;
+        if (pause.get() && mc.player.getVelocity().x == 0 && mc.player.getVelocity().y == 0 && mc.player.getVelocity().z == 0) return;
         for (ParticleType<?> particleType : particles.get()) {
             mc.world.addParticle((ParticleEffect) particleType, mc.player.getX(), mc.player.getY(), mc.player.getZ(), 0, 0, 0);
         }

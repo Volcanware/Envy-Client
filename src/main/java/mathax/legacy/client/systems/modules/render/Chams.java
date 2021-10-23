@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.settings.*;
 import net.minecraft.entity.Entity;
@@ -21,10 +20,11 @@ public class Chams extends Module {
     private final SettingGroup sgHand = settings.createGroup("Hand");
 
     // Through walls
+
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgThroughWalls.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Select entities to show through walls.")
-        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
+        .defaultValue(EntityType.PLAYER)
         .build()
     );
 

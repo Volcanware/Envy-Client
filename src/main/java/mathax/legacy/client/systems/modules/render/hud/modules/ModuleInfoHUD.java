@@ -9,7 +9,6 @@ import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.settings.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ModuleInfoHUD extends HUDElement {
@@ -20,7 +19,13 @@ public class ModuleInfoHUD extends HUDElement {
     private final Setting<List<Module>> modules = sgGeneral.add(new ModuleListSetting.Builder()
         .name("modules")
         .description("Which modules to display")
-        .defaultValue(getDefaultModules())
+        .defaultValue(
+            KillAura.class,
+            CrystalAura.class,
+            AnchorAura.class,
+            BedAura.class,
+            Surround.class
+        )
         .build()
     );
 
@@ -105,15 +110,5 @@ public class ModuleInfoHUD extends HUDElement {
         if (module.getInfoString() != null && module.isActive() && info.get()) return module.getInfoString();
         else if (module.isActive()) return "ON";
         else return "OFF";
-    }
-
-    private static List<Module> getDefaultModules() {
-        List<Module> modules = new ArrayList<>(5);
-        modules.add(Modules.get().get(KillAura.class));
-        modules.add(Modules.get().get(CrystalAura.class));
-        modules.add(Modules.get().get(AnchorAura.class));
-        modules.add(Modules.get().get(BedAura.class));
-        modules.add(Modules.get().get(Surround.class));
-        return modules;
     }
 }

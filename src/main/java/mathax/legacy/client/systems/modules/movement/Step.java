@@ -17,6 +17,7 @@ import java.util.Optional;
 
 public class Step extends Module {
     private float prevStepHeight;
+    private boolean prevBaritoneAssumeStep;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -46,8 +47,8 @@ public class Step extends Module {
         .name("step-health")
         .description("The health you stop being able to step at.")
         .defaultValue(5)
-        .min(1)
-        .max(36)
+        .range(1, 36)
+        .sliderRange(1, 36)
         .visible(safeStep::get)
         .build()
     );
@@ -58,8 +59,8 @@ public class Step extends Module {
 
     @Override
     public void onActivate() {
-        assert mc.player != null;
         prevStepHeight = mc.player.stepHeight;
+        prevBaritoneAssumeStep = BaritoneAPI.getSettings().assumeStep.value;
 
         BaritoneAPI.getSettings().assumeStep.value = true;
     }
@@ -75,19 +76,15 @@ public class Step extends Module {
 
     @Override
     public void onDeactivate() {
-        if (mc.player != null) mc.player.stepHeight = prevStepHeight;
-
-        BaritoneAPI.getSettings().assumeStep.value = false;
+        mc.player.stepHeight = prevStepHeight;
+        BaritoneAPI.getSettings().assumeStep.value = prevBaritoneAssumeStep;
     }
 
     private float getHealth(){
-        assert mc.player != null;
         return mc.player.getHealth() + mc.player.getAbsorptionAmount();
     }
 
     private double getExplosionDamage(){
-        assert mc.player != null;
-        assert mc.world != null;
         Optional<EndCrystalEntity> crystal = Streams.stream(mc.world.getEntities()).filter(entity -> entity instanceof EndCrystalEntity).filter(Entity::isAlive).max(Comparator.comparingDouble(o -> DamageUtils.crystalDamage(mc.player, o.getPos()))).map(entity -> (EndCrystalEntity) entity);
         return crystal.map(endCrystalEntity -> DamageUtils.crystalDamage(mc.player, endCrystalEntity.getPos())).orElse(0.0);
     }

@@ -7,7 +7,6 @@ import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.SortPriority;
 import mathax.legacy.client.utils.entity.Target;
@@ -91,9 +90,7 @@ public class KillAura extends Module {
         .name("hit-chance")
         .description("The probability of your hits landing.")
         .defaultValue(100)
-        .min(0)
-        .max(100)
-        .sliderMax(100)
+        .range(0, 100)
         .build()
     );
 
@@ -109,7 +106,7 @@ public class KillAura extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgTargeting.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Entities to attack.")
-        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
+        .defaultValue(EntityType.PLAYER)
         .onlyAttackable()
         .build()
     );
@@ -144,7 +141,7 @@ public class KillAura extends Module {
         .description("How many entities to target at once.")
         .defaultValue(1)
         .min(1)
-        .sliderMin(1).sliderMax(5)
+        .sliderRange(1, 5)
         .build()
     );
 
@@ -204,7 +201,6 @@ public class KillAura extends Module {
         .description("How many ticks to wait before hitting an entity after switching hotbar slots.")
         .defaultValue(0)
         .min(0)
-        .sliderMax(10)
         .build()
     );
 

@@ -33,6 +33,7 @@ public class Flight extends Module {
         .min(0.0)
         .build()
     );
+
     private final Setting<Boolean> verticalSpeedMatch = sgGeneral.add(new BoolSetting.Builder()
         .name("vertical-speed-match")
         .description("Matches your vertical speed to your horizontal speed, otherwise uses vanilla ratio.")
@@ -53,8 +54,7 @@ public class Flight extends Module {
         .name("delay")
         .description("The amount of delay, in ticks, between toggles in normal mode.")
         .defaultValue(80)
-        .min(1)
-        .max(5000)
+        .range(1, 5000)
         .sliderMax(200)
         .visible(() -> antiKickMode.get() == AntiKickMode.Normal)
         .build()
@@ -64,9 +64,7 @@ public class Flight extends Module {
         .name("off-time")
         .description("The amount of delay, in ticks, that Flight is toggled off for in normal mode.")
         .defaultValue(5)
-        .min(1)
-        .max(20)
-        .sliderMax(10)
+        .range(1, 20)
         .visible(() -> antiKickMode.get() == AntiKickMode.Normal)
         .build()
     );

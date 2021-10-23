@@ -12,7 +12,6 @@ import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerEntity;
 import mathax.legacy.client.utils.player.ArmorUtils;
 import mathax.legacy.client.utils.player.ChatUtils;
@@ -108,7 +107,7 @@ public class Notifier extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgVisualRange.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Which entities to notify about.")
-        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
+        .defaultValue(EntityType.PLAYER)
         .build()
     );
 

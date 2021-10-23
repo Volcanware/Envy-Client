@@ -28,7 +28,7 @@ public class InventoryViewerHUD extends HUDElement {
         .description("The scale.")
         .defaultValue(2)
         .min(1)
-        .sliderMin(1).sliderMax(5)
+        .sliderRange(1, 5)
         .build()
     );
 

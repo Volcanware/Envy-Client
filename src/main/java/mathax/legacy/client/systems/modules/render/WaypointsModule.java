@@ -49,11 +49,10 @@ public class WaypointsModule extends Module {
 
     private final Setting<Integer> maxDeathPositions = sgDeathPosition.add(new IntSetting.Builder()
         .name("max-death-positions")
-        .description("The amount of death positions to save, 0 to disable.")
+        .description("The amount of death positions to save, 0 to disable")
+        .defaultValue(1)
         .min(0)
-        .sliderMin(0)
         .sliderMax(20)
-        .defaultValue(0)
         .onChanged(this::cleanDeathWPs)
         .build()
     );
@@ -261,7 +260,7 @@ public class WaypointsModule extends Module {
 
             // X
             table.add(theme.label("X:"));
-            WIntEdit x = theme.intEdit(waypoint.x, 0, 0);
+            WIntEdit x = theme.intEdit(waypoint.x, 0, Integer.MAX_VALUE, true);
             x.noSlider = false;
             x.action = () -> waypoint.x = x.get();
             table.add(x).expandX();
@@ -269,7 +268,7 @@ public class WaypointsModule extends Module {
 
             // Y
             table.add(theme.label("Y:"));
-            WIntEdit y = theme.intEdit(waypoint.y, 0, 0);
+            WIntEdit y = theme.intEdit(waypoint.y, 0, Integer.MAX_VALUE, true);
             y.noSlider = false;
             y.actionOnRelease = () -> {
                 if (y.get() < 0) y.set(0);
@@ -282,7 +281,7 @@ public class WaypointsModule extends Module {
 
             // Z
             table.add(theme.label("Z:"));
-            WIntEdit z = theme.intEdit(waypoint.z, 0, 0);
+            WIntEdit z = theme.intEdit(waypoint.z, 0, Integer.MAX_VALUE, true);
             z.action = () -> waypoint.z = z.get();
             table.add(z).expandX();
             table.row();
@@ -298,13 +297,13 @@ public class WaypointsModule extends Module {
 
             // Max visible distance
             table.add(theme.label("Max Visible Distance"));
-            WIntEdit maxVisibleDist = table.add(theme.intEdit(waypoint.maxVisibleDistance, 0, 10000)).expandX().widget();
+            WIntEdit maxVisibleDist = table.add(theme.intEdit(waypoint.maxVisibleDistance, 0, Integer.MAX_VALUE, 0, 10000)).expandX().widget();
             maxVisibleDist.action = () -> waypoint.maxVisibleDistance = maxVisibleDist.get();
             table.row();
 
             // Scale
             table.add(theme.label("Scale:"));
-            WDoubleEdit scale = table.add(theme.doubleEdit(waypoint.scale, 0, 4)).expandX().widget();
+            WDoubleEdit scale = table.add(theme.doubleEdit(waypoint.scale, 0, 4, 0, 4)).expandX().widget();
             scale.action = () -> waypoint.scale = scale.get();
 
             table.add(theme.horizontalSeparator()).expandX();

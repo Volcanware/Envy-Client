@@ -70,7 +70,7 @@ public class ActiveModulesHUD extends HUDElement {
         .description("Outline width")
         .defaultValue(4)
         .min(1)
-        .sliderMin(1).sliderMax(10)
+        .sliderMin(1)
         .visible(outlines::get)
         .build()
     );

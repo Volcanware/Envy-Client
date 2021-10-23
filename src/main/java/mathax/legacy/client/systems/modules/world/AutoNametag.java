@@ -1,7 +1,6 @@
 package mathax.legacy.client.systems.modules.world;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
-import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
@@ -24,7 +23,6 @@ public class AutoNametag extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Which entities to nametag.")
-        .defaultValue(new Object2BooleanOpenHashMap<>(0))
         .build()
     );
 

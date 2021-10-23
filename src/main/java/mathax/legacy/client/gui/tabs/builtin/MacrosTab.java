@@ -10,7 +10,7 @@ import mathax.legacy.client.gui.renderer.GuiRenderer;
 import mathax.legacy.client.gui.tabs.Tab;
 import mathax.legacy.client.gui.tabs.TabScreen;
 import mathax.legacy.client.gui.tabs.WindowTabScreen;
-import mathax.legacy.client.gui.widgets.WKeybind;
+import mathax.legacy.client.gui.widgets.WKeyBind;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.input.WTextBox;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
@@ -95,7 +95,7 @@ public class MacrosTab extends Tab {
 
         private final Macro macro;
 
-        private WKeybind keybind;
+        private WKeyBind keybind;
         private boolean binding;
 
         public MacroEditorScreen(GuiTheme theme, Macro m) {

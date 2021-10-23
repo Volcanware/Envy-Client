@@ -99,7 +99,7 @@ public class BedAura extends Module {
         .name("min-damage")
         .description("The minimum damage to inflict on your target.")
         .defaultValue(7)
-        .min(0).max(36)
+        .range(0, 36)
         .sliderMax(36)
         .build()
     );
@@ -108,7 +108,7 @@ public class BedAura extends Module {
         .name("max-self-damage")
         .description("The maximum damage to inflict on yourself.")
         .defaultValue(7)
-        .min(0).max(36)
+        .range(0, 36)
         .sliderMax(36)
         .build()
     );
@@ -133,8 +133,8 @@ public class BedAura extends Module {
         .name("auto-move-slot")
         .description("The slot auto move moves beds to.")
         .defaultValue(9)
-        .min(1).max(9)
-        .sliderMin(1).sliderMax(9)
+        .range(1, 9)
+        .sliderRange(1, 9)
         .visible(autoMove::get)
         .build()
     );

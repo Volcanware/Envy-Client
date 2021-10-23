@@ -31,8 +31,7 @@ public class Anchor extends Module {
         .name("max-height")
         .description("The maximum height Anchor will work at.")
         .defaultValue(10)
-        .min(0)
-        .max(255)
+        .range(0, 255)
         .sliderMax(20)
         .build()
     );
@@ -40,11 +39,9 @@ public class Anchor extends Module {
     private final Setting<Integer> minPitch = sgGeneral.add(new IntSetting.Builder()
         .name("min-pitch")
         .description("The minimum pitch at which anchor will work.")
-        .defaultValue(-90)
-        .min(-90)
-        .max(90)
-        .sliderMin(-90)
-        .sliderMax(90)
+        .defaultValue(0)
+        .range(-90, 90)
+        .sliderRange(-90, 90)
         .build()
     );
 

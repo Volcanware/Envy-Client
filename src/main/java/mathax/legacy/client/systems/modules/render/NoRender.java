@@ -1,7 +1,6 @@
 package mathax.legacy.client.systems.modules.render;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
-import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import mathax.legacy.client.events.world.ChunkOcclusionEvent;
 import mathax.legacy.client.events.world.ParticleEvent;
 import mathax.legacy.client.systems.modules.Categories;
@@ -14,7 +13,6 @@ import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NoRender extends Module {
@@ -242,7 +240,6 @@ public class NoRender extends Module {
     private final Setting<List<ParticleType<?>>> particles = sgWorld.add(new ParticleTypeListSetting.Builder()
         .name("particles")
         .description("Particles to not render.")
-        .defaultValue(new ArrayList<>(0))
         .build()
     );
 
@@ -258,7 +255,6 @@ public class NoRender extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgEntity.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Disables rendering of selected entities.")
-        .defaultValue(new Object2BooleanOpenHashMap<>(0))
         .build()
     );
 

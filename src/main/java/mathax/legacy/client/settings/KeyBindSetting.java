@@ -1,26 +1,25 @@
 package mathax.legacy.client.settings;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
-import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
-import mathax.legacy.client.gui.widgets.WKeybind;
-import mathax.legacy.client.utils.misc.KeyBind;
-import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.eventbus.EventPriority;
+import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
+import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
+import mathax.legacy.client.gui.widgets.WKeyBind;
+import mathax.legacy.client.utils.misc.KeyBind;
+import mathax.legacy.client.utils.misc.input.KeyAction;
 import net.minecraft.nbt.NbtCompound;
 
 import java.util.function.Consumer;
 
-public class KeybindSetting extends Setting<KeyBind> {
+public class KeyBindSetting extends Setting<KeyBind> {
     private final Runnable action;
-    public WKeybind widget;
+    public WKeyBind widget;
 
-    public KeybindSetting(String name, String description, KeyBind defaultValue, Consumer<KeyBind> onChanged, Consumer<Setting<KeyBind>> onModuleActivated, IVisible visible, Runnable action) {
+    public KeyBindSetting(String name, String description, KeyBind defaultValue, Consumer<KeyBind> onChanged, Consumer<Setting<KeyBind>> onModuleActivated, IVisible visible, Runnable action) {
         super(name, description, defaultValue, onChanged, onModuleActivated, visible);
 
         this.action = action;
-
         MatHaxLegacy.EVENT_BUS.subscribe(this);
     }
 
@@ -86,42 +85,11 @@ public class KeybindSetting extends Setting<KeyBind> {
         return get();
     }
 
-    public static class Builder {
-        private String name = "undefined", description = "";
-        private KeyBind defaultValue = KeyBind.none();
-        private Consumer<KeyBind> onChanged;
-        private Consumer<Setting<KeyBind>> onModuleActivated;
-        private IVisible visible;
+    public static class Builder extends SettingBuilder<Builder, KeyBind, KeyBindSetting> {
         private Runnable action;
 
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder description(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder defaultValue(KeyBind defaultValue) {
-            this.defaultValue = defaultValue;
-            return this;
-        }
-
-        public Builder onChanged(Consumer<KeyBind> onChanged) {
-            this.onChanged = onChanged;
-            return this;
-        }
-
-        public Builder onModuleActivated(Consumer<Setting<KeyBind>> onModuleActivated) {
-            this.onModuleActivated = onModuleActivated;
-            return this;
-        }
-
-        public Builder visible(IVisible visible) {
-            this.visible = visible;
-            return this;
+        public Builder() {
+            super(KeyBind.none());
         }
 
         public Builder action(Runnable action) {
@@ -129,8 +97,9 @@ public class KeybindSetting extends Setting<KeyBind> {
             return this;
         }
 
-        public KeybindSetting build() {
-            return new KeybindSetting(name, description, defaultValue, onChanged, onModuleActivated, visible, action);
+        @Override
+        public KeyBindSetting build() {
+            return new KeyBindSetting(name, description, defaultValue, onChanged, onModuleActivated, visible, action);
         }
     }
 }

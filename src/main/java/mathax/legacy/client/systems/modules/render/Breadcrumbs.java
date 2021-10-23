@@ -37,8 +37,7 @@ public class Breadcrumbs extends Module {
         .description("The maximum number of sections.")
         .defaultValue(1000)
         .min(1)
-        .sliderMin(1)
-        .sliderMax(5000)
+        .sliderRange(1, 5000)
         .build()
     );
 
@@ -47,7 +46,6 @@ public class Breadcrumbs extends Module {
         .description("The section length in blocks.")
         .defaultValue(0.5)
         .min(0)
-        .sliderMin(0)
         .sliderMax(1)
         .build()
     );

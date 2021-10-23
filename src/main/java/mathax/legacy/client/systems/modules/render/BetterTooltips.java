@@ -58,7 +58,7 @@ public class BetterTooltips extends Module {
         .build()
     );
 
-    private final Setting<KeyBind> keybind = sgGeneral.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> keybind = sgGeneral.add(new KeyBindSetting.Builder()
         .name("keybind")
         .description("The bind for keybind mode.")
         .defaultValue(KeyBind.fromKey(GLFW_KEY_LEFT_ALT))

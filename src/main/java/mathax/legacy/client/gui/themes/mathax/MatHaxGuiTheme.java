@@ -41,41 +41,40 @@ public class MatHaxGuiTheme extends GuiTheme {
     // General
 
     public final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-            .name("scale")
-            .description("Scale of the GUI.")
-            .defaultValue(1)
-            .min(0.75)
-            .sliderMin(0.75)
-            .sliderMax(4)
-            .onSliderRelease()
-            .onChanged(aDouble -> {
-                if (Utils.mc.currentScreen instanceof WidgetScreen) ((WidgetScreen) Utils.mc.currentScreen).invalidate();
-            })
-            .build()
+        .name("scale")
+        .description("Scale of the GUI.")
+        .defaultValue(1)
+        .min(0.75)
+        .sliderRange(0.75, 4)
+        .onSliderRelease()
+        .onChanged(aDouble -> {
+            if (Utils.mc.currentScreen instanceof WidgetScreen) ((WidgetScreen) Utils.mc.currentScreen).invalidate();
+        })
+        .build()
     );
 
     public final Setting<AlignmentX> moduleAlignment = sgGeneral.add(new EnumSetting.Builder<AlignmentX>()
-            .name("module-alignment")
-            .description("How module titles are aligned.")
-            .defaultValue(AlignmentX.Center)
-            .build()
+        .name("module-alignment")
+        .description("How module titles are aligned.")
+        .defaultValue(AlignmentX.Center)
+        .build()
     );
 
     public final Setting<Boolean> categoryIcons = sgGeneral.add(new BoolSetting.Builder()
-            .name("category-icons")
-            .description("Adds item icons to module categories.")
-            .defaultValue(true)
-            .build()
+        .name("category-icons")
+        .description("Adds item icons to module categories.")
+        .defaultValue(true)
+        .build()
     );
 
     public final Setting<Boolean> hideHUD = sgGeneral.add(new BoolSetting.Builder()
-            .name("hide-hud")
-            .description("Hide HUD when in GUI.")
-            .defaultValue(false)
-            .onChanged(v -> {
-                if (Utils.mc.currentScreen instanceof WidgetScreen) Utils.mc.options.hudHidden = v;
-            })
-            .build()
+        .name("hide-hud")
+        .description("Hide HUD when in GUI.")
+        .defaultValue(false)
+        .onChanged(v -> {
+            if (Utils.mc.currentScreen instanceof WidgetScreen) Utils.mc.options.hudHidden = v;
+        })
+        .build()
     );
 
     public final Setting<Integer> round = sgGeneral.add(new IntSetting.Builder()

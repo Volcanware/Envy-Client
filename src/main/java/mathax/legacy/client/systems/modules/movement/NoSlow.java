@@ -35,7 +35,7 @@ public class NoSlow extends Module {
         .description("The timer value for WebMode Timer.")
         .defaultValue(10)
         .min(1)
-        .sliderMax(10)
+        .sliderMin(1)
         .visible(() -> web.get() == WebMode.Timer)
         .build()
     );

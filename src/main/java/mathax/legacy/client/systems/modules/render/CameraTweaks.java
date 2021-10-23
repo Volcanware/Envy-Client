@@ -52,7 +52,7 @@ public class CameraTweaks extends Module {
         .build()
     );
 
-    private final Setting<KeyBind> scrollKeybind = sgScrolling.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> scrollKeybind = sgScrolling.add(new KeyBindSetting.Builder()
         .name("scroll-keybind")
         .description("Makes it so a keybind needs to be pressed for scrolling to work.")
         .visible(scrollingEnabled::get)

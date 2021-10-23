@@ -51,7 +51,7 @@ public class ServerFinderScreen extends WindowScreen {
         ipBox = table.add(theme.textBox("127.0.0.1")).expandX().widget();
         table.row();
         table.add(theme.label("Max. Threads:"));
-        maxThreadsBox = table.add(theme.intEdit(128, 1, 256)).widget();
+        maxThreadsBox = table.add(theme.intEdit(128, 1, 256, true)).widget();
         table.row();
         stateLabel = table.add(theme.label("")).widget();
         table.row();

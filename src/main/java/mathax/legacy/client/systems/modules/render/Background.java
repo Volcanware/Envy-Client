@@ -60,8 +60,7 @@ public class Background extends Module {
         .description("How large the blur should be.")
         .defaultValue(5)
         .min(1)
-        .sliderMin(1)
-        .sliderMax(32)
+        .sliderRange(1, 32)
         .build()
     );
 

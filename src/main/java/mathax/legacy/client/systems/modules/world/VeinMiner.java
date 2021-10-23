@@ -27,7 +27,6 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.shape.VoxelShape;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -58,7 +57,11 @@ public class VeinMiner extends Module {
     private final Setting<List<Block>> blacklist = sgGeneral.add(new BlockListSetting.Builder()
         .name("blacklist")
         .description("Which blocks to ignore.")
-        .defaultValue(Arrays.asList(Blocks.STONE, Blocks.DIRT, Blocks.GRASS))
+        .defaultValue(
+            Blocks.STONE,
+            Blocks.DIRT,
+            Blocks.GRASS
+        )
         .build()
     );
 
@@ -67,7 +70,7 @@ public class VeinMiner extends Module {
         .description("Amount of iterations used to scan for similar blocks")
         .defaultValue(3)
         .min(1)
-        .sliderMax(15)
+        .sliderRange(1, 15)
         .build()
     );
 

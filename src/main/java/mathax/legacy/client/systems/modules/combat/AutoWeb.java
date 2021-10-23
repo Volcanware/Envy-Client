@@ -21,7 +21,8 @@ public class AutoWeb extends Module {
         .name("target-range")
         .description("The maximum distance to target players.")
         .defaultValue(4)
-        .min(0)
+        .range(0, 5)
+        .sliderMax(5)
         .build()
     );
 

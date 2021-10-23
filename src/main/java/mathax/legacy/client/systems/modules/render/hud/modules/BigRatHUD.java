@@ -22,8 +22,7 @@ public class BigRatHUD extends HUDElement {
         .description("The width of the image.")
         .defaultValue(225)
         .min(1)
-        .sliderMin(1)
-        .sliderMax(1800)
+        .sliderRange(1, 1800)
         .build()
     );
 
@@ -32,8 +31,7 @@ public class BigRatHUD extends HUDElement {
         .description("The height of the image.")
         .defaultValue(150)
         .min(1)
-        .sliderMin(1)
-        .sliderMax(1200)
+        .sliderRange(1, 1200)
         .build()
     );
 

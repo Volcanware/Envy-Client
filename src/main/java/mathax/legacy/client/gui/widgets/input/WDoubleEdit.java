@@ -5,23 +5,25 @@ import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
 import java.util.Locale;
 
 public class WDoubleEdit extends WHorizontalList {
-    public Runnable action;
-    public Runnable actionOnRelease;
+    private double value;
+
+    private final double min, max;
+    private final double sliderMin, sliderMax;
 
     public int decimalPlaces = 3;
     public boolean noSlider = false;
-    public boolean small;
+    public boolean small = false;
 
-    private double value;
-
-    private final double sliderMin, sliderMax;
-    public Double min, max;
+    public Runnable action;
+    public Runnable actionOnRelease;
 
     private WTextBox textBox;
     private WSlider slider;
 
-    public WDoubleEdit(double value, double sliderMin, double sliderMax, boolean noSlider) {
+    public WDoubleEdit(double value, double min, double max, double sliderMin, double sliderMax, int decimalPlaces, boolean noSlider) {
         this.value = value;
+        this.min = min;
+        this.max = max;
         this.sliderMin = sliderMin;
         this.sliderMax = sliderMax;
 
@@ -35,7 +37,8 @@ public class WDoubleEdit extends WHorizontalList {
         if (noSlider) {
             add(theme.button("+")).widget().action = () -> setButton(get() + 1);
             add(theme.button("-")).widget().action = () -> setButton(get() - 1);
-        } else slider = add(theme.slider(value, sliderMin, sliderMax)).minWidth(small ? 200 - 75 - spacing : 200).centerY().expandX().widget();
+        }
+        else slider = add(theme.slider(value, sliderMin, sliderMax)).minWidth(small ? 200 - 75 - spacing : 200).centerY().expandX().widget();
 
         textBox.actionOnUnfocused = () -> {
             double lastValue = value;
@@ -45,12 +48,13 @@ public class WDoubleEdit extends WHorizontalList {
             else if (textBox.get().equals(".")) value = 0;
             else if (textBox.get().equals("-.")) value = 0;
             else value = Double.parseDouble(textBox.get());
-            if (min != null && this.min >= 0 && value < 0) value = 0;
 
-            if (min != null && value < min) value = min;
-            else if (max != null && value > max) value = max;
+            double preValidationValue = value;
 
-            textBox.set(valueString());
+            if (value < min) value = min;
+            else if (value > max) value = max;
+
+            if (value != preValidationValue) textBox.set(valueString());
             if (slider != null) slider.set(value);
 
             if (value != lastValue) {
@@ -77,12 +81,19 @@ public class WDoubleEdit extends WHorizontalList {
 
     private boolean filter(String text, char c) {
         boolean good;
+        boolean validate = true;
 
-        if (c == '-' && text.isEmpty()) good = true;
-        else if (c == '.' && !text.contains(".")) good = true;
+        if (c == '-' && text.isEmpty()) {
+            good = true;
+            validate = false;
+        }
+        else if (c == '.' && !text.contains(".")) {
+            good = true;
+            if (text.isEmpty()) validate = false;
+        }
         else good = Character.isDigit(c);
 
-        if (good && (c != '-') && (c != '.')) {
+        if (good && validate) {
             try {
                 Double.parseDouble(text + c);
             } catch (NumberFormatException ignored) {
@@ -96,8 +107,8 @@ public class WDoubleEdit extends WHorizontalList {
     private void setButton(double v) {
         if (this.value == v) return;
 
-        if (min != null && v < min) this.value = min;
-        else if (max != null && v > max) this.value = max;
+        if (v < min) this.value = min;
+        else if (v > max) this.value = max;
         else this.value = v;
 
         if (this.value == v) {

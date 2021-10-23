@@ -74,7 +74,8 @@ public class Sphere2DMarker extends BaseMarker {
         .name("render-range")
         .description("Rendering range")
         .defaultValue(10)
-        .min(1).sliderMax(20)
+        .min(1)
+        .sliderRange(1, 20)
         .visible(limitRenderRange::get)
         .build()
     );
@@ -102,7 +103,7 @@ public class Sphere2DMarker extends BaseMarker {
 
     // Keybinding
 
-    private final Setting<KeyBind> nextLayerKey = sgKeybinding.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> nextLayerKey = sgKeybinding.add(new KeyBindSetting.Builder()
         .name("next-layer-keybind")
         .description("KeyBind to increment layer")
         .action(() -> {
@@ -111,7 +112,7 @@ public class Sphere2DMarker extends BaseMarker {
         .build()
     );
 
-    private final Setting<KeyBind> prevLayerKey = sgKeybinding.add(new KeybindSetting.Builder()
+    private final Setting<KeyBind> prevLayerKey = sgKeybinding.add(new KeyBindSetting.Builder()
         .name("prev-layer-keybind")
         .description("KeyBind to increment layer")
         .action(() -> {

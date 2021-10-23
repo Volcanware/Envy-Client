@@ -4,7 +4,7 @@ import mathax.legacy.client.events.mathaxlegacy.ModuleBindChangedEvent;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WindowScreen;
 import mathax.legacy.client.gui.utils.Cell;
-import mathax.legacy.client.gui.widgets.WKeybind;
+import mathax.legacy.client.gui.widgets.WKeyBind;
 import mathax.legacy.client.gui.widgets.WWidget;
 import mathax.legacy.client.gui.widgets.containers.WContainer;
 import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
@@ -21,7 +21,7 @@ public class ModuleScreen extends WindowScreen {
     public final Module module;
 
     private WContainer settingsContainer;
-    private WKeybind keybind;
+    private WKeyBind keybind;
 
     public ModuleScreen(GuiTheme theme, Module module) {
         super(theme, module.title);

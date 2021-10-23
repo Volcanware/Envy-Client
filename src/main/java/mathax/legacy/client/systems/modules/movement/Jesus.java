@@ -90,8 +90,8 @@ public class Jesus extends Module {
         .name("dip-fall-height")
         .description("The fall height at which you will go into the water.")
         .defaultValue(4)
-        .min(1).max(255)
-        .sliderMin(3).sliderMax(20)
+        .range(1, 255)
+        .sliderRange(3, 20)
         .visible(() -> waterMode.get() == Mode.Solid && dipOnFallWater.get())
         .build()
     );

@@ -46,7 +46,7 @@ public class InteractionMenu extends Module {
         .build()
     );
 
-    public final Setting<KeyBind> keybind = sgGeneral.add(new KeybindSetting.Builder()
+    public final Setting<KeyBind> keybind = sgGeneral.add(new KeyBindSetting.Builder()
         .name("keybind")
         .description("The keybind to open.")
         .action(this::onKey)

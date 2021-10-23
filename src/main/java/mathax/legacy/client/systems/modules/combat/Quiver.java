@@ -20,7 +20,6 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.potion.PotionUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Quiver extends Module {
@@ -31,7 +30,7 @@ public class Quiver extends Module {
     private final Setting<List<StatusEffect>> effects = sgGeneral.add(new StatusEffectListSetting.Builder()
         .name("effects")
         .description("Which effects to shoot you with.")
-        .defaultValue(Collections.singletonList(StatusEffects.STRENGTH))
+        .defaultValue(StatusEffects.STRENGTH)
         .build()
     );
 

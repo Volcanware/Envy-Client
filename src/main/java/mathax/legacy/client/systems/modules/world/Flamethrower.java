@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.Rotations;
 import mathax.legacy.client.eventbus.EventHandler;
@@ -72,9 +71,13 @@ public class Flamethrower extends Module {
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Entities to cook.")
-        .defaultValue(Utils.asO2BMap(
-                EntityType.PIG, EntityType.COW, EntityType.SHEEP,
-                EntityType.CHICKEN, EntityType.RABBIT))
+        .defaultValue(
+            EntityType.PIG,
+            EntityType.COW,
+            EntityType.SHEEP,
+            EntityType.CHICKEN,
+            EntityType.RABBIT
+        )
         .build()
     );
 
