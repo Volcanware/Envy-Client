@@ -182,7 +182,7 @@ public class ConfigTab extends Tab {
                     YesNoPrompt.create(theme, this.parent)
                         .title("Potential prefix conflict")
                         .message("You have set your command prefix to '/', which is used by minecraft.")
-                        .message("This can cause conflict issues between meteor and minecraft commands.")
+                        .message("This can cause conflict issues between MatHax and Minecraft commands.")
                         .message("Do you want to reset your prefix to '.'?")
                         .onYes(() -> Config.get().prefix = ".")
                         .id("minecraft-prefix-conflict")

@@ -3,7 +3,7 @@
   "name": "MatHax Legacy",
   "id": "mathaxlegacy",
   "version": "${version}",
-  "description": "MatHax Legacy is an fork of Meteor Client, advanced Minecraft utility client for Fabric.",
+  "description": "MatHax Legacy is an advanced Minecraft utility client for Fabric. Forked from Meteor Client.",
   "authors": [
     "Matejko06"
   ],
