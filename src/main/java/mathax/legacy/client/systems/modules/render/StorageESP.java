@@ -54,42 +54,42 @@ public class StorageESP extends Module {
     private final Setting<SettingColor> chest = sgGeneral.add(new ColorSetting.Builder()
         .name("chest")
         .description("The color of chests.")
-        .defaultValue(new SettingColor(255, 160, 0, 255))
+        .defaultValue(new SettingColor(255, 160, 0))
         .build()
     );
 
     private final Setting<SettingColor> trappedChest = sgGeneral.add(new ColorSetting.Builder()
         .name("trapped-chest")
         .description("The color of trapped chests.")
-        .defaultValue(new SettingColor(225, 0, 0, 255))
+        .defaultValue(new SettingColor(225, 0, 0))
         .build()
     );
 
     private final Setting<SettingColor> barrel = sgGeneral.add(new ColorSetting.Builder()
         .name("barrel")
         .description("The color of barrels.")
-        .defaultValue(new SettingColor(255, 160, 0, 255))
+        .defaultValue(new SettingColor(255, 160, 0))
         .build()
     );
 
     private final Setting<SettingColor> shulker = sgGeneral.add(new ColorSetting.Builder()
         .name("shulker")
         .description("The color of Shulker Boxes.")
-        .defaultValue(new SettingColor(0, 0, 0, 255, true))
+        .defaultValue(new SettingColor(0, 0, 0, true))
         .build()
     );
 
     private final Setting<SettingColor> enderChest = sgGeneral.add(new ColorSetting.Builder()
         .name("ender-chest")
         .description("The color of Ender Chests.")
-        .defaultValue(new SettingColor(120, 0, 255, 255))
+        .defaultValue(new SettingColor(120, 0, 255))
         .build()
     );
 
     private final Setting<SettingColor> other = sgGeneral.add(new ColorSetting.Builder()
         .name("other")
         .description("The color of furnaces, dispenders, droppers and hoppers.")
-        .defaultValue(new SettingColor(140, 140, 140, 255))
+        .defaultValue(new SettingColor(140, 140, 140))
         .build()
     );
 
@@ -147,9 +147,7 @@ public class StorageESP extends Module {
                 int excludeDir = 0;
                 if (blockEntity instanceof ChestBlockEntity) {
                     BlockState state = mc.world.getBlockState(blockEntity.getPos());
-                    if ((state.getBlock() == Blocks.CHEST || state.getBlock() == Blocks.TRAPPED_CHEST) && state.get(ChestBlock.CHEST_TYPE) != ChestType.SINGLE) {
-                        excludeDir = Dir.get(ChestBlock.getFacing(state));
-                    }
+                    if ((state.getBlock() == Blocks.CHEST || state.getBlock() == Blocks.TRAPPED_CHEST) && state.get(ChestBlock.CHEST_TYPE) != ChestType.SINGLE) excludeDir = Dir.get(ChestBlock.getFacing(state));
                 }
 
                 if (blockEntity instanceof ChestBlockEntity || blockEntity instanceof EnderChestBlockEntity) {
@@ -173,13 +171,9 @@ public class StorageESP extends Module {
                 lineColor.a *= a;
                 sideColor.a *= a;
 
-                if (a >= 0.075) {
-                    event.renderer.box(x1, y1, z1, x2, y2, z2, sideColor, lineColor, shapeMode.get(), excludeDir);
-                }
+                if (a >= 0.075) event.renderer.box(x1, y1, z1, x2, y2, z2, sideColor, lineColor, shapeMode.get(), excludeDir);
 
-                if (tracers.get()) {
-                    event.renderer.line(RenderUtils.center.x, RenderUtils.center.y, RenderUtils.center.z, blockEntity.getPos().getX() + 0.5, blockEntity.getPos().getY() + 0.5, blockEntity.getPos().getZ() + 0.5, lineColor);
-                }
+                if (tracers.get()) event.renderer.line(RenderUtils.center.x, RenderUtils.center.y, RenderUtils.center.z, blockEntity.getPos().getX() + 0.5, blockEntity.getPos().getY() + 0.5, blockEntity.getPos().getZ() + 0.5, lineColor);
 
                 lineColor.a = prevLineA;
                 sideColor.a = prevSideA;
