@@ -406,7 +406,6 @@ public class Modules extends System<Modules> {
         add(new EXPThrower());
         add(new FastUse());
         add(new GhostHand());
-        add(new InstaMine());
         add(new LiquidInteract());
         add(new NoBreakDelay());
         add(new NoInteract());
@@ -490,6 +489,7 @@ public class Modules extends System<Modules> {
         add(new NewChunks());
         add(new NoBob());
         add(new NoRender());
+        add(new PopChams());
         add(new SkeletonESP());
         add(new Search());
         add(new StorageESP());
@@ -527,6 +527,7 @@ public class Modules extends System<Modules> {
         add(new Flamethrower());
         add(new HighwayBuilder());
         add(new InfinityMiner());
+        add(new InstaMine());
         add(new LiquidFiller());
         add(new MountBypass());
         add(new Nuker());

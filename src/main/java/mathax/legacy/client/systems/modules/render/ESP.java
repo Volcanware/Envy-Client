@@ -197,7 +197,7 @@ public class ESP extends Module {
 
             Box box = entity.getBoundingBox();
             event.renderer.box(x + box.minX, y + box.minY, z + box.minZ, x + box.maxX, y + box.maxY, z + box.maxZ, sideColor, lineColor, shapeMode.get(), 0);
-        } else WireframeEntityRenderer.render(event, entity, sideColor, lineColor, shapeMode.get());
+        } else WireframeEntityRenderer.render(event, entity, 1, sideColor, lineColor, shapeMode.get());
 
         lineColor.a = prevLineA;
         sideColor.a = prevSideA;

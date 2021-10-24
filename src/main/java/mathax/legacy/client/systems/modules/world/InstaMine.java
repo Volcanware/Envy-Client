@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.player;
+package mathax.legacy.client.systems.modules.world;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.entity.player.StartBreakingBlockEvent;
@@ -55,7 +55,7 @@ public class InstaMine extends Module {
 
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
         .name("render")
-        .description("Renders a block overlay where the targeted block is.")
+        .description("Renders a block overlay on the block being broken.")
         .defaultValue(true)
         .build()
     );
@@ -82,7 +82,7 @@ public class InstaMine extends Module {
     );
 
     public InstaMine() {
-        super(Categories.Player, Items.DIAMOND_PICKAXE, "insta-mine", "Attempts to instantly mine blocks.");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "insta-mine", "Attempts to instantly mine blocks.");
     }
 
     @Override

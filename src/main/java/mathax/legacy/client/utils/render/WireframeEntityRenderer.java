@@ -32,13 +32,17 @@ public class WireframeEntityRenderer {
     private static Color sideColor, lineColor;
     private static ShapeMode shapeMode;
 
-    public static void render(Render3DEvent event, Entity entity, Color sideColor, Color lineColor, ShapeMode shapeMode) {
+    public static void render(Render3DEvent event, Entity entity, double scale, Color sideColor, Color lineColor, ShapeMode shapeMode) {
         WireframeEntityRenderer.sideColor = sideColor;
         WireframeEntityRenderer.lineColor = lineColor;
         WireframeEntityRenderer.shapeMode = shapeMode;
 
-        matrices.push();
-        matrices.translate(MathHelper.lerp(event.tickDelta, entity.lastRenderX, entity.getX()), MathHelper.lerp(event.tickDelta, entity.lastRenderY, entity.getY()), MathHelper.lerp(event.tickDelta, entity.lastRenderZ, entity.getZ()));
+        double x = MathHelper.lerp(event.tickDelta, entity.lastRenderX, entity.getX());
+        double y = MathHelper.lerp(event.tickDelta, entity.lastRenderY, entity.getY());
+        double z = MathHelper.lerp(event.tickDelta, entity.lastRenderZ, entity.getZ());
+
+        matrices.translate(x, y, z);
+        matrices.scale((float) scale, (float) scale, (float) scale);
 
         EntityRenderer<?> entityRenderer = mc.getEntityRenderDispatcher().getRenderer(entity);
 
@@ -119,18 +123,14 @@ public class WireframeEntityRenderer {
                 render(event.renderer, m.rightArm);
                 render(event.renderer, m.leftLeg);
                 render(event.renderer, m.rightLeg);
-            }
-            else if (model instanceof AnimalModel m) {
+            } else if (model instanceof AnimalModel m) {
                 m.getHeadParts().forEach(modelPart -> render(event.renderer, (ModelPart) modelPart));
                 m.getBodyParts().forEach(modelPart -> render(event.renderer, (ModelPart) modelPart));
-            }
-            else if (model instanceof SinglePartEntityModel m) {
+            } else if (model instanceof SinglePartEntityModel m) {
                 render(event.renderer, m.getPart());
-            }
-            else if (model instanceof CompositeEntityModel m) {
+            } else if (model instanceof CompositeEntityModel m) {
                 m.getParts().forEach(modelPart -> render(event.renderer, (ModelPart) modelPart));
-            }
-            else if (model instanceof LlamaEntityModel m) {
+            } else if (model instanceof LlamaEntityModel m) {
                 if (m.child) {
                     matrices.push();
                     matrices.scale(0.71428573F, 0.64935064F, 0.7936508F);
@@ -152,8 +152,7 @@ public class WireframeEntityRenderer {
                     render(event.renderer, m.rightChest);
                     render(event.renderer, m.leftChest);
                     matrices.pop();
-                }
-                else {
+                } else {
                     render(event.renderer, m.head);
                     render(event.renderer, m.body);
                     render(event.renderer, m.rightHindLeg);
@@ -163,8 +162,7 @@ public class WireframeEntityRenderer {
                     render(event.renderer, m.rightChest);
                     render(event.renderer, m.leftChest);
                 }
-            }
-            else if (model instanceof RabbitEntityModel m) {
+            } else if (model instanceof RabbitEntityModel m) {
                 if (m.child) {
                     matrices.push();
                     matrices.scale(0.56666666F, 0.56666666F, 0.56666666F);
@@ -186,8 +184,7 @@ public class WireframeEntityRenderer {
                     render(event.renderer, m.rightFrontLeg);
                     render(event.renderer, m.tail);
                     matrices.pop();
-                }
-                else {
+                } else {
                     matrices.push();
                     matrices.scale(0.6F, 0.6F, 0.6F);
                     matrices.translate(0.0D, 1.0D, 0.0D);
@@ -246,8 +243,7 @@ public class WireframeEntityRenderer {
             if (!chamsEnabled || chams.renderCore.get()) render(event.renderer, renderer.core);
             matrices.pop();
             matrices.pop();
-        }
-        else if (entityRenderer instanceof BoatEntityRenderer renderer) {
+        } else if (entityRenderer instanceof BoatEntityRenderer renderer) {
             BoatEntity boatEntity = (BoatEntity) entity;
 
             matrices.push();
@@ -257,14 +253,10 @@ public class WireframeEntityRenderer {
             float j = boatEntity.getDamageWobbleStrength() - event.tickDelta;
             if (j < 0.0F) j = 0.0F;
 
-            if (h > 0.0F) {
-                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(MathHelper.sin(h) * h * j / 10.0F * (float)boatEntity.getDamageWobbleSide()));
-            }
+            if (h > 0.0F) matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(MathHelper.sin(h) * h * j / 10.0F * (float)boatEntity.getDamageWobbleSide()));
 
             float k = boatEntity.interpolateBubbleWobble(event.tickDelta);
-            if (!MathHelper.approximatelyEquals(k, 0.0F)) {
-                matrices.multiply(new Quaternion(new Vec3f(1.0F, 0.0F, 1.0F), boatEntity.interpolateBubbleWobble(event.tickDelta), true));
-            }
+            if (!MathHelper.approximatelyEquals(k, 0.0F)) matrices.multiply(new Quaternion(new Vec3f(1.0F, 0.0F, 1.0F), boatEntity.interpolateBubbleWobble(event.tickDelta), true));
 
             BoatEntityModel boatEntityModel = renderer.texturesAndModels.get(boatEntity.getBoatType()).getSecond();
             matrices.scale(-1.0F, -1.0F, 1.0F);
@@ -276,12 +268,12 @@ public class WireframeEntityRenderer {
             matrices.pop();
         }
         else if (entityRenderer instanceof ItemEntityRenderer) {
-            double x = (entity.getX() - entity.prevX) * event.tickDelta;
-            double y = (entity.getY() - entity.prevY) * event.tickDelta;
-            double z = (entity.getZ() - entity.prevZ) * event.tickDelta;
+            double dx = (entity.getX() - entity.prevX) * event.tickDelta;
+            double dy = (entity.getY() - entity.prevY) * event.tickDelta;
+            double dz = (entity.getZ() - entity.prevZ) * event.tickDelta;
 
             Box box = entity.getBoundingBox();
-            event.renderer.box(x + box.minX, y + box.minY, z + box.minZ, x + box.maxX, y + box.maxY, z + box.maxZ, sideColor, lineColor, shapeMode, 0);
+            event.renderer.box(dx + box.minX, dy + box.minY, dz + box.minZ, dx + box.maxX, dy + box.maxY, dz + box.maxZ, sideColor, lineColor, shapeMode, 0);
         }
 
         matrices.pop();
