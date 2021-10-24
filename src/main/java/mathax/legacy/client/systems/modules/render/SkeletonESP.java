@@ -3,7 +3,9 @@ package mathax.legacy.client.systems.modules.render;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.render.Render3DEvent;
+import mathax.legacy.client.gui.tabs.builtin.FriendsTab;
 import mathax.legacy.client.settings.*;
+import mathax.legacy.client.systems.enemies.Enemies;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
@@ -100,6 +102,8 @@ public class SkeletonESP extends Module {
                 Color color;
                 if (distance.get()) color = getColorFromDistance(player);
                 else if (player == mc.player) color = selfColor.get();
+                else if (Friends.get().isFriend(player)) color = Friends.get().color;
+                else if (Enemies.get().isEnemy(player)) color = Enemies.get().color;
                 else color = playersColor.get();
 
                 double a = entity.prevX + ((entity.getX() - entity.prevX) * g) - mc.getEntityRenderDispatcher().camera.getPos().x;

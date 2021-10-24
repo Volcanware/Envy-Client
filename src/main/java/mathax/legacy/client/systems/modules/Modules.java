@@ -90,6 +90,7 @@ public class Modules extends System<Modules> {
         for (List<Module> modules : groups.values()) {
             modules.sort(Comparator.comparing(o -> o.title));
         }
+
         modules.sort(Comparator.comparing(o -> o.title));
     }
 
@@ -337,7 +338,6 @@ public class Modules extends System<Modules> {
             if (module1.name.equals(module.name)) {
                 removedModule.set(module1);
                 module1.settings.unregisterColorSettings();
-
                 return true;
             }
 

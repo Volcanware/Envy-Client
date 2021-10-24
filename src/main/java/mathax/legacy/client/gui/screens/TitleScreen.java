@@ -152,8 +152,8 @@ public class TitleScreen extends Screen {
         int backgroundY = ((int) yOffset - 16) * 2;
         int widthHalf = width / 2;
 
-        double width2 = width * 1.5;
-        double height2 = height * 1.5;
+        double width2 = width * 1.3;
+        double height2 = height * 1.3;
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, BACKGROUND);
