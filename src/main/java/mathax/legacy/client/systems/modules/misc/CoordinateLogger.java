@@ -125,9 +125,9 @@ public class CoordinateLogger extends Module {
                     Vec3d packetPosition = new Vec3d(packet.getX(), packet.getY(), packet.getZ());
                     Vec3d wolfPosition = entity.getPos();
 
-                    UUID ownerUuid = ((TameableEntity) entity).getOwnerUuid();
+                    UUID ownerUUID = ((TameableEntity) entity).getOwnerUuid();
 
-                    if (ownerUuid != null && wolfPosition.distanceTo(packetPosition) >= minDistance.get()) info("Wolf has teleported to (highlight)%s(default).", String.format("%.1f %.1f %.1f", packetPosition.x, packetPosition.y, packetPosition.z));
+                    if (ownerUUID != null && wolfPosition.distanceTo(packetPosition) >= minDistance.get()) info("Wolf has teleported to (highlight)%s(default).", String.format("%.1f %.1f %.1f", packetPosition.x, packetPosition.y, packetPosition.z));
                 }
             } catch(NullPointerException ignored) {
                 // Ignored

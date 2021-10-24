@@ -12,6 +12,7 @@ import mathax.legacy.client.renderer.GL;
 import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.renderer.text.TextRenderer;
 import mathax.legacy.client.settings.*;
+import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
@@ -86,13 +87,6 @@ public class Nametags extends Module {
         .build()
     );
 
-    private final Setting<SettingColor> background = sgGeneral.add(new ColorSetting.Builder()
-        .name("background-color")
-        .description("The color of the nametag background.")
-        .defaultValue(new SettingColor(0, 0, 0, 75))
-        .build()
-    );
-
     private final Setting<SettingColor> names = sgGeneral.add(new ColorSetting.Builder()
         .name("color")
         .description("The color of the nametag names.")
@@ -111,6 +105,21 @@ public class Nametags extends Module {
         .name("self-color")
         .description("The color of your nametag in Freecam.")
         .defaultValue(new SettingColor(0, 165, 255))
+        .visible(self::get)
+        .build()
+    );
+
+    private final Setting<SettingColor> background = sgGeneral.add(new ColorSetting.Builder()
+        .name("background-color")
+        .description("The color of the nametag background.")
+        .defaultValue(new SettingColor(0, 0, 0, 75))
+        .build()
+    );
+
+    private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-friends")
+        .description("Stops nametag rendering for friends.")
+        .defaultValue(false)
         .build()
     );
 
@@ -140,7 +149,7 @@ public class Nametags extends Module {
         .build()
     );
 
-    //Players
+    // Players
 
     private final Setting<Boolean> displayItems = sgPlayers.add(new BoolSetting.Builder()
         .name("show-items")
@@ -264,10 +273,10 @@ public class Nametags extends Module {
         if (!displayTotemPops.get()) return;
         if (!(event.packet instanceof EntityStatusS2CPacket)) return;
 
-        EntityStatusS2CPacket p = (EntityStatusS2CPacket) event.packet;
-        if (p.getStatus() != 35) return;
+        EntityStatusS2CPacket packet = (EntityStatusS2CPacket) event.packet;
+        if (packet.getStatus() != 35) return;
 
-        Entity entity = p.getEntity(mc.world);
+        Entity entity = packet.getEntity(mc.world);
 
         if (!(entity instanceof PlayerEntity)) return;
 
@@ -293,18 +302,6 @@ public class Nametags extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        if (displayTotemPops.get()) {
-            synchronized (totemPopMap) {
-                for (PlayerEntity player : mc.world.getPlayers()) {
-                    if (!totemPopMap.containsKey(player.getUuid())) continue;
-
-                    if (player.deathTime > 0 || player.getHealth() <= 0) {
-                        int pops = totemPopMap.removeInt(player.getUuid());
-                    }
-                }
-            }
-        }
-
         entityList.clear();
 
         boolean freecamNotActive = !Modules.get().isActive(Freecam.class);
@@ -341,8 +338,7 @@ public class Nametags extends Module {
             if (NametagUtils.to2D(pos, scale.get())) {
                 if (type == EntityType.PLAYER) renderNametagPlayer((PlayerEntity) entity);
                 else if (type == EntityType.ITEM) renderNametagItem(((ItemEntity) entity).getStack());
-                else if (type == EntityType.ITEM_FRAME)
-                    renderNametagItem(((ItemFrameEntity) entity).getHeldItemStack());
+                else if (type == EntityType.ITEM_FRAME) renderNametagItem(((ItemFrameEntity) entity).getHeldItemStack());
                 else if (type == EntityType.TNT) renderTntNametag((TntEntity) entity);
                 else if (entity instanceof LivingEntity) renderGenericNametag((LivingEntity) entity);
             }
@@ -371,11 +367,12 @@ public class Nametags extends Module {
     }
 
     private void renderNametagPlayer(PlayerEntity player) {
+        if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+
         TextRenderer text = TextRenderer.get();
         NametagUtils.begin(pos);
 
-        boolean showDev = false;
-        if (player.getUuidAsString().equals(MatHaxLegacy.devUUID) || player.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) showDev = true;
+        boolean showDev = player.getUuidAsString().equals(MatHaxLegacy.devUUID) || player.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID);
 
         // Gamemode
         GameMode gm = EntityUtils.getGameMode(player);
