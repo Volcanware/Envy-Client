@@ -74,7 +74,7 @@ public class AutoTotem extends Module {
     public final Setting<Integer> health = sgGeneral.add(new IntSetting.Builder()
         .name("health")
         .description("The health to hold a totem at. (36 to disable)")
-        .defaultValue(10)
+        .defaultValue(36)
         .range(0, 36)
         .sliderMax(36)
         .visible(() -> mode.get() != Mode.Strict)

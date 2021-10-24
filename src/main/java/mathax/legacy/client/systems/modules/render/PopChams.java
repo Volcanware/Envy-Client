@@ -6,6 +6,7 @@ import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.mixininterface.IVec3d;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.settings.*;
+import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerEntity;
@@ -24,22 +25,7 @@ public class PopChams extends Module {
     private final List<GhostPlayer> ghosts = new ArrayList<>();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-
-    private final Setting<Boolean> onlyOne = sgGeneral.add(new BoolSetting.Builder()
-        .name("only-one")
-        .description("Only allow one ghost per player.")
-        .defaultValue(false)
-        .build()
-    );
-
-    private final Setting<Double> renderTime = sgGeneral.add(new DoubleSetting.Builder()
-        .name("render-time")
-        .description("How long the ghost is rendered in seconds.")
-        .defaultValue(1)
-        .min(0.1)
-        .sliderMax(6)
-        .build()
-    );
+    private final SettingGroup sgRender = settings.createGroup("Render");
 
     private final Setting<Double> yModifier = sgGeneral.add(new DoubleSetting.Builder()
         .name("y-modifier")
@@ -57,31 +43,54 @@ public class PopChams extends Module {
         .build()
     );
 
-    private final Setting<Boolean> fadeOut = sgGeneral.add(new BoolSetting.Builder()
+    private final Setting<Boolean> onlyOne = sgGeneral.add(new BoolSetting.Builder()
+        .name("only-one")
+        .description("Only allow one ghost per player.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-friends")
+        .description("Stops Pop Chams rendering for friends.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Double> renderTime = sgRender.add(new DoubleSetting.Builder()
+        .name("render-time")
+        .description("How long the ghost is rendered in seconds.")
+        .defaultValue(1)
+        .min(0.1)
+        .sliderMax(6)
+        .build()
+    );
+
+    private final Setting<Boolean> fadeOut = sgRender.add(new BoolSetting.Builder()
         .name("fade-out")
         .description("Fades out the color.")
         .defaultValue(true)
         .build()
     );
 
-    private final Setting<ShapeMode> shapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
+    private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
         .description("How the shapes are rendered.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
-    private final Setting<SettingColor> sideColor = sgGeneral.add(new ColorSetting.Builder()
+    private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
         .description("The side color.")
-        .defaultValue(new SettingColor(255, 255, 255, 25))
+        .defaultValue(new SettingColor(255, 255, 255, 75))
         .build()
     );
 
-    private final Setting<SettingColor> lineColor = sgGeneral.add(new ColorSetting.Builder()
+    private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
         .description("The line color.")
-        .defaultValue(new SettingColor(255, 255, 255, 127))
+        .defaultValue(new SettingColor(255, 255, 255, 125))
         .build()
     );
 
@@ -98,11 +107,12 @@ public class PopChams extends Module {
 
     @EventHandler
     private void onReceivePacket(PacketEvent.Receive event) {
-        if (!(event.packet instanceof EntityStatusS2CPacket p)) return;
-        if (p.getStatus() != 35) return;
+        if (!(event.packet instanceof EntityStatusS2CPacket packet)) return;
+        if (packet.getStatus() != 35) return;
 
-        Entity entity = p.getEntity(mc.world);
+        Entity entity = packet.getEntity(mc.world);
         if (!(entity instanceof PlayerEntity player) || entity == mc.player) return;
+        if (ignoreFriends.get() && Friends.get().isFriend(((PlayerEntity) entity))) return;
 
         synchronized (ghosts) {
             if (onlyOne.get()) ghosts.removeIf(ghostPlayer -> ghostPlayer.uuid.equals(entity.getUuid()));
