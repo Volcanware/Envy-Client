@@ -26,6 +26,12 @@ public class ServerCleanUpScreen extends WindowScreen {
         super(theme, "Clean Up");
         this.multiplayerScreen = multiplayerScreen;
         this.parent = parent;
+        removeUnknown = theme.checkbox(true);
+        removeOutdated = theme.checkbox(false);
+        removeFailed = theme.checkbox(true);
+        removeFound = theme.checkbox(false);
+        removeAll = theme.checkbox(false);
+        rename = theme.checkbox(false);
     }
 
     @Override
@@ -34,22 +40,22 @@ public class ServerCleanUpScreen extends WindowScreen {
         table.add(theme.label("Servers to remove:"));
         table.row();
         table.add(theme.label("Unknown Hosts")).widget().tooltip = "";
-        removeUnknown = table.add(theme.checkbox(true)).widget();
+        table.add(removeUnknown).widget();
         table.row();
         table.add(theme.label("Outdated Servers"));
-        removeOutdated = table.add(theme.checkbox(false)).widget();
+        table.add(removeOutdated).widget();
         table.row();
         table.add(theme.label("Failed Ping"));
-        removeFailed = table.add(theme.checkbox(true)).widget();
+        table.add(removeFailed).widget();
         table.row();
         table.add(theme.label("\"Server Finder\" Servers"));
-        removeFound = table.add(theme.checkbox(false)).widget();
+        table.add(removeFound).widget();
         table.row();
         table.add(theme.label("Everything")).widget().color = new Color(255, 0, 0);
-        removeAll = table.add(theme.checkbox(false)).widget();
+        table.add(removeAll).widget();
         table.row();
         table.add(theme.label("Rename all Servers"));
-        rename = table.add(theme.checkbox(true)).widget();
+        table.add(rename).widget();
         table.row();
         table.add(theme.button("Execute")).expandX().widget().action = this::cleanUp;
     }

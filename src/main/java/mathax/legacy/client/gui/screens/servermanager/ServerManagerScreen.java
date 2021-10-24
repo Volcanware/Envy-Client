@@ -14,8 +14,8 @@ public class ServerManagerScreen extends WindowScreen {
 
     public ServerManagerScreen(GuiTheme theme, MultiplayerScreen multiplayerScreen) {
         super(theme, "Server Manager");
-        this.multiplayerScreen = multiplayerScreen;
         this.parent = multiplayerScreen;
+        this.multiplayerScreen = multiplayerScreen;
     }
 
     @Override

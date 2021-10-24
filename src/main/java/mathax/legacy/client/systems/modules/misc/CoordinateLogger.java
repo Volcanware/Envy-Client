@@ -8,7 +8,6 @@ import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -18,10 +17,6 @@ import net.minecraft.network.packet.s2c.play.EntityPositionS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.network.packet.s2c.play.WorldEventS2CPacket;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.BaseText;
-import net.minecraft.text.LiteralText;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.UUID;

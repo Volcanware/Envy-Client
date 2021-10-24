@@ -6,7 +6,6 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.game.GameJoinedEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
-import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.GL;
 import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.settings.*;

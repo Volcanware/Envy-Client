@@ -4,18 +4,13 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.settings.*;
-import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.utils.player.PlayerUtils;
-import mathax.legacy.client.utils.player.Rotations;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.render.color.SettingColor;
-
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.option.Perspective;
@@ -158,7 +153,7 @@ public class SkeletonESP extends Module {
                 bufferBuilder.vertex(matrix4f, -0.15f, sneaking ? 0.6f : 0.7f, sneaking ? 0.23f : 0).color(color.r, color.g, color.b, color.a).next();//pelvis
                 bufferBuilder.vertex(matrix4f, 0.15f, sneaking ? 0.6f : 0.7f, sneaking ? 0.23f : 0).color(color.r, color.g, color.b, color.a).next();
 
-                matrixStack.push();//head
+                matrixStack.push(); // Head
                 matrixStack.translate(0, sneaking ? 1.05f : 1.4f, 0);
                 rotate(matrixStack, head);
                 matrix4f = matrixStack.peek().getModel();
@@ -166,7 +161,7 @@ public class SkeletonESP extends Module {
                 bufferBuilder.vertex(matrix4f, 0, 0.15f, 0).color(color.r, color.g, color.b, color.a).next();
                 matrixStack.pop();
 
-                matrixStack.push();//right leg
+                matrixStack.push(); // Right leg
                 matrixStack.translate(0.15f, sneaking ? 0.6f : 0.7f, sneaking ? 0.23f : 0);
                 rotate(matrixStack, rightLeg);
                 matrix4f = matrixStack.peek().getModel();
@@ -174,7 +169,7 @@ public class SkeletonESP extends Module {
                 bufferBuilder.vertex(matrix4f, 0, -0.6f, 0).color(color.r, color.g, color.b, color.a).next();
                 matrixStack.pop();
 
-                matrixStack.push();//left leg
+                matrixStack.push(); // Left leg
                 matrixStack.translate(-0.15f, sneaking ? 0.6f : 0.7f, sneaking ? 0.23f : 0);
                 rotate(matrixStack, leftLeg);
                 matrix4f = matrixStack.peek().getModel();
@@ -182,7 +177,7 @@ public class SkeletonESP extends Module {
                 bufferBuilder.vertex(matrix4f, 0, -0.6f, 0).color(color.r, color.g, color.b, color.a).next();
                 matrixStack.pop();
 
-                matrixStack.push();//right arm
+                matrixStack.push(); // Right arm
                 matrixStack.translate(0.37f, sneaking ? 1.05f : 1.35f, 0);
                 rotate(matrixStack, rightArm);
                 matrix4f = matrixStack.peek().getModel();
@@ -190,7 +185,7 @@ public class SkeletonESP extends Module {
                 bufferBuilder.vertex(matrix4f, 0, -0.55f, 0).color(color.r, color.g, color.b, color.a).next();
                 matrixStack.pop();
 
-                matrixStack.push();//left arm
+                matrixStack.push(); // Left arm
                 matrixStack.translate(-0.37f, sneaking ? 1.05f : 1.35f, 0);
                 rotate(matrixStack, leftArm);
                 matrix4f = matrixStack.peek().getModel();
