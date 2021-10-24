@@ -33,22 +33,22 @@ import net.minecraft.util.math.*;
 public class SkeletonESP extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    public final Setting<SettingColor> skeletonSelfColorSetting = sgGeneral.add(new ColorSetting.Builder()
-        .name("self-color")
-        .description("The color of your skeleton in Freecam.")
-        .defaultValue(new SettingColor(0, 165, 255, 255))
-        .build()
-    );
-
-    private final Setting<SettingColor> skeletonColorSetting = sgGeneral.add(new ColorSetting.Builder()
+    private final Setting<SettingColor> playersColor = sgGeneral.add(new ColorSetting.Builder()
         .name("players-color")
         .description("The other player's color.")
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
+    public final Setting<SettingColor> selfColor = sgGeneral.add(new ColorSetting.Builder()
+        .name("self-color")
+        .description("The color of your skeleton in Freecam.")
+        .defaultValue(new SettingColor(0, 165, 255, 255))
+        .build()
+    );
+
     public SkeletonESP() {
-        super(Categories.Render, Items.SKELETON_SKULL, "skeleton-esp", "Spooky scary skeleton.");
+        super(Categories.Render, Items.SKELETON_SKULL, "skeleton-esp", "Renders player skeleton trough the body & walls.");
     }
 
     @EventHandler
@@ -70,8 +70,8 @@ public class SkeletonESP extends Module {
             int rotationHoldTicks = Config.get().rotationHoldTicks;
 
             Color skeletonColor = null;
-            if (entity.getUuidAsString().equals(mc.player.getUuidAsString())) skeletonColor = PlayerUtils.getPlayerColor((PlayerEntity)entity, skeletonSelfColorSetting.get());
-            else skeletonColor = PlayerUtils.getPlayerColor((PlayerEntity)entity, skeletonColorSetting.get());
+            if (entity.getUuidAsString().equals(mc.player.getUuidAsString())) skeletonColor = PlayerUtils.getPlayerColor((PlayerEntity)entity, selfColor.get());
+            else skeletonColor = PlayerUtils.getPlayerColor((PlayerEntity)entity, playersColor.get());
 
             PlayerEntity playerEntity = (PlayerEntity) entity;
 
