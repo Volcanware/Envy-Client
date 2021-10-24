@@ -18,7 +18,10 @@
   "entrypoints": {
     "client": [
       "mathax.legacy.client.MatHaxLegacy"
-    ]
+    ],
+    "modmenu": [
+      "mathax.legacy.client.MatHaxLegacyModMenu"
+      ]
   },
   "mixins": [
     "mathaxlegacy.mixins.json",
@@ -31,9 +34,9 @@
   "custom": {
     "modmenu": {
       "links": {
-        "Website": "https://mathaxclient.xyz",
-        "Discord": "https://mathaxclient.xyz/Discord",
-        "Issues": "https://mathaxclient.xyz/Discord"
+        "modmenu.website": "https://mathaxclient.xyz",
+        "modmenu.discord": "https://mathaxclient.xyz/Discord",
+        "modmenu.issues": "https://mathaxclient.xyz/Discord"
       }
     }
   },

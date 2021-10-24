@@ -25,6 +25,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 
 public class ESP extends Module {
     private final Color lineColor = new Color();
@@ -199,9 +200,9 @@ public class ESP extends Module {
         sideColor.a *= a;
 
         if (mode.get() == Mode.Box) {
-            double x = (entity.getX() - entity.prevX) * event.tickDelta;
-            double y = (entity.getY() - entity.prevY) * event.tickDelta;
-            double z = (entity.getZ() - entity.prevZ) * event.tickDelta;
+            double x = MathHelper.lerp(event.tickDelta, entity.lastRenderX, entity.getX()) - entity.getX();
+            double y = MathHelper.lerp(event.tickDelta, entity.lastRenderY, entity.getY()) - entity.getY();
+            double z = MathHelper.lerp(event.tickDelta, entity.lastRenderZ, entity.getZ()) - entity.getZ();
 
             Box box = entity.getBoundingBox();
             event.renderer.box(x + box.minX, y + box.minY, z + box.minZ, x + box.maxX, y + box.maxY, z + box.maxZ, sideColor, lineColor, shapeMode.get(), 0);
@@ -225,9 +226,9 @@ public class ESP extends Module {
 
             Box box = entity.getBoundingBox();
 
-            double x = (entity.getX() - entity.prevX) * event.tickDelta;
-            double y = (entity.getY() - entity.prevY) * event.tickDelta;
-            double z = (entity.getZ() - entity.prevZ) * event.tickDelta;
+            double x = MathHelper.lerp(event.tickDelta, entity.lastRenderX, entity.getX()) - entity.getX();
+            double y = MathHelper.lerp(event.tickDelta, entity.lastRenderY, entity.getY()) - entity.getY();
+            double z = MathHelper.lerp(event.tickDelta, entity.lastRenderZ, entity.getZ()) - entity.getZ();
 
             // Check corners
             pos1.set(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);

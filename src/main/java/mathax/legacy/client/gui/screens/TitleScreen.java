@@ -102,38 +102,36 @@ public class TitleScreen extends Screen {
 
     protected void init() {
         // Splash Loader
-
         if (splashText == null) splashText = client.getSplashTextLoader().get();
 
         // Copyright
-
         copyrightTextWidth = textRenderer.getWidth(COPYRIGHT);
         copyrightTextX = width - copyrightTextWidth - 2;
 
         // Realms
-
         client.setConnectedToRealms(false);
         if (client.options.realmsNotifications && realmsNotificationGui == null) realmsNotificationGui = new RealmsNotificationsScreen();
         if (areRealmsNotificationsEnabled()) realmsNotificationGui.init(client, width, height);
 
         // Buttons
-
-        int y = height / 4 + 36;
+        int y = height / 4 + 26;
         int spacingY = 24;
+        int modsButtonVisible = 0;
 
         addDrawableChild(new ButtonWidget(width / 2 - 100, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
         addDrawableChild(new ButtonWidget(width / 2 - 204, y + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> client.setScreen(new MultiplayerScreen(this))));
         addDrawableChild(new ButtonWidget(width / 2 + 4, y + spacingY, 200, 20, new TranslatableText("menu.online"), (button) -> switchToRealms()));
-        addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 3) - (spacingY / 2), 200, 20, new LiteralText("Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
-        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 3) - (spacingY / 2), 200, 20, new LiteralText("Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
-        addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 4) - (spacingY / 2), 96, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4) - (spacingY / 2), 96, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
-        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 4) - (spacingY / 2), 96, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
-        addDrawableChild(new ButtonWidget(width / 2 + 108, y + (spacingY * 4) - (spacingY / 2), 96, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
-        addDrawableChild(new TexturedButtonWidget(width / 2 - 124, y + (spacingY * 5), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
-        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 5), 96, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
-        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 5), 96, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
-        addDrawableChild(new TexturedButtonWidget(width / 2 + 104, y + (spacingY * 5    ), 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
+        //addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 2), 200, 20, new TranslatableText("modmenu.title"), (button) -> client.setScreen(new com.terraformersmc.modmenu.gui.ModsScreen(this))));
+        addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 3) - modsButtonVisible, 200, 20, new LiteralText("Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 3) - modsButtonVisible, 200, 20, new LiteralText("Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
+        addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 4) - modsButtonVisible, 96, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4) - modsButtonVisible, 96, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 4) - modsButtonVisible, 96, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
+        addDrawableChild(new ButtonWidget(width / 2 + 108, y + (spacingY * 4) - modsButtonVisible, 96, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
+        addDrawableChild(new TexturedButtonWidget(width / 2 - 128, y + (spacingY * 5) - modsButtonVisible, 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
+        addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 5) - modsButtonVisible, 96, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
+        addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 5) - modsButtonVisible, 96, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
+        addDrawableChild(new TexturedButtonWidget(width / 2 + 108, y + (spacingY * 5) - modsButtonVisible, 20, 20, 0, 0, 20, ACCESSIBILITY_ICON_TEXTURE, 32, 64, (button) -> client.setScreen(new AccessibilityOptionsScreen(this, client.options)), new TranslatableText("narrator.button.accessibility")));
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -147,34 +145,28 @@ public class TitleScreen extends Screen {
         int backgroundY = ((int) yOffset - 16) * 2;
         int widthHalf = width / 2;
 
-        double width2 = width * 1.2;
-        double height2 = height * 1.2;
+        double width2 = width * 1.5;
+        double height2 = height * 1.5;
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, BACKGROUND);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, doBackgroundFade ? (float)MathHelper.ceil(MathHelper.clamp(fade, 0.0F, 1.0F)) : 1.0F);
-        drawTexture(matrices, backgroundX, backgroundY, (int)width2, (int)height2, 0.0F, 0.0F, 16, 128, 16, 128);
+        drawTexture(matrices, backgroundX, backgroundY, (int) width2, (int) height2, 0.0F, 0.0F, 16, 128, 16, 128);
 
         float fade2 = doBackgroundFade ? MathHelper.clamp(fade - 1.0F, 0.0F, 1.0F) : 1.0F;
         int ceil = MathHelper.ceil(fade2 * 255.0F) << 24;
 
         if ((ceil & -67108864) != 0) {
             RenderSystem.setShaderTexture(0, LOGO);
-            int logoScale, splashX, splashY;
-            if (client.options.guiScale < 3) {
-                logoScale = 128;
-                splashX = widthHalf + 56;
-                splashY = 100;
-            } else {
-                logoScale = 64;
-                splashX = widthHalf + 28;
-                splashY = 75;
-            }
+            int logoScale = client.getWindow().getHeight() / 8;
 
-            drawTexture(matrices, widthHalf - (logoScale / 2), 15, 0.0F, 0.0F, logoScale, logoScale, logoScale, logoScale);
+            drawTexture(matrices, widthHalf - (logoScale / 2), 10, 0.0F, 0.0F, logoScale, logoScale, logoScale, logoScale);
             if (splashText != null) {
+                int splashX = width / 2 + (logoScale / 2);
+                int splashY = logoScale - (logoScale / 5);
+
                 matrices.push();
                 matrices.translate(splashX, splashY, 0);
                 matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-15.0F));

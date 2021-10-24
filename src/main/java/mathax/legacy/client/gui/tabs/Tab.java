@@ -17,7 +17,7 @@ public abstract class Tab {
         Utils.mc.setScreen(screen);
     }
 
-    protected abstract TabScreen createScreen(GuiTheme theme);
+    public abstract TabScreen createScreen(GuiTheme theme);
 
     public abstract boolean isScreen(Screen screen);
 }
