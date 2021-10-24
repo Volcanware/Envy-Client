@@ -12,6 +12,7 @@ import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.systems.proxies.Proxies;
 import mathax.legacy.client.systems.proxies.Proxy;
 import mathax.legacy.client.utils.render.color.Color;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.CreditsScreen;
@@ -121,10 +122,13 @@ public class TitleScreen extends Screen {
         addDrawableChild(new ButtonWidget(width / 2 - 100, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
         addDrawableChild(new ButtonWidget(width / 2 - 204, y + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> client.setScreen(new MultiplayerScreen(this))));
         addDrawableChild(new ButtonWidget(width / 2 + 4, y + spacingY, 200, 20, new TranslatableText("menu.online"), (button) -> switchToRealms()));
-        /*if (IS MODMENU LOADED) {
+
+        // TODO: Make it not crash when mod menu is not loaded. :)
+        /*if (FabricLoader.getInstance().isModLoaded("modmenu")) {
             addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 2), 200, 20, new TranslatableText("modmenu.title"), (button) -> client.setScreen(new com.terraformersmc.modmenu.gui.ModsScreen(this))));
             modsButtonVisible = 0;
         }*/
+
         addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 3) - modsButtonVisible, 200, 20, new LiteralText("Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
         addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 3) - modsButtonVisible, 200, 20, new LiteralText("Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
         addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 4) - modsButtonVisible, 96, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
