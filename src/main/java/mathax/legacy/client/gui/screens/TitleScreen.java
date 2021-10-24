@@ -121,7 +121,10 @@ public class TitleScreen extends Screen {
         addDrawableChild(new ButtonWidget(width / 2 - 100, y, 200, 20, new TranslatableText("menu.singleplayer"), (button) -> client.setScreen(new SelectWorldScreen(this))));
         addDrawableChild(new ButtonWidget(width / 2 - 204, y + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> client.setScreen(new MultiplayerScreen(this))));
         addDrawableChild(new ButtonWidget(width / 2 + 4, y + spacingY, 200, 20, new TranslatableText("menu.online"), (button) -> switchToRealms()));
-        //addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 2), 200, 20, new TranslatableText("modmenu.title"), (button) -> client.setScreen(new com.terraformersmc.modmenu.gui.ModsScreen(this))));
+        /*if (IS MODMENU LOADED) {
+            addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 2), 200, 20, new TranslatableText("modmenu.title"), (button) -> client.setScreen(new com.terraformersmc.modmenu.gui.ModsScreen(this))));
+            modsButtonVisible = spacingY;
+        }*/
         addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 3) - modsButtonVisible, 200, 20, new LiteralText("Website"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL)));
         addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 3) - modsButtonVisible, 200, 20, new LiteralText("Discord"), (button) -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Discord")));
         addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 4) - modsButtonVisible, 96, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
