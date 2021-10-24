@@ -85,10 +85,10 @@ public class TextRadarHUD extends HUDElement {
         .build()
     );
 
-    private final Setting<Boolean> friends = sgGeneral.add(new BoolSetting.Builder()
-        .name("display-friends")
-        .description("Whether to show friends or not.")
-        .defaultValue(true)
+    private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-friends")
+        .description("Stops showing friends.")
+        .defaultValue(false)
         .build()
     );
 
@@ -119,21 +119,6 @@ public class TextRadarHUD extends HUDElement {
         }
     }
 
-    @EventHandler
-    private void onTick(TickEvent.Post event) {
-        if (totemPops.get()) {
-            synchronized (totemPopMap) {
-                for (PlayerEntity player : mc.world.getPlayers()) {
-                    if (!totemPopMap.containsKey(player.getUuid())) continue;
-
-                    if (player.deathTime > 0 || player.getHealth() <= 0) {
-                        int pops = totemPopMap.removeInt(player.getUuid());
-                    }
-                }
-            }
-        }
-    }
-
     @Override
     public void update(HUDRenderer renderer) {
         double width = renderer.textWidth("Players:");
@@ -146,7 +131,7 @@ public class TextRadarHUD extends HUDElement {
 
         for (PlayerEntity entity : getPlayers()) {
             if (entity.equals(mc.player)) continue;
-            if (!friends.get() && Friends.get().isFriend(entity)) continue;
+            if (ignoreFriends.get() && Friends.get().isFriend(entity)) continue;
 
             String text = "";
             if (entity.getUuidAsString().equals(MatHaxLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID))
@@ -183,7 +168,7 @@ public class TextRadarHUD extends HUDElement {
 
         for (PlayerEntity entity : getPlayers()) {
             if (entity.equals(mc.player)) continue;
-            if (!friends.get() && Friends.get().isFriend(entity)) continue;
+            if (ignoreFriends.get() && Friends.get().isFriend(entity)) continue;
 
             x = box.getX();
             y += renderer.textHeight() + 2;

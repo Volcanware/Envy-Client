@@ -3,6 +3,7 @@ package mathax.legacy.client.systems.modules.render;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
+import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
@@ -65,6 +66,13 @@ public class Tracers extends Module {
         .name("show-invisible")
         .description("Shows invisibile entities.")
         .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-friends")
+        .description("Stops tracer rendering for friends.")
+        .defaultValue(false)
         .build()
     );
 
@@ -142,12 +150,12 @@ public class Tracers extends Module {
 
         for (Entity entity : mc.world.getEntities()) {
             if (mc.player.distanceTo(entity) > maxDist.get() || (!Modules.get().isActive(Freecam.class) && entity == mc.player) || !entities.get().getBoolean(entity.getType()) || (!showInvis.get() && entity.isInvisible()) | !EntityUtils.isInRenderDistance(entity)) continue;
+            if ((ignoreFriends.get() && Friends.get().isFriend((PlayerEntity) entity)) || !entities.get().getBoolean(EntityType.PLAYER)) return;
 
             Color color;
 
-            if (distance.get()) {
-                color = getColorFromDistance(entity);
-            } else if (entity instanceof PlayerEntity) {
+            if (distance.get()) color = getColorFromDistance(entity);
+            else if (entity instanceof PlayerEntity) {
                 if (entity.equals(MinecraftClient.getInstance().getCameraEntity())) color = PlayerUtils.getPlayerColor(((PlayerEntity) entity), selfColor.get());
                 else color = PlayerUtils.getPlayerColor(((PlayerEntity) entity), playersColor.get());
             } else {

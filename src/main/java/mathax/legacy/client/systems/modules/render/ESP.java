@@ -6,6 +6,7 @@ import mathax.legacy.client.events.render.Render2DEvent;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.renderer.ShapeMode;
+import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
@@ -88,6 +89,13 @@ public class ESP extends Module {
         .name("entities")
         .description("Select specific entities.")
         .defaultValue(EntityType.PLAYER)
+        .build()
+    );
+
+    private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-friends")
+        .description("Stops ESP rendering for friends.")
+        .defaultValue(false)
         .build()
     );
 
@@ -355,6 +363,7 @@ public class ESP extends Module {
 
     private boolean shouldSkip(Entity entity) {
         if ((!Modules.get().isActive(Freecam.class) && entity == mc.player) || !entities.get().getBoolean(entity.getType())) return true;
+        if ((ignoreFriends.get() && Friends.get().isFriend((PlayerEntity) entity)) || !entities.get().getBoolean(EntityType.PLAYER)) return true;
         return !EntityUtils.isInRenderDistance(entity);
     }
 
