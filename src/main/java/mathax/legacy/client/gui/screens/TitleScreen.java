@@ -41,8 +41,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-// TODO: REDESIGN SO ALL BUTTONS CAN BE ACCESSED IN EVERY GUI SCALE AND RESOLUTION AND RESIZE MATHAX LOGO SO IT IS NOT SO BIG
-// TODO: [LATER] Make MatHax theme & widgets work instead of buttons
+// TODO: Make MatHax theme & widgets work instead of buttons.
 
 public class TitleScreen extends Screen {
     private final int WHITE = Color.fromRGBA(255, 255, 255, 255);
@@ -159,7 +158,7 @@ public class TitleScreen extends Screen {
         RenderSystem.setShaderTexture(0, BACKGROUND);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, doBackgroundFade ? (float)MathHelper.ceil(MathHelper.clamp(fade, 0.0F, 1.0F)) : 1.0F);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, doBackgroundFade ? (float) MathHelper.ceil(MathHelper.clamp(fade, 0.0F, 1.0F)) : 1.0F);
         drawTexture(matrices, backgroundX, backgroundY, (int) width2, (int) height2, 0.0F, 0.0F, 16, 128, 16, 128);
 
         float fade2 = doBackgroundFade ? MathHelper.clamp(fade - 1.0F, 0.0F, 1.0F) : 1.0F;
