@@ -30,10 +30,6 @@ public class Version {
         }
     }
 
-    public static String get() {
-        return FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata().getVersion().getFriendlyString();
-    }
-
     public boolean isHigherThan(Version version) {
         for (int i = 0; i < 3; i++) {
             if (numbers[i] > version.numbers[i]) return true;
@@ -41,6 +37,10 @@ public class Version {
         }
 
         return false;
+    }
+
+    public static String get() {
+        return FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata().getVersion().getFriendlyString();
     }
 
     public static Integer getDev() {
