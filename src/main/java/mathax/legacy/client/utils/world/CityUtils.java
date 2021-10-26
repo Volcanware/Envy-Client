@@ -13,7 +13,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class CityUtils {
     private static final BlockPos[] surround;

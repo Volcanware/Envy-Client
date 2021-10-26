@@ -16,16 +16,18 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 @Mixin(TridentItem.class)
 public class TridentItemMixin {
     @Inject(method = "onStoppedUsing", at = @At("HEAD"))
     private void onStoppedUsingHead(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo info) {
-        if (user == Utils.mc.player) Utils.isReleasingTrident = true;
+        if (user == mc.player) Utils.isReleasingTrident = true;
     }
 
     @Inject(method = "onStoppedUsing", at = @At("TAIL"))
     private void onStoppedUsingTail(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo info) {
-        if (user == Utils.mc.player) Utils.isReleasingTrident = false;
+        if (user == mc.player) Utils.isReleasingTrident = false;
     }
 
     @ModifyArgs(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;addVelocity(DDD)V"))
@@ -40,12 +42,12 @@ public class TridentItemMixin {
     @Redirect(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isTouchingWaterOrRain()Z"))
     private boolean isInWaterUse(PlayerEntity playerEntity) {
         TridentBoost tridentBoost = Modules.get().get(TridentBoost.class);
-        return tridentBoost.allowOutOfWater() || Utils.mc.player.isTouchingWaterOrRain();
+        return tridentBoost.allowOutOfWater() || mc.player.isTouchingWaterOrRain();
     }
 
     @Redirect(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isTouchingWaterOrRain()Z"))
     private boolean isInWaterPostUse(PlayerEntity playerEntity) {
         TridentBoost tridentBoost = Modules.get().get(TridentBoost.class);
-        return tridentBoost.allowOutOfWater() || Utils.mc.player.isTouchingWaterOrRain();
+        return tridentBoost.allowOutOfWater() || mc.player.isTouchingWaterOrRain();
     }
 }

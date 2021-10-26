@@ -13,7 +13,6 @@ import mathax.legacy.client.systems.modules.render.hud.HUDElement;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.NbtUtils;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.NbtCompound;
 
 public class HudElementScreen extends WindowScreen {
@@ -42,7 +41,7 @@ public class HudElementScreen extends WindowScreen {
         // Bottom
         WHorizontalList bottomList = add(theme.horizontalList()).expandX().widget();
 
-        //   Active
+        // Active
         bottomList.add(theme.label("Active:"));
         WCheckbox active = bottomList.add(theme.checkbox(element.active)).widget();
         active.action = () -> {
@@ -59,13 +58,11 @@ public class HudElementScreen extends WindowScreen {
     public void tick() {
         super.tick();
 
-        if (settings != null) {
-            element.settings.tick(settings, theme);
-        }
+        if (settings != null) element.settings.tick(settings, theme);
     }
 
     @Override
-    protected void onRenderBefore(float delta, MatrixStack matrixStack) {
+    protected void onRenderBefore(float delta) {
         if (!Utils.canUpdate()) Modules.get().get(HUD.class).onRender(Render2DEvent.get(0, 0, delta));
     }
 

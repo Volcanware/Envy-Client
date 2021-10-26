@@ -1,6 +1,8 @@
 package mathax.legacy.client.systems;
 
 import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.systems.accounts.Accounts;
 import mathax.legacy.client.systems.commands.Commands;
 import mathax.legacy.client.systems.enemies.Enemies;
@@ -12,6 +14,7 @@ import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.proxies.Proxies;
+import mathax.legacy.client.utils.Version;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,6 +48,14 @@ public class Systems {
         for (System<?> system : systems.values()) {
             if (system != config) system.init();
         }
+
+        MatHaxLegacy.EVENT_BUS.subscribe(Systems.class);
+    }
+
+    @EventHandler
+    private static void onGameLeft(GameLeftEvent event) {
+        Version.didntCheckForLatest = true;
+        save();
     }
 
     private static System<?> add(System<?> system) {

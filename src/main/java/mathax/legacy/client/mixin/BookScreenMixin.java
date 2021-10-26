@@ -26,7 +26,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 @Mixin(BookScreen.class)
 public class BookScreenMixin extends Screen {

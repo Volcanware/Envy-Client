@@ -6,7 +6,6 @@ import mathax.legacy.client.events.entity.player.ClipAtLedgeEvent;
 import mathax.legacy.client.systems.modules.movement.Anchor;
 import mathax.legacy.client.systems.modules.player.SpeedMine;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
@@ -28,7 +29,7 @@ public class PlayerEntityMixin {
 
     @Inject(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("HEAD"), cancellable = true)
     private void onDropItem(ItemStack stack, boolean bl, boolean bl2, CallbackInfoReturnable<ItemEntity> info) {
-        if (Utils.mc.world.isClient) if (MatHaxLegacy.EVENT_BUS.post(DropItemsEvent.get(stack)).isCancelled()) info.cancel();
+        if (mc.world.isClient) if (MatHaxLegacy.EVENT_BUS.post(DropItemsEvent.get(stack)).isCancelled()) info.cancel();
     }
 
     @Inject(method = "getBlockBreakingSpeed", at = @At(value = "RETURN"), cancellable = true)

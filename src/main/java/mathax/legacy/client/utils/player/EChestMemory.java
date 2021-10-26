@@ -10,9 +10,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.util.collection.DefaultedList;
-
-import static mathax.legacy.client.utils.Utils.mc;
-
+import static mathax.legacy.client.MatHaxLegacy.mc;
 public class EChestMemory {
     public static final DefaultedList<ItemStack> ITEMS = DefaultedList.ofSize(27, ItemStack.EMPTY);
     private static int echestOpenedState;

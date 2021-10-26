@@ -13,7 +13,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 
 import static mathax.legacy.client.utils.Utils.canUpdate;
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class WBlockPosEdit extends WHorizontalList {
     public Runnable action;

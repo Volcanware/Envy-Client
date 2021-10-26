@@ -6,7 +6,7 @@ import mathax.legacy.client.utils.Utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Placeholders {
     private static final Pattern pattern = Pattern.compile("(%version%|%mc_version%|%player%|%username%|%server%)");

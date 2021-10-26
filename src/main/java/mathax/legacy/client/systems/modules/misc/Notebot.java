@@ -83,7 +83,7 @@ public class Notebot extends Module {
     private final Setting<NotebotUtils.InstrumentType> instrument = sgGeneral.add(new EnumSetting.Builder<NotebotUtils.InstrumentType>()
         .name("instrument")
         .description("Select which instrument will be played")
-        .defaultValue(NotebotUtils.InstrumentType.NotDrums)
+        .defaultValue(NotebotUtils.InstrumentType.Not_Drums)
         .build()
     );
 
@@ -93,6 +93,7 @@ public class Notebot extends Module {
         .defaultValue(true)
         .build()
     );
+
     private final Setting<Boolean> repeatMode = sgGeneral.add(new BoolSetting.Builder()
         .name("repeat-mode")
         .description("Whether or not to repeat current song.")
@@ -135,9 +136,7 @@ public class Notebot extends Module {
             for (int x = -5; x < 5; x++) {
                 if (y != 0 || x != 0) {
                     BlockPos pos = new BlockPos(x, 0, y);
-                    if (pos.getSquaredDistance(0, 0, 0, true) < (4.3 * 4.3) - 0.5) {
-                        possibleBlockPos.add(pos);
-                    }
+                    if (pos.getSquaredDistance(0, 0, 0, true) < (4.3 * 4.3) - 0.5) possibleBlockPos.add(pos);
                 }
             }
         }
@@ -171,7 +170,7 @@ public class Notebot extends Module {
     private void onRender(Render3DEvent event) {
         if (!render.get()) return;
 
-        if (stage != Stage.SetUp && stage != Stage.Tune && !isPlaying) return;
+        if (stage != Stage.Set_Up && stage != Stage.Tune && !isPlaying) return;
 
         blockPositions.values().forEach((blockPos) -> {
             double x1 = blockPos.getX();
@@ -189,7 +188,7 @@ public class Notebot extends Module {
     private void onTick(TickEvent.Pre event) {
         ticks++;
 
-        if (stage == Stage.SetUp) {
+        if (stage == Stage.Set_Up) {
             onTickSetup();
         } else if (stage == Stage.Tune) {
             onTickTune();
@@ -197,11 +196,8 @@ public class Notebot extends Module {
             if (!isPlaying) return;
 
             if (mc.player == null || currentIndex >= song.size()) {
-                if (repeatMode.get()){
-                    pause();
-                } else {
-                    stop();
-                }
+                if (repeatMode.get()) pause();
+                else stop();
                 return;
             }
 
@@ -270,6 +266,7 @@ public class Notebot extends Module {
             table.add(theme.label("Missing \"Notebot\" folder.")).expandCellX();
             table.row();
         }
+
         return table;
     }
 
@@ -278,7 +275,7 @@ public class Notebot extends Module {
         if (song.isEmpty()) return "No song loaded.";
         if (isPlaying) return String.format("Playing song. %d/%d",currentIndex,song.size());
         if (stage == Stage.Playing || stage == Stage.Preview) return "Ready to play.";
-        if (stage == Stage.SetUp || stage == Stage.Tune) return "Setting up the noteblocks.";
+        if (stage == Stage.Set_Up || stage == Stage.Tune) return "Setting up the noteblocks.";
         else return String.format("Stage: %s.", stage.toString());
     }
 
@@ -302,14 +299,11 @@ public class Notebot extends Module {
 
     public void Play() {
         if (mc.player == null) return;
-        if (mc.player.getAbilities().creativeMode && stage != Stage.Preview) {
-            error("You need to be in survival mode.");
-        } else if (stage == Stage.Preview || stage == Stage.Playing) {
+        if (mc.player.getAbilities().creativeMode && stage != Stage.Preview) error("You need to be in survival mode.");
+        else if (stage == Stage.Preview || stage == Stage.Playing) {
             isPlaying = true;
             info("Playing.");
-        } else {
-            error("No song loaded.");
-        }
+        } else error("No song loaded.");
     }
 
     public void pause() {
@@ -325,13 +319,13 @@ public class Notebot extends Module {
 
     public void stop() {
         info("Stopping.");
-        if (stage == Stage.SetUp || stage == Stage.Tune) {
-            resetVariables();
-        } else {
+        if (stage == Stage.Set_Up || stage == Stage.Tune) resetVariables();
+        else {
             isPlaying = false;
             currentNote = 0;
             currentIndex = 0;
         }
+
         if (status != null) status.set(getStatus());
     }
 
@@ -358,13 +352,9 @@ public class Notebot extends Module {
     }
 
     private void addNote(int tick, int value) {
-        if (polyphonic.get()) {
-            song.add(new ImmutablePair<>(tick, value));
-        } else if (song.size() == 0) {
-            song.add(new ImmutablePair<>(tick, value));
-        } else if (song.get(song.size()-1).left != tick) {
-            song.add(new ImmutablePair<>(tick, value));
-        }
+        if (polyphonic.get()) song.add(new ImmutablePair<>(tick, value));
+        else if (song.size() == 0) song.add(new ImmutablePair<>(tick, value));
+        else if (song.get(song.size()-1).left != tick) song.add(new ImmutablePair<>(tick, value));
     }
 
     private boolean loadFileToMap(File file) {
@@ -372,13 +362,13 @@ public class Notebot extends Module {
             error("File not found");
             return false;
         }
+
         String extension = FilenameUtils.getExtension(file.getName());
         boolean success = false;
         if (extension.equals("txt")) success = loadTextFile(file);
         else if (extension.equals("nbs")) success = loadNbsFile(file);
-        if (success) {
-            song.sort(Comparator.comparingInt(o -> o.left));
-        }
+        if (success) song.sort(Comparator.comparingInt(o -> o.left));
+
         return success;
     }
 
@@ -412,6 +402,7 @@ public class Notebot extends Module {
             }
             addNote(key,val);
         }
+
         return true;
     }
 
@@ -422,6 +413,7 @@ public class Notebot extends Module {
             error("Couldn't parse the file. Only classic and opennbs v5 are supported");
             return false;
         }
+
         List<Layer> layers = new ArrayList<>(nbsSong.getLayerHashMap().values());
         resetVariables();
         for (Layer layer : layers) {
@@ -437,9 +429,11 @@ public class Notebot extends Module {
                     warning("Note at tick %d out of range.", tick);
                     continue;
                 }
+
                 addNote(tick, n);
             }
         }
+
         return true;
     }
 
@@ -461,7 +455,6 @@ public class Notebot extends Module {
                     scannedNoteblocks.add(pos);
                 }
             }
-
         }
     }
 
@@ -471,21 +464,22 @@ public class Notebot extends Module {
                 uniqueNotes.add(v.right);
             }
         });
+
         scanForNoteblocks();
         if (uniqueNotes.size() > possibleBlockPos.size()+scannedNoteblocks.size()) {
             error("Too many notes. %d is the maximum.", possibleBlockPos.size());
             return false;
         }
+
         currentNote = 0;
         offset = 0;
-        stage = Stage.SetUp;
+        stage = Stage.Set_Up;
+
         return true;
     }
 
     private void onTickPreview() {
-        if (song.get(currentIndex).left == currentNote) {
-            mc.player.playSound(NotebotUtils.getInstrumentSound(instrument.get()), 2f, (float) Math.pow(2.0D, (song.get(currentIndex).right - 12) / 12.0D));
-        }
+        if (song.get(currentIndex).left == currentNote) mc.player.playSound(NotebotUtils.getInstrumentSound(instrument.get()), 2f, (float) Math.pow(2.0D, (song.get(currentIndex).right - 12) / 12.0D));
     }
 
     private void onTickSetup() {
@@ -507,9 +501,8 @@ public class Notebot extends Module {
         if (index < scannedNoteblocks.size()) {
             pos = scannedNoteblocks.get(index);
 
-            if (mc.world.getBlockState(pos).getBlock() != Blocks.NOTE_BLOCK) {
-                offset++;
-            } else {
+            if (mc.world.getBlockState(pos).getBlock() != Blocks.NOTE_BLOCK) offset++;
+            else {
                 blockPositions.put(uniqueNotes.get(currentNote), pos);
                 stage = Stage.Tune;
             }
@@ -540,9 +533,8 @@ public class Notebot extends Module {
             return;
         }
 
-        if (!BlockUtils.place(pos, noteBlock, true, 100, true)) {
-            offset++;
-        } else {
+        if (!BlockUtils.place(pos, noteBlock, true, 100, true)) offset++;
+        else {
             blockPositions.put(uniqueNotes.get(currentNote), pos);
             stage = Stage.Tune;
         }
@@ -560,9 +552,7 @@ public class Notebot extends Module {
     private void tuneRotate() {
         BlockPos pos = blockPositions.get(uniqueNotes.get(currentNote));
         if (pos == null) return;
-        if (!tuneBlock(pos, uniqueNotes.get(currentNote))) {
-            disable();
-        }
+        if (!tuneBlock(pos, uniqueNotes.get(currentNote))) disable();
     }
 
     private boolean tuneBlock(BlockPos pos, int note) {
@@ -571,15 +561,16 @@ public class Notebot extends Module {
         BlockState block = mc.world.getBlockState(pos);
         if (block.getBlock() != Blocks.NOTE_BLOCK) {
             offset++;
-            stage = Stage.SetUp;
+            stage = Stage.Set_Up;
             return true;
         }
 
         if (block.get(NoteBlock.NOTE).equals(note)) {
             currentNote++;
-            stage = Stage.SetUp;
+            stage = Stage.Set_Up;
             return true;
         }
+
         mc.player.networkHandler.sendPacket(new PlayerInteractBlockC2SPacket(Hand.MAIN_HAND, new BlockHitResult(
             mc.player.getPos(), rayTraceCheck(pos), pos, true)));
         mc.player.swingHand(Hand.MAIN_HAND);
@@ -593,9 +584,7 @@ public class Notebot extends Module {
             if (polyphonic.get()) {
                 Rotations.setCamRotation(Rotations.getYaw(pos), Rotations.getPitch(pos));
                 playRotate();
-            } else {
-                Rotations.rotate(Rotations.getYaw(pos), Rotations.getPitch(pos), 100, this::playRotate);
-            }
+            } else Rotations.rotate(Rotations.getYaw(pos), Rotations.getPitch(pos), 100, this::playRotate);
         }
     }
 
@@ -606,8 +595,7 @@ public class Notebot extends Module {
             BlockPos pos = blockPositions.get(note);
 
             mc.interactionManager.attackBlock(pos, Direction.DOWN);
-        } catch (NullPointerException ignored) {
-        }
+        } catch (NullPointerException ignored) {}
     }
 
     private boolean isValidEmptySpot(BlockPos pos) {
@@ -629,9 +617,7 @@ public class Notebot extends Module {
                 pos.getY() + 0.5 + direction.getVector().getY() * 0.5,
                 pos.getZ() + 0.5 + direction.getVector().getZ() * 0.5), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player);
             BlockHitResult result = mc.world.raycast(raycastContext);
-            if (result != null && result.getType() == HitResult.Type.BLOCK && result.getBlockPos().equals(pos)) {
-                return direction;
-            }
+            if (result != null && result.getType() == HitResult.Type.BLOCK && result.getBlockPos().equals(pos)) return direction;
         }
 
         if (pos.getY() > eyesPos.y) return Direction.DOWN;
@@ -641,9 +627,14 @@ public class Notebot extends Module {
 
     private enum Stage {
         None,
-        SetUp,
+        Set_Up,
         Tune,
         Playing,
-        Preview
+        Preview;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

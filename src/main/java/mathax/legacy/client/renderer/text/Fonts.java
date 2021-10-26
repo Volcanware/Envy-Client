@@ -3,12 +3,13 @@ package mathax.legacy.client.renderer.text;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.WidgetScreen;
 import mathax.legacy.client.systems.config.Config;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.files.StreamUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Fonts {
     private static final String[] BUILTIN_FONTS = { "Comfortaa.ttf", "Verdana.ttf", "Arial.ttf", "Roboto.ttf", "Raleway.ttf", "Lato.ttf", "Comic Sans.ttf", "Tw Cen MT.ttf", "Pixelation.ttf", "JetBrains Mono.ttf" };
@@ -25,9 +26,7 @@ public class Fonts {
         // Copy built in fonts if they not exist
         for (String font : BUILTIN_FONTS) {
             File file = new File(FONTS_FOLDER, font);
-            if (!file.exists()) {
-                StreamUtils.copy(Fonts.class.getResourceAsStream("/assets/mathaxlegacy/fonts/" + font), file);
-            }
+            if (!file.exists()) StreamUtils.copy(Fonts.class.getResourceAsStream("/assets/mathaxlegacy/fonts/" + font), file);
         }
 
         // Load default font
@@ -53,9 +52,7 @@ public class Fonts {
             CUSTOM_FONT = new CustomTextRenderer(file);
         }
 
-        if (Utils.mc.currentScreen instanceof WidgetScreen && Config.get().customFont) {
-            ((WidgetScreen) Utils.mc.currentScreen).invalidate();
-        }
+        if (mc.currentScreen instanceof WidgetScreen && Config.get().customFont) ((WidgetScreen) mc.currentScreen).invalidate();
 
         lastFont = Config.get().font;
     }
@@ -67,9 +64,7 @@ public class Fonts {
         if (files != null) {
             for (File file : files) {
                 int i = file.getName().lastIndexOf('.');
-                if (file.getName().substring(i).equals(".ttf")) {
-                    fonts.add(file.getName().substring(0, i));
-                }
+                if (file.getName().substring(i).equals(".ttf")) fonts.add(file.getName().substring(0, i));
             }
         }
 

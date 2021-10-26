@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class TargetUtils {
     private static final List<Entity> ENTITIES = new ArrayList<>();

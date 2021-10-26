@@ -2,7 +2,6 @@ package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.systems.modules.movement.NoSlow;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlimeBlock;
 import net.minecraft.entity.Entity;
@@ -13,10 +12,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 @Mixin(SlimeBlock.class)
 public class SlimeBlockMixin {
     @Inject(method = "onSteppedOn", at = @At("HEAD"), cancellable = true)
     private void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity, CallbackInfo info) {
-        if (Modules.get().get(NoSlow.class).slimeBlock() && entity == Utils.mc.player) info.cancel();
+        if (Modules.get().get(NoSlow.class).slimeBlock() && entity == mc.player) info.cancel();
     }
 }

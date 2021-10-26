@@ -2,7 +2,6 @@ package mathax.legacy.client.utils.misc;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.game.ResourcePacksReloadedEvent;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.sound.WeightedSoundSet;
@@ -20,6 +19,8 @@ import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Names {
     private static final Map<StatusEffect, String> statusEffectNames = new HashMap<>(16);
@@ -72,7 +73,7 @@ public class Names {
 
     public static String getSoundName(Identifier id) {
         return soundNames.computeIfAbsent(id, identifier -> {
-            WeightedSoundSet soundSet = Utils.mc.getSoundManager().get(identifier);
+            WeightedSoundSet soundSet = mc.getSoundManager().get(identifier);
             if (soundSet == null) return identifier.getPath();
 
             Text text = soundSet.getSubtitle();

@@ -24,6 +24,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
+import static mathax.legacy.client.utils.Utils.*;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 import static org.lwjgl.glfw.GLFW.*;
 
 public abstract class WidgetScreen extends Screen {
@@ -54,7 +56,7 @@ public abstract class WidgetScreen extends Screen {
     public WidgetScreen(GuiTheme theme, String title) {
         super(new LiteralText(title));
 
-        this.parent = Utils.mc.currentScreen;
+        this.parent = mc.currentScreen;
         this.root = new WFullScreenRoot();
         this.theme = theme;
 
@@ -84,7 +86,7 @@ public abstract class WidgetScreen extends Screen {
     @Override
     protected void init() {
         MatHaxLegacy.EVENT_BUS.subscribe(this);
-        if (theme.hideHUD()) Utils.mc.options.hudHidden = true;
+        if (theme.hideHUD()) mc.options.hudHidden = true;
         closed = false;
 
         if (firstInit) {
@@ -109,7 +111,7 @@ public abstract class WidgetScreen extends Screen {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (locked) return false;
 
-        double s = Utils.mc.getWindow().getScaleFactor();
+        double s = mc.getWindow().getScaleFactor();
         mouseX *= s;
         mouseY *= s;
 
@@ -120,7 +122,7 @@ public abstract class WidgetScreen extends Screen {
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (locked) return false;
 
-        double s = Utils.mc.getWindow().getScaleFactor();
+        double s = mc.getWindow().getScaleFactor();
         mouseX *= s;
         mouseY *= s;
 
@@ -131,7 +133,7 @@ public abstract class WidgetScreen extends Screen {
     public void mouseMoved(double mouseX, double mouseY) {
         if (locked) return;
 
-        double s = Utils.mc.getWindow().getScaleFactor();
+        double s = mc.getWindow().getScaleFactor();
         mouseX *= s;
         mouseY *= s;
 
@@ -209,7 +211,9 @@ public abstract class WidgetScreen extends Screen {
 
         boolean control = MinecraftClient.IS_SYSTEM_MAC ? modifiers == GLFW_MOD_SUPER : modifiers == GLFW_MOD_CONTROL;
 
-        if (control && keyCode == GLFW_KEY_C && toClipboard()) return true;
+        if (control && keyCode == GLFW_KEY_C && toClipboard()) {
+            return true;
+        }
         else if (control && keyCode == GLFW_KEY_V && fromClipboard()) {
             reload();
             return true;
@@ -235,7 +239,7 @@ public abstract class WidgetScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         if (!Utils.canUpdate()) renderBackground(matrices);
 
-        double s = Utils.mc.getWindow().getScaleFactor();
+        double s = mc.getWindow().getScaleFactor();
         mouseX *= s;
         mouseY *= s;
 
@@ -247,7 +251,7 @@ public abstract class WidgetScreen extends Screen {
         // Apply projection without scaling
         Utils.unscaledProjection();
 
-        onRenderBefore(delta, matrices);
+        onRenderBefore(delta);
 
         RENDERER.theme = theme;
         theme.beforeRender();
@@ -277,7 +281,7 @@ public abstract class WidgetScreen extends Screen {
         }
     }
 
-    protected void onRenderBefore(float delta, MatrixStack matrixStack) {}
+    protected void onRenderBefore(float delta) {}
 
     @Override
     public void resize(MinecraftClient client, int width, int height) {
@@ -291,7 +295,7 @@ public abstract class WidgetScreen extends Screen {
             boolean preOnClose = onClose;
             onClose = true;
 
-            if (theme.hideHUD() && !(parent instanceof WidgetScreen)) Utils.mc.options.hudHidden = false;
+            if (theme.hideHUD() && !(parent instanceof WidgetScreen)) mc.options.hudHidden = false;
 
             removed();
 
@@ -324,7 +328,7 @@ public abstract class WidgetScreen extends Screen {
             if (onClose) {
                 taskAfterRender = () -> {
                     locked = true;
-                    Utils.mc.setScreen(parent);
+                    mc.setScreen(parent);
                 };
             }
         }
@@ -368,8 +372,8 @@ public abstract class WidgetScreen extends Screen {
 
         @Override
         protected void onCalculateSize() {
-            width = Utils.getWindowWidth();
-            height = Utils.getWindowHeight();
+            width = getWindowWidth();
+            height = getWindowHeight();
         }
 
         @Override
@@ -392,7 +396,7 @@ public abstract class WidgetScreen extends Screen {
                 calculateWidgetPositions();
 
                 valid = true;
-                mouseMoved(Utils.mc.mouse.getX(), Utils.mc.mouse.getY(), Utils.mc.mouse.getX(), Utils.mc.mouse.getY());
+                mouseMoved(mc.mouse.getX(), mc.mouse.getY(), mc.mouse.getX(), mc.mouse.getY());
             }
 
             return super.render(renderer, mouseX, mouseY, delta);

@@ -12,7 +12,7 @@ import net.minecraft.command.CommandSource;
 
 import java.util.*;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Commands extends System<Commands> {
     private final CommandDispatcher<CommandSource> DISPATCHER = new CommandDispatcher<>();

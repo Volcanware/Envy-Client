@@ -4,11 +4,12 @@ import baritone.api.pathing.goals.GoalBlock;
 import baritone.command.defaults.ComeCommand;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.Freecam;
-import mathax.legacy.client.utils.Utils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 @Mixin(ComeCommand.class)
 public class ComeCommandMixin {
@@ -17,7 +18,7 @@ public class ComeCommandMixin {
         Freecam freecam = Modules.get().get(Freecam.class);
 
         if (freecam.isActive()) {
-            float tickDelta = Utils.mc.getTickDelta();
+            float tickDelta = mc.getTickDelta();
             args.set(0, new GoalBlock((int) freecam.getX(tickDelta), (int) freecam.getY(tickDelta), (int) freecam.getZ(tickDelta)));
         }
     }

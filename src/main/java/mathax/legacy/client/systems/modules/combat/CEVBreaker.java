@@ -47,8 +47,7 @@ public class CEVBreaker extends Module {
         .name("delay")
         .description("How many ticks between block placements.")
         .defaultValue(4)
-        .sliderMin(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 

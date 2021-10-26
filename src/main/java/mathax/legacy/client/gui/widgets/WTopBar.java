@@ -7,9 +7,9 @@ import mathax.legacy.client.gui.tabs.Tabs;
 import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
 import mathax.legacy.client.gui.widgets.pressable.WPressable;
 import mathax.legacy.client.utils.render.color.Color;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.gui.screen.Screen;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
 import static org.lwjgl.glfw.GLFW.glfwSetCursorPos;
 
 public abstract class WTopBar extends WHorizontalList {
@@ -54,21 +54,21 @@ public abstract class WTopBar extends WHorizontalList {
 
         @Override
         protected void onPressed(int button) {
-            Screen screen = Utils.mc.currentScreen;
+            Screen screen = mc.currentScreen;
 
             if (!(screen instanceof TabScreen) || ((TabScreen) screen).tab != tab) {
-                double mouseX = Utils.mc.mouse.getX();
-                double mouseY = Utils.mc.mouse.getY();
+                double mouseX = mc.mouse.getX();
+                double mouseY = mc.mouse.getY();
 
                 tab.openScreen(theme);
-                glfwSetCursorPos(Utils.mc.getWindow().getHandle(), mouseX, mouseY);
+                glfwSetCursorPos(mc.getWindow().getHandle(), mouseX, mouseY);
             }
         }
 
         @Override
         protected void onRender(GuiRenderer renderer, double mouseX, double mouseY, double delta) {
             double pad = pad();
-            Color color = getButtonColor(pressed || (Utils.mc.currentScreen instanceof TabScreen && ((TabScreen) Utils.mc.currentScreen).tab == tab), mouseOver);
+            Color color = getButtonColor(pressed || (mc.currentScreen instanceof TabScreen && ((TabScreen) mc.currentScreen).tab == tab), mouseOver);
 
             switch (getState(this)) {
                 case 1:

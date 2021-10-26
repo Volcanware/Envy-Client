@@ -8,7 +8,8 @@ import mathax.legacy.client.systems.accounts.Account;
 import mathax.legacy.client.systems.accounts.Accounts;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.render.color.Color;
-import mathax.legacy.client.utils.Utils;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public abstract class WAccount extends WHorizontalList {
     public Runnable refreshScreenAction;
@@ -32,7 +33,7 @@ public abstract class WAccount extends WHorizontalList {
 
         // Name
         WLabel name = add(theme.label(account.getUsername())).widget();
-        if (Utils.mc.getSession().getUsername().equalsIgnoreCase(account.getUsername())) name.color = loggedInColor();
+        if (mc.getSession().getUsername().equalsIgnoreCase(account.getUsername())) name.color = loggedInColor();
 
         // Type
         WLabel label = add(theme.label("(" + account.getType() + ")")).expandCellX().right().widget();

@@ -15,8 +15,9 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class ModulesScreen extends TabScreen {
@@ -37,7 +38,7 @@ public class ModulesScreen extends TabScreen {
 
     // Category
 
-    protected void createCategory(WContainer c, Category category) {
+    protected WWindow createCategory(WContainer c, Category category) {
         WWindow w = theme.window(category.name);
         w.id = category.name;
         w.padding = 0;
@@ -53,6 +54,8 @@ public class ModulesScreen extends TabScreen {
         for (Module module : Modules.get().getGroup(category)) {
             w.add(theme.module(module)).expandX().widget().tooltip = module.description;
         }
+
+        return w;
     }
 
     // Search
@@ -85,7 +88,7 @@ public class ModulesScreen extends TabScreen {
         }
     }
 
-    protected void createSearch(WContainer c) {
+    protected WWindow createSearch(WContainer c) {
         WWindow w = theme.window("Search");
         w.id = "search";
 
@@ -107,6 +110,8 @@ public class ModulesScreen extends TabScreen {
 
         w.add(l).expandX();
         createSearchW(l, text.get());
+
+        return w;
     }
 
     @Override
@@ -116,14 +121,7 @@ public class ModulesScreen extends TabScreen {
 
     @Override
     public boolean fromClipboard() {
-        NbtCompound clipboard = NbtUtils.fromClipboard(Modules.get().toTag());
-
-        if (clipboard != null) {
-            Modules.get().fromTag(clipboard);
-            return true;
-        }
-
-        return false;
+        return NbtUtils.fromClipboard(Modules.get());
     }
 
     @Override
@@ -132,13 +130,15 @@ public class ModulesScreen extends TabScreen {
     // Stuff
 
     protected class WCategoryController extends WContainer {
+        public final List<WWindow> windows = new ArrayList<>();
+
         @Override
         public void init() {
             for (Category category : Modules.loopCategories()) {
-                createCategory(this, category);
+                windows.add(createCategory(this, category));
             }
 
-            createSearch(this);
+            windows.add(createSearch(this));
         }
 
         @Override

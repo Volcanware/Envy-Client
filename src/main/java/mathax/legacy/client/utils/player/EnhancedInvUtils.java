@@ -13,7 +13,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.function.Predicate;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class EnhancedInvUtils {
     private static Long currentMove;

@@ -15,32 +15,32 @@ import mathax.legacy.client.gui.widgets.pressable.WMinus;
 import mathax.legacy.client.systems.proxies.Proxy;
 import mathax.legacy.client.systems.proxies.ProxyType;
 import mathax.legacy.client.systems.proxies.Proxies;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.NbtUtils;
-import net.minecraft.nbt.NbtCompound;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 public class ProxiesScreen extends WindowScreen {
     private final List<WCheckbox> checkboxes = new ArrayList<>();
-    private boolean dirty;
+    private boolean doReload;
 
     public ProxiesScreen(GuiTheme theme) {
         super(theme, "Proxies");
     }
 
     protected void openEditProxyScreen(Proxy proxy) {
-        Utils.mc.setScreen(new EditProxyScreen(theme, proxy));
+        mc.setScreen(new EditProxyScreen(theme, proxy));
     }
 
     @Override
     protected void init() {
         super.init();
 
-        if (dirty) {
+        if (doReload) {
             reload();
-            dirty = false;
+            doReload = false;
         }
     }
 
@@ -107,14 +107,7 @@ public class ProxiesScreen extends WindowScreen {
 
     @Override
     public boolean fromClipboard() {
-        NbtCompound clipboard = NbtUtils.fromClipboard(Proxies.get().toTag());
-
-        if (clipboard != null) {
-            Proxies.get().fromTag(clipboard);
-            return true;
-        }
-
-        return false;
+        return NbtUtils.fromClipboard(Proxies.get());
     }
 
     protected class EditProxyScreen extends WindowScreen {
@@ -177,7 +170,7 @@ public class ProxiesScreen extends WindowScreen {
             WButton addSave = add(theme.button(isNew ? "Add" : "Save")).expandX().widget();
             addSave.action = () -> {
                 if (proxy.resolveAddress() && (!isNew || Proxies.get().add(proxy))) {
-                    dirty = true;
+                    doReload = true;
                     onClose();
                 }
             };

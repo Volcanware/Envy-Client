@@ -8,6 +8,7 @@ import mathax.legacy.client.gui.widgets.pressable.WPressable;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
@@ -50,7 +51,7 @@ public class WMatHaxModule extends WPressable implements MatHaxWidget {
     @Override
     protected void onPressed(int button) {
         if (button == GLFW_MOUSE_BUTTON_LEFT) module.toggle();
-        else if (button == GLFW_MOUSE_BUTTON_RIGHT) Utils.mc.setScreen(theme.moduleScreen(module));
+        else if (button == GLFW_MOUSE_BUTTON_RIGHT) mc.setScreen(theme.moduleScreen(module));
     }
 
     @Override

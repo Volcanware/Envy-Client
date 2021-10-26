@@ -55,7 +55,7 @@ public class Flight extends Module {
         .description("The amount of delay, in ticks, between toggles in normal mode.")
         .defaultValue(80)
         .range(1, 5000)
-        .sliderMax(200)
+        .sliderRange(1, 200)
         .visible(() -> antiKickMode.get() == AntiKickMode.Normal)
         .build()
     );

@@ -22,6 +22,8 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.List;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 public class HudTab extends Tab {
     public static HudTab INSTANCE;
 
@@ -33,7 +35,7 @@ public class HudTab extends Tab {
 
     @Override
     public void openScreen(GuiTheme theme) {
-        Utils.mc.setScreen(createScreen(theme));
+        mc.setScreen(createScreen(theme));
     }
 
     @Override
@@ -73,7 +75,7 @@ public class HudTab extends Tab {
         protected void init() {
             super.init();
 
-            Utils.mc.options.hudHidden = false;
+            mc.options.hudHidden = false;
         }
 
         @Override
@@ -100,7 +102,7 @@ public class HudTab extends Tab {
         public void onClose() {
             super.onClose();
 
-            if (theme.hideHUD() && parent instanceof WidgetScreen) Utils.mc.options.hudHidden = true;
+            if (theme.hideHUD() && parent instanceof WidgetScreen) mc.options.hudHidden = true;
         }
 
         @Override
@@ -108,7 +110,7 @@ public class HudTab extends Tab {
             if (hoveredModule != null) {
                 if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
                     if (!selectedElements.isEmpty()) selectedElements.clear();
-                    Utils.mc.setScreen(new HudElementScreen(theme, hoveredModule));
+                    mc.setScreen(new HudElementScreen(theme, hoveredModule));
                 }
                 else {
                     dragging = true;
@@ -124,7 +126,7 @@ public class HudTab extends Tab {
                 return true;
             }
 
-            double s = Utils.mc.getWindow().getScaleFactor();
+            double s = mc.getWindow().getScaleFactor();
 
             selecting = true;
             mouseStartX = mouseX * s;
@@ -163,7 +165,7 @@ public class HudTab extends Tab {
 
         @Override
         public void mouseMoved(double mouseX, double mouseY) {
-            double s = Utils.mc.getWindow().getScaleFactor();
+            double s = mc.getWindow().getScaleFactor();
 
             mouseX *= s;
             mouseY *= s;
@@ -287,7 +289,7 @@ public class HudTab extends Tab {
 
         @Override
         public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-            double s = Utils.mc.getWindow().getScaleFactor();
+            double s = mc.getWindow().getScaleFactor();
 
             mouseX *= s;
             mouseY *= s;

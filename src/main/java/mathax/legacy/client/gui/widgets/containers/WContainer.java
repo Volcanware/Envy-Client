@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 public abstract class WContainer extends WWidget {
     public final List<Cell<?>> cells = new ArrayList<>();
 
@@ -43,7 +45,7 @@ public abstract class WContainer extends WWidget {
         for (Cell<?> cell : cells) {
             cell.move(deltaX, deltaY);
 
-            Mouse mouse = Utils.mc.mouse;
+            Mouse mouse = mc.mouse;
             cell.widget().mouseMoved(mouse.getX(), mouse.getY(), mouse.getX(), mouse.getY());
         }
     }

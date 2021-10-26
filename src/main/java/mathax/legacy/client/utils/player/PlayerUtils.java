@@ -35,8 +35,12 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.RaycastContext;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import static mathax.legacy.client.utils.Utils.WHITE;
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class PlayerUtils {
     private static final Vec3d hitPos = new Vec3d(0.0, 0.0, 0.0);
@@ -212,6 +216,25 @@ public class PlayerUtils {
 
     public static boolean isSprinting() {
         return mc.player.isSprinting() && (mc.player.forwardSpeed != 0 || mc.player.sidewaysSpeed != 0);
+    }
+
+    public static ArrayList<Vec3d> selfTrapPositions = new ArrayList<Vec3d>() {{
+        add(new Vec3d(1, 1, 0));
+        add(new Vec3d(-1, 1, 0));
+        add(new Vec3d(0, 1, 1));
+        add(new Vec3d(0, 1, -1));
+    }};
+
+    public static BlockPos getSelfTrapBlock(PlayerEntity p, Boolean escapePrevention) {
+        BlockPos tpos = p.getBlockPos();
+        List<BlockPos> selfTrapBlocks = new ArrayList<>();
+        if (!escapePrevention && BlockUtils.isTrapBlock(tpos.up(2))) return tpos.up(2);
+        for (Vec3d stp : selfTrapPositions) {
+            BlockPos stb = tpos.add(stp.x, stp.y, stp.z);
+            if (BlockUtils.isTrapBlock(stb)) selfTrapBlocks.add(stb);
+        }
+        if (selfTrapBlocks.isEmpty()) return null;
+        return selfTrapBlocks.get(new Random().nextInt(selfTrapBlocks.size()));
     }
 
     public static boolean isInHole(boolean doubles) {

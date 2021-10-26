@@ -21,12 +21,13 @@ import mathax.legacy.client.systems.accounts.Account;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.render.color.SettingColor;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.gui.themes.mathax.widgets.*;
 import mathax.legacy.client.gui.themes.mathax.widgets.pressable.*;
 import mathax.legacy.client.gui.widgets.*;
 import mathax.legacy.client.gui.widgets.pressable.*;
 import mathax.legacy.client.settings.*;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class MatHaxGuiTheme extends GuiTheme {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -48,7 +49,7 @@ public class MatHaxGuiTheme extends GuiTheme {
         .sliderRange(0.75, 4)
         .onSliderRelease()
         .onChanged(aDouble -> {
-            if (Utils.mc.currentScreen instanceof WidgetScreen) ((WidgetScreen) Utils.mc.currentScreen).invalidate();
+            if (mc.currentScreen instanceof WidgetScreen) ((WidgetScreen) mc.currentScreen).invalidate();
         })
         .build()
     );
@@ -72,7 +73,7 @@ public class MatHaxGuiTheme extends GuiTheme {
         .description("Hide HUD when in GUI.")
         .defaultValue(false)
         .onChanged(v -> {
-            if (Utils.mc.currentScreen instanceof WidgetScreen) Utils.mc.options.hudHidden = v;
+            if (mc.currentScreen instanceof WidgetScreen) mc.options.hudHidden = v;
         })
         .build()
     );

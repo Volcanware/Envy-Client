@@ -13,7 +13,7 @@ import mathax.legacy.client.utils.misc.NbtException;
 import net.minecraft.client.util.Session;
 import net.minecraft.nbt.NbtCompound;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class PremiumAccount extends Account<PremiumAccount> {
     private String password;

@@ -1,7 +1,6 @@
 package mathax.legacy.client.utils.player;
 
 import mathax.legacy.client.mixininterface.IClientPlayerInteractionManager;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.*;
@@ -12,7 +11,7 @@ import net.minecraft.screen.slot.SlotActionType;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class InvUtils {
     private static final Action ACTION = new Action();
@@ -41,7 +40,7 @@ public class InvUtils {
     }
 
     public static FindItemResult findInHotbar(Predicate<ItemStack> itemStackPredicate) {
-        if (itemStackPredicate.test(Utils.mc.player.getOffHandStack())) return new FindItemResult(SlotUtils.OFFHAND, mc.player.getOffHandStack().getCount());
+        if (itemStackPredicate.test(mc.player.getOffHandStack())) return new FindItemResult(SlotUtils.OFFHAND, mc.player.getOffHandStack().getCount());
 
         if (itemStackPredicate.test(mc.player.getMainHandStack())) return new FindItemResult(mc.player.getInventory().selectedSlot, mc.player.getMainHandStack().getCount());
 
@@ -119,6 +118,10 @@ public class InvUtils {
 
     public static FindItemResult findPick() {
         return InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof PickaxeItem);
+    }
+
+    public static FindItemResult findObsidian() {
+        return InvUtils.findInHotbar(Blocks.OBSIDIAN.asItem());
     }
 
     public static FindItemResult findCraftTable() {

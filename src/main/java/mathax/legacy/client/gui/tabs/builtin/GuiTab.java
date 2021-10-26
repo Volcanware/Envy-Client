@@ -7,10 +7,11 @@ import mathax.legacy.client.gui.tabs.TabScreen;
 import mathax.legacy.client.gui.tabs.WindowTabScreen;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.input.WDropdown;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.nbt.NbtCompound;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class GuiTab extends Tab {
     public GuiTab() {
@@ -43,7 +44,7 @@ public class GuiTab extends Tab {
             themeW.action = () -> {
                 GuiThemes.select(themeW.get());
 
-                Utils.mc.setScreen(null);
+                mc.setScreen(null);
                 tab.openScreen(GuiThemes.get());
             };
 

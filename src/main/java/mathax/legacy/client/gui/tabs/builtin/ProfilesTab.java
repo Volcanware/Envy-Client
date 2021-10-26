@@ -14,13 +14,13 @@ import mathax.legacy.client.gui.widgets.pressable.WMinus;
 import mathax.legacy.client.gui.widgets.pressable.WPlus;
 import mathax.legacy.client.systems.profiles.Profile;
 import mathax.legacy.client.systems.profiles.Profiles;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.nbt.NbtCompound;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class ProfilesTab extends Tab {
 
@@ -63,7 +63,7 @@ public class ProfilesTab extends Tab {
 
                 // Edit
                 WButton edit = table.add(theme.button(GuiRenderer.EDIT)).widget();
-                edit.action = () -> Utils.mc.setScreen(new EditProfileScreen(theme, profile, this::reload));
+                edit.action = () -> mc.setScreen(new EditProfileScreen(theme, profile, this::reload));
 
                 // Remove
                 WMinus remove = table.add(theme.minus()).widget();
@@ -80,7 +80,7 @@ public class ProfilesTab extends Tab {
 
             // Create
             WButton create = table.add(theme.button("Create")).expandX().widget();
-            create.action = () -> Utils.mc.setScreen(new EditProfileScreen(theme, null, this::reload));
+            create.action = () -> mc.setScreen(new EditProfileScreen(theme, null, this::reload));
         }
 
         @Override
@@ -90,14 +90,7 @@ public class ProfilesTab extends Tab {
 
         @Override
         public boolean fromClipboard() {
-            NbtCompound clipboard = NbtUtils.fromClipboard(Profiles.get().toTag());
-
-            if (clipboard != null) {
-                Profiles.get().fromTag(clipboard);
-                return true;
-            }
-
-            return false;
+            return NbtUtils.fromClipboard(Profiles.get());
         }
     }
 

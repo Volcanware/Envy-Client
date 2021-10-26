@@ -1,5 +1,7 @@
 package mathax.legacy.installer;
 
+import net.minecraft.util.Util;
+
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
@@ -43,37 +45,29 @@ public class Installer {
             JOptionPane.YES_NO_CANCEL_OPTION,
             JOptionPane.ERROR_MESSAGE,
             icon,
-            new String[]{"Download Fabric", "Open mods folder", "MatHax Website", "MatHax Discord"},
+            new String[]{"Download Fabric", "Open mods folder", "MatHax Website"},
             null
         );
 
         switch (option) {
-            case 0: openUrl("https://fabricmc.net/use/");
-            case 1:
-                String os = System.getProperty("os.name").toLowerCase();
+            case 0 -> {
+                openUrl("https://fabricmc.net/use/");
+            }
+            case 1 -> {
+                String path = switch (Util.getOperatingSystem()) {
+                    case WINDOWS -> System.getenv("AppData") + "/.minecraft/mods";
+                    case OSX -> System.getProperty("user.home") + "/Library/Application Support/minecraft/mods";
+                    default -> System.getProperty("user.home") + "/.minecraft";
+                };
 
-                try {
-                    if (os.contains("win")) {
-                        if (Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
-                            String path = System.getenv("AppData") + "/.minecraft/mods";
-                            new File(path).mkdirs();
-                            Desktop.getDesktop().open(new File(path));
-                        }
-                    } else if (os.contains("mac")) {
-                        String path = System.getProperty("user.home") + "/Library/Application Support/minecraft/mods";
-                        new File(path).mkdirs();
-                        ProcessBuilder pb = new ProcessBuilder("open", path);
-                        Process process = pb.start();
-                    } else if (os.contains("nix") || os.contains("nux")) {
-                        String path = System.getProperty("user.home") + "/.minecraft";
-                        new File(path).mkdirs();
-                        Runtime.getRuntime().exec("xdg-open \"" + path + "\"");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            case 2: openUrl("https://mathaxclient.xyz");
-            case 3: openUrl("https://mathaxclient.xyz/Discord");
+                File mods = new File(path);
+                if (!mods.exists()) mods.mkdirs();
+
+                Util.getOperatingSystem().open(mods);
+            }
+            case 2 -> {
+                openUrl("https://mathaxclient.xyz");
+            }
         }
     }
 

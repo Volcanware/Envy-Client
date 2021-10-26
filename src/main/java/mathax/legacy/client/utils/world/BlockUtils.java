@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class BlockUtils {
     private static final Vec3d hitPos = new Vec3d(0, 0, 0);
@@ -126,7 +126,7 @@ public class BlockUtils {
     }
 
     public static boolean place(BlockPos blockPos, FindItemResult findItemResult, boolean rotate, int rotationPriority, boolean swingHand, boolean checkEntities, boolean swapBack) {
-        if (findItemResult.isOffhand()) return place(blockPos, Hand.OFF_HAND, Utils.mc.player.getInventory().selectedSlot, rotate, rotationPriority, swingHand, checkEntities, swapBack);
+        if (findItemResult.isOffhand()) return place(blockPos, Hand.OFF_HAND, mc.player.getInventory().selectedSlot, rotate, rotationPriority, swingHand, checkEntities, swapBack);
         else if (findItemResult.isHotbar()) return place(blockPos, Hand.MAIN_HAND, findItemResult.getSlot(), rotate, rotationPriority, swingHand, checkEntities, swapBack);
         return false;
     }

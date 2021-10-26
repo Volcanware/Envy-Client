@@ -35,8 +35,7 @@ public class StayHydrated extends Module {
         .description("Delay between drinking notifications in minutes.")
         .defaultValue(120)
         .min(1)
-        .sliderMin(5)
-        .sliderMax(180)
+        .sliderRange(5, 180)
         .build()
     );
 

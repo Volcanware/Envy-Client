@@ -1,8 +1,9 @@
 package mathax.legacy.client.gui.tabs;
 
 import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.gui.screen.Screen;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public abstract class Tab {
     public final String name;
@@ -14,7 +15,7 @@ public abstract class Tab {
     public void openScreen(GuiTheme theme) {
         TabScreen screen = this.createScreen(theme);
         screen.addDirect(theme.topBar()).top().centerX();
-        Utils.mc.setScreen(screen);
+        mc.setScreen(screen);
     }
 
     public abstract TabScreen createScreen(GuiTheme theme);

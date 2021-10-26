@@ -10,7 +10,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class ChatUtils {
     private static final RainbowColor RAINBOW = new RainbowColor();

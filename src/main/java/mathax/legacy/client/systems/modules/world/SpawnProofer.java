@@ -49,7 +49,8 @@ public class SpawnProofer extends Module {
         .name("delay")
         .description("Delay in ticks between placing blocks")
         .defaultValue(0)
-        .min(0).sliderMax(10)
+        .min(0)
+        .sliderMax(10)
         .build()
     );
 

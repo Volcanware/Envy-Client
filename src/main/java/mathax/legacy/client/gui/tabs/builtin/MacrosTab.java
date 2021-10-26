@@ -18,10 +18,10 @@ import mathax.legacy.client.gui.widgets.pressable.WMinus;
 import mathax.legacy.client.gui.widgets.pressable.WPlus;
 import mathax.legacy.client.systems.macros.Macro;
 import mathax.legacy.client.systems.macros.Macros;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.nbt.NbtCompound;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class MacrosTab extends Tab {
     public MacrosTab() {
@@ -53,7 +53,7 @@ public class MacrosTab extends Tab {
                     table.add(theme.label(macro.name + " (" + macro.keybind + ")"));
 
                     WButton edit = table.add(theme.button(GuiRenderer.EDIT)).expandCellX().right().widget();
-                    edit.action = () -> Utils.mc.setScreen(new MacroEditorScreen(theme, macro));
+                    edit.action = () -> mc.setScreen(new MacroEditorScreen(theme, macro));
 
                     WMinus remove = table.add(theme.minus()).widget();
                     remove.action = () -> {
@@ -69,7 +69,7 @@ public class MacrosTab extends Tab {
 
             // New
             WButton create = add(theme.button("Create")).expandX().widget();
-            create.action = () -> Utils.mc.setScreen(new MacroEditorScreen(theme, null));
+            create.action = () -> mc.setScreen(new MacroEditorScreen(theme, null));
         }
 
         @Override
@@ -79,14 +79,7 @@ public class MacrosTab extends Tab {
 
         @Override
         public boolean fromClipboard() {
-            NbtCompound clipboard = NbtUtils.fromClipboard(Macros.get().toTag());
-
-            if (clipboard != null) {
-                Macros.get().fromTag(clipboard);
-                return true;
-            }
-
-            return false;
+            return NbtUtils.fromClipboard(Macros.get());
         }
     }
 

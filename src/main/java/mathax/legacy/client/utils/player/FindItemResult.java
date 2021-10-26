@@ -2,7 +2,7 @@ package mathax.legacy.client.utils.player;
 
 import net.minecraft.util.Hand;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class FindItemResult {
     private final int slot, count;

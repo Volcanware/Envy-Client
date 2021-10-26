@@ -32,6 +32,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
     private static final String[] BUILTIN_ICONS = {"square", "circle", "triangle", "star", "diamond", "skull"};
 
@@ -129,7 +131,7 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
         for (Waypoint waypoint : this) {
             if (!waypoint.visible || !checkDimension(waypoint)) continue;
 
-            Camera camera = Utils.mc.gameRenderer.getCamera();
+            Camera camera = mc.gameRenderer.getCamera();
 
             double x = getCoords(waypoint).x;
             double y = getCoords(waypoint).y;
@@ -147,7 +149,7 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
                 if (a < 0.1) continue;
             }
 
-            double maxViewDist = Utils.mc.options.viewDistance * 16;
+            double maxViewDist = mc.options.viewDistance * 16;
             if (dist > maxViewDist) {
                 double dx = x - camera.getPos().x;
                 double dy = y - camera.getPos().y;

@@ -9,11 +9,11 @@ import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import mathax.legacy.client.utils.render.color.RainbowColors;
 import mathax.legacy.client.settings.*;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.nbt.NbtCompound;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class ConfigTab extends Tab {
     private static final Settings settings = new Settings();
@@ -229,14 +229,7 @@ public class ConfigTab extends Tab {
 
         @Override
         public boolean fromClipboard() {
-            NbtCompound clipboard = NbtUtils.fromClipboard(Config.get().toTag());
-
-            if (clipboard != null) {
-                Config.get().fromTag(clipboard);
-                return true;
-            }
-
-            return false;
+            return NbtUtils.fromClipboard(Config.get());
         }
     }
 
@@ -244,7 +237,7 @@ public class ConfigTab extends Tab {
         if (!Config.get().openChatOnPrefix) return false;
 
         String prefixKeybindTranslation = String.format("key.keyboard.%s",  Config.get().prefix.toLowerCase().substring(0,1));
-        for (KeyBinding key: Utils.mc.options.keysAll) {
+        for (KeyBinding key: mc.options.keysAll) {
             if (key.getBoundKeyTranslationKey().equals(prefixKeybindTranslation)) return true;
         }
 

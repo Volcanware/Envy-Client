@@ -2,7 +2,6 @@ package mathax.legacy.client.gui.renderer.packer;
 
 import com.mojang.blaze3d.platform.TextureUtil;
 import mathax.legacy.client.utils.render.ByteTexture;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.util.Identifier;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBImage;
@@ -18,6 +17,8 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 public class TexturePacker {
     private static final int maxWidth = 2048;
 
@@ -25,7 +26,7 @@ public class TexturePacker {
 
     public GuiTexture add(Identifier id) {
         try {
-            InputStream in = Utils.mc.getResourceManager().getResource(id).getInputStream();
+            InputStream in = mc.getResourceManager().getResource(id).getInputStream();
             GuiTexture texture = new GuiTexture();
 
             try (MemoryStack stack = MemoryStack.stackPush()) {

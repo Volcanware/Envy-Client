@@ -7,7 +7,6 @@ import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.player.Rotations;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -26,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
 import static org.lwjgl.opengl.GL11.*;
 
 @Mixin(LivingEntityRenderer.class)
@@ -44,19 +44,19 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 
     @ModifyVariable(method = "render", ordinal = 2, at = @At(value = "STORE", ordinal = 0))
     public float changeYaw(float oldValue, LivingEntity entity) {
-        if (entity.equals(Utils.mc.player) && Rotations.rotationTimer < 10) return Rotations.serverYaw;
+        if (entity.equals(mc.player) && Rotations.rotationTimer < 10) return Rotations.serverYaw;
         return oldValue;
     }
 
     @ModifyVariable(method = "render", ordinal = 3, at = @At(value = "STORE", ordinal = 0))
     public float changeHeadYaw(float oldValue, LivingEntity entity) {
-        if (entity.equals(Utils.mc.player) && Rotations.rotationTimer < 10) return Rotations.serverYaw;
+        if (entity.equals(mc.player) && Rotations.rotationTimer < 10) return Rotations.serverYaw;
         return oldValue;
     }
 
     @ModifyVariable(method = "render", ordinal = 5, at = @At(value = "STORE", ordinal = 3))
     public float changePitch(float oldValue, LivingEntity entity) {
-        if (entity.equals(Utils.mc.player) && Rotations.rotationTimer < 10) return Rotations.serverPitch;
+        if (entity.equals(mc.player) && Rotations.rotationTimer < 10) return Rotations.serverPitch;
         return oldValue;
     }
 
@@ -102,7 +102,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     private void modifyScale(Args args, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         Chams module = Modules.get().get(Chams.class);
         if (!module.isActive() || !module.players.get() || !(livingEntity instanceof PlayerEntity)) return;
-        if (module.ignoreSelf.get() && livingEntity == Utils.mc.player) return;
+        if (module.ignoreSelf.get() && livingEntity == mc.player) return;
 
         args.set(0, -module.playersScale.get().floatValue());
         args.set(1, -module.playersScale.get().floatValue());
@@ -114,7 +114,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     private void modifyColor(Args args, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         Chams module = Modules.get().get(Chams.class);
         if (!module.isActive() || !module.players.get() || !(livingEntity instanceof PlayerEntity)) return;
-        if (module.ignoreSelf.get() && livingEntity == Utils.mc.player) return;
+        if (module.ignoreSelf.get() && livingEntity == mc.player) return;
 
         Color color = PlayerUtils.getPlayerColor(((PlayerEntity) livingEntity), module.playersColor.get());
         args.set(4, color.r / 255f);
@@ -127,7 +127,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     private RenderLayer getRenderLayer(LivingEntityRenderer<T, M> livingEntityRenderer, T livingEntity, boolean showBody, boolean translucent, boolean showOutline) {
         Chams module = Modules.get().get(Chams.class);
         if (!module.isActive() || !module.players.get() || !(livingEntity instanceof PlayerEntity) || module.playersTexture.get()) return getRenderLayer(livingEntity, showBody, translucent, showOutline);
-        if (module.ignoreSelf.get() && livingEntity == Utils.mc.player) return getRenderLayer(livingEntity, showBody, translucent, showOutline);
+        if (module.ignoreSelf.get() && livingEntity == mc.player) return getRenderLayer(livingEntity, showBody, translucent, showOutline);
 
         return RenderLayer.getItemEntityTranslucentCull(Chams.BLANK);
     }

@@ -1,6 +1,6 @@
 package mathax.legacy.client.renderer;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 import static org.lwjgl.opengl.GL32C.*;
 
 public class Framebuffer {

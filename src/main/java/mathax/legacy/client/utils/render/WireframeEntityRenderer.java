@@ -20,7 +20,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.*;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class WireframeEntityRenderer {
     private static final MatrixStack matrices = new MatrixStack();

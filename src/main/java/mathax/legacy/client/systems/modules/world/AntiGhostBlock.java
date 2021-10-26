@@ -6,6 +6,7 @@ import mathax.legacy.client.events.entity.player.PlaceBlockEvent;
 import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
+import mathax.legacy.client.settings.BoolSetting;
 import mathax.legacy.client.settings.IntSetting;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
@@ -29,14 +30,14 @@ public class AntiGhostBlock extends Module {
     private long lastRequest = 0L;
 
     SettingGroup sgGeneral = settings.getDefaultGroup();
+    SettingGroup sgModuleFixes = settings.createGroup("Module Fixes");
 
     private final Setting<Integer> requestDelay = sgGeneral.add(new IntSetting.Builder()
         .name("delay")
         .description("Delay between updating block and sending request.")
         .defaultValue(3)
         .min(1)
-        .sliderMin(1)
-        .sliderMax(200)
+        .sliderRange(1, 200)
         .build()
     );
 
@@ -45,8 +46,14 @@ public class AntiGhostBlock extends Module {
         .description("Delay between requests.")
         .defaultValue(5)
         .min(1)
-        .sliderMin(1)
-        .sliderMax(200)
+        .sliderRange(1, 200)
+        .build()
+    );
+
+    public final Setting<Boolean> bedAuraFix = sgModuleFixes.add(new BoolSetting.Builder()
+        .name("bed-aura-fix")
+        .description("Fixes Bed Aura issues with Anti Ghost Block.")
+        .defaultValue(false)
         .build()
     );
 

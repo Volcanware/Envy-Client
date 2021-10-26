@@ -3,7 +3,6 @@ package mathax.legacy.client.mixin;
 import com.google.common.base.MoreObjects;
 import mathax.legacy.client.systems.modules.render.HandView;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.HeldItemRenderer;
@@ -16,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 @Mixin(HeldItemRenderer.class)
 public abstract class HeldItemRendererMixin {
@@ -40,11 +41,11 @@ public abstract class HeldItemRendererMixin {
     @ModifyVariable(method = "renderItem(FLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;Lnet/minecraft/client/network/ClientPlayerEntity;I)V", at = @At(value = "STORE", ordinal = 0), index = 6)
     private float modifySwing(float swingProgress) {
         HandView module = Modules.get().get(HandView.class);
-        Hand hand = MoreObjects.firstNonNull(Utils.mc.player.preferredHand, Hand.MAIN_HAND);
+        Hand hand = MoreObjects.firstNonNull(mc.player.preferredHand, Hand.MAIN_HAND);
 
         if (module.isActive()) {
-            if (hand == Hand.OFF_HAND && !Utils.mc.player.getOffHandStack().isEmpty()) return swingProgress + module.offSwing.get().floatValue();
-            if (hand == Hand.MAIN_HAND && !Utils.mc.player.getMainHandStack().isEmpty()) return swingProgress + module.mainSwing.get().floatValue();
+            if (hand == Hand.OFF_HAND && !mc.player.getOffHandStack().isEmpty()) return swingProgress + module.offSwing.get().floatValue();
+            if (hand == Hand.MAIN_HAND && !mc.player.getMainHandStack().isEmpty()) return swingProgress + module.mainSwing.get().floatValue();
         }
 
         return swingProgress;

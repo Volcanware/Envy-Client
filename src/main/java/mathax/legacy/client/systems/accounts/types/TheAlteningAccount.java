@@ -13,7 +13,7 @@ import mathax.legacy.client.systems.accounts.AccountType;
 import mathax.legacy.client.systems.accounts.AccountUtils;
 import net.minecraft.client.util.Session;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class TheAlteningAccount extends Account<TheAlteningAccount> {
     private static final String AUTH = "http://authserver.thealtening.com";

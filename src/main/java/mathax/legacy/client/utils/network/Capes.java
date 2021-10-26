@@ -1,6 +1,8 @@
 package mathax.legacy.client.utils.network;
 
 import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.misc.CapesModule;
 import net.minecraft.client.texture.NativeImage;
@@ -13,7 +15,7 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Capes {
     public static final Map<UUID, String> OWNERS = new HashMap<>();
@@ -25,12 +27,7 @@ public class Capes {
     private static final List<Cape> TO_REMOVE = new ArrayList<>();
 
     public static void init() {
-        OWNERS.clear();
-        URLS.clear();
-        TEXTURES.clear();
-        TO_REGISTER.clear();
-        TO_RETRY.clear();
-        TO_REMOVE.clear();
+        disable();
 
         if (Modules.get().isActive(CapesModule.class)) {
             MatHaxExecutor.execute(() -> {
@@ -67,25 +64,8 @@ public class Capes {
         TO_REMOVE.clear();
     }
 
-    public static Identifier get(PlayerEntity player) {
-        if (Modules.get().isActive(CapesModule.class)) {
-            String capeName = OWNERS.get(player.getUuid());
-            if (capeName != null) {
-                Cape cape = TEXTURES.get(capeName);
-                if (cape == null) return null;
-
-                if (cape.isDownloaded()) return cape;
-
-                cape.download();
-                return null;
-            }
-
-            return null;
-        }
-        return null;
-    }
-
-    public static void tick() {
+    @EventHandler
+    private static void onTick(TickEvent.Post event) {
         if (Modules.get().isActive(CapesModule.class)) {
             synchronized (TO_REGISTER) {
                 for (Cape cape : TO_REGISTER) cape.register();
@@ -107,6 +87,21 @@ public class Capes {
                 TO_REMOVE.clear();
             }
         }
+    }
+
+    public static Identifier get(PlayerEntity player) {
+        String capeName = OWNERS.get(player.getUuid());
+        if (capeName != null) {
+            Cape cape = TEXTURES.get(capeName);
+            if (cape == null) return null;
+
+            if (cape.isDownloaded()) return cape;
+
+            cape.download();
+            return null;
+        }
+
+        return null;
     }
 
     private static class Cape extends Identifier {

@@ -3,7 +3,7 @@ package mathax.legacy.client.utils.entity.fakeplayer;
 import java.util.ArrayList;
 import java.util.List;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class FakePlayerManager {
     private static final List<FakePlayerEntity> fakePlayers = new ArrayList<>();

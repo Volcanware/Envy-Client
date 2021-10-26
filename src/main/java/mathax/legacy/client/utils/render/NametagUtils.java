@@ -8,7 +8,7 @@ import mathax.legacy.client.utils.misc.Vec4;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class NametagUtils {
     private static final Vec4 vec4 = new Vec4();

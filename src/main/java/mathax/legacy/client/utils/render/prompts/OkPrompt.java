@@ -13,7 +13,7 @@ import net.minecraft.client.gui.screen.Screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class OkPrompt {
     private final GuiTheme theme;

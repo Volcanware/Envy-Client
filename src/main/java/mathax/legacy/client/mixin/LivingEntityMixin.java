@@ -28,6 +28,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
     public LivingEntityMixin(EntityType<?> type, World world) {
@@ -46,7 +48,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "canWalkOnFluid", at = @At("HEAD"), cancellable = true)
     private void onCanWalkOnFluid(Fluid fluid, CallbackInfoReturnable<Boolean> info) {
-        if ((Object) this != Utils.mc.player) return;
+        if ((Object) this != mc.player) return;
         CanWalkOnFluidEvent event = MatHaxLegacy.EVENT_BUS.post(CanWalkOnFluidEvent.get(fluid));
 
         info.setReturnValue(event.walkOnFluid);
@@ -72,13 +74,13 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "onEquipStack", at = @At("HEAD"), cancellable = true)
     private void onEquipStack(ItemStack stack, CallbackInfo info) {
-        if ((Object) this == Utils.mc.player && Modules.get().get(OffhandCrash.class).isAntiCrash()) info.cancel();
+        if ((Object) this == mc.player && Modules.get().get(OffhandCrash.class).isAntiCrash()) info.cancel();
     }
 
     @ModifyArg(method = "swingHand(Lnet/minecraft/util/Hand;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;swingHand(Lnet/minecraft/util/Hand;Z)V"))
     private Hand setHand(Hand hand) {
         HandView handView = Modules.get().get(HandView.class);
-        if ((Object) this == Utils.mc.player && handView.isActive()) {
+        if ((Object) this == mc.player && handView.isActive()) {
             if (handView.swingMode.get() == HandView.SwingMode.None) return hand;
             return handView.swingMode.get() == HandView.SwingMode.Offhand ? Hand.OFF_HAND : Hand.MAIN_HAND;
         }

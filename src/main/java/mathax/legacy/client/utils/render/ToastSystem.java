@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.render.color.Color;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundInstance;
@@ -20,6 +19,8 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class ToastSystem implements Toast {
     public static final int TITLE_COLOR = Color.fromRGBA(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255);
@@ -65,16 +66,16 @@ public class ToastSystem implements Toast {
         int titleY = 12;
 
         if (text != null) {
-            Utils.mc.textRenderer.draw(matrices, text, x, 18, textColor);
+            mc.textRenderer.draw(matrices, text, x, 18, textColor);
             titleY = 7;
         }
 
-        Utils.mc.textRenderer.draw(matrices, title, x, titleY, titleColor);
+        mc.textRenderer.draw(matrices, title, x, titleY, titleColor);
 
-        if (icon != null) Utils.mc.getItemRenderer().renderInGui(icon, 8, 8);
+        if (icon != null) mc.getItemRenderer().renderInGui(icon, 8, 8);
 
         if (!playedSound && Config.get().playSoundToast) {
-            Utils.mc.getSoundManager().play(getSound());
+            mc.getSoundManager().play(getSound());
             playedSound = true;
         }
 

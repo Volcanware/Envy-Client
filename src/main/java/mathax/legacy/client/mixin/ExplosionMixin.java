@@ -1,7 +1,6 @@
 package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.mixininterface.IExplosion;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -11,6 +10,8 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 @Mixin(Explosion.class)
 public class ExplosionMixin implements IExplosion {
@@ -27,7 +28,7 @@ public class ExplosionMixin implements IExplosion {
 
     @Override
     public void set(Vec3d pos, float power, boolean createFire) {
-        this.world = Utils.mc.world;
+        this.world = mc.world;
         this.entity = null;
         this.x = pos.x;
         this.y = pos.y;

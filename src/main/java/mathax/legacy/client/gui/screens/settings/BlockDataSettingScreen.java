@@ -12,13 +12,14 @@ import mathax.legacy.client.utils.misc.IChangeable;
 import mathax.legacy.client.utils.misc.ICopyable;
 import mathax.legacy.client.utils.misc.ISerializable;
 import mathax.legacy.client.utils.misc.Names;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class BlockDataSettingScreen extends WindowScreen {
     private static final List<Block> BLOCKS = new ArrayList<>(100);
@@ -72,7 +73,7 @@ public class BlockDataSettingScreen extends WindowScreen {
                 T data = blockData;
                 if (data == null) data = (T) setting.defaultData.get().copy();
 
-                Utils.mc.setScreen(data.createScreen(theme, block, (BlockDataSetting<T>) setting));
+                mc.setScreen(data.createScreen(theme, block, (BlockDataSetting<T>) setting));
             };
 
             WButton reset = table.add(theme.button(GuiRenderer.RESET)).widget();

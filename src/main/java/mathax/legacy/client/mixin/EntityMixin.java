@@ -11,7 +11,6 @@ import mathax.legacy.client.systems.modules.render.ESP;
 import mathax.legacy.client.systems.modules.render.NoRender;
 import mathax.legacy.client.utils.render.Outlines;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -34,6 +33,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 @Mixin(Entity.class)
 public abstract class EntityMixin {
     @Shadow public World world;
@@ -46,7 +47,7 @@ public abstract class EntityMixin {
         Vec3d vec = state.getVelocity(world, pos);
 
         Velocity velocity = Modules.get().get(Velocity.class);
-        if ((Object) this == Utils.mc.player && velocity.isActive() && velocity.liquids.get()) {
+        if ((Object) this == mc.player && velocity.isActive() && velocity.liquids.get()) {
             vec = vec.multiply(velocity.getHorizontal(velocity.liquidsHorizontal), velocity.getVertical(velocity.liquidsVertical), velocity.getHorizontal(velocity.liquidsHorizontal));
         }
 
@@ -56,7 +57,7 @@ public abstract class EntityMixin {
     @ModifyArgs(method = "pushAwayFrom(Lnet/minecraft/entity/Entity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;addVelocity(DDD)V"))
     private void onPushAwayFrom(Args args) {
         Velocity velocity = Modules.get().get(Velocity.class);
-        if ((Object) this == Utils.mc.player && velocity.isActive() && velocity.entityPush.get()) {
+        if ((Object) this == mc.player && velocity.isActive() && velocity.entityPush.get()) {
             double multiplier = velocity.entityPushAmount.get();
             args.set(0, (double) args.get(0) * multiplier);
             args.set(2, (double) args.get(2) * multiplier);
@@ -65,7 +66,7 @@ public abstract class EntityMixin {
 
     @Inject(method = "getJumpVelocityMultiplier", at = @At("HEAD"), cancellable = true)
     private void onGetJumpVelocityMultiplier(CallbackInfoReturnable<Float> info) {
-        if ((Object) this == Utils.mc.player) {
+        if ((Object) this == mc.player) {
             float f = world.getBlockState(getBlockPos()).getBlock().getJumpVelocityMultiplier();
             float g = world.getBlockState(getVelocityAffectingPos()).getBlock().getJumpVelocityMultiplier();
             float a = f == 1.0D ? g : f;
@@ -77,7 +78,7 @@ public abstract class EntityMixin {
 
     @Inject(method = "move", at = @At("HEAD"))
     private void onMove(MovementType type, Vec3d movement, CallbackInfo info) {
-        if ((Object) this == Utils.mc.player) {
+        if ((Object) this == mc.player) {
             MatHaxLegacy.EVENT_BUS.post(PlayerMoveEvent.get(type, movement));
         } else if ((Object) this instanceof LivingEntity) {
             MatHaxLegacy.EVENT_BUS.post(LivingEntityMoveEvent.get((LivingEntity) (Object) this, movement));
@@ -93,7 +94,7 @@ public abstract class EntityMixin {
 
     @Redirect(method = "getVelocityMultiplier", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getBlock()Lnet/minecraft/block/Block;"))
     private Block getVelocityMultiplierGetBlockProxy(BlockState blockState) {
-        if ((Object) this != Utils.mc.player) return blockState.getBlock();
+        if ((Object) this != mc.player) return blockState.getBlock();
         if (blockState.getBlock() == Blocks.SOUL_SAND && Modules.get().get(NoSlow.class).soulSand()) return Blocks.STONE;
         return blockState.getBlock();
     }

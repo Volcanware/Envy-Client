@@ -1,7 +1,6 @@
 package mathax.legacy.client.mixin;
 
 import it.unimi.dsi.fastutil.io.FastByteArrayOutputStream;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.BookEditScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -25,6 +24,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 @Mixin(BookEditScreen.class)
 public abstract class BookEditScreenMixin extends Screen {
@@ -57,14 +58,14 @@ public abstract class BookEditScreenMixin extends Screen {
             }
 
             try {
-                GLFW.glfwSetClipboardString(Utils.mc.getWindow().getHandle(), Base64.getEncoder().encodeToString(bytes.array));
+                GLFW.glfwSetClipboardString(mc.getWindow().getHandle(), Base64.getEncoder().encodeToString(bytes.array));
             } catch (OutOfMemoryError exception) {
-                GLFW.glfwSetClipboardString(Utils.mc.getWindow().getHandle(), exception.toString());
+                GLFW.glfwSetClipboardString(mc.getWindow().getHandle(), exception.toString());
             }
         }));
 
         addDrawableChild(new ButtonWidget(4, 4 + 20 + 2, 120, 20, new LiteralText("Paste"), button -> {
-            String clipboard = GLFW.glfwGetClipboardString(Utils.mc.getWindow().getHandle());
+            String clipboard = GLFW.glfwGetClipboardString(mc.getWindow().getHandle());
             if (clipboard == null) return;
 
             byte[] bytes;

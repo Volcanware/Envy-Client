@@ -12,7 +12,6 @@ import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.systems.proxies.Proxies;
 import mathax.legacy.client.systems.proxies.Proxy;
 import mathax.legacy.client.utils.render.color.Color;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.CreditsScreen;

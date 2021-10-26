@@ -7,7 +7,7 @@ import net.minecraft.world.chunk.WorldChunk;
 
 import java.util.Iterator;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class WorldChunkIterator implements Iterator<WorldChunk> {
     private final int px, pz;

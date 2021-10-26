@@ -15,7 +15,7 @@ import mathax.legacy.client.eventbus.EventHandler;
 
 import java.util.List;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class RainbowColors {
 

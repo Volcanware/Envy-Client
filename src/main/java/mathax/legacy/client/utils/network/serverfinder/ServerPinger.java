@@ -90,8 +90,7 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
             successfulPortPingers = 0;
         }
         for (int i = startingIncrement ? 1 : currentIncrement; i < currentIncrement * 2; i++) {
-            if (isOldSearch())
-                return;
+            if (isOldSearch()) return;
             ServerPinger pp1 = new ServerPinger(false, searchNumber);
             ServerPinger pp2 = new ServerPinger(false, searchNumber);
             for (IServerFinderDoneListener doneListener : doneListeners) {
@@ -110,18 +109,13 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
     }
 
     private void pingInCurrentThread(String ip, int port) {
-        if (isOldSearch())
-            return;
-
-        //MeteorAdditions.LOG.info("Pinging " + ip + ":" + port + "...");
+        if (isOldSearch()) return;
 
         try {
             pinger.add(server, () -> {});
         } catch(UnknownHostException e) {
-            //MeteorAdditions.LOG.error("Unknown host: " + ip + ":" + port);
             failed = true;
         } catch(Exception e2) {
-            //MeteorAdditions.LOG.error("Ping failed: " + ip + ":" + port);
             failed = true;
         }
 

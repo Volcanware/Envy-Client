@@ -17,7 +17,7 @@ import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.player.ChatUtils;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Seeds extends System<Seeds> {
 

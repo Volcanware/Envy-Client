@@ -1,12 +1,9 @@
 package mathax.legacy.client;
 
 import mathax.legacy.client.events.game.GameJoinedEvent;
-import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.events.mathaxlegacy.CharTypedEvent;
-import mathax.legacy.client.events.mathaxlegacy.ClientInitialisedEvent;
 import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
 import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
-import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.renderer.GuiRenderer;
 import mathax.legacy.client.gui.tabs.Tabs;
@@ -29,7 +26,6 @@ import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.misc.Names;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.misc.input.KeyBinds;
-import mathax.legacy.client.utils.network.Capes;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.player.DamageUtils;
 import mathax.legacy.client.utils.player.EChestMemory;
@@ -46,7 +42,6 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.util.Window;
 import net.minecraft.util.Formatting;
@@ -66,9 +61,9 @@ import java.util.List;
 /*/------------------------------------------------------------------------------/*/
 
 public class MatHaxLegacy implements ClientModInitializer {
+    public static MinecraftClient mc;
     public static MatHaxLegacy INSTANCE;
     public static final IEventBus EVENT_BUS = new EventBus();
-    public static Screen screenToOpen;
 
     public static final File FOLDER = new File(FabricLoader.getInstance().getGameDir().toString(), "MatHax/Legacy");
     public static final File VERSION_FOLDER = new File(FOLDER + "/" + Version.getMinecraft());
@@ -120,12 +115,21 @@ public class MatHaxLegacy implements ClientModInitializer {
             return;
         }
 
+        // Log
         LOG.info(logPrefix + "Initializing MatHax Legacy " + Version.getStylized() + "...");
-        Utils.mc = MinecraftClient.getInstance();
+
+        // Global Minecraft client accessor
+        mc = MinecraftClient.getInstance();
+
+        // Title & Icon
         final Window window = MinecraftClient.getInstance().getWindow();
         window.setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
         window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
+
+        // Register event handlers
         EVENT_BUS.registerLambdaFactory("mathax.legacy.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
+
+        // Pre-load
         Systems.addPreLoadTask(() -> {
             if (!Modules.get().getFile().exists()) {
                 // ACTIVATE
@@ -156,55 +160,57 @@ public class MatHaxLegacy implements ClientModInitializer {
                 Modules.get().get(HUD.class).reset.run(); // HUD
             }
         });
-        Tabs.init();
+
+        Utils.init();
         GL.init();
         Shaders.init();
         Renderer2D.init();
         Outlines.init();
-        RainbowColors.init();
         MatHaxExecutor.init();
+        RainbowColors.init();
         BlockIterator.init();
         EChestMemory.init();
         Rotations.init();
         Names.init();
         FakeClientPlayer.init();
         PostProcessRenderer.init();
+        Tabs.init();
         GuiThemes.init();
         Fonts.init();
         DamageUtils.init();
         BlockUtils.init();
+
+        // Register module categories
         Modules.REGISTERING_CATEGORIES = true;
         Categories.register();
         Modules.REGISTERING_CATEGORIES = false;
+
         Systems.init();
+
+        EVENT_BUS.subscribe(this);
+
+        Modules.get().sortModules();
+        Systems.load();
+
+        Fonts.load();
+        GuiRenderer.init();
+        GuiThemes.postInit();
+
+        // Loaded window title
+        window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
+
+        // Shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DiscordRPC.deactivate();
             Systems.save();
             GuiThemes.save();
         }));
-        Fonts.load();
-        GuiRenderer.init();
-        GuiThemes.postInit();
-        window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
-        Capes.init();
-        EVENT_BUS.subscribe(this);
-        EVENT_BUS.post(new ClientInitialisedEvent()); // TODO: This is there just for compatibility
-        Modules.get().sortModules();
-        Systems.load();
+
+        // Final window title
         window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft());
+
+        // Log
         LOG.info(logPrefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
-    }
-
-    @EventHandler
-    private void onTick(TickEvent.Post event) {
-        Capes.tick();
-
-        if (screenToOpen != null && Utils.mc.currentScreen == null) {
-            Utils.mc.setScreen(screenToOpen);
-            screenToOpen = null;
-        }
-
-        if (Utils.canUpdate()) Utils.mc.player.getActiveStatusEffects().values().removeIf(statusEffectInstance -> statusEffectInstance.getDuration() <= 0);
     }
 
     @EventHandler
@@ -213,23 +219,15 @@ public class MatHaxLegacy implements ClientModInitializer {
     }
 
     @EventHandler
-    private void onGameLeft(GameLeftEvent event) {
-        Version.didntCheckForLatest = true;
-        Systems.save();
-    }
-
-    @EventHandler
-    private void onKey(KeyEvent event) {
-        // Click GUI
+    private void onKeyGUI(KeyEvent event) {
         if (event.action == KeyAction.Press && KeyBinds.OPEN_CLICK_GUI.matchesKey(event.key, 0)) {
-            if (Utils.mc.getOverlay() instanceof SplashOverlay) return;
+            if (mc.getOverlay() instanceof SplashOverlay) return;
             if (Utils.canOpenClickGUI()) openClickGUI();
         }
     }
 
     @EventHandler
-    private void onMouseButton(MouseButtonEvent event) {
-        // Click GUI
+    private void onMouseButtonGUI(MouseButtonEvent event) {
         if (event.action == KeyAction.Press && event.button != GLFW.GLFW_MOUSE_BUTTON_LEFT && KeyBinds.OPEN_CLICK_GUI.matchesMouse(event.button) && Utils.canOpenClickGUI()) openClickGUI();
     }
 
@@ -237,13 +235,14 @@ public class MatHaxLegacy implements ClientModInitializer {
         Tabs.get().get(0).openScreen(GuiThemes.get());
     }
 
+    // Console
+
     @EventHandler
     private void onCharTyped(CharTypedEvent event) {
-        if (Utils.mc.currentScreen != null) return;
-        if (!Config.get().openChatOnPrefix) return;
+        if (mc.currentScreen != null || !Config.get().openChatOnPrefix || Config.get().prefix.isBlank()) return;
 
         if (event.c == Config.get().prefix.charAt(0)) {
-            Utils.mc.setScreen(new ChatScreen(Config.get().prefix));
+            mc.setScreen(new ChatScreen(Config.get().prefix));
             event.cancel();
         }
     }

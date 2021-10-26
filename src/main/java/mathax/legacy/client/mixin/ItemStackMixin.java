@@ -20,6 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
     @Inject(method = "getTooltip", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
@@ -29,11 +31,11 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "finishUsing", at = @At("HEAD"))
     private void onFinishUsing(World world, LivingEntity user, CallbackInfoReturnable<ItemStack> info) {
-        if (user == Utils.mc.player) MatHaxLegacy.EVENT_BUS.post(FinishUsingItemEvent.get((ItemStack) (Object) this));
+        if (user == mc.player) MatHaxLegacy.EVENT_BUS.post(FinishUsingItemEvent.get((ItemStack) (Object) this));
     }
 
     @Inject(method = "onStoppedUsing", at = @At("HEAD"))
     private void onStoppedUsing(World world, LivingEntity user, int remainingUseTicks, CallbackInfo info) {
-        if (user == Utils.mc.player) MatHaxLegacy.EVENT_BUS.post(StoppedUsingItemEvent.get((ItemStack) (Object) this));
+        if (user == mc.player) MatHaxLegacy.EVENT_BUS.post(StoppedUsingItemEvent.get((ItemStack) (Object) this));
     }
 }

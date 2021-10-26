@@ -1109,7 +1109,7 @@ public class CrystalAura extends Module {
     // Render
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         if (renderTimer > 0 && render.get()) {
             event.renderer.box(renderPos, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
         }

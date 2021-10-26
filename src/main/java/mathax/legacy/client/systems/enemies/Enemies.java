@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Enemies extends System<Enemies> implements Iterable<Enemy> {
     private List<Enemy> enemies = new ArrayList<>();

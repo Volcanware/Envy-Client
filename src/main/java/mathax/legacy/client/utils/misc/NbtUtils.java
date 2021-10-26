@@ -13,7 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.util.*;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class NbtUtils {
     public static <T extends ISerializable<?>> NbtList listToTag(Iterable<T> list) {
@@ -66,6 +66,17 @@ public class NbtUtils {
             mc.keyboard.setClipboard(preClipboard);
             return false;
         }
+    }
+
+    public static boolean fromClipboard(System<?> system) {
+        NbtCompound clipboard = fromClipboard(system.toTag());
+
+        if (clipboard != null) {
+            system.fromTag(clipboard);
+            return true;
+        }
+
+        return false;
     }
 
     public static NbtCompound fromClipboard(NbtCompound schema) {

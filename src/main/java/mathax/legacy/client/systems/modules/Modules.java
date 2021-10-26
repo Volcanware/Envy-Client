@@ -49,7 +49,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Modules extends System<Modules> {
     public static final ModuleRegistry REGISTRY = new ModuleRegistry();
@@ -238,7 +238,7 @@ public class Modules extends System<Modules> {
     }
 
     private void onAction(boolean isKey, int value, boolean isPress) {
-        if (Utils.mc.currentScreen == null && !Input.isKeyPressed(GLFW.GLFW_KEY_F3)) {
+        if (mc.currentScreen == null && !Input.isKeyPressed(GLFW.GLFW_KEY_F3)) {
             for (Module module : moduleInstances.values()) {
                 if (module.keybind.matches(isKey, value) && (isPress || module.toggleOnBindRelease)) {
                     module.toggle();
@@ -491,6 +491,7 @@ public class Modules extends System<Modules> {
         add(new NoRender());
         add(new PopChams());
         add(new SkeletonESP());
+        //add(new SmoothChunks());
         add(new Search());
         add(new StorageESP());
         add(new TimeChanger());

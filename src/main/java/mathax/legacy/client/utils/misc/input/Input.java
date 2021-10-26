@@ -1,10 +1,11 @@
 package mathax.legacy.client.utils.misc.input;
 
 import mathax.legacy.client.gui.GuiKeyEvents;
-import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.CursorStyle;
 import net.minecraft.client.option.KeyBinding;
 import org.lwjgl.glfw.GLFW;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Input {
     private static final boolean[] keys = new boolean[512];
@@ -42,7 +43,7 @@ public class Input {
 
     public static void setCursorStyle(CursorStyle style) {
         if (lastCursorStyle != style) {
-            GLFW.glfwSetCursor(Utils.mc.getWindow().getHandle(), style.getGlfwCursor());
+            GLFW.glfwSetCursor(mc.getWindow().getHandle(), style.getGlfwCursor());
             lastCursorStyle = style;
         }
     }

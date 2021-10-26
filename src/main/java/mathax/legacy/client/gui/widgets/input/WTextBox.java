@@ -10,6 +10,7 @@ import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.MinecraftClient;
 import org.apache.commons.lang3.SystemUtils;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
 import static org.lwjgl.glfw.GLFW.*;
 
 public abstract class WTextBox extends WWidget {
@@ -147,13 +148,11 @@ public abstract class WTextBox extends WWidget {
         boolean control = MinecraftClient.IS_SYSTEM_MAC ? mods == GLFW_MOD_SUPER : mods == GLFW_MOD_CONTROL;
 
         if (control && key == GLFW_KEY_C) {
-            if (cursor != selectionStart || cursor != selectionEnd) {
-                Utils.mc.keyboard.setClipboard(text.substring(selectionStart, selectionEnd));
-            }
+            if (cursor != selectionStart || cursor != selectionEnd) mc.keyboard.setClipboard(text.substring(selectionStart, selectionEnd));
             return true;
         } else if (control && key == GLFW_KEY_X) {
             if (cursor != selectionStart || cursor != selectionEnd) {
-                Utils.mc.keyboard.setClipboard(text.substring(selectionStart, selectionEnd));
+                mc.keyboard.setClipboard(text.substring(selectionStart, selectionEnd));
                 clearSelection();
             }
 
@@ -187,7 +186,7 @@ public abstract class WTextBox extends WWidget {
             clearSelection();
 
             String preText = text;
-            String clipboard = Utils.mc.keyboard.getClipboard();
+            String clipboard = mc.keyboard.getClipboard();
             int addedChars = 0;
 
             StringBuilder sb = new StringBuilder(text.length() + clipboard.length());

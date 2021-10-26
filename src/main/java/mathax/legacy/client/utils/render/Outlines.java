@@ -12,7 +12,7 @@ import net.minecraft.client.gl.SimpleFramebuffer;
 import net.minecraft.client.render.OutlineVertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
 
-import static mathax.legacy.client.utils.Utils.mc;
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Outlines {
     public static boolean renderingOutlines;

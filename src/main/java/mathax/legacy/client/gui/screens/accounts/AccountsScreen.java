@@ -12,9 +12,9 @@ import mathax.legacy.client.systems.accounts.MicrosoftLogin;
 import mathax.legacy.client.systems.accounts.types.MicrosoftAccount;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
-import mathax.legacy.client.utils.Utils;
-import net.minecraft.nbt.NbtCompound;
 import org.jetbrains.annotations.Nullable;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class AccountsScreen extends WindowScreen {
     public AccountsScreen(GuiTheme theme) {
@@ -32,8 +32,8 @@ public class AccountsScreen extends WindowScreen {
         // Add account
         WHorizontalList l = add(theme.horizontalList()).expandX().widget();
 
-        addButton(l, "Cracked", () -> Utils.mc.setScreen(new AddCrackedAccountScreen(theme, this)));
-        addButton(l, "Premium", () -> Utils.mc.setScreen(new AddPremiumAccountScreen(theme, this)));
+        addButton(l, "Cracked", () -> mc.setScreen(new AddCrackedAccountScreen(theme, this)));
+        addButton(l, "Premium", () -> mc.setScreen(new AddPremiumAccountScreen(theme, this)));
         addButton(l, "Microsoft", () -> {
             locked = true;
 
@@ -46,7 +46,7 @@ public class AccountsScreen extends WindowScreen {
                 }
             });
         });
-        addButton(l, "Altening", () -> Utils.mc.setScreen(new AddAlteningAccountScreen(theme, this)));
+        addButton(l, "The Altening", () -> mc.setScreen(new AddAlteningAccountScreen(theme, this)));
     }
 
     private void addButton(WContainer c, String text, Runnable action) {
@@ -83,13 +83,6 @@ public class AccountsScreen extends WindowScreen {
 
     @Override
     public boolean fromClipboard() {
-        NbtCompound clipboard = NbtUtils.fromClipboard(Accounts.get().toTag());
-
-        if (clipboard != null) {
-            Accounts.get().fromTag(clipboard);
-            return true;
-        }
-
-        return false;
+        return NbtUtils.fromClipboard(Accounts.get());
     }
 }

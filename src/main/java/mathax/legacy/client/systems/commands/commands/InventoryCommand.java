@@ -1,9 +1,9 @@
 package mathax.legacy.client.systems.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.systems.commands.arguments.PlayerArgumentType;
+import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.command.CommandSource;
 
@@ -18,7 +18,7 @@ public class InventoryCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(argument("player", PlayerArgumentType.player()).executes(context -> {
-            MatHaxLegacy.screenToOpen = new InventoryScreen(PlayerArgumentType.getPlayer(context));
+            Utils.screenToOpen = new InventoryScreen(PlayerArgumentType.getPlayer(context));
             return SINGLE_SUCCESS;
         }));
 

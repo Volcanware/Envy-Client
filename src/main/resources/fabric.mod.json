@@ -18,10 +18,7 @@
   "entrypoints": {
     "client": [
       "mathax.legacy.client.MatHaxLegacy"
-    ],
-    "modmenu": [
-      "mathax.legacy.client.MatHaxLegacyModMenu"
-      ]
+    ]
   },
   "mixins": [
     "mathaxlegacy.mixins.json",

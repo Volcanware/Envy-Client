@@ -1,12 +1,13 @@
 package mathax.legacy.client.utils.misc;
 
 import mathax.legacy.client.mixininterface.IMultiplayerScreen;
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.gui.screen.ConnectScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public enum LastServerInfo {;
     private static ServerInfo lastServer;
@@ -28,7 +29,6 @@ public enum LastServerInfo {;
     public static void reconnect(Screen prevScreen) {
         if (lastServer == null) return;
 
-        ConnectScreen.connect(prevScreen, Utils.mc,
-            ServerAddress.parse(lastServer.address), lastServer);
+        ConnectScreen.connect(prevScreen, mc, ServerAddress.parse(lastServer.address), lastServer);
     }
 }

@@ -1,6 +1,5 @@
 package mathax.legacy.client.utils.notebot;
 
-import mathax.legacy.client.utils.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
@@ -10,14 +9,16 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 public class NotebotUtils {
     public static boolean isValidInstrument(BlockPos pos, InstrumentType instrument) {
         switch (instrument) {
             case Any:
                 return true;
 
-            case NotDrums: {
-                BlockState state = Utils.mc.world.getBlockState(pos);
+            case Not_Drums: {
+                BlockState state = mc.world.getBlockState(pos);
                 if (state.getBlock() == Blocks.NOTE_BLOCK) {
                     Instrument instr = state.get(NoteBlock.INSTRUMENT);
                     if (instr == Instrument.BASEDRUM)
@@ -28,7 +29,7 @@ public class NotebotUtils {
                         return false;
                     else return instr != Instrument.COW_BELL;
                 } else {
-                    BlockState block = Utils.mc.world.getBlockState(pos.down());
+                    BlockState block = mc.world.getBlockState(pos.down());
                     if (block.getMaterial() == Material.AGGREGATE)
                         return false;
                     else if (block.getMaterial() == Material.GLASS)
@@ -40,11 +41,11 @@ public class NotebotUtils {
             }
 
             case Harp: {
-                BlockState state = Utils.mc.world.getBlockState(pos);
+                BlockState state = mc.world.getBlockState(pos);
                 if (state.getBlock() == Blocks.NOTE_BLOCK) {
                     return (state.get(NoteBlock.INSTRUMENT) == Instrument.HARP);
                 } else {
-                    BlockState block = Utils.mc.world.getBlockState(pos.down());
+                    BlockState block = mc.world.getBlockState(pos.down());
                     if (block.getMaterial() == Material.WOOD)
                         return false;
                     else if (block.getMaterial() == Material.AGGREGATE)
@@ -77,51 +78,51 @@ public class NotebotUtils {
                 }
             }
             case Banjo: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.HAY_BLOCK);
             }
             case Bass: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getMaterial() == Material.WOOD);
             }
             case Bells: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.GOLD_BLOCK);
             }
             case Bit: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.EMERALD_BLOCK);
             }
             case Chimes: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.PACKED_ICE);
             }
-            case CowBell: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+            case Cow_Bell: {
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.SOUL_SAND);
             }
             case Didgeridoo: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.PUMPKIN);
             }
             case Flute: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.CLAY);
             }
             case Guitar: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getMaterial() == Material.WOOL);
             }
-            case IronXylophone: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+            case Iron_Xylophone: {
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.IRON_BLOCK);
             }
             case Pling: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.GLOWSTONE);
             }
             case Xylophone: {
-                BlockState block = Utils.mc.world.getBlockState(pos.down());
+                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.BONE_BLOCK);
             }
             default:
@@ -133,7 +134,7 @@ public class NotebotUtils {
     public static boolean isValidInstrumentNbsFile(byte type, InstrumentType instrument) {
         switch (instrument) {
 
-            case NotDrums: {
+            case Not_Drums: {
                 if (type == 2) return false; //basedrum
                 else if (type == 3) return false; //snare
                 else return type != 4; //hat
@@ -153,9 +154,9 @@ public class NotebotUtils {
                 return (type == 5);
             case Xylophone:
                 return (type == 9);
-            case IronXylophone:
+            case Iron_Xylophone:
                 return (type == 10);
-            case CowBell:
+            case Cow_Bell:
                 return (type == 11);
             case Didgeridoo:
                 return (type == 12);
@@ -173,7 +174,7 @@ public class NotebotUtils {
     public static boolean isValidIntrumentTextFile(int type, InstrumentType instrument) {
         switch (instrument) {
 
-            case NotDrums: {
+            case Not_Drums: {
                 if (type == 1)
                     return false; // basedrum
                 else if (type == 2)
@@ -198,9 +199,9 @@ public class NotebotUtils {
                 return (type == 7);
             case Xylophone:
                 return (type == 9);
-            case IronXylophone:
+            case Iron_Xylophone:
                 return (type == 10);
-            case CowBell:
+            case Cow_Bell:
                 return (type == 11);
             case Didgeridoo:
                 return (type == 12);
@@ -216,39 +217,26 @@ public class NotebotUtils {
     }
 
     public static SoundEvent getInstrumentSound(InstrumentType instrument) {
-        switch (instrument) {
-            case Bass:
-                return SoundEvents.BLOCK_NOTE_BLOCK_BASS;
-            case Bells:
-                return SoundEvents.BLOCK_NOTE_BLOCK_BELL;
-            case Flute:
-                return SoundEvents.BLOCK_NOTE_BLOCK_FLUTE;
-            case Chimes:
-                return SoundEvents.BLOCK_NOTE_BLOCK_CHIME;
-            case Guitar:
-                return SoundEvents.BLOCK_NOTE_BLOCK_GUITAR;
-            case Xylophone:
-                return SoundEvents.BLOCK_NOTE_BLOCK_XYLOPHONE;
-            case IronXylophone:
-                return SoundEvents.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE;
-            case CowBell:
-                return SoundEvents.BLOCK_NOTE_BLOCK_COW_BELL;
-            case Didgeridoo:
-                return SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO;
-            case Bit:
-                return SoundEvents.BLOCK_NOTE_BLOCK_BIT;
-            case Banjo:
-                return SoundEvents.BLOCK_NOTE_BLOCK_BANJO;
-            case Pling:
-                return SoundEvents.BLOCK_NOTE_BLOCK_PLING;
-            default:
-                return SoundEvents.BLOCK_NOTE_BLOCK_HARP;
-        }
+        return switch (instrument) {
+            case Bass -> SoundEvents.BLOCK_NOTE_BLOCK_BASS;
+            case Bells -> SoundEvents.BLOCK_NOTE_BLOCK_BELL;
+            case Flute -> SoundEvents.BLOCK_NOTE_BLOCK_FLUTE;
+            case Chimes -> SoundEvents.BLOCK_NOTE_BLOCK_CHIME;
+            case Guitar -> SoundEvents.BLOCK_NOTE_BLOCK_GUITAR;
+            case Xylophone -> SoundEvents.BLOCK_NOTE_BLOCK_XYLOPHONE;
+            case Iron_Xylophone -> SoundEvents.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE;
+            case Cow_Bell -> SoundEvents.BLOCK_NOTE_BLOCK_COW_BELL;
+            case Didgeridoo -> SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO;
+            case Bit -> SoundEvents.BLOCK_NOTE_BLOCK_BIT;
+            case Banjo -> SoundEvents.BLOCK_NOTE_BLOCK_BANJO;
+            case Pling -> SoundEvents.BLOCK_NOTE_BLOCK_PLING;
+            default -> SoundEvents.BLOCK_NOTE_BLOCK_HARP;
+        };
     }
 
     public enum InstrumentType {
         Any,
-        NotDrums,
+        Not_Drums,
         Harp,
         Bass,
         Bells,
@@ -256,12 +244,16 @@ public class NotebotUtils {
         Chimes,
         Guitar,
         Xylophone,
-        IronXylophone,
-        CowBell,
+        Iron_Xylophone,
+        Cow_Bell,
         Didgeridoo,
         Bit,
         Banjo,
-        Pling
-    }
+        Pling;
 
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
+    }
 }
