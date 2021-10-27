@@ -228,12 +228,9 @@ public class BetterChat extends Module {
             Matcher matcher = Pattern.compile("^(<[0-9]{2}:[0-9]{2}>\\s)").matcher(message.getString());
             if (matcher.matches()) message.getSiblings().subList(0, 8).clear();
 
-            String time = "";
-            if (timestampsSeconds.get()) {
-                time = timeFormatSeconds.format(new Date());
-            } else {
-                time = timeFormat.format(new Date());
-            }
+            String time;
+            if (timestampsSeconds.get()) time = timeFormatSeconds.format(new Date());
+            else time = timeFormat.format(new Date());
 
             Text timestamp = new LiteralText("<" + time + "> ").formatted(Formatting.GRAY);
 
@@ -319,18 +316,10 @@ public class BetterChat extends Module {
         if (annoy.get()) message = applyAnnoy(message);
 
         if (fancy.get()) {
-            if (fancyType.get() == FancyType.Full_Width) {
-                message = applyFull(message);
-            }
-            if (fancyType.get() == FancyType.Small_CAPS) {
-                message = applySmall(message);
-            }
-            if (fancyType.get() == FancyType.UwU) {
-                message = applyUwU(message);
-            }
-            if (fancyType.get() == FancyType.Leet) {
-                message = applyLeet(message);
-            }
+            if (fancyType.get() == FancyType.Full_Width) message = applyFull(message);
+            if (fancyType.get() == FancyType.Small_CAPS) message = applySmall(message);
+            if (fancyType.get() == FancyType.UwU) message = applyUwU(message);
+            if (fancyType.get() == FancyType.Leet) message = applyLeet(message);
         }
 
         message = getGreenChat() + message + getSuffix();

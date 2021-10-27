@@ -19,7 +19,7 @@ import net.minecraft.network.packet.s2c.play.*;
 import java.util.*;
 
 public class AutoEZ extends Module {
-    private boolean canSendPop = true;
+    private boolean canSendPop;
     private int ticks;
 
     private final Random random = new Random();
@@ -72,6 +72,15 @@ public class AutoEZ extends Module {
         .name("enabled")
         .description("Enables the totem pop messages.")
         .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Integer> delay = sgTotemPops.add(new IntSetting.Builder()
+        .name("delay")
+        .description("Determines how often to send totem pop messages.")
+        .defaultValue(600)
+        .min(0)
+        .sliderRange(0, 600)
         .build()
     );
 
@@ -141,7 +150,14 @@ public class AutoEZ extends Module {
                                 }
                             }
                         } else {
-                            if (mc.player.distanceTo(player) < 8) {
+                            if (Modules.get().isActive(KillAura.class)) {
+                                if (mc.player.distanceTo(player) < Modules.get().get(KillAura.class).targetRange.get()) {
+                                    if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
+                                    if (EntityUtils.getGameMode(player).isCreative()) return;
+                                    String message = getMessageStyle();
+                                    mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
+                                }
+                            } else if (mc.player.distanceTo(player) < 8) {
                                 if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
                                 if (EntityUtils.getGameMode(player).isCreative()) return;
                                 String message = getMessageStyle();
@@ -219,7 +235,7 @@ public class AutoEZ extends Module {
 
         if (entity == mc.player) return;
         if (mc.player.distanceTo(entity) > 8) return;
-        if (Friends.get().isFriend(((PlayerEntity) entity)) && totemIgnoreFriends.get()) return;
+        if (Friends.get().isFriend((PlayerEntity) entity) && totemIgnoreFriends.get()) return;
 
         if (EntityUtils.getGameMode(mc.player).isCreative()) return;
         if (canSendPop) {
@@ -237,14 +253,12 @@ public class AutoEZ extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        if (ticks > 600) {
+        if (ticks > delay.get()) {
             canSendPop = true;
             ticks = 0;
         }
 
-        if (!canSendPop) {
-            ticks++;
-        }
+        if (!canSendPop) ticks++;
     }
 
     public String getTotemMessageStyle() {

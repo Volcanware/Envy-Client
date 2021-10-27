@@ -122,7 +122,7 @@ public class KillAura extends Module {
         .build()
     );
 
-    private final Setting<Double> range = sgTargeting.add(new DoubleSetting.Builder()
+    public final Setting<Double> targetRange = sgTargeting.add(new DoubleSetting.Builder()
         .name("range")
         .description("The maximum range the entity can be to attack it.")
         .defaultValue(4.5)
@@ -298,7 +298,7 @@ public class KillAura extends Module {
     private boolean entityCheck(Entity entity) {
         if (entity.equals(mc.player) || entity.equals(mc.cameraEntity)) return false;
         if ((entity instanceof LivingEntity && ((LivingEntity) entity).isDead()) || !entity.isAlive()) return false;
-        if (PlayerUtils.distanceTo(entity) > range.get()) return false;
+        if (PlayerUtils.distanceTo(entity) > targetRange.get()) return false;
         if (!entities.get().getBoolean(entity.getType())) return false;
         if (!nametagged.get() && entity.hasCustomName()) return false;
         if (!PlayerUtils.canSeeEntity(entity) && PlayerUtils.distanceTo(entity) > wallsRange.get()) return false;

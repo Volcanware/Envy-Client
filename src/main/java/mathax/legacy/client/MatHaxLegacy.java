@@ -110,6 +110,7 @@ public class MatHaxLegacy implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        // Instance
         if (INSTANCE == null) {
             INSTANCE = this;
             return;
@@ -161,6 +162,7 @@ public class MatHaxLegacy implements ClientModInitializer {
             }
         });
 
+        // Initializing stuff
         Utils.init();
         GL.init();
         Shaders.init();
@@ -185,13 +187,17 @@ public class MatHaxLegacy implements ClientModInitializer {
         Categories.register();
         Modules.REGISTERING_CATEGORIES = false;
 
+        // Systems
         Systems.init();
 
+        // Event bus
         EVENT_BUS.subscribe(this);
 
+        // Sorting modules & loading systems
         Modules.get().sortModules();
         Systems.load();
 
+        // Initializing & loading stuff
         Fonts.load();
         GuiRenderer.init();
         GuiThemes.postInit();
@@ -201,7 +207,8 @@ public class MatHaxLegacy implements ClientModInitializer {
 
         // Shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            DiscordRPC.deactivate();
+            net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
+            net.arikia.dev.drpc.DiscordRPC.discordShutdown();
             Systems.save();
             GuiThemes.save();
         }));

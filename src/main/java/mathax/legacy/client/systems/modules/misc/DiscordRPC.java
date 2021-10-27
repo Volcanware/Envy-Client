@@ -125,21 +125,14 @@ public class DiscordRPC extends Module {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Discord Rich Presence disabled!");
     }
 
-    // For shutdown hook
-    public static void deactivate() {
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Disabling Discord Rich Presence...");
-        net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
-        net.arikia.dev.drpc.DiscordRPC.discordShutdown();
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Discord Rich Presence disabled!");
-    }
-
     private String getActivity() {
         if (mc == null || mc.getOverlay() instanceof SplashOverlay) return "Minecraft is loading...";
         else if (mc.currentScreen instanceof TitleScreen || mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) return "In main menu";
         else if (mc.currentScreen instanceof MultiplayerScreen || mc.currentScreen instanceof ServerManagerScreen) return "In server selection";
+        else if (mc.currentScreen instanceof DirectConnectScreen) return "Using direct connect";
         else if (mc.currentScreen instanceof ServerFinderScreen) return "Using server finder";
         else if (mc.currentScreen instanceof ServerCleanUpScreen) return "Using server cleanup";
-        else if (mc.currentScreen instanceof ConnectScreen || mc.currentScreen instanceof DirectConnectScreen) return "Connecting to " + getNakedWorldActivity();
+        else if (mc.currentScreen instanceof ConnectScreen) return "Connecting to " + getNakedWorldActivity();
         else if (mc.currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + getNakedWorldActivity();
         else if (mc.currentScreen instanceof GameMenuScreen) return "Game paused on " + getNakedWorldActivity();
         else if (mc.currentScreen instanceof PeekScreen) return "Using .peek on " + getNakedWorldActivity();
@@ -159,9 +152,8 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof SelectWorldScreen) return "In world selection";
         else if (mc.currentScreen instanceof EditWorldScreen) return "Editing a world";
         else if (mc.currentScreen instanceof CreateWorldScreen || mc.currentScreen instanceof EditGameRulesScreen) return "Creating a new world";
-        else if (mc.currentScreen instanceof LevelLoadingScreen) return "Loading a world";
-        else if (mc.currentScreen instanceof SaveLevelScreen) return "Saving a world";
-        else if (mc.currentScreen instanceof AddServerScreen) return "Adding a server";
+        else if (mc.currentScreen instanceof LevelLoadingScreen || mc.currentScreen instanceof SaveLevelScreen) return "Loading/Saving a world";
+        else if (mc.currentScreen instanceof AddServerScreen) return "Adding/Editing a server";
         else if (mc.currentScreen instanceof BaritoneTab.BaritoneScreen) return "Configuring Baritone";
         else if (mc.currentScreen instanceof ConfigTab.ConfigScreen) return "Editing Config";
         else if (mc.currentScreen instanceof EnemiesTab.EnemiesScreen) return "Editing Enemies";
@@ -172,12 +164,13 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) return "Configuring a Macro";
         else if (mc.currentScreen instanceof ProfilesTab.ProfilesScreen) return "Changing profiles";
         else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
-        else if (mc.currentScreen instanceof AddAlteningAccountScreen) return "Adding Altening account";
         else if (mc.currentScreen instanceof AddCrackedAccountScreen) return "Adding cracked account";
         else if (mc.currentScreen instanceof AddPremiumAccountScreen) return "Adding premium account";
+        else if (mc.currentScreen instanceof AddAlteningAccountScreen) return "Adding The Altening account";
         else if (mc.currentScreen instanceof ProxiesScreen) return "Editing proxies";
         else if (mc.currentScreen instanceof CreditsScreen) return "Reading credits";
         else if (mc.currentScreen instanceof RealmsScreen) return "Browsing Realms";
+        else if (mc.currentScreen instanceof ProgressScreen) return "Loading something...";
         else if (mc.world != null) return getWorldActivity();
 
         String className = mc.currentScreen.getClass().getName();
