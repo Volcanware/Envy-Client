@@ -69,21 +69,13 @@ public abstract class WTopBar extends WHorizontalList {
         protected void onRender(GuiRenderer renderer, double mouseX, double mouseY, double delta) {
             double pad = pad();
             Color color = getButtonColor(pressed || (mc.currentScreen instanceof TabScreen && ((TabScreen) mc.currentScreen).tab == tab), mouseOver);
-
             switch (getState(this)) {
-                case 1:
-                    renderer.quadRoundedSide(this, color, theme.roundAmount(), false);
-                    break;
-                case 2:
-                    renderer.quadRoundedSide(this, color, theme.roundAmount(), true);
-                    break;
-                case 3:
-                    renderer.quadRounded(this, color, theme.roundAmount());
-                    break;
-                default:
-                    renderer.quad(this, color);
-                    break;
+                case 1 -> renderer.quadRoundedSide(this, color, theme.roundAmount(), false);
+                case 2 -> renderer.quadRoundedSide(this, color, theme.roundAmount(), true);
+                case 3 -> renderer.quadRounded(this, color, theme.roundAmount());
+                default -> renderer.quad(this, color);
             }
+
             renderer.text(tab.name, x + pad, y + pad, getNameColor(), false);
         }
     }

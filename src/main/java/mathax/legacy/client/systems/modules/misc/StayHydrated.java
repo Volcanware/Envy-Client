@@ -102,7 +102,7 @@ public class StayHydrated extends Module {
     }
 
     private void sendNotificationToast() {
-        if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!"));
+        if (Config.get().toastFeedback) mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!", Config.get().toastDuration));
     }
 
     public enum Mode {

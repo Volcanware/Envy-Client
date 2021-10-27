@@ -1,8 +1,6 @@
 package mathax.legacy.client.gui.screens.accounts;
 
 import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.screens.accounts.AccountsScreen;
-import mathax.legacy.client.gui.screens.accounts.AddAccountScreen;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.input.WTextBox;
 import mathax.legacy.client.systems.accounts.Accounts;
@@ -32,9 +30,7 @@ public class AddPremiumAccountScreen extends AddAccountScreen {
         add = t.add(theme.button("Add")).expandX().widget();
         add.action = () -> {
             PremiumAccount account = new PremiumAccount(email.get(), password.get());
-            if (!email.get().isEmpty() && !password.get().isEmpty() && email.get().contains("@") && !Accounts.get().exists(account)) {
-                AccountsScreen.addAccount(this, parent, account);
-            }
+            if (!email.get().isEmpty() && !password.get().isEmpty() && email.get().contains("@") && !Accounts.get().exists(account)) AccountsScreen.addAccount(this, parent, account);
         };
 
         enterAction = add.action;

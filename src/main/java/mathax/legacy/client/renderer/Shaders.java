@@ -1,5 +1,7 @@
 package mathax.legacy.client.renderer;
 
+
+
 public class Shaders {
     public static Shader POS_COLOR;
     public static Shader POS_TEX_COLOR;

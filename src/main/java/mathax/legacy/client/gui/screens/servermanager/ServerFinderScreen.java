@@ -55,7 +55,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
     public static ServerFinderScreen instance = null;
     private static int searchNumber = 0;
     private ArrayList<String> versionFilters = new ArrayList<>();
-    private int playerCountFilter = 0;
+    private final int playerCountFilter = 0;
 
     public ServerFinderScreen(GuiTheme theme, MultiplayerScreen multiplayerScreen, Screen parent) {
         super(theme, "Server Discovery");
@@ -106,8 +106,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
 
     public void incrementTargetChecked(int amount) {
         synchronized(serverFinderLock) {
-            if (state != ServerFinderState.CANCELLED)
-                targetChecked += amount;
+            if (state != ServerFinderState.CANCELLED) targetChecked += amount;
         }
     }
 
@@ -137,8 +136,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
         for (int i = 0; i < servers.size(); i++) {
             ServerInfo info = servers.get(i);
             IPAddress addr = IPAddress.fromText(info.address);
-            if (addr != null && hashedIPs.add(addr))
-                newIPs++;
+            if (addr != null && hashedIPs.add(addr)) newIPs++;
         }
 
         StringBuilder fileOutput = new StringBuilder();
@@ -147,6 +145,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
             if (stringIP != null)
                 fileOutput.append(stringIP).append("\n");
         }
+
         try {
             Files.writeString(filePath, fileOutput.toString());
         } catch (IOException e) {
@@ -180,14 +179,11 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
     private void parseVersionFilters() {
         String filter = versionBox.get();
         String[] versions = filter.split(";");
-        if (versionFilters == null) {
-            versionFilters = new ArrayList<>();
-        }
+        if (versionFilters == null) versionFilters = new ArrayList<>();
         versionFilters.clear();
         for (String version : versions) {
             String trimmed = version.trim();
-            if (trimmed.length() > 0)
-                versionFilters.add(version.trim());
+            if (trimmed.length() > 0) versionFilters.add(version.trim());
         }
     }
 
@@ -236,6 +232,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
                 return true;
             }
         }
+
         return false;
     }
 
@@ -253,9 +250,9 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
     }
 
     private boolean isServerInList(String ip) {
-        for(int i = 0; i < multiplayerScreen.getServerList().size(); i++)
-            if(multiplayerScreen.getServerList().get(i).address.equals(ip))
-                return true;
+        for(int i = 0; i < multiplayerScreen.getServerList().size(); i++) {
+            if(multiplayerScreen.getServerList().get(i).address.equals(ip)) return true;
+        }
 
         return false;
     }
@@ -299,26 +296,22 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
     }
 
     private boolean filterPass(MServerInfo info) {
-        if (info == null)
-            return false;
-        if (info.playerCount < playerCountFilter)
-            return false;
+        if (info == null) return false;
+        if (info.playerCount < playerCountFilter) return false;
         for (String version : versionFilters) {
-            if (info.version != null && info.version.contains(version)) {
-                return true;
-            }
+            if (info.version != null && info.version.contains(version)) return true;
         }
         return versionFilters.isEmpty();
     }
 
     @Override
     public void onServerDone(ServerPinger pinger) {
-        if (state == ServerFinderState.CANCELLED || pinger == null || pinger.getSearchNumber() != searchNumber)
-            return;
+        if (state == ServerFinderState.CANCELLED || pinger == null || pinger.getSearchNumber() != searchNumber) return;
         synchronized (serverFinderLock) {
             checked++;
             numActiveThreads--;
         }
+
         if (pinger.isWorking()) {
             if (!isServerInList(pinger.getServerIP()) && filterPass(pinger.getServerInfo())) {
                 synchronized (serverFinderLock) {
@@ -330,27 +323,24 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
                 }
             }
         }
+
         while (numActiveThreads < maxThreads && pingNewIP());
         synchronized (serverFinderLock) {
-            if (checked == targetChecked) {
-                state = ServerFinderState.DONE;
-            }
+            if (checked == targetChecked) state = ServerFinderState.DONE;
         }
     }
 
     @Override
     public void onServerFailed(ServerPinger pinger) {
-        if (state == ServerFinderState.CANCELLED || pinger == null || pinger.getSearchNumber() != searchNumber)
-            return;
+        if (state == ServerFinderState.CANCELLED || pinger == null || pinger.getSearchNumber() != searchNumber) return;
         synchronized (serverFinderLock) {
             checked++;
             numActiveThreads--;
         }
+
         while (numActiveThreads < maxThreads && pingNewIP());
         synchronized (serverFinderLock) {
-            if (checked == targetChecked) {
-                state = ServerFinderState.DONE;
-            }
+            if (checked == targetChecked) state = ServerFinderState.DONE;
         }
     }
 }

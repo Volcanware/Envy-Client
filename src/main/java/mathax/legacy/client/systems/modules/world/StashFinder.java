@@ -15,6 +15,7 @@ import mathax.legacy.client.gui.widgets.containers.WVerticalList;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
 import mathax.legacy.client.gui.widgets.pressable.WMinus;
 import mathax.legacy.client.settings.*;
+import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.Utils;
@@ -118,10 +119,10 @@ public class StashFinder extends Module {
             if (notifications.get() && (!chunk.equals(prevChunk) || !chunk.countsEqual(prevChunk))) {
                 switch (notificationMode.get()) {
                     case Chat -> info("Found stash at (highlight)%s(default), (highlight)%s(default).", chunk.x, chunk.z);
-                    case Toast -> mc.getToastManager().add(new ToastSystem(Items.CHEST, color.getPacked(), title, null, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!"));
+                    case Toast -> mc.getToastManager().add(new ToastSystem(Items.CHEST, color.getPacked(), title, null, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!", Config.get().toastDuration));
                     case Both -> {
                         info("Found stash at (highlight)%s(default), (highlight)%s(default).", chunk.x, chunk.z);
-                        mc.getToastManager().add(new ToastSystem(Items.CHEST, color.getPacked(), title, null, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!"));
+                        mc.getToastManager().add(new ToastSystem(Items.CHEST, color.getPacked(), title, null, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!", Config.get().toastDuration));
                     }
                 }
             }

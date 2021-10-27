@@ -82,42 +82,22 @@ public class WelcomeHUD extends TripleTextHUDElement {
     private String getTime() {
         final String hourDate = new SimpleDateFormat("k").format(new Date());
         final int hour = Integer.valueOf(hourDate);
-        if (hour < 6) {
-            return "Good Night";
-        }
-        if (hour < 12) {
-            return "Good Morning";
-        }
-        if (hour < 17) {
-            return "Good Afternoon";
-        }
-        if (hour < 20) {
-            return "Good Evening";
-        }
+        if (hour < 6) return "Good Night";
+        if (hour < 12) return "Good Morning";
+        if (hour < 17) return "Good Afternoon";
+        if (hour < 20) return "Good Evening";
         return "Good Night";
     }
 
     private String getRetardedTime() {
         final String hourDate = new SimpleDateFormat("k").format(new Date());
         final int hour = Integer.valueOf(hourDate);
-        if (hour < 3) {
-            return "Why are you killing newfags at this hour retard";
-        }
-        if (hour < 6) {
-            return "You really need get some sleep retard";
-        }
-        if (hour < 9) {
-            return "Ur awake already? such a retard";
-        }
-        if (hour < 12) {
-            return "Retard moment";
-        }
-        if (hour < 14) {
-            return "Go eat lunch retard";
-        }
-        if (hour < 17) {
-            return "Retard playing minecraft";
-        }
+        if (hour < 3) return "Why are you killing newfags at this hour retard";
+        if (hour < 6) return "You really need get some sleep retard";
+        if (hour < 9) return "Ur awake already? such a retard";
+        if (hour < 12) return "Retard moment";
+        if (hour < 14) return "Go eat lunch retard";
+        if (hour < 17) return "Retard playing minecraft";
         return "Time to sleep retard";
     }
 

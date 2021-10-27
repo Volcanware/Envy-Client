@@ -2,7 +2,6 @@ package mathax.legacy.client.gui.screens.accounts;
 
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WindowScreen;
-import mathax.legacy.client.gui.screens.accounts.AccountsScreen;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
 
 public abstract class AddAccountScreen extends WindowScreen {
@@ -21,14 +20,10 @@ public abstract class AddAccountScreen extends WindowScreen {
             if (timer > 2) {
                 add.set(getNext(add));
                 timer = 0;
-            } else {
-                timer++;
-            }
+            } else timer++;
         }
 
-        else if (!add.getText().equals("Add")) {
-            add.set("Add");
-        }
+        else if (!add.getText().equals("Add")) add.set("Add");
     }
 
     private String getNext(WButton add) {

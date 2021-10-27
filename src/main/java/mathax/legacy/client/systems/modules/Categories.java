@@ -12,7 +12,11 @@ public class Categories {
     public static final Category Chat = new Category("Chat", Items.BEACON.getDefaultStack(), Color.fromRGBA(255, 255, 255, 255));
     public static final Category Misc = new Category("Misc", Items.NETHER_STAR.getDefaultStack(), Color.fromRGBA(0, 50, 175, 255));
 
-    public static void register() {
+    public static boolean REGISTERING;
+
+    public static void init() {
+        REGISTERING = true;
+
         Modules.registerCategory(Combat);
         Modules.registerCategory(Movement);
         Modules.registerCategory(Render);
@@ -20,5 +24,7 @@ public class Categories {
         Modules.registerCategory(World);
         Modules.registerCategory(Chat);
         Modules.registerCategory(Misc);
+
+        REGISTERING = false;
     }
 }

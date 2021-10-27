@@ -35,16 +35,12 @@ public class KeyBindSetting extends Setting<KeyBind> {
 
     @EventHandler(priority = EventPriority.HIGH)
     private void onKey(KeyEvent event) {
-        if (event.action == KeyAction.Release && get().matches(true, event.key) && module.isActive() && action != null) {
-            action.run();
-        }
+        if (event.action == KeyAction.Release && get().matches(true, event.key) && (module == null || module.isActive()) && action != null) action.run();
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     private void onMouseButton(MouseButtonEvent event) {
-        if (event.action == KeyAction.Release && get().matches(false ,event.button) && module.isActive() && action != null) {
-            action.run();
-        }
+        if (event.action == KeyAction.Release && get().matches(false, event.button) && (module == null || module.isActive()) && action != null) action.run();
     }
 
     @Override

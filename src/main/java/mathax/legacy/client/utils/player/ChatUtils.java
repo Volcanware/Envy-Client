@@ -1,8 +1,6 @@
 package mathax.legacy.client.utils.player;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.utils.render.color.RainbowColor;
-import mathax.legacy.client.utils.render.color.RainbowColors;
 import mathax.legacy.client.mixin.ChatHudAccessor;
 import mathax.legacy.client.systems.config.Config;
 import net.minecraft.text.*;
@@ -13,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class ChatUtils {
-    private static final RainbowColor RAINBOW = new RainbowColor();
 
     // Default
     public static void info(String message, Object... args) {
@@ -77,7 +74,7 @@ public class ChatUtils {
         if (prefixTitle != null) message.append(getCustomPrefix(prefixTitle, prefixColor));
         message.append(msg);
 
-        if (!Config.get().deleteChatCommandsInfo) id = 0;
+        if (!Config.get().deleteChatFeedback) id = 0;
 
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).add(message, id);
     }
@@ -98,29 +95,10 @@ public class ChatUtils {
     }
 
     private static BaseText getMatHaxPrefix() {
-        BaseText mathax = new LiteralText("");
+        BaseText mathax = new LiteralText("MatHax Legacy");
+        mathax.setStyle(mathax.getStyle().withColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
+
         BaseText prefix = new LiteralText("");
-
-        RAINBOW.setSpeed(RainbowColors.GLOBAL.getSpeed());
-
-        if (Config.get().rainbowPrefix) {
-            mathax.append(new LiteralText("M").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("a").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("t").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("H").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("a").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("x").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText(" ").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("L").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("e").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("g").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("a").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("c").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-            mathax.append(new LiteralText("y").setStyle(mathax.getStyle().withColor(new TextColor(RAINBOW.getNext().getPacked()))));
-        } else {
-            mathax = new LiteralText("MatHax Legacy");
-            mathax.setStyle(mathax.getStyle().withColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
-        }
 
         prefix.setStyle(prefix.getStyle().withFormatting(Formatting.GRAY));
         prefix.append("[");

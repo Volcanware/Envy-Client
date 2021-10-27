@@ -27,7 +27,7 @@ public class ArmorHUD extends HUDElement {
     private final Setting<Orientation> orientation = sgGeneral.add(new EnumSetting.Builder<Orientation>()
         .name("orientation")
         .description("How to display armor.")
-        .defaultValue(Orientation.Horizontal)
+        .defaultValue(Orientation.Vertical)
         .build()
     );
 

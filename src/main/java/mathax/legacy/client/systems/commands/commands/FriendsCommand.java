@@ -39,13 +39,13 @@ public class FriendsCommand extends Command {
 
                             if (Friends.get().add(friend)) {
                                 if (friend.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
-                                if (Config.get().chatCommandsInfo) info("Added (highlight)%s (default)to friends.", friend.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", null, Formatting.GRAY + "Added to friends."));
+                                if (Config.get().chatFeedback) info("Added (highlight)%s (default)to friends.", friend.name);
+                                if (Config.get().toastFeedback) mc.getToastManager().add(new ToastSystem(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", null, Formatting.GRAY + "Added to friends.", Config.get().toastDuration));
                             }
                             else {
                                 if (friend.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
-                                if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is already your friend.", friend.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", null, Formatting.RED + "Already your friend."));
+                                if (Config.get().chatFeedback) error("(highlight)%s (default)is already your friend.", friend.name);
+                                if (Config.get().toastFeedback) mc.getToastManager().add(new ToastSystem(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", null, Formatting.RED + "Already your friend.", Config.get().toastDuration));
                             }
 
                             return SINGLE_SUCCESS;
@@ -59,13 +59,13 @@ public class FriendsCommand extends Command {
 
                             if (Friends.get().remove(friend)) {
                                 if (friend.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
-                                if (Config.get().chatCommandsInfo) info("Removed (highlight)%s (default)from friends.", friend.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", null, Formatting.GRAY + "Removed from friends."));
+                                if (Config.get().chatFeedback) info("Removed (highlight)%s (default)from friends.", friend.name);
+                                if (Config.get().toastFeedback) mc.getToastManager().add(new ToastSystem(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", null, Formatting.GRAY + "Removed from friends.", Config.get().toastDuration));
                             }
                             else {
                                 if (friend.name.equals(mc.getSession().getUsername())) return SINGLE_SUCCESS;
-                                if (Config.get().chatCommandsInfo) error("(highlight)%s (default)is not your friend.", friend.name);
-                                if (Config.get().chatCommandsToast) mc.getToastManager().add(new ToastSystem(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", null, Formatting.RED + "Not your friend."));
+                                if (Config.get().chatFeedback) error("(highlight)%s (default)is not your friend.", friend.name);
+                                if (Config.get().toastFeedback) mc.getToastManager().add(new ToastSystem(Items.EMERALD_BLOCK, Friends.get().color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", null, Formatting.RED + "Not your friend.", Config.get().toastDuration));
                             }
 
                             return SINGLE_SUCCESS;

@@ -54,11 +54,11 @@ import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.List;
 
-/*/------------------------------------------------------------------------------/*/
-/*/ THIS CLIENT IS AN RECODED VERSION OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/
-/*/ https://meteorclient.com                                                     /*/
-/*/ https://github.com/MeteorDevelopment/meteor-client                           /*/
-/*/------------------------------------------------------------------------------/*/
+/*/------------------------------------------------------------------/*/
+/*/ THIS CLIENT IS A FORK OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/
+/*/ https://meteorclient.com                                         /*/
+/*/ https://github.com/MeteorDevelopment/meteor-client               /*/
+/*/------------------------------------------------------------------/*/
 
 public class MatHaxLegacy implements ClientModInitializer {
     public static MinecraftClient mc;
@@ -151,6 +151,9 @@ public class MatHaxLegacy implements ClientModInitializer {
                 // KEYBINDS
                 Modules.get().get(Zoom.class).keybind.set(KeyBind.fromKey(GLFW.GLFW_KEY_C));
 
+                // KEYBIND OPTIONS
+                Modules.get().get(Zoom.class).toggleOnBindRelease = true;
+
                 // TOASTS
                 Modules.get().get(Zoom.class).setToggleToast(false);
 
@@ -162,7 +165,7 @@ public class MatHaxLegacy implements ClientModInitializer {
             }
         });
 
-        // Initializing stuff
+        // Pre init
         Utils.init();
         GL.init();
         Shaders.init();
@@ -183,21 +186,21 @@ public class MatHaxLegacy implements ClientModInitializer {
         BlockUtils.init();
 
         // Register module categories
-        Modules.REGISTERING_CATEGORIES = true;
-        Categories.register();
-        Modules.REGISTERING_CATEGORIES = false;
+        Categories.init();
 
-        // Systems
+        // Load systems
         Systems.init();
 
         // Event bus
         EVENT_BUS.subscribe(this);
 
-        // Sorting modules & loading systems
+        // Sorting modules
         Modules.get().sortModules();
+
+        // Load saves
         Systems.load();
 
-        // Initializing & loading stuff
+        // Post init
         Fonts.load();
         GuiRenderer.init();
         GuiThemes.postInit();
@@ -238,6 +241,8 @@ public class MatHaxLegacy implements ClientModInitializer {
         if (event.action == KeyAction.Press && event.button != GLFW.GLFW_MOUSE_BUTTON_LEFT && KeyBinds.OPEN_CLICK_GUI.matchesMouse(event.button) && Utils.canOpenClickGUI()) openClickGUI();
     }
 
+    // GUI
+
     private void openClickGUI() {
         Tabs.get().get(0).openScreen(GuiThemes.get());
     }
@@ -246,7 +251,7 @@ public class MatHaxLegacy implements ClientModInitializer {
 
     @EventHandler
     private void onCharTyped(CharTypedEvent event) {
-        if (mc.currentScreen != null || !Config.get().openChatOnPrefix || Config.get().prefix.isBlank()) return;
+        if (mc.currentScreen != null || !Config.get().prefixOpensConsole || Config.get().prefix.isBlank()) return;
 
         if (event.c == Config.get().prefix.charAt(0)) {
             mc.setScreen(new ChatScreen(Config.get().prefix));

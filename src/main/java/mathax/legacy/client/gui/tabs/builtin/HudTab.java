@@ -120,7 +120,6 @@ public class HudTab extends Tab {
                         selectedElements.clear();
                         selectedElements.add(hoveredModule);
                     }
-
                 }
 
                 return true;
@@ -179,9 +178,7 @@ public class HudTab extends Tab {
                     double mW = module.box.width;
                     double mH = module.box.height;
 
-                    if (isInSelection(mouseX, mouseY, mX, mY) || isInSelection(mouseX, mouseY, mX + mW, mY) || (isInSelection(mouseX, mouseY, mX, mY + mH) || isInSelection(mouseX, mouseY, mX + mW, mY + mH))) {
-                        selectedElements.add(module);
-                    }
+                    if (isInSelection(mouseX, mouseY, mX, mY) || isInSelection(mouseX, mouseY, mX + mW, mY) || (isInSelection(mouseX, mouseY, mX, mY + mH) || isInSelection(mouseX, mouseY, mX + mW, mY + mH))) selectedElements.add(module);
                 }
             } else if (dragging) {
                 for (HUDElement element : selectedElements) {

@@ -78,9 +78,8 @@ public class ActiveModulesHUD extends HUDElement {
     private final Setting<Double> rainbowSpeed = sgGeneral.add(new DoubleSetting.Builder()
         .name("rainbow-speed")
         .description("Rainbow speed of rainbow color mode.")
-        .defaultValue(0.05)
-        .sliderMin(0.01)
-        .sliderMax(0.2)
+        .defaultValue(0.75)
+        .sliderRange(0.01, 2)
         .decimalPlaces(4)
         .visible(() -> colorMode.get() == ColorMode.Rainbow)
         .build()
@@ -89,9 +88,8 @@ public class ActiveModulesHUD extends HUDElement {
     private final Setting<Double> rainbowSpread = sgGeneral.add(new DoubleSetting.Builder()
         .name("rainbow-spread")
         .description("Rainbow spread of rainbow color mode.")
-        .defaultValue(0.01)
-        .sliderMin(0.001)
-        .sliderMax(0.05)
+        .defaultValue(0.05)
+        .sliderRange(0.01, 1)
         .decimalPlaces(4)
         .visible(() -> colorMode.get() == ColorMode.Rainbow)
         .build()
@@ -153,8 +151,7 @@ public class ActiveModulesHUD extends HUDElement {
             return;
         }
 
-        rainbowHue1 += rainbowSpeed.get() * (System.currentTimeMillis() - lastColorUpdate) / 100D;
-        lastColorUpdate = System.currentTimeMillis();
+        rainbowHue1 += rainbowSpeed.get() * renderer.delta;
         if (rainbowHue1 > 1) rainbowHue1 -= 1;
         else if (rainbowHue1 < -1) rainbowHue1 += 1;
 

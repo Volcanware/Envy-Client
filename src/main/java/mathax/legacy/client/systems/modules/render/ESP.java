@@ -20,6 +20,7 @@ import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.Perspective;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -363,9 +364,13 @@ public class ESP extends Module {
     }
 
     private boolean shouldSkip(Entity entity) {
-        if ((!Modules.get().isActive(Freecam.class) && entity == mc.player) || !entities.get().getBoolean(entity.getType())) return true;
-        if ((ignoreFriends.get() && Friends.get().isFriend((PlayerEntity) entity)) || !entities.get().getBoolean(EntityType.PLAYER)) return true;
+        if ((!Modules.get().isActive(Freecam.class) && entity == mc.player && mc.options.getPerspective() == Perspective.FIRST_PERSON) || !entities.get().getBoolean(entity.getType())) return true;
+        if (entity instanceof PlayerEntity player) return shouldSkipPlayer(player);
         return !EntityUtils.isInRenderDistance(entity);
+    }
+
+    private boolean shouldSkipPlayer(PlayerEntity player) {
+        return ignoreFriends.get() && Friends.get().isFriend(player);
     }
 
     @Override

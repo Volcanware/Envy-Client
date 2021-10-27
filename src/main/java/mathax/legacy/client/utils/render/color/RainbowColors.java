@@ -18,7 +18,6 @@ import java.util.List;
 import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class RainbowColors {
-
     public static final RainbowColor GLOBAL = new RainbowColor().setSpeed(ConfigTab.rainbowSpeed.get() / 100);
 
     private static final List<Setting<SettingColor>> colorSettings = new UnorderedArrayList<>();

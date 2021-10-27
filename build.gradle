@@ -63,8 +63,6 @@ dependencies {
     include "com.github.hube12:SEED:${project.seed_version}"
 
     // Dependencies
-    compileOnly "org.projectlombok:lombok:${project.lombok_version}"
-    annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
     library "com.github.Vatuu:discord-rpc:${project.discord_version}"
 }
 

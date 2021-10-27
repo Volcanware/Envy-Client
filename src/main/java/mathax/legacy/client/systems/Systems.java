@@ -25,14 +25,16 @@ import java.util.Map;
 public class Systems {
     @SuppressWarnings("rawtypes")
     private static final Map<Class<? extends System>, System<?>> systems = new HashMap<>();
-
     private static final List<Runnable> preLoadTasks = new ArrayList<>(1);
-    private static System<?> config;
+
+    public static void addPreLoadTask(Runnable task) {
+        preLoadTasks.add(task);
+    }
 
     public static void init() {
-        config = add(new Config());
-        config.load();
+        System<?> config = add(new Config());
         config.init();
+        config.load();
 
         add(new Modules());
         add(new Commands());
@@ -45,12 +47,18 @@ public class Systems {
         add(new Proxies());
         add(new Seeds());
 
-        for (System<?> system : systems.values()) {
-            if (system != config) system.init();
-        }
-
         MatHaxLegacy.EVENT_BUS.subscribe(Systems.class);
     }
+
+    private static System<?> add(System<?> system) {
+        systems.put(system.getClass(), system);
+        MatHaxLegacy.EVENT_BUS.subscribe(system);
+        system.init();
+
+        return system;
+    }
+
+    // Save/Load
 
     @EventHandler
     private static void onGameLeft(GameLeftEvent event) {
@@ -58,16 +66,9 @@ public class Systems {
         save();
     }
 
-    private static System<?> add(System<?> system) {
-        systems.put(system.getClass(), system);
-        MatHaxLegacy.EVENT_BUS.subscribe(system);
-
-        return system;
-    }
-
     public static void save(File folder) {
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems are saving...");
         long start = java.lang.System.currentTimeMillis();
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems are saving...");
 
         for (System<?> system : systems.values()) system.save(folder);
 
@@ -78,19 +79,13 @@ public class Systems {
         save(null);
     }
 
-    public static void addPreLoadTask(Runnable task) {
-        preLoadTasks.add(task);
-    }
-
     public static void load(File folder) {
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems are loading...");
         long start = java.lang.System.currentTimeMillis();
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems are loading...");
 
         for (Runnable task : preLoadTasks) task.run();
 
-        for (System<?> system : systems.values()) {
-            if (system != config) system.load(folder);
-        }
+        for (System<?> system : systems.values()) system.load(folder);
 
         MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Systems loaded in {} milliseconds.", java.lang.System.currentTimeMillis() - start);
     }

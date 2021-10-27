@@ -3,7 +3,7 @@ package mathax.legacy.client.systems.config;
 import mathax.legacy.client.gui.tabs.builtin.ConfigTab;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.systems.Systems;
-import mathax.legacy.client.utils.render.color.RainbowColors;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.systems.System;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -14,20 +14,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Config extends System<Config> {
+    // Visual
     public String font = ConfigTab.font.get();
     public boolean customFont = ConfigTab.customFont.get();
+    public double rainbowSpeed = ConfigTab.rainbowSpeed.get();
+
+    // Chat
+    public String prefix = ConfigTab.prefix.get();
+    public boolean prefixOpensConsole = ConfigTab.prefixOpensConsole.get();
+    public boolean chatFeedback = ConfigTab.chatFeedback.get();
+    public boolean deleteChatFeedback = ConfigTab.deleteChatFeedback.get();
+
+    // Toasts
+    public boolean toastFeedback = ConfigTab.toastFeedback.get();
+    public int toastDuration = ConfigTab.toastDuration.get();
+    public boolean toastSound = ConfigTab.toastSound.get();
+
+    // Misc
     public int rotationHoldTicks = ConfigTab.rotationHoldTicks.get();
     public boolean useTeamColor = ConfigTab.useTeamColor.get();
-
-    public String prefix = ConfigTab.prefix.get();
-    public boolean rainbowPrefix = ConfigTab.rainbowPrefix.get();
-    public boolean openChatOnPrefix = ConfigTab.openChatOnPrefix.get();
-    public boolean chatCommandsInfo = ConfigTab.chatCommandsInfo.get();
-    public boolean deleteChatCommandsInfo = ConfigTab.deleteChatCommandsInfo.get();
-
-    public boolean chatCommandsToast = ConfigTab.chatCommandsToast.get();
-    public boolean playSoundToast = ConfigTab.playSoundToast.get();
-
     public List<String> dontShowAgainPrompts = new ArrayList<>();
 
     public Config() {
@@ -38,25 +43,30 @@ public class Config extends System<Config> {
         return Systems.get(Config.class);
     }
 
+    // Serialisation
+
     @Override
     public NbtCompound toTag() {
         NbtCompound tag = new NbtCompound();
+        tag.putString("version", Version.get());
+
         tag.putString("font", font);
         tag.putBoolean("customFont", customFont);
-        tag.putInt("rotationHoldTicks", rotationHoldTicks);
-        tag.putBoolean("useTeamColor", useTeamColor);
+        tag.putDouble("rainbowSpeed", ConfigTab.rainbowSpeed.get());
 
         tag.putString("prefix", prefix);
-        tag.putBoolean("openChatOnPrefix", openChatOnPrefix);
-        tag.putBoolean("rainbowPrefix", rainbowPrefix);
-        tag.putDouble("rainbowSpeed", RainbowColors.GLOBAL.getSpeed());
-        tag.putBoolean("chatCommandsInfo", chatCommandsInfo);
-        tag.putBoolean("deleteChatCommandsInfo", deleteChatCommandsInfo);
+        tag.putBoolean("prefixOpensConsole", prefixOpensConsole);
+        tag.putBoolean("chatFeedback", chatFeedback);
+        tag.putBoolean("deleteChatFeedback", deleteChatFeedback);
 
-        tag.putBoolean("chatCommandsToast", chatCommandsToast);
-        tag.putBoolean("playSoundToast", playSoundToast);
+        tag.putBoolean("toastFeedback", toastFeedback);
+        tag.putInt("toastDuration", toastDuration);
+        tag.putBoolean("toastSound", toastSound);
 
-        tag.put("dontShowAgainPrompts", listToNbt(dontShowAgainPrompts));
+        tag.putInt("rotationHoldTicks", rotationHoldTicks);
+        tag.putBoolean("useTeamColor", useTeamColor);
+        tag.put("dontShowAgainPrompts", listToTag(dontShowAgainPrompts));
+
         return tag;
     }
 
@@ -64,47 +74,52 @@ public class Config extends System<Config> {
     public Config fromTag(NbtCompound tag) {
         font = getString(tag, "font", ConfigTab.font);
         customFont = getBoolean(tag, "customFont", ConfigTab.customFont);
-        rotationHoldTicks = getInt(tag, "rotationHoldTicks", ConfigTab.rotationHoldTicks);
-        useTeamColor = getBoolean(tag, "useTeamColor", ConfigTab.useTeamColor);
+        rainbowSpeed = getDouble(tag, "rainbowSpeed", ConfigTab.rainbowSpeed);
 
         prefix = getString(tag, "prefix", ConfigTab.prefix);
-        openChatOnPrefix = getBoolean(tag, "openChatOnPrefix", ConfigTab.openChatOnPrefix);
-        rainbowPrefix = getBoolean(tag, "rainbowPrefix", ConfigTab.rainbowPrefix);
-        RainbowColors.GLOBAL.setSpeed(tag.contains("rainbowSpeed") ? tag.getDouble("rainbowSpeed") : ConfigTab.rainbowSpeed.getDefaultValue() / 100);
-        chatCommandsInfo = getBoolean(tag, "chatCommandsInfo", ConfigTab.chatCommandsInfo);
-        deleteChatCommandsInfo = getBoolean(tag, "deleteChatCommandsInfo", ConfigTab.deleteChatCommandsInfo);
+        prefixOpensConsole = getBoolean(tag, "prefixOpensConsole", ConfigTab.prefixOpensConsole);
+        chatFeedback = getBoolean(tag, "chatFeedback", ConfigTab.chatFeedback);
+        deleteChatFeedback = getBoolean(tag, "deleteChatFeedback", ConfigTab.deleteChatFeedback);
 
-        chatCommandsToast = getBoolean(tag, "chatCommandsToast", ConfigTab.chatCommandsToast);
-        playSoundToast = getBoolean(tag, "playSoundToast", ConfigTab.playSoundToast);
+        toastFeedback = getBoolean(tag, "toastFeedback", ConfigTab.toastFeedback);
+        toastDuration = getInt(tag, "toastDuration", ConfigTab.toastDuration);
+        toastSound = getBoolean(tag, "toastSound", ConfigTab.toastSound);
 
-        dontShowAgainPrompts.clear();
-        for (NbtElement item : tag.getList("dontShowAgainPrompts", NbtElement.STRING_TYPE)) {
-            dontShowAgainPrompts.add(item.asString());
-        }
+        rotationHoldTicks = getInt(tag, "rotationHoldTicks", ConfigTab.rotationHoldTicks);
+        useTeamColor = getBoolean(tag, "useTeamColor", ConfigTab.useTeamColor);
+        dontShowAgainPrompts = listFromTag(tag, "dontShowAgainPrompts");
 
         return this;
     }
 
+
+    // Utils
+
     private boolean getBoolean(NbtCompound tag, String key, Setting<Boolean> setting) {
-        return tag.contains(key) ? tag.getBoolean(key) : setting.get();
+        return tag.contains(key) ? tag.getBoolean(key) : setting.getDefaultValue();
     }
 
     private String getString(NbtCompound tag, String key, Setting<String> setting) {
-        return tag.contains(key) ? tag.getString(key) : setting.get();
+        return tag.contains(key) ? tag.getString(key) : setting.getDefaultValue();
     }
 
     private double getDouble(NbtCompound tag, String key, Setting<Double> setting) {
-        return tag.contains(key) ? tag.getDouble(key) : setting.get();
+        return tag.contains(key) ? tag.getDouble(key) : setting.getDefaultValue();
     }
 
     private int getInt(NbtCompound tag, String key, Setting<Integer> setting) {
-        return tag.contains(key) ? tag.getInt(key) : setting.get();
+        return tag.contains(key) ? tag.getInt(key) : setting.getDefaultValue();
     }
 
-    private NbtList listToNbt(List<String> lst) {
+    private NbtList listToTag(List<String> list) {
         NbtList nbt = new NbtList();
-        for (String item: lst)
-            nbt.add(NbtString.of(item));
+        for (String item : list) nbt.add(NbtString.of(item));
         return nbt;
+    }
+
+    private List<String> listFromTag(NbtCompound tag, String key) {
+        List<String> list = new ArrayList<>();
+        for (NbtElement item : tag.getList(key, 8)) list.add(item.asString());
+        return list;
     }
 }

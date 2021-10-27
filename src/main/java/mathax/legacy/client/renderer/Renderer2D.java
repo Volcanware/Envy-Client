@@ -146,7 +146,8 @@ public class Renderer2D {
             quad(x, y + height - s, width, s, color);
             quad(x, y + s, s, height - s * 2, color);
             quad(x + width - s, y + s, s, height - s * 2, color);
-        } else {
+        }
+        else {
             //top
             circlePartOutline(x + r, y + r, r, circleThreeQuarter, circleQuarter, color, s);
             quad(x + r, y, width - r * 2, s, color);
@@ -163,7 +164,8 @@ public class Renderer2D {
 
     public void quadRounded(double x, double y, double width, double height, Color color, double r, boolean roundTop) {
         r = getR(r, width, height);
-        if (r <= 0) quad(x, y, width, height, color);
+        if (r <= 0)
+            quad(x, y, width, height, color);
         else {
             if (roundTop) {
                 //top
@@ -172,7 +174,8 @@ public class Renderer2D {
                 circlePart(x + width - r, y + r, r, circleNone, circleQuarter, color);
                 //middle
                 quad(x, y + r, width, height - 2 * r, color);
-            } else {
+            }
+            else {
                 //middle
                 quad(x, y, width, height - r, color);
             }
@@ -185,14 +188,16 @@ public class Renderer2D {
 
     public void quadRoundedSide(double x, double y, double width, double height, Color color, double r, boolean right) {
         r = getR(r, width, height);
-        if (r <= 0) quad(x, y, width, height, color);
+        if (r <= 0)
+            quad(x, y, width, height, color);
         else {
             if (right) {
                 circlePart(x + width - r, y + r, r, circleNone, circleQuarter, color);
                 circlePart(x + width - r, y + height - r, r, circleQuarter, circleQuarter, color);
                 quad(x, y, width - r, height, color);
                 quad(x + width - r, y + r, r, height - r * 2, color);
-            } else {
+            }
+            else {
                 circlePart(x + r, y + r, r, circleThreeQuarter, circleQuarter, color);
                 circlePart(x + r, y + height - r, r, circleHalf, circleQuarter, color);
                 quad(x + r, y, width - r, height, color);
@@ -202,12 +207,8 @@ public class Renderer2D {
     }
 
     private double getR(double r, double w, double h) {
-        if (r * 2 > h) {
-            r = (int)h / 2;
-        }
-        if (r * 2 > w) {
-            r = (int)w / 2;
-        }
+        if (r * 2 > h) r = (int) h / 2;
+        if (r * 2 > w) r = (int) w / 2;
         return r;
     }
 
@@ -232,7 +233,6 @@ public class Renderer2D {
             circlePart(x, y, r, startAngle, angle, color);
             return;
         }
-
         int cirDepth = getCirDepth(r, angle);
         double cirPart = angle / cirDepth;
         int innerPrev = vecOnCircle(x, y, r - outlineWidth, startAngle, color);

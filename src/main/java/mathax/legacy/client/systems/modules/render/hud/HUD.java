@@ -3,10 +3,14 @@ package mathax.legacy.client.systems.modules.render.hud;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render2DEvent;
 import mathax.legacy.client.gui.GuiTheme;
+import mathax.legacy.client.gui.GuiThemes;
+import mathax.legacy.client.gui.renderer.GuiRenderer;
 import mathax.legacy.client.gui.screens.HudElementScreen;
+import mathax.legacy.client.gui.tabs.Tab;
+import mathax.legacy.client.gui.tabs.Tabs;
 import mathax.legacy.client.gui.tabs.builtin.HudTab;
 import mathax.legacy.client.gui.widgets.WWidget;
-import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
+import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
@@ -226,17 +230,19 @@ public class HUD extends Module {
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
-        WHorizontalList list = theme.horizontalList();
+        WTable table = theme.table();
 
-        /*WButton editor = list.add(theme.button("Editor")).widget();
-        editor.action = () -> { };
-        list.add(theme.label("Opens the HUD editor."));*/
+        WButton openEditor = table.add(theme.button(GuiRenderer.EDIT)).widget();
+        openEditor.action = this::openHudEditor;
+        table.add(theme.label("Opens HUD editor."));
+        table.row();
 
-        WButton reset = list.add(theme.button("Reset")).widget();
+        WButton reset = table.add(theme.button(GuiRenderer.RESET)).widget();
         reset.action = this.reset;
-        list.add(theme.label("Resets positions (do this after changing scale)."));
+        table.add(theme.label("Resets positions (do this after changing scale)."));
+        table.row();
 
-        return list;
+        return table;
     }
 
     @Override
@@ -272,6 +278,18 @@ public class HUD extends Module {
         }
 
         return null;
+    }
+
+    private void openHudEditor() {
+        HudTab hudTab = null;
+        for (Tab tab : Tabs.get()) {
+            if (tab instanceof HudTab) {
+                hudTab = (HudTab) tab;
+                break;
+            }
+        }
+        if (hudTab == null) return;
+        hudTab.openScreen(GuiThemes.get());
     }
 
     public boolean mountHud() {

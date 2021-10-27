@@ -54,7 +54,7 @@ public class WatermarkHUD extends TripleTextHUDElement {
     }
 
     protected String getEnd() {
-        return getNewUpdate();
+        return checkForUpdate();
     }
 
     @Override
@@ -126,7 +126,7 @@ public class WatermarkHUD extends TripleTextHUDElement {
         Renderer2D.TEXTURE.render(null);
     }
 
-    public String getNewUpdate() {
+    public String checkForUpdate() {
         if (versionString == null) versionString = "";
 
         if (Version.didntCheckForLatest) {

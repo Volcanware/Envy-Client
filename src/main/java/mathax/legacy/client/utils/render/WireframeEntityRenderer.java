@@ -41,6 +41,7 @@ public class WireframeEntityRenderer {
         double y = MathHelper.lerp(event.tickDelta, entity.lastRenderY, entity.getY());
         double z = MathHelper.lerp(event.tickDelta, entity.lastRenderZ, entity.getZ());
 
+        matrices.push();
         matrices.translate(x, y, z);
         matrices.scale((float) scale, (float) scale, (float) scale);
 
@@ -95,7 +96,7 @@ public class WireframeEntityRenderer {
 
             float pitch = MathHelper.lerp(event.tickDelta, livingEntity.prevPitch, livingEntity.getPitch());
 
-            animationProgress = livingEntity.age + event.tickDelta;
+            animationProgress = renderer.getAnimationProgress(livingEntity, event.tickDelta);
             float limbDistance = 0;
             float limbAngle = 0;
 
@@ -145,21 +146,17 @@ public class WireframeEntityRenderer {
                     m.getHeadParts().forEach(modelPart -> render(event.renderer, (ModelPart) modelPart));
                     m.getBodyParts().forEach(modelPart -> render(event.renderer, (ModelPart) modelPart));
                 }
-            } else if (model instanceof BipedEntityModel m) {
+            }
+            else if (model instanceof BipedEntityModel m) {
                 render(event.renderer, m.head);
                 render(event.renderer, m.body);
                 render(event.renderer, m.leftArm);
                 render(event.renderer, m.rightArm);
                 render(event.renderer, m.leftLeg);
                 render(event.renderer, m.rightLeg);
-            } else if (model instanceof AnimalModel m) {
-                m.getHeadParts().forEach(modelPart -> render(event.renderer, (ModelPart) modelPart));
-                m.getBodyParts().forEach(modelPart -> render(event.renderer, (ModelPart) modelPart));
-            } else if (model instanceof SinglePartEntityModel m) {
-                render(event.renderer, m.getPart());
-            } else if (model instanceof CompositeEntityModel m) {
-                m.getParts().forEach(modelPart -> render(event.renderer, (ModelPart) modelPart));
-            } else if (model instanceof LlamaEntityModel m) {
+            } else if (model instanceof SinglePartEntityModel m) render(event.renderer, m.getPart());
+            else if (model instanceof CompositeEntityModel m) m.getParts().forEach(modelPart -> render(event.renderer, (ModelPart) modelPart));
+            else if (model instanceof LlamaEntityModel m) {
                 if (m.child) {
                     matrices.push();
                     matrices.scale(0.71428573F, 0.64935064F, 0.7936508F);

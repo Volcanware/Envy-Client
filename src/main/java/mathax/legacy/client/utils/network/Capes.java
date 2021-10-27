@@ -3,8 +3,6 @@ package mathax.legacy.client.utils.network;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.systems.modules.misc.CapesModule;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +16,7 @@ import java.util.stream.Stream;
 import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Capes {
-    public static final Map<UUID, String> OWNERS = new HashMap<>();
+    private static final Map<UUID, String> OWNERS = new HashMap<>();
     private static final Map<String, String> URLS = new HashMap<>();
     private static final Map<String, Cape> TEXTURES = new HashMap<>();
 
@@ -29,30 +27,30 @@ public class Capes {
     public static void init() {
         disable();
 
-        if (Modules.get().isActive(CapesModule.class)) {
-            MatHaxExecutor.execute(() -> {
-                // Cape owners
-                Stream<String> lines = HTTP.get(MatHaxLegacy.API_URL + "Cape/capeowners").sendLines();
-                if (lines != null) lines.forEach(s -> {
-                    String[] split = s.split(" ");
+        MatHaxExecutor.execute(() -> {
+            // Cape owners
+            Stream<String> lines = HTTP.get(MatHaxLegacy.API_URL + "Cape/capeowners").sendLines();
+            if (lines != null) lines.forEach(s -> {
+                String[] split = s.split(" ");
 
-                    if (split.length >= 2) {
-                        OWNERS.put(UUID.fromString(split[0]), split[1]);
-                        if (!TEXTURES.containsKey(split[1])) TEXTURES.put(split[1], new Cape(split[1]));
-                    }
-                });
-
-                // Capes
-                lines = HTTP.get(MatHaxLegacy.API_URL + "Cape/capes").sendLines();
-                if (lines != null) lines.forEach(s -> {
-                    String[] split = s.split(" ");
-
-                    if (split.length >= 2) {
-                        if (!URLS.containsKey(split[0])) URLS.put(split[0], split[1]);
-                    }
-                });
+                if (split.length >= 2) {
+                    OWNERS.put(UUID.fromString(split[0]), split[1]);
+                    if (!TEXTURES.containsKey(split[1])) TEXTURES.put(split[1], new Cape(split[1]));
+                }
             });
-        }
+
+            // Capes
+            lines = HTTP.get(MatHaxLegacy.API_URL + "Cape/capes").sendLines();
+            if (lines != null) lines.forEach(s -> {
+                String[] split = s.split(" ");
+
+                if (split.length >= 2) {
+                    if (!URLS.containsKey(split[0])) URLS.put(split[0], split[1]);
+                }
+            });
+        });
+
+        MatHaxLegacy.EVENT_BUS.subscribe(Capes.class);
     }
 
     public static void disable() {
@@ -66,26 +64,24 @@ public class Capes {
 
     @EventHandler
     private static void onTick(TickEvent.Post event) {
-        if (Modules.get().isActive(CapesModule.class)) {
-            synchronized (TO_REGISTER) {
-                for (Cape cape : TO_REGISTER) cape.register();
-                TO_REGISTER.clear();
+        synchronized (TO_REGISTER) {
+            for (Cape cape : TO_REGISTER) cape.register();
+            TO_REGISTER.clear();
+        }
+
+        synchronized (TO_RETRY) {
+            TO_RETRY.removeIf(Cape::tick);
+        }
+
+        synchronized (TO_REMOVE) {
+            for (Cape cape : TO_REMOVE) {
+                URLS.remove(cape.name);
+                TEXTURES.remove(cape.name);
+                TO_REGISTER.remove(cape);
+                TO_RETRY.remove(cape);
             }
 
-            synchronized (TO_RETRY) {
-                TO_RETRY.removeIf(Cape::tick);
-            }
-
-            synchronized (TO_REMOVE) {
-                for (Cape cape : TO_REMOVE) {
-                    URLS.remove(cape.name);
-                    TEXTURES.remove(cape.name);
-                    TO_REGISTER.remove(cape);
-                    TO_RETRY.remove(cape);
-                }
-
-                TO_REMOVE.clear();
-            }
+            TO_REMOVE.clear();
         }
     }
 
@@ -105,7 +101,6 @@ public class Capes {
     }
 
     private static class Cape extends Identifier {
-
         private static int COUNT = 0;
 
         private final String name;
@@ -124,51 +119,47 @@ public class Capes {
         }
 
         public void download() {
-            if (Modules.get().isActive(CapesModule.class)) {
-                if (downloaded || downloading || retryTimer > 0) return;
-                downloading = true;
+            if (downloaded || downloading || retryTimer > 0) return;
+            downloading = true;
 
-                MatHaxExecutor.execute(() -> {
-                    try {
-                        String url = URLS.get(name);
-                        if (url == null) {
-                            synchronized (TO_RETRY) {
-                                TO_REMOVE.add(this);
-                                downloading = false;
-                                return;
-                            }
+            MatHaxExecutor.execute(() -> {
+                try {
+                    String url = URLS.get(name);
+                    if (url == null) {
+                        synchronized (TO_RETRY) {
+                            TO_REMOVE.add(this);
+                            downloading = false;
+                            return;
                         }
-
-                        InputStream in = HTTP.get(url).sendInputStream();
-                        if (in == null) {
-                            synchronized (TO_RETRY) {
-                                TO_RETRY.add(this);
-                                retryTimer = 10 * 20;
-                                downloading = false;
-                                return;
-                            }
-                        }
-
-                        img = NativeImage.read(in);
-
-                        synchronized (TO_REGISTER) {
-                            TO_REGISTER.add(this);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
-                });
-            }
+
+                    InputStream in = HTTP.get(url).sendInputStream();
+                    if (in == null) {
+                        synchronized (TO_RETRY) {
+                            TO_RETRY.add(this);
+                            retryTimer = 10 * 20;
+                            downloading = false;
+                            return;
+                        }
+                    }
+
+                    img = NativeImage.read(in);
+
+                    synchronized (TO_REGISTER) {
+                        TO_REGISTER.add(this);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
 
         public void register() {
-            if (Modules.get().isActive(CapesModule.class)) {
-                mc.getTextureManager().registerTexture(this, new NativeImageBackedTexture(img));
-                img = null;
+            mc.getTextureManager().registerTexture(this, new NativeImageBackedTexture(img));
+            img = null;
 
-                downloading = false;
-                downloaded = true;
-            }
+            downloading = false;
+            downloaded = true;
         }
 
         public boolean tick() {

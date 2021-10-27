@@ -94,9 +94,7 @@ public class InteractionScreen extends Screen {
             functions.put("Open Inventory", (Entity e) -> {
                 closeScreen();
 
-                if (client.player.isRiding()) {
-                    client.player.networkHandler.sendPacket(new PlayerInputC2SPacket(0, 0, false, true));
-                }
+                if (client.player.isRiding()) client.player.networkHandler.sendPacket(new PlayerInputC2SPacket(0, 0, false, true));
 
                 client.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.interact(entity, true, Hand.MAIN_HAND));
                 client.player.setSneaking(false);
@@ -150,8 +148,8 @@ public class InteractionScreen extends Screen {
 
         msgs = Modules.get().get(InteractionMenu.class).messages;
         msgs.keySet().forEach((key) -> {
-            if (msgs.get(key).contains("{username}") && !(entity instanceof PlayerEntity)) return;
-            if (msgs.get(key).contains("{health}") && !(entity instanceof LivingEntity)) return;
+            if (msgs.get(key).contains("%username%") && !(entity instanceof PlayerEntity)) return;
+            if (msgs.get(key).contains("%health%") && !(entity instanceof LivingEntity)) return;
 
             functions.put(key, (Entity e) -> {
                 closeScreen();
@@ -159,7 +157,9 @@ public class InteractionScreen extends Screen {
             });
 
         });
-        functions.put("Cancel", (Entity e) -> {closeScreen();});
+        functions.put("Cancel", (Entity e) -> {
+            closeScreen();
+        });
     }
 
     private ItemStack[] getInventory(Entity e) {
@@ -213,8 +213,7 @@ public class InteractionScreen extends Screen {
     }
 
     public void tick() {
-        if (Modules.get().get(InteractionMenu.class).keybind.get().isPressed())
-            onClose();
+        if (Modules.get().get(InteractionMenu.class).keybind.get().isPressed()) onClose();
     }
 
     private void closeScreen() {
@@ -224,11 +223,8 @@ public class InteractionScreen extends Screen {
     public void onClose() {
         cursorMode(GLFW.GLFW_CURSOR_NORMAL);
 
-        if (focusedString != null) {
-            functions.get(focusedString).accept(this.entity);
-        } else {
-            client.setScreen((Screen) null);
-        }
+        if (focusedString != null) functions.get(focusedString).accept(this.entity);
+        else client.setScreen(null);
     }
 
     public boolean isPauseScreen() {
@@ -256,11 +252,8 @@ public class InteractionScreen extends Screen {
 
         if (scale == 0) scale = 4;
 
-        if (Math.hypot(width / 2 - mouseX, height / 2 - mouseY) < 1f / scale * 200f) {
-            mouse.multiply((float) Math.hypot(width / 2 - mouseX, height / 2 - mouseY));
-        } else {
-            mouse.multiply(1f / scale * 200f);
-        }
+        if (Math.hypot(width / 2 - mouseX, height / 2 - mouseY) < 1f / scale * 200f) mouse.multiply((float) Math.hypot(width / 2 - mouseX, height / 2 - mouseY));
+        else mouse.multiply(1f / scale * 200f);
 
         this.crosshairX = (int) mouse.x + width / 2;
         this.crosshairY = (int) mouse.y + height / 2;
@@ -299,9 +292,7 @@ public class InteractionScreen extends Screen {
             if (pointList.get(focusedDot) == point) {
                 drawDot(matrix, point.x - 4, point.y - 4, selectedDotColor);
                 this.focusedString = cache[focusedDot];
-            } else {
-                drawDot(matrix, point.x - 4, point.y - 4, dotColor);
-            }
+            } else drawDot(matrix, point.x - 4, point.y - 4, dotColor);
         }
     }
 
@@ -344,12 +335,8 @@ public class InteractionScreen extends Screen {
         in = in.replace("%uuid%", e.getUuidAsString());
         in = in.replace("%name%", e.getName().getString());
         in = in.replace("%pos%", String.format("%.2f %.2f %.2f", e.getX(), e.getY(), e.getZ()));
-        if (e instanceof PlayerEntity) {
-            in = in.replace("%username%", ((PlayerEntity)e).getGameProfile().getName());
-        }
-        if (e instanceof LivingEntity) {
-            in = in.replace("{health}", String.format("%.2f", ((LivingEntity)e).getHealth()));
-        }
+        if (e instanceof PlayerEntity) in = in.replace("%username%", ((PlayerEntity)e).getGameProfile().getName());
+        if (e instanceof LivingEntity) in = in.replace("%health%", String.format("%.2f", ((LivingEntity)e).getHealth()));
         return in;
     }
 

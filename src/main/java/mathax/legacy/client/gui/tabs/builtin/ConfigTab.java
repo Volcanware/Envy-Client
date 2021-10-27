@@ -17,13 +17,15 @@ import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class ConfigTab extends Tab {
     private static final Settings settings = new Settings();
-    private static final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private static final SettingGroup sgVisual = settings.createGroup("Visual");
     private static final SettingGroup sgChat = settings.createGroup("Chat");
     private static final SettingGroup sgToasts = settings.createGroup("Toasts");
+    private static final SettingGroup sgMisc = settings.createGroup("Misc");
 
-    // General
 
-    public static final Setting<Boolean> customFont = sgGeneral.add(new BoolSetting.Builder()
+    // Visual
+
+    public static final Setting<Boolean> customFont = sgVisual.add(new BoolSetting.Builder()
         .name("custom-font")
         .description("Use a custom font.")
         .defaultValue(true)
@@ -32,7 +34,7 @@ public class ConfigTab extends Tab {
         .build()
     );
 
-    public static final Setting<String> font = sgGeneral.add(new ProvidedStringSetting.Builder()
+    public static final Setting<String> font = sgVisual.add(new ProvidedStringSetting.Builder()
         .name("font")
         .description("Custom font to use (picked from .minecraft/MatHax/Legacy/Fonts folder).")
         .supplier(Fonts::getAvailableFonts)
@@ -46,25 +48,7 @@ public class ConfigTab extends Tab {
         .build()
     );
 
-    public static final Setting<Integer> rotationHoldTicks = sgGeneral.add(new IntSetting.Builder()
-        .name("rotation-hold")
-        .description("Hold long to hold server side rotation when not sending any packets.")
-        .defaultValue(4)
-        .onChanged(integer -> Config.get().rotationHoldTicks = integer)
-        .onModuleActivated(integerSetting -> integerSetting.set(Config.get().rotationHoldTicks))
-        .build()
-    );
-
-    public static final Setting<Boolean> useTeamColor = sgGeneral.add(new BoolSetting.Builder()
-        .name("use-team-color")
-        .description("Uses player's team color for rendering things like esp and tracers.")
-        .defaultValue(false)
-        .onChanged(aBoolean -> Config.get().useTeamColor = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().useTeamColor))
-        .build()
-    );
-
-    public static final Setting<Double> rainbowSpeed = sgGeneral.add(new DoubleSetting.Builder()
+    public static final Setting<Double> rainbowSpeed = sgVisual.add(new DoubleSetting.Builder()
         .name("rainbow-speed")
         .description("The global rainbow speed.")
         .defaultValue(0.5)
@@ -81,65 +65,87 @@ public class ConfigTab extends Tab {
         .name("prefix")
         .description("The command prefix.")
         .defaultValue(".")
-        .onChanged(s -> Config.get().prefix = s)
+        .onChanged(newPrefix -> Config.get().prefix = newPrefix)
         .onModuleActivated(stringSetting -> stringSetting.set(Config.get().prefix))
         .build()
     );
 
-    public static final Setting<Boolean> openChatOnPrefix = sgChat.add(new BoolSetting.Builder()
+    public static final Setting<Boolean> prefixOpensConsole = sgChat.add(new BoolSetting.Builder()
         .name("open-chat-on-prefix")
         .description("Open chat when command prefix is pressed. Works like pressing '/' in vanilla.")
         .defaultValue(true)
-        .onChanged(aBoolean -> Config.get().openChatOnPrefix = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().openChatOnPrefix))
+        .onChanged(aBoolean -> Config.get().prefixOpensConsole = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().prefixOpensConsole))
         .build()
     );
 
-    public static final Setting<Boolean> rainbowPrefix = sgChat.add(new BoolSetting.Builder()
-        .name("rainbow-prefix")
-        .description("Makes the [MatHax Legacy] prefix in chat info rainbow.")
-        .defaultValue(false)
-        .onChanged(aBoolean -> Config.get().rainbowPrefix = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().rainbowPrefix))
-        .build()
-    );
-
-    public static final Setting<Boolean> chatCommandsInfo = sgChat.add(new BoolSetting.Builder()
-        .name("chat-commands-info")
-        .description("Sends a chat message when you use chat commands (eg toggling module, changing a setting, etc).")
+    public static final Setting<Boolean> chatFeedback = sgChat.add(new BoolSetting.Builder()
+        .name("chat-feedback")
+        .description("Sends chat feedback when MatHax performs certain actions.")
         .defaultValue(true)
-        .onChanged(aBoolean -> Config.get().chatCommandsInfo = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().chatCommandsInfo))
+        .onChanged(aBoolean -> Config.get().chatFeedback = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().chatFeedback))
         .build()
     );
 
-    public static final Setting<Boolean> deleteChatCommandsInfo = sgChat.add(new BoolSetting.Builder()
-        .name("delete-chat-commands-info")
-        .description("Deletes previous chat messages.")
+    public static final Setting<Boolean> deleteChatFeedback = sgChat.add(new BoolSetting.Builder()
+        .name("delete-chat-feedback")
+        .description("Delete previous matching chat feedback to keep chat clear.")
+        .visible(chatFeedback::get)
         .defaultValue(true)
-        .onChanged(aBoolean -> Config.get().deleteChatCommandsInfo = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().deleteChatCommandsInfo))
-        .visible(chatCommandsInfo::get)
+        .onChanged(aBoolean -> Config.get().deleteChatFeedback = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().deleteChatFeedback))
         .build()
     );
 
     // Toasts
 
-    public static final Setting<Boolean> chatCommandsToast = sgToasts.add(new BoolSetting.Builder()
-        .name("chat-commands-toast")
-        .description("Sends a toast when you use chat commands (eg changing a setting, etc).")
+    public static final Setting<Boolean> toastFeedback = sgToasts.add(new BoolSetting.Builder()
+        .name("toast-feedback")
+        .description("Sends a toast feedback when MatHax performs certain actions.")
         .defaultValue(true)
-        .onChanged(aBoolean -> Config.get().chatCommandsToast = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().chatCommandsToast))
+        .onChanged(aBoolean -> Config.get().toastFeedback = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().toastFeedback))
         .build()
     );
 
-    public static final Setting<Boolean> playSoundToast = sgToasts.add(new BoolSetting.Builder()
-        .name("play-sound")
+    public static final Setting<Integer> toastDuration = sgToasts.add(new IntSetting.Builder()
+        .name("duration")
+        .description("Determines how long the toast will stay visible in milliseconds")
+        .defaultValue(3000)
+        .min(1)
+        .sliderRange(1, 6000)
+        .onChanged(integer -> Config.get().toastDuration = integer)
+        .onModuleActivated(integerSetting -> integerSetting.set(Config.get().toastDuration))
+        .build()
+    );
+
+    public static final Setting<Boolean> toastSound = sgToasts.add(new BoolSetting.Builder()
+        .name("sound")
         .description("Plays a sound when a toast appears.")
         .defaultValue(true)
-        .onChanged(aBoolean -> Config.get().playSoundToast = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().playSoundToast))
+        .onChanged(aBoolean -> Config.get().toastSound = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().toastSound))
+        .build()
+    );
+
+    // Misc
+
+    public static final Setting<Integer> rotationHoldTicks = sgMisc.add(new IntSetting.Builder()
+        .name("rotation-hold")
+        .description("Hold long to hold server side rotation when not sending any packets.")
+        .defaultValue(4)
+        .onChanged(integer -> Config.get().rotationHoldTicks = integer)
+        .onModuleActivated(integerSetting -> integerSetting.set(Config.get().rotationHoldTicks))
+        .build()
+    );
+
+    public static final Setting<Boolean> useTeamColor = sgMisc.add(new BoolSetting.Builder()
+        .name("use-team-color")
+        .description("Uses player's team color for rendering things like esp and tracers.")
+        .defaultValue(true)
+        .onChanged(aBoolean -> Config.get().useTeamColor = aBoolean)
+        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().useTeamColor))
         .build()
     );
 
@@ -203,7 +209,7 @@ public class ConfigTab extends Tab {
                         .title("Prefix keybind")
                         .message("You have \"Open Chat On Prefix\" setting enabled and your command prefix has a conflict with another keybind.")
                         .message("Do you want to disable \"Open Chat On Prefix\" setting?")
-                        .onYes(() -> Config.get().openChatOnPrefix = false)
+                        .onYes(() -> Config.get().prefixOpensConsole = false)
                         .id("prefix-keybind")
                         .show();
                 }
@@ -234,7 +240,7 @@ public class ConfigTab extends Tab {
     }
 
     private static boolean isUsedKey() {
-        if (!Config.get().openChatOnPrefix) return false;
+        if (!Config.get().prefixOpensConsole) return false;
 
         String prefixKeybindTranslation = String.format("key.keyboard.%s",  Config.get().prefix.toLowerCase().substring(0,1));
         for (KeyBinding key: mc.options.keysAll) {

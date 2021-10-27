@@ -1,8 +1,6 @@
 package mathax.legacy.client.gui.screens.accounts;
 
 import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.screens.accounts.AccountsScreen;
-import mathax.legacy.client.gui.screens.accounts.AddAccountScreen;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.input.WTextBox;
 import mathax.legacy.client.systems.accounts.Accounts;
@@ -31,9 +29,7 @@ public class AddCrackedAccountScreen extends AddAccountScreen {
         add.action = () -> {
             if (!name.get().isEmpty() && (name.get().length() < 17) && name.get().matches("^[a-zA-Z0-9_]+$")) {
                 CrackedAccount account = new CrackedAccount(name.get());
-                if (!(Accounts.get().exists(account))) {
-                    AccountsScreen.addAccount(this, parent, account);
-                }
+                if (!(Accounts.get().exists(account))) AccountsScreen.addAccount(this, parent, account);
             }
         };
 

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import static mathax.legacy.client.utils.Utils.*;
+
 public class GuiRenderer {
     private static final Color WHITE = new Color(255, 255, 255);
 
@@ -67,7 +69,7 @@ public class GuiRenderer {
 
         GL.enableBlend();
         GL.enableScissorTest();
-        scissorStart(0, 0, Utils.getWindowWidth(), Utils.getWindowHeight());
+        scissorStart(0, 0, getWindowWidth(), getWindowHeight());
     }
 
     public void end(MatrixStack matrices) {
@@ -201,6 +203,11 @@ public class GuiRenderer {
     public void quad(double x, double y, double width, double height, GuiTexture texture, Color color) {
         rTex.texQuad(x, y, width, height, texture.get(width, height), color);
     }
+
+    public void rotatedQuad(double x, double y, double width, double height, double rotation, GuiTexture texture, Color color) {
+        rTex.texQuad(x, y, width, height, rotation, texture.get(width, height), color);
+    }
+
     public void quadRounded(double x, double y, double width, double height, Color color, double round, boolean roundTop) {
         r.quadRounded(x, y, width, height, color, round, roundTop);
     }
@@ -235,10 +242,6 @@ public class GuiRenderer {
 
     public void circlePartOutline(double x, double y, double r, double startAngle, double angle, Color color, double outlineWidth) {
         this.r.circlePartOutline(x, y, r, startAngle, angle, color, outlineWidth);
-    }
-
-    public void rotatedQuad(double x, double y, double width, double height, double rotation, GuiTexture texture, Color color) {
-        rTex.texQuad(x, y, width, height, rotation, texture.get(width, height), color);
     }
 
     public void text(String text, double x, double y, Color color, boolean title) {
