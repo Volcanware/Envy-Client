@@ -27,7 +27,7 @@ import net.minecraft.util.math.BlockPos;
 /*/ https://github.com/timoreo22/auto-anvil-dupe/blob/main/src/main/java/fr/timoreo/autodupe/modules/AnvilDupe.java /*/
 /*/-----------------------------------------------------------------------------------------------------------------/*/
 
-public class AnvilDupe extends Module {
+public class AutoAnvilDupe extends Module {
     private BlockPos target;
 
     private int prevSlot;
@@ -38,7 +38,7 @@ public class AnvilDupe extends Module {
 
     private ItemStack toDupe = null;
 
-    public AnvilDupe() {
+    public AutoAnvilDupe() {
         super(Categories.Misc, Items.ANVIL, "auto-anvil-dupe", "Automatically dupes using the anvil dupe.");
     }
 
@@ -87,7 +87,7 @@ public class AnvilDupe extends Module {
         }
 
         if (mc.world.getBlockState(target).getMaterial().isReplaceable()) {
-            FindItemResult echest = InvUtils.findInHotbar(AnvilDupe::isAnvil);
+            FindItemResult echest = InvUtils.findInHotbar(AutoAnvilDupe::isAnvil);
             didDupe = false;
             if (!echest.found()) {
                 error("No Anvils in hotbar, disabling...");

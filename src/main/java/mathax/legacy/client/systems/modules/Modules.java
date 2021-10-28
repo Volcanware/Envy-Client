@@ -572,7 +572,7 @@ public class Modules extends System<Modules> {
 
     private void initMisc() {
         add(new AntiPacketKick());
-        add(new AnvilDupe());
+        add(new AutoAnvilDupe());
         add(new AutoClicker());
         //add(new AutoCraft());
         add(new AutoMountBypassDupe());
