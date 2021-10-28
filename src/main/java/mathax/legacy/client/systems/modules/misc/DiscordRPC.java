@@ -43,8 +43,10 @@ public class DiscordRPC extends Module {
     private static final DiscordRichPresence rpc = new DiscordRichPresence();
     private static final DiscordEventHandlers handlers = new DiscordEventHandlers();
 
-    public static int delay = 0;
-    public static int number = 1;
+    public static boolean mcFirstLoad = true;
+
+    private static int delay = 0;
+    private static int number = 1;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -126,7 +128,8 @@ public class DiscordRPC extends Module {
     }
 
     private String getActivity() {
-        if (mc == null || mc.getOverlay() instanceof SplashOverlay) return "Minecraft is loading...";
+        if (mcFirstLoad && mc.getOverlay() instanceof SplashOverlay) return "Minecraft is loading...";
+        else if (!mcFirstLoad && mc.getOverlay() instanceof SplashOverlay) return "Minecraft is reloading...";
         else if (mc.currentScreen instanceof TitleScreen || mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) return "In main menu";
         else if (mc.currentScreen instanceof MultiplayerScreen || mc.currentScreen instanceof ServerManagerScreen) return "In server selection";
         else if (mc.currentScreen instanceof DirectConnectScreen) return "Using direct connect";
@@ -176,6 +179,7 @@ public class DiscordRPC extends Module {
         String className = mc.currentScreen.getClass().getName();
         if (className.contains("me.jellysquid.mods.sodium.client")) return "Changing Sodium video settings";
         else if (className.contains("com.terraformersmc.modmenu.gui")) return "Viewing loaded mods";
+        else if (className.contains("com.viaversion.fabric.mc117.gui")) return "Changing Minecraft version";
 
         return "Unknown Activity";
     }
@@ -186,12 +190,10 @@ public class DiscordRPC extends Module {
     }
 
     private String getPlayerHealth() {
-        if (!Modules.get().get(DiscordRPC.class).playerHealth.get()) return "";
-        if (mc.world == null) return "";
-        if (mc.player == null) return "";
-        if (mc.player.isDead()) return " | Dead";
-        if (mc.player.isCreative()) return " | Creative Mode";
-        if (mc.player.isSpectator()) return " | Spectator Mode";
+        if (!Modules.get().get(DiscordRPC.class).playerHealth.get() || mc.world == null || mc.player == null) return "";
+        else if (mc.player.isDead()) return " | Dead";
+        else if (mc.player.isCreative()) return " | Creative Mode";
+        else if (mc.player.isSpectator()) return " | Spectator Mode";
         return " | " + Math.round(mc.player.getHealth() + mc.player.getAbsorptionAmount()) + " HP";
     }
 
@@ -252,16 +254,11 @@ public class DiscordRPC extends Module {
     private static void applySmallImage() {
         if (delay == 5) {
             if (number == 16) number = 1;
-            if (Modules.get().get(DiscordRPC.class).smallImageMode.get() == SmallImageMode.Dogs) {
-                rpc.smallImageKey = "dog-" + number;
-            } else {
-                rpc.smallImageKey = "cat-" + number;
-            }
+            if (Modules.get().get(DiscordRPC.class).smallImageMode.get() == SmallImageMode.Dogs) rpc.smallImageKey = "dog-" + number;
+            else rpc.smallImageKey = "cat-" + number;
             ++number;
             delay = 0;
-        } else {
-            ++delay;
-        }
+        } else ++delay;
     }
 
     public enum SmallImageMode {

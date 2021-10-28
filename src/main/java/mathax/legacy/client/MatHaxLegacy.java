@@ -208,6 +208,9 @@ public class MatHaxLegacy implements ClientModInitializer {
         // Loaded window title
         window.setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
 
+        // Loaded Discord RPC
+        DiscordRPC.mcFirstLoad = false;
+
         // Shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
