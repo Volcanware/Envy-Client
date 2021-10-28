@@ -50,7 +50,7 @@ public class AACCrash extends Module {
     );
 
     public AACCrash() {
-        super(Categories.Crash, Items.BARRIER, "aac-crash", "Supposed crash methods for servers using AAC.");
+        super(Categories.Crash, Items.BARRIER, "aac-crash", "Supposed crash methods for servers using AAC. (By 0x150)");
     }
 
     @Override

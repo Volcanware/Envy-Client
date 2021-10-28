@@ -306,6 +306,7 @@ public class Utils {
         name = Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
 
         String title = name.replace("Mathax", "MatHax");
+        title = title.replace("Aac", "AAC");
         title = title.replace("Uuid", "UUID");
         title = title.replace("Keybind", "KeyBind");
         title = title.replace("Esp", "ESP");

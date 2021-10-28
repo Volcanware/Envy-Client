@@ -40,7 +40,7 @@ public class MovementCrash extends Module {
     );
 
     public MovementCrash() {
-        super(Categories.Crash, Items.GOLDEN_BOOTS, "movement-crash", "Tries to crash the server by spamming move packets.");
+        super(Categories.Crash, Items.GOLDEN_BOOTS, "movement-crash", "Tries to crash the server by spamming move packets. (By 0x150)");
     }
 
     public static double rndD(double rad) {

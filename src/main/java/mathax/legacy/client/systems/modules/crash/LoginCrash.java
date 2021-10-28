@@ -11,6 +11,6 @@ import net.minecraft.item.Items;
 
 public class LoginCrash extends Module {
     public LoginCrash() {
-        super(Categories.Crash, Items.COMMAND_BLOCK, "login-crash", "Tries to crash the server on login using null packets.");
+        super(Categories.Crash, Items.COMMAND_BLOCK, "login-crash", "Tries to crash the server on login using null packets. (By 0x150)");
     }
 }

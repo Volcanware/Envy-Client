@@ -47,7 +47,7 @@ public class EntityCrash extends Module {
     );
 
     public EntityCrash() {
-        super(Categories.Crash, Items.EGG, "entity-crash", "Tries to crash the server when you are riding an entity.");
+        super(Categories.Crash, Items.EGG, "entity-crash", "Tries to crash the server when you are riding an entity. (By 0x150)");
     }
 
     @Override

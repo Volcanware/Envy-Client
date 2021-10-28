@@ -49,7 +49,7 @@ public class BoatCrash extends Module {
     );
 
     public BoatCrash() {
-        super(Categories.Crash, Items.OAK_BOAT, "boat-crash", "Tries to crash the server when you are in a boat.");
+        super(Categories.Crash, Items.OAK_BOAT, "boat-crash", "Tries to crash the server when you are in a boat. (By 0x150)");
     }
 
     @EventHandler

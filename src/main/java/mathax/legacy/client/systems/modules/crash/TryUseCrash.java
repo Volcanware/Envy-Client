@@ -42,7 +42,7 @@ public class TryUseCrash extends Module {
     );
 
     public TryUseCrash() {
-        super(Categories.Crash, Items.STICK, "try-use-crash", "Tries to crash the server by spamming use packets.");
+        super(Categories.Crash, Items.STICK, "try-use-crash", "Tries to crash the server by spamming use packets. (By 0x150)");
     }
 
     @EventHandler

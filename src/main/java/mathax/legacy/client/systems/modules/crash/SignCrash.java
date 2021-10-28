@@ -40,7 +40,7 @@ public class SignCrash extends Module {
     );
 
     public SignCrash() {
-        super(Categories.Crash, Items.OAK_SIGN, "sign-crash", "Tries to crash the server by spamming sign updates packets.");
+        super(Categories.Crash, Items.OAK_SIGN, "sign-crash", "Tries to crash the server by spamming sign updates packets. (By 0x150)");
     }
 
     public static String rndBinStr(int size) {
