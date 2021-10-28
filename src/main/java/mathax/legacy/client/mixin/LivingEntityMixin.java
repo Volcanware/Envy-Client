@@ -5,7 +5,7 @@ import mathax.legacy.client.events.entity.DamageEvent;
 import mathax.legacy.client.events.entity.TookDamageEvent;
 import mathax.legacy.client.events.entity.player.CanWalkOnFluidEvent;
 import mathax.legacy.client.systems.modules.movement.AntiLevitation;
-import mathax.legacy.client.systems.modules.misc.OffhandCrash;
+import mathax.legacy.client.systems.modules.crash.OffhandCrash;
 import mathax.legacy.client.systems.modules.render.HandView;
 import mathax.legacy.client.systems.modules.render.NoRender;
 import mathax.legacy.client.systems.modules.Modules;

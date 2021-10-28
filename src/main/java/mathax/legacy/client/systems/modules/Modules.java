@@ -19,6 +19,7 @@ import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.chat.*;
 import mathax.legacy.client.systems.modules.combat.*;
+import mathax.legacy.client.systems.modules.crash.*;
 import mathax.legacy.client.systems.modules.misc.*;
 import mathax.legacy.client.systems.modules.misc.swarm.Swarm;
 import mathax.legacy.client.systems.modules.movement.*;
@@ -81,6 +82,7 @@ public class Modules extends System<Modules> {
         initRender();
         initWorld();
         initChat();
+        initCrash();
         initMisc();
 
         // This is here because some hud elements depend on modules to be initialised before them
@@ -540,6 +542,22 @@ public class Modules extends System<Modules> {
         add(new VeinMiner());
     }
 
+    private void initCrash() {
+        add(new AACCrash());
+        add(new BoatCrash());
+        add(new BookCrash());
+        add(new ContainerCrash());
+        add(new EntityCrash());
+        add(new InvalidPositionCrash());
+        add(new LoginCrash());
+        add(new MessageLagger());
+        add(new MovementCrash());
+        add(new OffhandCrash());
+        add(new PacketSpammer());
+        add(new SignCrash());
+        add(new TryUseCrash());
+    }
+
     private void initChat() {
         add(new Announcer());
         add(new AntiVanish());
@@ -569,7 +587,6 @@ public class Modules extends System<Modules> {
         add(new MiddleClickFriend());
         add(new NameProtect());
         add(new Notebot());
-        add(new OffhandCrash());
         add(new PacketCanceller());
         add(new Panic());
         //add(new PenisESP());
