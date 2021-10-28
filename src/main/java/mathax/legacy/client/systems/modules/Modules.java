@@ -572,6 +572,7 @@ public class Modules extends System<Modules> {
 
     private void initMisc() {
         add(new AntiPacketKick());
+        add(new AnvilDupe());
         add(new AutoClicker());
         //add(new AutoCraft());
         add(new AutoMountBypassDupe());
@@ -583,6 +584,7 @@ public class Modules extends System<Modules> {
         add(new CoordinateLogger());
         add(new DiscordRPC());
         add(new InventoryTweaks());
+        add(new ItemFrameDupe());
         add(new MiddleClickExtra());
         add(new MiddleClickFriend());
         add(new NameProtect());
