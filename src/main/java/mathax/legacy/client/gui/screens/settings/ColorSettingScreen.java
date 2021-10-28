@@ -250,18 +250,13 @@ public class ColorSettingScreen extends WindowScreen {
             double delta = max - min;
 
             value = max / 255;
-            if (delta == 0){
-                saturation = 0;
-            }else {
-                saturation = delta / max;
-            }
+            if (delta == 0) saturation = 0;
+            else saturation = delta / max;
 
             if (calculateNow) {
                 handleX = saturation * width;
                 handleY = (1 - value) * height;
-            } else {
-                calculateHandlePosOnLayout = true;
-            }
+            } else calculateHandlePosOnLayout = true;
         }
 
         @Override
@@ -295,9 +290,7 @@ public class ColorSettingScreen extends WindowScreen {
 
         @Override
         public boolean onMouseReleased(double mouseX, double mouseY, int button) {
-            if (dragging) {
-                dragging = false;
-            }
+            if (dragging) dragging = false;
 
             return false;
         }
@@ -305,16 +298,14 @@ public class ColorSettingScreen extends WindowScreen {
         @Override
         public void onMouseMoved(double mouseX, double mouseY, double lastMouseX, double lastMouseY) {
             if (dragging) {
-                if (mouseX >= this.x && mouseX <= this.x + width) {
-                    handleX += mouseX - lastMouseX;
-                } else {
+                if (mouseX >= this.x && mouseX <= this.x + width) handleX += mouseX - lastMouseX;
+                else {
                     if (handleX > 0 && mouseX < this.x) handleX = 0;
                     else if (handleX < width && mouseX > this.x + width) handleX = width;
                 }
 
-                if (mouseY >= this.y && mouseY <= this.y + height) {
-                    handleY += mouseY - lastMouseY;
-                } else {
+                if (mouseY >= this.y && mouseY <= this.y + height) handleY += mouseY - lastMouseY;
+                else {
                     if (handleY > 0 && mouseY < this.y) handleY = 0;
                     else if (handleY < height && mouseY > this.y + height) handleY = height;
                 }
@@ -348,7 +339,7 @@ public class ColorSettingScreen extends WindowScreen {
             renderer.quad(x, y, width, height, WHITE, hueQuad.color, BLACK, BLACK);
 
             double s = theme.scale(2);
-            renderer.quad(x + handleX - s / 2, y + handleY - s / 2, s, s, WHITE);
+            renderer.quadRounded(x + handleX - s / 2, y + handleY - s / 2, s, s, WHITE, theme.roundAmount(), true);
         }
     }
 
@@ -409,9 +400,7 @@ public class ColorSettingScreen extends WindowScreen {
             if (calculateNow) {
                 double huePercentage = hueAngle / 360;
                 handleX = huePercentage * width;
-            } else {
-                calculateHandleXOnLayout = true;
-            }
+            } else calculateHandleXOnLayout = true;
         }
 
         @Override
@@ -501,9 +490,7 @@ public class ColorSettingScreen extends WindowScreen {
 
         @Override
         public boolean onMouseReleased(double mouseX, double mouseY, int button) {
-            if (dragging) {
-                dragging = false;
-            }
+            if (dragging) dragging = false;
 
             return mouseOver;
         }
@@ -542,7 +529,7 @@ public class ColorSettingScreen extends WindowScreen {
             }
 
             double s = theme.scale(2);
-            renderer.quad(x + handleX - s / 2, y, s, height, WHITE);
+            renderer.quadRounded(x + handleX - s / 2, y, s, height, WHITE, theme.roundAmount(), true);
         }
     }
 }

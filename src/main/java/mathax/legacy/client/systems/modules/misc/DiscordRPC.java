@@ -178,6 +178,7 @@ public class DiscordRPC extends Module {
 
         String className = mc.currentScreen.getClass().getName();
         if (className.contains("me.jellysquid.mods.sodium.client")) return "Changing Sodium video settings";
+        else if (className.contains("net.coderbot.iris.gui.screen")) return "Changing Iris shaderpack";
         else if (className.contains("com.terraformersmc.modmenu.gui")) return "Viewing loaded mods";
         else if (className.contains("com.viaversion.fabric.mc117.gui")) return "Changing Minecraft version";
 

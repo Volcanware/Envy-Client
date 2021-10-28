@@ -174,8 +174,7 @@ public class Renderer2D {
                 circlePart(x + width - r, y + r, r, circleNone, circleQuarter, color);
                 //middle
                 quad(x, y + r, width, height - 2 * r, color);
-            }
-            else {
+            } else {
                 //middle
                 quad(x, y, width, height - r, color);
             }
@@ -196,8 +195,7 @@ public class Renderer2D {
                 circlePart(x + width - r, y + height - r, r, circleQuarter, circleQuarter, color);
                 quad(x, y, width - r, height, color);
                 quad(x + width - r, y + r, r, height - r * 2, color);
-            }
-            else {
+            } else {
                 circlePart(x + r, y + r, r, circleThreeQuarter, circleQuarter, color);
                 circlePart(x + r, y + height - r, r, circleHalf, circleQuarter, color);
                 quad(x + r, y, width - r, height, color);

@@ -34,7 +34,6 @@ public class HUD extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgEditor = settings.createGroup("Editor");
-    private final SettingGroup sgVanilla = settings.createGroup("Vanilla HUD");
 
     // General
 
@@ -68,15 +67,6 @@ public class HUD extends Module {
         .name("snapping-range")
         .description("Snapping range in editor.")
         .defaultValue(6)
-        .build()
-    );
-
-    // Improve vanilla HUD
-
-    public final Setting<Boolean> mountHud = sgVanilla.add(new BoolSetting.Builder()
-        .name("mount-hud")
-        .description("Display xp bar and hunger when riding.")
-        .defaultValue(true)
         .build()
     );
 
@@ -290,9 +280,5 @@ public class HUD extends Module {
         }
         if (hudTab == null) return;
         hudTab.openScreen(GuiThemes.get());
-    }
-
-    public boolean mountHud() {
-        return isActive() && mountHud.get();
     }
 }
