@@ -102,6 +102,7 @@
     "LivingEntityMixin",
     "LivingEntityRendererMixin",
     "LlamaEntityMixin",
+    "LoginHelloC2SPacketMixin",
     "MapRendererMixin",
     "Matrix4fMixin",
     "MinecraftClientAccessor",
