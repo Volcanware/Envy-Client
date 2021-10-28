@@ -15,10 +15,10 @@ import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.BoatPaddleStateC2SPacket;
 
-/*/------------------------------------------------------------------------------------------------------------------------/*/
-/*/ Used from Meteor Crash Addon by Wide Cat                                                                               /*/
-/*/ https://github.com/Wide-Cat/meteor-crash-addon/blob/main/src/main/java/widecat/meteorcrashaddon/modules/BoatCrash.java /*/
-/*/------------------------------------------------------------------------------------------------------------------------/*/
+/*/--------------------------/*/
+/*/ Made by 0x150            /*/
+/*/ https://github.com/0x150 /*/
+/*/--------------------------/*/
 
 public class BoatCrash extends Module {
     private final BoatPaddleStateC2SPacket PACKET = new BoatPaddleStateC2SPacket(true, true);

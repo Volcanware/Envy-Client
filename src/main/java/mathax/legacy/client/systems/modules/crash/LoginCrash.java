@@ -4,10 +4,10 @@ import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import net.minecraft.item.Items;
 
-/*/-------------------------------------------------------------------------------------------------------------------------/*/
-/*/ Used from Meteor Crash Addon by Wide Cat                                                                                /*/
-/*/ https://github.com/Wide-Cat/meteor-crash-addon/blob/main/src/main/java/widecat/meteorcrashaddon/modules/LoginCrash.java /*/
-/*/-------------------------------------------------------------------------------------------------------------------------/*/
+/*/--------------------------/*/
+/*/ Made by 0x150            /*/
+/*/ https://github.com/0x150 /*/
+/*/--------------------------/*/
 
 public class LoginCrash extends Module {
     public LoginCrash() {

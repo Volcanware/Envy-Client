@@ -13,10 +13,10 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
-/*/--------------------------------------------------------------------------------------------------------------------------/*/
-/*/ Used from Meteor Crash Addon by Wide Cat                                                                                 /*/
-/*/ https://github.com/Wide-Cat/meteor-crash-addon/blob/main/src/main/java/widecat/meteorcrashaddon/modules/EntityCrash.java /*/
-/*/--------------------------------------------------------------------------------------------------------------------------/*/
+/*/--------------------------/*/
+/*/ Made by 0x150            /*/
+/*/ https://github.com/0x150 /*/
+/*/--------------------------/*/
 
 public class EntityCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

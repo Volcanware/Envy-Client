@@ -15,10 +15,10 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.Random;
 
-/*/----------------------------------------------------------------------------------------------------------------------------/*/
-/*/ Used from Meteor Crash Addon by Wide Cat                                                                                   /*/
-/*/ https://github.com/Wide-Cat/meteor-crash-addon/blob/main/src/main/java/widecat/meteorcrashaddon/modules/MovementCrash.java /*/
-/*/----------------------------------------------------------------------------------------------------------------------------/*/
+/*/--------------------------/*/
+/*/ Made by 0x150            /*/
+/*/ https://github.com/0x150 /*/
+/*/--------------------------/*/
 
 public class MovementCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

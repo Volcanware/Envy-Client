@@ -10,11 +10,10 @@ import mathax.legacy.client.utils.Utils;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
-/*/-----------------------------------------------------------------------------------------------------------------------/*/
-/*/ Used from Meteor Crash Addon by Wide Cat                                                                              /*/
-/*/ https://github.com/Wide-Cat/meteor-crash-addon/blob/main/src/main/java/widecat/meteorcrashaddon/modules/AACCrash.java /*/
-/*/-----------------------------------------------------------------------------------------------------------------------/*/
-/*/-----------------------------------------------------------------------------------------------------------------------/*/
+/*/--------------------------/*/
+/*/ Made by 0x150            /*/
+/*/ https://github.com/0x150 /*/
+/*/--------------------------/*/
 
 public class AACCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
