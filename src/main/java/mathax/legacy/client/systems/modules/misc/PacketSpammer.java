@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.crash;
+package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.game.GameLeftEvent;
@@ -38,7 +38,7 @@ public class PacketSpammer extends Module {
     );
 
     public PacketSpammer() {
-        super(Categories.Crash, Items.COMMAND_BLOCK, "packet-spammer", "Spams various packets to the server. Likely to get you kicked instantly.");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "packet-spammer", "Spams various packets to the server. Likely to get you kicked instantly.");
     }
 
     @EventHandler

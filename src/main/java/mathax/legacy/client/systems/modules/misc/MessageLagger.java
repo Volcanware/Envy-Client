@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.crash;
+package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.game.GameLeftEvent;
@@ -23,6 +23,8 @@ import java.util.Random;
 /*/----------------------------------------------------------------------------------------------------------------------------/*/
 
 public class MessageLagger extends Module {
+    private int timer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Integer> messageLength = sgGeneral.add(new IntSetting.Builder()
@@ -66,10 +68,8 @@ public class MessageLagger extends Module {
     );
 
     public MessageLagger() {
-        super(Categories.Crash, Items.COMMAND_BLOCK, "message-lagger", "Sends dense messages that lag other players on the server.");
+        super(Categories.Misc, Items.COMMAND_BLOCK, "message-lagger", "Sends dense messages that lag other players on the server.");
     }
-
-    private int timer;
 
     @Override
     public void onActivate() {

@@ -550,10 +550,8 @@ public class Modules extends System<Modules> {
         add(new EntityCrash());
         add(new InvalidPositionCrash());
         add(new LoginCrash());
-        add(new MessageLagger());
         add(new MovementCrash());
         add(new OffhandCrash());
-        add(new PacketSpammer());
         add(new SignCrash());
         add(new TryUseCrash());
     }
@@ -585,11 +583,13 @@ public class Modules extends System<Modules> {
         add(new DiscordRPC());
         add(new InventoryTweaks());
         add(new ItemFrameDupe());
+        add(new MessageLagger());
         add(new MiddleClickExtra());
         add(new MiddleClickFriend());
         add(new NameProtect());
         add(new Notebot());
         add(new PacketCanceller());
+        add(new PacketSpammer());
         add(new Panic());
         //add(new PenisESP());
         add(new SoundBlocker());
