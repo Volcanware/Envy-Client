@@ -18,10 +18,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.LightType;
 import net.minecraft.world.RaycastContext;
@@ -202,7 +199,7 @@ public class BlockUtils {
 
         if (bl) {
             Direction direction1 = direction;
-            Rotations.rotate(Rotations.getYaw(vec3d), Rotations.getPitch(vec3d), n2, () -> place2(n, vec3d, hand, direction1, blockPos1, bl2, bl4, bl5));
+            Rotations.rotate(Rotations.getYaw(vec3d), Rotations.getPitch(vec3d), n2, () -> placeEnhanced2(n, vec3d, hand, direction1, blockPos1, bl2, bl4, bl5));
         } else placeEnhanced(n, vec3d, hand, direction, blockPos1, bl2, bl4, bl5);
 
         return true;
@@ -224,7 +221,7 @@ public class BlockUtils {
         if (bl3) mc.player.getInventory().selectedSlot = n2;
     }
 
-    private static void place2(int n, Vec3d vec3d, Hand hand, Direction direction, BlockPos blockPos, boolean bl, boolean bl2, boolean bl3) {
+    private static void placeEnhanced2(int n, Vec3d vec3d, Hand hand, Direction direction, BlockPos blockPos, boolean bl, boolean bl2, boolean bl3) {
         placeEnhanced(n, vec3d, hand, direction, blockPos, bl, bl2, bl3);
     }
 

@@ -159,7 +159,7 @@ public class CEVBreaker extends Module {
                             if (n == -1) n = EnhancedInvUtils.findItemInHotbar(Items.NETHERITE_PICKAXE);
                             if (n == -1) n = EnhancedInvUtils.findItemInHotbar(Items.DIAMOND_PICKAXE);
                             if (n == -1 && !mc.player.isCreative()) {
-                                error("Can't find any pickaxe in hotbar, disabling...");
+                                error("Can't find any pickaxe in your hotbar, disabling...");
                                 toggle();
                             } else {
                                 EndCrystalEntity endCrystalEntity = null;

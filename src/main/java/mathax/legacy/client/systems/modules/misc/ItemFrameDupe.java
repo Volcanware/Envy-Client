@@ -88,7 +88,7 @@ public class ItemFrameDupe extends Module {
 
         FindItemResult itemResult = InvUtils.findInHotbar(Items.ITEM_FRAME, Items.GLOW_ITEM_FRAME);
         if (!itemResult.found()) {
-            error("No item frames found in hotbar, disabling...");
+            error("No item frames found in your hotbar, disabling...");
             toggle();
             return;
         }

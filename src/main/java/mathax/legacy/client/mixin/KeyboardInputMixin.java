@@ -15,6 +15,6 @@ public class KeyboardInputMixin extends Input {
     @Inject(method = "tick", at = @At("TAIL"))
     private void isPressed(boolean slowDown, CallbackInfo info) {
         if (Modules.get().get(Sneak.class).doVanilla()) sneaking = true;
-        if ((Modules.get().get(Twerk.class)).doVanilla()) this.sneaking = true;
+        if ((Modules.get().get(Twerk.class)).doVanilla()) sneaking = true;
     }
 }

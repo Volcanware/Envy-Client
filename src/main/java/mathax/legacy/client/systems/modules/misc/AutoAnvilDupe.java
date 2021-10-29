@@ -90,7 +90,7 @@ public class AutoAnvilDupe extends Module {
             FindItemResult echest = InvUtils.findInHotbar(AutoAnvilDupe::isAnvil);
             didDupe = false;
             if (!echest.found()) {
-                error("No Anvils in hotbar, disabling...");
+                error("No Anvils in your hotbar, disabling...");
                 toggle();
                 return;
             }

@@ -95,9 +95,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Inject(method = "shouldSlowDown", at = @At("HEAD"), cancellable = true)
     private void onShouldSlowDown(CallbackInfoReturnable<Boolean> info) {
-        if (Modules.get().get(NoSlow.class).sneaking()) {
-            info.setReturnValue(shouldLeaveSwimmingPose());
-        }
+        if (Modules.get().get(NoSlow.class).sneaking()) info.setReturnValue(shouldLeaveSwimmingPose());
     }
 
     @Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
