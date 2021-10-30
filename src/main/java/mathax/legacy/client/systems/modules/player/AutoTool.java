@@ -24,6 +24,7 @@ import java.util.function.Predicate;
 public class AutoTool extends Module {
     private boolean wasPressed;
     private boolean shouldSwitch;
+
     private int ticks;
     private int bestSlot;
 

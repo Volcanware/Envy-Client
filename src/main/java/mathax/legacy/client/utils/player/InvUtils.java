@@ -1,6 +1,7 @@
 package mathax.legacy.client.utils.player;
 
 import mathax.legacy.client.mixininterface.IClientPlayerInteractionManager;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.*;
@@ -27,6 +28,22 @@ public class InvUtils {
 
     public static FindItemResult findEmpty() {
         return find(ItemStack::isEmpty);
+    }
+
+    public static int findItemInHotbar(final Item item) {
+        int index = -1;
+        for (int i = 0; i < 9; ++i) {
+            if (mc.player.getInventory().getStack(i).getItem() == item) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
+
+    public static int findBlockInHotbar(final Block block) {
+        return findItemInHotbar(new ItemStack(block).getItem());
     }
 
     public static FindItemResult findInHotbar(Item... items) {

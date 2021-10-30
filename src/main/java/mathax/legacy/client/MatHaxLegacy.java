@@ -164,8 +164,6 @@ public class MatHaxLegacy implements ClientModInitializer {
                 Modules.get().get(CEVBreaker.class).setToggleToast(true);
                 Modules.get().get(CrystalAura.class).setToggleToast(true);
                 Modules.get().get(KillAura.class).setToggleToast(true);
-                Modules.get().get(Speed.class).setToggleToast(true);
-                Modules.get().get(Surround.class).setToggleToast(true);
 
                 // MESSAGES
                 Modules.get().get(Zoom.class).setToggleMessage(false);

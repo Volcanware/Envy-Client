@@ -171,12 +171,14 @@ public class MusicHUD extends HUDElement {
             if (Music.player.isPaused()) {
                 double pauseStart = h / 2 - controlSizeHalf;
                 double quadWidth = controlSizeHalf * 2 / 3;
+
                 Renderer2D.COLOR.quad(x + pauseStart, y + pauseStart, quadWidth, controlSizeHalf * 2, iconColor.get());
                 Renderer2D.COLOR.quad(x + h / 2 + controlSizeHalf - quadWidth, y + pauseStart, quadWidth, controlSizeHalf * 2, iconColor.get());
             } else {
                 controlSizeHalf /= 2;
                 double startX = h / 2 - controlSizeHalf;
                 double startY = h / 2 - controlSizeHalf * 2;
+
                 Mesh mesh = Renderer2D.COLOR.triangles;
                 mesh.triangle(
                     mesh.vec2(x + startX, y + startY).color(iconColor.get()).next(),
