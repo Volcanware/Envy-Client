@@ -15,6 +15,7 @@ import mathax.legacy.client.utils.render.color.SettingColor;
 public class MusicHUD extends HUDElement {
     private static String time = "00:00:00";
     private static final String notPlaying = "Not playing";
+    private static final String noAuthor = "No author";
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -138,8 +139,8 @@ public class MusicHUD extends HUDElement {
             textRenderer.end();
             textRenderer.begin(0.45 * textScale.get(), false, true);
             if (showTitle.get()) width = Math.max(width, size.get() + renderer.roundAmount() + textRenderer.getWidth(current == null ? notPlaying : current.getInfo().title));
-            if (showAuthor.get()) width = Math.max(width, size.get() + renderer.roundAmount() + textRenderer.getWidth(current == null ? notPlaying : current.getInfo().author));
-            if (showRemainingTime.get()) width = Math.max(width, size.get() + renderer.roundAmount() + textRenderer.getWidth(current == null ? notPlaying : time));
+            if (showAuthor.get()) width = Math.max(width, size.get() + renderer.roundAmount() + textRenderer.getWidth(current == null ? noAuthor : current.getInfo().author));
+            if (showRemainingTime.get()) width = Math.max(width, size.get() + renderer.roundAmount() + textRenderer.getWidth(time));
             textRenderer.end();
             textRenderer.begin();
             box.setSize(width, size.get());
@@ -158,7 +159,7 @@ public class MusicHUD extends HUDElement {
             AudioTrack current = Music.player.getPlayingTrack();
             double progress = current == null ? 1 : current.getPosition() * 1d / current.getDuration();
             String title = current == null ? notPlaying : current.getInfo().title.replace("&amp;", "&");
-            String author = current == null ? notPlaying : current.getInfo().author.replace("&amp;", "&");
+            String author = current == null ? noAuthor : current.getInfo().author.replace("&amp;", "&");
 
             // Song view
             double r = h * recordPart.get() / 2;
