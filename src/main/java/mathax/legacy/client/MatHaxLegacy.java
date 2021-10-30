@@ -15,9 +15,11 @@ import mathax.legacy.client.renderer.*;
 import mathax.legacy.client.renderer.text.Fonts;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.modules.Categories;
+import mathax.legacy.client.systems.modules.combat.*;
 import mathax.legacy.client.systems.modules.misc.CapesModule;
 import mathax.legacy.client.systems.modules.misc.DiscordRPC;
 import mathax.legacy.client.systems.modules.misc.MiddleClickFriend;
+import mathax.legacy.client.systems.modules.movement.speed.Speed;
 import mathax.legacy.client.systems.modules.render.Background;
 import mathax.legacy.client.systems.modules.render.Zoom;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
@@ -157,7 +159,13 @@ public class MatHaxLegacy implements ClientModInitializer {
                 Modules.get().get(Zoom.class).toggleOnBindRelease = true;
 
                 // TOASTS
-                Modules.get().get(Zoom.class).setToggleToast(false);
+                Modules.get().get(AnchorAura.class).setToggleToast(true);
+                Modules.get().get(BedAura.class).setToggleToast(true);
+                Modules.get().get(CEVBreaker.class).setToggleToast(true);
+                Modules.get().get(CrystalAura.class).setToggleToast(true);
+                Modules.get().get(KillAura.class).setToggleToast(true);
+                Modules.get().get(Speed.class).setToggleToast(true);
+                Modules.get().get(Surround.class).setToggleToast(true);
 
                 // MESSAGES
                 Modules.get().get(Zoom.class).setToggleMessage(false);
