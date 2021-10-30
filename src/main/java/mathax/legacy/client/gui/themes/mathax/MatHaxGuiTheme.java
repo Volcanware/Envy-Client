@@ -80,12 +80,10 @@ public class MatHaxGuiTheme extends GuiTheme {
 
     public final Setting<Integer> round = sgGeneral.add(new IntSetting.Builder()
         .name("round")
-        .description("How much windows should be rounded")
+        .description("How much windows should be rounded. (0 to disable)")
         .defaultValue(10)
-        .min(0)
-        .max(20)
-        .sliderMin(0)
-        .sliderMax(20)
+        .range(0, 20)
+        .sliderRange(0, 20)
         .build()
     );
 

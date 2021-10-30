@@ -17,6 +17,7 @@ import net.minecraft.client.util.Window;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.profiler.Profiler;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,6 +25,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @Mixin(value = MinecraftClient.class, priority = 1001)
@@ -139,5 +142,23 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
     @Override
     public void rightClick() {
         rightClick = true;
+    }
+
+    // Music
+
+    private static final Set<Screen> musicPassingScreens = new HashSet<>();
+    @Redirect(method = "setScreen(Lnet/minecraft/client/gui/screen/Screen;)V", at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;currentScreen:Lnet/minecraft/client/gui/screen/Screen;", opcode = Opcodes.PUTFIELD))
+    public void preInitScreen(MinecraftClient client, Screen screen) {
+        if (screen != null) {
+            musicPassingScreens.add(screen);
+            screen.init((MinecraftClient)(Object)this, window.getScaledWidth(), window.getScaledHeight());
+        }
+
+        client.currentScreen = screen;
+    }
+
+    @Redirect(method = "setScreen(Lnet/minecraft/client/gui/screen/Screen;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/Screen;init(Lnet/minecraft/client/MinecraftClient;II)V"))
+    private void disableInit(Screen screen, MinecraftClient client, int width, int height) {
+        if (musicPassingScreens.remove(screen)) screen.init(client, width, height);
     }
 }

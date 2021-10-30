@@ -1,6 +1,9 @@
 package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.gui.screens.music.MusicScreen;
+import mathax.legacy.client.gui.screens.music.PlaylistViewScreen;
+import mathax.legacy.client.gui.screens.music.PlaylistsScreen;
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.screens.*;
 import mathax.legacy.client.gui.screens.TitleScreen;
@@ -21,6 +24,8 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.misc.LastServerInfo;
 import mathax.legacy.client.utils.render.PeekScreen;
+import mathax.legacy.client.utils.render.prompts.OkPrompt;
+import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.minecraft.client.gui.screen.*;
@@ -128,8 +133,7 @@ public class DiscordRPC extends Module {
     }
 
     private String getActivity() {
-        if (mcFirstLoad && mc.getOverlay() instanceof SplashOverlay) return "Minecraft is loading...";
-        else if (!mcFirstLoad && mc.getOverlay() instanceof SplashOverlay) return "Minecraft is reloading...";
+        if (mc.getOverlay() instanceof SplashOverlay) return "Something is loading...";
         else if (mc.currentScreen instanceof TitleScreen || mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) return "In main menu";
         else if (mc.currentScreen instanceof MultiplayerScreen || mc.currentScreen instanceof ServerManagerScreen) return "In server selection";
         else if (mc.currentScreen instanceof DirectConnectScreen) return "Using direct connect";
@@ -158,21 +162,28 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof LevelLoadingScreen || mc.currentScreen instanceof SaveLevelScreen) return "Loading/Saving a world";
         else if (mc.currentScreen instanceof AddServerScreen) return "Adding/Editing a server";
         else if (mc.currentScreen instanceof BaritoneTab.BaritoneScreen) return "Configuring Baritone";
-        else if (mc.currentScreen instanceof ConfigTab.ConfigScreen) return "Editing Config";
-        else if (mc.currentScreen instanceof EnemiesTab.EnemiesScreen) return "Editing Enemies";
-        else if (mc.currentScreen instanceof FriendsTab.FriendsScreen) return "Editing Friends";
+        else if (mc.currentScreen instanceof ConfigTab.ConfigScreen) return "Editing config";
+        else if (mc.currentScreen instanceof EnemiesTab.EnemiesScreen) return "Editing enemies";
+        else if (mc.currentScreen instanceof FriendsTab.FriendsScreen) return "Editing friends";
         else if (mc.currentScreen instanceof GuiTab.GuiScreen) return "Editing GUI";
         else if (mc.currentScreen instanceof HudTab.HudScreen || mc.currentScreen instanceof HudElementScreen) return "Editing HUD";
-        else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) return "Configuring Macros";
-        else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) return "Configuring a Macro";
+        else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) return "Configuring macros";
+        else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) return "Configuring a macro";
         else if (mc.currentScreen instanceof ProfilesTab.ProfilesScreen) return "Changing profiles";
-        else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
+        else if (mc.currentScreen instanceof MusicScreen) return "Configuring music";
+        else if (mc.currentScreen instanceof PlaylistsScreen) return "Viewing playlists";
+        else if (mc.currentScreen instanceof PlaylistViewScreen) {
+            if (((PlaylistViewScreen) mc.currentScreen).getTitleString().contains("Search")) return "Searching for a song";
+            else return "Viewing a playlist";
+        } else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
         else if (mc.currentScreen instanceof AddCrackedAccountScreen) return "Adding cracked account";
         else if (mc.currentScreen instanceof AddPremiumAccountScreen) return "Adding premium account";
         else if (mc.currentScreen instanceof AddAlteningAccountScreen) return "Adding The Altening account";
         else if (mc.currentScreen instanceof ProxiesScreen) return "Editing proxies";
         else if (mc.currentScreen instanceof CreditsScreen) return "Reading credits";
         else if (mc.currentScreen instanceof RealmsScreen) return "Browsing Realms";
+        else if (mc.currentScreen instanceof YesNoPrompt.PromptScreen) return "Viewing a prompt";
+        else if (mc.currentScreen instanceof OkPrompt.PromptScreen) return "Viewing a prompt";
         else if (mc.currentScreen instanceof ProgressScreen) return "Loading something...";
         else if (mc.world != null) return getWorldActivity();
 

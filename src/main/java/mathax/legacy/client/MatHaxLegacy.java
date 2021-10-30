@@ -10,6 +10,7 @@ import mathax.legacy.client.gui.tabs.Tabs;
 import mathax.legacy.client.eventbus.EventBus;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.eventbus.IEventBus;
+import mathax.legacy.client.music.Music;
 import mathax.legacy.client.renderer.*;
 import mathax.legacy.client.renderer.text.Fonts;
 import mathax.legacy.client.systems.Systems;
@@ -43,7 +44,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.util.Window;
 import net.minecraft.util.Formatting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -58,6 +58,9 @@ import java.util.List;
 /*/ THIS CLIENT IS A FORK OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/
 /*/ https://meteorclient.com                                         /*/
 /*/ https://github.com/MeteorDevelopment/meteor-client               /*/
+/*/------------------------------------------------------------------/*/
+/*/ Music player used from Motor Tunez made by JFronny               /*/
+/*/ https://github.com/JFronny/MotorTunez                            /*/
 /*/------------------------------------------------------------------/*/
 
 public class MatHaxLegacy implements ClientModInitializer {
@@ -183,6 +186,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         Fonts.init();
         DamageUtils.init();
         BlockUtils.init();
+        Music.init();
 
         // Register module categories
         Categories.init();

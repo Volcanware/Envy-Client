@@ -78,7 +78,7 @@ public class OkPrompt {
         }
     }
 
-    private class PromptScreen extends WindowScreen {
+    public class PromptScreen extends WindowScreen {
         public PromptScreen(GuiTheme theme) {
             super(theme, OkPrompt.this.title);
 

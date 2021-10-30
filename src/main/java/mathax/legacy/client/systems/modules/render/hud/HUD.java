@@ -104,6 +104,7 @@ public class HUD extends Module {
         mainInfo.add(new ServerHUD(this));
         mainInfo.add(new ServerBrandHUD(this));
         mainInfo.add(new DurabilityHUD(this));
+        mainInfo.add(new MusicHUD(this));
         mainInfo.add(new BiomeHUD(this));
         mainInfo.add(new PlayerModelHUD(this));
         mainInfo.add(new CombatInfoHUD(this));

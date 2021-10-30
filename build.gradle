@@ -16,6 +16,9 @@ repositories {
         name = "jitpack"
         url = "https://jitpack.io"
     }
+    maven {
+        url 'https://m2.dv8tion.net/releases'
+    }
 
     // Meteor
     maven {
@@ -64,6 +67,18 @@ dependencies {
 
     // Dependencies
     library "com.github.Vatuu:discord-rpc:${project.discord_version}"
+
+    // Music
+    include modImplementation("com.github.Walkyst:lavaplayer:cc6830f9c6")
+    include('com.sedmelluq:lava-common:1.1.2')
+    include('com.sedmelluq:lavaplayer-natives:1.3.14')
+    include("commons-io:commons-io:2.6")
+    include("commons-codec:commons-codec:1.11")
+    include("com.fasterxml.jackson.core:jackson-core:2.10.1")
+    include("com.fasterxml.jackson.core:jackson-databind:2.10.1")
+    include("com.fasterxml.jackson.core:jackson-annotations:2.10.1")
+    include("org.jsoup:jsoup:1.12.1")
+    include("net.iharder:base64:2.3.9")
 }
 
 loom {
