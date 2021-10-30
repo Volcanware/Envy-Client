@@ -33,7 +33,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
 
     private boolean active;
     private boolean toggleMessage = true;
-    private boolean toggleToast = true;
+    private boolean toggleToast = false;
     private boolean visible = true;
 
     public boolean serialize = true;
