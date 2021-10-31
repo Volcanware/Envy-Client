@@ -5,7 +5,6 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
-import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.screens.music.MusicScreen;
 import mathax.legacy.client.utils.player.ChatUtils;
 
@@ -16,6 +15,7 @@ import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class TrackScheduler extends AudioEventAdapter {
     public List<AudioTrack> tracks = new ArrayList<>();
+
     public void queue(AudioTrack track) {
         if (track == null) return;
         if (!Music.player.startTrack(track, true)) {

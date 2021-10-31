@@ -203,7 +203,7 @@ public class MusicHUD extends HUDElement {
 
             // The total duration in Hours, Minutes and Seconds
             textRenderer.begin(0.4 * textScale.get(), false, true);
-            if (showRemainingTime.get()) textRenderer.render(time, x + h, y + h, textColor.get());
+            if (showRemainingTime.get()) textRenderer.render(time, x + h, y + h - textRenderer.getHeight(), textColor.get());
             textRenderer.end();
         });
     }

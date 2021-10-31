@@ -47,7 +47,7 @@ public class MusicCommand extends Command {
 
         builder.then(literal("continue")
             .executes(context -> {
-                if (Music.player.isPaused()) {
+                if (!Music.player.isPaused()) {
                     info("Not paused.");
                     return SINGLE_SUCCESS;
                 }
