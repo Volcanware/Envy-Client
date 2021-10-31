@@ -313,9 +313,13 @@ public class Utils {
         title = title.replace("Tps", "TPS");
         title = title.replace("Tp", "TP");
         title = title.replace("Xp", "XP");
-        title = title.replace("Exp", "EXP");
+        title = title.replace("Exp ", "EXP");
         title = title.replace("EXPlosion", "Explosion");
         title = title.replace("EXPand", "Expand");
+        title = title.replace("EXPosed", "Exposed");
+        title = title.replace("EXPlore", "Explore");
+        title = title.replace("EXPloring", "Exploring");
+        title = title.replace("EXPiry", "Expiry");
         title = title.replace("Gui", "GUI");
         title = title.replace("Hud", "HUD");
         title = title.replace("Fov", "FOV");

@@ -37,6 +37,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -142,9 +143,9 @@ public class TitleScreen extends Screen {
 
         if (backgroundFadeStart == 0L && doBackgroundFade) backgroundFadeStart = Util.getMeasuringTimeMs();
 
-        float fade = doBackgroundFade ? (float)(Util.getMeasuringTimeMs() - backgroundFadeStart) / 1000.0F : 1.0F;
-        float xOffset = -1.0f * (((float) mouseX - (float) width / 2.0f) / ((float) width / 32.0f));
-        float yOffset = -1.0f * (((float) mouseY - (float) height / 2.0f) / ((float) height / 18.0f));
+        float fade = doBackgroundFade ? (Util.getMeasuringTimeMs() - backgroundFadeStart) / 1000.0F : 1.0F;
+        float xOffset = -1.0f * ((mouseX - width / 2.0f) / (width / 32.0f));
+        float yOffset = -1.0f * ((mouseY - height / 2.0f) / (height / 18.0f));
 
         int backgroundX = ((int) xOffset - 16) * 3;
         int backgroundY = ((int) yOffset - 16) * 2;
@@ -157,7 +158,7 @@ public class TitleScreen extends Screen {
         RenderSystem.setShaderTexture(0, BACKGROUND);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, doBackgroundFade ? (float) MathHelper.ceil(MathHelper.clamp(fade, 0.0F, 1.0F)) : 1.0F);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, doBackgroundFade ? MathHelper.ceil(MathHelper.clamp(fade, 0.0F, 1.0F)) : 1.0F);
         drawTexture(matrices, backgroundX, backgroundY, (int) width2, (int) height2, 0.0F, 0.0F, 16, 128, 16, 128);
 
         float fade2 = doBackgroundFade ? MathHelper.clamp(fade - 1.0F, 0.0F, 1.0F) : 1.0F;
@@ -167,21 +168,39 @@ public class TitleScreen extends Screen {
 
         if ((ceil & -67108864) != 0) {
             RenderSystem.setShaderTexture(0, LOGO);
-            int logoScale = client.getWindow().getHeight() / 8;
+            int logoScale;
+            if (client.options.guiScale == 1) logoScale = client.getWindow().getHeight() / 4;
+            else if (client.options.guiScale == 2) logoScale = client.getWindow().getHeight() / 8;
+            else if (client.options.guiScale == 3) logoScale = client.getWindow().getHeight() / 12;
+            else if (client.options.guiScale == 4) logoScale = client.getWindow().getHeight() / 16;
+            else logoScale = client.getWindow().getHeight() / 32;
 
             drawTexture(matrices, widthHalf - (logoScale / 2), 10, 0.0F, 0.0F, logoScale, logoScale, logoScale, logoScale);
 
             // Splashes
 
             if (splashText != null) {
-                int splashX = width / 2 + (logoScale / 2);
+                int splashX = width / 2 + (logoScale / 2) - 32;
+                if (client.getWindow().getWidth() < 3072 && client.options.guiScale == 1) splashX += 32;
                 int splashY = logoScale - (logoScale / 5);
+
+                if (client.options.guiScale == 1) splashY -= logoScale / 8;
+                if (client.options.guiScale == 3) splashX += logoScale / 6;
+                if (client.options.guiScale == 4) splashX += logoScale / 4;
+                if (isAutoGUIScale()) splashX += (logoScale / 2) + (logoScale / 8);
+
+                if (client.getWindow().getHeight() < 1200) splashX += 32;
+                if (client.getWindow().getHeight() < 500) splashX += logoScale / 3;
+                if (client.getWindow().getHeight() < 350) {
+                    splashY += logoScale / 2;
+                    splashX += logoScale / 2;
+                }
 
                 matrices.push();
                 matrices.translate(splashX, splashY, 0);
                 matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-15.0F));
-                float h = 1.8F - MathHelper.abs(MathHelper.sin((float) (Util.getMeasuringTimeMs() % 1000L) / 1000.0F * 6.2831855F) * 0.1F);
-                h = h * 100.0F / (float) (textRenderer.getWidth(splashText) + 32);
+                float h = 1.8F - MathHelper.abs(MathHelper.sin((Util.getMeasuringTimeMs() % 1000L) / 1000.0F * 6.2831855F) * 0.1F);
+                h = h * 100.0F / (textRenderer.getWidth(splashText) + 32);
                 matrices.scale(h, h, h);
                 drawCenteredText(matrices, textRenderer, splashText, 0, -8, 16776960 | ceil);
                 matrices.pop();
@@ -279,6 +298,14 @@ public class TitleScreen extends Screen {
             super.render(matrices, mouseX, mouseY, delta);
             if (areRealmsNotificationsEnabled() && fade2 >= 1.0F) realmsNotificationGui.render(matrices, mouseX, mouseY, delta);
         }
+    }
+
+    private boolean isAutoGUIScale() {
+        if (client.options.guiScale == 1) return false;
+        else if (client.options.guiScale == 2) return false;
+        else if (client.options.guiScale == 3) return false;
+        else if (client.options.guiScale == 4) return false;
+        else return true;
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {

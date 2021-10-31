@@ -57,6 +57,18 @@ public class Surround extends Module {
         .build()
     );
 
+    private final Setting<Boolean> underHeight = sgGeneral.add(new BoolSetting.Builder()
+        .name("under-height")
+        .description("Places obsidian under the original surround blocks to prevent surround not placing on some servers.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<KeyBind> underHeightKeyBind = sgGeneral.add(new KeyBindSetting.Builder()
+        .name("force-under-height")
+        .description("Toggles under height when held.")
+        .build()
+    );
 
     private final Setting<Boolean> doubleHeight = sgGeneral.add(new BoolSetting.Builder()
         .name("double-height")
@@ -143,14 +155,6 @@ public class Surround extends Module {
         .build()
     );
 
-
-    private final Setting<Boolean> airPlace = sgGeneral.add(new BoolSetting.Builder()
-        .name("air-place")
-        .description("Makes the surround place in air.")
-        .defaultValue(false)
-        .build()
-    );
-
     private final Setting<Boolean> allBlocks = sgGeneral.add(new BoolSetting.Builder()
         .name("blastproof-blocks-only")
         .description("Places blastproof blocks only.")
@@ -201,7 +205,7 @@ public class Surround extends Module {
             if (needsToPlace()) {
                 for (final BlockPos pos : getPositions()) {
                     if (mc.world.getBlockState(pos).getMaterial().isReplaceable()) mc.player.getInventory().selectedSlot = obbyIndex;
-                    if (PlayerUtils.placeBlockMainHand(pos, rotate.get(), airPlace.get(), placeOnCrystal.get()) && delay.get() != 0) {
+                    if (PlayerUtils.placeBlockMainHand(pos, rotate.get(), !onlyOnGround.get(), placeOnCrystal.get()) && delay.get() != 0) {
                         mc.player.getInventory().selectedSlot = prevSlot;
                         return;
                     }
@@ -219,6 +223,14 @@ public class Surround extends Module {
     private List<BlockPos> getPositions() {
         final List<BlockPos> positions = new ArrayList<>();
         if (!onlyOnGround.get()) add(positions, lastPos.down());
+
+        if (underHeight.get() || (underHeightKeyBind.get()).isPressed()) {
+            add(positions, lastPos.north().down());
+            add(positions, lastPos.east().down());
+            add(positions, lastPos.south().down());
+            add(positions, lastPos.west().down());
+        }
+
         add(positions, lastPos.north());
         add(positions, lastPos.east());
         add(positions, lastPos.south());
@@ -249,7 +261,7 @@ public class Surround extends Module {
     }
 
     private void add(final List<BlockPos> list, final BlockPos pos) {
-        if (mc.world.getBlockState(pos).isAir() && allAir(pos.north(), pos.east(), pos.south(), pos.west(), pos.up(), pos.down()) && !airPlace.get()) list.add(pos.down());
+        if (mc.world.getBlockState(pos).isAir() && allAir(pos.north(), pos.east(), pos.south(), pos.west(), pos.up(), pos.down()) && onlyOnGround.get()) list.add(pos.down());
         list.add(pos);
     }
 
