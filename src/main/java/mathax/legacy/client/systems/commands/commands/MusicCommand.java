@@ -40,7 +40,20 @@ public class MusicCommand extends Command {
                 }
 
                 Music.trackScheduler.setPaused(true);
-                info("Paused the music");
+                info("Paused.");
+                return SINGLE_SUCCESS;
+            })
+        );
+
+        builder.then(literal("continue")
+            .executes(context -> {
+                if (Music.player.isPaused()) {
+                    info("Not paused.");
+                    return SINGLE_SUCCESS;
+                }
+
+                Music.trackScheduler.setPaused(false);
+                info("Continued playing.");
                 return SINGLE_SUCCESS;
             })
         );
