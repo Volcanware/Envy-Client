@@ -18,7 +18,6 @@ public class TrackScheduler extends AudioEventAdapter {
     public List<AudioTrack> tracks = new ArrayList<>();
     public void queue(AudioTrack track) {
         if (track == null) return;
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + track.getInfo().title);
         if (!Music.player.startTrack(track, true)) {
             if (tracks.contains(track) || Music.player.getPlayingTrack() == track) track = track.makeClone();
             tracks.add(track);

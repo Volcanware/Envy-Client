@@ -57,7 +57,7 @@ public class Scaffold extends Module {
     private final Setting<Boolean> fastTower = sgGeneral.add(new BoolSetting.Builder()
         .name("fast-tower")
         .description("Whether or not to scaffold upwards faster.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 
@@ -84,7 +84,7 @@ public class Scaffold extends Module {
 
     private final Setting<Boolean> airPlace = sgGeneral.add(new BoolSetting.Builder()
         .name("air-place")
-        .description("Allow air place.")
+        .description("Allows placing blocks in air.")
         .defaultValue(false)
         .build()
     );
@@ -101,6 +101,13 @@ public class Scaffold extends Module {
 
     // Render
 
+    private final Setting<Boolean> render = sgGeneral.add(new BoolSetting.Builder()
+        .name("render")
+        .description("Renders currently placed blocks.")
+        .defaultValue(true)
+        .build()
+    );
+
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
         .description("How the shapes are rendered.")
@@ -110,14 +117,14 @@ public class Scaffold extends Module {
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
-        .description("The side color of the target block rendering.")
+        .description("The side color of the placed block.")
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
-        .description("The line color of the target block rendering.")
+        .description("The line color of the placed block.")
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
@@ -218,18 +225,12 @@ public class Scaffold extends Module {
         }
 
         if (BlockUtils.place(bp, item, rotate.get(), 50, renderSwing.get(), true)) {
-            // Render block if was placed
-            renderBlocks.add(renderBlockPool.get().set(bp));
+            if (!mc.world.isOutOfHeightLimit(bp.getY())) renderBlocks.add(renderBlockPool.get().set(bp));
 
-            // Move player down so they are on top of the placed block ready to jump again
-            if (mc.options.keyJump.isPressed() && !mc.options.keySneak.isPressed() && !mc.player.isOnGround() && !mc.world.getBlockState(bp).isAir() && fastTower.get()) {
-                mc.player.setVelocity(0, -0.28f, 0);
-            }
+            if (mc.options.keyJump.isPressed() && !mc.options.keySneak.isPressed() && !mc.player.isOnGround() && !mc.world.getBlockState(bp).isAir() && fastTower.get()) mc.player.setVelocity(0, -0.28f, 0);
         }
 
-        if (!mc.world.getBlockState(bp).isAir()) {
-            prevBp.set(bp);
-        }
+        if (!mc.world.getBlockState(bp).isAir()) prevBp.set(bp);
     }
 
     private boolean validItem(ItemStack itemStack, BlockPos pos) {
@@ -253,6 +254,7 @@ public class Scaffold extends Module {
 
     @EventHandler
     private void onRender(Render3DEvent event) {
+        if (!render.get()) return;
         renderBlocks.sort(Comparator.comparingInt(o -> -o.ticks));
         renderBlocks.forEach(renderBlock -> renderBlock.render(event, sideColor.get(), lineColor.get(), shapeMode.get()));
     }

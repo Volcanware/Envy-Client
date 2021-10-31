@@ -202,11 +202,8 @@ public class MusicHUD extends HUDElement {
             textRenderer.end();
 
             // The total duration in Hours, Minutes and Seconds
-            double remainingTimeY;
-            if (!showAuthor.get() && !showTitle.get()) remainingTimeY = y + h / 2;
-            else remainingTimeY = y + h - (textRenderer.getHeight() * 3);
             textRenderer.begin(0.4 * textScale.get(), false, true);
-            if (showRemainingTime.get()) textRenderer.render(time, x + h, remainingTimeY, textColor.get());
+            if (showRemainingTime.get()) textRenderer.render(time, x + h, y + h - (textRenderer.getHeight() / 2), textColor.get());
             textRenderer.end();
         });
     }

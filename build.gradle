@@ -69,16 +69,21 @@ dependencies {
     library "com.github.Vatuu:discord-rpc:${project.discord_version}"
 
     // Music
-    include modImplementation("com.github.Walkyst:lavaplayer:cc6830f9c6")
-    include('com.sedmelluq:lava-common:1.1.2')
-    include('com.sedmelluq:lavaplayer-natives:1.3.14')
-    include("commons-io:commons-io:2.6")
-    include("commons-codec:commons-codec:1.11")
-    include("com.fasterxml.jackson.core:jackson-core:2.10.1")
-    include("com.fasterxml.jackson.core:jackson-databind:2.10.1")
-    include("com.fasterxml.jackson.core:jackson-annotations:2.10.1")
-    include("org.jsoup:jsoup:1.12.1")
-    include("net.iharder:base64:2.3.9")
+
+    // Lava Player
+    modImplementation "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
+    include "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
+    include "com.sedmelluq:lava-common:${project.lava_common_version}"
+    include "com.sedmelluq:lavaplayer-natives:${project.lavaplayer_natives_version}"
+
+    // Other
+    include "commons-io:commons-io:${project.commons_io_version}"
+    include "commons-codec:commons-codec:${project.commons_codec_version}"
+    include "com.fasterxml.jackson.core:jackson-core:${project.jackson_core_version}"
+    include "com.fasterxml.jackson.core:jackson-databind:${project.jackson_databind_version}"
+    include "com.fasterxml.jackson.core:jackson-annotations:${project.jackson_annotations_version}"
+    include "org.jsoup:jsoup:${project.jsoup_version}"
+    include "net.iharder:base64:${project.iharder_base_version}"
 }
 
 loom {
