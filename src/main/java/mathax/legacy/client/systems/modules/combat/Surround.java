@@ -31,8 +31,8 @@ public class Surround extends Module {
     private int timeToStart = 0;
     private int ticks = 0;
 
+    private boolean doCenter;
     private boolean hasCentered = false;
-    private boolean doSnap;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -47,13 +47,13 @@ public class Surround extends Module {
 
     private final Setting<KeyBind> bigKeyBind = sgGeneral.add(new KeyBindSetting.Builder()
         .name("force-big")
-        .description("Turns on big surround when held.")
+        .description("Toggles big surround when held.")
         .build()
     );
 
     private final Setting<KeyBind> giantKeyBind = sgGeneral.add(new KeyBindSetting.Builder()
         .name("force-giant")
-        .description("Turns on giant surround when held.")
+        .description("Toggles giant surround when held.")
         .build()
     );
 
@@ -67,7 +67,7 @@ public class Surround extends Module {
 
     private final Setting<KeyBind> doubleHeightKeyBind = sgGeneral.add(new KeyBindSetting.Builder()
         .name("force-double-height")
-        .description("Toggles double height.")
+        .description("Toggles double height when held.")
         .build()
     );
 
@@ -100,7 +100,7 @@ public class Surround extends Module {
         .build()
     );
 
-    private final Setting<Boolean> snap = sgGeneral.add(new BoolSetting.Builder()
+    private final Setting<Boolean> center = sgGeneral.add(new BoolSetting.Builder()
         .name("center")
         .description("Teleports you to the center of the block.")
         .defaultValue(true)
@@ -164,8 +164,8 @@ public class Surround extends Module {
 
     @EventHandler
     private void onTick(final TickEvent.Pre event) {
-        if (onGroundCenter.passedTicks(centerDelay.get()) && snap.get() && doSnap && !hasCentered && mc.player.isOnGround()) {
-            PlayerUtils.snapPlayer(lastPos);
+        if (onGroundCenter.passedTicks(centerDelay.get()) && center.get() && doCenter && !hasCentered && mc.player.isOnGround()) {
+            PlayerUtils.centerPlayer(lastPos);
             hasCentered = true;
         }
 
@@ -297,8 +297,8 @@ public class Surround extends Module {
     @Override
     public void onDeactivate() {
         ticks = 0;
-        doSnap = true;
         timeToStart = 0;
+        doCenter = true;
         hasCentered = false;
     }
 

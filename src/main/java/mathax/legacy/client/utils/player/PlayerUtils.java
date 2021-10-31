@@ -257,6 +257,25 @@ public class PlayerUtils {
         mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.isOnGround()));
     }
 
+    public static void centerPlayer(BlockPos lastPos) {
+        double xPos = mc.player.getPos().x;
+        double zPos = mc.player.getPos().z;
+
+        if (Math.abs(lastPos.getX() + 0.5 - mc.player.getPos().x) >= 0.2) {
+            int xDir = (lastPos.getX() + 0.5 - mc.player.getPos().x > 0.0) ? 1 : -1;
+            xPos += 0.3 * xDir;
+        }
+
+        if (Math.abs(lastPos.getZ() + 0.5 - mc.player.getPos().z) >= 0.2) {
+            int zDir = (lastPos.getZ() + 0.5 - mc.player.getPos().z > 0.0) ? 1 : -1;
+            zPos += 0.3 * zDir;
+        }
+
+        mc.player.setVelocity(0.0, 0.0, 0.0);
+        mc.player.setPosition(xPos, mc.player.getY(), zPos);
+        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.isOnGround()));
+    }
+
     public static boolean canSeeEntity(Entity entity) {
         Vec3d vec1 = new Vec3d(0, 0, 0);
         Vec3d vec2 = new Vec3d(0, 0, 0);
@@ -516,29 +535,5 @@ public class PlayerUtils {
 
     public static BlockPos roundBlockPos(final Vec3d vec) {
         return new BlockPos(vec.x, Math.round(vec.y), vec.z);
-    }
-
-    public static void snapPlayer() {
-        final BlockPos lastPos = mc.player.isOnGround() ? roundBlockPos(mc.player.getPos()) : mc.player.getBlockPos();
-        snapPlayer(lastPos);
-    }
-
-    public static void snapPlayer(final BlockPos lastPos) {
-        double xPos = mc.player.getPos().x;
-        double zPos = mc.player.getPos().z;
-
-        if (Math.abs(lastPos.getX() + 0.5 - mc.player.getPos().x) >= 0.2) {
-            final int xDir = (lastPos.getX() + 0.5 - mc.player.getPos().x > 0.0) ? 1 : -1;
-            xPos += 0.3 * xDir;
-        }
-
-        if (Math.abs(lastPos.getZ() + 0.5 - mc.player.getPos().z) >= 0.2) {
-            final int zDir = (lastPos.getZ() + 0.5 - mc.player.getPos().z > 0.0) ? 1 : -1;
-            zPos += 0.3 * zDir;
-        }
-
-        mc.player.setVelocity(0.0, 0.0, 0.0);
-        mc.player.setPosition(xPos, mc.player.getY(), zPos);
-        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.isOnGround()));
     }
 }
