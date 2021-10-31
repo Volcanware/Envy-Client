@@ -73,7 +73,7 @@ public class SkeletonESP extends Module {
 
     public final Setting<SettingColor> selfColor = sgColors.add(new ColorSetting.Builder()
         .name("self-color")
-        .description("The color of your skeleton in Freecam.")
+        .description("The color of your skeleton.")
         .defaultValue(new SettingColor(0, 165, 255))
         .visible(() -> !distance.get())
         .build()

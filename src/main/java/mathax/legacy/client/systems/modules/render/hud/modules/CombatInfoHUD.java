@@ -41,7 +41,7 @@ public class CombatInfoHUD extends HUDElement {
     private static final Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/icons/icon.png");
     private final Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
 
-    private PlayerEntity playerEntity;
+    private PlayerEntity player;
 
     private static final Color GREEN = new Color(15, 255, 15);
     private static final Color RED = new Color(255, 15, 15);
@@ -188,10 +188,10 @@ public class CombatInfoHUD extends HUDElement {
             double x = box.getX();
             double y = box.getY();
 
-            if (isInEditor()) playerEntity = FakeClientPlayer.getPlayer();
-            else playerEntity = TargetUtils.getPlayerTarget(range.get(), SortPriority.Lowest_Distance);
+            if (isInEditor()) player = FakeClientPlayer.getPlayer();
+            else player = TargetUtils.getPlayerTarget(range.get(), SortPriority.Lowest_Distance);
 
-            if (playerEntity == null) return;
+            if (player == null) return;
 
             // Background
             Renderer2D.COLOR.begin();
@@ -203,8 +203,8 @@ public class CombatInfoHUD extends HUDElement {
                 (int) (x + (25 * scale.get())),
                 (int) (y + (66 * scale.get())),
                 (int) (30 * scale.get()),
-                -MathHelper.wrapDegrees(playerEntity.prevYaw + (playerEntity.getYaw() - playerEntity.prevYaw) * mc.getTickDelta()),
-                -playerEntity.getPitch(), playerEntity
+                -MathHelper.wrapDegrees(player.prevYaw + (player.getYaw() - player.prevYaw) * mc.getTickDelta()),
+                -player.getPitch(), player
             );
 
             // Moving pos to past player model
@@ -217,19 +217,19 @@ public class CombatInfoHUD extends HUDElement {
             // Name
             String nameText = "";
 
-            if (playerEntity.getUuidAsString().equals(MatHaxLegacy.devUUID) || playerEntity.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) {
-                nameText += "     " + playerEntity.getEntityName();
+            if (player.getUuidAsString().equals(MatHaxLegacy.devUUID) || player.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) {
+                nameText += "     " + player.getEntityName();
                 GL.bindTexture(MATHAX_LOGO);
                 Renderer2D.TEXTURE.begin();
                 Renderer2D.TEXTURE.texQuad(x, y, 16, 16, TEXTURE_COLOR);
                 Renderer2D.TEXTURE.render(null);
             } else
-                nameText += playerEntity.getEntityName();
+                nameText += player.getEntityName();
 
-            Color nameColor = PlayerUtils.getPlayerColor(playerEntity, hud.primaryColor.get());
+            Color nameColor = PlayerUtils.getPlayerColor(player, hud.primaryColor.get());
 
             // Ping
-            int ping = EntityUtils.getPing(playerEntity);
+            int ping = EntityUtils.getPing(player);
             String pingText = ping + "ms";
 
             Color pingColor;
@@ -239,7 +239,7 @@ public class CombatInfoHUD extends HUDElement {
 
             // Distance
             double dist = 0;
-            if (!isInEditor()) dist = Math.round(mc.player.distanceTo(playerEntity) * 100.0) / 100.0;
+            if (!isInEditor()) dist = Math.round(mc.player.distanceTo(player) * 100.0) / 100.0;
             String distText = dist + "m";
 
             Color distColor;
@@ -252,7 +252,7 @@ public class CombatInfoHUD extends HUDElement {
 
             Color friendColor = hud.primaryColor.get();
 
-            if (Friends.get().isFriend(playerEntity)) {
+            if (Friends.get().isFriend(player)) {
                 friendText = "Friend";
                 friendColor = Friends.get().color;
             } else {
@@ -382,15 +382,15 @@ public class CombatInfoHUD extends HUDElement {
             x += 2;
             y += 2;
 
-            float maxHealth = playerEntity.getMaxHealth();
+            float maxHealth = player.getMaxHealth();
             int maxAbsorb = 16;
             int maxTotal = (int) (maxHealth + maxAbsorb);
 
             int totalHealthWidth = (int) (161 * maxHealth / maxTotal);
             int totalAbsorbWidth = 161 * maxAbsorb / maxTotal;
 
-            float health = playerEntity.getHealth();
-            float absorb = playerEntity.getAbsorptionAmount();
+            float health = player.getHealth();
+            float absorb = player.getAbsorptionAmount();
 
             double healthPercent = health / maxHealth;
             double absorbPercent = absorb / maxAbsorb;
@@ -420,12 +420,12 @@ public class CombatInfoHUD extends HUDElement {
             };
         }
 
-        if (playerEntity == null) return ItemStack.EMPTY;
+        if (player == null) return ItemStack.EMPTY;
 
         return switch (i) {
-            case 4 -> playerEntity.getOffHandStack();
-            case 5 -> playerEntity.getMainHandStack();
-            default -> playerEntity.getInventory().getArmorStack(i);
+            case 4 -> player.getOffHandStack();
+            case 5 -> player.getMainHandStack();
+            default -> player.getInventory().getArmorStack(i);
         };
     }
 
