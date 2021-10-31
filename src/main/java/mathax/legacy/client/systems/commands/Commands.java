@@ -70,6 +70,7 @@ public class Commands extends System<Commands> {
         add(new SaveCommand());
         add(new SaveMapCommand());
         add(new ModulesCommand());
+        add(new MusicCommand());
         add(new GiveCommand());
         add(new NameHistoryCommand());
 
