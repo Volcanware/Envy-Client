@@ -35,7 +35,7 @@ public class Speed extends Module {
         .description("The speed in blocks per second.")
         .defaultValue(5.6)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .visible(() -> speedMode.get() == SpeedModes.Vanilla)
         .build()
     );
@@ -46,7 +46,7 @@ public class Speed extends Module {
         .visible(() -> speedMode.get() == SpeedModes.Strafe)
         .defaultValue(1.6)
         .min(0)
-        .sliderMax(3)
+        .sliderRange(0, 3)
         .build()
     );
 
@@ -63,8 +63,7 @@ public class Speed extends Module {
         .description("Timer override.")
         .defaultValue(1)
         .min(0.01)
-        .sliderMin(0.01)
-        .sliderMax(10)
+        .sliderRange(0.01, 10)
         .build()
     );
 
@@ -136,8 +135,8 @@ public class Speed extends Module {
 
     private void onSpeedModeChanged(SpeedModes mode) {
         switch (mode) {
-            case Vanilla:   currentMode = new Vanilla(); break;
-            case Strafe:    currentMode = new Strafe(); break;
+            case Vanilla -> currentMode = new Vanilla();
+            case Strafe -> currentMode = new Strafe();
         }
     }
 
