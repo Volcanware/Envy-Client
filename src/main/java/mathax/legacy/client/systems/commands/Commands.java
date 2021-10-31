@@ -73,6 +73,7 @@ public class Commands extends System<Commands> {
         add(new MusicCommand());
         add(new GiveCommand());
         add(new NameHistoryCommand());
+        add(new WaypointCommand());
 
         commands.sort(Comparator.comparing(Command::getName));
     }
