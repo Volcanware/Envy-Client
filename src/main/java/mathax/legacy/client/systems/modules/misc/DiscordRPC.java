@@ -143,9 +143,13 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + getNakedWorldActivity();
         else if (mc.currentScreen instanceof GameMenuScreen) return "Game paused on " + getNakedWorldActivity();
         else if (mc.currentScreen instanceof PeekScreen) return "Using .peek on " + getNakedWorldActivity();
-        else if (mc.currentScreen instanceof ModulesScreen) return "In Click GUI";
-        else if (mc.currentScreen instanceof ModuleScreen) return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title;
-        else if (mc.currentScreen instanceof PackScreen) return "Changing resourcepack";
+        else if (mc.currentScreen instanceof ModulesScreen) {
+            if (mc.world != null && serverVisibility.get()) return "In Click GUI (" + getNakedWorldActivity2() + ")";
+            else return "In Click GUI";
+        } else if (mc.currentScreen instanceof ModuleScreen) {
+            if (mc.world != null) return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title + " (" + getNakedWorldActivity2() + ")";
+            else return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title;
+        } else if (mc.currentScreen instanceof PackScreen) return "Changing resourcepack";
         else if (mc.currentScreen instanceof OptionsScreen) return "Changing Minecraft settings";
         else if (mc.currentScreen instanceof AccessibilityOptionsScreen) return "Changing Minecraft accessibility settings";
         else if (mc.currentScreen instanceof ChatOptionsScreen) return "Changing Minecraft chat settings";
@@ -258,6 +262,36 @@ public class DiscordRPC extends Module {
             if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) folder = folder.getParentFile();
 
             return "singleplayer (" + folder.getName() + ")";
+        }
+
+        return "Unknown";
+    }
+
+    private String getNakedWorldActivity2() {
+
+        // Disconnected etc...
+        if (!mc.isInSingleplayer() && mc.getCurrentServerEntry() != null && LastServerInfo.getLastServer() != null) {
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return LastServerInfo.getLastServer().address;
+            else return "A server";
+        }
+
+        // Multiplayer
+        if (mc.getCurrentServerEntry() != null) {
+            String name = mc.isConnectedToRealms() ? "Realms" : mc.getCurrentServerEntry().address;
+
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return name;
+            else return "A server";
+        }
+
+        if ((mc.getServer()) == null) return "Unknown";
+        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Unknown";
+
+        // Singleplayer
+        if (mc.isInSingleplayer()) {
+            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
+            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) folder = folder.getParentFile();
+
+            return "Singleplayer (" + folder.getName() + ")";
         }
 
         return "Unknown";
