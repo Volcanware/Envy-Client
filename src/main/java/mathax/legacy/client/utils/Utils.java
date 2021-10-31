@@ -313,7 +313,7 @@ public class Utils {
         title = title.replace("Tps", "TPS");
         title = title.replace("Tp", "TP");
         title = title.replace("Xp", "XP");
-        title = title.replace("Exp ", "EXP");
+        title = title.replace("Exp", "EXP");
         title = title.replace("EXPlosion", "Explosion");
         title = title.replace("EXPand", "Expand");
         title = title.replace("EXPosed", "Exposed");
