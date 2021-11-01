@@ -25,14 +25,10 @@ import java.util.List;
 
 public class Surround extends Module {
     private static final Timer surroundInstanceDelay = new Timer();
-    private final Timer onGroundCenter = new Timer();
     private BlockPos lastPos = new BlockPos(0, -100, 0);
 
     private int timeToStart = 0;
     private int ticks = 0;
-
-    private boolean doCenter;
-    private boolean hasCentered = false;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -119,14 +115,6 @@ public class Surround extends Module {
         .build()
     );
 
-    private final Setting<Integer> centerDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("center-delay")
-        .description("Delays the block centering.")
-        .defaultValue(0)
-        .sliderRange(0, 10)
-        .build()
-    );
-
     private final Setting<Boolean> placeOnCrystal = sgGeneral.add(new BoolSetting.Builder()
         .name("place-on-crystal")
         .description("Places the surround on end crystal placement.")
@@ -168,18 +156,12 @@ public class Surround extends Module {
 
     @EventHandler
     private void onTick(final TickEvent.Pre event) {
-        if (onGroundCenter.passedTicks(centerDelay.get()) && center.get() && doCenter && !hasCentered && mc.player.isOnGround()) {
-            PlayerUtils.centerPlayer(lastPos);
-            hasCentered = true;
-        }
-
         if ((disableOnJump.get() && (mc.options.keyJump.isPressed() || mc.player.input.jumping)) || (disableOnYChange.get() && mc.player.prevY < mc.player.getY())) {
             ChatUtils.sendMsg(hashCode(), "Surround", Formatting.DARK_RED, "You jumped, disabling...", Formatting.GRAY);
             toggle();
             return;
         }
 
-        if (!hasCentered && !mc.player.isOnGround()) onGroundCenter.reset();
         final BlockPos roundedPos = PlayerUtils.roundBlockPos(mc.player.getPos());
         if (onlyOnGround.get() && !mc.player.isOnGround() && roundedPos.getY() <= lastPos.getY()) lastPos = PlayerUtils.roundBlockPos(mc.player.getPos());
 
@@ -304,14 +286,13 @@ public class Surround extends Module {
     @Override
     public void onActivate() {
         lastPos = (mc.player.isOnGround() ? PlayerUtils.roundBlockPos(mc.player.getPos()) : mc.player.getBlockPos());
+        if (center.get()) PlayerUtils.centerPlayer(lastPos);
     }
 
     @Override
     public void onDeactivate() {
         ticks = 0;
         timeToStart = 0;
-        doCenter = true;
-        hasCentered = false;
     }
 
     public enum Mode {
