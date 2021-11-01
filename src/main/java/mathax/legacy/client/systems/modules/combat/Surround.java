@@ -115,6 +115,12 @@ public class Surround extends Module {
         .build()
     );
 
+    private final Setting<KeyBind> centerKeyBind = sgGeneral.add(new KeyBindSetting.Builder()
+        .name("force-center")
+        .description("Toggles center when held.")
+        .build()
+    );
+
     private final Setting<Boolean> placeOnCrystal = sgGeneral.add(new BoolSetting.Builder()
         .name("place-on-crystal")
         .description("Places the surround on end crystal placement.")
@@ -173,6 +179,8 @@ public class Surround extends Module {
             toggle();
             return;
         }
+
+        if ((centerKeyBind.get()).isPressed()) PlayerUtils.centerPlayer();
 
         final BlockPos roundedPos = PlayerUtils.roundBlockPos(mc.player.getPos());
         if (onlyOnGround.get() && !mc.player.isOnGround() && roundedPos.getY() <= lastPos.getY()) lastPos = PlayerUtils.roundBlockPos(mc.player.getPos());
