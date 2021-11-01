@@ -30,54 +30,60 @@ public class Surround extends Module {
     private int timeToStart = 0;
     private int ticks = 0;
 
+    private final SettingGroup sgHorizontalExpanding = settings.createGroup("Horizontal Expanding");
+    private final SettingGroup sgVerticalExpanding = settings.createGroup("Vertical Expanding");
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    // General
+    // Horizontal Expanding
 
-    private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+    private final Setting<Mode> mode = sgHorizontalExpanding.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Determines how big the surround is.")
         .defaultValue(Mode.Normal)
         .build()
     );
 
-    private final Setting<KeyBind> bigKeyBind = sgGeneral.add(new KeyBindSetting.Builder()
+    private final Setting<KeyBind> bigKeyBind = sgHorizontalExpanding.add(new KeyBindSetting.Builder()
         .name("force-big")
         .description("Toggles big surround when held.")
         .build()
     );
 
-    private final Setting<KeyBind> giantKeyBind = sgGeneral.add(new KeyBindSetting.Builder()
+    private final Setting<KeyBind> giantKeyBind = sgHorizontalExpanding.add(new KeyBindSetting.Builder()
         .name("force-giant")
         .description("Toggles giant surround when held.")
         .build()
     );
 
-    private final Setting<Boolean> underHeight = sgGeneral.add(new BoolSetting.Builder()
+    // Vertical Expanding
+
+    private final Setting<Boolean> underHeight = sgVerticalExpanding.add(new BoolSetting.Builder()
         .name("under-height")
         .description("Places obsidian under the original surround blocks to prevent surround not placing on some servers.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<KeyBind> underHeightKeyBind = sgGeneral.add(new KeyBindSetting.Builder()
+    private final Setting<KeyBind> underHeightKeyBind = sgVerticalExpanding.add(new KeyBindSetting.Builder()
         .name("force-under-height")
         .description("Toggles under height when held.")
         .build()
     );
 
-    private final Setting<Boolean> doubleHeight = sgGeneral.add(new BoolSetting.Builder()
+    private final Setting<Boolean> doubleHeight = sgVerticalExpanding.add(new BoolSetting.Builder()
         .name("double-height")
         .description("Places obsidian on top of the original surround blocks to prevent people from face-placing you.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<KeyBind> doubleHeightKeyBind = sgGeneral.add(new KeyBindSetting.Builder()
+    private final Setting<KeyBind> doubleHeightKeyBind = sgVerticalExpanding.add(new KeyBindSetting.Builder()
         .name("force-double-height")
         .description("Toggles double height when held.")
         .build()
     );
+
+    // General
 
     private final Setting<Primary> primary = sgGeneral.add(new EnumSetting.Builder<Primary>()
         .name("primary-block")
@@ -86,25 +92,18 @@ public class Surround extends Module {
         .build()
     );
 
+    private final Setting<Boolean> allBlocks = sgGeneral.add(new BoolSetting.Builder()
+        .name("blastproof-blocks-only")
+        .description("Places blastproof blocks only.")
+        .defaultValue(true)
+        .build()
+    );
+
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
         .name("delay")
         .description("Delay between block placements in ticks.")
         .defaultValue(0)
         .sliderRange(0, 10)
-        .build()
-    );
-
-    private final Setting<Boolean> onlyOnGround = sgGeneral.add(new BoolSetting.Builder()
-        .name("only-on-ground")
-        .description("Makes surround only work on ground.")
-        .defaultValue(false)
-        .build()
-    );
-
-    private final Setting<Boolean> stayOnBlink = sgGeneral.add(new BoolSetting.Builder()
-        .name("blinkers")
-        .description("Surround stays on when you are in blink.")
-        .defaultValue(false)
         .build()
     );
 
@@ -121,10 +120,10 @@ public class Surround extends Module {
         .build()
     );
 
-    private final Setting<Boolean> placeOnCrystal = sgGeneral.add(new BoolSetting.Builder()
-        .name("place-on-crystal")
-        .description("Places the surround on end crystal placement.")
-        .defaultValue(true)
+    private final Setting<Boolean> onlyOnGround = sgGeneral.add(new BoolSetting.Builder()
+        .name("only-on-ground")
+        .description("Makes surround only work on ground.")
+        .defaultValue(false)
         .build()
     );
 
@@ -142,17 +141,24 @@ public class Surround extends Module {
         .build()
     );
 
-    private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
-        .name("rotate")
-        .description("Makes you rotate when placing.")
+    private final Setting<Boolean> stayOnBlink = sgGeneral.add(new BoolSetting.Builder()
+        .name("blinkers")
+        .description("Surround stays on when you are in blink.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<Boolean> allBlocks = sgGeneral.add(new BoolSetting.Builder()
-        .name("blastproof-blocks-only")
-        .description("Places blastproof blocks only.")
+    private final Setting<Boolean> placeOnCrystal = sgGeneral.add(new BoolSetting.Builder()
+        .name("place-on-crystal")
+        .description("Places the surround on end crystal placement.")
         .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
+        .name("rotate")
+        .description("Makes you rotate when placing.")
+        .defaultValue(false)
         .build()
     );
 
@@ -218,10 +224,6 @@ public class Surround extends Module {
         }
     }
 
-    private boolean needsToPlace() {
-        return anyAir(lastPos.down(), lastPos.north(), lastPos.east(), lastPos.south(), lastPos.west(), lastPos.north().up(), lastPos.east().up(), lastPos.south().up(), lastPos.west().up(), lastPos.north(2), lastPos.east(2), lastPos.south(2), lastPos.west(2), lastPos.north().east(), lastPos.east().south(), lastPos.south().west(), lastPos.west().north());
-    }
-
     private List<BlockPos> getPositions() {
         final List<BlockPos> positions = new ArrayList<>();
         if (!onlyOnGround.get()) add(positions, lastPos.down());
@@ -262,6 +264,10 @@ public class Surround extends Module {
         return positions;
     }
 
+    private boolean needsToPlace() {
+        return anyAir(lastPos.down(), lastPos.north(), lastPos.east(), lastPos.south(), lastPos.west(), lastPos.north().up(), lastPos.east().up(), lastPos.south().up(), lastPos.west().up(), lastPos.north(2), lastPos.east(2), lastPos.south(2), lastPos.west(2), lastPos.north().east(), lastPos.east().south(), lastPos.south().west(), lastPos.west().north());
+    }
+
     private void add(final List<BlockPos> list, final BlockPos pos) {
         if (mc.world.getBlockState(pos).isAir() && allAir(pos.north(), pos.east(), pos.south(), pos.west(), pos.up(), pos.down()) && onlyOnGround.get()) list.add(pos.down());
         list.add(pos);
@@ -292,10 +298,10 @@ public class Surround extends Module {
         int index = InvUtils.findBlockInHotbar(primaryBlock());
         if (index == -1 && allBlocks.get()) {
             if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.OBSIDIAN);
+            if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.ENDER_CHEST);
             if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.CRYING_OBSIDIAN);
             if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.NETHERITE_BLOCK);
             if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.ANCIENT_DEBRIS);
-            if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.ENDER_CHEST);
             if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.RESPAWN_ANCHOR);
             if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.ANVIL);
         }
