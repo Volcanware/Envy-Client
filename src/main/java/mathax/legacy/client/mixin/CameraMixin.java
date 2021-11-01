@@ -4,6 +4,7 @@ import mathax.legacy.client.systems.modules.render.CameraTweaks;
 import mathax.legacy.client.systems.modules.render.FreeLook;
 import mathax.legacy.client.systems.modules.render.Freecam;
 import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.systems.modules.render.InstantSneak;
 import net.minecraft.client.render.Camera;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.BlockView;
@@ -19,11 +20,25 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(Camera.class)
 public abstract class CameraMixin {
-    @Shadow private boolean thirdPerson;
+    @Shadow
+    private boolean thirdPerson;
 
-    @Shadow protected abstract double clipToSpace(double desiredCameraDistance);
+    @Shadow
+    protected abstract double clipToSpace(double desiredCameraDistance);
 
-    @Unique private float tickDelta;
+    @Unique
+    private float tickDelta;
+
+    @Shadow
+    private float cameraY;
+
+    @Shadow
+    private Entity focusedEntity;
+
+    @Inject(at = @At("HEAD"), method = "updateEyeHeight")
+    public void noLerp(CallbackInfo ci) {
+        if (Modules.get().isActive(InstantSneak.class) && focusedEntity != null) cameraY = focusedEntity.getStandingEyeHeight();
+    }
 
     @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;moveBy(DDD)V", ordinal = 0))
     private void modifyCameraDistance(Args args) {

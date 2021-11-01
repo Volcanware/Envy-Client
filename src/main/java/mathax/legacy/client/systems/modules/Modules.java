@@ -482,6 +482,7 @@ public class Modules extends System<Modules> {
         add(new Fullbright());
         add(new HandView());
         add(new HoleESP());
+        add(new InstantSneak());
         add(new InteractionMenu());
         add(new ItemHighlight());
         add(new ItemPhysics());
