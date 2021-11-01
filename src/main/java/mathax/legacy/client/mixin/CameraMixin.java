@@ -36,7 +36,7 @@ public abstract class CameraMixin {
     private Entity focusedEntity;
 
     @Inject(at = @At("HEAD"), method = "updateEyeHeight")
-    public void noLerp(CallbackInfo ci) {
+    public void updateEyeHeight(CallbackInfo ci) {
         if (Modules.get().isActive(InstantSneak.class) && focusedEntity != null) cameraY = focusedEntity.getStandingEyeHeight();
     }
 
