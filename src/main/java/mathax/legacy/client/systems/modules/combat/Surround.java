@@ -154,6 +154,18 @@ public class Surround extends Module {
         super(Categories.Combat, Items.OBSIDIAN, "surround", "Surrounds you in blocks to prevent you from taking lots of damage.");
     }
 
+    @Override
+    public void onActivate() {
+        lastPos = (mc.player.isOnGround() ? PlayerUtils.roundBlockPos(mc.player.getPos()) : mc.player.getBlockPos());
+        if (center.get()) PlayerUtils.centerPlayer();
+    }
+
+    @Override
+    public void onDeactivate() {
+        ticks = 0;
+        timeToStart = 0;
+    }
+
     @EventHandler
     private void onTick(final TickEvent.Pre event) {
         if ((disableOnJump.get() && (mc.options.keyJump.isPressed() || mc.player.input.jumping)) || (disableOnYChange.get() && mc.player.prevY < mc.player.getY())) {
@@ -281,18 +293,6 @@ public class Surround extends Module {
         }
 
         return index;
-    }
-
-    @Override
-    public void onActivate() {
-        lastPos = (mc.player.isOnGround() ? PlayerUtils.roundBlockPos(mc.player.getPos()) : mc.player.getBlockPos());
-        if (center.get()) PlayerUtils.centerPlayer(lastPos);
-    }
-
-    @Override
-    public void onDeactivate() {
-        ticks = 0;
-        timeToStart = 0;
     }
 
     public enum Mode {
