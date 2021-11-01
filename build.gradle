@@ -73,18 +73,14 @@ dependencies {
     // Lava Player
     modImplementation "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
     include "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
-    include "com.sedmelluq:lava-common:${project.lava_common_version}"
-    include "com.sedmelluq:lavaplayer-natives:${project.lavaplayer_natives_version}"
+    library "com.sedmelluq:lava-common:${project.lava_common_version}"
+    library "com.sedmelluq:lavaplayer-natives:${project.lavaplayer_natives_version}"
 
     // Other
-    include "org.apache.httpcomponents:httpclient:${project.apache_http_client_version}"
-    include "commons-io:commons-io:${project.commons_io_version}"
-    include "commons-codec:commons-codec:${project.commons_codec_version}"
-    include "com.fasterxml.jackson.core:jackson-core:${project.jackson_core_version}"
-    include "com.fasterxml.jackson.core:jackson-databind:${project.jackson_databind_version}"
-    include "com.fasterxml.jackson.core:jackson-annotations:${project.jackson_annotations_version}"
-    include "org.jsoup:jsoup:${project.jsoup_version}"
-    include "net.iharder:base64:${project.iharder_base_version}"
+    library "org.apache.httpcomponents:httpclient:${project.apache_http_client_version}"
+    library "com.fasterxml.jackson.core:jackson-core:${project.jackson_core_version}"
+    library "com.fasterxml.jackson.core:jackson-databind:${project.jackson_databind_version}"
+    library "com.fasterxml.jackson.core:jackson-annotations:${project.jackson_annotations_version}"
 }
 
 loom {
