@@ -1,13 +1,13 @@
 package mathax.legacy.client.systems.commands.commands;
 
-import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.legacy.client.music.Music;
-import mathax.legacy.client.music.TrackScheduler;
 import mathax.legacy.client.systems.commands.Command;
 import net.minecraft.command.CommandSource;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
+
+// TODO: Add volume set & info, play command which searches for a song and plays it and stop command which removes all songs.
 
 public class MusicCommand extends Command {
 
@@ -18,19 +18,15 @@ public class MusicCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-            info("Currently playing (highlight)%s(default).", Music.player.getPlayingTrack());
+            if (Music.player.getPlayingTrack() == null) {
+                info("Not playing any song.");
+                return SINGLE_SUCCESS;
+            }
+
+            // TODO: Add hover text "View on YouTube Music" and add click link to the song.
+            info("Currently playing (highlight)%s(default).", Music.player.getPlayingTrack().getInfo().title + " - " + Music.player.getPlayingTrack().getInfo().author);
             return SINGLE_SUCCESS;
         });
-
-        builder.then(literal("set-volume")
-            .then(argument("new-volume", FloatArgumentType.floatArg())
-                .executes(context -> {
-                    Music.trackScheduler.setVolume(context.getArgument("new-volume", Float.class));
-                    info("Set music volume to (highlight)%s(default).", context.getArgument("new-volume", Float.class));
-                    return SINGLE_SUCCESS;
-                })
-            )
-        );
 
         builder.then(literal("pause")
             .executes(context -> {
