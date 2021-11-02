@@ -126,7 +126,7 @@ public class AutoCity extends Module {
         }
 
         if (!sentMessage) {
-            info("Auto City", "Attempting to city %s.", target.getEntityName());
+            info("Attempting to city (highlight)%s(default).", target.getEntityName());
             sentMessage = true;
         }
 
