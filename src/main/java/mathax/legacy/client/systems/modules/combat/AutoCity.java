@@ -137,12 +137,11 @@ public class AutoCity extends Module {
                 error("No pickaxe found, disabling...");
                 toggle();
             }
+
             return;
         }
 
-        if (support.get()) {
-            BlockUtils.place(mineTarget.down(1), InvUtils.findInHotbar(Items.OBSIDIAN), rotate.get(), 0, true);
-        }
+        if (support.get()) BlockUtils.place(mineTarget.down(1), InvUtils.findInHotbar(Items.OBSIDIAN), rotate.get(), 0, true);
 
         InvUtils.swap(pickaxe.getSlot(), false);
 

@@ -179,7 +179,8 @@ public class InstaAutoCity extends Module {
                 }
             }
 
-            if (chatInfo.get()) info("Attempting to city (highlight)%s(default).", target.getGameProfile().getName());
+            if (chatInfo.get()) info("Attempting to city (highlight)%s(default).", target.getEntityName());
+
             targetBlockPos = target.getBlockPos();
             int n = InvUtils.findInHotbar(Items.BARRIER).getSlot();
             if (ironPickaxe.get() && n == -1) n = InvUtils.findInHotbar(Items.IRON_PICKAXE).getSlot();
