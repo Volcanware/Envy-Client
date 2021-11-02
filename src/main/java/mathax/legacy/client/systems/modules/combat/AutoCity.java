@@ -115,6 +115,7 @@ public class AutoCity extends Module {
                 error("No target block found, disabling...");
                 toggle();
             }
+
             target = null;
             return;
         }

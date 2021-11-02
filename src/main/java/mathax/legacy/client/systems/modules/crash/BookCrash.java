@@ -80,7 +80,7 @@ public class BookCrash extends Module {
             }
             case Creative_Action -> {
                 ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
-                String author = "MineGame159" + Math.random() * 400;
+                String author = "Matejko06" + Math.random() * 400;
                 NbtList pageList = new NbtList();
 
                 for (int i = 0; i < 50; ++i) {
