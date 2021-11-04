@@ -81,9 +81,7 @@ public class AutoReplenish extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        if (mc.currentScreen == null && prevHadOpenScreen) {
-            fillItems();
-        }
+        if (mc.currentScreen == null && prevHadOpenScreen) fillItems();
 
         prevHadOpenScreen = mc.currentScreen != null;
         if (mc.player.currentScreenHandler.getStacks().size() != 46 || mc.currentScreen != null) return;
@@ -102,32 +100,19 @@ public class AutoReplenish extends Module {
                 ItemStack stack = mc.player.getOffHandStack();
                 checkSlot(SlotUtils.OFFHAND, stack);
             }
-        } else {
-            tickDelayLeft--;
-        }
+        } else tickDelayLeft--;
     }
 
     private void checkSlot(int slot, ItemStack stack) {
         ItemStack prevStack = getItem(slot);
 
-        // Stackable items 1
         if (!stack.isEmpty() && stack.isStackable() && !excludedItems.get().contains(stack.getItem())) {
-            if (stack.getCount() <= threshold.get()) {
-                addSlots(slot, findItem(stack, slot, threshold.get() - stack.getCount() + 1));
-            }
+            if (stack.getCount() <= threshold.get()) addSlots(slot, findItem(stack, slot, threshold.get() - stack.getCount() + 1));
         }
 
         if (stack.isEmpty() && !prevStack.isEmpty() && !excludedItems.get().contains(prevStack.getItem())) {
-            // Stackable items 2
-            if (prevStack.isStackable()) {
-                addSlots(slot, findItem(prevStack, slot, threshold.get() - stack.getCount() + 1));
-            }
-            // Unstackable items
-            else {
-                if (unstackable.get()) {
-                    addSlots(slot, findItem(prevStack, slot, 1));
-                }
-            }
+            if (prevStack.isStackable()) addSlots(slot, findItem(prevStack, slot, threshold.get() - stack.getCount() + 1));
+            else if (unstackable.get()) addSlots(slot, findItem(prevStack, slot, 1));
         }
 
         setItem(slot, stack);
