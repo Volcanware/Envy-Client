@@ -44,13 +44,12 @@ public class MessageAura extends Module {
 
     @EventHandler
     private void onEntityAdded(EntityAddedEvent event) {
-        if (!(event.entity instanceof PlayerEntity) || event.entity.getUuid().equals(mc.player.getUuid())) return;
+        if (!(event.entity instanceof PlayerEntity player)) return;
+        if (player == mc.player) return;
 
-        if (!ignoreFriends.get() || (ignoreFriends.get() && !Friends.get().isFriend((PlayerEntity)event.entity))) {
-            mc.player.sendChatMessage("/msg " + event.entity.getEntityName() + " " + Placeholders.apply(message.get()));
-        }
-        if (!ignoreEnemies.get() || (ignoreEnemies.get() && !Enemies.get().isEnemy((PlayerEntity)event.entity))) {
-            mc.player.sendChatMessage("/msg " + event.entity.getEntityName() + " " + Placeholders.apply(message.get()));
-        }
+        if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+        if (ignoreEnemies.get() && Enemies.get().isEnemy(player)) return;
+
+        mc.player.sendChatMessage("/msg " + player.getName() + " " + Placeholders.apply(message.get()));
     }
 }
