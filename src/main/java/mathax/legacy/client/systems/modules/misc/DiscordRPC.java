@@ -147,7 +147,7 @@ public class DiscordRPC extends Module {
             if (mc.world != null && serverVisibility.get()) return "In Click GUI (" + getNakedWorldActivity2() + ")";
             else return "In Click GUI";
         } else if (mc.currentScreen instanceof ModuleScreen) {
-            if (mc.world != null) return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title + " (" + getNakedWorldActivity2() + ")";
+            if (mc.world != null && serverVisibility.get()) return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title + " (" + getNakedWorldActivity2() + ")";
             else return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title;
         } else if (mc.currentScreen instanceof PackScreen) return "Changing resourcepack";
         else if (mc.currentScreen instanceof OptionsScreen) return "Changing Minecraft settings";
