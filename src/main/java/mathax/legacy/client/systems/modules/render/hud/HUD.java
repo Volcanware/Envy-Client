@@ -130,7 +130,6 @@ public class HUD extends Module {
         lag = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Top, 0, 2);
         // Modules
         lag.add(new LagNotifierHUD(this));
-        lag.add(new BigRatHUD(this));
 
         // MODULES
         modules = new HUDElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Bottom, 2, 2);
