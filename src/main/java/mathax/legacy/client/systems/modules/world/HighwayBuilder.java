@@ -96,14 +96,6 @@ public class HighwayBuilder extends Module {
         .build()
     );
 
-    //TODO: Place the block under the side first, like my surround fix. Some servers block sides without it...
-    /*private final Setting<Boolean> underSides = sgGeneral.add(new BoolSetting.Builder()
-        .name("under-sides")
-        .description("Places blocks under the side blocks. [Some servers blocks sides without it]")
-        .defaultValue(true)
-        .build()
-    );*/
-
     private final Setting<Boolean> railings = sgGeneral.add(new BoolSetting.Builder()
         .name("railings")
         .description("Builds railings next to the highway.")
@@ -188,7 +180,7 @@ public class HighwayBuilder extends Module {
     private final Setting<SettingColor> renderMineSideColor = sgRenderMine.add(new ColorSetting.Builder()
         .name("blocks-to-mine-side-color")
         .description("Color of blocks to be mined.")
-        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 75))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 150))
         .build()
     );
 
@@ -1490,16 +1482,6 @@ public class HighwayBuilder extends Module {
         }
     }
 
-    public enum Floor {
-        Replace,
-        Place_Missing;
-
-        @Override
-        public String toString() {
-            return super.toString().replace("_", " ");
-        }
-    }
-
     public enum Rotation {
         None(false, false),
         Mine(true, false),
@@ -1511,6 +1493,16 @@ public class HighwayBuilder extends Module {
         Rotation(boolean mine, boolean place) {
             this.mine = mine;
             this.place = place;
+        }
+    }
+
+    public enum Floor {
+        Replace,
+        PlaceMissing;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
         }
     }
 }
