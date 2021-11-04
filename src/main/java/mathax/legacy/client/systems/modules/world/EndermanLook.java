@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.world;
 
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.EnumSetting;
 import mathax.legacy.client.settings.Setting;
@@ -19,7 +20,7 @@ public class EndermanLook extends Module {
     private final Setting<Mode> lookMode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("look-mode")
         .description("How this module behaves.")
-        .defaultValue(Mode.Look_Away)
+        .defaultValue(Mode.Away)
         .build()
     );
 
@@ -27,15 +28,15 @@ public class EndermanLook extends Module {
         super(Categories.World, Items.ENDER_EYE, "enderman-look", "Either looks at all Endermen or prevents you from looking at Endermen.");
     }
 
-    public void onTick(TickEvent.Pre event) {
-        if (lookMode.get() == Mode.Look_Away) {
+    @EventHandler
+    private void onTick(TickEvent.Pre event) {
+        if (lookMode.get() == Mode.Away) {
             if (mc.player.getAbilities().creativeMode || !shouldLook()) return;
 
             Rotations.rotate(mc.player.getYaw(), 90, -75, null);
         } else {
             for (Entity entity : mc.world.getEntities()) {
-                if (!(entity instanceof EndermanEntity)) continue;
-                EndermanEntity enderman = (EndermanEntity) entity;
+                if (!(entity instanceof EndermanEntity enderman)) continue;
 
                 if (enderman.isAngry() || !enderman.isAlive() || !mc.player.canSee(enderman)) continue;
 
@@ -66,13 +67,8 @@ public class EndermanLook extends Module {
         return e > 1.0D - 0.025D / d && mc.player.canSee(entity);
     }
 
-    public enum Mode{
-        Look_At,
-        Look_Away;
-
-        @Override
-        public String toString() {
-            return super.toString().replace("_", " ");
-        }
+    public enum Mode {
+        At,
+        Away
     }
 }
