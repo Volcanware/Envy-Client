@@ -262,9 +262,7 @@ public class HighwayBuilder extends Module {
         super.error(message, args);
         toggle();
 
-        if (disconnectOnToggle.get()) {
-            disconnect(message, args);
-        }
+        if (disconnectOnToggle.get()) disconnect(message, args);
     }
 
     private void errorEarly(String message, Object... args) {
@@ -647,9 +645,7 @@ public class HighwayBuilder extends Module {
                 int obsidianCount = 0;
 
                 for (Entity entity : b.mc.world.getOtherEntities(b.mc.player, new Box(pos.x, pos.y, pos.z, pos.x + 1, pos.y + 2, pos.z + 1))) {
-                    if (entity instanceof ItemEntity itemEntity && itemEntity.getStack().getItem() == Items.OBSIDIAN) {
-                        obsidianCount += itemEntity.getStack().getCount();
-                    }
+                    if (entity instanceof ItemEntity itemEntity && itemEntity.getStack().getItem() == Items.OBSIDIAN) obsidianCount += itemEntity.getStack().getCount();
                 }
 
                 for (int i = 0; i < b.mc.player.getInventory().main.size(); i++) {
@@ -676,8 +672,7 @@ public class HighwayBuilder extends Module {
 
                     InvUtils.swap(slot, false);
                     BlockUtils.breakBlock(pos.getMcPos(), true);
-                }
-                else {
+                } else {
                     // Place ender chest
                     int slot = findAndMoveToHotbar(b, itemStack -> itemStack.getItem() == Items.ENDER_CHEST, false);
                     if (slot == -1) {
@@ -822,9 +817,7 @@ public class HighwayBuilder extends Module {
 
             // Stop if no items were found and are required
             if (slot == -1) {
-                if (required) {
-                    b.error("Out of items.");
-                }
+                if (required) b.error("Out of items.");
 
                 return -1;
             }
@@ -880,9 +873,7 @@ public class HighwayBuilder extends Module {
             int slot = findAndMoveToHotbar(b, itemStack -> itemStack.getItem() instanceof BlockItem blockItem && b.blocksToPlace.get().contains(blockItem.getBlock()), false);
 
             if (slot == -1) {
-                if (!b.mineEnderChests.get()) {
-                    b.error("Out of blocks to place.");
-                }
+                if (!b.mineEnderChests.get()) b.error("Out of blocks to place.");
                 else {
                     if (hasItem(b, Items.ENDER_CHEST)) b.setState(MineEnderChests);
                     else b.error("Out of blocks to place.");
