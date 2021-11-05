@@ -15,8 +15,8 @@ import java.util.List;
 
 public class Config extends System<Config> {
     // Visual
-    public String font = ConfigTab.font.get();
     public boolean customFont = ConfigTab.customFont.get();
+    public String font = ConfigTab.font.get();
     public double rainbowSpeed = ConfigTab.rainbowSpeed.get();
 
     // Chat
@@ -50,8 +50,8 @@ public class Config extends System<Config> {
         NbtCompound tag = new NbtCompound();
         tag.putString("version", Version.get());
 
-        tag.putString("font", font);
         tag.putBoolean("customFont", customFont);
+        tag.putString("font", font);
         tag.putDouble("rainbowSpeed", ConfigTab.rainbowSpeed.get());
 
         tag.putString("prefix", prefix);
@@ -72,8 +72,8 @@ public class Config extends System<Config> {
 
     @Override
     public Config fromTag(NbtCompound tag) {
-        font = getString(tag, "font", ConfigTab.font);
         customFont = getBoolean(tag, "customFont", ConfigTab.customFont);
+        font = getString(tag, "font", ConfigTab.font);
         rainbowSpeed = getDouble(tag, "rainbowSpeed", ConfigTab.rainbowSpeed);
 
         prefix = getString(tag, "prefix", ConfigTab.prefix);
