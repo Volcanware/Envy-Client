@@ -48,8 +48,6 @@ public class DiscordRPC extends Module {
     private static final DiscordRichPresence rpc = new DiscordRichPresence();
     private static final DiscordEventHandlers handlers = new DiscordEventHandlers();
 
-    public static boolean mcFirstLoad = true;
-
     private static int delay = 0;
     private static int number = 1;
 
@@ -111,9 +109,10 @@ public class DiscordRPC extends Module {
                     rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
                     rpc.partyMax = 1;
                     net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
-                } catch (Exception e2) {
-                    e2.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException ex) {
@@ -300,8 +299,10 @@ public class DiscordRPC extends Module {
     private static void applySmallImage() {
         if (delay == 5) {
             if (number == 16) number = 1;
+
             if (Modules.get().get(DiscordRPC.class).smallImageMode.get() == SmallImageMode.Dogs) rpc.smallImageKey = "dog-" + number;
             else rpc.smallImageKey = "cat-" + number;
+
             ++number;
             delay = 0;
         } else ++delay;
