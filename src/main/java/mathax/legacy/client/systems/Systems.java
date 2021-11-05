@@ -2,6 +2,7 @@ package mathax.legacy.client.systems;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.events.game.GameJoinedEvent;
 import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.systems.accounts.Accounts;
 import mathax.legacy.client.systems.commands.Commands;
@@ -58,13 +59,22 @@ public class Systems {
         return system;
     }
 
-    // Save/Load
+    // Game join
+
+    @EventHandler
+    private void onGameJoined(GameJoinedEvent event) {
+        Version.didntCheckForLatest = true;
+    }
+
+    // Game leave
 
     @EventHandler
     private static void onGameLeft(GameLeftEvent event) {
         Version.didntCheckForLatest = true;
         save();
     }
+
+    // Save
 
     public static void save(File folder) {
         long start = java.lang.System.currentTimeMillis();
@@ -78,6 +88,8 @@ public class Systems {
     public static void save() {
         save(null);
     }
+
+    // Load
 
     public static void load(File folder) {
         long start = java.lang.System.currentTimeMillis();

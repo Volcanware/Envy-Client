@@ -1,6 +1,5 @@
 package mathax.legacy.client;
 
-import mathax.legacy.client.events.game.GameJoinedEvent;
 import mathax.legacy.client.events.mathaxlegacy.CharTypedEvent;
 import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
 import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
@@ -19,7 +18,6 @@ import mathax.legacy.client.systems.modules.combat.*;
 import mathax.legacy.client.systems.modules.misc.CapesModule;
 import mathax.legacy.client.systems.modules.misc.DiscordRPC;
 import mathax.legacy.client.systems.modules.misc.MiddleClickFriend;
-import mathax.legacy.client.systems.modules.movement.speed.Speed;
 import mathax.legacy.client.systems.modules.render.Background;
 import mathax.legacy.client.systems.modules.render.Zoom;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
@@ -127,8 +125,10 @@ public class MatHaxLegacy implements ClientModInitializer {
         // Global Minecraft client accessor
         mc = MinecraftClient.getInstance();
 
-        // Title & Icon
+        // Icon
         mc.getWindow().setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
+
+        // Title
         mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
 
         // Register event handlers
@@ -153,20 +153,20 @@ public class MatHaxLegacy implements ClientModInitializer {
                 Modules.get().get(HUD.class).setVisible(false); // HUD
 
                 // KEYBINDS
-                Modules.get().get(Zoom.class).keybind.set(KeyBind.fromKey(GLFW.GLFW_KEY_C));
+                Modules.get().get(Zoom.class).keybind.set(KeyBind.fromKey(GLFW.GLFW_KEY_C)); // ZOOM
 
                 // KEYBIND OPTIONS
-                Modules.get().get(Zoom.class).toggleOnBindRelease = true;
+                Modules.get().get(Zoom.class).toggleOnBindRelease = true; // ZOOM
 
                 // TOASTS
-                Modules.get().get(AnchorAura.class).setToggleToast(true);
-                Modules.get().get(BedAura.class).setToggleToast(true);
-                Modules.get().get(CEVBreaker.class).setToggleToast(true);
-                Modules.get().get(CrystalAura.class).setToggleToast(true);
-                Modules.get().get(KillAura.class).setToggleToast(true);
+                Modules.get().get(AnchorAura.class).setToggleToast(true); // ANCHOR AURA
+                Modules.get().get(BedAura.class).setToggleToast(true); // BED AURA
+                Modules.get().get(CEVBreaker.class).setToggleToast(true); // CEV BREAKER
+                Modules.get().get(CrystalAura.class).setToggleToast(true); // CRYSTAL AURA
+                Modules.get().get(KillAura.class).setToggleToast(true); // KILL AURA
 
                 // MESSAGES
-                Modules.get().get(Zoom.class).setToggleMessage(false);
+                Modules.get().get(Zoom.class).setToggleMessage(false); // ZOOM
 
                 // RESET HUD LOCATIONS
                 Modules.get().get(HUD.class).reset.run(); // HUD
@@ -232,10 +232,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         LOG.info(logPrefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
     }
 
-    @EventHandler
-    private void onGameJoined(GameJoinedEvent event) {
-        Version.didntCheckForLatest = true;
-    }
+    // Click GUI keys
 
     @EventHandler
     private void onKeyGUI(KeyEvent event) {
@@ -250,7 +247,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         if (event.action == KeyAction.Press && event.button != GLFW.GLFW_MOUSE_BUTTON_LEFT && KeyBinds.OPEN_CLICK_GUI.matchesMouse(event.button) && Utils.canOpenClickGUI()) openClickGUI();
     }
 
-    // GUI
+    // Click GUI
 
     private void openClickGUI() {
         Tabs.get().get(0).openScreen(GuiThemes.get());
