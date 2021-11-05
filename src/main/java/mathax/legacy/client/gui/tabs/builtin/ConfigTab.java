@@ -4,6 +4,7 @@ import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.tabs.Tab;
 import mathax.legacy.client.gui.tabs.TabScreen;
 import mathax.legacy.client.gui.tabs.WindowTabScreen;
+import mathax.legacy.client.music.Music;
 import mathax.legacy.client.renderer.text.Fonts;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.misc.NbtUtils;
@@ -16,12 +17,14 @@ import net.minecraft.client.option.KeyBinding;
 import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class ConfigTab extends Tab {
+    public static ConfigScreen currentScreen;
+
     private static final Settings settings = new Settings();
     private static final SettingGroup sgVisual = settings.createGroup("Visual");
     private static final SettingGroup sgChat = settings.createGroup("Chat");
     private static final SettingGroup sgToasts = settings.createGroup("Toasts");
+    private static final SettingGroup sgMusic = settings.createGroup("Music");
     private static final SettingGroup sgMisc = settings.createGroup("Misc");
-
 
     // Visual
 
@@ -129,6 +132,25 @@ public class ConfigTab extends Tab {
         .build()
     );
 
+    // Music
+
+    public static final Setting<Integer> musicVolume = sgMusic.add(new IntSetting.Builder()
+        .name("volume")
+        .description("Determines the volume of the currently played music.")
+        .defaultValue(100)
+        .min(1)
+        .sliderMin(1)
+        .onChanged(integer -> {
+            Music.player.setVolume(integer);
+            Config.get().musicVolume = integer;
+        })
+        .onModuleActivated(integerSetting -> {
+            Music.player.setVolume(Config.get().musicVolume);
+            integerSetting.set(Config.get().musicVolume);
+        })
+        .build()
+    );
+
     // Misc
 
     public static final Setting<Integer> rotationHoldTicks = sgMisc.add(new IntSetting.Builder()
@@ -148,8 +170,6 @@ public class ConfigTab extends Tab {
         .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().useTeamColor))
         .build()
     );
-
-    public static ConfigScreen currentScreen;
 
     public ConfigTab() {
         super("Config");

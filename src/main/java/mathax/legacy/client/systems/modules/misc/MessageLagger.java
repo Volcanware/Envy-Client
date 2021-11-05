@@ -113,10 +113,11 @@ public class MessageLagger extends Module {
     }
 
     private String generateLagMessage() {
-        String message = null;
+        StringBuilder message = null;
         for (int i = 0; i < messageLength.get(); i++) {
-            message += (char) (Math.floor(Math.random() * 0x1D300) + 0x800);
+            message.append((char) (Math.floor(Math.random() * 0x1D300) + 0x800));
         }
-        return message;
+
+        return message.toString();
     }
 }

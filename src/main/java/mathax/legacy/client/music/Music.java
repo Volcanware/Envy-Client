@@ -5,11 +5,9 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import mathax.legacy.client.mixininterface.ISoundManager;
+import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.music.PlaylistUtils;
 import mathax.legacy.client.utils.music.StreamPlayer;
-
-import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class Music {
     public static DefaultAudioPlayerManager playerManager;
@@ -24,7 +22,7 @@ public class Music {
         AudioSourceManagers.registerRemoteSources(playerManager);
         player = playerManager.createPlayer();
         trackScheduler = new TrackScheduler();
-        trackScheduler.setVolume(((ISoundManager) mc.getSoundManager()).getMusicVolume());
+        trackScheduler.setVolume(Config.get().musicVolume);
         player.addListener(trackScheduler);
         streamPlayer = new StreamPlayer();
         PlaylistUtils.load();

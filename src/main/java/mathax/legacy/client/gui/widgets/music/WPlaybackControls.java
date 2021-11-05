@@ -2,8 +2,8 @@ package mathax.legacy.client.gui.widgets.music;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.screens.music.MusicScreen;
 import mathax.legacy.client.gui.screens.music.PlaylistsScreen;
+import mathax.legacy.client.gui.tabs.builtin.MusicTab;
 import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
@@ -15,7 +15,7 @@ import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class WPlaybackControls extends WMusicWidget {
     @Override
-    public void add(WTable parent, MusicScreen screen, GuiTheme theme) {
+    public void add(WTable parent, MusicTab.MusicScreen screen, GuiTheme theme) {
         WHorizontalList list = parent.add(theme.horizontalList()).widget();
         WButton pauseButton = list.add(theme.button(Music.player.isPaused() ? "Resume" : "Pause")).widget();
         pauseButton.action = () -> {

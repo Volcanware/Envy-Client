@@ -1,7 +1,6 @@
 package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.gui.screens.music.MusicScreen;
 import mathax.legacy.client.gui.screens.music.PlaylistViewScreen;
 import mathax.legacy.client.gui.screens.music.PlaylistsScreen;
 import mathax.legacy.client.utils.Version;
@@ -173,7 +172,7 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) return "Configuring macros";
         else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) return "Configuring a macro";
         else if (mc.currentScreen instanceof ProfilesTab.ProfilesScreen) return "Changing profiles";
-        else if (mc.currentScreen instanceof MusicScreen) return "Configuring music";
+        else if (mc.currentScreen instanceof MusicTab.MusicScreen) return "Configuring music";
         else if (mc.currentScreen instanceof PlaylistsScreen) return "Viewing playlists";
         else if (mc.currentScreen instanceof PlaylistViewScreen) {
             if (((PlaylistViewScreen) mc.currentScreen).getTitleString().contains("Search")) return "Searching for a song";

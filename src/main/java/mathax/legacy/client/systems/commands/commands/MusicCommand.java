@@ -1,6 +1,8 @@
 package mathax.legacy.client.systems.commands.commands;
 
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import mathax.legacy.client.gui.tabs.builtin.ConfigTab;
 import mathax.legacy.client.music.Music;
 import mathax.legacy.client.systems.commands.Command;
 import net.minecraft.command.CommandSource;
@@ -27,6 +29,23 @@ public class MusicCommand extends Command {
             info("Currently playing (highlight)%s(default).", Music.player.getPlayingTrack().getInfo().title + " - " + Music.player.getPlayingTrack().getInfo().author);
             return SINGLE_SUCCESS;
         });
+
+        builder.then(literal("volume")
+            .executes(context -> {
+                info("Current volume is (highlight)%s(default).", ConfigTab.musicVolume.get());
+                return SINGLE_SUCCESS;
+            })
+            .then(literal("set")
+                .then(argument("new-volume", IntegerArgumentType.integer(0, 500))
+                    .executes(context -> {
+                        int newVolume = IntegerArgumentType.getInteger(context, "new-volume");
+                        ConfigTab.musicVolume.set(newVolume);
+                        Music.player.setVolume(newVolume);
+                        info("Volume set to (highlight)%s(default).", newVolume);
+                        return SINGLE_SUCCESS;
+                    })
+                ))
+        );
 
         builder.then(literal("pause")
             .executes(context -> {

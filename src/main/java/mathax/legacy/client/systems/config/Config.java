@@ -30,6 +30,9 @@ public class Config extends System<Config> {
     public int toastDuration = ConfigTab.toastDuration.get();
     public boolean toastSound = ConfigTab.toastSound.get();
 
+    // Music
+    public int musicVolume = ConfigTab.musicVolume.get();
+
     // Misc
     public int rotationHoldTicks = ConfigTab.rotationHoldTicks.get();
     public boolean useTeamColor = ConfigTab.useTeamColor.get();
@@ -63,6 +66,8 @@ public class Config extends System<Config> {
         tag.putInt("toastDuration", toastDuration);
         tag.putBoolean("toastSound", toastSound);
 
+        tag.putInt("musicVolume", musicVolume);
+
         tag.putInt("rotationHoldTicks", rotationHoldTicks);
         tag.putBoolean("useTeamColor", useTeamColor);
         tag.put("dontShowAgainPrompts", listToTag(dontShowAgainPrompts));
@@ -85,13 +90,14 @@ public class Config extends System<Config> {
         toastDuration = getInt(tag, "toastDuration", ConfigTab.toastDuration);
         toastSound = getBoolean(tag, "toastSound", ConfigTab.toastSound);
 
+        musicVolume = getInt(tag, "musicVolume", ConfigTab.musicVolume);
+
         rotationHoldTicks = getInt(tag, "rotationHoldTicks", ConfigTab.rotationHoldTicks);
         useTeamColor = getBoolean(tag, "useTeamColor", ConfigTab.useTeamColor);
         dontShowAgainPrompts = listFromTag(tag, "dontShowAgainPrompts");
 
         return this;
     }
-
 
     // Utils
 

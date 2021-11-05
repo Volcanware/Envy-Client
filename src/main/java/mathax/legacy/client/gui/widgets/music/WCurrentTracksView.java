@@ -2,7 +2,7 @@ package mathax.legacy.client.gui.widgets.music;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.screens.music.MusicScreen;
+import mathax.legacy.client.gui.tabs.builtin.MusicTab;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.music.Music;
 
@@ -11,14 +11,14 @@ public class WCurrentTracksView extends WMusicWidget {
     private final WPaginationProvider pagination;
 
     @Override
-    public void add(WTable parent, MusicScreen screen, GuiTheme theme) {
+    public void add(WTable parent, MusicTab.MusicScreen screen, GuiTheme theme) {
         currentTrack = Music.player.getPlayingTrack();
         parent.row();
         WTable currentTracks = parent.add(theme.section("Current tracks")).expandX().widget().add(theme.table()).expandX().widget();
         super.add(currentTracks, screen, theme);
     }
 
-    public WCurrentTracksView(MusicScreen screen) {
+    public WCurrentTracksView(MusicTab.MusicScreen screen) {
         childWidgets.add(new WPlaybackControls());
         childWidgets.add(new WCurrentTrackView());
         pagination = new WPaginationProvider(i -> screen.construct());
@@ -34,7 +34,7 @@ public class WCurrentTracksView extends WMusicWidget {
 
     public class WCurrentTrackView extends WMusicWidget {
         @Override
-        public void add(WTable parent, MusicScreen screen, GuiTheme theme) {
+        public void add(WTable parent, MusicTab.MusicScreen screen, GuiTheme theme) {
             if (currentTrack != null && pagination.getPageOffset() == 0) {
                 parent.add(theme.label("Current: " + screen.getName(currentTrack).replace("&amp;", "&"))).expandX();
                 parent.add(theme.minus()).widget().action = () -> {

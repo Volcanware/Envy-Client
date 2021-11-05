@@ -110,7 +110,7 @@ public class HUD extends Module {
         mainInfo.add(new CombatInfoHUD(this));
 
         // MODULE INFO
-        moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 215);
+        moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 430);
         // Modules
         moduleInfo.add(new ModuleInfoHUD(this));
 

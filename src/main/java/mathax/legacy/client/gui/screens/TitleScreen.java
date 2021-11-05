@@ -37,7 +37,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 

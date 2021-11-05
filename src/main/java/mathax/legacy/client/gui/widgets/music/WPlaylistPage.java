@@ -2,7 +2,7 @@ package mathax.legacy.client.gui.widgets.music;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.screens.music.MusicScreen;
+import mathax.legacy.client.gui.tabs.builtin.MusicTab;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 
 import java.util.List;
@@ -16,10 +16,10 @@ public class WPlaylistPage extends WMusicWidget {
     private final Consumer<Integer> remove;
 
     @Override
-    public void add(WTable parent, MusicScreen screen, GuiTheme theme) {
+    public void add(WTable parent, MusicTab.MusicScreen screen, GuiTheme theme) {
         List<AudioTrack> tracks = source.get();
-        pagination.setMaxPage(tracks.size() / MusicScreen.pageSize);
-        for (int i = 0; i < tracks.size() - pagination.getPageOffset() && i < MusicScreen.pageSize; i++) {
+        pagination.setMaxPage(tracks.size() / MusicTab.MusicScreen.pageSize);
+        for (int i = 0; i < tracks.size() - pagination.getPageOffset() && i < MusicTab.MusicScreen.pageSize; i++) {
             int j = i + pagination.getPageOffset();
             if (i != 0) parent.row();
             AudioTrack track = tracks.get(j);

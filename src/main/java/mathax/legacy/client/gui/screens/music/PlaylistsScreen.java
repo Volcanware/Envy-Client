@@ -3,6 +3,7 @@ package mathax.legacy.client.gui.screens.music;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WindowScreen;
+import mathax.legacy.client.gui.tabs.builtin.MusicTab;
 import mathax.legacy.client.gui.widgets.containers.WTable;
 import mathax.legacy.client.gui.widgets.input.WTextBox;
 import mathax.legacy.client.gui.widgets.music.WMusicWidget;
@@ -17,12 +18,12 @@ import java.util.Map;
 import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class PlaylistsScreen extends WindowScreen {
-    private final MusicScreen musicScreen;
+    private final MusicTab.MusicScreen musicScreen;
     private List<WMusicWidget> childWidgets;
     private WTable table;
     private WPaginationProvider pagination;
 
-    public PlaylistsScreen(GuiTheme theme, MusicScreen musicScreen) {
+    public PlaylistsScreen(GuiTheme theme, MusicTab.MusicScreen musicScreen) {
         super(theme, "Music - Playlists");
         this.musicScreen = musicScreen;
         this.parent = musicScreen;
@@ -43,7 +44,7 @@ public class PlaylistsScreen extends WindowScreen {
     }
 
     public void construct() {
-        pagination.setMaxPage(PlaylistUtils.count() / MusicScreen.pageSize);
+        pagination.setMaxPage(PlaylistUtils.count() / MusicTab.MusicScreen.pageSize);
         table.clear();
 
         WTextBox box = table.add(theme.textBox("")).expandX().widget();

@@ -1,10 +1,9 @@
 package mathax.legacy.client.gui.widgets.music;
 
 import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.screens.music.MusicScreen;
+import mathax.legacy.client.gui.tabs.builtin.MusicTab;
 import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
 import mathax.legacy.client.gui.widgets.containers.WTable;
-import mathax.legacy.client.gui.widgets.music.WMusicWidget;
 
 import java.util.function.Consumer;
 
@@ -14,7 +13,7 @@ public class WPaginationProvider extends WMusicWidget {
     private final Consumer<Integer> onPageChange;
 
     @Override
-    public void add(WTable parent, MusicScreen screen, GuiTheme theme) {
+    public void add(WTable parent, MusicTab.MusicScreen screen, GuiTheme theme) {
         if (maxPage > 1) {
             parent.row();
             WHorizontalList list = parent.add(theme.horizontalList()).widget();
@@ -39,7 +38,7 @@ public class WPaginationProvider extends WMusicWidget {
     }
 
     public int getPageOffset() {
-        return currentPage * MusicScreen.pageSize;
+        return currentPage * MusicTab.MusicScreen.pageSize;
     }
 
     public WPaginationProvider(Consumer<Integer> onPageChange) {
