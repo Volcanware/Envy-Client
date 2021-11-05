@@ -23,32 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class AntiGhostBlock extends Module {
-    private final HashMap<BlockPos, Long> blocks = new HashMap<>();
-
-    private final boolean lock = false;
-
-    private long lastRequest = 0L;
-
-    SettingGroup sgGeneral = settings.getDefaultGroup();
     SettingGroup sgModuleFixes = settings.createGroup("Module Fixes");
-
-    private final Setting<Integer> requestDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("delay")
-        .description("Delay between updating block and sending request.")
-        .defaultValue(3)
-        .min(1)
-        .sliderRange(1, 200)
-        .build()
-    );
-
-    private final Setting<Integer> sendDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("delay-between")
-        .description("Delay between requests.")
-        .defaultValue(5)
-        .min(1)
-        .sliderRange(1, 200)
-        .build()
-    );
 
     public final Setting<Boolean> bedAuraFix = sgModuleFixes.add(new BoolSetting.Builder()
         .name("bed-aura-fix")
@@ -62,43 +37,7 @@ public class AntiGhostBlock extends Module {
     }
 
     @EventHandler
-    private void onBlockBreak(BreakBlockEvent event) {
-        blocks.put(event.blockPos, mc.world.getTime());
-    }
-
-    @EventHandler
-    private void onGameDisconnect(GameLeftEvent event) {
-        blocks.clear();
-        lastRequest = 0L;
-    }
-
-    @EventHandler
-    private void onPacket(PacketEvent.Receive event) {
-        BlockUpdateS2CPacket blockUpdateS2CPacket;
-        if (event.packet instanceof BlockUpdateS2CPacket && blocks.containsKey((blockUpdateS2CPacket= (BlockUpdateS2CPacket) event.packet).getPos())) blocks.remove(blockUpdateS2CPacket.getPos());
-        if (event.packet instanceof BlockUpdateS2CPacket && blocks.containsKey((blockUpdateS2CPacket = (BlockUpdateS2CPacket) event.packet).getPos())) blocks.remove(blockUpdateS2CPacket.getPos());
-    }
-
-    @EventHandler
-    private void onTick(TickEvent.Post post) {
-        long l = mc.world.getTime();
-        if (blocks.isEmpty() || mc.interactionManager == null || mc.interactionManager.isBreakingBlock() || l - lastRequest < (long) sendDelay.get() || lock) return;
-
-        List list = new ArrayList();
-        blocks.forEach((argument, argument2) -> tick(list, l, argument, argument2));
-        list.forEach(blocks::remove);
-    }
-
-    private void tick(List list, long l, BlockPos blockPos, Long l2) {
-        if (list.isEmpty() && l - l2 >= (long) requestDelay.get()) {
-            mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, Direction.UP));
-            list.add(blockPos.asLong());
-            lastRequest = l;
-        }
-    }
-
-    @EventHandler
-    private void onBlockPlace(PlaceBlockEvent event) {
-        blocks.put(event.blockPos, mc.world.getTime());
+    public void onBreakBlock(BreakBlockEvent event) {
+        mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, event.blockPos, Direction.UP));
     }
 }
