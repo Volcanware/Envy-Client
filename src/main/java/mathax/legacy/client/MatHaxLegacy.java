@@ -85,7 +85,7 @@ public class MatHaxLegacy implements ClientModInitializer {
     public static final String URL = "https://mathaxclient.xyz/";
     public static final String API_URL = "https://api.mathaxclient.xyz/";
 
-    public static List<String> getMatHaxSplashes() {
+    public static List<String> getSplashes() {
         return Arrays.asList(
 
             // SPLASHES
