@@ -22,11 +22,14 @@ public class Music {
         AudioSourceManagers.registerRemoteSources(playerManager);
         player = playerManager.createPlayer();
         trackScheduler = new TrackScheduler();
-        trackScheduler.setVolume(Config.get().musicVolume);
         player.addListener(trackScheduler);
         streamPlayer = new StreamPlayer();
         PlaylistUtils.load();
         start();
+    }
+
+    public static void resetVolume() {
+        trackScheduler.setVolume(Config.get().musicVolume);
     }
 
     public static void start() {

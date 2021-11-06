@@ -328,6 +328,7 @@ public class Utils {
         title = title.replace("Cpu", "CPU");
         title = title.replace("Afk", "AFK");
         title = title.replace("32k", "32K");
+        title = title.replace("Blocks/tick", "Blocks/Tick");
         title = title.replace("Echest", "EChest");
 
         return title;

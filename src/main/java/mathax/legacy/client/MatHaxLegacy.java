@@ -213,6 +213,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         Fonts.load();
         GuiRenderer.init();
         GuiThemes.postInit();
+        Music.resetVolume();
 
         // Loaded window title
         mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");

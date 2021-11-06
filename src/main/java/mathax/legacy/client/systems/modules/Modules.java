@@ -38,6 +38,7 @@ import mathax.legacy.client.utils.misc.input.Input;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.utils.render.ToastSystem;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -594,6 +595,7 @@ public class Modules extends System<Modules> {
         add(new PacketSpammer());
         add(new Panic());
         //add(new PenisESP());
+        add(new Printer());
         add(new SoundBlocker());
         add(new SoundLocator());
         add(new SpinBot());

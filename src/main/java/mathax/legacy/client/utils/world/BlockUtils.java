@@ -225,6 +225,45 @@ public class BlockUtils {
         placeEnhanced(n, vec3d, hand, direction, blockPos, bl, bl2, bl3);
     }
 
+    public static boolean placePrinter(BlockPos blockPos, Direction direction, boolean swingHand) {
+        if (mc.player == null) return false;
+        if (!canPlace(blockPos)) return false;
+
+        Vec3d hitPos = new Vec3d(blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
+
+        BlockPos neighbour;
+        Direction side = direction;
+
+        if (side == null) {
+            side = Direction.UP;
+            neighbour = blockPos;
+        } else {
+            neighbour = blockPos.offset(side.getOpposite());
+            hitPos.add(side.getOffsetX() * 0.5, side.getOffsetY() * 0.5, side.getOffsetZ() * 0.5);
+        }
+
+        Direction dir = side;
+        placePrinter(new BlockHitResult(hitPos, dir, neighbour, false), swingHand);
+
+        return true;
+    }
+
+
+    private static void placePrinter(BlockHitResult blockHitResult, boolean swing) {
+        if (mc.player == null || mc.interactionManager == null || mc.getNetworkHandler() == null) return;
+        boolean wasSneaking = mc.player.input.sneaking;
+        mc.player.input.sneaking = false;
+
+        ActionResult result = mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, blockHitResult);
+
+        if (result.shouldSwingHand()) {
+            if (swing) mc.player.swingHand(Hand.MAIN_HAND);
+            else mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
+        }
+
+        mc.player.input.sneaking = wasSneaking;
+    }
+
     public static boolean canPlace(BlockPos blockPos, boolean checkEntities) {
         if (blockPos == null) return false;
 

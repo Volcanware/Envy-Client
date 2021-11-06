@@ -16,6 +16,7 @@ repositories {
         name = "jitpack"
         url = "https://jitpack.io"
     }
+
     maven {
         url 'https://m2.dv8tion.net/releases'
     }
@@ -25,15 +26,27 @@ repositories {
         name = "meteor-maven"
         url = "https://maven.meteordev.org"
     }
+
     maven {
         name = "meteor-maven-snapshots"
         url = "https://maven.meteordev.org/snapshots"
     }
 
+    // Litematica
+    maven {
+        url = "https://www.cursemaven.com"
+    }
+
+    maven {
+        url 'https://masa.dy.fi/maven'
+    }
+
+    // Other
     maven {
         name = "dblsaiko"
         url = "https://maven.dblsaiko.net/"
     }
+
     jcenter()
 }
 
@@ -64,6 +77,10 @@ dependencies {
     // Seed integration
     modImplementation "com.github.hube12:SEED:${project.seed_version}"
     include "com.github.hube12:SEED:${project.seed_version}"
+
+    // Litematica
+    modImplementation "curse.maven:litematica-${project.litematica_project_id}:${project.litematica_file_id}"
+    modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
 
     // Dependencies
     library "com.github.Vatuu:discord-rpc:${project.discord_version}"

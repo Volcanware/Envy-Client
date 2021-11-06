@@ -61,13 +61,6 @@ public class Scaffold extends Module {
         .build()
     );
 
-    private final Setting<Boolean> renderSwing = sgGeneral.add(new BoolSetting.Builder()
-        .name("swing")
-        .description("Renders your client-side swing.")
-        .defaultValue(false)
-        .build()
-    );
-
     private final Setting<Boolean> autoSwitch = sgGeneral.add(new BoolSetting.Builder()
         .name("auto-switch")
         .description("Automatically swaps to a block before placing.")
@@ -101,10 +94,17 @@ public class Scaffold extends Module {
 
     // Render
 
-    private final Setting<Boolean> render = sgGeneral.add(new BoolSetting.Builder()
+    private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
         .name("render")
         .description("Renders currently placed blocks.")
         .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> renderSwing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Renders your client-side swing.")
+        .defaultValue(false)
         .build()
     );
 
