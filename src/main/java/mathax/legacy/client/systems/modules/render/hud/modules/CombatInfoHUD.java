@@ -217,14 +217,13 @@ public class CombatInfoHUD extends HUDElement {
             // Name
             String nameText = "";
 
-            if (player.getUuidAsString().equals(MatHaxLegacy.devUUID) || player.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) {
+            if (MatHaxLegacy.isDeveloper(player.getUuidAsString())) {
                 nameText += "     " + player.getEntityName();
                 GL.bindTexture(MATHAX_LOGO);
                 Renderer2D.TEXTURE.begin();
                 Renderer2D.TEXTURE.texQuad(x, y, 16, 16, TEXTURE_COLOR);
                 Renderer2D.TEXTURE.render(null);
-            } else
-                nameText += player.getEntityName();
+            } else nameText += player.getEntityName();
 
             Color nameColor = PlayerUtils.getPlayerColor(player, hud.primaryColor.get());
 

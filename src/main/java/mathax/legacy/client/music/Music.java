@@ -29,6 +29,7 @@ public class Music {
     }
 
     public static void resetVolume() {
+        player.setVolume(Config.get().musicVolume);
         trackScheduler.setVolume(Config.get().musicVolume);
     }
 

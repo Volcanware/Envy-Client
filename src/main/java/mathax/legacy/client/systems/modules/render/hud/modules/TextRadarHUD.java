@@ -133,10 +133,8 @@ public class TextRadarHUD extends HUDElement {
             if (ignoreFriends.get() && Friends.get().isFriend(entity)) continue;
 
             String text = "";
-            if (entity.getUuidAsString().equals(MatHaxLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID))
-                text += "    " + entity.getEntityName();
-            else
-                text += entity.getEntityName();
+            if (MatHaxLegacy.isDeveloper(entity.getUuidAsString())) text += "    " + entity.getEntityName();
+            else text += entity.getEntityName();
 
             if (health.get() || ping.get() || distance.get()) text += " -";
             if (health.get()) text += String.format(" %s", Math.round(entity.getHealth() + entity.getAbsorptionAmount()));
@@ -174,17 +172,17 @@ public class TextRadarHUD extends HUDElement {
 
             String text = "";
 
-            if (entity.getUuidAsString().equals(MatHaxLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID)) {
+            boolean showDev = MatHaxLegacy.isDeveloper(entity.getUuidAsString());
+
+            if (showDev) {
+                text += "    " + entity.getEntityName();
+
                 GL.bindTexture(MATHAX_LOGO);
                 Renderer2D.TEXTURE.begin();
                 Renderer2D.TEXTURE.texQuad(x - renderer.textWidth(text) + 2, y, 16, 16, TEXTURE_COLOR);
                 Renderer2D.TEXTURE.render(null);
-            }
+            } else text += entity.getEntityName();
 
-            if (entity.getUuidAsString().equals(MatHaxLegacy.devUUID) || entity.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID))
-                text += "    " + entity.getEntityName();
-            else
-                text += entity.getEntityName();
             Color color = PlayerUtils.getPlayerColor(entity, playerNameColor.get());
 
             renderer.text(text, x, y, color);

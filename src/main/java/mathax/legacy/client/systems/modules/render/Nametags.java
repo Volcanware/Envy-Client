@@ -372,7 +372,7 @@ public class Nametags extends Module {
         TextRenderer text = TextRenderer.get();
         NametagUtils.begin(pos);
 
-        boolean showDev = player.getUuidAsString().equals(MatHaxLegacy.devUUID) || player.getUuidAsString().equals(MatHaxLegacy.devOfflineUUID);
+        boolean showDev = MatHaxLegacy.getDeveloperUUIDs().contains(player.getUuidAsString());
 
         // Gamemode
         GameMode gm = EntityUtils.getGameMode(player);

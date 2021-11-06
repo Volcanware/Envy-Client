@@ -84,7 +84,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
         drawStringWithShadow(matrices, textRenderer, loggedInAs, 2, (int) y, GRAY);
         drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, (int) y, GRAY);
         drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, (int) y, WHITE);
-        if (!(Modules.get() == null) && !Modules.get().isActive(NameProtect.class) && (client.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || client.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) {
+        if (!(Modules.get() == null) && !Modules.get().isActive(NameProtect.class) && MatHaxLegacy.isDeveloper(client.getSession().getUuid())) {
             drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, (int) y, GRAY);
             drawStringWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, (int) y, GRAY);
             drawStringWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, (int) y, MatHaxLegacy.INSTANCE.MATHAX_COLOR_INT);
@@ -109,7 +109,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
         return serverListWidget;
     }
 
-    @Inject(at = {@At("HEAD")}, method = {"connect(Lnet/minecraft/client/network/ServerInfo;)V"})
+    @Inject(at = @At("HEAD"), method = "connect(Lnet/minecraft/client/network/ServerInfo;)V")
     private void onConnect(ServerInfo entry, CallbackInfo info) {
         LastServerInfo.setLastServer(entry);
     }

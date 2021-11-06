@@ -43,27 +43,27 @@ public class WelcomeHUD extends TripleTextHUDElement {
         switch (message.get()) {
             case Using -> {
                 if (Modules.get().isActive(NameProtect.class)) return "You are using MatHax Legacy, ";
-                if ((mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) return "You are using MatHax Legacy, Developer ";
+                if (MatHaxLegacy.isDeveloper(mc.getSession().getUuid())) return "You are using MatHax Legacy, Developer ";
                 else return "You are using MatHax Legacy, ";
             }
             case Time -> {
                 if (Modules.get().isActive(NameProtect.class)) return getTime() + ", ";
-                if ((mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) return getTime() + ", Developer ";
+                if (MatHaxLegacy.isDeveloper(mc.getSession().getUuid())) return getTime() + ", Developer ";
                 else return getTime() + ", ";
             }
             case Retarded_Time -> {
                 if (Modules.get().isActive(NameProtect.class)) return getRetardedTime() + ", ";
-                if ((mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) return getRetardedTime() + ", Developer ";
+                if (MatHaxLegacy.isDeveloper(mc.getSession().getUuid())) return getRetardedTime() + ", Developer ";
                 else return getRetardedTime() + ", ";
             }
             case Sussy -> {
                 if (Modules.get().isActive(NameProtect.class)) return "You are a sussy baka, ";
-                if ((mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) return "You are a sussy baka, Developer ";
+                if (MatHaxLegacy.isDeveloper(mc.getSession().getUuid())) return "You are a sussy baka, Developer ";
                 else return "You are a sussy baka, ";
             }
             default -> {
                 if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax Legacy, ";
-                if ((mc.getSession().getUuid().equals(MatHaxLegacy.devUUID.replace("-", "")) || mc.getSession().getUuid().equals(MatHaxLegacy.devOfflineUUID.replace("-", "")))) return "Welcome to MatHax Legacy, Developer ";
+                if (MatHaxLegacy.isDeveloper(mc.getSession().getUuid())) return "Welcome to MatHax Legacy, Developer ";
                 else return "Welcome to MatHax Legacy, ";
             }
         }

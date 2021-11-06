@@ -79,11 +79,18 @@ public class MatHaxLegacy implements ClientModInitializer {
     public static final Logger LOG = LogManager.getLogger();
     public static String logPrefix = "[MatHax Legacy] ";
 
-    public static String devUUID = "3e24ef27-e66d-45d2-bf4b-2c7ade68ff47";
-    public static String devOfflineUUID = "7c73f844-73c3-3a7d-9978-004ba0a6436e";
-
     public static final String URL = "https://mathaxclient.xyz/";
     public static final String API_URL = "https://api.mathaxclient.xyz/";
+
+    public static List<String> getDeveloperUUIDs() {
+        return Arrays.asList(
+
+            // MATEJKO06
+            "3e24ef27e66d45d2bf4b2c7ade68ff47",
+            "7c73f84473c33a7d9978004ba0a6436e"
+
+        );
+    }
 
     public static List<String> getSplashes() {
         return Arrays.asList(
@@ -231,6 +238,13 @@ public class MatHaxLegacy implements ClientModInitializer {
 
         // Log
         LOG.info(logPrefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
+    }
+
+    // Developer
+
+    public static boolean isDeveloper(String uuid) {
+        uuid = uuid.replace("-", "");
+        return getDeveloperUUIDs().contains(uuid);
     }
 
     // Click GUI keys

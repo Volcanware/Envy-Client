@@ -65,14 +65,14 @@ public class AutoFish extends Module {
     // Splash Detection
 
     private final Setting<Boolean> splashDetectionRangeEnabled = sgSplashRangeDetection.add(new BoolSetting.Builder()
-        .name("splash-detection-range-enabled")
+        .name("range-enabled")
         .description("Allows you to use multiple accounts next to each other.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<Double> splashDetectionRange = sgSplashRangeDetection.add(new DoubleSetting.Builder()
-        .name("splash-detection-range")
+        .name("range")
         .description("The detection range of a splash. Lower values will not work when the TPS is low.")
         .defaultValue(10)
         .min(0)
@@ -114,9 +114,7 @@ public class AutoFish extends Module {
                 autoCastTimer = 0;
                 autoCastEnabled = true;
             }
-        } else {
-            autoCastCheckTimer--;
-        }
+        } else autoCastCheckTimer--;
 
         // Check for auto cast timer
         if (autoCastEnabled) {
