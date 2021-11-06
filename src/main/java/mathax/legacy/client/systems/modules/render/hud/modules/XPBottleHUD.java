@@ -26,7 +26,7 @@ public class XPBottleHUD extends HUDElement {
     );
 
     public XPBottleHUD(HUD hud) {
-        super(hud, "xp-bottle", "Displays the amount of XP bottles in your inventory.", true);
+        super(hud, "xp-bottle", "Displays the amount of xp bottles in your inventory.", true);
     }
 
     @Override
@@ -39,10 +39,7 @@ public class XPBottleHUD extends HUDElement {
         double x = box.getX();
         double y = box.getY();
 
-        if (isInEditor()) {
-            RenderUtils.drawItem(Items.EXPERIENCE_BOTTLE.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        } else if (InvUtils.find(Items.EXPERIENCE_BOTTLE).getCount() > 0) {
-            RenderUtils.drawItem(new ItemStack(Items.EXPERIENCE_BOTTLE, InvUtils.find(Items.EXPERIENCE_BOTTLE).getCount()), (int) x, (int) y, scale.get(), true);
-        }
+        if (isInEditor()) RenderUtils.drawItem(Items.EXPERIENCE_BOTTLE.getDefaultStack(), (int) x, (int) y, scale.get(), true);
+        else if (InvUtils.find(Items.EXPERIENCE_BOTTLE).getCount() > 0) RenderUtils.drawItem(new ItemStack(Items.EXPERIENCE_BOTTLE, InvUtils.find(Items.EXPERIENCE_BOTTLE).getCount()), (int) x, (int) y, scale.get(), true);
     }
 }

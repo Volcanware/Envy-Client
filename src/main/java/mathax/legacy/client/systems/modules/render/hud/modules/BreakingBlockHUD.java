@@ -17,7 +17,6 @@ public class BreakingBlockHUD extends TripleTextHUDElement {
     @Override
     protected String getRight() {
         if (isInEditor()) return "0%";
-
         return String.format("%.0f%%", ((ClientPlayerInteractionManagerAccessor) mc.interactionManager).getBreakingProgress() * 100);
     }
 

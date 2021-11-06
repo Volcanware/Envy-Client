@@ -11,7 +11,7 @@ import mathax.legacy.client.utils.render.RenderUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-public class CrystalHUD extends HUDElement {
+public class ObsidianHUD extends HUDElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
@@ -25,8 +25,8 @@ public class CrystalHUD extends HUDElement {
         .build()
     );
 
-    public CrystalHUD(HUD hud) {
-        super(hud, "crystal", "Displays the amount of crystals in your inventory.", true);
+    public ObsidianHUD(HUD hud) {
+        super(hud, "obsidian", "Displays the amount of obsidian in your inventory.", true);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class CrystalHUD extends HUDElement {
         double x = box.getX();
         double y = box.getY();
 
-        if (isInEditor()) RenderUtils.drawItem(Items.END_CRYSTAL.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        else if (InvUtils.find(Items.END_CRYSTAL).getCount() > 0) RenderUtils.drawItem(new ItemStack(Items.END_CRYSTAL, InvUtils.find(Items.END_CRYSTAL).getCount()), (int) x, (int) y, scale.get(), true);
+        if (isInEditor()) RenderUtils.drawItem(Items.OBSIDIAN.getDefaultStack(), (int) x, (int) y, scale.get(), true);
+        else if (InvUtils.find(Items.OBSIDIAN).getCount() > 0) RenderUtils.drawItem(new ItemStack(Items.OBSIDIAN, InvUtils.find(Items.OBSIDIAN).getCount()), (int) x, (int) y, scale.get(), true);
     }
 }

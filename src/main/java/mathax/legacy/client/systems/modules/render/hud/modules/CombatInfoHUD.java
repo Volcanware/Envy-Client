@@ -273,10 +273,7 @@ public class CombatInfoHUD extends HUDElement {
                     for (int position = 5; position >= 0; position--) {
                         ItemStack itemStack = getItem(position);
 
-                        if (itemStack.getItem() instanceof SwordItem
-                            || itemStack.getItem() == Items.END_CRYSTAL
-                            || itemStack.getItem() == Items.RESPAWN_ANCHOR
-                            || itemStack.getItem() instanceof BedItem) threat = true;
+                        if (itemStack.getItem() instanceof SwordItem || itemStack.getItem() == Items.END_CRYSTAL || itemStack.getItem() == Items.RESPAWN_ANCHOR || itemStack.getItem() instanceof BedItem) threat = true;
                     }
 
                     if (threat) {
@@ -345,9 +342,7 @@ public class CombatInfoHUD extends HUDElement {
                 Map<Enchantment, Integer> enchantmentsToShow = new HashMap<>();
 
                 for (Enchantment enchantment : displayedEnchantments.get()) {
-                    if (enchantments.containsKey(enchantment)) {
-                        enchantmentsToShow.put(enchantment, enchantments.get(enchantment));
-                    }
+                    if (enchantments.containsKey(enchantment)) enchantmentsToShow.put(enchantment, enchantments.get(enchantment));
                 }
 
                 for (Enchantment enchantment : enchantmentsToShow.keySet()) {
@@ -358,6 +353,7 @@ public class CombatInfoHUD extends HUDElement {
                     TextRenderer.get().render(enchantName, enchX, armorY, enchantment.isCursed() ? RED : enchantmentTextColor.get());
                     armorY += TextRenderer.get().getHeight();
                 }
+
                 slot--;
             }
 

@@ -32,11 +32,8 @@ public class DateHUD extends TripleTextHUDElement {
 
     @Override
     protected String getRight() {
-        if (euDate.get()) {
-            return getDate() + " EU";
-        } else {
-            return getDate() + " US";
-        }
+        if (euDate.get()) return getDate() + " EU";
+        else return getDate() + " US";
     }
 
     @Override
@@ -45,10 +42,7 @@ public class DateHUD extends TripleTextHUDElement {
     }
 
     private String getDate() {
-        if (euDate.get()) {
-            return new SimpleDateFormat("dd/MM/yy").format(Calendar.getInstance().getTime());
-        } else {
-            return new SimpleDateFormat("MM/dd/yy").format(Calendar.getInstance().getTime());
-        }
+        if (euDate.get()) return new SimpleDateFormat("dd/MM/yy").format(Calendar.getInstance().getTime());
+        else return new SimpleDateFormat("MM/dd/yy").format(Calendar.getInstance().getTime());
     }
 }
