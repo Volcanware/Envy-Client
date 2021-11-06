@@ -17,7 +17,7 @@ public class FOVCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-            info("Currently set to (highlight)%s(default).", (int) mc.options.fov);
+            info("Currently using (highlight)%s(default).", (int) mc.options.fov);
             return SINGLE_SUCCESS;
         });
 
