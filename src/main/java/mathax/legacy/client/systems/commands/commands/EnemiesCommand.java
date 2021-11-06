@@ -25,7 +25,6 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 import static net.minecraft.command.CommandSource.suggestMatching;
 
 public class EnemiesCommand extends Command {
-
     public EnemiesCommand() {
         super("enemies", "Manages enemies.", "enemy");
     }

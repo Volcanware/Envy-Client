@@ -23,7 +23,6 @@ import java.util.List;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class NameHistoryCommand extends Command {
-
     public NameHistoryCommand() {
         super("name-history", "Provides a list of a players previous names from the Mojang API.", "history", "names");
     }

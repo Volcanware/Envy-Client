@@ -13,7 +13,6 @@ import net.minecraft.util.Formatting;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class WaypointCommand extends Command {
-
     public WaypointCommand() {
         super("waypoint", "Manages waypoints.", "wp");
     }

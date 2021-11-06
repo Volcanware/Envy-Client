@@ -9,10 +9,9 @@ import net.minecraft.command.CommandSource;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
-// TODO: Add volume set & info, play command which searches for a song and plays it and stop command which removes all songs.
+// TODO: Add play command which searches for a song and plays it and stop command which removes all songs.
 
 public class MusicCommand extends Command {
-
     public MusicCommand() {
         super("music", "Music commands.");
     }

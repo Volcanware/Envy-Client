@@ -24,7 +24,7 @@ public class Phase extends Module {
         .name("mode")
         .description("The phase mode used.")
         .defaultValue(Mode.NRNB)
-        .onChanged(v -> { setPos(); })
+        .onChanged(mode -> setPos())
         .build()
     );
 
@@ -35,7 +35,7 @@ public class Phase extends Module {
         .min(0.0)
         .sliderMin(0.0)
         .sliderMax(10.0)
-        .visible(() -> (mode.get() != Mode.CollisionShape))
+        .visible(() -> (mode.get() != Mode.Collision_Shape))
         .build()
     );
 
@@ -58,7 +58,7 @@ public class Phase extends Module {
     @EventHandler
     private void onCollisionShape(CollisionShapeEvent event) {
         if (mc.world == null || mc.player == null) return;
-        if (mode.get() != Mode.CollisionShape) return;
+        if (mode.get() != Mode.Collision_Shape) return;
         if (event == null || event.pos == null) return;
         if (event.type != CollisionShapeEvent.CollisionType.BLOCK) return;
         if (event.pos.getY() < mc.player.getY()) {
@@ -71,16 +71,16 @@ public class Phase extends Module {
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post post) {
-        if (mode.get() == Mode.CollisionShape) return;
+    private void onTick(TickEvent.Post event) {
+        if (mode.get() == Mode.Collision_Shape) return;
         if (mc.player == null) return;
 
         if (Double.isNaN(prevX) || Double.isNaN(prevZ)) setPos();
 
-        Vec3d yawForward = Vec3d.fromPolar((float)0.0f, (float)mc.player.getYaw());
-        Vec3d yawBack = Vec3d.fromPolar((float)0.0f, (float)mc.player.getYaw() - 180f);
-        Vec3d yawLeft = Vec3d.fromPolar((float)0.0f, (float)mc.player.getYaw() - 90f);
-        Vec3d yawRight = Vec3d.fromPolar((float)0.0f, (float)mc.player.getYaw() - 270f);
+        Vec3d yawForward = Vec3d.fromPolar(0.0f, mc.player.getYaw());
+        Vec3d yawBack = Vec3d.fromPolar(0.0f, mc.player.getYaw() - 180f);
+        Vec3d yawLeft = Vec3d.fromPolar(0.0f, mc.player.getYaw() - 90f);
+        Vec3d yawRight = Vec3d.fromPolar(0.0f, mc.player.getYaw() - 270f);
 
         if (mode.get() == Mode.Normal) {
 
@@ -153,6 +153,11 @@ public class Phase extends Module {
     public enum Mode {
         NRNB,
         Normal,
-        CollisionShape
+        Collision_Shape;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

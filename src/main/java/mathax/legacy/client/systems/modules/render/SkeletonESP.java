@@ -127,6 +127,7 @@ public class SkeletonESP extends Module {
 
                 boolean swimming = player.isInSwimmingPose();
                 boolean sneaking = player.isSneaking();
+                //boolean sleeping = player.isSleeping(); // TODO: Sleeping broken.
                 boolean flying = player.isFallFlying();
 
                 ModelPart head = playerModel.head;

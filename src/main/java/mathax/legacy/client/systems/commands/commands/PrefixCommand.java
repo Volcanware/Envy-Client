@@ -11,7 +11,6 @@ import net.minecraft.util.Formatting;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class PrefixCommand extends Command {
-
     public PrefixCommand() {
         super("prefix", "Lets you customize the command prefix.");
     }

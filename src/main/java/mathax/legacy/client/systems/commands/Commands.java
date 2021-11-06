@@ -55,6 +55,7 @@ public class Commands extends System<Commands> {
         add(new PrefixCommand());
         add(new ProfilesCommand());
         add(new ReloadCommand());
+        add(new ReloadSoundSystemCommand());
         add(new ResetCommand());
         add(new RotationCommand());
         add(new SeedCommand());

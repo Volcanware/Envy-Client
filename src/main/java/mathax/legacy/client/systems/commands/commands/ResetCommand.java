@@ -13,7 +13,6 @@ import net.minecraft.command.CommandSource;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class ResetCommand extends Command {
-
     public ResetCommand() {
         super("reset", "Resets specified settings.");
     }

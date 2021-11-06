@@ -9,7 +9,6 @@ import net.minecraft.util.math.MathHelper;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class RotationCommand extends Command {
-
     public RotationCommand() {
         super("rotation", "Modifies your rotation.");
     }

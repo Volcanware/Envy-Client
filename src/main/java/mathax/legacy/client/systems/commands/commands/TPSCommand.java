@@ -9,7 +9,6 @@ import net.minecraft.util.Formatting;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class TPSCommand extends Command {
-
     public TPSCommand() {
         super("tps", "Prints server TPS.");
     }

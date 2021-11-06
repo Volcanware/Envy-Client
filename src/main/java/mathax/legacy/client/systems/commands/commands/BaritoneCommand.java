@@ -9,7 +9,6 @@ import net.minecraft.command.CommandSource;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class BaritoneCommand extends Command {
-
     public BaritoneCommand() {
         super("baritone", "Executes baritone commands.", "b");
     }
@@ -21,6 +20,7 @@ public class BaritoneCommand extends Command {
                     String command = context.getArgument("command", String.class);
                     BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute(command);
                     return SINGLE_SUCCESS;
-                }));
+                })
+        );
     }
 }

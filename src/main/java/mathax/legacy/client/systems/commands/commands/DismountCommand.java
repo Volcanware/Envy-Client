@@ -8,7 +8,6 @@ import net.minecraft.network.packet.c2s.play.PlayerInputC2SPacket;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class DismountCommand extends Command {
-
     public DismountCommand() {
         super("dismount", "Dismounts you from entity you are riding.");
     }
