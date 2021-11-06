@@ -2,6 +2,8 @@ package mathax.legacy.client.systems.commands.commands;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import mathax.legacy.client.gui.tabs.builtin.ConfigTab;
+import mathax.legacy.client.music.Music;
 import mathax.legacy.client.systems.commands.Command;
 import net.minecraft.command.CommandSource;
 
@@ -14,9 +16,20 @@ public class FOVCommand extends Command {
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(argument("fov", IntegerArgumentType.integer(0, 180)).executes(context -> {
-            mc.options.fov = context.getArgument("fov", Integer.class);
+        builder.executes(context -> {
+            info("Currently set to (highlight)%s(default).", (int) mc.options.fov);
             return SINGLE_SUCCESS;
-        }));
+        });
+
+        builder.then(literal("set")
+            .then(argument("new-fov", IntegerArgumentType.integer(0))
+                .executes(context -> {
+                    int newFov = context.getArgument("new-fov", Integer.class);
+                    mc.options.fov = newFov;
+                    info("Set to (highlight)%s(default).", newFov);
+                    return SINGLE_SUCCESS;
+                })
+            )
+        );
     }
 }

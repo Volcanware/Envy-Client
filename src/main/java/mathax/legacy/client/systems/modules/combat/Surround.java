@@ -403,7 +403,7 @@ public class Surround extends Module {
     // Rendering
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         if (!render.get()) return;
         renderBlocks.sort(Comparator.comparingInt(o -> -o.ticks));
         renderBlocks.forEach(renderBlock -> renderBlock.render(event, sideColor.get(), lineColor.get(), shapeMode.get()));

@@ -10,6 +10,7 @@ import kaptainwutax.mcutils.util.data.SpiralIterator;
 import kaptainwutax.mcutils.util.pos.*;
 import kaptainwutax.mcutils.version.MCVersion;
 import kaptainwutax.terrainutils.TerrainGenerator;
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.systems.seeds.Seed;
 import mathax.legacy.client.systems.seeds.Seeds;
 import mathax.legacy.client.utils.player.ChatUtils;
@@ -29,15 +30,9 @@ import net.minecraft.util.math.BlockPos;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class WorldGenUtils {
-
-    private static final Logger LOG = LogManager.getLogger();
-
     private static final HashMap<Feature, List<Block>> FEATURE_BLOCKS = new HashMap<>(){{
         put(Feature.nether_fortress, Arrays.asList(
             Blocks.NETHER_BRICKS,
@@ -131,7 +126,7 @@ public class WorldGenUtils {
             try {
                 pos = locateFeature(seed, feature, center);
             } catch (Exception | Error ex) {
-                LOG.error(ex);
+                MatHaxLegacy.LOG.error(MatHaxLegacy.logPrefix + ex);
             }
 
             if (pos != null) return pos;
@@ -144,8 +139,9 @@ public class WorldGenUtils {
                 try {
                     pos = locateFeatureMap(feature, stack);
                 } catch (Exception | Error ex) {
-                    LOG.error(ex);
+                    MatHaxLegacy.LOG.error(MatHaxLegacy.logPrefix + ex);
                 }
+
                 if (pos != null) return pos;
             }
         }
@@ -153,14 +149,14 @@ public class WorldGenUtils {
         try {
             pos = locateFeatureEntities(feature);
         } catch (Exception | Error ex) {
-            LOG.error(ex);
+            MatHaxLegacy.LOG.error(MatHaxLegacy.logPrefix + ex);
         }
 
         if (pos != null) return pos;
         try {
             pos = locateFeatureBlocks(feature);
         } catch (Exception | Error ex) {
-            LOG.error(ex);
+            MatHaxLegacy.LOG.error(MatHaxLegacy.logPrefix + ex);
         }
 
         return pos;
@@ -174,15 +170,7 @@ public class WorldGenUtils {
     private static BlockPos locateFeatureBlocks(Feature feature) {
         List<Block> blocks = FEATURE_BLOCKS.get(feature);
         if (blocks == null) return null;
-        List<BlockPos> posList = BaritoneAPI
-            .getProvider()
-            .getWorldScanner()
-            .scanChunkRadius(
-                BaritoneAPI
-                    .getProvider()
-                    .getPrimaryBaritone()
-                    .getPlayerContext(),
-                blocks,64,10,32);
+        List<BlockPos> posList = BaritoneAPI.getProvider().getWorldScanner().scanChunkRadius(BaritoneAPI.getProvider().getPrimaryBaritone().getPlayerContext(), blocks,64,10,32);
         if (posList.isEmpty()) return null;
         if (posList.size() < 5) ChatUtils.warning("Locate", "Only %d block(s) found. This search might be a false positive.", posList.size());
         return posList.get(0);
@@ -216,15 +204,13 @@ public class WorldGenUtils {
     }
 
     private static CPos locateSlimeChunk(SlimeChunk slimeChunk, CPos centerChunk, int radius, long seed, ChunkRand rand, Dimension dimension) {
-        if (!slimeChunk.isValidDimension(dimension))
-            return null;
+        if (!slimeChunk.isValidDimension(dimension)) return null;
         SpiralIterator<CPos> spiralIterator = new SpiralIterator<>(centerChunk, new CPos(radius, radius), (x, y, z) -> new CPos(x, z));
         for (CPos next : spiralIterator) {
             SlimeChunk.Data data = slimeChunk.at(next.getX(), next.getZ(), true);
-            if (data.testStart(seed, rand)) {
-                return next;
-            }
+            if (data.testStart(seed, rand)) return next;
         }
+
         return null;
     }
 
@@ -234,8 +220,7 @@ public class WorldGenUtils {
         Structure<?, ?> structure = getStructure(feature, mcVersion);
         if (structure == null) return null;
         BiomeSource biomeSource = BiomeSource.of(dimension, mcVersion, seed.seed);
-        if (!structure.isValidDimension(biomeSource.getDimension()))
-            return null;
+        if (!structure.isValidDimension(biomeSource.getDimension())) return null;
         BPos structurePos = locateStructure(structure, new BPos(center.getX(), center.getY(), center.getZ()), 6400, new ChunkRand(), biomeSource, TerrainGenerator.of(biomeSource));
         if (structurePos == null) return null;
         return toBlockPos(structurePos);
@@ -270,14 +255,13 @@ public class WorldGenUtils {
             } else if (structure instanceof Mineshaft mineshaft) {
                 SpiralIterator<CPos> spiralIterator = new SpiralIterator<>(new CPos(center.getX() >> 4, center.getZ() >> 4), new CPos(radius, radius), (x, y, z) -> new CPos(x, z));
 
-                return StreamSupport.stream(spiralIterator.spliterator(), false)
-                    .filter(cPos -> {
-                        kaptainwutax.featureutils.Feature.Data<Mineshaft> data = mineshaft.at(cPos.getX(), cPos.getZ());
-                        return data.testStart(source.getWorldSeed(), chunkRand) && data.testBiome(source) && data.testGenerate(terrainGenerator);
-                    })
-                    .findAny().map(cPos -> cPos.toBlockPos().add(9, 0, 9)).orElse(null);
+                return StreamSupport.stream(spiralIterator.spliterator(), false).filter(cPos -> {
+                    kaptainwutax.featureutils.Feature.Data<Mineshaft> data = mineshaft.at(cPos.getX(), cPos.getZ());
+                    return data.testStart(source.getWorldSeed(), chunkRand) && data.testBiome(source) && data.testGenerate(terrainGenerator);
+                }).findAny().map(cPos -> cPos.toBlockPos().add(9, 0, 9)).orElse(null);
             }
         }
+
         return null;
     }
 
@@ -290,19 +274,19 @@ public class WorldGenUtils {
     }
 
     private static Structure<?, ?> getStructure(Feature feature, MCVersion version) {
-        switch (feature) {
-            case buried_treasure: return new BuriedTreasure(version);
-            case mansion: return new Mansion(version);
-            case stronghold: return new Stronghold(version);
-            case nether_fortress: return new Fortress(version);
-            case ocean_monument: return new Monument(version);
-            case bastion_remnant: return new BastionRemnant(version);
-            case end_city: return new EndCity(version);
-            case village: return new Village(version);
-            case mineshaft: return new Mineshaft(version);
-            case desert_pyramid: return new DesertPyramid(version);
-            default: return null;
-        }
+        return switch (feature) {
+            case buried_treasure -> new BuriedTreasure(version);
+            case mansion -> new Mansion(version);
+            case stronghold -> new Stronghold(version);
+            case nether_fortress -> new Fortress(version);
+            case ocean_monument -> new Monument(version);
+            case bastion_remnant -> new BastionRemnant(version);
+            case end_city -> new EndCity(version);
+            case village -> new Village(version);
+            case mineshaft -> new Mineshaft(version);
+            case desert_pyramid -> new DesertPyramid(version);
+            default -> null;
+        };
     }
 
     private static BlockPos toBlockPos(BPos pos) {
@@ -320,6 +304,7 @@ public class WorldGenUtils {
         if (feature == Feature.buried_treasure) return nameTag.contains("filled_map.buried_treasure");
         else if (feature == Feature.ocean_monument) return nameTag.contains("filled_map.monument");
         else if (feature == Feature.mansion) return nameTag.contains("filled_map.mansion");
+
         return false;
     }
 
@@ -329,10 +314,6 @@ public class WorldGenUtils {
         NbtList decorationsTag = stack.getNbt().getList("Decorations", NbtElement.COMPOUND_TYPE);
         if (decorationsTag.size() < 1) return null;
         NbtCompound iconTag = decorationsTag.getCompound(0);
-        return new BlockPos(
-            (int)iconTag.getDouble("x"),
-            (int)iconTag.getDouble("y"),
-            (int)iconTag.getDouble("z")
-        );
+        return new BlockPos((int) iconTag.getDouble("x"), (int) iconTag.getDouble("y"), (int) iconTag.getDouble("z"));
     }
 }

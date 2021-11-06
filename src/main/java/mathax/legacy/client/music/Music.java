@@ -28,11 +28,6 @@ public class Music {
         start();
     }
 
-    public static void resetVolume() {
-        player.setVolume(Config.get().musicVolume);
-        trackScheduler.setVolume(Config.get().musicVolume);
-    }
-
     public static void start() {
         soundThread = new Thread(streamPlayer, "Music");
         soundThread.start();

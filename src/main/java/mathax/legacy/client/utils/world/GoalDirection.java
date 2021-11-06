@@ -22,6 +22,7 @@ public class GoalDirection implements Goal {
         double z = Math.abs(zDiff);
         double straight;
         double diagonal;
+
         if (x < z) {
             straight = z - x;
             diagonal = x;

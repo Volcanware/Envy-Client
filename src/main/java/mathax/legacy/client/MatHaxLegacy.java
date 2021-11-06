@@ -3,6 +3,7 @@ package mathax.legacy.client;
 import mathax.legacy.client.events.mathaxlegacy.CharTypedEvent;
 import mathax.legacy.client.events.mathaxlegacy.KeyEvent;
 import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
+import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.renderer.GuiRenderer;
 import mathax.legacy.client.gui.tabs.Tabs;
@@ -220,7 +221,6 @@ public class MatHaxLegacy implements ClientModInitializer {
         Fonts.load();
         GuiRenderer.init();
         GuiThemes.postInit();
-        Music.resetVolume();
 
         // Loaded window title
         mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
@@ -238,6 +238,14 @@ public class MatHaxLegacy implements ClientModInitializer {
 
         // Log
         LOG.info(logPrefix + "MatHax Legacy " + Version.getStylized() + " initialized!");
+    }
+
+    // Music Volume
+
+    @EventHandler
+    private void onTick(TickEvent.Post event) {
+        if (Music.player == null) return;
+        if (Music.player.getVolume() != Config.get().musicVolume) Music.player.setVolume(Config.get().musicVolume);
     }
 
     // Developer
