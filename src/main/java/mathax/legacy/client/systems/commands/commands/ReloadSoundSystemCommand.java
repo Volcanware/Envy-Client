@@ -12,7 +12,7 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class ReloadSoundSystemCommand extends Command {
     public ReloadSoundSystemCommand() {
-        super("reload-sound-system", "Reloads Minecraft's sound system.", "rss", "rmcss");
+        super("reload-sound-system", "Reloads Minecraft's sound system.", "rss", "rmss", "rmcss");
     }
 
     @Override

@@ -22,7 +22,6 @@ public abstract class ScreenMixin {
         if (Utils.canUpdate() && Modules.get().get(NoRender.class).noGUIBackground()) info.cancel();
     }
 
-    @SuppressWarnings("UnresolvedMixinReference")
     @Inject(method = "method_32635", at = @At("HEAD"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     private static void onComponentConstruct(List<TooltipComponent> list, TooltipData data, CallbackInfo info) {
         if (data instanceof MatHaxTooltipData) {

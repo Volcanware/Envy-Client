@@ -26,15 +26,12 @@ public abstract class AbstractQuadRendererMixin {
     @Final @Shadow protected Function<RenderLayer, VertexConsumer> bufferFunc;
     @Final @Shadow protected Vec3f normalVec;
 
-    @Shadow public static void bufferQuad(VertexConsumer buff, MutableQuadViewImpl quad, Matrix4f matrix, int overlay, Matrix3f normalMatrix, Vec3f normalVec) { }
-
     @Shadow protected abstract Matrix3f normalMatrix();
     @Shadow protected abstract Matrix4f matrix();
 
     @Shadow protected abstract int overlay();
 
-    @SuppressWarnings("UnresolvedMixinReference")
-    @Inject(method = "bufferQuad(Lnet/fabricmc/fabric/impl/client/indigo/renderer/mesh/MutableQuadViewImpl;Lnet/minecraft/class_1921;)V",
+    @Inject(method = "bufferQuad(Lnet/fabricmc/fabric/impl/client/indigo/renderer/mesh/MutableQuadViewImpl;Lnet/minecraft/client/render/RenderLayer;)V",
     at = @At("HEAD"), cancellable = true, remap = false)
     private void onBufferQuad(MutableQuadViewImpl quad, RenderLayer renderLayer, CallbackInfo info) {
         WallHack wallHack = Modules.get().get(WallHack.class);
