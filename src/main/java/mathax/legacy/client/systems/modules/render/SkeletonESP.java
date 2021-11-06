@@ -95,8 +95,9 @@ public class SkeletonESP extends Module {
         RenderSystem.depthMask(MinecraftClient.isFabulousGraphicsOrBetter());
         RenderSystem.enableCull();
         mc.world.getEntities().forEach(entity -> {
-            if (entity instanceof PlayerEntity player && canRenderSkeleton()) {
+            if (entity instanceof PlayerEntity player) {
                 if (ignoreFriends.get() && Friends.get().isFriend((PlayerEntity) entity)) return;
+                if (!firstPerson.get() && player == mc.player && mc.options.getPerspective() == Perspective.FIRST_PERSON && !Modules.get().isActive(Freecam.class) && !Modules.get().isActive(FreeLook.class)) return;
 
                 Color color;
                 if (distance.get()) color = getColorFromDistance(player);
@@ -246,11 +247,5 @@ public class SkeletonESP extends Module {
 
         distanceColor.set(r, g, 0, 255);
         return distanceColor;
-    }
-
-    private boolean canRenderSkeleton() {
-        if (firstPerson.get()) return true;
-        if (Modules.get().isActive(Freecam.class)) return true;
-        else return mc.options.getPerspective() != Perspective.FIRST_PERSON;
     }
 }
