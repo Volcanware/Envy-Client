@@ -78,9 +78,13 @@ dependencies {
     modImplementation "com.github.hube12:SEED:${project.seed_version}"
     include "com.github.hube12:SEED:${project.seed_version}"
 
-    // Litematica
+    // Litematica integration
     modImplementation "curse.maven:litematica-${project.litematica_project_id}:${project.litematica_file_id}"
+    include "curse.maven:litematica-${project.litematica_project_id}:${project.litematica_file_id}"
+
+    // Malilib for Litematica
     modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
+    include "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
 
     // Dependencies
     library "com.github.Vatuu:discord-rpc:${project.discord_version}"

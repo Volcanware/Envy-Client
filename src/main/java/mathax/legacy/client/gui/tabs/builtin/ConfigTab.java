@@ -139,7 +139,7 @@ public class ConfigTab extends Tab {
         .description("Determines the volume of the currently played music.")
         .defaultValue(100)
         .min(1)
-        .sliderMin(1)
+        .sliderRange(1, 250)
         .onChanged(integer -> {
             Music.player.setVolume(integer);
             Config.get().musicVolume = integer;
