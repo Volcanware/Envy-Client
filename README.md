@@ -12,9 +12,9 @@
 
 <div align="center">
   <a href="https://meteorclient.com"><img src="https://img.shields.io/badge/Meteor%20Client-Fork-e64c65"></a>
-  <img src="https://img.shields.io/github/last-commit/Matejko06/MatHax-Client-Legacy">
-  <img src="https://img.shields.io/github/commit-activity/m/Matejko06/MatHax-Client-Legacy">
-  <img src="https://img.shields.io/github/languages/code-size/Matejko06/MatHax-Client-Legacy">
-  <img src="https://img.shields.io/tokei/lines/github/Matejko06/MatHax-Client-Legacy">
+  <img src="https://img.shields.io/github/last-commit/MatHax/Legacy">
+  <img src="https://img.shields.io/github/commit-activity/m/MatHax/Legacy">
+  <img src="https://img.shields.io/github/languages/code-size/MatHax/Legacy">
+  <img src="https://img.shields.io/tokei/lines/github/MatHax/Legacy">
   <a href="https://mathaxclient.xyz/Discord"><img src="https://img.shields.io/discord/823286525402939402"></a>
 </div>
