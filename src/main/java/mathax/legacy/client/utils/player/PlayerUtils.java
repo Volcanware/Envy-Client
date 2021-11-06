@@ -63,24 +63,28 @@ public class PlayerUtils {
 
     // Place Block Main Hand
 
-    public static boolean placeBlockMainHand(final BlockPos pos) {
+    public static boolean placeBlockMainHand(BlockPos pos) {
         return placeBlockMainHand(pos, true);
     }
 
-    public static boolean placeBlockMainHand(final BlockPos pos, final Boolean rotate) {
+    public static boolean placeBlockMainHand(BlockPos pos, boolean rotate) {
         return placeBlockMainHand(pos, rotate, true);
     }
 
-    public static boolean placeBlockMainHand(final BlockPos pos, final Boolean rotate, final Boolean airPlace) {
-        return placeBlockMainHand(pos, rotate, airPlace, false);
+    public static boolean placeBlockMainHand(BlockPos pos, boolean rotate, boolean swing) {
+        return placeBlockMainHand(pos, rotate, swing, false);
     }
 
-    public static boolean placeBlockMainHand(final BlockPos pos, final Boolean rotate, final Boolean airPlace, final Boolean ignoreEntity) {
-        return placeBlockMainHand(pos, rotate, airPlace, ignoreEntity, null);
+    public static boolean placeBlockMainHand(BlockPos pos, boolean rotate, boolean swing, final Boolean airPlace) {
+        return placeBlockMainHand(pos, rotate, swing, airPlace, false);
     }
 
-    public static boolean placeBlockMainHand(final BlockPos pos, final Boolean rotate, final Boolean airPlace, final Boolean ignoreEntity, final Direction overrideSide) {
-        return placeBlock2(Hand.MAIN_HAND, pos, rotate, airPlace, ignoreEntity, overrideSide);
+    public static boolean placeBlockMainHand(BlockPos pos, boolean rotate, boolean swing, boolean airPlace, boolean ignoreEntity) {
+        return placeBlockMainHand(pos, rotate, swing, airPlace, ignoreEntity, null);
+    }
+
+    public static boolean placeBlockMainHand(BlockPos pos, boolean rotate, boolean swing, boolean airPlace, boolean ignoreEntity, Direction overrideSide) {
+        return placeBlock2(Hand.MAIN_HAND, pos, rotate, swing, airPlace, ignoreEntity, overrideSide);
     }
 
     // Place Block
@@ -121,27 +125,32 @@ public class PlayerUtils {
         return true;
     }
 
-    public static boolean placeBlock2(final Hand hand, final BlockPos pos) {
+    public static boolean placeBlock2(Hand hand, BlockPos pos) {
         placeBlock2(hand, pos, true, false);
         return true;
     }
 
-    public static boolean placeBlock2(final Hand hand, final BlockPos pos, final Boolean rotate) {
+    public static boolean placeBlock2(Hand hand, BlockPos pos, boolean rotate) {
         placeBlock2(hand, pos, rotate, false);
         return true;
     }
 
-    public static boolean placeBlock2(final Hand hand, final BlockPos pos, final Boolean rotate, final Boolean airPlace) {
-        placeBlock2(hand, pos, rotate, airPlace, false);
+    public static boolean placeBlock2(Hand hand, BlockPos pos, boolean rotate, boolean swing) {
+        placeBlock2(hand, pos, rotate, swing, false);
         return true;
     }
 
-    public static boolean placeBlock2(final Hand hand, final BlockPos pos, final Boolean rotate, final Boolean airPlace, final Boolean ignoreEntity) {
-        placeBlock2(hand, pos, rotate, airPlace, ignoreEntity, null);
+    public static boolean placeBlock2(Hand hand, BlockPos pos, boolean rotate, boolean swing, boolean airPlace) {
+        placeBlock2(hand, pos, rotate, swing, airPlace, false);
         return true;
     }
 
-    public static boolean placeBlock2(final Hand hand, final BlockPos pos, final Boolean rotate, final Boolean airPlace, final Boolean ignoreEntity, final Direction overrideSide) {
+    public static boolean placeBlock2(Hand hand, BlockPos pos, boolean rotate, boolean swing, boolean airPlace, boolean ignoreEntity) {
+        placeBlock2(hand, pos, rotate, swing, airPlace, ignoreEntity, null);
+        return true;
+    }
+
+    public static boolean placeBlock2(Hand hand, BlockPos pos, boolean rotate, boolean swing, boolean airPlace, boolean ignoreEntity, Direction overrideSide) {
         if (ignoreEntity && !mc.world.getBlockState(pos).getMaterial().isReplaceable()) return false;
         else if (!mc.world.getBlockState(pos).getMaterial().isReplaceable() || !mc.world.canPlace(Blocks.OBSIDIAN.getDefaultState(), pos, ShapeContext.absent())) return false;
 
@@ -187,11 +196,14 @@ public class PlayerUtils {
         final double diffXZ = Math.sqrt(diffX * diffX + diffZ * diffZ);
         final float yaw = (float)Math.toDegrees(Math.atan2(diffZ, diffX)) - 90.0f;
         final float pitch = (float)(-Math.toDegrees(Math.atan2(diffY, diffXZ)));
-        final float[] rotations = { mc.player.getYaw() + MathHelper.wrapDegrees(yaw - mc.player.getYaw()), mc.player.getPitch() + MathHelper.wrapDegrees(pitch - mc.player.getPitch()) };
+        final float[] rotations = {
+            mc.player.getYaw() + MathHelper.wrapDegrees(yaw - mc.player.getYaw()),
+            mc.player.getPitch() + MathHelper.wrapDegrees(pitch - mc.player.getPitch())
+        };
         if (rotate) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(rotations[0], rotations[1], mc.player.isOnGround()));
         mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
         mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(hitVec, side2, neighbor, false));
-        mc.player.swingHand(hand);
+        if (swing) mc.player.swingHand(hand);
         mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
         return true;
     }

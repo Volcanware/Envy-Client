@@ -59,8 +59,8 @@ public class Xray extends Module {
         .name("opacity")
         .description("The opacity for all other blocks.")
         .defaultValue(100)
-        .range(1, 255)
-        .sliderMax(255)
+        .range(0, 255)
+        .sliderRange(0, 255)
         .onChanged(onChanged -> {
             if (isActive()) mc.worldRenderer.reload();
         })
@@ -74,7 +74,7 @@ public class Xray extends Module {
     @Override
     public void onActivate() {
         if (Modules.get().isActive(WallHack.class)) {
-            error("Wallhack was enabled while enabling Xray, disabling Wallhack...");
+            error("(highlight)WallHack(default) was enabled while enabling (highlight)Xray(default), disabling (highlight)WallHack(default)...");
             Modules.get().get(WallHack.class).toggle();
         }
 

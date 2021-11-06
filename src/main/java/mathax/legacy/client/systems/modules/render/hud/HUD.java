@@ -104,13 +104,13 @@ public class HUD extends Module {
         mainInfo.add(new ServerHUD(this));
         mainInfo.add(new ServerBrandHUD(this));
         mainInfo.add(new DurabilityHUD(this));
-        mainInfo.add(new MusicHUD(this));
         mainInfo.add(new BiomeHUD(this));
+        mainInfo.add(new MusicHUD(this));
         mainInfo.add(new PlayerModelHUD(this));
         mainInfo.add(new CombatInfoHUD(this));
 
         // MODULE INFO
-        moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 430);
+        moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 350);
         // Modules
         moduleInfo.add(new ModuleInfoHUD(this));
 

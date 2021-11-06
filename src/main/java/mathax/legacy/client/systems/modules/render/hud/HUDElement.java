@@ -48,7 +48,7 @@ public abstract class HUDElement implements ISerializable<HUDElement> {
     public abstract void render(HUDRenderer renderer);
 
     protected boolean isInEditor() {
-        return HudTab.INSTANCE.isScreen(mc.currentScreen) || mc.currentScreen instanceof HudElementScreen || !Utils.canUpdate();
+        return (HudTab.INSTANCE != null && HudTab.INSTANCE.isScreen(mc.currentScreen)) || mc.currentScreen instanceof HudElementScreen || !Utils.canUpdate();
     }
 
     @Override

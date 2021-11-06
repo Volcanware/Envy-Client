@@ -1,17 +1,24 @@
 package mathax.legacy.client.systems.modules.combat;
 
+import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.events.world.TickEvent;
+import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.movement.Blink;
+import mathax.legacy.client.systems.modules.movement.Scaffold;
 import mathax.legacy.client.utils.misc.KeyBind;
+import mathax.legacy.client.utils.misc.Pool;
 import mathax.legacy.client.utils.misc.Timer;
 import mathax.legacy.client.utils.player.ChatUtils;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.utils.render.color.Color;
+import mathax.legacy.client.utils.render.color.SettingColor;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -21,10 +28,15 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class Surround extends Module {
+    private final Pool<Scaffold.RenderBlock> renderBlockPool = new Pool<>(Scaffold.RenderBlock::new);
+    private final List<Scaffold.RenderBlock> renderBlocks = new ArrayList<>();
+
     private static final Timer surroundInstanceDelay = new Timer();
+
     private BlockPos lastPos = new BlockPos(0, -100, 0);
 
     private int timeToStart = 0;
@@ -33,6 +45,7 @@ public class Surround extends Module {
     private final SettingGroup sgHorizontalExpanding = settings.createGroup("Horizontal Expanding");
     private final SettingGroup sgVerticalExpanding = settings.createGroup("Vertical Expanding");
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgRender = settings.createGroup("Render");
 
     // Horizontal Expanding
 
@@ -162,6 +175,43 @@ public class Surround extends Module {
         .build()
     );
 
+    // Render
+
+    private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
+        .name("render")
+        .description("Renders currently placed blocks.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> renderSwing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Renders your client-side swing.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
+        .name("shape-mode")
+        .description("How the shapes are rendered.")
+        .defaultValue(ShapeMode.Both)
+        .build()
+    );
+
+    private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
+        .name("side-color")
+        .description("The side color of the placed block.")
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 50))
+        .build()
+    );
+
+    private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
+        .name("line-color")
+        .description("The line color of the placed block.")
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
+        .build()
+    );
+
     public Surround() {
         super(Categories.Combat, Items.OBSIDIAN, "surround", "Surrounds you in blocks to prevent you from taking lots of damage.");
     }
@@ -170,16 +220,26 @@ public class Surround extends Module {
     public void onActivate() {
         lastPos = (mc.player.isOnGround() ? PlayerUtils.roundBlockPos(mc.player.getPos()) : mc.player.getBlockPos());
         if (center.get()) PlayerUtils.centerPlayer();
+
+        for (Scaffold.RenderBlock renderBlock : renderBlocks) renderBlockPool.free(renderBlock);
+        renderBlocks.clear();
     }
 
     @Override
     public void onDeactivate() {
         ticks = 0;
         timeToStart = 0;
+
+        for (Scaffold.RenderBlock renderBlock : renderBlocks) renderBlockPool.free(renderBlock);
+        renderBlocks.clear();
     }
 
     @EventHandler
     private void onTick(final TickEvent.Pre event) {
+        // Ticking fade animation
+        renderBlocks.forEach(Scaffold.RenderBlock::tick);
+        renderBlocks.removeIf(renderBlock -> renderBlock.ticks <= 0);
+
         if ((disableOnJump.get() && (mc.options.keyJump.isPressed() || mc.player.input.jumping)) || (disableOnYChange.get() && mc.player.prevY < mc.player.getY())) {
             ChatUtils.sendMsg(hashCode(), "Surround", Formatting.DARK_RED, "You jumped, disabling...", Formatting.GRAY);
             toggle();
@@ -213,7 +273,8 @@ public class Surround extends Module {
             if (needsToPlace()) {
                 for (final BlockPos pos : getPositions()) {
                     if (mc.world.getBlockState(pos).getMaterial().isReplaceable()) mc.player.getInventory().selectedSlot = obbyIndex;
-                    if (PlayerUtils.placeBlockMainHand(pos, rotate.get(), !onlyOnGround.get(), placeOnCrystal.get()) && delay.get() != 0) {
+                    if (!mc.world.isOutOfHeightLimit(pos.getY()) && mc.world.getBlockState(pos).getBlock() != primaryBlock()) renderBlocks.add(renderBlockPool.get().set(pos));
+                    if (PlayerUtils.placeBlockMainHand(pos, rotate.get(), renderSwing.get(), !onlyOnGround.get(), placeOnCrystal.get()) && delay.get() != 0) {
                         mc.player.getInventory().selectedSlot = prevSlot;
                         return;
                     }
@@ -290,14 +351,23 @@ public class Surround extends Module {
         else if (primary.get() == Primary.Ancient_Debris) index = Blocks.ANCIENT_DEBRIS;
         else if (primary.get() == Primary.Respawn_Anchor) index = Blocks.RESPAWN_ANCHOR;
         else if (primary.get() == Primary.Anvil) index = Blocks.ANVIL;
-
         return index;
+    }
+
+    private boolean isPrimaryBlock(Block block) {
+        if (block == Blocks.OBSIDIAN) return true;
+        else if (block == Blocks.ENDER_CHEST) return true;
+        else if (block == Blocks.CRYING_OBSIDIAN) return true;
+        else if (block == Blocks.NETHERITE_BLOCK) return true;
+        else if (block == Blocks.ANCIENT_DEBRIS) return true;
+        else if (block == Blocks.RESPAWN_ANCHOR) return true;
+        else return block == Blocks.ANVIL;
     }
 
     private int findBlock() {
         int index = InvUtils.findBlockInHotbar(primaryBlock());
         if (index == -1 && allBlocks.get()) {
-            if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.OBSIDIAN);
+            index = InvUtils.findBlockInHotbar(Blocks.OBSIDIAN);
             if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.ENDER_CHEST);
             if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.CRYING_OBSIDIAN);
             if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.NETHERITE_BLOCK);
@@ -327,6 +397,44 @@ public class Surround extends Module {
         @Override
         public String toString() {
             return super.toString().replace("_", " ");
+        }
+    }
+
+    // Rendering
+
+    @EventHandler
+    private void onRender(Render3DEvent event) {
+        if (!render.get()) return;
+        renderBlocks.sort(Comparator.comparingInt(o -> -o.ticks));
+        renderBlocks.forEach(renderBlock -> renderBlock.render(event, sideColor.get(), lineColor.get(), shapeMode.get()));
+    }
+
+    public static class RenderBlock {
+        public BlockPos.Mutable pos = new BlockPos.Mutable();
+        public int ticks;
+
+        public RenderBlock set(BlockPos blockPos) {
+            pos.set(blockPos);
+            ticks = 8;
+
+            return this;
+        }
+
+        public void tick() {
+            ticks--;
+        }
+
+        public void render(Render3DEvent event, Color sides, Color lines, ShapeMode shapeMode) {
+            int preSideA = sides.a;
+            int preLineA = lines.a;
+
+            sides.a *= (double) ticks / 8;
+            lines.a *= (double) ticks / 8;
+
+            event.renderer.box(pos, sides, lines, shapeMode, 0);
+
+            sides.a = preSideA;
+            lines.a = preLineA;
         }
     }
 }

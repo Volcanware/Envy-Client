@@ -393,7 +393,6 @@ public class Modules extends System<Modules> {
         add(new SelfAnvil());
         add(new SelfTrap());
         add(new SelfWeb());
-        add(new SmartSurround());
         add(new Surround());
     }
 

@@ -147,9 +147,7 @@ public class PacketMine extends Module {
 
         swapped = false;
 
-        if (!isMiningBlock(event.blockPos)) {
-            blocks.add(blockPool.get().set(event));
-        }
+        if (!isMiningBlock(event.blockPos)) blocks.add(blockPool.get().set(event));
     }
 
     public boolean isMiningBlock(BlockPos pos) {
@@ -195,9 +193,7 @@ public class PacketMine extends Module {
     private double getBreakDelta(int slot, BlockState state) {
         float hardness = state.getHardness(null, null);
         if (hardness == -1) return 0;
-        else {
-            return getBlockBreakingSpeed(slot, state) / hardness / (!state.isToolRequired() || mc.player.getInventory().main.get(slot).isSuitableFor(state) ? 30 : 100);
-        }
+        else return getBlockBreakingSpeed(slot, state) / hardness / (!state.isToolRequired() || mc.player.getInventory().main.get(slot).isSuitableFor(state) ? 30 : 100);
     }
 
     private double getBlockBreakingSpeed(int slot, BlockState block) {
@@ -211,37 +207,21 @@ public class PacketMine extends Module {
             if (efficiency > 0 && !tool.isEmpty()) speed += efficiency * efficiency + 1;
         }
 
-        if (StatusEffectUtil.hasHaste(mc.player)) {
-            speed *= 1 + (StatusEffectUtil.getHasteAmplifier(mc.player) + 1) * 0.2F;
-        }
+        if (StatusEffectUtil.hasHaste(mc.player)) speed *= 1 + (StatusEffectUtil.getHasteAmplifier(mc.player) + 1) * 0.2F;
 
         if (mc.player.hasStatusEffect(StatusEffects.MINING_FATIGUE)) {
-            float k;
-            switch(mc.player.getStatusEffect(StatusEffects.MINING_FATIGUE).getAmplifier()) {
-                case 0:
-                    k = 0.3F;
-                    break;
-                case 1:
-                    k = 0.09F;
-                    break;
-                case 2:
-                    k = 0.0027F;
-                    break;
-                case 3:
-                default:
-                    k = 8.1E-4F;
-            }
+            float k = switch (mc.player.getStatusEffect(StatusEffects.MINING_FATIGUE).getAmplifier()) {
+                case 0 -> 0.3F;
+                case 1 -> 0.09F;
+                case 2 -> 0.0027F;
+                default -> 8.1E-4F;
+            };
 
             speed *= k;
         }
 
-        if (mc.player.isSubmergedIn(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(mc.player)) {
-            speed /= 5.0F;
-        }
-
-        if (!mc.player.isOnGround()) {
-            speed /= 5.0F;
-        }
+        if (mc.player.isSubmergedIn(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(mc.player)) speed /= 5.0F;
+        if (!mc.player.isOnGround()) speed /= 5.0F;
 
         return speed;
     }
@@ -311,9 +291,7 @@ public class PacketMine extends Module {
 
                     mining = true;
                 }
-            } else {
-                timer--;
-            }
+            } else timer--;
         }
 
         public void render(Render3DEvent event) {
@@ -335,11 +313,8 @@ public class PacketMine extends Module {
                 z2 = blockPos.getZ() + shape.getMax(Direction.Axis.Z);
             }
 
-            if (isReady()) {
-                event.renderer.box(x1, y1, z1, x2, y2, z2, readySideColor.get(), readyLineColor.get(), shapeMode.get(), 0);
-            } else {
-                event.renderer.box(x1, y1, z1, x2, y2, z2, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
-            }
+            if (isReady()) event.renderer.box(x1, y1, z1, x2, y2, z2, readySideColor.get(), readyLineColor.get(), shapeMode.get(), 0);
+            else event.renderer.box(x1, y1, z1, x2, y2, z2, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
         }
     }
 }
