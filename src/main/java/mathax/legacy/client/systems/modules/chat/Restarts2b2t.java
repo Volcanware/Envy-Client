@@ -26,10 +26,10 @@ public class Restarts2b2t extends Module {
 
     // General
 
-    public final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
-        .name("mode")
+    public final Setting<NotificationMode> mode = sgGeneral.add(new EnumSetting.Builder<NotificationMode>()
+        .name("notification-mode")
         .description("Determines how to notify you.")
-        .defaultValue(Mode.Both)
+        .defaultValue(NotificationMode.Both)
         .build()
     );
 
@@ -92,7 +92,7 @@ public class Restarts2b2t extends Module {
         else if (message.contains("restarting")) mc.getToastManager().add(new ToastSystem(Items.COMMAND_BLOCK, GOLD_INT, "2b2t Restarts", null, "Restarting", Config.get().toastDuration));
     }
 
-    public enum Mode {
+    public enum NotificationMode {
         Chat,
         Toast,
         Both
