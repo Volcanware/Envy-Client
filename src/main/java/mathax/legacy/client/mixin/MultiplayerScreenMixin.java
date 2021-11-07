@@ -39,10 +39,6 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
     @Shadow
     protected MultiplayerServerListWidget serverListWidget;
 
-    @Shadow
-    @Final
-    private Screen parent;
-
     public MultiplayerScreenMixin(Text title) {
         super(title);
     }
@@ -55,7 +51,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
         addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> client.setScreen(GuiThemes.get().proxiesScreen())));
         addDrawableChild(new ButtonWidget(width - 231, 2, 75, 20, new LiteralText("Servers"), button -> client.setScreen(new ServerManagerScreen(GuiThemes.get(), (MultiplayerScreen) client.currentScreen))));
         //addDrawableChild(new ButtonWidget(width - 308, 2, 75, 20, new LiteralText("Protocol"), button -> client.setScreen(new ProtocolScreen(GuiThemes.get(), client.currentScreen))));
-        if (LastServerInfo.getLastServer() != null) addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> LastServerInfo.reconnect(parent)));
+        if (LastServerInfo.getLastServer() != null) addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> LastServerInfo.reconnect(client.currentScreen)));
     }
 
     @Inject(method = "render", at = @At("TAIL"))
