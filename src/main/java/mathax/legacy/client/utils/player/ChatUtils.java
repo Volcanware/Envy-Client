@@ -111,7 +111,9 @@ public class ChatUtils {
     private static String formatMsg(String format, Formatting defaultColor, Object... args) {
         String msg = String.format(format, args);
         msg = msg.replaceAll("\\(default\\)", defaultColor.toString());
+        msg = msg.replaceAll("\\(reset\\)", Formatting.RESET.toString());
         msg = msg.replaceAll("\\(highlight\\)", Formatting.WHITE.toString());
+        msg = msg.replaceAll("\\(bold\\)", Formatting.BOLD.toString());
         msg = msg.replaceAll("\\(underline\\)", Formatting.UNDERLINE.toString());
 
         return msg;

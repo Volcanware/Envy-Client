@@ -26,7 +26,7 @@ public class PrefixCommand extends Command {
             .then(argument("new-prefix", StringArgumentType.string())
                 .executes(context -> {
                     ConfigTab.prefix.set(StringArgumentType.getString(context, "new-prefix"));
-                    info("Command prefix set to (highlight)%s%s%s(default)!", Formatting.BOLD, Config.get().prefix, Formatting.RESET);
+                    info("Command prefix set to (highlight)(bold)%s(reset)(default)!", Config.get().prefix);
                     return SINGLE_SUCCESS;
                 })
             )
