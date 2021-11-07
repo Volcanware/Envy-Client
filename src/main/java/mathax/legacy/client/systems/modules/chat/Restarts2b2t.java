@@ -52,7 +52,7 @@ public class Restarts2b2t extends Module {
             try {
                 InputStream connection = new URL("http://crystalpvp.ru/restarts/fetch").openStream();
                 String data = parseValue(new BufferedReader(new InputStreamReader(connection, StandardCharsets.UTF_8)).readLine());
-                String time = parseValueTime(new BufferedReader(new InputStreamReader(connection, StandardCharsets.UTF_8)).readLine());
+                String time = StringUtils.chop(new BufferedReader(new InputStreamReader(connection, StandardCharsets.UTF_8)).readLine());
                 if (!data.equalsIgnoreCase("None")) sendNotification(data, time);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -73,12 +73,6 @@ public class Restarts2b2t extends Module {
         else if (value.equalsIgnoreCase("now")) message = "(highlight)2b2t(default) is restarting!";
         else message = "None";
         return message;
-    }
-
-    private String parseValueTime(String value) {
-        String time = "ERROR";
-        if (value.equalsIgnoreCase("m")) time = StringUtils.chop(value);
-        return time;
     }
 
     private void sendNotification(String message, String time) {
