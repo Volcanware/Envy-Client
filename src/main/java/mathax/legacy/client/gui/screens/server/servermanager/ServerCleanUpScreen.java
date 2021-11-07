@@ -1,4 +1,4 @@
-package mathax.legacy.client.gui.screens.servermanager;
+package mathax.legacy.client.gui.screens.server.servermanager;
 
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.GuiTheme;
@@ -15,12 +15,12 @@ import net.minecraft.util.Formatting;
 
 public class ServerCleanUpScreen extends WindowScreen {
     private final MultiplayerScreen multiplayerScreen;
-    private WCheckbox removeAll;
-    private WCheckbox removeFailed;
-    private WCheckbox removeOutdated;
-    private WCheckbox removeUnknown;
-    private WCheckbox removeFound;
-    private WCheckbox rename;
+    private final WCheckbox removeAll;
+    private final WCheckbox removeFailed;
+    private final WCheckbox removeOutdated;
+    private final WCheckbox removeUnknown;
+    private final WCheckbox removeFound;
+    private final WCheckbox rename;
 
     public ServerCleanUpScreen(GuiTheme theme, MultiplayerScreen multiplayerScreen, Screen parent) {
         super(theme, "Clean Up");

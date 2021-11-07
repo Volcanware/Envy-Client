@@ -1,4 +1,4 @@
-package mathax.legacy.client.gui.screens.servermanager;
+package mathax.legacy.client.gui.screens.server.servermanager;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.GuiTheme;

@@ -3,7 +3,7 @@ package mathax.legacy.client.mixin;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.GuiThemes;
-import mathax.legacy.client.gui.screens.servermanager.ServerManagerScreen;
+import mathax.legacy.client.gui.screens.server.servermanager.ServerManagerScreen;
 import mathax.legacy.client.mixininterface.IMultiplayerScreen;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.systems.proxies.Proxy;
@@ -36,7 +36,8 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
     private final int WHITE = Color.fromRGBA(255, 255, 255, 255);
     private final int GRAY = Color.fromRGBA(175, 175, 175, 255);
 
-    @Shadow protected MultiplayerServerListWidget serverListWidget;
+    @Shadow
+    protected MultiplayerServerListWidget serverListWidget;
 
     @Shadow
     @Final
@@ -50,15 +51,11 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
     private void onInit(CallbackInfo info) {
         Version.didntCheckForLatest = true;
 
-        addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> client.setScreen(GuiThemes.get().proxiesScreen())));
-
         addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, new LiteralText("Accounts"), button -> client.setScreen(GuiThemes.get().accountsScreen())));
-
-        addDrawableChild(new ButtonWidget(width - 75 - 2 - 75 - 2 - 75 - 2, 2, 75, 20, new LiteralText("Servers"), button -> client.setScreen(new ServerManagerScreen(GuiThemes.get(), (MultiplayerScreen) (Object) this))));
-
-        if (LastServerInfo.getLastServer() != null) {
-            addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> LastServerInfo.reconnect(parent)));
-        }
+        addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> client.setScreen(GuiThemes.get().proxiesScreen())));
+        addDrawableChild(new ButtonWidget(width - 231, 2, 75, 20, new LiteralText("Servers"), button -> client.setScreen(new ServerManagerScreen(GuiThemes.get(), (MultiplayerScreen) client.currentScreen))));
+        //addDrawableChild(new ButtonWidget(width - 308, 2, 75, 20, new LiteralText("Protocol"), button -> client.setScreen(new ProtocolScreen(GuiThemes.get(), client.currentScreen))));
+        if (LastServerInfo.getLastServer() != null) addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> LastServerInfo.reconnect(parent)));
     }
 
     @Inject(method = "render", at = @At("TAIL"))

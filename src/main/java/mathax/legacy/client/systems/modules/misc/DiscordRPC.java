@@ -1,20 +1,14 @@
 package mathax.legacy.client.systems.modules.misc;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.gui.screens.music.PlaylistViewScreen;
-import mathax.legacy.client.gui.screens.music.PlaylistsScreen;
+import mathax.legacy.client.gui.screens.TitleScreen;
+import mathax.legacy.client.gui.screens.music.*;
+import mathax.legacy.client.gui.screens.server.ProtocolScreen;
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.screens.*;
-import mathax.legacy.client.gui.screens.TitleScreen;
-import mathax.legacy.client.gui.screens.accounts.AccountsScreen;
-import mathax.legacy.client.gui.screens.accounts.AddAlteningAccountScreen;
-import mathax.legacy.client.gui.screens.accounts.AddCrackedAccountScreen;
-import mathax.legacy.client.gui.screens.accounts.AddPremiumAccountScreen;
-import mathax.legacy.client.gui.screens.clickgui.ModuleScreen;
-import mathax.legacy.client.gui.screens.clickgui.ModulesScreen;
-import mathax.legacy.client.gui.screens.servermanager.ServerCleanUpScreen;
-import mathax.legacy.client.gui.screens.servermanager.ServerFinderScreen;
-import mathax.legacy.client.gui.screens.servermanager.ServerManagerScreen;
+import mathax.legacy.client.gui.screens.accounts.*;
+import mathax.legacy.client.gui.screens.clickgui.*;
+import mathax.legacy.client.gui.screens.server.servermanager.*;
 import mathax.legacy.client.gui.tabs.builtin.*;
 import mathax.legacy.client.mixin.MinecraftServerAccessor;
 import mathax.legacy.client.settings.*;
@@ -31,10 +25,7 @@ import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.*;
 import net.minecraft.client.gui.screen.pack.PackScreen;
-import net.minecraft.client.gui.screen.world.CreateWorldScreen;
-import net.minecraft.client.gui.screen.world.EditGameRulesScreen;
-import net.minecraft.client.gui.screen.world.EditWorldScreen;
-import net.minecraft.client.gui.screen.world.SelectWorldScreen;
+import net.minecraft.client.gui.screen.world.*;
 import net.minecraft.client.realms.gui.screen.RealmsScreen;
 import net.minecraft.item.Items;
 
@@ -137,6 +128,7 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof DirectConnectScreen) return "Using direct connect";
         else if (mc.currentScreen instanceof ServerFinderScreen) return "Using server finder";
         else if (mc.currentScreen instanceof ServerCleanUpScreen) return "Using server cleanup";
+        else if (mc.currentScreen instanceof ProtocolScreen) return "Changing protocol";
         else if (mc.currentScreen instanceof ConnectScreen) return "Connecting to " + getNakedWorldActivity();
         else if (mc.currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + getNakedWorldActivity();
         else if (mc.currentScreen instanceof GameMenuScreen) return "Game paused on " + getNakedWorldActivity();

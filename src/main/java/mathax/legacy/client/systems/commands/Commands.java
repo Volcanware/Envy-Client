@@ -35,6 +35,7 @@ public class Commands extends System<Commands> {
         add(new BookDupeCommand());
         add(new VClipCommand());
         add(new HClipCommand());
+        add(new HeadsCommand());
         add(new ClearChatCommand());
         add(new DismountCommand());
         add(new DamageCommand());

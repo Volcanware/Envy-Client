@@ -1,6 +1,6 @@
 package mathax.legacy.client.utils.network.serverfinder;
 
-import mathax.legacy.client.gui.screens.servermanager.ServerFinderScreen;
+import mathax.legacy.client.gui.screens.server.servermanager.ServerFinderScreen;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;

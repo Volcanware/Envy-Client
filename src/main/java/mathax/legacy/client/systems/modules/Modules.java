@@ -371,6 +371,7 @@ public class Modules extends System<Modules> {
         add(new AutoArmor());
         add(new AutoCity());
         add(new AutoLog());
+        //add(new AutoMinecart());
         add(new AutoPot());
         add(new AutoTotem());
         add(new AutoTrap());
