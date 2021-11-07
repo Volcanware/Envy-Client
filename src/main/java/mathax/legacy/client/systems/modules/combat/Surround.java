@@ -20,6 +20,7 @@ import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.item.Items;
@@ -273,7 +274,7 @@ public class Surround extends Module {
             if (needsToPlace()) {
                 for (final BlockPos pos : getPositions()) {
                     if (mc.world.getBlockState(pos).getMaterial().isReplaceable()) mc.player.getInventory().selectedSlot = obbyIndex;
-                    if (!mc.world.isOutOfHeightLimit(pos.getY()) && mc.world.getBlockState(pos).getBlock() != primaryBlock()) renderBlocks.add(renderBlockPool.get().set(pos));
+                    if (!mc.world.isOutOfHeightLimit(pos.getY()) && canPlace(pos)) renderBlocks.add(renderBlockPool.get().set(pos));
                     if (PlayerUtils.placeBlockMainHand(pos, rotate.get(), renderSwing.get(), !onlyOnGround.get(), placeOnCrystal.get()) && delay.get() != 0) {
                         mc.player.getInventory().selectedSlot = prevSlot;
                         return;
@@ -283,6 +284,13 @@ public class Surround extends Module {
                 mc.player.getInventory().selectedSlot = prevSlot;
             }
         }
+    }
+
+    private boolean canPlace(BlockPos pos) {
+        BlockState state = mc.world.getBlockState(pos);
+        if (state.isAir()) return true;
+        else if (state.getMaterial().isLiquid()) return true;
+        else return state.getMaterial().isReplaceable();
     }
 
     private List<BlockPos> getPositions() {
@@ -352,16 +360,6 @@ public class Surround extends Module {
         else if (primary.get() == Primary.Respawn_Anchor) index = Blocks.RESPAWN_ANCHOR;
         else if (primary.get() == Primary.Anvil) index = Blocks.ANVIL;
         return index;
-    }
-
-    private boolean isPrimaryBlock(Block block) {
-        if (block == Blocks.OBSIDIAN) return true;
-        else if (block == Blocks.ENDER_CHEST) return true;
-        else if (block == Blocks.CRYING_OBSIDIAN) return true;
-        else if (block == Blocks.NETHERITE_BLOCK) return true;
-        else if (block == Blocks.ANCIENT_DEBRIS) return true;
-        else if (block == Blocks.RESPAWN_ANCHOR) return true;
-        else return block == Blocks.ANVIL;
     }
 
     private int findBlock() {

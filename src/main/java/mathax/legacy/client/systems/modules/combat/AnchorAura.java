@@ -297,8 +297,7 @@ public class AnchorAura extends Module {
         if (PlayerUtils.shouldPause(pauseOnMine.get(), pauseOnEat.get(), pauseOnDrink.get())) return;
         if (EntityUtils.getTotalHealth(mc.player) <= minHealth.get()) return;
 
-        if (TargetUtils.isBadTarget(target, targetRange.get()))
-            target = TargetUtils.getPlayerTarget(targetRange.get(), targetPriority.get());
+        if (TargetUtils.isBadTarget(target, targetRange.get())) target = TargetUtils.getPlayerTarget(targetRange.get(), targetPriority.get());
         if (TargetUtils.isBadTarget(target, targetRange.get())) return;
 
         FindItemResult anchor = InvUtils.findInHotbar(Items.RESPAWN_ANCHOR);
@@ -318,6 +317,7 @@ public class AnchorAura extends Module {
                 }
             }
         }
+
         if (sentAntiStuck && BlockUtils.getBlock(target.getBlockPos().up(2)) != Blocks.GLOWSTONE) sentAntiStuck = false;
 
         //Anti Self Trap
@@ -333,6 +333,7 @@ public class AnchorAura extends Module {
                 }
             }
         }
+
         if (sentTrapMine && !BlockUtils.isTrapBlock(target.getBlockPos().up(2))) {
             if (fastPlaceAfter.get()) { placeDelayLeft = 0; breakDelayLeft = 0; }
             sentTrapMine = false;
@@ -349,6 +350,7 @@ public class AnchorAura extends Module {
                 return;
             }
         }
+
         if (sentBurrowMine && PlayerUtils.isBurrowed(target, true)) return;
         else sentBurrowMine = false;
 
@@ -357,9 +359,8 @@ public class AnchorAura extends Module {
             if (breakPos != null) {
                 breakDelayLeft = 0;
 
-                if (rotationMode.get() == RotationMode.Both || rotationMode.get() == RotationMode.Break) {
-                    Rotations.rotate(Rotations.getYaw(breakPos), Rotations.getPitch(breakPos), 50, () -> breakAnchor(breakPos, anchor, glowStone));
-                } else breakAnchor(breakPos, anchor, glowStone);
+                if (rotationMode.get() == RotationMode.Both || rotationMode.get() == RotationMode.Break) Rotations.rotate(Rotations.getYaw(breakPos), Rotations.getPitch(breakPos), 50, () -> breakAnchor(breakPos, anchor, glowStone));
+                else breakAnchor(breakPos, anchor, glowStone);
             }
         }
 
@@ -422,6 +423,7 @@ public class AnchorAura extends Module {
                 else if (isValidPlace(targetPlacePos.up(2))) return targetPlacePos.up(2);
                 break;
         }
+
         return null;
     }
 
@@ -460,16 +462,14 @@ public class AnchorAura extends Module {
 
         mc.player.setSneaking(false);
 
-        if (glowStone.isOffhand()) {
-            mc.interactionManager.interactBlock(mc.player, mc.world, Hand.OFF_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
-        } else {
+        if (glowStone.isOffhand()) mc.interactionManager.interactBlock(mc.player, mc.world, Hand.OFF_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
+        else {
             InvUtils.swap(glowStone.getSlot(), true);
             mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
         }
 
-        if (anchor.isOffhand()) {
-            mc.interactionManager.interactBlock(mc.player, mc.world, Hand.OFF_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
-        } else {
+        if (anchor.isOffhand()) mc.interactionManager.interactBlock(mc.player, mc.world, Hand.OFF_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
+        else {
             InvUtils.swap(anchor.getSlot(), true);
             mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
         }
