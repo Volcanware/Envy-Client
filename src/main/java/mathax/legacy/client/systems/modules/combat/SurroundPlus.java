@@ -50,10 +50,10 @@ public class SurroundPlus extends Module {
 
     // Horizontal Expanding
 
-    private final Setting<Mode> mode = sgHorizontalExpanding.add(new EnumSetting.Builder<Mode>()
+    private final Setting<HorizontalMode> horizontalMode = sgHorizontalExpanding.add(new EnumSetting.Builder<HorizontalMode>()
         .name("mode")
         .description("Determines how big the surround is.")
-        .defaultValue(Mode.Normal)
+        .defaultValue(HorizontalMode.Normal)
         .build()
     );
 
@@ -71,28 +71,21 @@ public class SurroundPlus extends Module {
 
     // Vertical Expanding
 
-    private final Setting<Boolean> underHeight = sgVerticalExpanding.add(new BoolSetting.Builder()
-        .name("under-height")
-        .description("Places obsidian under the original surround blocks to prevent surround not placing on some servers.")
-        .defaultValue(false)
+    private final Setting<VerticalMode> verticalMode = sgVerticalExpanding.add(new EnumSetting.Builder<VerticalMode>()
+        .name("vertical-mode")
+        .description("Places obsidian on top or under of the original surround blocks to prevent people from face-placing you or anticheat from bugging you out.")
+        .defaultValue(VerticalMode.None)
         .build()
     );
 
     private final Setting<KeyBind> underHeightKeyBind = sgVerticalExpanding.add(new KeyBindSetting.Builder()
-        .name("force-under-height")
+        .name("force-under")
         .description("Toggles under height when held.")
         .build()
     );
 
-    private final Setting<Boolean> doubleHeight = sgVerticalExpanding.add(new BoolSetting.Builder()
-        .name("double-height")
-        .description("Places obsidian on top of the original surround blocks to prevent people from face-placing you.")
-        .defaultValue(false)
-        .build()
-    );
-
     private final Setting<KeyBind> doubleHeightKeyBind = sgVerticalExpanding.add(new KeyBindSetting.Builder()
-        .name("force-double-height")
+        .name("force-double")
         .description("Toggles double height when held.")
         .build()
     );
@@ -107,7 +100,7 @@ public class SurroundPlus extends Module {
     );
 
     private final Setting<Boolean> allBlocks = sgGeneral.add(new BoolSetting.Builder()
-        .name("blastproof-blocks-only")
+        .name("blastproof-only")
         .description("Places blastproof blocks only.")
         .defaultValue(true)
         .build()
@@ -185,7 +178,7 @@ public class SurroundPlus extends Module {
         .build()
     );
 
-    private final Setting<Boolean> renderSwing = sgRender.add(new BoolSetting.Builder()
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
         .name("swing")
         .description("Renders your client-side swing.")
         .defaultValue(false)
@@ -273,15 +266,15 @@ public class SurroundPlus extends Module {
                 }
             }
 
-            final int obbyIndex = findBlock();
+            int obbyIndex = findBlock();
             if (obbyIndex == -1) return;
-            final int prevSlot = mc.player.getInventory().selectedSlot;
+            int prevSlot = mc.player.getInventory().selectedSlot;
 
             if (needsToPlace()) {
-                for (final BlockPos pos : getPositions()) {
+                for (BlockPos pos : getPositions()) {
                     if (mc.world.getBlockState(pos).getMaterial().isReplaceable()) mc.player.getInventory().selectedSlot = obbyIndex;
                     if (!mc.world.isOutOfHeightLimit(pos.getY()) && canPlace(pos)) renderBlocks.add(renderBlockPool.get().set(pos));
-                    if (PlayerUtils.placeBlockMainHand(pos, rotate.get(), renderSwing.get(), !onlyOnGround.get(), placeOnCrystal.get()) && delay.get() != 0) {
+                    if (PlayerUtils.placeBlockMainHand(pos, rotate.get(), swing.get(), !onlyOnGround.get(), placeOnCrystal.get()) && delay.get() != 0) {
                         mc.player.getInventory().selectedSlot = prevSlot;
                         return;
                     }
@@ -303,7 +296,7 @@ public class SurroundPlus extends Module {
         final List<BlockPos> positions = new ArrayList<>();
         if (!onlyOnGround.get()) add(positions, lastPos.down());
 
-        if (underHeight.get() || (underHeightKeyBind.get()).isPressed()) {
+        if ((verticalMode.get() == VerticalMode.Under || verticalMode.get() == VerticalMode.Both) || (underHeightKeyBind.get()).isPressed()) {
             add(positions, lastPos.north().down());
             add(positions, lastPos.east().down());
             add(positions, lastPos.south().down());
@@ -315,21 +308,21 @@ public class SurroundPlus extends Module {
         add(positions, lastPos.south());
         add(positions, lastPos.west());
 
-        if (doubleHeight.get() || (doubleHeightKeyBind.get()).isPressed()) {
+        if ((verticalMode.get() == VerticalMode.Double || verticalMode.get() == VerticalMode.Both) || (doubleHeightKeyBind.get()).isPressed()) {
             add(positions, lastPos.north().up());
             add(positions, lastPos.east().up());
             add(positions, lastPos.south().up());
             add(positions, lastPos.west().up());
         }
 
-        if (mode.get() != Mode.Normal || (bigKeyBind.get()).isPressed() || (bigKeyBind.get()).isPressed()) {
+        if (horizontalMode.get() != HorizontalMode.Normal || (bigKeyBind.get()).isPressed() || (bigKeyBind.get()).isPressed()) {
             if (mc.world.getBlockState(lastPos.north()).getBlock() != Blocks.BEDROCK) add(positions, lastPos.north(2));
             if (mc.world.getBlockState(lastPos.east()).getBlock() != Blocks.BEDROCK) add(positions, lastPos.east(2));
             if (mc.world.getBlockState(lastPos.south()).getBlock() != Blocks.BEDROCK) add(positions, lastPos.south(2));
             if (mc.world.getBlockState(lastPos.west()).getBlock() != Blocks.BEDROCK) add(positions, lastPos.west(2));
         }
 
-        if (mode.get() == Mode.Giant || (giantKeyBind.get()).isPressed()) {
+        if (horizontalMode.get() == HorizontalMode.Giant || (giantKeyBind.get()).isPressed()) {
             if (mc.world.getBlockState(lastPos.north()).getBlock() != Blocks.BEDROCK || mc.world.getBlockState(lastPos.east()).getBlock() != Blocks.BEDROCK) add(positions, lastPos.north().east());
             if (mc.world.getBlockState(lastPos.east()).getBlock() != Blocks.BEDROCK || mc.world.getBlockState(lastPos.south()).getBlock() != Blocks.BEDROCK) add(positions, lastPos.east().south());
             if (mc.world.getBlockState(lastPos.south()).getBlock() != Blocks.BEDROCK || mc.world.getBlockState(lastPos.west()).getBlock() != Blocks.BEDROCK) add(positions, lastPos.south().west());
@@ -383,10 +376,17 @@ public class SurroundPlus extends Module {
         return index;
     }
 
-    public enum Mode {
+    public enum HorizontalMode {
         Normal,
         Big,
         Giant
+    }
+
+    public enum VerticalMode {
+        Under,
+        Double,
+        Both,
+        None
     }
 
     public enum Primary {

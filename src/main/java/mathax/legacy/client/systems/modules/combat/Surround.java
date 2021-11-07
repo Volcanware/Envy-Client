@@ -47,17 +47,10 @@ public class Surround extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
-    private final Setting<Boolean> underHeight = sgGeneral.add(new BoolSetting.Builder()
-        .name("under-height")
-        .description("Places obsidian next to the block you are standing on. (Bypasses some anti cheats)")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> doubleHeight = sgGeneral.add(new BoolSetting.Builder()
-        .name("double-height")
-        .description("Places obsidian on top of the original surround blocks to prevent people from face-placing you.")
-        .defaultValue(false)
+    private final Setting<VerticalMode> verticalMode = sgGeneral.add(new EnumSetting.Builder<VerticalMode>()
+        .name("vertical-mode")
+        .description("Places obsidian on top or under of the original surround blocks to prevent people from face-placing you or anticheat from bugging you out.")
+        .defaultValue(VerticalMode.None)
         .build()
     );
 
@@ -111,7 +104,7 @@ public class Surround extends Module {
     );
 
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
-        .name("block")
+        .name("blocks")
         .description("What blocks to use for surround.")
         .defaultValue(Blocks.OBSIDIAN)
         .filter(this::blockFilter)
@@ -123,6 +116,13 @@ public class Surround extends Module {
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
         .name("render")
         .description("Renders a block overlay where the obsidian will be placed.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Renders your client-side swing.")
         .defaultValue(false)
         .build()
     );
@@ -196,7 +196,7 @@ public class Surround extends Module {
 
         // Under height
         underHeightPlaced = false;
-        if (underHeight.get()) {
+        if (verticalMode.get() == VerticalMode.Under || verticalMode.get() == VerticalMode.Both) {
             boolean p2 = place(1, -1, 0);
             if (doReturn) return;
             boolean p3 = place(-1, -1, 0);
@@ -221,7 +221,7 @@ public class Surround extends Module {
 
         // Sides up
         doubleHeightPlaced = false;
-        if (doubleHeight.get()) {
+        if (verticalMode.get() == VerticalMode.Double || verticalMode.get() == VerticalMode.Both) {
             boolean p10 = place(1, 1, 0);
             if (doReturn) return;
             boolean p11 = place(-1, 1, 0);
@@ -236,8 +236,8 @@ public class Surround extends Module {
 
         // Auto turn off
         if (turnOff.get() && p1 && p6 && p7 && p8 &&p9) {
-            if (underHeightPlaced || !underHeight.get()) toggle();
-            if (doubleHeightPlaced || !doubleHeight.get()) toggle();
+            if (underHeightPlaced || verticalMode.get() != VerticalMode.Under || verticalMode.get() != VerticalMode.Both) toggle();
+            if (doubleHeightPlaced || verticalMode.get() != VerticalMode.Double || verticalMode.get() != VerticalMode.Both) toggle();
         }
     }
 
@@ -255,7 +255,7 @@ public class Surround extends Module {
 
         if (!blockState.getMaterial().isReplaceable()) return true;
 
-        if (BlockUtils.place(blockPos, InvUtils.findInHotbar(itemStack -> blocks.get().contains(Block.getBlockFromItem(itemStack.getItem()))), rotate.get(), 100, true)) doReturn = true;
+        if (BlockUtils.place(blockPos, InvUtils.findInHotbar(itemStack -> blocks.get().contains(Block.getBlockFromItem(itemStack.getItem()))), rotate.get(), 100, swing.get(), true)) doReturn = true;
 
         // Render block if was placed
         renderSurroundBlocks.add(renderSurroundBlockPool.get().set(blockPos));
@@ -265,6 +265,28 @@ public class Surround extends Module {
 
     private void setBlockPos(int x, int y, int z) {
         blockPos.set(mc.player.getX() + x, mc.player.getY() + y, mc.player.getZ() + z);
+    }
+
+    public enum VerticalMode {
+        Under,
+        Double,
+        Both,
+        None
+    }
+
+    // Rendering
+
+    @EventHandler
+    private void onRender3D(Render3DEvent event) {
+        if (!render.get() || blockPos == null || blockPos.getY() > 256) return;
+        if (p1 && p6 && p7 && p8 &&p9) {
+            if (underHeightPlaced || verticalMode.get() != VerticalMode.Under || verticalMode.get() != VerticalMode.Both) return;
+            if (doubleHeightPlaced || verticalMode.get() != VerticalMode.Double || verticalMode.get() != VerticalMode.Both) return;
+        }
+
+        renderSurroundBlocks.sort(Comparator.comparingInt(o -> -o.ticks));
+        renderSurroundBlocks.forEach(renderSurroundBlock -> renderSurroundBlock.render(event, sideColor.get(), lineColor.get(), shapeMode.get()));
+        event.renderer.box(blockPos, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
     }
 
     public static class RenderSurroundBlock {
@@ -294,17 +316,5 @@ public class Surround extends Module {
             sides.a = preSideA;
             lines.a = preLineA;
         }
-    }
-
-    @EventHandler
-    private void onRender(Render3DEvent event) {
-        if (!render.get() || blockPos == null || blockPos.getY() > 256) return;
-        if (p1 && p6 && p7 && p8 &&p9) {
-            if (underHeightPlaced || !underHeight.get()) return;
-            if (doubleHeightPlaced || !doubleHeight.get()) return;
-        }
-        renderSurroundBlocks.sort(Comparator.comparingInt(o -> -o.ticks));
-        renderSurroundBlocks.forEach(renderSurroundBlock -> renderSurroundBlock.render(event, sideColor.get(), lineColor.get(), shapeMode.get()));
-        event.renderer.box(blockPos, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
     }
 }
