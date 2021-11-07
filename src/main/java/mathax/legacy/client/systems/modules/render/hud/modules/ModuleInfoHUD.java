@@ -24,6 +24,7 @@ public class ModuleInfoHUD extends HUDElement {
             CrystalAura.class,
             AnchorAura.class,
             BedAura.class,
+            SurroundPlus.class,
             Surround.class
         )
         .build()
