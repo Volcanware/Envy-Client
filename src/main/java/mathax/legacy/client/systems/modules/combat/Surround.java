@@ -162,18 +162,18 @@ public class Surround extends Module {
 
     @Override
     public void onDeactivate() {
-        for (RenderSurroundBlock renderSurroundBlock : renderSurroundBlocks) renderSurroundBlockPool.free(renderSurroundBlock);
-        renderSurroundBlocks.clear();
-    }
-
-    @EventHandler
-    private void onTick(TickEvent.Pre event) {
         if (Modules.get().isActive(SurroundPlus.class)) {
             ChatUtils.sendMsg(this.hashCode(), "Surround", Formatting.DARK_RED, Formatting.WHITE + "Surround+" + Formatting.DARK_RED + " is already enabled, disabling...", Formatting.GRAY);
             toggle();
             return;
         }
 
+        for (RenderSurroundBlock renderSurroundBlock : renderSurroundBlocks) renderSurroundBlockPool.free(renderSurroundBlock);
+        renderSurroundBlocks.clear();
+    }
+
+    @EventHandler
+    private void onTick(TickEvent.Pre event) {
         // Ticking fade animation
         renderSurroundBlocks.forEach(RenderSurroundBlock::tick);
         renderSurroundBlocks.removeIf(renderSurroundBlock -> renderSurroundBlock.ticks <= 0);
