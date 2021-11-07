@@ -105,12 +105,11 @@ public class HUD extends Module {
         mainInfo.add(new ServerBrandHUD(this));
         mainInfo.add(new DurabilityHUD(this));
         mainInfo.add(new BiomeHUD(this));
-        mainInfo.add(new MusicHUD(this));
         mainInfo.add(new PlayerModelHUD(this));
-        mainInfo.add(new CombatInfoHUD(this));
+        mainInfo.add(new MusicHUD(this));
 
         // MODULE INFO
-        moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 300);
+        moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 200);
         // Modules
         moduleInfo.add(new ModuleInfoHUD(this));
 
@@ -153,10 +152,11 @@ public class HUD extends Module {
         // TEXT RADAR
         radar = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Center, 2, 100);
         // Modules
+        radar.add(new CombatInfoHUD(this));
         radar.add(new TextRadarHUD(this));
 
         // ITEMS & ARMOR
-        itemsArmor = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, -75, -50);
+        itemsArmor = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, -150, -50);
         // Modules
         itemsArmor.add(new TotemHUD(this));
         itemsArmor.add(new CrystalHUD(this));
