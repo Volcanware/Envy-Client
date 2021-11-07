@@ -233,6 +233,9 @@ public class MatHaxLegacy implements ClientModInitializer {
             GuiThemes.save();
         }));
 
+        // Icon
+        mc.getWindow().setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
+
         // Final window title
         mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft());
 

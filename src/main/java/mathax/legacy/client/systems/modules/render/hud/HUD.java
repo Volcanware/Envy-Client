@@ -71,7 +71,7 @@ public class HUD extends Module {
     );
 
     public final List<HUDElement> elements = new ArrayList<>();
-    private final HUDElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, time, radar, items, crosshair, crosshair2, crosshair3;
+    private final HUDElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, time, radar, itemsArmor, crosshair, crosshair2;
 
     public final Runnable reset = () -> {
         align();
@@ -155,15 +155,16 @@ public class HUD extends Module {
         // Modules
         radar.add(new TextRadarHUD(this));
 
-        // ITEMS
-        items = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Center, 2, 25);
+        // ITEMS & ARMOR
+        itemsArmor = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, -75, -50);
         // Modules
-        items.add(new TotemHUD(this));
-        items.add(new CrystalHUD(this));
-        items.add(new EGapHUD(this));
-        items.add(new XPBottleHUD(this));
-        items.add(new ObsidianHUD(this));
-        items.add(new BedHUD(this));
+        itemsArmor.add(new TotemHUD(this));
+        itemsArmor.add(new CrystalHUD(this));
+        itemsArmor.add(new EGapHUD(this));
+        itemsArmor.add(new XPBottleHUD(this));
+        itemsArmor.add(new ObsidianHUD(this));
+        itemsArmor.add(new BedHUD(this));
+        itemsArmor.add(new ArmorHUD(this));
 
         // CROSSHAIR
         crosshair = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
@@ -174,11 +175,6 @@ public class HUD extends Module {
         crosshair2 = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
         // Modules
         crosshair2.add(new CompassHUD(this));
-
-        // CROSSHAIR 3
-        crosshair3 = new HUDElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 65);
-        // Modules
-        crosshair3.add(new ArmorHUD(this));
 
         align();
     }
@@ -195,10 +191,9 @@ public class HUD extends Module {
         invPot.align();
         time.align();
         radar.align();
-        items.align();
+        itemsArmor.align();
         crosshair.align();
         crosshair2.align();
-        crosshair3.align();
 
         RENDERER.end();
     }
