@@ -82,6 +82,28 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
         }
     }
 
+    public void forceToggle(boolean toggle) {
+        active = toggle;
+
+        if (toggle) {
+            Modules.get().addActive(this);
+
+            settings.onActivated();
+
+            if (runInMainMenu || Utils.canUpdate()) {
+                if (autoSubscribe) MatHaxLegacy.EVENT_BUS.subscribe(this);
+                onActivate();
+            }
+        } else {
+            if (runInMainMenu || Utils.canUpdate()) {
+                if (autoSubscribe) MatHaxLegacy.EVENT_BUS.unsubscribe(this);
+                onDeactivate();
+            }
+
+            Modules.get().removeActive(this);
+        }
+    }
+
     public void sendToggledMsg(String name, Module module) {
         if (!module.isMessageEnabled()) return;
         if (Config.get().chatFeedback) ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY, "Toggled (highlight)%s(default) %s(default).", title, getOnOff(module));

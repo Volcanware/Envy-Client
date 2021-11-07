@@ -569,6 +569,7 @@ public class Modules extends System<Modules> {
         //add(new ChatBot());
         add(new MessageAura());
         add(new Notifier());
+        add(new Restarts2b2t());
         add(new Spam());
     }
 

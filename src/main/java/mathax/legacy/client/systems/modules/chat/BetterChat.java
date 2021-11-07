@@ -46,6 +46,8 @@ public class BetterChat extends Module {
     private final SettingGroup sgLongerChat = settings.createGroup("Longer Chat");
     private final SettingGroup sgSuffix = settings.createGroup("Suffix");
 
+    // General
+
     public final Setting<Boolean> fancy = sgGeneral.add(new BoolSetting.Builder()
         .name("fancy-chat")
         .description("Makes your messages fancy using fancy fonts.")

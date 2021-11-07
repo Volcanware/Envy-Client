@@ -15,6 +15,7 @@ import mathax.legacy.client.renderer.*;
 import mathax.legacy.client.renderer.text.Fonts;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.modules.Categories;
+import mathax.legacy.client.systems.modules.chat.Restarts2b2t;
 import mathax.legacy.client.systems.modules.combat.*;
 import mathax.legacy.client.systems.modules.misc.CapesModule;
 import mathax.legacy.client.systems.modules.misc.DiscordRPC;
@@ -146,18 +147,20 @@ public class MatHaxLegacy implements ClientModInitializer {
         Systems.addPreLoadTask(() -> {
             if (!Modules.get().getFile().exists()) {
                 // ACTIVATE
-                Modules.get().get(CapesModule.class).toggle(); // CAPES
-                Modules.get().get(DiscordRPC.class).toggle(); // DISCORD RPC
-                Modules.get().get(Background.class).toggle(); // BACKGROUND
-                Modules.get().get(MiddleClickFriend.class).toggle(); // MIDDLE CLICK FRIEND
-                Modules.get().get(HUD.class).toggle(); // HUD
+                Modules.get().get(CapesModule.class).forceToggle(true); // CAPES
+                Modules.get().get(DiscordRPC.class).forceToggle(true); // DISCORD RPC
+                Modules.get().get(Background.class).forceToggle(true); // BACKGROUND
+                Modules.get().get(MiddleClickFriend.class).forceToggle(true); // MIDDLE CLICK FRIEND
+                Modules.get().get(Restarts2b2t.class).forceToggle(true); // 2B2T RESTARTS
+                Modules.get().get(HUD.class).forceToggle(true); // HUD
 
                 // VISIBILITY
                 Modules.get().get(CapesModule.class).setVisible(false); // CAPES
                 Modules.get().get(DiscordRPC.class).setVisible(false); // DISCORD RPC
                 Modules.get().get(Background.class).setVisible(false); // BACKGROUND
                 Modules.get().get(MiddleClickFriend.class).setVisible(false); // MIDDLE CLICK FRIEND
-                Modules.get().get(Zoom.class).setVisible(false); // HUD
+                Modules.get().get(Restarts2b2t.class).setVisible(false); // 2B2T RESTARTS
+                Modules.get().get(Zoom.class).setVisible(false); // ZOOM
                 Modules.get().get(HUD.class).setVisible(false); // HUD
 
                 // KEYBINDS

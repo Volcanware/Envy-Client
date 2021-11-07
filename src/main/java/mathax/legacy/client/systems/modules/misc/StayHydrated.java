@@ -14,7 +14,7 @@ import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.item.Items;
 
 public class StayHydrated extends Module {
-    public final int BLUE = Color.fromRGBA(0, 128, 255, 255);
+    private static final int BLUE = Color.fromRGBA(0, 128, 255, 255);
 
     private boolean menuCounting, notifyOnJoin, count;
     private int ticks = 0;
@@ -52,24 +52,14 @@ public class StayHydrated extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        if (count) {
-            ticks++;
-        }
+        if (count) ticks++;
 
         if (mc.world != null) count = true;
 
         if (notifyOnJoin && mc.world != null) {
             notifyOnJoin = false;
             ticks = 0;
-            switch (mode.get()) {
-                case Chat:
-                    sendNotificationChat();
-                case Toast:
-                    sendNotificationToast();
-                case Both:
-                    sendNotificationChat();
-                    sendNotificationToast();
-            }
+            sendNotification();
             return;
         }
 
@@ -84,25 +74,20 @@ public class StayHydrated extends Module {
         }
 
         if (ticks > (delay.get() * 20) * 60) {
-            switch (mode.get()) {
-                case Chat:
-                    sendNotificationChat();
-                case Toast:
-                    sendNotificationToast();
-                case Both:
-                    sendNotificationChat();
-                    sendNotificationToast();
-            }
+            sendNotification();
             ticks = 0;
         }
     }
 
-    private void sendNotificationChat() {
-        info("Its time to drink! #StayHydrated");
-    }
-
-    private void sendNotificationToast() {
-        if (Config.get().toastFeedback) mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!", Config.get().toastDuration));
+    private void sendNotification() {
+        switch (mode.get()) {
+            case Chat -> info("Its time to drink! #StayHydrated");
+            case Toast -> mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!", Config.get().toastDuration));
+            case Both -> {
+                info("Its time to drink! #StayHydrated");
+                mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!", Config.get().toastDuration));
+            }
+        }
     }
 
     public enum Mode {
