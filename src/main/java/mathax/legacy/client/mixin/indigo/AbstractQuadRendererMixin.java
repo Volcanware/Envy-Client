@@ -22,32 +22,44 @@ import java.util.function.Function;
 
 @Mixin(value = AbstractQuadRenderer.class, remap = false)
 public abstract class AbstractQuadRendererMixin {
-    @Final @Shadow protected BlockRenderInfo blockInfo;
-    @Final @Shadow protected Function<RenderLayer, VertexConsumer> bufferFunc;
-    @Final @Shadow protected Vec3f normalVec;
+    @Final
+    @Shadow
+    protected BlockRenderInfo blockInfo;
 
-    @Shadow protected abstract Matrix3f normalMatrix();
-    @Shadow protected abstract Matrix4f matrix();
+    @Final
+    @Shadow
+    protected Function<RenderLayer, VertexConsumer> bufferFunc;
 
-    @Shadow protected abstract int overlay();
+    @Final
+    @Shadow
+    protected Vec3f normalVec;
 
-    @Inject(method = "bufferQuad(Lnet/fabricmc/fabric/impl/client/indigo/renderer/mesh/MutableQuadViewImpl;Lnet/minecraft/client/render/RenderLayer;)V",
-    at = @At("HEAD"), cancellable = true, remap = false)
-    private void onBufferQuad(MutableQuadViewImpl quad, RenderLayer renderLayer, CallbackInfo info) {
+    @Shadow
+    protected abstract Matrix3f normalMatrix();
+
+    @Shadow
+    protected abstract Matrix4f matrix();
+
+    @Shadow
+    protected abstract int overlay();
+
+    @SuppressWarnings("UnresolvedMixinReference")
+    @Inject(method = "bufferQuad(Lnet/fabricmc/fabric/impl/client/indigo/renderer/mesh/MutableQuadViewImpl;Lnet/minecraft/class_1921;)V", at = @At("HEAD"), cancellable = true, remap = false)
+    private void onBufferQuad(MutableQuadViewImpl quad, RenderLayer renderLayer, CallbackInfo ci) {
         WallHack wallHack = Modules.get().get(WallHack.class);
         Xray xray = Modules.get().get(Xray.class);
 
-        if (wallHack.isActive() && wallHack.blocks.get().contains(blockInfo.blockState.getBlock())) {
+        if(wallHack.isActive() && wallHack.blocks.get().contains(blockInfo.blockState.getBlock())) {
             int alpha;
 
             if (xray.isActive()) alpha = xray.opacity.get();
             else alpha = wallHack.opacity.get();
 
             whBufferQuad(bufferFunc.apply(renderLayer), quad, matrix(), overlay(), normalMatrix(), normalVec, alpha);
-            info.cancel();
-        } else if (xray.isActive() && !wallHack.isActive() && xray.isBlocked(blockInfo.blockState.getBlock())) {
+            ci.cancel();
+        } else if(xray.isActive() && !wallHack.isActive() && xray.isBlocked(blockInfo.blockState.getBlock())) {
             whBufferQuad(bufferFunc.apply(renderLayer), quad, matrix(), overlay(), normalMatrix(), normalVec, xray.opacity.get());
-            info.cancel();
+            ci.cancel();
         }
     }
 
