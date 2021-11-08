@@ -2,6 +2,7 @@ package mathax.legacy.client.gui;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.themes.mathax.MatHaxGuiTheme;
+import mathax.legacy.client.gui.themes.meteor.MeteorGuiTheme;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 
@@ -21,6 +22,7 @@ public class GuiThemes {
 
     public static void init() {
         add(new MatHaxGuiTheme());
+        add(new MeteorGuiTheme());
     }
 
     public static void postInit() {
