@@ -23,13 +23,13 @@ public class CapesModule extends Module {
 
     private final Setting<Boolean> autoReload = sgGeneral.add(new BoolSetting.Builder()
         .name("auto-reload")
-        .description("Automatically reloads MatHax capes every 10 minutes.")
+        .description("Automatically reloads the capes every 10 minutes.")
         .defaultValue(true)
         .build()
     );
 
     public CapesModule() {
-        super(Categories.Misc, Items.CAKE, "capes", "When enabled you will see very cool MatHax cape on users which have it.");
+        super(Categories.Misc, Items.CAKE, "capes", "Shows very cool capes on users which have them.");
     }
 
     @EventHandler
@@ -65,7 +65,7 @@ public class CapesModule extends Module {
         reload.action = () -> {
             if (isActive()) Capes.init();
         };
-        w.add(theme.label("Reloads the capes from the MatHax API."));
+        w.add(theme.label("Reloads the capes."));
 
         return w;
     }
