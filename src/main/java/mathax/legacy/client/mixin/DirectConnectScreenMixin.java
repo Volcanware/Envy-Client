@@ -27,7 +27,7 @@ public class DirectConnectScreenMixin extends Screen {
 
 	@Inject(at = @At("TAIL"), method = "saveAndClose()V")
 	private void onSaveAndClose(CallbackInfo info) {
-        UpdateChecker.didntCheckForLatest = true;
+        UpdateChecker.checkForLatest = true;
 		LastServerInfo.setLastServer(serverEntry);
 	}
 }

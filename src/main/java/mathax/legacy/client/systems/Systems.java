@@ -63,14 +63,14 @@ public class Systems {
 
     @EventHandler
     private void onGameJoined(GameJoinedEvent event) {
-        UpdateChecker.didntCheckForLatest = true;
+        UpdateChecker.checkForLatest = true;
     }
 
     // Game leave
 
     @EventHandler
     private static void onGameLeft(GameLeftEvent event) {
-        UpdateChecker.didntCheckForLatest = true;
+        UpdateChecker.checkForLatest = true;
         save();
     }
 

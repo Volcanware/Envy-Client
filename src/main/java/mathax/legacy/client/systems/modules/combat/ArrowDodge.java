@@ -117,7 +117,6 @@ public class ArrowDodge extends Module {
                     );
                 }
             }
-
         }
     }
 

@@ -9,8 +9,8 @@ import net.minecraft.util.Util;
 import static mathax.legacy.client.utils.Version.*;
 
 public class UpdateChecker {
-    public static boolean didntCheckForLatestTitle = true;
-    public static boolean didntCheckForLatest = true;
+    public static boolean checkForLatestTitle = true;
+    public static boolean checkForLatest = true;
 
     public static String getLatest() {
         String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
@@ -23,7 +23,7 @@ public class UpdateChecker {
         if (getDev() > 0) return CheckStatus.Running_Dev;
 
         String latestVersion = getLatest();
-
+        
         if (latestVersion == null) return CheckStatus.Cant_Check;
         else {
             Version latestVer = new Version(latestVersion);

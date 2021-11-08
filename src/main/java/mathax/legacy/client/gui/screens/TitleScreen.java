@@ -141,8 +141,8 @@ public class TitleScreen extends Screen {
 
         // Update Check
 
-        if (UpdateChecker.didntCheckForLatestTitle) {
-            UpdateChecker.didntCheckForLatestTitle = false;
+        if (UpdateChecker.checkForLatestTitle) {
+            UpdateChecker.checkForLatestTitle = false;
 
             UpdateChecker.checkForUpdate(false, true, false, false, false);
         }
