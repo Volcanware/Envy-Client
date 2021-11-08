@@ -6,17 +6,17 @@
   MatHax Legacy
 </h1>
 
-<p align="center">
-  Forked from <a href="https://meteorclient.com/">Meteor Client</a>.
-</p>
-
 <div align="center">
-  <a href="https://meteorclient.com"><img src="https://img.shields.io/badge/Meteor%20Client-Fork-e64c65"></a>
-  <img src="https://img.shields.io/github/last-commit/MatHax/Legacy">
-  <img src="https://img.shields.io/github/commit-activity/m/MatHax/Legacy">
-  <img src="https://img.shields.io/github/languages/code-size/MatHax/Legacy">
-  <img src="https://img.shields.io/tokei/lines/github/MatHax/Legacy">
-  <a href="https://mathaxclient.xyz/Discord"><img src="https://img.shields.io/discord/823286525402939402"></a>
+    <a href="https://meteorclient.com"><img src="https://img.shields.io/badge/Meteor%20Client-Fork-e64c65"></a>
+    <br>
+    <a href="https://mathaxclient.xyz/Discord"><img src="https://img.shields.io/discord/823286525402939402?logo=discord" alt="Discord"/></a>
+    <br><br>
+    <img src="https://img.shields.io/github/last-commit/MatHax/Legacy" alt="GitHub last commit"/>
+    <img src="https://img.shields.io/github/commit-activity/w/MatHax/Legacy" alt="GitHub commit activity"/>
+    <br>
+    <img src="https://img.shields.io/github/languages/code-size/MatHax/Legacy" alt="GitHub code size in bytes"/>
+    <img src="https://tokei.rs/b1/github/MatHax/Legacy" alt="GitHub lines of code"/>
+    <img src="https://img.shields.io/github/contributors/MatHax/Legacy" alt="GitHub contributors"/>
 </div>
 
 ## Usage
