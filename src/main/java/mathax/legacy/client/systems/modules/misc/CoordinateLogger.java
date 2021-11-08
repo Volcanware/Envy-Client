@@ -54,7 +54,7 @@ public class CoordinateLogger extends Module {
         .build()
     );
 
-    // World events
+    // World Events
 
     private final Setting<Boolean> enderDragons = sgWorldEvents.add(new BoolSetting.Builder()
         .name("ender-dragons")
@@ -124,9 +124,7 @@ public class CoordinateLogger extends Module {
 
                     if (ownerUUID != null && wolfPosition.distanceTo(packetPosition) >= minDistance.get()) info("Wolf has teleported to (highlight)%s(default).", String.format("%.1f %.1f %.1f", packetPosition.x, packetPosition.y, packetPosition.z));
                 }
-            } catch(NullPointerException ignored) {
-                // Ignored
-            }
+            } catch(NullPointerException ignored) {}
 
             // World events
         } else if (event.packet instanceof WorldEventS2CPacket) {
