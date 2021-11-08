@@ -1,7 +1,7 @@
 package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.utils.Version;
+import mathax.legacy.client.utils.UpdateChecker;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.screens.server.servermanager.ServerManagerScreen;
 import mathax.legacy.client.mixininterface.IMultiplayerScreen;
@@ -19,7 +19,6 @@ import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -45,7 +44,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
 
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
-        Version.didntCheckForLatest = true;
+        UpdateChecker.didntCheckForLatest = true;
 
         addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, new LiteralText("Accounts"), button -> client.setScreen(GuiThemes.get().accountsScreen())));
         addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> client.setScreen(GuiThemes.get().proxiesScreen())));

@@ -1,7 +1,5 @@
 package mathax.legacy.client.systems.modules.misc;
 
-import baritone.utils.schematic.schematica.SchematicaHelper;
-import fi.dy.masa.litematica.Litematica;
 import fi.dy.masa.litematica.world.SchematicWorldHandler;
 import fi.dy.masa.litematica.world.WorldSchematic;
 import mathax.legacy.client.MatHaxLegacy;

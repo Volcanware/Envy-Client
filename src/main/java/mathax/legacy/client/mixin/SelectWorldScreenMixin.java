@@ -1,6 +1,6 @@
 package mathax.legacy.client.mixin;
 
-import mathax.legacy.client.utils.Version;
+import mathax.legacy.client.utils.UpdateChecker;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -19,6 +19,6 @@ public class SelectWorldScreenMixin extends Screen {
 
     @Inject(method = "render", at = @At("TAIL"))
     private void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
-        Version.didntCheckForLatest = true;
+        UpdateChecker.didntCheckForLatest = true;
     }
 }

@@ -5,6 +5,7 @@ import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
 import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
+import mathax.legacy.client.utils.UpdateChecker;
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.settings.DoubleSetting;
@@ -129,12 +130,13 @@ public class WatermarkHUD extends TripleTextHUDElement {
     public String checkForUpdate() {
         if (versionString == null) versionString = "";
 
-        if (Version.didntCheckForLatest) {
-            Version.didntCheckForLatest = false;
-            switch (Version.checkLatest()) {
-                case 0 -> versionString = " [Could not get Latest Version]";
-                case 1 -> versionString = " [Outdated | Latest Version: v" + Version.getLatest() + "]";
-                case 2 -> versionString = "";
+        if (UpdateChecker.didntCheckForLatest) {
+            UpdateChecker.didntCheckForLatest = false;
+
+            switch (UpdateChecker.checkLatest()) {
+                case Cant_Check -> versionString = " [Could not get Latest Version]";
+                case Newer_Found -> versionString = " [Outdated | Latest Version: v" + UpdateChecker.getLatest() + "]";
+                default -> versionString = "";
             }
         }
 

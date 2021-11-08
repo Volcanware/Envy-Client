@@ -80,11 +80,8 @@ public class YesNoPrompt {
         if (id == null) this.id(this.title);
         if (Config.get().dontShowAgainPrompts.contains(id)) return;
 
-        if (!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(() -> mc.setScreen(new PromptScreen(theme)));
-        } else {
-            mc.setScreen(new PromptScreen(theme));
-        }
+        if (!RenderSystem.isOnRenderThread()) RenderSystem.recordRenderCall(() -> mc.setScreen(new PromptScreen(theme)));
+        else mc.setScreen(new PromptScreen(theme));
     }
 
     public class PromptScreen extends WindowScreen {
@@ -99,7 +96,7 @@ public class YesNoPrompt {
             for (String line : messages) add(theme.label(line)).expandX();
             add(theme.horizontalSeparator()).expandX();
 
-            if (id.contains("-dont-disable")) {
+            if (id.contains("-cant-disable")) {
                 WHorizontalList list = add(theme.horizontalList()).expandX().widget();
 
                 WButton yesButton = list.add(theme.button("Yes")).expandX().widget();

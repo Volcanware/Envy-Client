@@ -2,8 +2,6 @@ package mathax.legacy.client.systems.commands.commands;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import mathax.legacy.client.gui.tabs.builtin.ConfigTab;
-import mathax.legacy.client.music.Music;
 import mathax.legacy.client.systems.commands.Command;
 import net.minecraft.command.CommandSource;
 

@@ -5,7 +5,6 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.music.PlaylistUtils;
 import mathax.legacy.client.utils.music.StreamPlayer;
 

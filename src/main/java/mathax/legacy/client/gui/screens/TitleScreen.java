@@ -4,6 +4,7 @@ import com.google.common.util.concurrent.Runnables;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.utils.UpdateChecker;
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.tabs.Tabs;
@@ -129,7 +130,7 @@ public class TitleScreen extends Screen {
         addDrawableChild(new ButtonWidget(width / 2 - 204, y + (spacingY * 3), 96, 20, new LiteralText("Proxies"), (button) -> client.setScreen(GuiThemes.get().proxiesScreen())));
         addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 3), 96, 20, new LiteralText("Accounts"), (button) -> client.setScreen(GuiThemes.get().accountsScreen())));
         addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 3), 96, 20, new LiteralText("Click GUI"), (button) -> Tabs.get().get(0).openScreen(GuiThemes.get())));
-        addDrawableChild(new ButtonWidget(width / 2 + 108, y + (spacingY * 3), 96, 20, new LiteralText("Check for Update"), (button) -> Version.checkForUpdate(true)));
+        addDrawableChild(new ButtonWidget(width / 2 + 108, y + (spacingY * 3), 96, 20, new LiteralText("Check for Update"), (button) -> UpdateChecker.checkForUpdate(true, true, true, true, true)));
         addDrawableChild(new TexturedButtonWidget(width / 2 - 128, y + (spacingY * 4), 20, 20, 0, 106, 20, ButtonWidget.WIDGETS_TEXTURE, 256, 256, (button) -> client.setScreen(new LanguageOptionsScreen(this, client.options, client.getLanguageManager())), new TranslatableText("narrator.button.language")));
         addDrawableChild(new ButtonWidget(width / 2 - 100, y + (spacingY * 4), 96, 20, new TranslatableText("menu.options"), (button) -> client.setScreen(new OptionsScreen(this, client.options))));
         addDrawableChild(new ButtonWidget(width / 2 + 4, y + (spacingY * 4), 96, 20, new TranslatableText("menu.quit"), (button) -> client.scheduleStop()));
@@ -137,6 +138,14 @@ public class TitleScreen extends Screen {
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+
+        // Update Check
+
+        if (UpdateChecker.didntCheckForLatestTitle) {
+            UpdateChecker.didntCheckForLatestTitle = false;
+
+            UpdateChecker.checkForUpdate(false, true, false, false, false);
+        }
 
         // Background
 
@@ -284,14 +293,6 @@ public class TitleScreen extends Screen {
 
             for (Element element : children()) {
                 if (element instanceof ClickableWidget) ((ClickableWidget) element).setAlpha(255);
-            }
-
-            // Version Check
-
-            if (Version.didntCheckForLatestTitle) {
-                Version.didntCheckForLatestTitle = false;
-
-                Version.checkForUpdate(false);
             }
 
             super.render(matrices, mouseX, mouseY, delta);

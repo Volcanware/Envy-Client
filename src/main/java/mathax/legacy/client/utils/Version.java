@@ -1,16 +1,9 @@
 package mathax.legacy.client.utils;
 
-import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.utils.network.HTTP;
-import mathax.legacy.client.utils.render.prompts.OkPrompt;
-import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
-import net.minecraft.util.Util;
 
 public class Version {
-    public static boolean didntCheckForLatestTitle = false;
-    public static boolean didntCheckForLatest = false;
     private final String string;
     private final int[] numbers;
 
@@ -44,7 +37,7 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 1;
+        return 2;
     }
 
     public static String getDevString() {
@@ -63,97 +56,6 @@ public class Version {
 
     public static Integer getMinecraftProtocol(){
         return SharedConstants.getGameVersion().getProtocolVersion();
-    }
-
-    public static Integer checkLatest() {
-        String latestVersion = getLatest();
-        if (latestVersion.equals(null) || latestVersion.equals("NULL")) return 0;
-        else {
-            Version latestVer = new Version(latestVersion);
-            Version currentVer = new Version(get());
-            if (latestVer.isHigherThan(currentVer)) return 1;
-            if (latestVer.equals(currentVer) && getDev() > 0) return 1;
-            else return 2;
-        }
-    }
-
-    public static String getLatest() {
-        String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
-        if (latestVer == null) return "NULL";
-        else return latestVer.replace("\n", "");
-    }
-
-    // TODO: PROMPT GLITCHING OUT AND APPEARING AGAIN ON OKPROMPT [ISSUE IN METEOR TOO]
-    public static void checkForUpdate(boolean dontDisable) {
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Checking for latest version of MatHax Legacy!");
-        switch (Version.checkLatest()) {
-            case 0:
-                MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Could not check for latest version!");
-                if (dontDisable) {
-                    OkPrompt.create()
-                        .title("Update Check Failed")
-                        .message("Could not get latest MatHax version from the API!")
-                        .message("\n")
-                        .message("Your version: %s", Version.getStylized())
-                        .id("no-update-found-dont-disable")
-                        .show();
-                }
-            case 1:
-                MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "There is a new version of MatHax Legacy, v" + Version.getLatest() + "! You are using v" + Version.getStylized() + "! You can download the newest version on " + MatHaxLegacy.URL + "Download!");
-
-                String id = "new-update";
-                if (dontDisable) id += "-dont-disable";
-
-                YesNoPrompt.create()
-                    .title("New Update")
-                    .message("A new version of MatHax Legacy has been released!")
-                    .message("\n")
-                    .message("Your version: %s", Version.getStylized())
-                    .message("Latest version: v%s", Version.getLatest())
-                    .message("\n")
-                    .message("Do you want to update?")
-                    .message("Using old versions of MatHax Legacy is not recommended")
-                    .message("and could report in issues.")
-                    /*.onNo(() -> OkPrompt.create()
-                        .title("Are you sure?")
-                        .message("Using old versions of MatHax Legacy is not recommended")
-                        .message("and could report in issues.")
-                        .id("new-update-no")
-                        .show())*/
-                    .onYes(() -> {
-                        Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download");
-                    })
-                    .id(id)
-                    .show();
-            case 2:
-                if (getDev() == 0) {
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "!");
-                    if (dontDisable) {
-                        OkPrompt.create()
-                            .title("No New Update")
-                            .message("You are using the latest version of MatHax Legacy!")
-                            .message("\n")
-                            .message("Your version: %s", Version.getStylized())
-                            .message("Latest version: v%s", Version.getLatest())
-                            .id("no-update-dont-disable")
-                            .show();
-                    }
-                } else {
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "You are using the latest version of MatHax Legacy, " + Version.getStylized() + "! [Developer builds do not get update notifications about another developer build of the version they are a developer build of!]");
-                    if (dontDisable) {
-                        OkPrompt.create()
-                            .title("No New Update Found")
-                            .message("Developer builds do not get update notifications")
-                            .message("about another developer build of the")
-                            .message("version they are a developer build of!")
-                            .message("\n")
-                            .message("Your version: %s", Version.getStylized())
-                            .message("Latest version: v%s", Version.getLatest())
-                            .id("no-update-dont-disable")
-                            .show();
-                    }
-                }
-        }
     }
 
     @Override

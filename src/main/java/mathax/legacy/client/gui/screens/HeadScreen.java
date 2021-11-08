@@ -2,7 +2,6 @@ package mathax.legacy.client.gui.screens;
 
 import com.google.common.reflect.TypeToken;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WindowScreen;
 import mathax.legacy.client.gui.widgets.containers.WTable;
