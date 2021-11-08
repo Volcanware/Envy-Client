@@ -23,7 +23,7 @@ public class UpdateChecker {
         if (getDev() > 0) return CheckStatus.Running_Dev;
 
         String latestVersion = getLatest();
-        
+
         if (latestVersion == null) return CheckStatus.Cant_Check;
         else {
             Version latestVer = new Version(latestVersion);

@@ -604,9 +604,7 @@ public class CrystalAura extends Module {
             if (ticks > 3) {
                 it.remove();
                 removed.remove(id);
-            } else {
-                waitingToExplode.put(id, ticks + 1);
-            }
+            } else waitingToExplode.put(id, ticks + 1);
         }
 
         // Check pause settings
@@ -627,9 +625,7 @@ public class CrystalAura extends Module {
     @EventHandler(priority = EventPriority.LOWEST - 666)
     private void onPreTickLast(TickEvent.Pre event) {
         // Rotate to last rotation
-        if (rotate.get() && lastRotationTimer < getLastRotationStopDelay() && !didRotateThisTick) {
-            Rotations.rotate(isLastRotationPos ? Rotations.getYaw(lastRotationPos) : lastYaw, isLastRotationPos ? Rotations.getPitch(lastRotationPos) : lastPitch, -100, null);
-        }
+        if (rotate.get() && lastRotationTimer < getLastRotationStopDelay() && !didRotateThisTick) Rotations.rotate(isLastRotationPos ? Rotations.getYaw(lastRotationPos) : lastYaw, isLastRotationPos ? Rotations.getPitch(lastRotationPos) : lastPitch, -100, null);
     }
 
     @EventHandler
@@ -755,9 +751,7 @@ public class CrystalAura extends Module {
                 Rotations.rotate(yaw, pitch, 50, () -> attackCrystal(crystal));
 
                 breakTimer = breakDelay.get();
-            } else {
-                attacked = false;
-            }
+            } else attacked = false;
         } else {
             attackCrystal(crystal);
             breakTimer = breakDelay.get();
@@ -797,9 +791,7 @@ public class CrystalAura extends Module {
 
     @EventHandler
     private void onPacketSend(PacketEvent.Send event) {
-        if (event.packet instanceof UpdateSelectedSlotC2SPacket) {
-            switchTimer = switchDelay.get();
-        }
+        if (event.packet instanceof UpdateSelectedSlotC2SPacket) switchTimer = switchDelay.get();
     }
 
     // Place
@@ -913,9 +905,7 @@ public class CrystalAura extends Module {
             ((IRaycastContext) raycastContext).set(vec3d, vec3dRayTraceEnd, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player);
             BlockHitResult result = mc.world.raycast(raycastContext);
 
-            if (result != null && result.getType() == HitResult.Type.BLOCK && result.getBlockPos().equals(blockPos)) {
-                return result;
-            }
+            if (result != null && result.getType() == HitResult.Type.BLOCK && result.getBlockPos().equals(blockPos)) return result;
         }
 
         Direction side = blockPos.getY() > vec3d.y ? Direction.DOWN : Direction.UP;
@@ -967,9 +957,7 @@ public class CrystalAura extends Module {
 
     @EventHandler
     private void onPacketSent(PacketEvent.Sent event) {
-        if (event.packet instanceof PlayerMoveC2SPacket) {
-            serverYaw = ((PlayerMoveC2SPacket) event.packet).getYaw((float) serverYaw);
-        }
+        if (event.packet instanceof PlayerMoveC2SPacket) serverYaw = ((PlayerMoveC2SPacket) event.packet).getYaw((float) serverYaw);
     }
 
     public boolean doYawSteps(double targetYaw, double targetPitch) {
@@ -1010,12 +998,8 @@ public class CrystalAura extends Module {
                 if (EntityUtils.getTotalHealth(target) <= facePlaceHealth.get()) return true;
 
                 for (ItemStack itemStack : target.getArmorItems()) {
-                    if (itemStack == null || itemStack.isEmpty()) {
-                        if (facePlaceArmor.get()) return true;
-                    }
-                    else {
-                        if ((double) (itemStack.getMaxDamage() - itemStack.getDamage()) / itemStack.getMaxDamage() * 100 <= facePlaceDurability.get()) return true;
-                    }
+                    if ((itemStack == null || itemStack.isEmpty()) && facePlaceArmor.get()) return true;
+                    else if ((double) (itemStack.getMaxDamage() - itemStack.getDamage()) / itemStack.getMaxDamage() * 100 <= facePlaceDurability.get()) return true;
                 }
             }
         }
@@ -1041,7 +1025,6 @@ public class CrystalAura extends Module {
 
         for (PlayerEntity target : targets) {
             double distance = target.squaredDistanceTo(mc.player);
-
             if (distance < nearestDistance) {
                 nearestTarget = target;
                 nearestDistance = distance;
@@ -1096,9 +1079,7 @@ public class CrystalAura extends Module {
 
         // Fake players
         for (PlayerEntity player : FakePlayerManager.getPlayers()) {
-            if (!player.isDead() && player.isAlive() && Friends.get().shouldAttack(player) && player.distanceTo(mc.player) <= targetRange.get()) {
-                targets.add(player);
-            }
+            if (!player.isDead() && player.isAlive() && Friends.get().shouldAttack(player) && player.distanceTo(mc.player) <= targetRange.get()) targets.add(player);
         }
     }
 
@@ -1110,9 +1091,7 @@ public class CrystalAura extends Module {
 
     @EventHandler
     private void onRender3D(Render3DEvent event) {
-        if (renderTimer > 0 && render.get()) {
-            event.renderer.box(renderPos, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
-        }
+        if (renderTimer > 0 && render.get()) event.renderer.box(renderPos, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
 
         if (breakRenderTimer > 0 && renderBreak.get() && !mc.world.getBlockState(breakRenderPos).isAir()) {
             int preSideA = sideColor.get().a;
@@ -1142,11 +1121,8 @@ public class CrystalAura extends Module {
 
             String text = String.format("%.1f", renderDamage);
             double w = TextRenderer.get().getWidth(text) / 2;
-            if (textColorMode.get() == ColorMode.Damage) {
-                TextRenderer.get().render(text, -w, 0, getDamageTextColor(renderDamage), true);
-            } else {
-                TextRenderer.get().render(text, -w, 0, textColor.get(), true);
-            }
+            if (textColorMode.get() == ColorMode.Damage) TextRenderer.get().render(text, -w, 0, getDamageTextColor(renderDamage), true);
+            else TextRenderer.get().render(text, -w, 0, textColor.get(), true);
 
             TextRenderer.get().end();
             NametagUtils.end();
