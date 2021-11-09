@@ -15,7 +15,7 @@ import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.proxies.Proxies;
-import mathax.legacy.client.utils.UpdateChecker;
+import mathax.legacy.client.utils.Version;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -63,14 +63,14 @@ public class Systems {
 
     @EventHandler
     private void onGameJoined(GameJoinedEvent event) {
-        UpdateChecker.checkForLatest = true;
+        Version.UpdateChecker.checkForLatest = true;
     }
 
     // Game leave
 
     @EventHandler
     private static void onGameLeft(GameLeftEvent event) {
-        UpdateChecker.checkForLatest = true;
+        Version.UpdateChecker.checkForLatest = true;
         save();
     }
 

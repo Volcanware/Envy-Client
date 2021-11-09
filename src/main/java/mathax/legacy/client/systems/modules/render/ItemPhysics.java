@@ -40,16 +40,14 @@ public class ItemPhysics extends Module {
         boolean renderBlockFlat = false;
 
         if (event.itemEntity.getStack().getItem() instanceof BlockItem && !(event.itemEntity.getStack().getItem() instanceof AliasedBlockItem)) {
-            Block b = ((BlockItem) event.itemEntity.getStack().getItem()).getBlock();
-            VoxelShape shape = b.getOutlineShape(b.getDefaultState(), event.itemEntity.world, event.itemEntity.getBlockPos(), ShapeContext.absent());
+            Block block = ((BlockItem) event.itemEntity.getStack().getItem()).getBlock();
+            VoxelShape shape = block.getOutlineShape(block.getDefaultState(), event.itemEntity.world, event.itemEntity.getBlockPos(), ShapeContext.absent());
 
             if (shape.getMax(Direction.Axis.Y) <= .5) renderBlockFlat = true;
         }
 
         Item item = event.itemEntity.getStack().getItem();
-        if (item instanceof BlockItem && !(item instanceof AliasedBlockItem) && !renderBlockFlat) {
-            event.matrixStack.translate(0, -0.06, 0);
-        }
+        if (item instanceof BlockItem && !(item instanceof AliasedBlockItem) && !renderBlockFlat) event.matrixStack.translate(0, -0.06, 0);
 
         if (!renderBlockFlat) {
             event.matrixStack.translate(0, .185, .0);
@@ -59,7 +57,7 @@ public class ItemPhysics extends Module {
 
         boolean isAboveWater = event.itemEntity.world.getBlockState(event.itemEntity.getBlockPos()).getFluidState().getFluid().isIn(FluidTags.WATER);
         if (!event.itemEntity.isOnGround() && (!event.itemEntity.isSubmergedInWater() && !isAboveWater)) {
-            float rotation = ((float) event.itemEntity.getItemAge() + event.tickDelta) / 20.0F + event.itemEntity.uniqueOffset; // calculate rotation based on age and ticks
+            float rotation = ((float) event.itemEntity.getItemAge() + event.tickDelta) / 20.0F + event.itemEntity.uniqueOffset; // Calculate rotation based on age and ticks
 
             if (!renderBlockFlat) {
                 event.matrixStack.translate(0, .185, .0);
@@ -72,13 +70,8 @@ public class ItemPhysics extends Module {
                 event.matrixStack.translate(0, -.065, 0);
             }
 
-            if (event.itemEntity.getStack().getItem() instanceof AliasedBlockItem) {
-                event.matrixStack.translate(0, 0, .195);
-            }
-
-            else if (!(event.itemEntity.getStack().getItem() instanceof BlockItem)) {
-                event.matrixStack.translate(0, 0, .195);
-            }
+            if (event.itemEntity.getStack().getItem() instanceof AliasedBlockItem) event.matrixStack.translate(0, 0, .195);
+            else if (!(event.itemEntity.getStack().getItem() instanceof BlockItem)) event.matrixStack.translate(0, 0, .195);
         }
 
         else if (event.itemEntity.getStack().getItem() instanceof AliasedBlockItem){
@@ -95,24 +88,16 @@ public class ItemPhysics extends Module {
 
 
         else {
-            if (!(event.itemEntity.getStack().getItem() instanceof BlockItem)) {
-                event.matrixStack.translate(0, 0, .195);
-            }
+            if (!(event.itemEntity.getStack().getItem() instanceof BlockItem)) event.matrixStack.translate(0, 0, .195);
 
             event.matrixStack.translate(0, .185, .0);
             event.matrixStack.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion((float) rotator.getRotation().z));
             event.matrixStack.translate(0, -.185, .0);
         }
 
-        if (event.itemEntity.world.getBlockState(event.itemEntity.getBlockPos()).getBlock().equals(Blocks.SOUL_SAND)) {
-            event.matrixStack.translate(0, 0, -.1);
-        }
+        if (event.itemEntity.world.getBlockState(event.itemEntity.getBlockPos()).getBlock().equals(Blocks.SOUL_SAND)) event.matrixStack.translate(0, 0, -.1);
 
-        if (event.itemEntity.getStack().getItem() instanceof BlockItem) {
-            if (((BlockItem) event.itemEntity.getStack().getItem()).getBlock() instanceof SkullBlock) {
-                event.matrixStack.translate(0, .11, 0);
-            }
-        }
+        if (event.itemEntity.getStack().getItem() instanceof BlockItem && ((BlockItem) event.itemEntity.getStack().getItem()).getBlock() instanceof SkullBlock) event.matrixStack.translate(0, .11, 0);
 
         float scaleX = bakedModel.getTransformation().ground.scale.getX();
         float scaleY = bakedModel.getTransformation().ground.scale.getY();
@@ -147,13 +132,11 @@ public class ItemPhysics extends Module {
 
             event.matrixStack.pop();
 
-            if (!hasDepthInGui) {
-                event.matrixStack.translate(0.0F * scaleX, 0.0F * scaleY, 0.0625F * scaleZ);
-            }
+            if (!hasDepthInGui) event.matrixStack.translate(0.0F * scaleX, 0.0F * scaleY, 0.0625F * scaleZ);
         }
 
         event.matrixStack.pop();
-//        mc.getEntityRenderDispatcher().getRenderer(event.itemEntity).render(event.itemEntity, event.f, event.tickDelta, event.matrixStack, event.vertexConsumerProvider, event.light);
+        //mc.getEntityRenderDispatcher().getRenderer(event.itemEntity).render(event.itemEntity, event.f, event.tickDelta, event.matrixStack, event.vertexConsumerProvider, event.light);
         event.setCancelled(true);
     }
 

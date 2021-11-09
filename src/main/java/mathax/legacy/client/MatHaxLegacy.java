@@ -85,7 +85,8 @@ public class MatHaxLegacy implements ClientModInitializer {
     public static final String API_URL = "https://api.mathaxclient.xyz/";
 
     public static List<String> getDeveloperUUIDs() {
-        return Arrays.asList(
+        /* Get from API, too lazy to do it now.
+        else */return Arrays.asList(
 
             // MATEJKO06
             "3e24ef27e66d45d2bf4b2c7ade68ff47",
@@ -95,7 +96,8 @@ public class MatHaxLegacy implements ClientModInitializer {
     }
 
     public static List<String> getSplashes() {
-        return Arrays.asList(
+        /* Get from API, too lazy to do it now.
+        else */return Arrays.asList(
 
             // SPLASHES
             Formatting.RED + "MatHax on top!",

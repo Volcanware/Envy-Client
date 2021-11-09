@@ -1,12 +1,12 @@
 package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.utils.UpdateChecker;
 import mathax.legacy.client.gui.GuiThemes;
 import mathax.legacy.client.gui.screens.server.servermanager.ServerManagerScreen;
 import mathax.legacy.client.mixininterface.IMultiplayerScreen;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.systems.proxies.Proxy;
+import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.utils.misc.LastServerInfo;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.systems.modules.Modules;
@@ -44,7 +44,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
 
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
-        UpdateChecker.checkForLatest = true;
+        Version.UpdateChecker.checkForLatest = true;
 
         addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, new LiteralText("Accounts"), button -> client.setScreen(GuiThemes.get().accountsScreen())));
         addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> client.setScreen(GuiThemes.get().proxiesScreen())));
