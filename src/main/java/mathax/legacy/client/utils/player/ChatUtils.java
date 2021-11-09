@@ -95,14 +95,14 @@ public class ChatUtils {
     }
 
     private static BaseText getMatHaxPrefix() {
-        BaseText mathax = new LiteralText("MatHax Legacy");
-        mathax.setStyle(mathax.getStyle().withColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
+        BaseText text = new LiteralText("MatHax Legacy");
+        text.setStyle(text.getStyle().withColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
 
         BaseText prefix = new LiteralText("");
 
         prefix.setStyle(prefix.getStyle().withFormatting(Formatting.GRAY));
         prefix.append("[");
-        prefix.append(mathax);
+        prefix.append(text);
         prefix.append("] ");
 
         return prefix;

@@ -61,15 +61,15 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
         super(theme, "Server Discovery");
         this.multiplayerScreen = multiplayerScreen;
         this.parent = parent;
-        ipBox = theme.textBox("127.0.0.1");
-        versionBox = theme.textBox("1.17; 1.16; 1.15; 1.14; 1.13; 1.12; 1.11; 1.10; 1.9; 1.8");
-        maxThreadsBox = theme.intEdit(128, 1, 256, true);
-        stateLabel = theme.label("");
-        checkedLabel = theme.label("");
-        searchButton = theme.button("Search");
-        workingLabel = theme.label("");
-        scanPortsBox = theme.checkbox(true);
-        state = ServerFinderState.NOT_RUNNING;
+        this.ipBox = theme.textBox("127.0.0.1");
+        this.versionBox = theme.textBox("1.17; 1.16; 1.15; 1.14; 1.13; 1.12; 1.11; 1.10; 1.9; 1.8");
+        this.maxThreadsBox = theme.intEdit(128, 1, 256, true);
+        this.stateLabel = theme.label("");
+        this.checkedLabel = theme.label("");
+        this.searchButton = theme.button("Search");
+        this.workingLabel = theme.label("");
+        this.scanPortsBox = theme.checkbox(true);
+        this.state = ServerFinderState.NOT_RUNNING;
         newSearch();
         instance = this;
     }

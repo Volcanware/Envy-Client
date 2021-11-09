@@ -96,6 +96,7 @@ public class MatHaxLegacy implements ClientModInitializer {
     }
 
     public static List<String> getSplashes() {
+        MinecraftClient minecraft = MinecraftClient.getInstance();
         /* Get from API, too lazy to do it now.
         else */return Arrays.asList(
 
@@ -118,7 +119,11 @@ public class MatHaxLegacy implements ClientModInitializer {
             Formatting.YELLOW + "owned",
             Formatting.YELLOW + "your mom :joy:",
             Formatting.YELLOW + "BOOM BOOM BOOM!",
-            Formatting.YELLOW + "I <3 forks"
+            Formatting.YELLOW + "I <3 forks",
+
+            // PERSONALIZED
+            Formatting.YELLOW + "You're cool, " + Formatting.GRAY + minecraft.getSession().getUsername(),
+            Formatting.YELLOW + "Owning with " + Formatting.GRAY + minecraft.getSession().getUsername()
 
         );
     }

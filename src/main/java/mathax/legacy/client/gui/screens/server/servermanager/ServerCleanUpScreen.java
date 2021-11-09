@@ -26,12 +26,12 @@ public class ServerCleanUpScreen extends WindowScreen {
         super(theme, "Clean Up");
         this.multiplayerScreen = multiplayerScreen;
         this.parent = parent;
-        removeUnknown = theme.checkbox(true);
-        removeOutdated = theme.checkbox(false);
-        removeFailed = theme.checkbox(true);
-        removeFound = theme.checkbox(false);
-        removeAll = theme.checkbox(false);
-        rename = theme.checkbox(false);
+        this.removeUnknown = theme.checkbox(true);
+        this.removeOutdated = theme.checkbox(false);
+        this.removeFailed = theme.checkbox(true);
+        this.removeFound = theme.checkbox(false);
+        this.removeAll = theme.checkbox(false);
+        this.rename = theme.checkbox(false);
     }
 
     @Override
@@ -79,21 +79,15 @@ public class ServerCleanUpScreen extends WindowScreen {
 
     private boolean shouldRemove(ServerInfo server) {
         if (server == null) return false;
-
         if (removeUnknown.checked && isUnknownHost(server)) return true;
-
         if (removeOutdated.checked && !isSameProtocol(server)) return true;
-
         if (removeFailed.checked && isFailedPing(server)) return true;
-
         return removeFound.checked && isFoundServer(server);
     }
 
     private boolean isUnknownHost(ServerInfo server) {
         if (server.label == null) return false;
-
         if (server.label.getString() == null) return false;
-
         return server.label.getString().equals(Formatting.DARK_RED + "Can't resolve hostname");
     }
 

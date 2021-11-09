@@ -262,10 +262,10 @@ public class Utils {
 
     public static Dimension getDimension() {
         switch (mc.world.getRegistryKey().getValue().getPath()) {
-            case "the_nether": {
+            case "the_nether" -> {
                 return Dimension.Nether;
             }
-            case "the_end": {
+            case "the_end" -> {
                 return Dimension.End;
             }
         }
