@@ -115,7 +115,8 @@ public class MatHaxLegacy implements ClientModInitializer {
             Formatting.YELLOW + "too ez",
             Formatting.YELLOW + "owned",
             Formatting.YELLOW + "your mom :joy:",
-            Formatting.YELLOW + "BOOM BOOM BOOM!"
+            Formatting.YELLOW + "BOOM BOOM BOOM!",
+            Formatting.YELLOW + "I <3 forks"
 
         );
     }
