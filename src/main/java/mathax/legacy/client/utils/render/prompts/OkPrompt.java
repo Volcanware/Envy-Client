@@ -71,11 +71,8 @@ public class OkPrompt {
         if (id == null) this.id(this.title);
         if (Config.get().dontShowAgainPrompts.contains(id)) return;
 
-        if (!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(() -> mc.setScreen(new PromptScreen(theme)));
-        } else {
-            mc.setScreen(new PromptScreen(theme));
-        }
+        if (!RenderSystem.isOnRenderThread()) RenderSystem.recordRenderCall(() -> mc.setScreen(new PromptScreen(theme)));
+        else mc.setScreen(new PromptScreen(theme));
     }
 
     public class PromptScreen extends WindowScreen {

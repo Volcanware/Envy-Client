@@ -24,10 +24,8 @@ public class YesNoPrompt {
     private final List<String> messages = new ArrayList<>();
     private String id = null;
 
-    private Runnable onYes = () -> {
-    };
-    private Runnable onNo = () -> {
-    };
+    private Runnable onYes = () -> {};
+    private Runnable onNo = () -> {};
 
     private YesNoPrompt() {
         this(GuiThemes.get(), mc.currentScreen);

@@ -47,7 +47,7 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 4;
+        return 5;
     }
 
     public static String getDevString() {
@@ -144,16 +144,23 @@ public class Version {
                 .message("Do you want to update?")
                 .message("Using old versions of MatHax Legacy is not recommended")
                 .message("and could report in issues.")
-                /*.onNo(() -> OkPrompt.create()
-                    .title("Are you sure?")
-                    .message("Using old versions of MatHax Legacy is not recommended")
-                    .message("and could report in issues.")
-                    .id("new-update-no")
-                    .show())*/
+                //.onNo(() -> foundNoPrompt(cantDisable))
                 .onYes(() -> Util.getOperatingSystem().open(MatHaxLegacy.URL + "Download"))
                 .id(id)
                 .show();
         }
+
+        /*private static void foundNoPrompt(boolean cantDisable) {
+            String id = "new-update-no";
+            if (cantDisable) id += "-cant-disable";
+
+            OkPrompt.create()
+                .title("Are you sure?")
+                .message("Using old versions of MatHax Legacy is not recommended")
+                .message("and could report in issues.")
+                .id(id)
+                .show();
+        }*/
 
         private static void latestPrompt(boolean cantDisable) {
             String id = "no-new-update";
