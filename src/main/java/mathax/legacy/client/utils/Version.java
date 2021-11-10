@@ -109,7 +109,7 @@ public class Version {
                     if (latest) latestPrompt(cantDisable);
                 }
                 case Running_Dev -> {
-                    MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Developer builds do not get update notifications about another developer build of the version they are a developer build of! You are running " + get() + "!");
+                    MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Developer builds do not get update notifications about another developer build of the version they are a developer build of! You are running " + getStylized() + "!");
                     if (dev) devPrompt(cantDisable);
                 }
             }
