@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.misc;
+package mathax.legacy.client.systems.modules.chat;
 
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
@@ -40,7 +40,7 @@ public class StayHydrated extends Module {
     );
 
     public StayHydrated() {
-        super(Categories.Misc, Items.WATER_BUCKET, "stay-hydrated", "Notifies you when its time to drink. #StayHydrated");
+        super(Categories.Chat, Items.WATER_BUCKET, "stay-hydrated", "Notifies you when its time to drink. #StayHydrated");
 
         runInMainMenu = true;
     }

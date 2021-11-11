@@ -40,7 +40,7 @@ public class AutoFish extends Module {
         .description("The amount of ticks to wait before recasting automatically.")
         .defaultValue(10)
         .min(0)
-        .sliderMax(60)
+        .sliderRange(0, 60)
         .build()
     );
 
@@ -49,7 +49,7 @@ public class AutoFish extends Module {
         .description("The amount of ticks to wait before catching the fish.")
         .defaultValue(6)
         .min(0)
-        .sliderMax(60)
+        .sliderRange(0, 60)
         .build()
     );
 
@@ -58,7 +58,7 @@ public class AutoFish extends Module {
         .description("The amount of ticks to wait before throwing the bobber.")
         .defaultValue(14)
         .min(0)
-        .sliderMax(60)
+        .sliderRange(0, 60)
         .build()
     );
 
@@ -76,6 +76,7 @@ public class AutoFish extends Module {
         .description("The detection range of a splash. Lower values will not work when the TPS is low.")
         .defaultValue(10)
         .min(0)
+        .sliderRange(0, 20)
         .build()
     );
 

@@ -52,6 +52,7 @@ public class Commands extends System<Commands> {
         add(new NotebotCommand());
         add(new PanicCommand());
         add(new PeekCommand());
+        add(new PingCommand());
         add(new PluginsCommand());
         add(new PrefixCommand());
         add(new ProfilesCommand());

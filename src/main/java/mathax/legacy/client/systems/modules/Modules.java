@@ -496,6 +496,7 @@ public class Modules extends System<Modules> {
         add(new NewChunks());
         add(new NoBob());
         add(new NoRender());
+        //add(new PenisESP());
         add(new PopChams());
         add(new SkeletonESP());
         //add(new SmoothChunks());
@@ -570,6 +571,7 @@ public class Modules extends System<Modules> {
         add(new Notifier());
         add(new Restarts2b2t());
         add(new Spam());
+        add(new StayHydrated());
     }
 
     private void initMisc() {
@@ -595,13 +597,12 @@ public class Modules extends System<Modules> {
         add(new PacketCanceller());
         add(new PacketSpammer());
         add(new Panic());
-        //add(new PenisESP());
+        //add(new PingSpoof());
         add(new Printer());
         add(new SoundBlocker());
         add(new SoundLocator());
         add(new SpinBot());
         add(new Swarm());
-        add(new StayHydrated());
         add(new TPSSync());
         add(new Twerk());
         add(new VanillaSpoof());
