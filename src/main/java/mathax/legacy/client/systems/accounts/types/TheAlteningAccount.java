@@ -42,15 +42,6 @@ public class TheAlteningAccount extends Account<TheAlteningAccount> {
     }
 
     @Override
-    public boolean fetchHead() {
-        try {
-            return cache.makeHead("https://www.mc-heads.net/avatar/" + cache.uuid + "/8");
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @Override
     public boolean login() {
         YggdrasilMinecraftSessionService service = (YggdrasilMinecraftSessionService) mc.getSessionService();
         AccountUtils.setBaseUrl(service, SESSION + "/session/minecraft/");
@@ -66,7 +57,7 @@ public class TheAlteningAccount extends Account<TheAlteningAccount> {
             cache.username = auth.getSelectedProfile().getName();
             return true;
         } catch (AuthenticationException e) {
-            MatHaxLegacy.LOG.error(MatHaxLegacy.logPrefix + "Failed to login with TheAltening.");
+            MatHaxLegacy.LOG.error(MatHaxLegacy.logPrefix + "Failed to login with The Altening.");
             return false;
         }
     }

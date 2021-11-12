@@ -2,12 +2,8 @@ package mathax.legacy.client.systems.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.legacy.client.systems.commands.Command;
-import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.systems.modules.Modules;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.command.CommandSource;
-
-import java.util.ArrayList;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 

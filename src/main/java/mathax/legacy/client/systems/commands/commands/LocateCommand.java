@@ -49,7 +49,7 @@ public class LocateCommand extends Command {
         Blocks.DARK_PRISMARINE
     );
 
-    private  final List<Block> strongholdBlocks = Arrays.asList(
+    private final List<Block> strongholdBlocks = Arrays.asList(
         Blocks.END_PORTAL_FRAME
     );
 

@@ -86,6 +86,8 @@ public class MatHaxLegacy implements ClientModInitializer {
 
     public static List<String> getDeveloperUUIDs() {
         /* Get from API, too lazy to do it now.
+
+        if (developers != null) return developers;
         else */return Arrays.asList(
 
             // MATEJKO06
@@ -96,13 +98,14 @@ public class MatHaxLegacy implements ClientModInitializer {
     }
 
     public static List<String> getSplashes() {
-        MinecraftClient minecraft = MinecraftClient.getInstance();
         /* Get from API, too lazy to do it now.
+
+        if (splashes != null) return splashes;
         else */return Arrays.asList(
 
             // SPLASHES
             Formatting.RED + "MatHax on top!",
-            Formatting.GRAY + "Matejko06 " + Formatting.RED + "based god",
+            Formatting.GRAY + "Matejko06" + Formatting.RED + " based god",
             Formatting.RED + "MatHaxClient.xyz",
             Formatting.RED + "MatHaxClient.xyz/Discord",
             Formatting.RED + Version.getStylized(),
@@ -120,10 +123,12 @@ public class MatHaxLegacy implements ClientModInitializer {
             Formatting.YELLOW + "your mom :joy:",
             Formatting.YELLOW + "BOOM BOOM BOOM!",
             Formatting.YELLOW + "I <3 forks",
+            Formatting.YELLOW + "based",
+            Formatting.YELLOW + "Pog",
 
             // PERSONALIZED
-            Formatting.YELLOW + "You're cool, " + Formatting.GRAY + minecraft.getSession().getUsername(),
-            Formatting.YELLOW + "Owning with " + Formatting.GRAY + minecraft.getSession().getUsername()
+            Formatting.YELLOW + "You're cool, " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername(),
+            Formatting.YELLOW + "Owning with " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername()
 
         );
     }
