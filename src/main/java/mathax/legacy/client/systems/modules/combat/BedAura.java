@@ -7,7 +7,7 @@ import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.systems.modules.world.AntiGhostBlock;
+import mathax.legacy.client.systems.modules.misc.AntiGhostBlock;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.SortPriority;
@@ -495,7 +495,7 @@ public class BedAura extends Module {
             BlockPos bedPos = blockEntity.getPos();
             Vec3d bedVec = Utils.vec3d(bedPos);
 
-            if (Modules.get().isActive(AntiGhostBlock.class) && Modules.get().get(AntiGhostBlock.class).bedAuraFix.get() && PlayerUtils.distanceTo(bedPos) <= mc.interactionManager.getReachDistance()) return bedPos;
+            if (Modules.get().isActive(AntiGhostBlock.class) && PlayerUtils.distanceTo(bedPos) <= mc.interactionManager.getReachDistance()) return bedPos;
             if (PlayerUtils.distanceTo(bedVec) <= mc.interactionManager.getReachDistance() && DamageUtils.bedDamage(target, bedVec) >= minDamage.get() && DamageUtils.bedDamage(mc.player, bedVec) < maxSelfDamage.get() && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - DamageUtils.bedDamage(mc.player, bedVec) > 0)) return bedPos;
         }
 

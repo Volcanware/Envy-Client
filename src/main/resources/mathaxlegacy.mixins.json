@@ -147,6 +147,7 @@
     "TextHandlerAccessor",
     "TextVisitFactoryMixin",
     "TitleScreenMixin",
+    "TotemParticleMixin",
     "TridentItemMixin",
     "Vec3dMixin",
     "WindowMixin",

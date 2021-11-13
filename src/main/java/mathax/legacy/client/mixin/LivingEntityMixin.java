@@ -6,6 +6,7 @@ import mathax.legacy.client.events.entity.TookDamageEvent;
 import mathax.legacy.client.events.entity.player.CanWalkOnFluidEvent;
 import mathax.legacy.client.systems.modules.movement.AntiLevitation;
 import mathax.legacy.client.systems.modules.crash.OffhandCrash;
+import mathax.legacy.client.systems.modules.movement.Moses;
 import mathax.legacy.client.systems.modules.render.HandView;
 import mathax.legacy.client.systems.modules.render.NoRender;
 import mathax.legacy.client.systems.modules.Modules;
@@ -86,5 +87,27 @@ public abstract class LivingEntityMixin extends Entity {
         }
 
         return hand;
+    }
+
+    @Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isTouchingWater()Z"))
+    private boolean travelIsTouchingWaterProxy(LivingEntity self) {
+        return (!self.isTouchingWater() || !Modules.get().isActive(Moses.class)) && self.isTouchingWater();
+    }
+
+    @Redirect(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isInLava()Z"))
+    private boolean tickMovementIsInLavaProxy(LivingEntity self) {
+        if (self.isInLava() && Modules.get().isActive(Moses.class)) return !Modules.get().get(Moses.class).lava.get();
+        return self.isInLava();
+    }
+
+    @Redirect(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isTouchingWater()Z"))
+    private boolean tickIsTouchingWaterProxy(LivingEntity self) {
+        return (!self.isTouchingWater() || !Modules.get().isActive(Moses.class)) && self.isTouchingWater();
+    }
+
+    @Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isInLava()Z"))
+    private boolean travelIsInLavaProxy(LivingEntity self) {
+        if (self.isInLava() && Modules.get().isActive(Moses.class)) return !Modules.get().get(Moses.class).lava.get();
+        return self.isInLava();
     }
 }

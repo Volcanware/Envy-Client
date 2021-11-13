@@ -1,6 +1,7 @@
 package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.events.entity.player.InteractEvent;
 import mathax.legacy.client.events.entity.player.ItemUseCrosshairTargetEvent;
 import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.events.game.OpenScreenEvent;
@@ -13,6 +14,8 @@ import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.hit.HitResult;
@@ -120,6 +123,16 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
     @Inject(method = "onResolutionChanged", at = @At("TAIL"))
     private void onResolutionChanged(CallbackInfo info) {
         MatHaxLegacy.EVENT_BUS.post(WindowResizedEvent.get());
+    }
+
+    @Redirect(method = "handleBlockBreaking", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"))
+    public boolean breakBlockCheck(ClientPlayerEntity clientPlayerEntity) {
+        return MatHaxLegacy.EVENT_BUS.post(InteractEvent.get(clientPlayerEntity.isUsingItem())).usingItem;
+    }
+
+    @Redirect(method = "doItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;isBreakingBlock()Z"))
+    public boolean useItemBreakCheck(ClientPlayerInteractionManager clientPlayerInteractionManager) {
+        return MatHaxLegacy.EVENT_BUS.post(InteractEvent.get(clientPlayerInteractionManager.isBreakingBlock())).usingItem;
     }
 
     // Time delta

@@ -448,6 +448,7 @@ public class Modules extends System<Modules> {
         add(new HighJump());
         add(new Jesus());
         add(new LongJump());
+        add(new Moses());
         add(new NoFall());
         add(new NoSlow());
         add(new PacketFly());
@@ -477,6 +478,7 @@ public class Modules extends System<Modules> {
         add(new CameraTweaks());
         add(new Chams());
         add(new CityESP());
+        add(new Confetti());
         //add(new CustomCrosshair());
         add(new EntityOwner());
         add(new ESP());
@@ -520,7 +522,6 @@ public class Modules extends System<Modules> {
         add(new AirPlace());
         add(new Ambience());
         add(new AntiCactus());
-        add(new AntiGhostBlock());
         add(new AutoBreed());
         add(new AutoBrewer());
         add(new AutoExtinguish());
@@ -579,6 +580,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initMisc() {
+        add(new AntiGhostBlock());
         add(new AntiPacketKick());
         add(new AutoAnvilDupe());
         add(new AutoClicker());
@@ -593,6 +595,7 @@ public class Modules extends System<Modules> {
         add(new ItemFrameDupe());
         add(new MessageLagger());
         add(new MiddleClickExtra());
+        add(new MultiTask());
         add(new NameProtect());
         add(new Notebot());
         add(new PacketCanceller());

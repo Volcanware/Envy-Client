@@ -5,6 +5,7 @@ import mathax.legacy.client.events.entity.LivingEntityMoveEvent;
 import mathax.legacy.client.events.entity.player.JumpVelocityMultiplierEvent;
 import mathax.legacy.client.events.entity.player.PlayerMoveEvent;
 import mathax.legacy.client.systems.modules.combat.Hitboxes;
+import mathax.legacy.client.systems.modules.movement.Moses;
 import mathax.legacy.client.systems.modules.movement.NoSlow;
 import mathax.legacy.client.systems.modules.movement.Velocity;
 import mathax.legacy.client.systems.modules.render.ESP;
@@ -47,9 +48,7 @@ public abstract class EntityMixin {
         Vec3d vec = state.getVelocity(world, pos);
 
         Velocity velocity = Modules.get().get(Velocity.class);
-        if ((Object) this == mc.player && velocity.isActive() && velocity.liquids.get()) {
-            vec = vec.multiply(velocity.getHorizontal(velocity.liquidsHorizontal), velocity.getVertical(velocity.liquidsVertical), velocity.getHorizontal(velocity.liquidsHorizontal));
-        }
+        if ((Object) this == mc.player && velocity.isActive() && velocity.liquids.get()) vec = vec.multiply(velocity.getHorizontal(velocity.liquidsHorizontal), velocity.getVertical(velocity.liquidsVertical), velocity.getHorizontal(velocity.liquidsHorizontal));
 
         return vec;
     }
@@ -78,18 +77,13 @@ public abstract class EntityMixin {
 
     @Inject(method = "move", at = @At("HEAD"))
     private void onMove(MovementType type, Vec3d movement, CallbackInfo info) {
-        if ((Object) this == mc.player) {
-            MatHaxLegacy.EVENT_BUS.post(PlayerMoveEvent.get(type, movement));
-        } else if ((Object) this instanceof LivingEntity) {
-            MatHaxLegacy.EVENT_BUS.post(LivingEntityMoveEvent.get((LivingEntity) (Object) this, movement));
-        }
+        if ((Object) this == mc.player) MatHaxLegacy.EVENT_BUS.post(PlayerMoveEvent.get(type, movement));
+        else if ((Object) this instanceof LivingEntity) MatHaxLegacy.EVENT_BUS.post(LivingEntityMoveEvent.get((LivingEntity) (Object) this, movement));
     }
 
     @Inject(method = "getTeamColorValue", at = @At("HEAD"), cancellable = true)
     private void onGetTeamColorValue(CallbackInfoReturnable<Integer> info) {
-        if (Outlines.renderingOutlines) {
-            info.setReturnValue(Modules.get().get(ESP.class).getColor((Entity) (Object) this).getPacked());
-        }
+        if (Outlines.renderingOutlines) info.setReturnValue(Modules.get().get(ESP.class).getColor((Entity) (Object) this).getPacked());
     }
 
     @Redirect(method = "getVelocityMultiplier", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getBlock()Lnet/minecraft/block/Block;"))
@@ -101,8 +95,7 @@ public abstract class EntityMixin {
 
     @Inject(method = "isInvisibleTo(Lnet/minecraft/entity/player/PlayerEntity;)Z", at = @At("HEAD"), cancellable = true)
     private void isInvisibleToCanceller(PlayerEntity player, CallbackInfoReturnable<Boolean> info) {
-        if (Modules.get().get(NoRender.class).noInvisibility()
-            || Modules.get().get(ESP.class).shouldDrawOutline((Entity) (Object) this)) info.setReturnValue(false);
+        if (Modules.get().get(NoRender.class).noInvisibility() || Modules.get().get(ESP.class).shouldDrawOutline((Entity) (Object) this)) info.setReturnValue(false);
     }
 
     @Inject(method = "getTargetingMargin", at = @At("HEAD"), cancellable = true)
@@ -114,5 +107,10 @@ public abstract class EntityMixin {
     @Inject(method = "isInvisibleTo", at = @At("HEAD"), cancellable = true)
     private void onIsInvisibleTo(PlayerEntity player, CallbackInfoReturnable<Boolean> info) {
         if (player == null) info.setReturnValue(false);
+    }
+
+    @Redirect(method = "updateSwimming", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isSprinting()Z"))
+    private boolean updateSwimmingisSprintingProxy(Entity self) {
+        return (!self.isSprinting() || !Modules.get().isActive(Moses.class)) && self.isSprinting();
     }
 }
