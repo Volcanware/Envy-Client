@@ -1,5 +1,6 @@
 package mathax.legacy.client.asm;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.asm.transformers.CanvasWorldRendererTransformer;
 import mathax.legacy.client.asm.transformers.GameRendererTransformer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -64,7 +65,7 @@ public class Asm {
     private void export(String name, byte[] bytes) {
         if (export) {
             try {
-                Path path = Path.of(FabricLoader.getInstance().getGameDir().toString(), ".mathaxlegacy.asm.out", name.replace('.', '/') + ".class");
+                Path path = Path.of(MatHaxLegacy.GAME_FOLDER.getPath(), ".mathaxlegacy.asm.out", name.replace('.', '/') + ".class");
                 new File(path.toUri()).getParentFile().mkdirs();
                 Files.write(path, bytes);
             } catch (IOException e) {

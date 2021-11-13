@@ -2,7 +2,6 @@ package mathax.legacy.client.utils.music;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import mathax.legacy.client.MatHaxLegacy;
-import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +10,7 @@ import java.util.*;
 
 public class PlaylistUtils {
     private static final Map<String, AudioPlaylist> playlists = new HashMap<>();
-    private static final Path filePath = FabricLoader.getInstance().getGameDir().resolve(MatHaxLegacy.FOLDER.toPath()).resolve("Playlists.txt");
+    private static final Path filePath = MatHaxLegacy.GAME_FOLDER.toPath().resolve(MatHaxLegacy.MUSIC_FOLDER.toPath()).resolve("Playlists.txt");
 
     public static void load() {
         playlists.clear();
@@ -28,9 +27,7 @@ public class PlaylistUtils {
 
         try {
             Files.lines(filePath).forEach(s -> {
-                if (s != null) {
-                    SearchUtils.search(s, playlist -> playlists.put(s, playlist));
-                }
+                if (s != null) SearchUtils.search(s, playlist -> playlists.put(s, playlist));
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,11 +70,10 @@ public class PlaylistUtils {
         List<Map.Entry<String, AudioPlaylist>> l = new ArrayList<>(playlists.entrySet());
         l.sort((e1, e2) -> {
             int res = String.CASE_INSENSITIVE_ORDER.compare(e1.getValue().getName(), e2.getValue().getName());
-            if (res == 0) {
-                res = e1.getValue().getName().compareTo(e2.getValue().getName());
-            }
+            if (res == 0) res = e1.getValue().getName().compareTo(e2.getValue().getName());
             return res;
         });
+
         return l;
     }
 }

@@ -70,8 +70,10 @@ public class MatHaxLegacy implements ClientModInitializer {
     public static MatHaxLegacy INSTANCE;
     public static final IEventBus EVENT_BUS = new EventBus();
 
-    public static final File FOLDER = new File(FabricLoader.getInstance().getGameDir().toString(), "MatHax/Legacy");
+    public static final File GAME_FOLDER = new File(FabricLoader.getInstance().getGameDir().toString());
+    public static final File FOLDER = new File(GAME_FOLDER, "MatHax/Legacy");
     public static final File VERSION_FOLDER = new File(FOLDER + "/" + Version.getMinecraft());
+    public static final File MUSIC_FOLDER = new File(FOLDER + "/Music");
 
     public final Color MATHAX_COLOR = new Color(230, 75, 100, 255);
     public final int MATHAX_COLOR_INT = Color.fromRGBA(230, 75, 100, 255);

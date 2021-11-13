@@ -117,7 +117,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
     private void saveToFile() {
         int newIPs = 0;
 
-        Path filePath = FabricLoader.getInstance().getGameDir().resolve("servers.txt");
+        Path filePath = MatHaxLegacy.GAME_FOLDER.toPath().resolve("servers.txt");
         Set<IPAddress> hashedIPs = new HashSet<>();
         if (Files.exists(filePath)) {
             try {
