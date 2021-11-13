@@ -56,7 +56,7 @@ public class Offhand extends Module {
         .build()
     );
 
-    private final Setting<Boolean> crystalCa = sgGeneral.add(new BoolSetting.Builder()
+    private final Setting<Boolean> crystalCA = sgGeneral.add(new BoolSetting.Builder()
         .name("crystal-on-ca")
         .description("Holds a crystal when you have Crystal Aura enabled.")
         .defaultValue(true)
@@ -94,8 +94,8 @@ public class Offhand extends Module {
         // Sword Gap
         if ((mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem) && swordGap.get()) currentItem = Item.EGap;
 
-            // Ca and mining
-        else if ((Modules.get().isActive(CrystalAura.class) && crystalCa.get()) || mc.interactionManager.isBreakingBlock() && crystalMine.get()) currentItem = Item.Crystal;
+            // CA and Mining
+        else if ((Modules.get().isActive(CrystalAura.class) && crystalCA.get()) || mc.interactionManager.isBreakingBlock() && crystalMine.get()) currentItem = Item.Crystal;
 
         else currentItem = item.get();
 
@@ -149,8 +149,6 @@ public class Offhand extends Module {
         EGap(Items.ENCHANTED_GOLDEN_APPLE),
         Gap(Items.GOLDEN_APPLE),
         Crystal(Items.END_CRYSTAL),
-        // TODO: All types in one :))))))
-        Bed(Items.RED_BED),
         Shield(Items.SHIELD);
 
         net.minecraft.item.Item item;
