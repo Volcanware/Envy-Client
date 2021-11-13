@@ -10,7 +10,7 @@ import java.util.*;
 
 public class PlaylistUtils {
     private static final Map<String, AudioPlaylist> playlists = new HashMap<>();
-    private static final Path filePath = MatHaxLegacy.GAME_FOLDER.toPath().resolve(MatHaxLegacy.MUSIC_FOLDER.toPath()).resolve("Playlists.txt");
+    private static final Path filePath = MatHaxLegacy.MUSIC_FOLDER.toPath().resolve("Playlists.txt");
 
     public static void load() {
         playlists.clear();
