@@ -39,10 +39,6 @@ public class AntiVanish extends Module {
     public void onDeactivate() {
         toLookup.clear();
     }
-    @EventHandler
-    public void onLeave(GameLeftEvent event) {
-        toLookup.clear();
-    }
 
     @EventHandler
     public void onPacket(PacketEvent.Receive event) {
@@ -51,13 +47,10 @@ public class AntiVanish extends Module {
             if (packet.getAction() == PlayerListS2CPacket.Action.UPDATE_LATENCY) {
                 try {
                     for (PlayerListS2CPacket.Entry entry : packet.getEntries()) {
-                        if (mc.getNetworkHandler().getPlayerListEntry(entry.getProfile().getId()) != null)
-                            continue;
+                        if (mc.getNetworkHandler().getPlayerListEntry(entry.getProfile().getId()) != null) continue;
                         toLookup.add(entry.getProfile().getId());
                     }
-                } catch (Exception ignore) {
-                    // Ignoring
-                }
+                } catch (Exception ignore) {}
             }
         }
     }
@@ -70,12 +63,9 @@ public class AntiVanish extends Module {
         if (Math.abs(lastTick - time) > 100 && (lookup = toLookup.poll()) != null) {
             try {
                 String name = getPlayerNameFromUUID(lookup);
-                if (name != null) {
-                    warning("(highlight)%s(default) used vanish!", name);
-                }
-            } catch (Exception ignore) {
-                // Ignoring
-            }
+                if (name != null) warning("(highlight)%s(default) used (highlight)/vanish(default)!", name);
+            } catch (Exception ignore) {}
+
             lastTick = time;
         }
     }
@@ -93,47 +83,47 @@ public class AntiVanish extends Module {
     }
 
     public static class NameLookup implements Runnable {
-        private final String uuidstr;
+        private final String uuidString;
         private final UUID uuid;
         private final MinecraftClient mc;
         private volatile String name;
 
-        public NameLookup(final String input, MinecraftClient mc) {
-            this.uuidstr = input;
+        public NameLookup(String input, MinecraftClient mc) {
+            this.uuidString = input;
             this.uuid = UUID.fromString(input);
             this.mc = mc;
         }
 
-        public NameLookup(final UUID input, MinecraftClient mc) {
+        public NameLookup(UUID input, MinecraftClient mc) {
             this.uuid = input;
-            this.uuidstr = input.toString();
+            this.uuidString = input.toString();
             this.mc = mc;
         }
 
         @Override
         public void run() {
-            this.name = this.lookUpName();
+            name = lookUpName();
         }
 
         public String lookUpName() {
             PlayerEntity player = null;
-            if (mc.world != null) {
-                player = mc.world.getPlayerByUuid(uuid);
-            }
+            if (mc.world != null) player = mc.world.getPlayerByUuid(uuid);
             if (player == null) {
-                final String url = "https://api.mojang.com/user/profiles/" + this.uuidstr.replace("-", "") + "/names";
+                final String url = "https://api.mojang.com/user/profiles/" + uuidString.replace("-", "") + "/names";
                 try {
-                    final JsonParser parser = new JsonParser();
-                    final String nameJson = IOUtils.toString(new URL(url), StandardCharsets.UTF_8);
-                    final JsonElement nameElement = parser.parse(nameJson);
-                    final JsonArray nameArray = nameElement.getAsJsonArray();
-                    final String playerSlot = nameArray.get(nameArray.size() - 1).toString();
-                    final JsonObject nameObject = parser.parse(playerSlot).getAsJsonObject();
+                    JsonParser parser = new JsonParser();
+                    String nameJson = IOUtils.toString(new URL(url), StandardCharsets.UTF_8);
+                    JsonElement nameElement = parser.parse(nameJson);
+                    JsonArray nameArray = nameElement.getAsJsonArray();
+                    String playerSlot = nameArray.get(nameArray.size() - 1).toString();
+                    JsonObject nameObject = parser.parse(playerSlot).getAsJsonObject();
+
                     return nameObject.get("name").toString();
                 } catch (Exception e) {
                     return null;
                 }
             }
+
             return player.getName().asString();
         }
 
