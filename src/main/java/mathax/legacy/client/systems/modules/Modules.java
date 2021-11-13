@@ -58,7 +58,6 @@ public class Modules extends System<Modules> {
     public static final ModuleRegistry REGISTRY = new ModuleRegistry();
 
     private static final List<Category> CATEGORIES = new ArrayList<>();
-    public static boolean REGISTERING_CATEGORIES;
 
     private final List<Module> modules = new ArrayList<>();
     private final Map<Class<? extends Module>, Module> moduleInstances = new HashMap<>();
@@ -444,6 +443,7 @@ public class Modules extends System<Modules> {
         add(new EntitySpeed());
         add(new FastClimb());
         add(new Flight());
+        add(new Gravity());
         add(new GUIMove());
         add(new HighJump());
         add(new Jesus());
