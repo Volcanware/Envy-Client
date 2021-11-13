@@ -40,7 +40,7 @@ public class PingSpoof extends Module {
         .description("The delay between packet sending in ms.")
         .defaultValue(50)
         .min(0)
-        .sliderRange(0, 1000)
+        .sliderRange(0, 5000)
         .build()
     );
 
@@ -55,7 +55,7 @@ public class PingSpoof extends Module {
     }
 
     @EventHandler
-    public void onPacket(PacketEvent event) {
+    public void onPacket(PacketEvent.Send event) {
         if (!dontRepeat.contains(event.packet) && shouldDelayPacket(event.packet)) {
             event.setCancelled(true);
             entries.add(new PacketEntry(event.packet, delay.get(), System.currentTimeMillis()));

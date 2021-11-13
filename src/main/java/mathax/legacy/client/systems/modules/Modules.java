@@ -598,7 +598,7 @@ public class Modules extends System<Modules> {
         add(new PacketCanceller());
         add(new PacketSpammer());
         add(new Panic());
-        //add(new PingSpoof());
+        add(new PingSpoof());
         add(new Printer());
         add(new SoundBlocker());
         add(new SoundLocator());

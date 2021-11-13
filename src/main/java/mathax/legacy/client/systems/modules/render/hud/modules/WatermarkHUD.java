@@ -35,8 +35,7 @@ public class WatermarkHUD extends TripleTextHUDElement {
         .description("The scale of the icon.")
         .defaultValue(1)
         .min(1)
-        .sliderMin(1)
-        .sliderMax(5)
+        .sliderRange(1, 5)
         .visible(() -> mode.get() == Mode.Icon)
         .build()
     );

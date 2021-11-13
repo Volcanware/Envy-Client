@@ -49,7 +49,7 @@ public class Xray extends Module {
             Blocks.NETHER_QUARTZ_ORE,
             Blocks.ANCIENT_DEBRIS
         )
-        .onChanged(v -> {
+        .onChanged(blockList -> {
             if (isActive()) mc.worldRenderer.reload();
         })
         .build()
