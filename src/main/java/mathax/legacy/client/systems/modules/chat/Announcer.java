@@ -45,9 +45,7 @@ public class Announcer extends Module {
     @Override
     public void onDeactivate() {
         for (Feature feature : features) {
-            if (feature.isEnabled()) {
-                MatHaxLegacy.EVENT_BUS.unsubscribe(feature);
-            }
+            if (feature.isEnabled()) MatHaxLegacy.EVENT_BUS.unsubscribe(feature);
         }
     }
 
@@ -92,6 +90,10 @@ public class Announcer extends Module {
     }
 
     private class Moving extends Feature {
+        private double distance, timer;
+        private double lastX, lastZ;
+        private boolean first;
+
         private final Setting<String> message = sg.add(new StringSetting.Builder()
         .name("message")
         .description("The chat message for moving a certain amount of blocks.")
@@ -115,12 +117,8 @@ public class Announcer extends Module {
         .build()
         );
 
-        private double distance, timer;
-        private double lastX, lastZ;
-        private boolean first;
-
         Moving() {
-            super("Moving", "moving-enabled", "Send msg how much you moved");
+            super("Moving", "moving-enabled", "Send msg how much you moved.");
         }
 
         @Override
@@ -148,9 +146,7 @@ public class Announcer extends Module {
                     sendMsg();
                     distance = 0;
                 }
-            } else {
-                timer += TICK;
-            }
+            } else timer += TICK;
 
             updateLastPos();
         }
@@ -166,6 +162,10 @@ public class Announcer extends Module {
     }
 
     private class Mining extends Feature {
+        private Block lastBlock;
+        private int count;
+        private double notBrokenTimer;
+
         private final Setting<String> message = sg.add(new StringSetting.Builder()
             .name("message")
             .description("The chat message for mining blocks.")
@@ -173,12 +173,8 @@ public class Announcer extends Module {
             .build()
         );
 
-        private Block lastBlock;
-        private int count;
-        private double notBrokenTimer;
-
         Mining() {
-            super("Mining", "mining-enabled", "Send msg how much blocks you mined");
+            super("Mining", "mining-enabled", "Send msg how much blocks you mined.");
         }
 
         @Override
@@ -192,9 +188,7 @@ public class Announcer extends Module {
         private void onBreakBlock(BreakBlockEvent event) {
             Block block = event.getBlockState(mc.world).getBlock();
 
-            if (lastBlock != null && lastBlock != block) {
-                sendMsg();
-            }
+            if (lastBlock != null && lastBlock != block) sendMsg();
 
             lastBlock = block;
             count++;
@@ -203,11 +197,8 @@ public class Announcer extends Module {
 
         @Override
         void tick() {
-            if (notBrokenTimer >= 2) {
-                sendMsg();
-            } else {
-                notBrokenTimer += TICK;
-            }
+            if (notBrokenTimer >= 2) sendMsg();
+            else notBrokenTimer += TICK;
         }
 
         void sendMsg() {
@@ -219,6 +210,10 @@ public class Announcer extends Module {
     }
 
     private class Placing extends Feature {
+        private Block lastBlock;
+        private int count;
+        private double notPlacedTimer;
+
         private final Setting<String> message = sg.add(new StringSetting.Builder()
             .name("message")
             .description("The chat message for placing blocks.")
@@ -226,12 +221,8 @@ public class Announcer extends Module {
             .build()
         );
 
-        private Block lastBlock;
-        private int count;
-        private double notPlacedTimer;
-
         Placing() {
-            super("Placing", "placing-enabled", "Send msg how much blocks you placed");
+            super("Placing", "placing-enabled", "Send msg how much blocks you placed.");
         }
 
         @Override
@@ -243,9 +234,7 @@ public class Announcer extends Module {
 
         @EventHandler
         private void onPlaceBlock(PlaceBlockEvent event) {
-            if (lastBlock != null && lastBlock != event.block) {
-                sendMsg();
-            }
+            if (lastBlock != null && lastBlock != event.block) sendMsg();
 
             lastBlock = event.block;
             count++;
@@ -254,11 +243,8 @@ public class Announcer extends Module {
 
         @Override
         void tick() {
-            if (notPlacedTimer >= 2) {
-                sendMsg();
-            } else {
-                notPlacedTimer += TICK;
-            }
+            if (notPlacedTimer >= 2) sendMsg();
+            else notPlacedTimer += TICK;
         }
 
         void sendMsg() {
@@ -270,6 +256,10 @@ public class Announcer extends Module {
     }
 
     private class DropItems extends Feature {
+        private Item lastItem;
+        private int count;
+        private double notDroppedTimer;
+
         private final Setting<String> message = sg.add(new StringSetting.Builder()
             .name("message")
             .description("The chat message for dropping items.")
@@ -277,12 +267,8 @@ public class Announcer extends Module {
             .build()
         );
 
-        private Item lastItem;
-        private int count;
-        private double notDroppedTimer;
-
         DropItems() {
-            super("Drop Items", "drop-items-enabled", "Send msg how much items you dropped");
+            super("Drop Items", "drop-items-enabled", "Send msg how much items you dropped.");
         }
 
         @Override
@@ -294,9 +280,7 @@ public class Announcer extends Module {
 
         @EventHandler
         private void onDropItems(DropItemsEvent event) {
-            if (lastItem != null && lastItem != event.itemStack.getItem()) {
-                sendMsg();
-            }
+            if (lastItem != null && lastItem != event.itemStack.getItem()) sendMsg();
 
             lastItem = event.itemStack.getItem();
             count += event.itemStack.getCount();
@@ -305,11 +289,8 @@ public class Announcer extends Module {
 
         @Override
         void tick() {
-            if (notDroppedTimer >= 1) {
-                sendMsg();
-            } else {
-                notDroppedTimer += TICK;
-            }
+            if (notDroppedTimer >= 1) sendMsg();
+            else notDroppedTimer += TICK;
         }
 
         void sendMsg() {
@@ -321,6 +302,10 @@ public class Announcer extends Module {
     }
 
     private class PickItems extends Feature {
+        private Item lastItem;
+        private int count;
+        private double notPickedUpTimer;
+
         private final Setting<String> message = sg.add(new StringSetting.Builder()
             .name("message")
             .description("The chat message for picking up items.")
@@ -328,12 +313,8 @@ public class Announcer extends Module {
             .build()
         );
 
-        private Item lastItem;
-        private int count;
-        private double notPickedUpTimer;
-
         PickItems() {
-            super("Pick Items", "pick-items-enabled", "Send msg how much items you pick up");
+            super("Pick Items", "pick-items-enabled", "Send msg how much items you pick up.");
         }
 
         @Override
@@ -345,9 +326,7 @@ public class Announcer extends Module {
 
         @EventHandler
         private void onPickItems(PickItemsEvent event) {
-            if (lastItem != null && lastItem != event.itemStack.getItem()) {
-                sendMsg();
-            }
+            if (lastItem != null && lastItem != event.itemStack.getItem()) sendMsg();
 
             lastItem = event.itemStack.getItem();
             count += event.itemStack.getCount();
@@ -356,11 +335,8 @@ public class Announcer extends Module {
 
         @Override
         void tick() {
-            if (notPickedUpTimer >= 1) {
-                sendMsg();
-            } else {
-                notPickedUpTimer += TICK;
-            }
+            if (notPickedUpTimer >= 1) sendMsg();
+            else notPickedUpTimer += TICK;
         }
 
         void sendMsg() {
@@ -380,7 +356,7 @@ public class Announcer extends Module {
         );
 
         public OpenContainer() {
-            super("Open Container", "open-container-enabled", "Sends msg when you open containers");
+            super("Open Container", "open-container-enabled", "Sends msg when you open containers.");
         }
 
         @Override
