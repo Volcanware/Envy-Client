@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.utils.render.EntityShaders;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.settings.*;
 import net.minecraft.entity.Entity;
@@ -21,14 +22,34 @@ public class Chams extends Module {
 
     // Through walls
 
-    private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgThroughWalls.add(new EntityTypeListSetting.Builder()
+    public final Setting<Object2BooleanMap<EntityType<?>>> entities = sgThroughWalls.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Select entities to show through walls.")
         .defaultValue(EntityType.PLAYER)
         .build()
     );
 
-    //Players
+    public final Setting<Shader> shader = sgThroughWalls.add(new EnumSetting.Builder<Shader>()
+        .name("shader")
+        .description("Renders a shader instead of the entities.")
+        .defaultValue(Shader.Liquid1)
+        .onModuleActivated(shaderSetting -> {
+            if (shaderSetting.get() != Shader.None) EntityShaders.initOverlay(shaderSetting.get().shaderName);
+        })
+        .onChanged(value -> {
+            if (value != Shader.None) EntityShaders.initOverlay(value.shaderName);
+        })
+        .build()
+    );
+
+    public final Setting<Boolean> ignoreSelfDepth = sgThroughWalls.add(new BoolSetting.Builder()
+        .name("ignore-self")
+        .description("Ignores yourself drawing the player.")
+        .defaultValue(true)
+        .build()
+    );
+
+    // Players
 
     public final Setting<Boolean> players = sgPlayers.add(new BoolSetting.Builder()
         .name("players")
@@ -70,7 +91,7 @@ public class Chams extends Module {
         .build()
     );
 
-    //Crystals
+    // Crystals
 
     public final Setting<Boolean> crystals = sgCrystals.add(new BoolSetting.Builder()
         .name("crystals")
@@ -163,6 +184,7 @@ public class Chams extends Module {
     );
 
     // Hand
+
     public final Setting<Boolean> hand = sgHand.add(new BoolSetting.Builder()
         .name("enabled")
         .description("Enables tweaks of hand rendering.")
@@ -189,6 +211,21 @@ public class Chams extends Module {
     }
 
     public boolean shouldRender(Entity entity) {
-        return isActive() && entities.get().getBoolean(entity.getType());
+        return isActive() && !isShader() && entities.get().getBoolean(entity.getType()) && (entity != mc.player || ignoreSelfDepth.get());
+    }
+
+    public boolean isShader() {
+        return isActive() && shader.get() != Shader.None;
+    }
+
+    public enum Shader {
+        Liquid1("liquid"),
+        None(null);
+
+        public final String shaderName;
+
+        Shader(String shaderName) {
+            this.shaderName = shaderName;
+        }
     }
 }

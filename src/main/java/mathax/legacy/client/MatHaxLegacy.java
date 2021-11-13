@@ -15,7 +15,6 @@ import mathax.legacy.client.renderer.*;
 import mathax.legacy.client.renderer.text.Fonts;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.modules.Categories;
-import mathax.legacy.client.systems.modules.chat.Restarts2b2t;
 import mathax.legacy.client.systems.modules.combat.*;
 import mathax.legacy.client.systems.modules.client.CapesModule;
 import mathax.legacy.client.systems.modules.client.DiscordRPC;
@@ -33,7 +32,7 @@ import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.player.DamageUtils;
 import mathax.legacy.client.utils.player.EChestMemory;
 import mathax.legacy.client.utils.player.Rotations;
-import mathax.legacy.client.utils.render.Outlines;
+import mathax.legacy.client.utils.render.EntityShaders;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.render.color.RainbowColors;
 import mathax.legacy.client.utils.world.BlockIterator;
@@ -160,7 +159,6 @@ public class MatHaxLegacy implements ClientModInitializer {
                 Modules.get().get(DiscordRPC.class).forceToggle(true); // DISCORD RPC
                 Modules.get().get(Background.class).forceToggle(true); // BACKGROUND
                 Modules.get().get(MiddleClickFriend.class).forceToggle(true); // MIDDLE CLICK FRIEND
-                Modules.get().get(Restarts2b2t.class).forceToggle(true); // 2B2T RESTARTS
                 Modules.get().get(HUD.class).forceToggle(true); // HUD
 
                 // VISIBILITY
@@ -168,7 +166,6 @@ public class MatHaxLegacy implements ClientModInitializer {
                 Modules.get().get(DiscordRPC.class).setVisible(false); // DISCORD RPC
                 Modules.get().get(Background.class).setVisible(false); // BACKGROUND
                 Modules.get().get(MiddleClickFriend.class).setVisible(false); // MIDDLE CLICK FRIEND
-                Modules.get().get(Restarts2b2t.class).setVisible(false); // 2B2T RESTARTS
                 Modules.get().get(Zoom.class).setVisible(false); // ZOOM
                 Modules.get().get(HUD.class).setVisible(false); // HUD
 
@@ -198,7 +195,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         GL.init();
         Shaders.init();
         Renderer2D.init();
-        Outlines.init();
+        EntityShaders.initOutlines();
         MatHaxExecutor.init();
         RainbowColors.init();
         BlockIterator.init();

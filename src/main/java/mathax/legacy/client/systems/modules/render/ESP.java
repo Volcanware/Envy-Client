@@ -94,6 +94,14 @@ public class ESP extends Module {
         .build()
     );
 
+    public final Setting<Boolean> ignoreSelf = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-self")
+        .description("Ignores yourself drawing the shader.")
+        .defaultValue(true)
+        .visible(() -> mode.get() == Mode.Shader)
+        .build()
+    );
+
     private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
         .name("ignore-friends")
         .description("Stops ESP rendering for friends.")
@@ -298,7 +306,7 @@ public class ESP extends Module {
         return false;
     }
 
-    // Outlines
+    // EntityShaders
 
     public boolean shouldDrawOutline(Entity entity) {
         return mode.get() == Mode.Shader && isActive() && getOutlineColor(entity) != null;
@@ -376,6 +384,10 @@ public class ESP extends Module {
     @Override
     public String getInfoString() {
         return Integer.toString(count);
+    }
+
+    public boolean isShader() {
+        return isActive() && mode.get() == Mode.Shader;
     }
 
     public enum Mode {

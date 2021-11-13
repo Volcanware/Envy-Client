@@ -258,7 +258,6 @@ public class NoRender extends Module {
         .build()
     );
 
-
     private final Setting<Boolean> noArmor = sgEntity.add(new BoolSetting.Builder()
         .name("armor")
         .description("Disables rendering of armor on entities.")

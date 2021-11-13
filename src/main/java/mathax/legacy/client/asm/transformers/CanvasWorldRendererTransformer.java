@@ -23,7 +23,7 @@ public class CanvasWorldRendererTransformer extends AsmTransformer {
 
     @Override
     public void transform(ClassNode klass) {
-        // Inject Outlines.endRender() after OutlineVertexConsumerProvider.draw() in CanvasWorldRenderer
+        // Inject EntityShaders.endRender() after OutlineVertexConsumerProvider.draw() in CanvasWorldRenderer
         MethodNode method = getMethod(klass, renderWorldMethod);
         if (method == null) return;
 
@@ -31,7 +31,7 @@ public class CanvasWorldRendererTransformer extends AsmTransformer {
             if (!(insn instanceof MethodInsnNode in)) continue;
 
             if (drawMethod.equals(in)) {
-                method.instructions.insert(insn, new MethodInsnNode(Opcodes.INVOKESTATIC, "mathax/legacy/client/utils/render/Outlines", "endRender", "()V"));
+                method.instructions.insert(insn, new MethodInsnNode(Opcodes.INVOKESTATIC, "mathax/legacy/client/utils/render/EntityShaders", "endRender", "()V"));
                 break;
             }
         }

@@ -10,7 +10,7 @@ import mathax.legacy.client.systems.modules.movement.NoSlow;
 import mathax.legacy.client.systems.modules.movement.Velocity;
 import mathax.legacy.client.systems.modules.render.ESP;
 import mathax.legacy.client.systems.modules.render.NoRender;
-import mathax.legacy.client.utils.render.Outlines;
+import mathax.legacy.client.utils.render.EntityShaders;
 import mathax.legacy.client.systems.modules.Modules;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -83,7 +83,7 @@ public abstract class EntityMixin {
 
     @Inject(method = "getTeamColorValue", at = @At("HEAD"), cancellable = true)
     private void onGetTeamColorValue(CallbackInfoReturnable<Integer> info) {
-        if (Outlines.renderingOutlines) info.setReturnValue(Modules.get().get(ESP.class).getColor((Entity) (Object) this).getPacked());
+        if (EntityShaders.renderingOutlines) info.setReturnValue(Modules.get().get(ESP.class).getColor((Entity) (Object) this).getPacked());
     }
 
     @Redirect(method = "getVelocityMultiplier", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getBlock()Lnet/minecraft/block/Block;"))
