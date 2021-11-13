@@ -87,16 +87,9 @@ public class InstaAutoCity extends Module {
         .build()
     );
 
-    private final Setting<Boolean> swing = sgGeneral.add(new BoolSetting.Builder()
-        .name("swing")
-        .description("Only server side rotations.")
-        .defaultValue(true)
-        .build()
-    );
-
     private final Setting<Boolean> ironPickaxe = sgGeneral.add(new BoolSetting.Builder()
-        .name("swing")
-        .description("Only server side rotations.")
+        .name("iron-pickaxe")
+        .description("Uses iron pickaxe.")
         .defaultValue(true)
         .build()
     );
@@ -118,6 +111,13 @@ public class InstaAutoCity extends Module {
     );
 
     // Render
+
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Swings your hand client-side when placing.")
+        .defaultValue(true)
+        .build()
+    );
 
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
         .name("render")

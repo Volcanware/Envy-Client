@@ -277,7 +277,7 @@ public class BedAura extends Module {
 
     private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
         .name("swing")
-        .description("Whether to swing hand clientside clientside.")
+        .description("Swings your hand client-side when placing.")
         .defaultValue(true)
         .build()
     );

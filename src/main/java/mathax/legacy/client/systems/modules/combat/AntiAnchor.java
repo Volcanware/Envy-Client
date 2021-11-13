@@ -16,6 +16,7 @@ import net.minecraft.item.Items;
 
 public class AntiAnchor extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgRender = settings.createGroup("Render");
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
         .name("rotate")
@@ -24,9 +25,11 @@ public class AntiAnchor extends Module {
         .build()
     );
 
-    private final Setting<Boolean> swing = sgGeneral.add(new BoolSetting.Builder()
+    // Render
+
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
         .name("swing")
-        .description("Swings your hand when placing.")
+        .description("Swings your hand client-side when placing.")
         .defaultValue(true)
         .build()
     );

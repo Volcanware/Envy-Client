@@ -12,8 +12,6 @@ public class CustomCrosshair extends Module {
 
     // General
 
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
     public CustomCrosshair() {
         super(Categories.Render, Items.COMPASS, "custom-crosshair", "Renders a customizable crosshair instead of the Minecraft one.");
     }

@@ -15,17 +15,22 @@ import net.minecraft.util.math.BlockPos;
 
 public class AntiAnvil extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgRender = settings.createGroup("Render");
 
-    private final Setting<Boolean> swing = sgGeneral.add(new BoolSetting.Builder()
-        .name("swing")
-        .description("Swings your hand client-side when placing.")
-        .defaultValue(true)
-        .build()
-    );
+    // General
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
         .name("rotate")
         .description("Makes you rotate when placing.")
+        .defaultValue(true)
+        .build()
+    );
+
+    // Render
+
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Swings your hand client-side when placing.")
         .defaultValue(true)
         .build()
     );

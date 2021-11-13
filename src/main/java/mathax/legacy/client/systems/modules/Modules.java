@@ -18,10 +18,11 @@ import mathax.legacy.client.systems.System;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.chat.*;
+import mathax.legacy.client.systems.modules.client.*;
 import mathax.legacy.client.systems.modules.combat.*;
 import mathax.legacy.client.systems.modules.crash.*;
 import mathax.legacy.client.systems.modules.misc.*;
-import mathax.legacy.client.systems.modules.misc.swarm.Swarm;
+import mathax.legacy.client.systems.modules.client.swarm.Swarm;
 import mathax.legacy.client.systems.modules.movement.*;
 import mathax.legacy.client.systems.modules.movement.elytrafly.ElytraFly;
 import mathax.legacy.client.systems.modules.movement.speed.Speed;
@@ -84,6 +85,7 @@ public class Modules extends System<Modules> {
         initChat();
         initCrash();
         initMisc();
+        initClient();
 
         // This is here because some hud elements depend on modules to be initialised before them
         add(new HUD());
@@ -478,7 +480,6 @@ public class Modules extends System<Modules> {
         //add(new CustomCrosshair());
         add(new EntityOwner());
         add(new ESP());
-        add(new FakePlayer());
         add(new Freecam());
         add(new FreeLook());
         add(new Fullbright());
@@ -587,14 +588,11 @@ public class Modules extends System<Modules> {
         add(new AutoRespawn());
         add(new BetterTab());
         add(new BookBot());
-        add(new CapesModule());
         add(new CoordinateLogger());
-        add(new DiscordRPC());
         add(new InventoryTweaks());
         add(new ItemFrameDupe());
         add(new MessageLagger());
         add(new MiddleClickExtra());
-        add(new MiddleClickFriend());
         add(new NameProtect());
         add(new Notebot());
         add(new PacketCanceller());
@@ -605,10 +603,18 @@ public class Modules extends System<Modules> {
         add(new SoundBlocker());
         add(new SoundLocator());
         add(new SpinBot());
-        add(new Swarm());
         add(new TPSSync());
         add(new Twerk());
         add(new VanillaSpoof());
+    }
+
+    private void initClient() {
+        add(new CapesModule());
+        add(new DiscordRPC());
+        add(new FakePlayer());
+        add(new MiddleClickFriend());
+        add(new Panic());
+        add(new Swarm());
     }
 
     public static class ModuleRegistry extends Registry<Module> {
@@ -677,7 +683,7 @@ public class Modules extends System<Modules> {
             return new ModuleIterator();
         }
 
-        @org.jetbrains.annotations.Nullable
+        @Nullable
         @Override
         public Module getRandom(Random random) {
             return null;

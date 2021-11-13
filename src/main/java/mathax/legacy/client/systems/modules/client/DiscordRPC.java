@@ -1,9 +1,10 @@
-package mathax.legacy.client.systems.modules.misc;
+package mathax.legacy.client.systems.modules.client;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.screens.TitleScreen;
 import mathax.legacy.client.gui.screens.music.*;
 import mathax.legacy.client.gui.screens.server.ProtocolScreen;
+import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.screens.*;
 import mathax.legacy.client.gui.screens.accounts.*;
@@ -65,7 +66,7 @@ public class DiscordRPC extends Module {
     );
 
     public DiscordRPC() {
-        super(Categories.Misc, Items.COMMAND_BLOCK, "discord-rpc", "Shows MatHax Legacy as your Discord status.");
+        super(Categories.Client, Items.COMMAND_BLOCK, "discord-rpc", "Shows MatHax Legacy as your Discord status.");
 
         runInMainMenu = true;
     }

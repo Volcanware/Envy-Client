@@ -13,7 +13,7 @@ import mathax.legacy.client.mixin.MinecraftClientAccessor;
 import mathax.legacy.client.mixin.MinecraftServerAccessor;
 import mathax.legacy.client.mixininterface.IMinecraftClient;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.systems.modules.misc.DiscordRPC;
+import mathax.legacy.client.systems.modules.client.DiscordRPC;
 import mathax.legacy.client.systems.modules.render.BetterTooltips;
 import mathax.legacy.client.systems.modules.world.Timer;
 import mathax.legacy.client.utils.player.EChestMemory;

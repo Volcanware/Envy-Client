@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.misc.swarm;
+package mathax.legacy.client.systems.modules.client.swarm;
 
 import mathax.legacy.client.events.game.GameJoinedEvent;
 import mathax.legacy.client.events.game.GameLeftEvent;
@@ -46,7 +46,7 @@ public class Swarm extends Module {
     );
 
     public Swarm() {
-        super(Categories.Misc, Items.BEEHIVE, "Swarm", "Allows you to control multiple instances of MatHax Legacy from one central host.");
+        super(Categories.Client, Items.BEEHIVE, "Swarm", "Allows you to control multiple instances of MatHax Legacy from one central host.");
     }
 
     @Override

@@ -90,6 +90,13 @@ public class Printer extends Module {
 
     // Render
 
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Swings your hand client-side when placing.")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
         .name("render")
         .description("Renders currently placed blocks.")
@@ -103,13 +110,6 @@ public class Printer extends Module {
         .defaultValue(10)
         .range(1, 1000)
         .sliderRange(1, 100)
-        .build()
-    );
-
-    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
-        .name("swing")
-        .description("Renders your client-side swing.")
-        .defaultValue(false)
         .build()
     );
 

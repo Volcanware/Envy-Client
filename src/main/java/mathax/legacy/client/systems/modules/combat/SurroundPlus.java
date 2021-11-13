@@ -171,17 +171,17 @@ public class SurroundPlus extends Module {
 
     // Render
 
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Swings your hand client-side when placing.")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
         .name("render")
         .description("Renders currently placed blocks.")
         .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
-        .name("swing")
-        .description("Renders your client-side swing.")
-        .defaultValue(false)
         .build()
     );
 

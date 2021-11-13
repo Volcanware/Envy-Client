@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.misc;
+package mathax.legacy.client.systems.modules.client;
 
 import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
 import mathax.legacy.client.settings.BoolSetting;
@@ -57,7 +57,7 @@ public class MiddleClickFriend extends Module {
     );
 
     public MiddleClickFriend() {
-        super(Categories.Misc, Items.STONE_BUTTON, "middle-click-friend", "Adds or removes a player as a friend using middle click.");
+        super(Categories.Client, Items.STONE_BUTTON, "middle-click-friend", "Adds or removes a player as a friend using middle click.");
     }
 
     @EventHandler

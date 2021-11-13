@@ -94,17 +94,17 @@ public class Scaffold extends Module {
 
     // Render
 
-    private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
-        .name("render")
-        .description("Renders currently placed blocks.")
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Swings your hand client-side when placing.")
         .defaultValue(true)
         .build()
     );
 
-    private final Setting<Boolean> renderSwing = sgRender.add(new BoolSetting.Builder()
-        .name("swing")
-        .description("Renders your client-side swing.")
-        .defaultValue(false)
+    private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
+        .name("render")
+        .description("Renders currently placed blocks.")
+        .defaultValue(true)
         .build()
     );
 
@@ -224,7 +224,7 @@ public class Scaffold extends Module {
             mc.player.setVelocity(0, 0.42f, 0);
         }
 
-        if (BlockUtils.place(bp, item, rotate.get(), 50, renderSwing.get(), true)) {
+        if (BlockUtils.place(bp, item, rotate.get(), 50, swing.get(), true)) {
             if (!mc.world.isOutOfHeightLimit(bp.getY())) renderBlocks.add(renderBlockPool.get().set(bp));
 
             if (mc.options.keyJump.isPressed() && !mc.options.keySneak.isPressed() && !mc.player.isOnGround() && !mc.world.getBlockState(bp).isAir() && fastTower.get()) mc.player.setVelocity(0, -0.28f, 0);

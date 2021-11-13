@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.item.Items;
 
@@ -12,6 +13,7 @@ public class Categories {
     public static final Category Crash = new Category("Crash", Items.BARRIER, Color.fromRGBA(255, 75, 75, 255));
     public static final Category Chat = new Category("Chat", Items.BEACON, Color.fromRGBA(255, 255, 255, 255));
     public static final Category Misc = new Category("Misc", Items.NETHER_STAR, Color.fromRGBA(0, 50, 175, 255));
+    public static final Category Client = new Category("Client", Items.COMMAND_BLOCK, Color.fromRGBA(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 255));
 
     public static boolean REGISTERING;
 
@@ -25,6 +27,7 @@ public class Categories {
         Modules.registerCategory(Crash);
         Modules.registerCategory(Chat);
         Modules.registerCategory(Misc);
+        Modules.registerCategory(Client);
         REGISTERING = false;
     }
 }

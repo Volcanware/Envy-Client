@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.misc.swarm;
+package mathax.legacy.client.systems.modules.client.swarm;
 
 import mathax.legacy.client.utils.player.ChatUtils;
 

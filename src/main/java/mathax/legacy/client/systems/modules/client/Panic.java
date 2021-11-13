@@ -1,4 +1,4 @@
-package mathax.legacy.client.systems.modules.misc;
+package mathax.legacy.client.systems.modules.client;
 
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Panic extends Module {
 
     public Panic(){
-        super(Categories.Misc, Items.COMMAND_BLOCK, "panic", "Disables all active modules.");
+        super(Categories.Client, Items.COMMAND_BLOCK, "panic", "Disables all active modules.");
 
         runInMainMenu = true;
     }
