@@ -25,12 +25,12 @@ public class ArmorUtils {
         return itemStack.getItem() == Items.NETHERITE_CHESTPLATE || itemStack.getItem() == Items.DIAMOND_CHESTPLATE || itemStack.getItem() == Items.GOLDEN_CHESTPLATE || itemStack.getItem() == Items.IRON_CHESTPLATE || itemStack.getItem() == Items.CHAINMAIL_CHESTPLATE || itemStack.getItem() == Items.LEATHER_CHESTPLATE;
     }
 
-    public static boolean isLeggings(ItemStack itemStack) {
+    public static boolean areLeggings(ItemStack itemStack) {
         if (itemStack == null) return false;
         return itemStack.getItem() == Items.NETHERITE_LEGGINGS || itemStack.getItem() == Items.DIAMOND_LEGGINGS || itemStack.getItem() == Items.GOLDEN_LEGGINGS || itemStack.getItem() == Items.IRON_LEGGINGS || itemStack.getItem() == Items.CHAINMAIL_LEGGINGS || itemStack.getItem() == Items.LEATHER_LEGGINGS;
     }
 
-    public static boolean isBoots(ItemStack itemStack) {
+    public static boolean areBoots(ItemStack itemStack) {
         if (itemStack == null) return false;
         return itemStack.getItem() == Items.NETHERITE_BOOTS || itemStack.getItem() == Items.DIAMOND_BOOTS || itemStack.getItem() == Items.GOLDEN_BOOTS || itemStack.getItem() == Items.IRON_BOOTS || itemStack.getItem() == Items.CHAINMAIL_BOOTS || itemStack.getItem() == Items.LEATHER_BOOTS;
     }

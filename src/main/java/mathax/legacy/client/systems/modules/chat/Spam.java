@@ -35,7 +35,7 @@ public class Spam extends Module {
         .description("The delay between specified messages in ticks.")
         .defaultValue(20)
         .min(0)
-        .sliderMax(10000)
+        .sliderRange(0, 10000)
         .build()
     );
 
@@ -58,7 +58,7 @@ public class Spam extends Module {
         .description("Minimal number in random number append.")
         .defaultValue(1)
         .min(0)
-        .sliderMax(10000)
+        .sliderRange(0, 10000)
         .visible(randomNumbers::get)
         .build()
     );
@@ -68,7 +68,7 @@ public class Spam extends Module {
         .description("Maximal number in random number append.")
         .defaultValue(100000)
         .min(0)
-        .sliderMax(1000000)
+        .sliderRange(0, 1000000)
         .visible(randomNumbers::get)
         .build()
     );
@@ -96,29 +96,22 @@ public class Spam extends Module {
 
         if (timer <= 0) {
             int i;
-            if (random.get()) {
-                i = Utils.random(0, messages.size());
-            } else {
+            if (random.get()) i = Utils.random(0, messages.size());
+            else {
                 if (messageI >= messages.size()) messageI = 0;
                 i = messageI++;
             }
+
             if (placeholder.get()) {
-                if (randomNumbers.get()) {
-                    mc.player.sendChatMessage(Placeholders.apply(messages.get(i)) + String.format(" %03d", Utils.random(randomNumbersMin.get(), randomNumbersMax.get())));
-                } else {
-                    mc.player.sendChatMessage(Placeholders.apply(messages.get(i)));
-                }
+                if (randomNumbers.get()) mc.player.sendChatMessage(Placeholders.apply(messages.get(i)) + String.format(" %03d", Utils.random(randomNumbersMin.get(), randomNumbersMax.get())));
+                else mc.player.sendChatMessage(Placeholders.apply(messages.get(i)));
             } else {
-                if (randomNumbers.get()) {
-                    mc.player.sendChatMessage(messages.get(i) + String.format(" %03d", Utils.random(randomNumbersMin.get(), randomNumbersMax.get())));
-                } else {
-                    mc.player.sendChatMessage(messages.get(i));
-                }
+                if (randomNumbers.get()) mc.player.sendChatMessage(messages.get(i) + String.format(" %03d", Utils.random(randomNumbersMin.get(), randomNumbersMax.get())));
+                else mc.player.sendChatMessage(messages.get(i));
             }
+
             timer = delay.get();
-        } else {
-            timer--;
-        }
+        } else timer--;
     }
 
     @Override
@@ -193,9 +186,7 @@ public class Spam extends Module {
         if (tag.contains("messages")) {
             NbtList messagesTag = tag.getList("messages", 8);
             for (NbtElement messageTag : messagesTag) messages.add(messageTag.asString());
-        } else {
-            messages.add("MatHax on top!");
-        }
+        } else messages.add("MatHax on top!");
 
         return super.fromTag(tag);
     }

@@ -563,15 +563,18 @@ public class Modules extends System<Modules> {
     private void initChat() {
         add(new Announcer());
         add(new AntiVanish());
+        add(new ArmorNotifier());
         add(new AutoEZ());
         add(new AutoLogin());
         add(new BetterChat());
+        add(new BurrowNotifier());
         //add(new ChatBot());
         add(new MessageAura());
-        add(new Notifier());
         add(new Restarts2b2t());
         add(new Spam());
         add(new StayHydrated());
+        add(new TotemNotifier());
+        add(new VisualRange());
     }
 
     private void initMisc() {
