@@ -72,8 +72,8 @@ public class AntiVanish extends Module {
 
     public String getPlayerNameFromUUID(UUID id) {
         try {
-            final NameLookup process = new NameLookup(id, mc);
-            final Thread thread = new Thread(process);
+            NameLookup process = new NameLookup(id, mc);
+            Thread thread = new Thread(process);
             thread.start();
             thread.join();
             return process.getName();
@@ -109,7 +109,7 @@ public class AntiVanish extends Module {
             PlayerEntity player = null;
             if (mc.world != null) player = mc.world.getPlayerByUuid(uuid);
             if (player == null) {
-                final String url = "https://api.mojang.com/user/profiles/" + uuidString.replace("-", "") + "/names";
+                String url = "https://api.mojang.com/user/profiles/" + uuidString.replace("-", "") + "/names";
                 try {
                     JsonParser parser = new JsonParser();
                     String nameJson = IOUtils.toString(new URL(url), StandardCharsets.UTF_8);
