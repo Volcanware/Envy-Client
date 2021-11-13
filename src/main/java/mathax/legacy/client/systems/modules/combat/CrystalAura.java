@@ -783,7 +783,7 @@ public class CrystalAura extends Module {
         Hand hand = InvUtils.findInHotbar(Items.END_CRYSTAL).getHand();
         if (hand == null) hand = Hand.MAIN_HAND;
 
-        if (renderSwing.get()) mc.player.swingHand(hand);
+        if (swing.get()) mc.player.swingHand(hand);
         else mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(hand));
 
         attacks++;
@@ -931,7 +931,7 @@ public class CrystalAura extends Module {
             // Place crystal
             mc.player.networkHandler.sendPacket(new PlayerInteractBlockC2SPacket(hand, result));
 
-            if (renderSwing.get()) mc.player.swingHand(hand);
+            if (swing.get()) mc.player.swingHand(hand);
             else mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(hand));
 
             placing = true;
@@ -943,7 +943,7 @@ public class CrystalAura extends Module {
             renderDamage = damage;
         } else {
             // Place support block
-            BlockUtils.place(supportBlock, item, false, 0, renderSwing.get(), true, false);
+            BlockUtils.place(supportBlock, item, false, 0, swing.get(), true, false);
             placeTimer += supportDelay.get();
 
             if (supportDelay.get() == 0) placeCrystal(result, damage, null);
