@@ -502,6 +502,7 @@ public class Modules extends System<Modules> {
         add(new NoRender());
         //add(new PenisESP());
         add(new PopChams());
+        add(new Rendering());
         add(new SkeletonESP());
         //add(new SmoothChunks());
         add(new Search());

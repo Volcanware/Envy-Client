@@ -3,6 +3,7 @@ package mathax.legacy.client.mixin;
 import mathax.legacy.client.systems.modules.render.Chams;
 import mathax.legacy.client.systems.modules.render.Freecam;
 import mathax.legacy.client.systems.modules.render.NoRender;
+import mathax.legacy.client.systems.modules.render.Rendering;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.player.Rotations;
 import mathax.legacy.client.utils.render.color.Color;
@@ -18,6 +19,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.AbstractTeam;
+import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -108,7 +110,6 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
         args.set(2, module.playersScale.get().floatValue());
     }
 
-    @SuppressWarnings("UnresolvedMixinReference")
     @ModifyArgs(method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/EntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
     private void modifyColor(Args args, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         Chams module = Modules.get().get(Chams.class);
@@ -129,5 +130,15 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
         if (module.ignoreSelf.get() && livingEntity == mc.player) return getRenderLayer(livingEntity, showBody, translucent, showOutline);
 
         return RenderLayer.getItemEntityTranslucentCull(Chams.BLANK);
+    }
+
+    // Rendering
+
+    @Inject(method = "setupTransforms", at = @At(value = "TAIL"))
+    private void dinnerboneEntities(LivingEntity entity, MatrixStack matrices, float _animationProgress, float _bodyYaw, float _tickDelta, CallbackInfo _info) {
+        if ((!(entity instanceof PlayerEntity)) && Modules.get().get(Rendering.class).dinnerboneEnabled()) {
+            matrices.translate(0.0D, entity.getHeight() + 0.1F, 0.0D);
+            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
+        }
     }
 }

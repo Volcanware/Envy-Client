@@ -13,8 +13,9 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.util.math.Vec3d;
 
 public class Flight extends Module {
-    private boolean flip;
     private float lastYaw;
+
+    private boolean flip;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAntiKick = settings.createGroup("Anti Kick");
@@ -73,7 +74,7 @@ public class Flight extends Module {
     private int offLeft = offTime.get();
 
     public Flight() {
-        super(Categories.Movement, Items.COMMAND_BLOCK, "flight", "FLYYYyy! No Fall is recommended with this module.");
+        super(Categories.Movement, Items.COMMAND_BLOCK, "flight", "Allows you to fly. No Fall is recommended with this module.");
     }
 
     @Override
@@ -130,7 +131,7 @@ public class Flight extends Module {
         if (mc.player.getYaw() != lastYaw) mc.player.setYaw(lastYaw);
 
         switch (mode.get()) {
-            case Velocity:
+            case Velocity -> {
 
                  /*TODO: deal with underwater movement, find a way to "spoof" not being in water
                 also, all of the multiplication below is to get the speed to roughly match the speed
@@ -138,20 +139,20 @@ public class Flight extends Module {
 
                 mc.player.getAbilities().flying = false;
                 mc.player.flyingSpeed = speed.get().floatValue() * (mc.player.isSprinting() ? 15f : 10f);
-
                 mc.player.setVelocity(0, 0, 0);
                 Vec3d initialVelocity = mc.player.getVelocity();
-
-                if (mc.options.keyJump.isPressed()) mc.player.setVelocity(initialVelocity.add(0, speed.get() * (verticalSpeedMatch.get() ? 10f : 5f), 0));
-                if (mc.options.keySneak.isPressed()) mc.player.setVelocity(initialVelocity.subtract(0, speed.get() * (verticalSpeedMatch.get() ? 10f : 5f), 0));
-                break;
-            case Abilities:
+                if (mc.options.keyJump.isPressed())
+                    mc.player.setVelocity(initialVelocity.add(0, speed.get() * (verticalSpeedMatch.get() ? 10f : 5f), 0));
+                if (mc.options.keySneak.isPressed())
+                    mc.player.setVelocity(initialVelocity.subtract(0, speed.get() * (verticalSpeedMatch.get() ? 10f : 5f), 0));
+            }
+            case Abilities -> {
                 if (mc.player.isSpectator()) return;
                 mc.player.getAbilities().setFlySpeed(speed.get().floatValue());
                 mc.player.getAbilities().flying = true;
                 if (mc.player.getAbilities().creativeMode) return;
                 mc.player.getAbilities().allowFlying = true;
-                break;
+            }
         }
     }
 

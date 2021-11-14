@@ -32,7 +32,7 @@ public class Chams extends Module {
     public final Setting<Shader> shader = sgThroughWalls.add(new EnumSetting.Builder<Shader>()
         .name("shader")
         .description("Renders a shader instead of the entities.")
-        .defaultValue(Shader.Liquid1)
+        .defaultValue(Shader.Liquid)
         .onModuleActivated(shaderSetting -> {
             if (shaderSetting.get() != Shader.None) EntityShaders.initOverlay(shaderSetting.get().shaderName);
         })
@@ -219,8 +219,14 @@ public class Chams extends Module {
     }
 
     public enum Shader {
-        Liquid1("liquid"),
+        Liquid("chams/liquid"),
+        Liquid_2("chams/liquid_two"),
         None(null);
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
 
         public final String shaderName;
 

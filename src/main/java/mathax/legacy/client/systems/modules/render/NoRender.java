@@ -151,6 +151,13 @@ public class NoRender extends Module {
         .build()
     );
 
+    public final Setting<Boolean> noToastPopups = sgHUD.add(new BoolSetting.Builder()
+        .name("toasts")
+        .description("Disables toasts.")
+        .defaultValue(false)
+        .build()
+    );
+
     // World
 
     private final Setting<Boolean> noWeather = sgWorld.add(new BoolSetting.Builder()
@@ -356,6 +363,10 @@ public class NoRender extends Module {
 
     public boolean noPotionIcons() {
         return isActive() && noPotionIcons.get();
+    }
+
+    public boolean noToasts() {
+        return isActive() && noToastPopups.get();
     }
 
     // World

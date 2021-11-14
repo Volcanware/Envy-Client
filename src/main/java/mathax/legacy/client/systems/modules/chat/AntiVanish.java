@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /*/-----------------------------------------------------------------------------------------------------------------/*/
 /*/ Taken from Meteor Rejects                                                                                       /*/
-/*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/cloudburst/rejects/modules/AntiVanish.java /*/
+/*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/anticope/rejects/modules/AntiVanish.java /*/
 /*/-----------------------------------------------------------------------------------------------------------------/*/
 
 public class AntiVanish extends Module {

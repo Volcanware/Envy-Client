@@ -12,12 +12,14 @@ import mathax.legacy.client.systems.modules.player.Reach;
 import mathax.legacy.client.systems.modules.render.Freecam;
 import mathax.legacy.client.systems.modules.render.NoBob;
 import mathax.legacy.client.systems.modules.render.NoRender;
+import mathax.legacy.client.systems.modules.render.Rendering;
 import mathax.legacy.client.systems.modules.world.HighwayBuilder;
 import mathax.legacy.client.utils.render.NametagUtils;
 import mathax.legacy.client.utils.render.RenderUtils;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.ShaderEffect;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -112,7 +114,7 @@ public abstract class GameRendererMixin {
         return MathHelper.lerp(delta, first, second);
     }
 
-// Freecam
+    // Freecam
 
     private boolean freecamSet = false;
 
@@ -201,5 +203,15 @@ public abstract class GameRendererMixin {
     private double updateTargetedEntityModifySquaredMaxReach(double d) {
         Reach reach = Modules.get().get(Reach.class);
         return reach.isActive() ? reach.getReach() * reach.getReach() : d;
+    }
+
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;drawEntityOutlinesFramebuffer()V", ordinal = 0))
+    private void renderShader(float tickDelta, long startTime, boolean tick, CallbackInfo ci) {
+        ShaderEffect shader = Modules.get().get(Rendering.class).getShaderEffect();
+
+        if (shader != null) {
+            shader.setupDimensions(client.getWindow().getFramebufferWidth(), client.getWindow().getFramebufferHeight());
+            shader.render(tickDelta);
+        }
     }
 }

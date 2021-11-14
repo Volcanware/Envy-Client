@@ -17,6 +17,8 @@ import net.minecraft.item.Items;
 public class MessageAura extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<String> message = sgGeneral.add(new StringSetting.Builder()
         .name("message")
         .description("The specified message sent to the player.")

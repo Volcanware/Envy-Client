@@ -20,7 +20,6 @@ import java.io.File;
 
 @Mixin(GameOptions.class)
 public class GameOptionsMixin {
-
     @Shadow
     @Final
     @Mutable

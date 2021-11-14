@@ -20,12 +20,12 @@ public class Announcer extends Module {
     private static final double TICK = 1.0 / 20.0;
 
     private final Feature[] features = {
-            new Moving(),
-            new Mining(),
-            new Placing(),
-            new DropItems(),
-            new PickItems(),
-            new OpenContainer()
+        new Moving(),
+        new Mining(),
+        new Placing(),
+        new DropItems(),
+        new PickItems(),
+        new OpenContainer()
     };
 
     public Announcer() {
