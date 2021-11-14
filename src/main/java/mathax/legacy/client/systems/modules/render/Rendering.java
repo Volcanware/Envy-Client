@@ -28,9 +28,7 @@ public class Rendering extends Module {
         .description("Render structure void blocks.")
         .defaultValue(true)
         .onChanged(onChanged -> {
-            if (isActive()) {
-                mc.worldRenderer.reload();
-            }
+            if (isActive()) mc.worldRenderer.reload();
         })
         .build()
     );
