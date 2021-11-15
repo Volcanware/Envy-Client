@@ -3,6 +3,7 @@ package mathax.legacy.client.utils.music;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import mathax.legacy.client.MatHaxLegacy;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,12 +11,19 @@ import java.util.*;
 
 public class PlaylistUtils {
     private static final Map<String, AudioPlaylist> playlists = new HashMap<>();
-    private static final Path filePath = MatHaxLegacy.MUSIC_FOLDER.toPath().resolve("Playlists.txt");
+
+    private static final Path folderPath = MatHaxLegacy.FOLDER.toPath().resolve("Music");
+    private static final Path filePath = folderPath.resolve("Playlists.txt");
 
     public static void load() {
+        if (!Files.exists(folderPath)) {
+            File musicFolder = new File(MatHaxLegacy.FOLDER, "Music");
+            musicFolder.mkdirs();
+        }
+
         playlists.clear();
         if (!Files.exists(filePath)) {
-            playlists.put("https://music.youtube.com/playlist?list=PL63ZO-jXFTasqvj7WdEFQ6QtG6UBrl9CR&feature=share", null); // Electronic Gems
+            playlists.put("https://music.youtube.com/playlist?list=PL63ZO-jXFTasqvj7WdEFQ6QtG6UBrl9CR", null); // Electronic Gems
             playlists.put("https://music.youtube.com/watch?v=BAPRv3Zts_w&list=RDQMuICnGifx4w8", null); // Chill Nation Mix
             playlists.put("https://music.youtube.com/playlist?list=PLRBp0Fe2GpglKIXdvLnzcnCdRwEr3tbkO", null); // NCS
             playlists.put("https://music.youtube.com/playlist?list=PL2vYabJDBczNGOYVGXMIlH4G_wcYje5Oi", null); // Rap Nation
