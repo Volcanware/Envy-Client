@@ -1,4 +1,4 @@
-package mathax.legacy.client.utils.player;
+package mathax.legacy.client.utils.misc;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.mixin.ChatHudAccessor;

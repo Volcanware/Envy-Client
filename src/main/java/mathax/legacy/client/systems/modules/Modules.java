@@ -37,7 +37,7 @@ import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.ValueComparableMap;
 import mathax.legacy.client.utils.misc.input.Input;
 import mathax.legacy.client.utils.misc.input.KeyAction;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import mathax.legacy.client.utils.render.ToastSystem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;

@@ -13,7 +13,7 @@ import kaptainwutax.terrainutils.TerrainGenerator;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.systems.seeds.Seed;
 import mathax.legacy.client.systems.seeds.Seeds;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;

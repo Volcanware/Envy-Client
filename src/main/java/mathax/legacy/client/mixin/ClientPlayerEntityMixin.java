@@ -13,7 +13,7 @@ import mathax.legacy.client.systems.modules.movement.Scaffold;
 import mathax.legacy.client.systems.modules.movement.Sneak;
 import mathax.legacy.client.systems.modules.movement.Velocity;
 import mathax.legacy.client.systems.modules.player.Portals;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.Modules;
 import net.minecraft.client.MinecraftClient;

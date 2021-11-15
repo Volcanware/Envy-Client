@@ -9,7 +9,7 @@ import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.misc.Pool;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.render.color.Color;

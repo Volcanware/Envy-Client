@@ -8,7 +8,7 @@ import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.ISerializable;
 import mathax.legacy.client.utils.misc.KeyBind;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import mathax.legacy.client.utils.render.ToastSystem;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.client.MinecraftClient;

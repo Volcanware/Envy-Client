@@ -2,7 +2,7 @@ package mathax.legacy.client.systems.modules.client.swarm;
 
 import baritone.api.BaritoneAPI;
 import mathax.legacy.client.systems.commands.Commands;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import net.minecraft.block.Block;
 
 import java.io.DataInputStream;

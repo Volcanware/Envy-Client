@@ -9,7 +9,7 @@ import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerEntity;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
@@ -17,7 +17,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.Formatting;
 
-import static mathax.legacy.client.utils.player.ChatUtils.formatCoords;
+import static mathax.legacy.client.utils.misc.ChatUtils.formatCoords;
 
 public class VisualRange extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

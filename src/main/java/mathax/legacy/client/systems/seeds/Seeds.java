@@ -15,7 +15,7 @@ import mathax.legacy.client.systems.System;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 
 import static mathax.legacy.client.MatHaxLegacy.mc;
 

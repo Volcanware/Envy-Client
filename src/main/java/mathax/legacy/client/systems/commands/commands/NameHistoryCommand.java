@@ -7,7 +7,7 @@ import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.utils.misc.text.TextUtils;
 import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import mathax.legacy.client.utils.render.color.Color;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.command.CommandSource;

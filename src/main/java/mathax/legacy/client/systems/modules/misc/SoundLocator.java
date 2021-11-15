@@ -7,7 +7,7 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.settings.SoundEventListSetting;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.client.sound.WeightedSoundSet;
 import net.minecraft.item.Items;

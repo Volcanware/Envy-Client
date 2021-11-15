@@ -10,7 +10,7 @@ import mathax.legacy.client.systems.commands.Commands;
 import mathax.legacy.client.systems.commands.commands.SayCommand;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.client.gui.hud.ChatHudLine;

@@ -13,7 +13,7 @@ import mathax.legacy.client.systems.modules.movement.Scaffold;
 import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.misc.Pool;
 import mathax.legacy.client.utils.misc.Timer;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.eventbus.EventHandler;

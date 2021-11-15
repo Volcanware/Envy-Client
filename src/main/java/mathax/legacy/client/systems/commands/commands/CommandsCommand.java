@@ -5,7 +5,7 @@ import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.systems.commands.Commands;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.Utils;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.BaseText;
 import net.minecraft.text.ClickEvent;

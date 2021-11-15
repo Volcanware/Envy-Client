@@ -40,7 +40,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ListIterator;
 
-import static mathax.legacy.client.utils.player.ChatUtils.formatCoords;
+import static mathax.legacy.client.utils.misc.ChatUtils.formatCoords;
 
 public class WaypointsModule extends Module {
     private static final Color GRAY = new Color(200, 200, 200);

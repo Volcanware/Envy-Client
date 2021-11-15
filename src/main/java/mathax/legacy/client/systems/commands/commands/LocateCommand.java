@@ -6,7 +6,7 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.systems.commands.Command;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import mathax.legacy.client.utils.player.FindItemResult;
 import mathax.legacy.client.utils.player.InvUtils;
 import net.minecraft.block.Block;

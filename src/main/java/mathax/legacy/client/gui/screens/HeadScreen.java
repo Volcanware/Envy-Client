@@ -12,7 +12,7 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.settings.Settings;
 import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import mathax.legacy.client.utils.player.GiveUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

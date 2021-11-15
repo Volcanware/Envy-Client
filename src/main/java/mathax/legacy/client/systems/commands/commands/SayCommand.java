@@ -5,7 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.legacy.client.systems.commands.Command;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.chat.BetterChat;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import net.minecraft.command.CommandSource;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.text.BaseText;

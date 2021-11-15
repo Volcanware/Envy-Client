@@ -4,7 +4,7 @@ import mathax.legacy.client.systems.System;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.utils.misc.NbtUtils;
-import mathax.legacy.client.utils.player.ChatUtils;
+import mathax.legacy.client.utils.misc.ChatUtils;
 import mathax.legacy.client.utils.render.ToastSystem;
 import mathax.legacy.client.utils.render.color.RainbowColors;
 import mathax.legacy.client.utils.render.color.SettingColor;
