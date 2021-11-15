@@ -129,7 +129,7 @@ public class StorageESP extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         count = 0;
 
         for (BlockEntity blockEntity : Utils.blockEntities()) {

@@ -127,7 +127,7 @@ public class Trajectories extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (!otherPlayers.get() && player != mc.player) continue;
 

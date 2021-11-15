@@ -257,7 +257,7 @@ public class InstaAutoCity extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         if (!render.get()) return;
         if (mineTarget == null) return;
         event.renderer.box(mineTarget, sideColor.get(), lineColor.get(), shapeMode.get(), 0);

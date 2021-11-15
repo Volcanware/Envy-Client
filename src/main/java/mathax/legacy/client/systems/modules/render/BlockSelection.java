@@ -58,7 +58,7 @@ public class BlockSelection extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         if (mc.crosshairTarget == null || !(mc.crosshairTarget instanceof BlockHitResult result)) return;
 
         BlockPos bp = result.getBlockPos();

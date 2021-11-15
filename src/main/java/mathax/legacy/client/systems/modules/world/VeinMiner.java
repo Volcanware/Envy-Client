@@ -160,10 +160,8 @@ public class VeinMiner extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
-        if (render.get()) {
-            for (MyBlock block : blocks) block.render(event);
-        }
+    private void onRender3D(Render3DEvent event) {
+        if (render.get()) for (MyBlock block : blocks) block.render(event);
     }
 
     private class MyBlock {

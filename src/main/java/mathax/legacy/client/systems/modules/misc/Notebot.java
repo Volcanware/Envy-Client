@@ -167,7 +167,7 @@ public class Notebot extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         if (!render.get()) return;
 
         if (stage != Stage.Set_Up && stage != Stage.Tune && !isPlaying) return;

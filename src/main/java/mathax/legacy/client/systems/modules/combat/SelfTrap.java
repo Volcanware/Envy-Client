@@ -147,7 +147,7 @@ public class SelfTrap extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         if (!render.get() || placePositions.isEmpty()) return;
         for (BlockPos pos : placePositions) event.renderer.box(pos, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
     }

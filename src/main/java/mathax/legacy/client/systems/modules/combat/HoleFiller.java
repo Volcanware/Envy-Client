@@ -204,7 +204,7 @@ public class HoleFiller extends Module {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         if (!render.get()) return;
 
         for (Hole hole : holes) {

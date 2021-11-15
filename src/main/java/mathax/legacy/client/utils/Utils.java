@@ -165,6 +165,7 @@ public class Utils {
             for (int i = 0; i < EChestMemory.ITEMS.size(); i++) {
                 items[i] = EChestMemory.ITEMS.get(i);
             }
+
             return;
         }
 
@@ -269,6 +270,7 @@ public class Utils {
                 return Dimension.End;
             }
         }
+
         return Dimension.Overworld;
     }
 
@@ -489,9 +491,7 @@ public class Utils {
         if (!tag.contains("Enchantments", 9)) {
             listTag = new NbtList();
             tag.put("Enchantments", listTag);
-        } else {
-            listTag = tag.getList("Enchantments", 10);
-        }
+        } else listTag = tag.getList("Enchantments", 10);
 
         // Check if item already has the enchantment and modify the level
         String enchId = Registry.ENCHANTMENT.getId(enchantment).toString();
@@ -540,8 +540,7 @@ public class Utils {
     @SafeVarargs
     public static <T> Object2BooleanOpenHashMap<T> asO2BMap(T... checked) {
         Map<T, Boolean> map = new HashMap<>();
-        for (T item : checked)
-            map.put(item, true);
+        for (T item : checked) map.put(item, true);
         return new Object2BooleanOpenHashMap<>(map);
     }
 }

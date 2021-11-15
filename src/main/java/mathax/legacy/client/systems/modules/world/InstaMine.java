@@ -118,7 +118,7 @@ public class InstaMine extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         if (!render.get() || !shouldMine()) return;
         event.renderer.box(blockPos, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
     }

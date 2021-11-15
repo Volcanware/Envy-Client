@@ -182,7 +182,7 @@ public class EChestFarmer extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         if (target == null || !render.get() || Modules.get().get(PacketMine.class).isMiningBlock(target)) return;
 
         Box box = SHAPE.getBoundingBoxes().get(0);

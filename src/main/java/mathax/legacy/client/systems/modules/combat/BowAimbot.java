@@ -87,7 +87,7 @@ public class BowAimbot extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         if (!PlayerUtils.isAlive() || !itemInHand()) return;
         if (!InvUtils.find(itemStack -> itemStack.getItem() instanceof ArrowItem).found()) return;
 

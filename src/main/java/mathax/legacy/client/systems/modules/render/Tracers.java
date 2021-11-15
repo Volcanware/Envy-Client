@@ -145,15 +145,16 @@ public class Tracers extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         count = 0;
 
         for (Entity entity : mc.world.getEntities()) {
             if (mc.player.distanceTo(entity) > maxDist.get() || (!Modules.get().isActive(Freecam.class) && entity == mc.player) || !entities.get().getBoolean(entity.getType()) || (!showInvis.get() && entity.isInvisible()) | !EntityUtils.isInRenderDistance(entity)) continue;
-            if ((ignoreFriends.get() && Friends.get().isFriend((PlayerEntity) entity)) || !entities.get().getBoolean(EntityType.PLAYER)) return;
+            if (ignoreFriends.get() && entity instanceof PlayerEntity player) {
+                if (Friends.get().isFriend(player)) return;
+            }
 
             Color color;
-
             if (distance.get()) color = getColorFromDistance(entity);
             else if (entity instanceof PlayerEntity) {
                 if (entity.equals(MinecraftClient.getInstance().getCameraEntity())) color = PlayerUtils.getPlayerColor(((PlayerEntity) entity), selfColor.get());

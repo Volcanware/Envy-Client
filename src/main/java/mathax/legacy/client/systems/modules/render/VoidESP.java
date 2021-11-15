@@ -139,7 +139,7 @@ public class VoidESP extends Module {
     }
 
     @EventHandler
-    private void onRender(Render3DEvent event) {
+    private void onRender3D(Render3DEvent event) {
         for (Void voidHole : voidHoles) voidHole.render(event);
     }
 

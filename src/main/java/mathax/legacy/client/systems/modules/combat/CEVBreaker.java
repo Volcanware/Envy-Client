@@ -272,7 +272,7 @@ public class CEVBreaker extends Module {
     }
 
     @EventHandler
-    public void onRender(Render3DEvent event) {
+    public void onRender3D(Render3DEvent event) {
         if (!render.get() || pos == null) return;
         event.renderer.box(pos, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
     }

@@ -19,8 +19,9 @@ import net.minecraft.network.packet.s2c.play.*;
 import java.util.*;
 
 public class AutoEZ extends Module {
-    private boolean canSendPop;
     private int ticks;
+
+    private boolean canSendPop;
 
     private final Random random = new Random();
 
@@ -61,7 +62,16 @@ public class AutoEZ extends Module {
     private final Setting<List<String>> killMessages = sgKills.add(new StringListSetting.Builder()
         .name("messages")
         .description("Custom messages when you kill someone.")
-        .defaultValue(Arrays.asList("haha %killed_player% is a noob! EZZz", "I just raped %killed_player%!", "I just ended %killed_player%!", "I just EZZz'd %killed_player%!", "I just fucked %killed_player%!", "Take the L nerd %killed_player%! You just got ended!", "I just nae nae'd %killed_player%!", "I am too good for %killed_player%!"))
+        .defaultValue(Arrays.asList(
+            "haha %killed_player% is a noob! EZZz",
+            "I just raped %killed_player%!",
+            "I just ended %killed_player%!",
+            "I just EZZz'd %killed_player%!",
+            "I just fucked %killed_player%!",
+            "Take the L nerd %killed_player%! You just got ended!",
+            "I just nae nae'd %killed_player%!",
+            "I am too good for %killed_player%!"
+        ))
         .visible(() -> killMode.get() == Mode.Custom)
         .build()
     );
