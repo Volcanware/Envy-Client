@@ -28,19 +28,16 @@ public class SayCommand extends Command {
 
                 String message = messageTextRaw;
 
-                if (Modules.get().get(BetterChat.class).annoy.get())
-                    message = Modules.get().get(BetterChat.class).applyAnnoy(message);
+                if (Modules.get().get(BetterChat.class).annoy.get()) message = Modules.get().get(BetterChat.class).applyAnnoy(message);
 
-                if (Modules.get().get(BetterChat.class).fancy.get()) {
-                    switch (Modules.get().get(BetterChat.class).fancyType.get()) {
-                        case Full_Width -> message = Modules.get().get(BetterChat.class).applyFull(message);
-                        case Small_CAPS -> message = Modules.get().get(BetterChat.class).applySmall(message);
-                        case UwU -> message = Modules.get().get(BetterChat.class).applyUwU(message);
-                        case Leet -> message = Modules.get().get(BetterChat.class).applyLeet(message);
-                    }
+                switch (Modules.get().get(BetterChat.class).fancy.get()) {
+                    case Full_Width -> message = Modules.get().get(BetterChat.class).applyFull(message);
+                    case Small_CAPS -> message = Modules.get().get(BetterChat.class).applySmall(message);
+                    case UwU -> message = Modules.get().get(BetterChat.class).applyUwU(message);
+                    case Leet -> message = Modules.get().get(BetterChat.class).applyLeet(message);
                 }
 
-                message = Modules.get().get(BetterChat.class).getGreenChat() + message + Modules.get().get(BetterChat.class).getSuffix();
+                message = Modules.get().get(BetterChat.class).getPrefix() + message + Modules.get().get(BetterChat.class).getSuffix();
 
                 if (Modules.get().get(BetterChat.class).coordsProtection.get() && Modules.get().get(BetterChat.class).containsCoordinates(message)) {
                     BaseText warningMessage = new LiteralText("It looks like there are coordinates in your message! ");
@@ -58,6 +55,7 @@ public class SayCommand extends Command {
                 String messageText = context.getArgument("message", String.class);
                 mc.getNetworkHandler().sendPacket(new ChatMessageC2SPacket(messageText));
             }
+
             return SINGLE_SUCCESS;
         }));
     }

@@ -2,7 +2,7 @@ package mathax.legacy.client.systems.modules.chat;
 
 import it.unimi.dsi.fastutil.chars.Char2CharArrayMap;
 import it.unimi.dsi.fastutil.chars.Char2CharMap;
-import mathax.legacy.client.utils.Version;
+import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.events.game.ReceiveMessageEvent;
 import mathax.legacy.client.events.game.SendMessageEvent;
 import mathax.legacy.client.mixin.ChatHudAccessor;
@@ -44,38 +44,11 @@ public class BetterChat extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgFilter = settings.createGroup("Filter");
     private final SettingGroup sgLongerChat = settings.createGroup("Longer Chat");
+    private final SettingGroup sgFancyChat = settings.createGroup("Fancy Chat");
+    private final SettingGroup sgPrefix = settings.createGroup("Prefix");
     private final SettingGroup sgSuffix = settings.createGroup("Suffix");
 
     // General
-
-    public final Setting<Boolean> fancy = sgGeneral.add(new BoolSetting.Builder()
-        .name("fancy-chat")
-        .description("Makes your messages fancy using fancy fonts.")
-        .defaultValue(false)
-        .build()
-    );
-
-    public final Setting<FancyType> fancyType = sgGeneral.add(new EnumSetting.Builder<FancyType>()
-        .name("fancy-type")
-        .description("Determines what font or style to use in the your messages.")
-        .defaultValue(FancyType.Full_Width)
-        .visible(fancy::get)
-        .build()
-    );
-
-    public final Setting<Boolean> annoy = sgGeneral.add(new BoolSetting.Builder()
-        .name("annoy")
-        .description("Makes your messages aNnOyInG.")
-        .defaultValue(false)
-        .build()
-    );
-
-    private final Setting<Boolean> greenChat = sgGeneral.add(new BoolSetting.Builder()
-        .name("green-chat")
-        .description("Adds '>' to your chat messages.")
-        .defaultValue(true)
-        .build()
-    );
 
     private final Setting<Boolean> timestamps = sgGeneral.add(new BoolSetting.Builder()
         .name("timestamps")
@@ -173,26 +146,83 @@ public class BetterChat extends Module {
         .build()
     );
 
-    // Suffix
+    // Fancy Chat
 
-    private final Setting<Boolean> suffix = sgSuffix.add(new BoolSetting.Builder()
-        .name("suffix")
-        .description("Adds MatHax suffix to your chat messages.")
-        .defaultValue(true)
+    public final Setting<FancyType> fancy = sgFancyChat.add(new EnumSetting.Builder<FancyType>()
+        .name("fancy")
+        .description("Determines what font or style to use in the your messages.")
+        .defaultValue(FancyType.None)
         .build()
     );
 
-    private final Setting<Boolean> suffixAppendVersion = sgSuffix.add(new BoolSetting.Builder()
-        .name("append-version")
-        .description("Adds MatHax version to the suffix.")
+    public final Setting<Boolean> annoy = sgFancyChat.add(new BoolSetting.Builder()
+        .name("annoy")
+        .description("Makes your messages aNnOyInG.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<SuffixFont> suffixFont = sgSuffix.add(new EnumSetting.Builder<SuffixFont>()
-        .name("suffix-font")
+    // Prefix
+
+    private final Setting<Boolean> prefix = sgPrefix.add(new BoolSetting.Builder()
+        .name("prefix")
+        .description("Adds a prefix to your chat messages.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Boolean> prefixRandom = sgPrefix.add(new BoolSetting.Builder()
+        .name("random")
+        .description("Uses a random number as your prefix.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<String> prefixText = sgPrefix.add(new StringSetting.Builder()
+        .name("text")
+        .description("The text to add as your prefix.")
+        .defaultValue("> ")
+        .visible(() -> !prefixRandom.get())
+        .build()
+    );
+
+
+    private final Setting<Fonts> prefixFont = sgPrefix.add(new EnumSetting.Builder<Fonts>()
+        .name("font")
+        .description("Determines what font to use in the prefix.")
+        .defaultValue(Fonts.Full_Width)
+        .build()
+    );
+
+    // Suffix
+
+    private final Setting<Boolean> suffix = sgSuffix.add(new BoolSetting.Builder()
+        .name("suffix")
+        .description("Adds a suffix to your chat messages.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Boolean> suffixRandom = sgSuffix.add(new BoolSetting.Builder()
+        .name("random")
+        .description("Uses a random number as your suffix.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<String> suffixText = sgSuffix.add(new StringSetting.Builder()
+        .name("text")
+        .description("The text to add as your suffix.")
+        .defaultValue(" | MatHax Legacy")
+        .visible(() -> !suffixRandom.get())
+        .build()
+    );
+
+
+    private final Setting<Fonts> suffixFont = sgSuffix.add(new EnumSetting.Builder<Fonts>()
+        .name("font")
         .description("Determines what font to use in the suffix.")
-        .defaultValue(SuffixFont.Full_Width)
+        .defaultValue(Fonts.Full_Width)
         .build()
     );
 
@@ -274,9 +304,8 @@ public class BetterChat extends Module {
         String oldMessage = parsed.getString();
         String newMessage = text.getString();
 
-        if (oldMessage.equals(newMessage)) {
-            return parsed.append(new LiteralText(" (2)").formatted(Formatting.GRAY));
-        } else {
+        if (oldMessage.equals(newMessage)) return parsed.append(new LiteralText(" (2)").formatted(Formatting.GRAY));
+        else {
             Matcher matcher = Pattern.compile(".*(\\([0-9]+\\)$)").matcher(oldMessage);
 
             if (!matcher.matches()) return null;
@@ -295,17 +324,6 @@ public class BetterChat extends Module {
         return null;
     }
 
-    private boolean filterRegex(Pattern regex) {
-        LiteralText parsed = new LiteralText("");
-
-        ((ChatHudAccessor) mc.inGameHud.getChatHud()).getVisibleMessages().get(0).getText().accept((i, style, codePoint) -> {
-            parsed.append(new LiteralText(new String(Character.toChars(codePoint))).setStyle(style));
-            return true;
-        });
-
-        return regex.matcher(parsed.getString()).find();
-    }
-
     @EventHandler
     private void onMessageSend(SendMessageEvent event) {
         String message = event.message;
@@ -317,14 +335,12 @@ public class BetterChat extends Module {
 
         if (annoy.get()) message = applyAnnoy(message);
 
-        if (fancy.get()) {
-            if (fancyType.get() == FancyType.Full_Width) message = applyFull(message);
-            if (fancyType.get() == FancyType.Small_CAPS) message = applySmall(message);
-            if (fancyType.get() == FancyType.UwU) message = applyUwU(message);
-            if (fancyType.get() == FancyType.Leet) message = applyLeet(message);
-        }
+        if (fancy.get() == FancyType.Full_Width) message = applyFull(message);
+        else if (fancy.get() == FancyType.Small_CAPS) message = applySmall(message);
+        else if (fancy.get() == FancyType.UwU) message = applyUwU(message);
+        else if (fancy.get() == FancyType.Leet) message = applyLeet(message);
 
-        message = getGreenChat() + message + getSuffix();
+        message = getPrefix() + message + getSuffix();
 
         if (coordsProtection.get() && containsCoordinates(message)) {
             BaseText warningMessage = new LiteralText(Formatting.GRAY + "It looks like there are coordinates in your message! ");
@@ -346,16 +362,18 @@ public class BetterChat extends Module {
     public String applyAnnoy(String message) {
         StringBuilder sb = new StringBuilder(message.length());
         boolean upperCase = true;
+
         for (int cp : message.codePoints().toArray()) {
             if (upperCase) sb.appendCodePoint(Character.toUpperCase(cp));
             else sb.appendCodePoint(Character.toLowerCase(cp));
             upperCase = !upperCase;
         }
+
         message = sb.toString();
         return message;
     }
 
-    // FullWidth
+    // Full Width
 
     public String applyFull(String message) {
         StringBuilder sb = new StringBuilder();
@@ -381,41 +399,41 @@ public class BetterChat extends Module {
         return sb.toString();
     }
 
-    // UWU
+    // UwU
 
     public String applyUwU(String message) {
-        String one = message.replace("ove", "uv");
-        String two = one.replace("the", "da");
-        String three = two.replace("is", "ish");
-        String four = three.replace("r", "w");
-        String five = four.replace("ve", "v");
-        String six = five.replace("OVE", "UV");
-        String seven = six.replace("THE", "DA");
-        String eight = seven.replace("IS", "ISH");
-        String nine = eight.replace("R", "W");
-        String ten = nine.replace("L", "W");
-        return ten.replace("l", "w");
+        message = message.replace("ove", "uv");
+        message = message.replace("the", "da");
+        message = message.replace("is", "ish");
+        message = message.replace("r", "w");
+        message = message.replace("ve", "v");
+        message = message.replace("OVE", "UV");
+        message = message.replace("THE", "DA");
+        message = message.replace("IS", "ISH");
+        message = message.replace("R", "W");
+        message = message.replace("L", "W");
+        return message.replace("l", "w");
     }
 
     // Leet
 
     public String applyLeet(String message) {
-        String one = message.replace("a", "4");
-        String two = one.replace("e", "3");
-        String three = two.replace("g", "6");
-        String four = three.replace("l" , "1");
-        String five = four.replace("i" , "1");
-        String six = five.replace("o", "0");
-        String seven = six.replace("s", "$");
-        String eight = seven.replace("A", "4");
-        String nine = eight.replace("E", "3");
-        String ten = nine.replace("G", "6");
-        String eleven = ten.replace("L" , "1");
-        String twelve = eleven.replace("I" , "1");
-        String thirteen = twelve.replace("O", "0");
-        String fourteen = thirteen.replace("S", "$");
-        String fifteen = fourteen.replace("T", "7");
-        return fifteen.replace("t", "7");
+        message = message.replace("a", "4");
+        message = message.replace("e", "3");
+        message = message.replace("g", "6");
+        message = message.replace("l" , "1");
+        message = message.replace("i" , "1");
+        message = message.replace("o", "0");
+        message = message.replace("s", "$");
+        message = message.replace("A", "4");
+        message = message.replace("E", "3");
+        message = message.replace("G", "6");
+        message = message.replace("L" , "1");
+        message = message.replace("I" , "1");
+        message = message.replace("O", "0");
+        message = message.replace("S", "$");
+        message = message.replace("T", "7");
+        return message.replace("t", "7");
     }
 
     // Emoji Fix
@@ -433,23 +451,21 @@ public class BetterChat extends Module {
         return msg;
     }
 
-    // GreenChat and Suffix
+    // Prefix & Suffix
 
-    public String getGreenChat() {
-        return greenChat.get() ? "> " : "";
+    public String getPrefix() {
+        return prefix.get() ? getAffix(prefixText.get(), prefixFont.get(), prefixRandom.get()) : "";
     }
 
     public String getSuffix() {
-        if (suffix.get()) {
-            if (suffixFont.get() == SuffixFont.Full_Width) return applyFull(getSuffixString());
-            else if (suffixFont.get() == SuffixFont.Small_CAPS) return applySmall(getSuffixString());
-            else return getSuffixString();
-        } else return "";
+        return suffix.get() ? getAffix(suffixText.get(), suffixFont.get(), suffixRandom.get()) : "";
     }
 
-    private String getSuffixString() {
-        if (suffixAppendVersion.get()) return " | MatHax Legacy " + Version.getStylized();
-        else return " | MatHax Legacy";
+    private String getAffix(String text, Fonts font, boolean random) {
+        if (random) return String.format("(%03d) ", Utils.random(0, 1000));
+        else if (font == Fonts.Full_Width) return applyFull(text);
+        else if (font == Fonts.Small_CAPS) return applySmall(text);
+        else return text;
     }
 
     // Coords Protection
@@ -473,11 +489,13 @@ public class BetterChat extends Module {
         .withClickEvent(new ClickEvent(
                 ClickEvent.Action.RUN_COMMAND,
                 Commands.get().get(SayCommand.class).toString(message)
-            ))
+            )
+        )
         .withHoverEvent(new HoverEvent(
                 HoverEvent.Action.SHOW_TEXT,
                 hintBaseText
-            )));
+            )
+        ));
         return sendButton;
     }
 
@@ -501,7 +519,8 @@ public class BetterChat extends Module {
         Full_Width,
         Small_CAPS,
         UwU,
-        Leet;
+        Leet,
+        None;
 
         @Override
         public String toString() {
@@ -509,10 +528,10 @@ public class BetterChat extends Module {
         }
     }
 
-    public enum SuffixFont {
-        Normal,
+    public enum Fonts {
         Full_Width,
-        Small_CAPS;
+        Small_CAPS,
+        None;
 
         @Override
         public String toString() {

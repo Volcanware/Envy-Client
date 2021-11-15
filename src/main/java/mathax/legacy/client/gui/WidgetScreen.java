@@ -65,9 +65,7 @@ public abstract class WidgetScreen extends Screen {
         if (parent != null) {
             animProgress = 1;
 
-            if (this instanceof TabScreen && parent instanceof TabScreen && !(this instanceof HudTab.HudScreen)) {
-                parent = ((TabScreen) parent).parent;
-            }
+            if (this instanceof TabScreen && parent instanceof TabScreen && !(this instanceof HudTab.HudScreen)) parent = ((TabScreen) parent).parent;
         }
     }
 
@@ -190,8 +188,7 @@ public abstract class WidgetScreen extends Screen {
                     textBox.setCursorMax();
 
                     done.set(true);
-                }
-                else {
+                } else {
                     if (textBox.isFocused()) {
                         textBox.setFocused(false);
                         foundFocused.set(true);
@@ -213,8 +210,7 @@ public abstract class WidgetScreen extends Screen {
 
         if (control && keyCode == GLFW_KEY_C && toClipboard()) {
             return true;
-        }
-        else if (control && keyCode == GLFW_KEY_V && fromClipboard()) {
+        } else if (control && keyCode == GLFW_KEY_V && fromClipboard()) {
             reload();
             return true;
         }

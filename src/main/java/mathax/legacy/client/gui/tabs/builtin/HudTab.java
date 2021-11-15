@@ -111,8 +111,7 @@ public class HudTab extends Tab {
                 if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
                     if (!selectedElements.isEmpty()) selectedElements.clear();
                     mc.setScreen(new HudElementScreen(theme, hoveredModule));
-                }
-                else {
+                } else {
                     dragging = true;
                     dragged = false;
 
