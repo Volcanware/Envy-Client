@@ -47,16 +47,16 @@ public class Version {
     }
 
     public static Integer getDev() {
-        return 1;
+        return 2;
     }
 
     public static String getDevString() {
-        if (getDev() == 0) return "";
+        if (getDev() < 1) return "";
         else return "Dev-" + getDev();
     }
 
     public static String getStylized() {
-        if (getDev() == 0) return "v" + get();
+        if (getDev() < 1) return "v" + get();
         else return "v" + get() + " " + getDevString();
     }
 
