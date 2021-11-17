@@ -294,6 +294,11 @@ public class MatHaxGuiTheme extends GuiTheme {
     }
 
     @Override
+    public void resetScale() {
+        scale.set(scale.getDefaultValue());
+    }
+
+    @Override
     public boolean categoryIcons() {
         return categoryIcons.get();
     }

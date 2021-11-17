@@ -33,9 +33,13 @@ public class ResetCommand extends Command {
                 }))
         ).then(literal("gui").executes(context -> {
             GuiThemes.get().clearWindowConfigs();
-            info("The ClickGUI positioning has been reset.");
+            info("The Click GUI positioning has been reset.");
             return SINGLE_SUCCESS;
-        })).then(literal("bind")
+        }).then(literal("scale").executes(context -> {
+            GuiThemes.get().resetScale();
+            info("The GUI scale has been reset.");
+            return SINGLE_SUCCESS;
+        }))).then(literal("bind")
                 .then(argument("module", ModuleArgumentType.module()).executes(context -> {
                     Module module = context.getArgument("module", Module.class);
 
