@@ -100,7 +100,7 @@ public class LongJump extends Module {
     );
 
     private final Setting<Boolean> disableOnRubberband = sgGeneral.add(new BoolSetting.Builder()
-        .name("disable-on-rubberband")
+        .name("rubberband-disable")
         .description("Disables the module when you get lagged back.")
         .defaultValue(true)
         .build()

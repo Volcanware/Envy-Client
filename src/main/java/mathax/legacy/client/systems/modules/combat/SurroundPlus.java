@@ -135,14 +135,14 @@ public class SurroundPlus extends Module {
     );
 
     private final Setting<Boolean> disableOnJump = sgGeneral.add(new BoolSetting.Builder()
-        .name("disable-on-jump")
+        .name("jump-disable")
         .description("Automatically disables when you jump.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> disableOnYChange = sgGeneral.add(new BoolSetting.Builder()
-        .name("disable-on-y-change")
+        .name("y-change-disable")
         .description("Automatically disables when your y level (step, jumping, atc).")
         .defaultValue(true)
         .build()

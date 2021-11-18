@@ -116,7 +116,7 @@ public class CEVBreaker extends Module {
     );
 
     public CEVBreaker() {
-        super(Categories.Combat, Items.END_CRYSTAL, "CEV-breaker", "Places obsidian on top of people and explodes crystals on top of their heads after destroying the obsidian.");
+        super(Categories.Combat, Items.END_CRYSTAL, "cev-breaker", "Places obsidian on top of people and explodes crystals on top of their heads after destroying the obsidian.");
     }
 
     @Override

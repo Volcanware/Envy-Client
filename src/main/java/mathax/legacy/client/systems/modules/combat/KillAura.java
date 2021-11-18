@@ -2,6 +2,7 @@ package mathax.legacy.client.systems.modules.combat;
 
 import baritone.api.BaritoneAPI;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.friends.Friends;
@@ -106,8 +107,15 @@ public class KillAura extends Module {
         .build()
     );
 
+    private final Setting<Boolean> toggleOnDisconnect = sgGeneral.add(new BoolSetting.Builder()
+        .name("disconnect-toggle")
+        .description("Toggles the module on disconnect.")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<Boolean> pauseOnCombat = sgGeneral.add(new BoolSetting.Builder()
-        .name("pause-on-combat")
+        .name("combat-pause")
         .description("Freezes Baritone temporarily until you are finished attacking the entity.")
         .defaultValue(true)
         .build()
@@ -185,7 +193,7 @@ public class KillAura extends Module {
         .description("How fast you hit the entity in ticks.")
         .defaultValue(0)
         .min(0)
-        .sliderMax(60)
+        .sliderRange(0, 60)
         .visible(() -> !smartDelay.get())
         .build()
     );
@@ -203,7 +211,7 @@ public class KillAura extends Module {
         .description("The maximum value for random delay.")
         .defaultValue(4)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .visible(() -> randomDelayEnabled.get() && !smartDelay.get())
         .build()
     );
@@ -228,6 +236,11 @@ public class KillAura extends Module {
     }
 
     @EventHandler
+    private void onDisconnect(GameLeftEvent event) {
+        if (toggleOnDisconnect.get()) toggle();
+    }
+
+    @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (!mc.player.isAlive() || PlayerUtils.getGameMode() == GameMode.SPECTATOR) return;
 
@@ -248,11 +261,9 @@ public class KillAura extends Module {
         }
 
         Entity primary = targets.get(0);
-
         if (rotation.get() == RotationMode.Always) rotate(primary, null);
 
         if (onlyOnClick.get() && !mc.options.keyAttack.isPressed()) return;
-
         if (onlyWhenLook.get()) {
             primary = mc.targetedEntity;
 
@@ -281,9 +292,7 @@ public class KillAura extends Module {
         }
 
         if (!itemInHand()) return;
-
         if (delayCheck()) targets.forEach(this::attack);
-
         if (randomTeleport.get() && !onlyWhenLook.get()) mc.player.setPosition(primary.getX() + randomOffset(), primary.getY(), primary.getZ() + randomOffset());
     }
 
@@ -301,7 +310,7 @@ public class KillAura extends Module {
         if ((entity instanceof LivingEntity && ((LivingEntity) entity).isDead()) || !entity.isAlive()) return false;
         if (PlayerUtils.distanceTo(entity) > targetRange.get()) return false;
         if (!entities.get().getBoolean(entity.getType())) return false;
-        if (!nametagged.get() && entity.hasCustomName()) return false;
+        if (!nametagged.get() && entity.hasCustomName() && !(entity instanceof PlayerEntity)) return false;
         if (!PlayerUtils.canSeeEntity(entity) && PlayerUtils.distanceTo(entity) > wallsRange.get()) return false;
         if (ignorePassive.get()) {
             if (entity instanceof EndermanEntity && !((EndermanEntity) entity).isAngry()) return false;
@@ -385,9 +394,7 @@ public class KillAura extends Module {
 
         @Override
         public String toString() {
-            if (this == Sword_and_Axe) return "Sword & Axe";
-            else if (this == All_Three) return "All Three";
-            return super.toString();
+            return super.toString().replace("_", " ");
         }
     }
 
@@ -398,8 +405,7 @@ public class KillAura extends Module {
 
         @Override
         public String toString() {
-            if (this == On_Hit) return "On Hit";
-            return super.toString();
+            return super.toString().replace("_", " ");
         }
     }
 }

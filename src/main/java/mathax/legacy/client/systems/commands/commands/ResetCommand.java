@@ -28,7 +28,7 @@ public class ResetCommand extends Command {
                 }))
                 .then(literal("all").executes(context -> {
                     Modules.get().getAll().forEach(module -> module.settings.forEach(group -> group.forEach(Setting::reset)));
-                    info("Modules", "Reset all module's settings");
+                    info("Reset all module's settings");
                     return SINGLE_SUCCESS;
                 }))
         ).then(literal("gui").executes(context -> {
@@ -50,7 +50,7 @@ public class ResetCommand extends Command {
                 }))
                 .then(literal("all").executes(context -> {
                     Modules.get().getAll().forEach(module -> module.keybind.set(true, -1));
-                    info("Modules", "Reset all binds");
+                    info("Reset all module's binds");
                     return SINGLE_SUCCESS;
                 }))
         ).then(literal("hud").executes(context -> {

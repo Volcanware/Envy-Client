@@ -365,7 +365,6 @@ public class Modules extends System<Modules> {
         add(new AntiAnchor());
         add(new AntiAnvil());
         add(new AntiBed());
-        add(new AntiCEVBreaker());
         add(new ArrowDodge());
         add(new Auto32K());
         add(new AutoAnvil());
@@ -393,6 +392,7 @@ public class Modules extends System<Modules> {
         //add(new PistonAura());
         add(new Quiver());
         add(new SelfAnvil());
+        add(new SelfProtect());
         add(new SelfTrap());
         add(new SelfWeb());
         add(new Surround());

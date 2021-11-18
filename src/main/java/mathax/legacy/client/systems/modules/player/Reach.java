@@ -15,7 +15,7 @@ public class Reach extends Module {
         .description("Your reach modifier.")
         .defaultValue(5)
         .min(0)
-        .sliderMax(7.5)
+        .sliderRange(0, 7.5)
         .build()
     );
 
@@ -26,5 +26,10 @@ public class Reach extends Module {
     public float getReach() {
         if (!isActive()) return mc.interactionManager.getCurrentGameMode().isCreative() ? 5.0F : 4.5F;
         return reach.get().floatValue();
+    }
+
+    @Override
+    public String getInfoString() {
+        return reach.get().toString();
     }
 }

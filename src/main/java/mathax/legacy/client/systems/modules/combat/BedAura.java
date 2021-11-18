@@ -206,7 +206,7 @@ public class BedAura extends Module {
     );
 
     private final Setting<Boolean> disableOnNoBeds = sgAutomation.add(new BoolSetting.Builder()
-        .name("disable-on-no-beds")
+        .name("no-beds-disable")
         .description("Disable if you run out of beds.")
         .defaultValue(false)
         .build()
@@ -215,8 +215,8 @@ public class BedAura extends Module {
     // Safety
 
     private final Setting<Boolean> disableOnSafety = sgSafety.add(new BoolSetting.Builder()
-        .name("disable-on-safety")
-        .description("Disable BedAuraPlus when safety activates.")
+        .name("safety-disable")
+        .description("Disable bed aura when safety activates.")
         .defaultValue(true)
         .build()
     );
