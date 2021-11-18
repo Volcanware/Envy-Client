@@ -52,7 +52,7 @@ public class Spam extends Module {
 
     private final Setting<Integer> length = sgAntiSpamBypass.add(new IntSetting.Builder()
         .name("length")
-        .description("Text length of Anti Spam Bypass.")
+        .description("Text length of anti spam bypass.")
         .defaultValue(16)
         .sliderRange(1, 256)
         .build()
