@@ -43,14 +43,14 @@ public class Spam extends Module {
 
     // Anti Spam Bypass
 
-    private final Setting<Boolean> antiSpamBypass = sgGeneral.add(new BoolSetting.Builder()
+    private final Setting<Boolean> antiSpamBypass = sgAntiSpamBypass.add(new BoolSetting.Builder()
         .name("enabled")
         .description("Adds random text at the bottom of the text.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<Integer> length = sgGeneral.add(new IntSetting.Builder()
+    private final Setting<Integer> length = sgAntiSpamBypass.add(new IntSetting.Builder()
         .name("length")
         .description("Text length of Anti Spam Bypass.")
         .defaultValue(16)
