@@ -157,22 +157,20 @@ public class SelfTrap extends Module {
         BlockPos pos = mc.player.getBlockPos();
 
         switch (topPlacement.get()) {
-            case Full:
+            case Full -> {
                 add(pos.add(0, 2, 0));
                 add(pos.add(1, 1, 0));
                 add(pos.add(-1, 1, 0));
                 add(pos.add(0, 1, 1));
                 add(pos.add(0, 1, -1));
-                break;
-            case Top:
-                add(pos.add(0, 2, 0));
-                break;
-            case Anti_FacePlace:
+            }
+            case Top -> add(pos.add(0, 2, 0));
+            case Anti_FacePlace -> {
                 add(pos.add(1, 1, 0));
                 add(pos.add(-1, 1, 0));
                 add(pos.add(0, 1, 1));
                 add(pos.add(0, 1, -1));
-
+            }
         }
 
         if (bottomPlacement.get() == BottomMode.Single) add(pos.add(0, -1, 0));

@@ -63,8 +63,7 @@ public class Burrow extends Module {
         .name("rubberband-height")
         .description("How far to attempt to cause rubberband.")
         .defaultValue(12)
-        .sliderMin(-30)
-        .sliderMax(30)
+        .sliderRange(-30, 30)
         .build()
     );
 
@@ -139,9 +138,7 @@ public class Burrow extends Module {
         if (automatic.get()) {
             if (instant.get()) shouldBurrow = true;
             else mc.player.jump();
-        } else {
-            info("Waiting for manual jump.");
-        }
+        } else info("Waiting for manual jump.");
     }
 
     @Override
@@ -161,8 +158,7 @@ public class Burrow extends Module {
                 return;
             }*/
 
-            if (rotate.get())
-                Rotations.rotate(Rotations.getYaw(mc.player.getBlockPos()), Rotations.getPitch(mc.player.getBlockPos()), 50, this::burrow);
+            if (rotate.get()) Rotations.rotate(Rotations.getYaw(mc.player.getBlockPos()), Rotations.getPitch(mc.player.getBlockPos()), 50, this::burrow);
             else burrow();
 
             toggle();
@@ -172,9 +168,7 @@ public class Burrow extends Module {
     @EventHandler
     private void onKey(KeyEvent event) {
         if (instant.get() && !shouldBurrow) {
-            if (event.action == KeyAction.Press && mc.options.keyJump.matchesKey(event.key, 0)) {
-                shouldBurrow = true;
-            }
+            if (event.action == KeyAction.Press && mc.options.keyJump.matchesKey(event.key, 0)) shouldBurrow = true;
             blockPos.set(mc.player.getBlockPos());
         }
     }
@@ -189,7 +183,6 @@ public class Burrow extends Module {
             mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 1.15, mc.player.getZ(), false));
         }
 
-
         FindItemResult block = getItem();
 
         if (!(mc.player.getInventory().getStack(block.getSlot()).getItem() instanceof BlockItem)) return;
@@ -200,11 +193,8 @@ public class Burrow extends Module {
 
         InvUtils.swapBack();
 
-        if (instant.get()) {
-            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + rubberbandHeight.get(), mc.player.getZ(), false));
-        } else {
-            mc.player.updatePosition(mc.player.getX(), mc.player.getY() + rubberbandHeight.get(), mc.player.getZ());
-        }
+        if (instant.get()) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + rubberbandHeight.get(), mc.player.getZ(), false));
+        else mc.player.updatePosition(mc.player.getX(), mc.player.getY() + rubberbandHeight.get(), mc.player.getZ());
     }
 
     private FindItemResult getItem() {
@@ -217,15 +207,7 @@ public class Burrow extends Module {
     }
 
     private boolean checkHead() {
-        BlockState blockState1 = mc.world.getBlockState(blockPos.set(mc.player.getX() + .3, mc.player.getY() + 2.3, mc.player.getZ() + .3));
-        BlockState blockState2 = mc.world.getBlockState(blockPos.set(mc.player.getX() + .3, mc.player.getY() + 2.3, mc.player.getZ() - .3));
-        BlockState blockState3 = mc.world.getBlockState(blockPos.set(mc.player.getX() - .3, mc.player.getY() + 2.3, mc.player.getZ() - .3));
-        BlockState blockState4 = mc.world.getBlockState(blockPos.set(mc.player.getX() - .3, mc.player.getY() + 2.3, mc.player.getZ() + .3));
-        boolean air1 = blockState1.getMaterial().isReplaceable();
-        boolean air2 = blockState2.getMaterial().isReplaceable();
-        boolean air3 = blockState3.getMaterial().isReplaceable();
-        boolean air4 = blockState4.getMaterial().isReplaceable();
-        return air1 & air2 & air3 & air4;
+        return mc.world.getBlockState(blockPos.set(mc.player.getX() + .3, mc.player.getY() + 2.3, mc.player.getZ() + .3)).getMaterial().isReplaceable() & mc.world.getBlockState(blockPos.set(mc.player.getX() + .3, mc.player.getY() + 2.3, mc.player.getZ() - .3)).getMaterial().isReplaceable() & mc.world.getBlockState(blockPos.set(mc.player.getX() - .3, mc.player.getY() + 2.3, mc.player.getZ() - .3)).getMaterial().isReplaceable() & mc.world.getBlockState(blockPos.set(mc.player.getX() - .3, mc.player.getY() + 2.3, mc.player.getZ() + .3)).getMaterial().isReplaceable();
     }
 
     public enum Block {

@@ -193,7 +193,7 @@ public class InstaAutoCity extends Module {
             }
 
             if (support.get()) {
-                int n2 = InvUtils.findInHotbar((Item[]) new Item[]{Items.OBSIDIAN}).getSlot();
+                int n2 = InvUtils.findInHotbar(Items.OBSIDIAN).getSlot();
                 BlockPos blockPos = mineTarget.down(1);
                 if (!BlockUtils.canPlace(blockPos) && mc.world.getBlockState(blockPos).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK && chatInfo.get()) info("Couldn't place support block, mining anyway.");
                 else if (n2 == -1) if (chatInfo.get()) info("No obsidian found for support, mining anyway.");
@@ -204,6 +204,7 @@ public class InstaAutoCity extends Module {
         } else {
             mineTarget = null;
             target = null;
+
             if (autoToggle.get()) {
                 if (chatInfo.get()) info("No target block found, disabling...");
                 toggle();
@@ -240,8 +241,10 @@ public class InstaAutoCity extends Module {
 
         if (autoToggle.get()) {
             direction = BlockUtils.rayTraceCheck(mineTarget, true);
+
             if (!mc.world.isAir(mineTarget)) doMine();
             else ++count;
+
             if (target == null || !target.isAlive() || count >= toggle.get() || !mineTarget.isWithinDistance(mc.player.getPos(), range.get()) || target.getBlockPos() != targetBlockPos) toggle();
         } else {
             if (target == null) return;

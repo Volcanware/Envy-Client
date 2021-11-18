@@ -16,6 +16,9 @@ public class AutoWeb extends Module {
     private PlayerEntity target = null;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgRender = settings.createGroup("Render");
+
+    // General
 
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
         .name("target-range")
@@ -47,21 +50,26 @@ public class AutoWeb extends Module {
         .build()
     );
 
+    // Render
+
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("rotate")
+        .description("Rotates towards the webs when placing.")
+        .defaultValue(true)
+        .build()
+    );
+
     public AutoWeb() {
         super(Categories.Combat, Items.COBWEB, "auto-web", "Automatically places webs on other players.");
     }
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        if (TargetUtils.isBadTarget(target, range.get())) {
-            target = TargetUtils.getPlayerTarget(range.get(), priority.get());
-        }
+        if (TargetUtils.isBadTarget(target, range.get())) target = TargetUtils.getPlayerTarget(range.get(), priority.get());
         if (TargetUtils.isBadTarget(target, range.get())) return;
 
-        BlockUtils.place(target.getBlockPos(), InvUtils.findInHotbar(Items.COBWEB), rotate.get(), 0, false);
+        BlockUtils.place(target.getBlockPos(), InvUtils.findInHotbar(Items.COBWEB), rotate.get(), 0, swing.get(), false);
 
-        if (doubles.get()) {
-            BlockUtils.place(target.getBlockPos().add(0, 1, 0), InvUtils.findInHotbar(Items.COBWEB), rotate.get(), 0, false);
-        }
+        if (doubles.get()) BlockUtils.place(target.getBlockPos().add(0, 1, 0), InvUtils.findInHotbar(Items.COBWEB), rotate.get(), 0, swing.get(), false);
     }
 }

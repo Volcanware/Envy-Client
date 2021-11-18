@@ -14,6 +14,9 @@ import net.minecraft.item.Items;
 
 public class SelfWeb extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgRender = settings.createGroup("Render");
+
+    // General
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
@@ -52,6 +55,15 @@ public class SelfWeb extends Module {
         .build()
     );
 
+    // Render
+
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("rotate")
+        .description("Rotates towards the webs when placing.")
+        .defaultValue(true)
+        .build()
+    );
+
     public SelfWeb() {
         super(Categories.Combat, Items.COBWEB, "self-web", "Automatically places webs on you.");
     }
@@ -71,11 +83,9 @@ public class SelfWeb extends Module {
     private void placeWeb() {
         FindItemResult web = InvUtils.findInHotbar(Items.COBWEB);
 
-        BlockUtils.place(mc.player.getBlockPos(), web, rotate.get(), 0, false);
+        BlockUtils.place(mc.player.getBlockPos(), web, rotate.get(), 0, swing.get(), false);
 
-        if (doubles.get()) {
-            BlockUtils.place(mc.player.getBlockPos().add(0, 1, 0), web, rotate.get(), 0, false);
-        }
+        if (doubles.get()) BlockUtils.place(mc.player.getBlockPos().add(0, 1, 0), web, rotate.get(), 0, swing.get(), false);
 
         if (turnOff.get()) toggle();
     }

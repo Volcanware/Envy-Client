@@ -142,9 +142,8 @@ public class CrystalAura extends Module {
         .name("max-damage")
         .description("Maximum damage crystals can deal to yourself.")
         .defaultValue(6)
-        .min(0)
-        .max(36)
-        .sliderMax(36)
+        .range(0, 36)
+        .sliderRange(0, 36)
         .build()
     );
 
@@ -200,7 +199,7 @@ public class CrystalAura extends Module {
         .description("The delay in ticks to wait to place a crystal after it's exploded.")
         .defaultValue(0)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 
@@ -209,7 +208,7 @@ public class CrystalAura extends Module {
         .description("Range in which to place crystals.")
         .defaultValue(4.5)
         .min(0)
-        .sliderMax(6)
+        .sliderRange(0, 6)
         .build()
     );
 
@@ -218,7 +217,7 @@ public class CrystalAura extends Module {
         .description("Range in which to place crystals when behind blocks.")
         .defaultValue(4.5)
         .min(0)
-        .sliderMax(6)
+        .sliderRange(0, 6)
         .build()
     );
 
@@ -259,8 +258,7 @@ public class CrystalAura extends Module {
         .description("The health the target has to be at to start face placing.")
         .defaultValue(8)
         .min(1)
-        .sliderMin(1)
-        .sliderMax(36)
+        .sliderRange(1, 36)
         .visible(facePlace::get)
         .build()
     );
@@ -269,9 +267,8 @@ public class CrystalAura extends Module {
         .name("face-place-durability")
         .description("The durability threshold percentage to be able to face-place.")
         .defaultValue(2)
-        .min(1)
-        .sliderMin(1)
-        .sliderMax(100)
+        .range(1, 100)
+        .sliderRange(1, 100)
         .visible(facePlace::get)
         .build()
     );
@@ -305,7 +302,7 @@ public class CrystalAura extends Module {
         .description("The delay in ticks to wait to break a crystal after it's placed.")
         .defaultValue(0)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 
@@ -329,7 +326,7 @@ public class CrystalAura extends Module {
         .description("Range in which to break crystals.")
         .defaultValue(4.5)
         .min(0)
-        .sliderMax(6)
+        .sliderRange(0, 6)
         .build()
     );
 
@@ -338,7 +335,7 @@ public class CrystalAura extends Module {
         .description("Range in which to break crystals when behind blocks.")
         .defaultValue(4.5)
         .min(0)
-        .sliderMax(6)
+        .sliderRange(0, 6)
         .build()
     );
 
@@ -353,8 +350,7 @@ public class CrystalAura extends Module {
         .name("break-attempts")
         .description("How many times to hit a crystal before stopping to target it.")
         .defaultValue(2)
-        .sliderMin(1)
-        .sliderMax(5)
+        .sliderRange(1, 5)
         .build()
     );
 
@@ -484,10 +480,8 @@ public class CrystalAura extends Module {
         .name("text-color-alpha")
         .description("The alpha channel value of damage text of the block overlay.")
         .defaultValue(255)
-        .min(0)
-        .max(255)
-        .sliderMin(0)
-        .sliderMax(255)
+        .range(0, 255)
+        .sliderRange(0, 255)
         .visible(() -> textColorMode.get() == ColorMode.Damage)
         .build()
     );

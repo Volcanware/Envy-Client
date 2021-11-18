@@ -28,6 +28,8 @@ public class Offhand extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Item> item = sgGeneral.add(new EnumSetting.Builder<Item>()
         .name("item")
         .description("Which item to hold in your offhand.")
