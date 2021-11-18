@@ -24,7 +24,7 @@ public class Spam extends Module {
         .description("The delay between specified messages in ticks.")
         .defaultValue(20)
         .min(0)
-        .sliderMax(200)
+        .sliderRange(0, 200)
         .build()
     );
 
