@@ -365,6 +365,7 @@ public class Modules extends System<Modules> {
         add(new AntiAnchor());
         add(new AntiAnvil());
         add(new AntiBed());
+        add(new AntiCEVBreaker());
         add(new ArrowDodge());
         add(new Auto32K());
         add(new AutoAnvil());
