@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.render;
 
+import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Categories;
@@ -17,11 +18,20 @@ import net.minecraft.util.shape.VoxelShape;
 
 public class BlockSelection extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgColors = settings.createGroup("Colors");
+
+    private final Setting<Boolean> cool = sgGeneral.add(new BoolSetting.Builder()
+        .name("cool")
+        .description("Makes the block selection cool.")
+        .defaultValue(true)
+        .build()
+    );
 
     private final Setting<Boolean> advanced = sgGeneral.add(new BoolSetting.Builder()
         .name("advanced")
         .description("Shows a more advanced outline on different types of shape blocks.")
         .defaultValue(true)
+        .visible(() -> !cool.get())
         .build()
     );
 
@@ -29,6 +39,7 @@ public class BlockSelection extends Module {
         .name("single-side")
         .description("Only renders the side you are looking at.")
         .defaultValue(false)
+        .visible(() -> !cool.get())
         .build()
     );
 
@@ -39,18 +50,34 @@ public class BlockSelection extends Module {
         .build()
     );
 
-    private final Setting<SettingColor> sideColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("side-color")
+    private final Setting<SettingColor> sideColor = sgColors.add(new ColorSetting.Builder()
+        .name("side")
         .description("The side color.")
-        .defaultValue(new SettingColor(255, 255, 255, 75))
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 75))
         .build()
     );
 
-    private final Setting<SettingColor> lineColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("line-color")
-        .description("The line color.")
-        .defaultValue(new SettingColor(255, 255, 255, 255))
+    private final Setting<SettingColor> sideTwoColor = sgColors.add(new ColorSetting.Builder()
+        .name("side-2")
+        .description("The second side color.")
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b, 75))
+        .visible(cool::get)
         .build()
+    );
+
+    private final Setting<SettingColor> lineColor = sgColors.add(new ColorSetting.Builder()
+        .name("line")
+        .description("The line color.")
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
+        .build()
+    );
+
+    private final Setting<SettingColor> lineTwoColor = sgColors.add(new ColorSetting.Builder()
+        .name("line-2")
+        .description("The second line color.")
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_BACKGROUND_COLOR.b))
+        .visible(cool::get)
+       .build()
     );
 
     public BlockSelection() {
@@ -60,6 +87,17 @@ public class BlockSelection extends Module {
     @EventHandler
     private void onRender3D(Render3DEvent event) {
         if (mc.crosshairTarget == null || !(mc.crosshairTarget instanceof BlockHitResult result)) return;
+        if (cool.get()) {
+            BlockPos pos = result.getBlockPos();
+
+            BlockState state = mc.world.getBlockState(pos);
+            VoxelShape shape = state.getOutlineShape(mc.world, pos);
+
+            if (shape.isEmpty()) return;
+
+            renderCool(event,pos);
+            return;
+        }
 
         BlockPos bp = result.getBlockPos();
         Direction side = result.getSide();
@@ -101,5 +139,48 @@ public class BlockSelection extends Module {
 
     private void render(Render3DEvent event, BlockPos bp, Box box) {
         event.renderer.box(bp.getX() + box.minX, bp.getY() + box.minY, bp.getZ() + box.minZ, bp.getX() + box.maxX, bp.getY() + box.maxY, bp.getZ() + box.maxZ, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
+    }
+
+    private void renderCool(Render3DEvent event, BlockPos pos) {
+        if (shapeMode.get() == ShapeMode.Lines || shapeMode.get() == ShapeMode.Both) {
+            // Sides
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY() + 1, pos.getZ() + 0.02, lineColor.get(), lineTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 0.02, pos.getY() + 1, pos.getZ(), lineColor.get(), lineTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX() + 1, pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 0.02, lineColor.get(), lineTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX() + 1, pos.getY(), pos.getZ(), pos.getX() + 0.98, pos.getY() + 1, pos.getZ(), lineColor.get(), lineTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ() + 1, pos.getX(), pos.getY() + 1, pos.getZ() + 0.98, lineColor.get(), lineTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ() + 1, pos.getX() + 0.02, pos.getY() + 1, pos.getZ() + 1, lineColor.get(), lineTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX() + 1, pos.getY(), pos.getZ() + 1, pos.getX() + 1, pos.getY() + 1, pos.getZ() + 0.98, lineColor.get(), lineTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX() + 1, pos.getY(), pos.getZ() + 1, pos.getX() + 0.98, pos.getY() + 1, pos.getZ() + 1, lineColor.get(), lineTwoColor.get());
+
+            // Up
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, pos.getY() + 0.98, pos.getZ(), lineColor.get(), lineColor.get());
+            event.renderer.quadHorizontal(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, pos.getZ() + 0.02, lineColor.get());
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX(), pos.getY() + 0.98, pos.getZ() + 1, lineColor.get(), lineColor.get());
+            event.renderer.quadHorizontal(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 0.02, pos.getZ() + 1, lineColor.get());
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY() + 1, pos.getZ() + 1, pos.getX() + 1, pos.getY() + 0.98, pos.getZ() + 1, lineColor.get(), lineColor.get());
+            event.renderer.quadHorizontal(pos.getX(), pos.getY() + 1, pos.getZ() + 1, pos.getX() + 1, pos.getZ() + 0.98, lineColor.get());
+            event.renderer.gradientQuadVertical(pos.getX() + 1, pos.getY() + 1, pos.getZ(), pos.getX() + 1, pos.getY() + 0.98, pos.getZ() + 1, lineColor.get(), lineColor.get());
+            event.renderer.quadHorizontal(pos.getX() + 1, pos.getY() + 1, pos.getZ(), pos.getX() + 0.98, pos.getZ() + 1, lineColor.get());
+
+            // Down
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 0.02, pos.getZ(), lineTwoColor.get(), lineTwoColor.get());
+            event.renderer.quadHorizontal(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getZ() + 0.02, lineTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY() + 0.02, pos.getZ() + 1, lineTwoColor.get(), lineTwoColor.get());
+            event.renderer.quadHorizontal(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 0.02, pos.getZ() + 1, lineTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ() + 1, pos.getX() + 1, pos.getY() + 0.02, pos.getZ() + 1, lineTwoColor.get(), lineTwoColor.get());
+            event.renderer.quadHorizontal(pos.getX(), pos.getY(), pos.getZ() + 1, pos.getX() + 1, pos.getZ() + 0.98, lineTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX() + 1, pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 0.02, pos.getZ() + 1, lineTwoColor.get(), lineTwoColor.get());
+            event.renderer.quadHorizontal(pos.getX() + 1, pos.getY(), pos.getZ(), pos.getX() + 0.98, pos.getZ() + 1, lineTwoColor.get());
+        }
+
+        if (shapeMode.get() == ShapeMode.Sides || shapeMode.get() == ShapeMode.Both) {
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ(), sideColor.get(), sideTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY() + 1, pos.getZ() + 1, sideColor.get(), sideTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX() + 1, pos.getY(), pos.getZ() + 1, pos.getX() + 1, pos.getY() + 1, pos.getZ(), sideColor.get(), sideTwoColor.get());
+            event.renderer.gradientQuadVertical(pos.getX() + 1, pos.getY(), pos.getZ() + 1, pos.getX(), pos.getY() + 1, pos.getZ() + 1, sideColor.get(), sideTwoColor.get());
+            event.renderer.quadHorizontal(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, pos.getZ() + 1, sideColor.get());
+            event.renderer.quadHorizontal(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getZ() + 1, sideTwoColor.get());
+        }
     }
 }
