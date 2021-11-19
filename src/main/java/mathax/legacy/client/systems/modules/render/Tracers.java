@@ -79,63 +79,65 @@ public class Tracers extends Module {
     // Colors
 
     public final Setting<Boolean> distance = sgColors.add(new BoolSetting.Builder()
-        .name("distance-colors")
-        .description("Changes the color of tracers depending on distance.")
+        .name("distance-based")
+        .description("Changes the color depending on distance.")
         .defaultValue(false)
         .build()
     );
 
     private final Setting<SettingColor> playersColor = sgColors.add(new ColorSetting.Builder()
-        .name("players-colors")
-        .description("The player's color.")
-        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b, 125))
+        .name("players")
+        .description("The other player's color.")
+        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .visible(() -> !distance.get())
         .build()
     );
 
+
     public final Setting<SettingColor> selfColor = sgColors.add(new ColorSetting.Builder()
-        .name("self-color")
-        .description("The color of your tracer in Freecam.")
-        .defaultValue(new SettingColor(0, 165, 255, 125))
+        .name("self")
+        .description("Your own color.")
+        .defaultValue(new SettingColor(0, 165, 255))
+        .visible(() -> !distance.get())
         .build()
     );
 
     private final Setting<SettingColor> animalsColor = sgColors.add(new ColorSetting.Builder()
-        .name("animals-color")
+        .name("animals")
         .description("The animal's color.")
-        .defaultValue(new SettingColor(145, 255, 145, 125))
+        .defaultValue(new SettingColor(25, 255, 25))
         .visible(() -> !distance.get())
         .build()
     );
 
     private final Setting<SettingColor> waterAnimalsColor = sgColors.add(new ColorSetting.Builder()
-        .name("water-animals-color")
+        .name("water-animals")
         .description("The water animal's color.")
-        .defaultValue(new SettingColor(145, 145, 255, 125))
+        .defaultValue(new SettingColor(25, 25, 255))
         .visible(() -> !distance.get())
         .build()
     );
 
     private final Setting<SettingColor> monstersColor = sgColors.add(new ColorSetting.Builder()
-        .name("monsters-color")
+        .name("monsters")
         .description("The monster's color.")
-        .defaultValue(new SettingColor(255, 145, 145, 125))
+        .defaultValue(new SettingColor(255, 25, 25))
         .visible(() -> !distance.get())
         .build()
     );
 
     private final Setting<SettingColor> ambientColor = sgColors.add(new ColorSetting.Builder()
-        .name("ambient-color")
-        .description("The ambient color.")
-        .defaultValue(new SettingColor(75, 75, 75, 125))
+        .name("ambient")
+        .description("The ambient's color.")
+        .defaultValue(new SettingColor(25, 25, 25))
         .visible(() -> !distance.get())
         .build()
     );
 
     private final Setting<SettingColor> miscColor = sgColors.add(new ColorSetting.Builder()
-        .name("misc-color")
+        .name("misc")
         .description("The misc color.")
-        .defaultValue(new SettingColor(145, 145, 145, 125))
+        .defaultValue(new SettingColor(175, 175, 175))
         .visible(() -> !distance.get())
         .build()
     );
