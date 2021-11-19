@@ -96,15 +96,14 @@ public class ESP extends Module {
 
     public final Setting<Boolean> ignoreSelf = sgGeneral.add(new BoolSetting.Builder()
         .name("ignore-self")
-        .description("Ignores yourself drawing the shader.")
+        .description("Stops rendering for you.")
         .defaultValue(true)
-        .visible(() -> mode.get() == Mode.Shader)
         .build()
     );
 
     private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
         .name("ignore-friends")
-        .description("Stops ESP rendering for friends.")
+        .description("Stops rendering for friends.")
         .defaultValue(false)
         .build()
     );
@@ -378,6 +377,7 @@ public class ESP extends Module {
     }
 
     private boolean shouldSkipPlayer(PlayerEntity player) {
+        if (ignoreSelf.get() && player == mc.player) return true;
         return ignoreFriends.get() && Friends.get().isFriend(player);
     }
 
