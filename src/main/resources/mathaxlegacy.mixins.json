@@ -141,6 +141,7 @@
     "SimpleEntityLookupAccessor",
     "SlimeBlockMixin",
     "SlotMixin",
+    "SoundSystemMixin",
     "SplashOverlayMixin",
     "SplashTextResourceSupplierMixin",
     "StatusEffectInstanceAccessor",
