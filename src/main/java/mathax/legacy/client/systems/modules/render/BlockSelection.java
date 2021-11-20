@@ -141,6 +141,7 @@ public class BlockSelection extends Module {
         event.renderer.box(bp.getX() + box.minX, bp.getY() + box.minY, bp.getZ() + box.minZ, bp.getX() + box.maxX, bp.getY() + box.maxY, bp.getZ() + box.maxZ, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
     }
 
+    // Lines
     private void renderCool(Render3DEvent event, BlockPos pos) {
         if (shapeMode.get() == ShapeMode.Lines || shapeMode.get() == ShapeMode.Both) {
             // Sides
@@ -174,6 +175,8 @@ public class BlockSelection extends Module {
             event.renderer.quadHorizontal(pos.getX() + 1, pos.getY(), pos.getZ(), pos.getX() + 0.98, pos.getZ() + 1, lineTwoColor.get());
         }
 
+
+        // Sides
         if (shapeMode.get() == ShapeMode.Sides || shapeMode.get() == ShapeMode.Both) {
             event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ(), sideColor.get(), sideTwoColor.get());
             event.renderer.gradientQuadVertical(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY() + 1, pos.getZ() + 1, sideColor.get(), sideTwoColor.get());
