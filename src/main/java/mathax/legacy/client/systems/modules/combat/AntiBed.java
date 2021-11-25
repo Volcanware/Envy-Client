@@ -23,6 +23,9 @@ public class AntiBed extends Module {
     private boolean breaking;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgRender = settings.createGroup("Render");
+
+    // General
 
     private final Setting<Boolean> placeStringTop = sgGeneral.add(new BoolSetting.Builder()
         .name("place-string-top")
@@ -48,6 +51,15 @@ public class AntiBed extends Module {
     private final Setting<Boolean> onlyInHole = sgGeneral.add(new BoolSetting.Builder()
         .name("only-in-hole")
         .description("Only functions when you are standing in a hole.")
+        .defaultValue(true)
+        .build()
+    );
+
+    // Render
+
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Swings your hand client-side when placing.")
         .defaultValue(true)
         .build()
     );
@@ -79,7 +91,7 @@ public class AntiBed extends Module {
 
     private void place(BlockPos blockPos) {
         if (mc.world.getBlockState(blockPos).getBlock().asItem() != Items.STRING) {
-            BlockUtils.place(blockPos, InvUtils.findInHotbar(Items.STRING), 50, false);
+            BlockUtils.place(blockPos, InvUtils.findInHotbar(Items.STRING), 50, swing.get(), false);
         }
     }
 

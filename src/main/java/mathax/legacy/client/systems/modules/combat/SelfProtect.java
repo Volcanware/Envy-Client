@@ -35,6 +35,7 @@ public class SelfProtect extends Module {
     private final SettingGroup sgCEVBreaker = settings.createGroup("CEV Breaker");
     private final SettingGroup sgTNTAura = settings.createGroup("TNT Aura");
     private final SettingGroup sgBedAura = settings.createGroup("Bed Aura");
+    private final SettingGroup sgRender = settings.createGroup("Render");
 
     // General
 
@@ -128,6 +129,15 @@ public class SelfProtect extends Module {
         .build()
     );
 
+    // Render
+
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Swings your hand client-side when placing.")
+        .defaultValue(true)
+        .build()
+    );
+
     public SelfProtect() {
         super(Categories.Combat, Items.OBSIDIAN, "self-protect", "Protects you from various combat modules.");
     }
@@ -197,8 +207,8 @@ public class SelfProtect extends Module {
     }
 
     private void place(BlockPos blockPos) {
-        if (useString.get() && mc.world.getBlockState(blockPos).getBlock().asItem() != Items.STRING) BlockUtils.place(blockPos, InvUtils.findInHotbar(Items.STRING), 50, false);
-        else if (useWebs.get() && mc.world.getBlockState(blockPos).getBlock().asItem() != Items.COBWEB) BlockUtils.place(blockPos, InvUtils.findInHotbar(Items.COBWEB), 50, false);
+        if (useString.get() && mc.world.getBlockState(blockPos).getBlock().asItem() != Items.STRING) BlockUtils.place(blockPos, InvUtils.findInHotbar(Items.STRING), 50, swing.get(), false);
+        else if (useWebs.get() && mc.world.getBlockState(blockPos).getBlock().asItem() != Items.COBWEB) BlockUtils.place(blockPos, InvUtils.findInHotbar(Items.COBWEB), 50, swing.get(), false);
     }
 
     private void mine(BlockPos blockPos) {

@@ -34,10 +34,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
-/*/--------------------------------------------------------------------------------------------------------------/*/
-/*/ Remastered using Orion Meteor Addon                                                                          /*/
-/*/ https://github.com/GhostTypes/orion/blob/main/src/main/java/me/ghosttypes/orion/modules/main/AnchorAura.java /*/
-/*/--------------------------------------------------------------------------------------------------------------/*/
+/*/-----------------------------------------------------------------------------------------------------------/*/
+/*/ Remastered using Orion Meteor Addon                                                                       /*/
+/*/ https://github.com/AntiCope/orion/blob/master/src/main/java/me/ghosttypes/orion/modules/main/BedAura.java /*/
+/*/-----------------------------------------------------------------------------------------------------------/*/
 
 public class BedAura extends Module {
     private CardinalDirection direction;

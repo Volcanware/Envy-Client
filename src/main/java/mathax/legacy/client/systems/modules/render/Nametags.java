@@ -43,8 +43,8 @@ import net.minecraft.world.GameMode;
 import java.util.*;
 
 /*/----------------------------------------------------------------------------------------------------------------/*/
-/*/ Taken from Orion Meteor Addon and edited by Matejko06                                                          /*/
-/*/ https://github.com/GhostTypes/orion/blob/main/src/main/java/me/ghosttypes/orion/modules/main/NametagsPlus.java /*/
+/*/ Used from Orion Meteor Addon and edited by Matejko06                                                           /*/
+/*/ https://github.com/AntiCope/orion/blob/master/src/main/java/me/ghosttypes/orion/modules/main/NametagsPlus.java /*/
 /*/----------------------------------------------------------------------------------------------------------------/*/
 
 public class Nametags extends Module {

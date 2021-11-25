@@ -103,7 +103,7 @@ public class BlockUtils {
     // Placing
 
     public static boolean place(BlockPos blockPos, FindItemResult findItemResult, int rotationPriority) {
-        return place(blockPos, findItemResult, rotationPriority, true);
+        return place(blockPos, findItemResult, rotationPriority, true, true);
     }
 
     public static boolean place(BlockPos blockPos, FindItemResult findItemResult, boolean rotate, int rotationPriority) {
@@ -114,8 +114,8 @@ public class BlockUtils {
         return place(blockPos, findItemResult, rotate, rotationPriority, true, checkEntities);
     }
 
-    public static boolean place(BlockPos blockPos, FindItemResult findItemResult, int rotationPriority, boolean checkEntities) {
-        return place(blockPos, findItemResult, true, rotationPriority, true, checkEntities);
+    public static boolean place(BlockPos blockPos, FindItemResult findItemResult, int rotationPriority, boolean swingHand, boolean checkEntities) {
+        return place(blockPos, findItemResult, true, rotationPriority, swingHand, checkEntities);
     }
 
     public static boolean place(BlockPos blockPos, FindItemResult findItemResult, boolean rotate, int rotationPriority, boolean swingHand, boolean checkEntities) {

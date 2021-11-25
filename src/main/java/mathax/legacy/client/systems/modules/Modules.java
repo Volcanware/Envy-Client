@@ -404,6 +404,7 @@ public class Modules extends System<Modules> {
     private void initPlayer() {
         add(new AntiHunger());
         add(new AntiSpawnpoint());
+        add(new AutoBedCraft());
         add(new AutoCraft());
         add(new AutoEat());
         add(new AutoFish());
