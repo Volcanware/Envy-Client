@@ -82,15 +82,6 @@ public class ConfigTab extends Tab {
         .build()
     );
 
-    public static final Setting<Boolean> rainbowFeedback = sgChat.add(new BoolSetting.Builder()
-        .name("rainbow-feedback")
-        .description("Makes the [MatHax Legacy] feedback prefix rainbow.")
-        .defaultValue(false)
-        .onChanged(aBoolean -> Config.get().rainbowFeedback = aBoolean)
-        .onModuleActivated(booleanSetting -> booleanSetting.set(Config.get().rainbowFeedback))
-        .build()
-    );
-
     public static final Setting<Boolean> chatFeedback = sgChat.add(new BoolSetting.Builder()
         .name("chat-feedback")
         .description("Sends chat feedback when MatHax performs certain actions.")

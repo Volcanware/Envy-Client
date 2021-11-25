@@ -2,6 +2,7 @@ package mathax.legacy.client.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.systems.modules.client.ClientSpoof;
 import mathax.legacy.client.utils.misc.text.StringCharacterVisitor;
 import mathax.legacy.client.events.game.ReceiveMessageEvent;
 import mathax.legacy.client.mixininterface.IChatHud;
@@ -30,10 +31,9 @@ import java.util.regex.Pattern;
 public abstract class ChatHudMixin implements IChatHud {
     private static final MinecraftClient mc = MinecraftClient.getInstance();
 
-    private static final Pattern MATHAXLEGACY_PREFIX_REGEX = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[MatHax Legacy\\]");
     private static final Pattern BARITONE_PREFIX_REGEX = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[Baritone\\]");
-    private static final Pattern MATHAXLEGACY_PREFIX_REGEX_2 = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[MatHax Legacy\\]");
     private static final Pattern BARITONE_PREFIX_REGEX_2 = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[Baritone\\]");
+
     private static final Identifier MATHAXLEGACY_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/icon64.png");
     private static final Identifier BARITONE_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/baritone.png");
 
@@ -117,7 +117,7 @@ public abstract class ChatHudMixin implements IChatHud {
     protected abstract void addMessage(Text message, int messageId);
 
     private void drawIcon(MatrixStack matrices, String line, int y, float opacity) {
-        if (MATHAXLEGACY_PREFIX_REGEX.matcher(line).find()) {
+        if (getMatHax().matcher(line).find()) {
             RenderSystem.setShaderTexture(0, MATHAXLEGACY_CHAT_ICON);
             matrices.push();
             RenderSystem.setShaderColor(1, 1, 1, opacity);
@@ -127,7 +127,7 @@ public abstract class ChatHudMixin implements IChatHud {
             RenderSystem.setShaderColor(1, 1, 1, 1);
             matrices.pop();
             return;
-        } else if (MATHAXLEGACY_PREFIX_REGEX_2.matcher(line).find()) {
+        } else if (getMatHax2().matcher(line).find()) {
             RenderSystem.setShaderTexture(0, MATHAXLEGACY_CHAT_ICON);
             matrices.push();
             RenderSystem.setShaderColor(1, 1, 1, opacity);
@@ -167,6 +167,18 @@ public abstract class ChatHudMixin implements IChatHud {
             DrawableHelper.drawTexture(matrices, 0, y, 8, 8, 40.0F, 8.0F,8, 8, 64, 64);
             RenderSystem.setShaderColor(1, 1, 1, 1);
         }
+    }
+
+    private Pattern getMatHax() {
+        ClientSpoof cs = Modules.get().get(ClientSpoof.class);
+        if (cs.changeChatFeedback()) return Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[" + cs.chatFeedbackText + "\\]");
+        return Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[MatHax Legacy\\]");
+    }
+
+    private Pattern getMatHax2() {
+        ClientSpoof cs = Modules.get().get(ClientSpoof.class);
+        if (cs.changeChatFeedback()) return Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[" + cs.chatFeedbackText.get() + "\\]");
+        return Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[MatHax Legacy\\]");
     }
 
     private static Identifier getMessageTexture(String message) {

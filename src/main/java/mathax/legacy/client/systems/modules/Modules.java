@@ -618,6 +618,7 @@ public class Modules extends System<Modules> {
 
     private void initClient() {
         add(new CapesModule());
+        add(new ClientSpoof());
         add(new DiscordRPC());
         add(new FakePlayer());
         add(new MiddleClickFriend());

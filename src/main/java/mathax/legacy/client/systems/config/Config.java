@@ -22,7 +22,6 @@ public class Config extends System<Config> {
     // Chat
     public String prefix = ConfigTab.prefix.get();
     public boolean prefixOpensConsole = ConfigTab.prefixOpensConsole.get();
-    public boolean rainbowFeedback = ConfigTab.rainbowFeedback.get();
     public boolean chatFeedback = ConfigTab.chatFeedback.get();
     public boolean deleteChatFeedback = ConfigTab.deleteChatFeedback.get();
 
@@ -60,7 +59,6 @@ public class Config extends System<Config> {
 
         tag.putString("prefix", prefix);
         tag.putBoolean("prefixOpensConsole", prefixOpensConsole);
-        tag.putBoolean("rainbowFeedback", rainbowFeedback);
         tag.putBoolean("chatFeedback", chatFeedback);
         tag.putBoolean("deleteChatFeedback", deleteChatFeedback);
 
@@ -85,7 +83,6 @@ public class Config extends System<Config> {
 
         prefix = getString(tag, "prefix", ConfigTab.prefix);
         prefixOpensConsole = getBoolean(tag, "prefixOpensConsole", ConfigTab.prefixOpensConsole);
-        rainbowFeedback = getBoolean(tag, "rainbowFeedback", ConfigTab.rainbowFeedback);
         chatFeedback = getBoolean(tag, "chatFeedback", ConfigTab.chatFeedback);
         deleteChatFeedback = getBoolean(tag, "deleteChatFeedback", ConfigTab.deleteChatFeedback);
 

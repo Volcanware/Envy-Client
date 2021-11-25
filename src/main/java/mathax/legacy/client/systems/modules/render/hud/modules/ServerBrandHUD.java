@@ -4,6 +4,7 @@ import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
 import mathax.legacy.client.utils.Utils;
+import net.minecraft.text.Text;
 
 public class ServerBrandHUD extends TripleTextHUDElement {
     public ServerBrandHUD(HUD hud) {
@@ -24,14 +25,12 @@ public class ServerBrandHUD extends TripleTextHUDElement {
         if (!Utils.canUpdate() || mc.player.getServerBrand() == null) return "None";
 
         String brand = mc.player.getServerBrand();
-
-        if (!Config.get().customFont) brand = removeColors(brand);
-
+        if (!Config.get().customFont) brand = decolorize(brand);
+        if (mc.isInSingleplayer() && brand.equals("fabric")) brand = "Fabric";
         return brand;
     }
 
-    private String removeColors(String brand) {
-
+    private String decolorize(String brand) {
         brand = brand.replace("§a", "");
         brand = brand.replace("§b", "");
         brand = brand.replace("§c", "");
@@ -72,7 +71,6 @@ public class ServerBrandHUD extends TripleTextHUDElement {
         brand = brand.replace("&n", "");
         brand = brand.replace("&o", "");
         brand = brand.replace("&r", "");
-
         return brand;
     }
 

@@ -165,7 +165,7 @@ public class BetterChat extends Module {
     // Prefix
 
     private final Setting<Boolean> prefix = sgPrefix.add(new BoolSetting.Builder()
-        .name("prefix")
+        .name("enabled")
         .description("Adds a prefix to your chat messages.")
         .defaultValue(false)
         .build()
@@ -186,7 +186,6 @@ public class BetterChat extends Module {
         .build()
     );
 
-
     private final Setting<Fonts> prefixFont = sgPrefix.add(new EnumSetting.Builder<Fonts>()
         .name("font")
         .description("Determines what font to use in the prefix.")
@@ -197,7 +196,7 @@ public class BetterChat extends Module {
     // Suffix
 
     private final Setting<Boolean> suffix = sgSuffix.add(new BoolSetting.Builder()
-        .name("suffix")
+        .name("enabled")
         .description("Adds a suffix to your chat messages.")
         .defaultValue(false)
         .build()
@@ -217,7 +216,6 @@ public class BetterChat extends Module {
         .visible(() -> !suffixRandom.get())
         .build()
     );
-
 
     private final Setting<Fonts> suffixFont = sgSuffix.add(new EnumSetting.Builder<Fonts>()
         .name("font")

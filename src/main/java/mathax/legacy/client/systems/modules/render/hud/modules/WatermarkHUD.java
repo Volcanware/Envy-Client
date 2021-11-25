@@ -2,6 +2,8 @@ package mathax.legacy.client.systems.modules.render.hud.modules;
 
 import mathax.legacy.client.renderer.GL;
 import mathax.legacy.client.renderer.Renderer2D;
+import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.systems.modules.client.ClientSpoof;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
 import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
@@ -45,6 +47,8 @@ public class WatermarkHUD extends TripleTextHUDElement {
     }
 
     protected String getLeft() {
+        ClientSpoof cs = Modules.get().get(ClientSpoof.class);
+        if (cs.changeWatermark()) return cs.watermarkText.get() + " ";
         return "MatHax Legacy ";
     }
 
