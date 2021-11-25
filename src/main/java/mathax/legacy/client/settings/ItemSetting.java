@@ -54,7 +54,7 @@ public class ItemSetting extends Setting<Item> {
             }
         }
 
-        changed();
+        onChanged();
         return get();
     }
 

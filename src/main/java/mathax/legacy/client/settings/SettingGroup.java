@@ -45,7 +45,10 @@ public class SettingGroup implements ISerializable<SettingGroup>, Iterable<Setti
 
         tag.putString("name", name);
         tag.putBoolean("sectionExpanded", sectionExpanded);
-        tag.put("settings", NbtUtils.listToTag(settings));
+
+        NbtList settingsTag = new NbtList();
+        for (Setting<?> setting : this) if (setting.changed()) settingsTag.add(setting.toTag());
+        tag.put("settings", settingsTag);
 
         return tag;
     }

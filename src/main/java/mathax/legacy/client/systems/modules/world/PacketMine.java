@@ -7,6 +7,8 @@ import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.systems.modules.render.BreakIndicators;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.Pool;
 import mathax.legacy.client.utils.player.FindItemResult;
@@ -37,7 +39,7 @@ import java.util.List;
 
 public class PacketMine extends Module {
     private final Pool<MyBlock> blockPool = new Pool<>(MyBlock::new);
-    private final List<MyBlock> blocks = new ArrayList<>();
+    public final List<MyBlock> blocks = new ArrayList<>();
 
     private boolean swapped, shouldUpdateSlot;
 
@@ -185,7 +187,10 @@ public class PacketMine extends Module {
 
     @EventHandler
     private void onRender3D(Render3DEvent event) {
-        if (render.get()) for (MyBlock block : blocks) block.render(event);
+        for (MyBlock block : blocks) {
+            if (Modules.get().get(BreakIndicators.class).isActive() && Modules.get().get(BreakIndicators.class).packetMine.get() && block.mining) continue;
+            else block.render(event);
+        }
     }
 
     private double getBreakDelta(int slot, BlockState state) {
@@ -224,7 +229,7 @@ public class PacketMine extends Module {
         return speed;
     }
 
-    private class MyBlock {
+    public class MyBlock {
         public BlockPos blockPos;
         public BlockState blockState;
         public Block block;
@@ -233,7 +238,7 @@ public class PacketMine extends Module {
 
         public int timer;
         public boolean mining;
-        private double progress;
+        public double progress;
 
         public MyBlock set(StartBreakingBlockEvent event) {
             this.blockPos = event.blockPos;

@@ -11,6 +11,7 @@ import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.player.DamageUtils;
+import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.entity.Entity;
@@ -29,6 +30,23 @@ public class AutoLog extends Module {
         .defaultValue(6)
         .range(0, 20)
         .sliderMax(20)
+        .build()
+    );
+
+    private final Setting<Boolean> totems = sgGeneral.add(new BoolSetting.Builder()
+        .name("totems")
+        .description("Automatically disconnects when totem amount is lower or equal to set value.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Integer> totemCount = sgGeneral.add(new IntSetting.Builder()
+        .name("totem-count")
+        .description("Automatically disconnects when totem amount is lower or equal to this value.")
+        .defaultValue(1)
+        .min(0)
+        .sliderMax(36)
+        .visible(totems::get)
         .build()
     );
 
@@ -94,6 +112,12 @@ public class AutoLog extends Module {
             toggle();
             return;
         }
+
+        if (totems.get() && InvUtils.find(Items.TOTEM_OF_UNDYING).getCount() <= totemCount.get()){
+            mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(new LiteralText("[AutoLog] Totems was lower than " + totemCount.get() + ".")));
+            toggle();
+        }
+
         if (mc.player.getHealth() <= health.get()) {
             mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(new LiteralText("[AutoLog] Health was lower than " + health.get() + ".")));
             if (smartToggle.get()) {

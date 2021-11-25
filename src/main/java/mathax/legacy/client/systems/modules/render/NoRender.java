@@ -137,6 +137,13 @@ public class NoRender extends Module {
         .build()
     );
 
+    private final Setting<Boolean> noHeldItemName = sgHUD.add(new BoolSetting.Builder()
+        .name("held-item-name")
+        .description("Disables rendering of the held item name.")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<Boolean> noPotionIcons = sgHUD.add(new BoolSetting.Builder()
         .name("potion-icons")
         .description("Disables rendering of status effect icons.")
@@ -361,6 +368,9 @@ public class NoRender extends Module {
         return isActive() && noCrosshair.get();
     }
 
+    public boolean noHeldItemName() {
+        return isActive() && noHeldItemName.get();
+    }
     public boolean noPotionIcons() {
         return isActive() && noPotionIcons.get();
     }

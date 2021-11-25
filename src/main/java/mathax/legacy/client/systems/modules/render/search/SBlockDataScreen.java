@@ -93,7 +93,7 @@ public class SBlockDataScreen extends WindowScreen {
     private void changed(SBlockData blockData, Block block, BlockDataSetting<SBlockData> setting) {
         if (!blockData.isChanged() && block != null && setting != null) {
             setting.get().put(block, blockData);
-            setting.changed();
+            setting.onChanged();
         }
 
         blockData.changed();

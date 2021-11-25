@@ -27,7 +27,7 @@ public class BlockListSetting extends Setting<List<Block>> {
     @Override
     public void reset(boolean callbacks) {
         value = new ArrayList<>(defaultValue);
-        if (callbacks) changed();
+        if (callbacks) onChanged();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class BlockListSetting extends Setting<List<Block>> {
             if (filter == null || filter.test(block)) get().add(block);
         }
 
-        changed();
+        onChanged();
         return get();
     }
 

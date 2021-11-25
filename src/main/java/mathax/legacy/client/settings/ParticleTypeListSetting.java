@@ -24,7 +24,7 @@ public class ParticleTypeListSetting extends Setting<List<ParticleType<?>>> {
     @Override
     public void reset(boolean callbacks) {
         value = new ArrayList<>(defaultValue);
-        if (callbacks) changed();
+        if (callbacks) onChanged();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ParticleTypeListSetting extends Setting<List<ParticleType<?>>> {
             get().add(Registry.PARTICLE_TYPE.get(new Identifier(tagI.asString())));
         }
 
-        changed();
+        onChanged();
         return get();
     }
 

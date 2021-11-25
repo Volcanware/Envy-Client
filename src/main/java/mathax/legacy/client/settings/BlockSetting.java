@@ -54,7 +54,7 @@ public class BlockSetting extends Setting<Block> {
             }
         }
 
-        changed();
+        onChanged();
         return get();
     }
 

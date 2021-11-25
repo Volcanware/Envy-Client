@@ -23,7 +23,7 @@ public class SoundEventListSetting extends Setting<List<SoundEvent>> {
     @Override
     public void reset(boolean callbacks) {
         value = new ArrayList<>(defaultValue);
-        if (callbacks) changed();
+        if (callbacks) onChanged();
     }
 
     @Override
@@ -75,11 +75,9 @@ public class SoundEventListSetting extends Setting<List<SoundEvent>> {
             if (soundEvent != null) get().add(soundEvent);
         }
 
-        changed();
+        onChanged();
         return get();
     }
-
-
 
     public static class Builder extends SettingBuilder<Builder, List<SoundEvent>, SoundEventListSetting> {
         public Builder() {

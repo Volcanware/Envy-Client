@@ -48,7 +48,7 @@ public class KeyBindSetting extends Setting<KeyBind> {
         if (value == null) value = defaultValue.copy();
         else value.set(defaultValue);
 
-        if (callbacks) changed();
+        if (callbacks) onChanged();
     }
 
     @Override

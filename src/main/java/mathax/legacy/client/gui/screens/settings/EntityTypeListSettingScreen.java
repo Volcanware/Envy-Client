@@ -209,7 +209,7 @@ public class EntityTypeListSettingScreen extends WindowScreen {
         if (changed) {
             list.clear();
             initWidgets();
-            setting.changed();
+            setting.onChanged();
         }
     }
 
@@ -269,7 +269,7 @@ public class EntityTypeListSettingScreen extends WindowScreen {
                 }
             }
 
-            setting.changed();
+            setting.onChanged();
         };
 
         table.row();

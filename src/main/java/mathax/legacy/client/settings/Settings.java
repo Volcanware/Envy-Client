@@ -68,9 +68,7 @@ public class Settings implements ISerializable<Settings>, Iterable<SettingGroup>
             for (Setting<?> setting : group) {
                 setting.module = module;
 
-                if (setting instanceof ColorSetting) {
-                    RainbowColors.addSetting((Setting<SettingColor>) setting);
-                }
+                if (setting instanceof ColorSetting) RainbowColors.addSetting((Setting<SettingColor>) setting);
             }
         }
     }
@@ -78,9 +76,7 @@ public class Settings implements ISerializable<Settings>, Iterable<SettingGroup>
     public void unregisterColorSettings() {
         for (SettingGroup group : this) {
             for (Setting<?> setting : group) {
-                if (setting instanceof ColorSetting) {
-                    RainbowColors.removeSetting((Setting<SettingColor>) setting);
-                }
+                if (setting instanceof ColorSetting) RainbowColors.removeSetting((Setting<SettingColor>) setting);
             }
         }
     }
@@ -108,7 +104,9 @@ public class Settings implements ISerializable<Settings>, Iterable<SettingGroup>
     @Override
     public NbtCompound toTag() {
         NbtCompound tag = new NbtCompound();
+
         tag.put("groups", NbtUtils.listToTag(groups));
+
         return tag;
     }
 

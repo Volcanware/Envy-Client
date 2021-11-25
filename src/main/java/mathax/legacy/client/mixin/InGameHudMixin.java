@@ -94,6 +94,11 @@ public abstract class InGameHudMixin {
         if (Modules.get().get(NoRender.class).noCrosshair()) info.cancel();
     }
 
+    @Inject(method = "renderHeldItemTooltip", at = @At("HEAD"), cancellable = true)
+    private void onRenderHeldItemTooltip(MatrixStack matrices, CallbackInfo info) {
+        if (Modules.get().get(NoRender.class).noHeldItemName()) info.cancel();
+    }
+
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;hasJumpingMount()Z"))
     private boolean onSwitchBar(ClientPlayerEntity player) {
         if (!Modules.get().isActive(MountHUD.class) || !client.interactionManager.hasExperienceBar()) return player.hasJumpingMount();
