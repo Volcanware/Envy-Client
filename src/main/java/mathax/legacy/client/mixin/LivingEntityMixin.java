@@ -4,6 +4,7 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.entity.DamageEvent;
 import mathax.legacy.client.events.entity.TookDamageEvent;
 import mathax.legacy.client.events.entity.player.CanWalkOnFluidEvent;
+import mathax.legacy.client.events.entity.player.TeleportParticleEvent;
 import mathax.legacy.client.systems.modules.movement.AntiLevitation;
 import mathax.legacy.client.systems.modules.crash.OffhandCrash;
 import mathax.legacy.client.systems.modules.movement.Moses;
@@ -76,6 +77,11 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "onEquipStack", at = @At("HEAD"), cancellable = true)
     private void onEquipStack(ItemStack stack, CallbackInfo info) {
         if ((Object) this == mc.player && Modules.get().get(OffhandCrash.class).isAntiCrash()) info.cancel();
+    }
+
+    @Inject(method = "handleStatus", at = @At("HEAD"), cancellable = true)
+    private void onHandleStatus(byte status, CallbackInfo info) {
+        if ((Object) this == mc.player && status == 46 && Utils.canUpdate()) MatHaxLegacy.EVENT_BUS.post(TeleportParticleEvent.get(this.getX(), this.getY(), this.getZ()));
     }
 
     @ModifyArg(method = "swingHand(Lnet/minecraft/util/Hand;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;swingHand(Lnet/minecraft/util/Hand;Z)V"))

@@ -106,7 +106,7 @@ public class ChatUtils {
         if (cs.changeChatFeedback()) text = new LiteralText(cs.chatFeedbackText.get());
         BaseText prefix = new LiteralText("");
 
-        if (cs.changeChatFeedback()) text.setStyle(text.getStyle().withColor(cs.chatFeedbackTextColor.get().getPacked()));
+        if (cs.changeChatFeedbackColor()) text.setStyle(text.getStyle().withColor(cs.chatFeedbackTextColor.get().getPacked()));
         else text.setStyle(text.getStyle().withColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
 
         prefix.setStyle(prefix.getStyle().withFormatting(Formatting.GRAY));

@@ -6,7 +6,7 @@ import java.util.List;
 import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class FakePlayerManager {
-    private static final List<FakePlayerEntity> fakePlayers = new ArrayList<>();
+    public static final List<FakePlayerEntity> fakePlayers = new ArrayList<>();
 
     public static void add(String name, float health, boolean copyInv) {
         FakePlayerEntity fakePlayer = new FakePlayerEntity(mc.player, name, health, copyInv);

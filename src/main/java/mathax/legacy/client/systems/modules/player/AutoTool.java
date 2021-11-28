@@ -5,6 +5,8 @@ import mathax.legacy.client.events.entity.player.StartBreakingBlockEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.systems.modules.world.InfinityMiner;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.eventbus.EventPriority;
@@ -81,6 +83,8 @@ public class AutoTool extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
+        if (Modules.get().isActive(InfinityMiner.class)) return;
+
         if (switchBack.get() && !mc.options.keyAttack.isPressed() && wasPressed && InvUtils.previousSlot != -1) {
             InvUtils.swapBack();
             wasPressed = false;
@@ -99,6 +103,8 @@ public class AutoTool extends Module {
 
     @EventHandler(priority = EventPriority.HIGH)
     private void onStartBreakingBlock(StartBreakingBlockEvent event) {
+        if (Modules.get().isActive(InfinityMiner.class)) return;
+
         // Get blockState
         BlockState blockState = mc.world.getBlockState(event.blockPos);
         if (!BlockUtils.canBreak(event.blockPos, blockState)) return;

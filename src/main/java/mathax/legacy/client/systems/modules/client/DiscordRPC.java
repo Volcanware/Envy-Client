@@ -51,6 +51,13 @@ public class DiscordRPC extends Module {
         .build()
     );
 
+    public final Setting<Boolean> worldVisibility = sgGeneral.add(new BoolSetting.Builder()
+        .name("world-visiblity")
+        .description("Determines if the singleplayer world name will be visible on the RPC.")
+        .defaultValue(true)
+        .build()
+    );
+
     public final Setting<Boolean> serverVisibility = sgGeneral.add(new BoolSetting.Builder()
         .name("server-visiblity")
         .description("Determines if the server IP will be visible on the RPC.")
@@ -130,15 +137,15 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof ServerFinderScreen) return "Using server finder";
         else if (mc.currentScreen instanceof ServerCleanUpScreen) return "Using server cleanup";
         else if (mc.currentScreen instanceof ProtocolScreen) return "Changing protocol";
-        else if (mc.currentScreen instanceof ConnectScreen) return "Connecting to " + getNakedWorldActivity();
-        else if (mc.currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + getNakedWorldActivity();
-        else if (mc.currentScreen instanceof GameMenuScreen) return "Game paused on " + getNakedWorldActivity();
-        else if (mc.currentScreen instanceof PeekScreen) return "Using .peek on " + getNakedWorldActivity();
+        else if (mc.currentScreen instanceof ConnectScreen) return "Connecting to " + getWorldActivity(true, true);
+        else if (mc.currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + getWorldActivity(true, true);
+        else if (mc.currentScreen instanceof GameMenuScreen) return "Game paused on " + getWorldActivity(true, true);
+        else if (mc.currentScreen instanceof PeekScreen) return "Using .peek on " + getWorldActivity(true, true);
         else if (mc.currentScreen instanceof ModulesScreen) {
-            if (mc.world != null && serverVisibility.get()) return "In Click GUI (" + getNakedWorldActivity2() + ")";
+            if (mc.world != null && serverVisibility.get()) return "In Click GUI (" + getWorldActivity(true, false) + ")";
             else return "In Click GUI";
         } else if (mc.currentScreen instanceof ModuleScreen) {
-            if (mc.world != null && serverVisibility.get()) return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title + " (" + getNakedWorldActivity2() + ")";
+            if (mc.world != null && serverVisibility.get()) return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title + " (" + getWorldActivity(true, false) + ")";
             else return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title;
         } else if (mc.currentScreen instanceof PackScreen) return "Changing resourcepack";
         else if (mc.currentScreen instanceof OptionsScreen) return "Changing Minecraft settings";
@@ -180,7 +187,7 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof YesNoPrompt.PromptScreen) return "Viewing a prompt";
         else if (mc.currentScreen instanceof OkPrompt.PromptScreen) return "Viewing a prompt";
         else if (mc.currentScreen instanceof ProgressScreen) return "Loading something...";
-        else if (mc.world != null) return getWorldActivity();
+        else if (mc.world != null) return getWorldActivity(false, false);
 
         String className = mc.currentScreen.getClass().getName();
         if (className.contains("me.jellysquid.mods.sodium.client")) return "Changing Sodium video settings";
@@ -204,88 +211,77 @@ public class DiscordRPC extends Module {
         return " | " + Math.round(mc.player.getHealth() + mc.player.getAbsorptionAmount()) + " HP";
     }
 
-    private String getWorldActivity() {
+    private String getWorldActivity(boolean naked, boolean upperCase) {
+
+        // Disconnected etc...
+        if (naked && !mc.isInSingleplayer() && mc.getCurrentServerEntry() != null && LastServerInfo.getLastServer() != null) {
+            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return LastServerInfo.getLastServer().address;
+            else return "a server";
+        }
 
         // Multiplayer
         if (mc.getCurrentServerEntry() != null) {
             String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
 
+            if (naked) {
+                if (name.equals("realms") && upperCase) return "Realms";
+                return name;
+            }
+
             if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return "Playing on " + name;
-            else return "Playing on a server";
+            else {
+                if (naked) {
+                    if (upperCase) return "A server";
+                    return "a server";
+                }
+
+                return "Playing on a server";
+            }
         }
 
-        if ((mc.getServer()) == null) return "Could not get server/world";
-        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Could not get server/world";
+        if ((mc.getServer()) == null) {
+            if (naked) {
+                if (upperCase) return "Unknown";
+                return "unknown";
+            }
+
+            return "Could not get server/world";
+        }
+
+        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) {
+            if (naked) {
+                if (upperCase) return "Unknown";
+                return "unknown";
+            }
+
+            return "Could not get server/world";
+        }
 
         // Singleplayer
         if (mc.isInSingleplayer()) {
             File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
             if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) folder = folder.getParentFile();
 
-            return "Playing singleplayer (" + folder.getName() + ")";
+            if (naked) {
+                if (upperCase) {
+                    if (worldVisibility.get()) return "Singleplayer (" + folder.getName() + ")";
+                    return "Singleplayer";
+                }
+
+                if (worldVisibility.get()) return "singleplayer (" + folder.getName() + ")";
+                return "singleplayer";
+            }
+
+            if (worldVisibility.get()) return "Playing singleplayer (" + folder.getName() + ")";
+            else return "Playing singleplayer";
+        }
+
+        if (naked) {
+            if (upperCase) return "Unknown";
+            return "unknown";
         }
 
         return "Could not get server/world";
-    }
-
-    private String getNakedWorldActivity() {
-
-        // Disconnected etc...
-        if (!mc.isInSingleplayer() && mc.getCurrentServerEntry() != null && LastServerInfo.getLastServer() != null) {
-            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return LastServerInfo.getLastServer().address;
-            else return "a server";
-        }
-
-        // Multiplayer
-        if (mc.getCurrentServerEntry() != null) {
-            String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
-
-            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return name;
-            else return "a server";
-        }
-
-        if ((mc.getServer()) == null) return "Unknown";
-        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Unknown";
-
-        // Singleplayer
-        if (mc.isInSingleplayer()) {
-            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
-            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) folder = folder.getParentFile();
-
-            return "singleplayer (" + folder.getName() + ")";
-        }
-
-        return "Unknown";
-    }
-
-    private String getNakedWorldActivity2() {
-
-        // Disconnected etc...
-        if (!mc.isInSingleplayer() && mc.getCurrentServerEntry() != null && LastServerInfo.getLastServer() != null) {
-            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return LastServerInfo.getLastServer().address;
-            else return "A server";
-        }
-
-        // Multiplayer
-        if (mc.getCurrentServerEntry() != null) {
-            String name = mc.isConnectedToRealms() ? "Realms" : mc.getCurrentServerEntry().address;
-
-            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return name;
-            else return "A server";
-        }
-
-        if ((mc.getServer()) == null) return "Unknown";
-        if (((MinecraftServerAccessor) mc.getServer()).getSession() == null) return "Unknown";
-
-        // Singleplayer
-        if (mc.isInSingleplayer()) {
-            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
-            if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) folder = folder.getParentFile();
-
-            return "Singleplayer (" + folder.getName() + ")";
-        }
-
-        return "Unknown";
     }
 
     private static void applySmallImage() {

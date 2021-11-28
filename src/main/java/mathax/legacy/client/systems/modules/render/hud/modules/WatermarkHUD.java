@@ -17,6 +17,7 @@ import net.minecraft.util.Identifier;
 
 public class WatermarkHUD extends TripleTextHUDElement {
     private static final Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/icons/icon.png");
+    private static final Identifier METEOR_LOGO = new Identifier("mathaxlegacy", "textures/icons/meteor.png");
     private final Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
 
     private String versionString;
@@ -114,6 +115,8 @@ public class WatermarkHUD extends TripleTextHUDElement {
     }
 
     private void drawIcon(int x, int y, int textWidth) {
+        ClientSpoof cs = Modules.get().get(ClientSpoof.class);
+
         int w = 0;
 
         switch (mode.get()) {
@@ -123,7 +126,11 @@ public class WatermarkHUD extends TripleTextHUDElement {
 
         int h = (int) box.height;
 
-        GL.bindTexture(MATHAX_LOGO);
+        Identifier LOGO;
+        if (cs.changeWatermarkIcon()) LOGO = METEOR_LOGO;
+        else LOGO = MATHAX_LOGO;
+
+        GL.bindTexture(LOGO);
         Renderer2D.TEXTURE.begin();
         Renderer2D.TEXTURE.texQuad(x, y, w, h, TEXTURE_COLOR);
         Renderer2D.TEXTURE.render(null);

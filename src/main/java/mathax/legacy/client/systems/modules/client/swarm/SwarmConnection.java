@@ -38,7 +38,7 @@ public class SwarmConnection extends Thread {
 
             out.close();
         } catch (IOException e) {
-            ChatUtils.info("Swarm", "Error creating a connection with %s on port %s.", getIp(socket.getInetAddress().getHostAddress()), socket.getPort());
+            ChatUtils.info("Error creating a connection with %s on port %s.", getIp(socket.getInetAddress().getHostAddress()), socket.getPort());
             e.printStackTrace();
         }
     }

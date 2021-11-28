@@ -35,6 +35,7 @@ public abstract class ChatHudMixin implements IChatHud {
     private static final Pattern BARITONE_PREFIX_REGEX_2 = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[Baritone\\]");
 
     private static final Identifier MATHAXLEGACY_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/icon64.png");
+    private static final Identifier METEOR_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/meteor64.png");
     private static final Identifier BARITONE_CHAT_ICON = new Identifier("mathaxlegacy", "textures/icons/baritone.png");
 
     @Shadow @Final private List<ChatHudLine<OrderedText>> visibleMessages;
@@ -117,8 +118,11 @@ public abstract class ChatHudMixin implements IChatHud {
     protected abstract void addMessage(Text message, int messageId);
 
     private void drawIcon(MatrixStack matrices, String line, int y, float opacity) {
+        ClientSpoof cs = Modules.get().get(ClientSpoof.class);
+
         if (getMatHax().matcher(line).find()) {
-            RenderSystem.setShaderTexture(0, MATHAXLEGACY_CHAT_ICON);
+            if (cs.changeChatFeedbackIcon()) RenderSystem.setShaderTexture(0, METEOR_CHAT_ICON);
+            else RenderSystem.setShaderTexture(0, MATHAXLEGACY_CHAT_ICON);
             matrices.push();
             RenderSystem.setShaderColor(1, 1, 1, opacity);
             matrices.translate(0, y, 0);
@@ -128,7 +132,8 @@ public abstract class ChatHudMixin implements IChatHud {
             matrices.pop();
             return;
         } else if (getMatHax2().matcher(line).find()) {
-            RenderSystem.setShaderTexture(0, MATHAXLEGACY_CHAT_ICON);
+            if (cs.changeChatFeedbackIcon()) RenderSystem.setShaderTexture(0, METEOR_CHAT_ICON);
+            else RenderSystem.setShaderTexture(0, MATHAXLEGACY_CHAT_ICON);
             matrices.push();
             RenderSystem.setShaderColor(1, 1, 1, opacity);
             matrices.translate(0, y, 0);

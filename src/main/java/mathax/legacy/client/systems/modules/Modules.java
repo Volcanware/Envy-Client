@@ -441,6 +441,7 @@ public class Modules extends System<Modules> {
         add(new Blink());
         add(new BoatFly());
         add(new BoatPhase());
+        add(new ChorusExploit());
         add(new ClickTP());
         add(new ElytraBoost());
         add(new ElytraFly());
