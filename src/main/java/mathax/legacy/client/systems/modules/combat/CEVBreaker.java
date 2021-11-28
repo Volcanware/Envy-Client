@@ -54,9 +54,8 @@ public class CEVBreaker extends Module {
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
         .name("range")
         .description("The radius players can be in to be targeted.")
-        .defaultValue(5.0)
-        .sliderMin(0.0)
-        .sliderMax(10.0)
+        .defaultValue(5)
+        .sliderRange(0, 10)
         .build()
     );
 
@@ -71,9 +70,8 @@ public class CEVBreaker extends Module {
         .name("max-damage")
         .description("Maximum damage crystals can deal to yourself.")
         .defaultValue(6)
-        .min(0)
-        .max(36)
-        .sliderMax(36)
+        .range(0, 36)
+        .sliderRange(0, 36)
         .visible(antiSuicide::get)
         .build()
     );
@@ -86,6 +84,13 @@ public class CEVBreaker extends Module {
     );
 
     // Render
+
+    private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
+        .name("swing")
+        .description("Swings your hand client-side when placing.")
+        .defaultValue(true)
+        .build()
+    );
 
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
         .name("render")
@@ -186,7 +191,7 @@ public class CEVBreaker extends Module {
                                     EnhancedInvUtils.swap(n);
 
                                     mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, pos, Direction.UP));
-                                    mc.player.swingHand(Hand.MAIN_HAND);
+                                    if (swing.get()) mc.player.swingHand(Hand.MAIN_HAND);
                                     mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, pos, Direction.UP));
 
                                     isDone = true;

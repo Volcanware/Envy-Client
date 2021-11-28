@@ -45,7 +45,7 @@ public class AutoLog extends Module {
         .description("Automatically disconnects when totem amount is lower or equal to this value.")
         .defaultValue(1)
         .min(0)
-        .sliderMax(36)
+        .sliderRange(0, 36)
         .visible(totems::get)
         .build()
     );
@@ -65,7 +65,7 @@ public class AutoLog extends Module {
     );
 
     private final Setting<Boolean> instantDeath = sgGeneral.add(new BoolSetting.Builder()
-        .name("32K")
+        .name("32k")
         .description("Disconnects when a player near you can instantly kill you.")
         .defaultValue(false)
         .build()
@@ -83,7 +83,7 @@ public class AutoLog extends Module {
         .description("How close a crystal has to be to you before you disconnect.")
         .defaultValue(4)
         .range(1, 10)
-        .sliderMax(5)
+        .sliderRange(1, 5)
         .visible(crystalLog::get)
         .build()
     );

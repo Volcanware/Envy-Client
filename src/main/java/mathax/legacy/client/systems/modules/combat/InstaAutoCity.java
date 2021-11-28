@@ -51,9 +51,9 @@ public class InstaAutoCity extends Module {
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
         .name("range")
         .description("The maximum range a city-able block will be found.")
-        .defaultValue(5.0)
-        .min(0.0)
-        .sliderMax(20.0)
+        .defaultValue(5)
+        .min(0)
+        .sliderMax(20)
         .build()
     );
 
@@ -76,7 +76,7 @@ public class InstaAutoCity extends Module {
         .description("Delay between mining blocks in ticks.")
         .defaultValue(1)
         .min(0)
-        .sliderMax(10)
+        .sliderRange(0, 10)
         .build()
     );
 
@@ -106,7 +106,7 @@ public class InstaAutoCity extends Module {
         .description("Amount of ticks the block has to be air to auto toggle off.")
         .defaultValue(20)
         .min(0)
-        .sliderMax(40)
+        .sliderRange(0, 40)
         .build()
     );
 

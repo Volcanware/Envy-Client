@@ -40,7 +40,6 @@ public class InfinityMiner extends Module {
     private Mode currentMode = Mode.Still;
     private Mode secondaryMode;
 
-
     private int playerX;
     private int playerY;
     private int playerZ;
@@ -48,6 +47,8 @@ public class InfinityMiner extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAutoToggles = settings.createGroup("Auto Toggles");
     private final SettingGroup sgExtras = settings.createGroup("Extras");
+
+    // General
 
     public final Setting<Block> targetBlock = sgGeneral.add(new BlockSetting.Builder()
         .name("target-block")
@@ -69,12 +70,12 @@ public class InfinityMiner extends Module {
         .name("durability-threshold")
         .description("The durability at which to start repairing as a percent of maximum durability.")
         .defaultValue(.15)
-        .max(.95)
-        .min(.05)
-        .sliderMin(.05)
-        .sliderMax(.95)
+        .range(.05, .95)
+        .sliderRange(.05, .95)
         .build()
     );
+
+    // Auto Toggles
 
     public final Setting<Boolean> smartModuleToggle = sgAutoToggles.add(new BoolSetting.Builder()
         .name("smart-module-toggle")
@@ -82,6 +83,8 @@ public class InfinityMiner extends Module {
         .defaultValue(true)
         .build()
     );
+
+    // Extras
 
     public final Setting<Boolean> autoWalkHome = sgExtras.add(new BoolSetting.Builder()
         .name("walk-home")
@@ -101,20 +104,19 @@ public class InfinityMiner extends Module {
         super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever.");
     }
 
-    private boolean filter(Block block) {
-        return block != Blocks.AIR && block.getDefaultState().getHardness(mc.world, null) != -1 && !(block instanceof FluidBlock);
-    }
-
     @Override
     public void onActivate() {
         if (smartModuleToggle.get()) {
             BLOCKER = true;
+
             for (Module module : getToggleModules()) {
                 originalSettings.put(module.name, module.isActive());
                 if (!module.isActive()) module.toggle();
             }
+
             BLOCKER = false;
         }
+
         if (mc.player != null) {
             playerX = (int) mc.player.getX();
             playerY = (int) mc.player.getY();
@@ -128,24 +130,22 @@ public class InfinityMiner extends Module {
             BLOCKER = true;
             try {
                 for (Module module : getToggleModules()) {
-                    if (module != null && originalSettings.get(module.name) != module.isActive()) {
-                        module.toggle();
-                    }
+                    if (module != null && originalSettings.get(module.name) != module.isActive()) module.toggle();
                 }
-            } catch (NullPointerException ignored) {
-            }
+            } catch (NullPointerException ignored) {}
+
             originalSettings.clear();
             BLOCKER = false;
         }
-        if (!BaritoneAPI.getSettings().mineScanDroppedItems.value)
-            BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
+
+        if (!BaritoneAPI.getSettings().mineScanDroppedItems.value) BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
         baritoneRequestStop();
         baritoneRunning = false;
+
         currentMode = Mode.Still;
         secondaryMode = null;
     }
 
-    @SuppressWarnings("unused")
     @EventHandler
     private void onTick(TickEvent.Post event) {
         try {
@@ -155,18 +155,17 @@ public class InfinityMiner extends Module {
                     baritoneRequestPathHome();
                     return;
                 }
+
                 currentMode = (isTool() && getCurrentDamage() <= durabilityThreshold.get()) ? Mode.Repair : Mode.Target;
                 if (currentMode == Mode.Repair) baritoneRequestMineRepairBlock();
                 else baritoneRequestMineTargetBlock();
-            } else if (autoWalkHome.get() && isInventoryFull() && secondaryMode != Mode.Home)
-                baritoneRequestPathHome();
+            } else if (autoWalkHome.get() && isInventoryFull() && secondaryMode != Mode.Home) baritoneRequestPathHome();
             else if (!autoWalkHome.get() && isInventoryFull() && autoLogOut.get()) {
                 toggle();
                 requestLogout(currentMode);
             } else if (currentMode == Mode.Repair) {
                 int REPAIR_BUFFER = 15;
-                if (BaritoneAPI.getSettings().mineScanDroppedItems.value)
-                    BaritoneAPI.getSettings().mineScanDroppedItems.value = false;
+                if (BaritoneAPI.getSettings().mineScanDroppedItems.value) BaritoneAPI.getSettings().mineScanDroppedItems.value = false;
                 if (isTool() && getCurrentDamage() >= mc.player.getMainHandStack().getMaxDamage() - REPAIR_BUFFER) {
                     if (secondaryMode != Mode.Home) {
                         currentMode = Mode.Target;
@@ -177,8 +176,7 @@ public class InfinityMiner extends Module {
                     }
                 }
             } else if (currentMode == Mode.Target) {
-                if (!BaritoneAPI.getSettings().mineScanDroppedItems.value)
-                    BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
+                if (!BaritoneAPI.getSettings().mineScanDroppedItems.value) BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
                 if (isTool() && getCurrentDamage() <= durabilityThreshold.get() * mc.player.getMainHandStack().getMaxDamage()) {
                     currentMode = Mode.Repair;
                     baritoneRequestMineRepairBlock();
@@ -190,11 +188,9 @@ public class InfinityMiner extends Module {
                     toggle();
                 } else if (isTool() && getCurrentDamage() <= durabilityThreshold.get()) currentMode = Mode.Repair;
             }
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
     }
 
-    @SuppressWarnings("unused")
     @EventHandler
     private void moduleChange(ActiveModulesChangedEvent event) {
         if (!BLOCKER) {
@@ -208,16 +204,14 @@ public class InfinityMiner extends Module {
         try {
             BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().mine(targetBlock.get());
             baritoneRunning = true;
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
     }
 
     private void baritoneRequestMineRepairBlock() {
         try {
             BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().mine(repairBlock.get());
             baritoneRunning = true;
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
     }
 
     private void baritoneRequestStop() {
@@ -238,9 +232,7 @@ public class InfinityMiner extends Module {
     private Boolean isInventoryFull() {
         if (mc.player == null) return false;
         if (mc.player.getInventory().getEmptySlot() != -1) return false;
-        for (int i = 0; i < mc.player.getInventory().size(); i++)
-            if (mc.player.getInventory().getStack(i).getItem() == targetBlock.get().asItem() &&
-                    mc.player.getInventory().getStack(i).getCount() < targetBlock.get().asItem().getMaxCount()) return false;
+        for (int i = 0; i < mc.player.getInventory().size(); i++) if (mc.player.getInventory().getStack(i).getItem() == targetBlock.get().asItem() && mc.player.getInventory().getStack(i).getCount() < targetBlock.get().asItem().getMaxCount()) return false;
         return true;
     }
 
@@ -259,28 +251,22 @@ public class InfinityMiner extends Module {
 
     private void requestLogout(Mode mode) {
         if (mc.player != null) {
-            if (mode == Mode.Home)
-                mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(new LiteralText("[Infinity Miner] Inventory is Full and You Are Home")));
-            else
-                mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(new LiteralText("[Infinity Miner] Inventory is Full")));
+            if (mode == Mode.Home) mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(new LiteralText("[Infinity Miner] Inventory is Full and You Are Home")));
+            else mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(new LiteralText("[Infinity Miner] Inventory is Full")));
         }
     }
 
-    @SuppressWarnings("unused")
     @EventHandler
     private void onGameDisconnect(GameLeftEvent event) {
         baritoneRequestStop();
-        if (!BaritoneAPI.getSettings().mineScanDroppedItems.value)
-            BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
+        if (!BaritoneAPI.getSettings().mineScanDroppedItems.value) BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
         if (this.isActive()) toggle();
     }
 
-    @SuppressWarnings("unused")
     @EventHandler
     private void onGameJoin(GameJoinedEvent event) {
         baritoneRequestStop();
-        if (!BaritoneAPI.getSettings().mineScanDroppedItems.value)
-            BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
+        if (!BaritoneAPI.getSettings().mineScanDroppedItems.value) BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
         if (this.isActive()) toggle();
     }
 
@@ -302,6 +288,10 @@ public class InfinityMiner extends Module {
 
     private int getCurrentDamage() {
         return (mc.player != null) ? mc.player.getMainHandStack().getItem().getMaxDamage() - mc.player.getMainHandStack().getDamage() : -1;
+    }
+
+    private boolean filter(Block block) {
+        return block != Blocks.AIR && block.getDefaultState().getHardness(mc.world, null) != -1 && !(block instanceof FluidBlock);
     }
 
     @Override
