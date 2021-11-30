@@ -13,6 +13,8 @@ import mathax.legacy.client.utils.misc.NbtException;
 import net.minecraft.client.util.Session;
 import net.minecraft.nbt.NbtCompound;
 
+import java.util.Optional;
+
 import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class PremiumAccount extends Account<PremiumAccount> {
@@ -47,7 +49,7 @@ public class PremiumAccount extends Account<PremiumAccount> {
 
         try {
             auth.logIn();
-            setSession(new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), "mojang"));
+            setSession(new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), Optional.empty(), Optional.empty(), Session.AccountType.MOJANG));
 
             cache.username = auth.getSelectedProfile().getName();
             return true;

@@ -1,6 +1,5 @@
 package mathax.legacy.client.systems.modules.combat;
 
-import baritone.api.BaritoneAPI;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.events.render.Render3DEvent;
 import mathax.legacy.client.systems.friends.Friends;
@@ -37,7 +36,7 @@ public class BowAimbot extends Module {
         .description("The maximum range the entity can be to aim at it.")
         .defaultValue(20)
         .range(0, 100)
-        .sliderMax(100)
+        .sliderRange(0, 100)
         .build()
     );
 
@@ -106,18 +105,21 @@ public class BowAimbot extends Module {
         }, priority.get());
 
         if (target == null) {
-            if (wasPathing) {
+            // TODO: Baritone
+            /*if (wasPathing) {
                 BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
                 wasPathing = false;
-            }
+            }*/
+
             return;
         }
 
         if (mc.options.keyUse.isPressed() && itemInHand()) {
-            if (pauseOnCombat.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing() && !wasPathing) {
+            // TODO: Baritone
+            /*if (pauseOnCombat.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing() && !wasPathing) {
                 BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("pause");
                 wasPathing = true;
-            }
+            }*/
             aim(event.tickDelta);
         }
     }

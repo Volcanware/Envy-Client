@@ -1,15 +1,6 @@
 package mathax.legacy.client.utils.music;
 
-import com.sedmelluq.discord.lavaplayer.format.AudioDataFormat;
-import com.sedmelluq.discord.lavaplayer.format.AudioPlayerInputStream;
-import com.sedmelluq.discord.lavaplayer.format.Pcm16AudioDataFormat;
-import com.sedmelluq.discord.lavaplayer.format.StandardAudioDataFormats;
-import mathax.legacy.client.music.Music;
-
-import javax.sound.sampled.*;
-import java.io.IOException;
-
-public class StreamPlayer implements Runnable {
+public class StreamPlayer/* implements Runnable {
     public boolean playing;
     public boolean stop = false;
     SourceDataLine line;
@@ -58,4 +49,4 @@ public class StreamPlayer implements Runnable {
         stop = false;
         playing = false;
     }
-}
+}*/ {}

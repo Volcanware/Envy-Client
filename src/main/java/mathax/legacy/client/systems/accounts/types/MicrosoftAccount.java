@@ -5,6 +5,8 @@ import mathax.legacy.client.systems.accounts.AccountType;
 import mathax.legacy.client.systems.accounts.MicrosoftLogin;
 import net.minecraft.client.util.Session;
 
+import java.util.Optional;
+
 public class MicrosoftAccount extends Account<MicrosoftAccount> {
     public MicrosoftAccount(String refreshToken) {
         super(AccountType.Microsoft, refreshToken);
@@ -22,7 +24,7 @@ public class MicrosoftAccount extends Account<MicrosoftAccount> {
         String token = auth();
         if (token == null) return false;
 
-        setSession(new Session(cache.username, cache.uuid, token, "mojang"));
+        setSession(new Session(cache.username, cache.uuid, token, Optional.empty(), Optional.empty(), Session.AccountType.MSA));
         return true;
     }
 

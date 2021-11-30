@@ -7,7 +7,7 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.render.color.SettingColor;
-import net.minecraft.client.render.SkyProperties;
+import net.minecraft.client.render.DimensionEffects;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
@@ -153,9 +153,9 @@ public class Ambience extends Module {
         if (mc.worldRenderer != null) mc.worldRenderer.reload();
     }
 
-    public static class Custom extends SkyProperties {
+    public static class Custom extends DimensionEffects {
         public Custom() {
-            super(Float.NaN, true, SkyProperties.SkyType.END, true, false);
+            super(Float.NaN, true, DimensionEffects.SkyType.END, true, false);
         }
 
         @Override

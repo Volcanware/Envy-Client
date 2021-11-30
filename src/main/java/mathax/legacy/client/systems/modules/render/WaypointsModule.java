@@ -1,8 +1,5 @@
 package mathax.legacy.client.systems.modules.render;
 
-import baritone.api.BaritoneAPI;
-import baritone.api.IBaritone;
-import baritone.api.pathing.goals.GoalGetToBlock;
 import mathax.legacy.client.events.game.OpenScreenEvent;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.WindowScreen;
@@ -185,14 +182,15 @@ public class WaypointsModule extends Module {
             // Goto
             if (waypoint.actualDimension == dimension) {
                 WButton gotoB = table.add(theme.button("Goto")).widget();
-                gotoB.action = () -> {
+                // TODO: Baritone
+                /*gotoB.action = () -> {
                     if (mc.player == null || mc.world == null) return;
                     IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
                     if (baritone.getPathingBehavior().isPathing()) baritone.getPathingBehavior().cancelEverything();
                     Vec3d vec = Waypoints.get().getCoords(waypoint);
                     BlockPos pos = new BlockPos(vec.x, vec.y, vec.z);
                     baritone.getCustomGoalProcess().setGoalAndPath(new GoalGetToBlock(pos));
-                };
+                };*/
             }
 
             table.row();

@@ -172,12 +172,12 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) return "Configuring macros";
         else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) return "Configuring a macro";
         else if (mc.currentScreen instanceof ProfilesTab.ProfilesScreen) return "Changing profiles";
-        else if (mc.currentScreen instanceof MusicTab.MusicScreen) return "Configuring music";
+        /*else if (mc.currentScreen instanceof MusicTab.MusicScreen) return "Configuring music";
         else if (mc.currentScreen instanceof PlaylistsScreen) return "Viewing playlists";
         else if (mc.currentScreen instanceof PlaylistViewScreen) {
             if (((PlaylistViewScreen) mc.currentScreen).getTitleString().contains("Search")) return "Searching for a song";
             else return "Viewing a playlist";
-        } else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
+        }*/ else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
         else if (mc.currentScreen instanceof AddCrackedAccountScreen) return "Adding cracked account";
         else if (mc.currentScreen instanceof AddPremiumAccountScreen) return "Adding premium account";
         else if (mc.currentScreen instanceof AddAlteningAccountScreen) return "Adding The Altening account";
@@ -260,7 +260,7 @@ public class DiscordRPC extends Module {
 
         // Singleplayer
         if (mc.isInSingleplayer()) {
-            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
+            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey()).toFile();
             if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) folder = folder.getParentFile();
 
             if (naked) {

@@ -4,6 +4,8 @@ import mathax.legacy.client.systems.accounts.AccountType;
 import mathax.legacy.client.systems.accounts.Account;
 import net.minecraft.client.util.Session;
 
+import java.util.Optional;
+
 public class CrackedAccount extends Account<CrackedAccount> {
     public CrackedAccount(String name) {
         super(AccountType.Cracked, name);
@@ -19,7 +21,7 @@ public class CrackedAccount extends Account<CrackedAccount> {
     public boolean login() {
         super.login();
 
-        setSession(new Session(name, "", "", "mojang"));
+        setSession(new Session(name, "", "", Optional.empty(), Optional.empty(), Session.AccountType.MOJANG));
         return true;
     }
 

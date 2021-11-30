@@ -1,7 +1,6 @@
 package mathax.legacy.client.systems.profiles;
 
 import mathax.legacy.client.systems.enemies.Enemies;
-import mathax.legacy.client.systems.seeds.Seeds;
 import mathax.legacy.client.systems.waypoints.Waypoints;
 import mathax.legacy.client.systems.System;
 import mathax.legacy.client.systems.accounts.Accounts;
@@ -26,7 +25,7 @@ public class Profile implements ISerializable<Profile> {
     public String name = "";
     public boolean onLaunch = false;
     public List<String> loadOnJoinIps = new ArrayList<>();
-    public boolean accounts = false, config = true, friends = false, enemies = false, macros = true, modules = true, waypoints = false, seeds = false;
+    public boolean accounts = false, config = true, friends = false, enemies = false, macros = true, modules = true, waypoints = false;
 
     public void load(System<?> system) {
         File folder = new File(Profiles.FOLDER, name);
@@ -43,7 +42,6 @@ public class Profile implements ISerializable<Profile> {
         if (macros) Macros.get().load(folder);
         if (modules) Modules.get().load(folder);
         if (waypoints) Waypoints.get().load(folder);
-        if (seeds) Seeds.get().load(folder);
     }
 
     public void save(System<?> system) {
@@ -60,7 +58,6 @@ public class Profile implements ISerializable<Profile> {
         if (macros) Macros.get().save(folder);
         if (modules) Modules.get().save(folder);
         if (waypoints) Waypoints.get().save(folder);
-        if (seeds) Seeds.get().save(folder);
     }
 
     public void delete(System<?> system) {
@@ -89,7 +86,6 @@ public class Profile implements ISerializable<Profile> {
         tag.putBoolean("macros", macros);
         tag.putBoolean("modules", modules);
         tag.putBoolean("waypoints", waypoints);
-        tag.putBoolean("seeds", seeds);
 
         loadOnJoinIps.removeIf(String::isEmpty);
 
@@ -111,7 +107,6 @@ public class Profile implements ISerializable<Profile> {
         macros = tag.contains("macros") && tag.getBoolean("macros");
         modules = tag.contains("modules") && tag.getBoolean("modules");
         waypoints = tag.contains("waypoints") && tag.getBoolean("waypoints");
-        seeds = tag.contains("seeds") && tag.getBoolean("seeds");
 
         loadOnJoinIps.clear();
 
@@ -135,7 +130,6 @@ public class Profile implements ISerializable<Profile> {
         this.macros = profile.macros;
         this.modules = profile.modules;
         this.waypoints = profile.waypoints;
-        this.seeds = profile.seeds;
         return this;
     }
 
@@ -146,5 +140,4 @@ public class Profile implements ISerializable<Profile> {
         Profile profile = (Profile) o;
         return name.equalsIgnoreCase(profile.name);
     }
-
 }

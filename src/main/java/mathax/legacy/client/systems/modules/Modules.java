@@ -502,7 +502,7 @@ public class Modules extends System<Modules> {
         add(new Marker());
         add(new MountHUD());
         add(new Nametags());
-        add(new NewChunks());
+        //add(new NewChunks());
         add(new NoBob());
         add(new NoRender());
         //add(new PenisESP());
@@ -608,7 +608,7 @@ public class Modules extends System<Modules> {
         add(new PacketSpammer());
         add(new Panic());
         add(new PingSpoof());
-        add(new LitematicaPrinter());
+        //add(new LitematicaPrinter());
         add(new SoundBlocker());
         add(new SoundLocator());
         add(new SpinBot());
@@ -618,6 +618,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initClient() {
+        //add(new BaritoneTweaks());
         add(new CapesModule());
         add(new ClientSpoof());
         add(new DiscordRPC());
@@ -630,6 +631,11 @@ public class Modules extends System<Modules> {
     public static class ModuleRegistry extends Registry<Module> {
         public ModuleRegistry() {
             super(RegistryKey.ofRegistry(new Identifier("mathaxlegacy", "modules")), Lifecycle.stable());
+        }
+
+        @Override
+        public int size() {
+            return Modules.get().getAll().size();
         }
 
         @Override
@@ -658,7 +664,7 @@ public class Modules extends System<Modules> {
         }
 
         @Override
-        protected Lifecycle getEntryLifecycle(Module object) {
+        public Lifecycle getEntryLifecycle(Module object) {
             return null;
         }
 

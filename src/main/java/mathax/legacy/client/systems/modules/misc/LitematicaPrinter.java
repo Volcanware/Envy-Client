@@ -1,35 +1,6 @@
 package mathax.legacy.client.systems.modules.misc;
 
-import fi.dy.masa.litematica.world.SchematicWorldHandler;
-import fi.dy.masa.litematica.world.WorldSchematic;
-import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.eventbus.EventHandler;
-import mathax.legacy.client.events.render.Render3DEvent;
-import mathax.legacy.client.events.world.TickEvent;
-import mathax.legacy.client.renderer.ShapeMode;
-import mathax.legacy.client.settings.*;
-import mathax.legacy.client.systems.modules.Categories;
-import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.player.FindItemResult;
-import mathax.legacy.client.utils.player.InvUtils;
-import mathax.legacy.client.utils.render.color.Color;
-import mathax.legacy.client.utils.render.color.SettingColor;
-import mathax.legacy.client.utils.world.BlockIterator;
-import mathax.legacy.client.utils.world.BlockUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Pair;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
-
-public class LitematicaPrinter extends Module {
+public class LitematicaPrinter/* extends Module {
     private int timer, placed = 0;
     private int usedSlot = -1;
 
@@ -265,3 +236,4 @@ public class LitematicaPrinter extends Module {
         });
     }
 }
+*/ {}

@@ -1,7 +1,5 @@
 package mathax.legacy.client.utils.player;
 
-import baritone.api.BaritoneAPI;
-import baritone.api.utils.Rotation;
 import mathax.legacy.client.mixininterface.IVec3d;
 import mathax.legacy.client.systems.enemies.Enemies;
 import mathax.legacy.client.systems.modules.movement.NoFall;
@@ -218,10 +216,11 @@ public class PlayerUtils {
     public static Vec3d getHorizontalVelocity(double bps) {
         float yaw = mc.player.getYaw();
 
-        if (BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
+        // TODO: Baritone
+        /*if (BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
             Rotation target = BaritoneUtils.getTarget();
             if (target != null) yaw = target.getYaw();
-        }
+        }*/
 
         Vec3d forward = Vec3d.fromPolar(0, yaw);
         Vec3d right = Vec3d.fromPolar(0, yaw + 90);

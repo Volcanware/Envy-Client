@@ -1,18 +1,7 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.music.Music;
-import mathax.legacy.client.renderer.Mesh;
-import mathax.legacy.client.renderer.Renderer2D;
-import mathax.legacy.client.renderer.text.TextRenderer;
-import mathax.legacy.client.settings.*;
-import mathax.legacy.client.systems.modules.render.hud.HUD;
-import mathax.legacy.client.systems.modules.render.hud.HUDElement;
-import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
-import mathax.legacy.client.utils.render.color.SettingColor;
 
-public class MusicHUD extends HUDElement {
+public class MusicHUD/* extends HUDElement {
     private static String time = "00:00:00";
     private static final String notPlaying = "Not playing";
     private static final String noAuthor = "No author";
@@ -208,3 +197,4 @@ public class MusicHUD extends HUDElement {
         });
     }
 }
+*/ {}

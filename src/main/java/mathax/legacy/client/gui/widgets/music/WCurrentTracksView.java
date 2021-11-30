@@ -1,12 +1,6 @@
 package mathax.legacy.client.gui.widgets.music;
 
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.tabs.builtin.MusicTab;
-import mathax.legacy.client.gui.widgets.containers.WTable;
-import mathax.legacy.client.music.Music;
-
-public class WCurrentTracksView extends WMusicWidget {
+public class WCurrentTracksView/* extends WMusicWidget {
     private AudioTrack currentTrack;
     private final WPaginationProvider pagination;
 
@@ -45,4 +39,4 @@ public class WCurrentTracksView extends WMusicWidget {
             super.add(parent, screen, theme);
         }
     }
-}
+}*/ {}

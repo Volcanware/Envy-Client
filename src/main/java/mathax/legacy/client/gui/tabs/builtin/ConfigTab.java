@@ -134,7 +134,8 @@ public class ConfigTab extends Tab {
 
     // Music
 
-    public static final Setting<Integer> musicVolume = sgMusic.add(new IntSetting.Builder()
+    // TODO: Music Player
+    /*public static final Setting<Integer> musicVolume = sgMusic.add(new IntSetting.Builder()
         .name("volume")
         .description("Determines the volume of the currently played music.")
         .defaultValue(100)
@@ -149,7 +150,7 @@ public class ConfigTab extends Tab {
             integerSetting.set(Config.get().musicVolume);
         })
         .build()
-    );
+    );*/
 
     // Misc
 

@@ -91,7 +91,7 @@ public class Search extends Module {
             groups.clear();
         }
 
-        for (WorldChunk chunk : Utils.chunks()) {
+        for (Chunk chunk : Utils.chunks()) {
             searchChunk(chunk, null);
         }
 

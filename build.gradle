@@ -1,10 +1,10 @@
 plugins {
-    id 'fabric-loom' version '0.9-SNAPSHOT'
+    id 'fabric-loom' version '0.10-SNAPSHOT'
     id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '7.1.0'
 }
 
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
 version = project.client_version + (System.getenv("CIRCLE_BUILD_NUM") != null ? ("-" + System.getenv("CIRCLE_BUILD_NUM")) : "")
@@ -43,8 +43,8 @@ repositories {
 
     // Other
     maven {
-        name = "dblsaiko"
-        url = "https://maven.dblsaiko.net/"
+        name = "vram"
+        url = "https://maven.vram.io//"
     }
 
     jcenter()
@@ -66,33 +66,32 @@ dependencies {
     modCompileOnly("me.jellysquid.mods:sodium-fabric:${project.sodium_version}") {
         transitive = false
     }
-    modCompileOnly("grondag:canvas-mc117-1.17:1.0.+") {
+    modCompileOnly("io.vram:canvas-fabric-mc118:1.0.+") {
         transitive = false
     }
 
+    // TODO: Baritone
     // Baritone integration
-    modImplementation "baritone:baritone:${project.baritone_version}"
-    include "baritone:baritone:${project.baritone_version}"
+    /*modImplementation "baritone:baritone:${project.baritone_version}"
+    include "baritone:baritone:${project.baritone_version}"*/
 
-    // Seed integration
-    modImplementation "com.github.hube12:SEED:${project.seed_version}"
-    include "com.github.hube12:SEED:${project.seed_version}"
-
+    // TODO: Litematica & Malilib
     // Litematica integration
-    modImplementation "curse.maven:litematica-${project.litematica_project_id}:${project.litematica_file_id}"
+    /*modImplementation "curse.maven:litematica-${project.litematica_project_id}:${project.litematica_file_id}"
     include "curse.maven:litematica-${project.litematica_project_id}:${project.litematica_file_id}"
 
     // Malilib for Litematica
     modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
-    include "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
+    include "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"*/
 
     // Dependencies
     library "com.github.Vatuu:discord-rpc:${project.discord_version}"
 
     // Music
 
+    // TODO: Music Player
     // Lava Player
-    modImplementation "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
+    /*modImplementation "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
     include "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
     library "com.sedmelluq:lava-common:${project.lava_common_version}"
     library "com.sedmelluq:lavaplayer-natives:${project.lavaplayer_natives_version}"
@@ -102,7 +101,7 @@ dependencies {
     library "com.fasterxml.jackson.core:jackson-core:${project.jackson_core_version}"
     library "com.fasterxml.jackson.core:jackson-databind:${project.jackson_databind_version}"
     library "com.fasterxml.jackson.core:jackson-annotations:${project.jackson_annotations_version}"
-    library "org.jsoup:jsoup:${project.jsoup_version}"
+    library "org.jsoup:jsoup:${project.jsoup_version}"*/
 }
 
 loom {

@@ -1,15 +1,6 @@
 package mathax.legacy.client.utils.music;
 
-import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
-import mathax.legacy.client.MatHaxLegacy;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
-
-public class PlaylistUtils {
+public class PlaylistUtils {/*
     private static final Map<String, AudioPlaylist> playlists = new HashMap<>();
 
     private static final Path folderPath = MatHaxLegacy.FOLDER.toPath().resolve("Music");
@@ -83,5 +74,5 @@ public class PlaylistUtils {
         });
 
         return l;
-    }
+    }*/
 }

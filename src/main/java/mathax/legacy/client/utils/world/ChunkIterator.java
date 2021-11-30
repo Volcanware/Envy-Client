@@ -2,21 +2,21 @@ package mathax.legacy.client.utils.world;
 
 import mathax.legacy.client.utils.Utils;
 import net.minecraft.util.math.ChunkSectionPos;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.chunk.WorldChunk;
 
 import java.util.Iterator;
 
 import static mathax.legacy.client.MatHaxLegacy.mc;
 
-public class WorldChunkIterator implements Iterator<WorldChunk> {
+public class ChunkIterator implements Iterator<Chunk> {
     private final int px, pz;
     private final int r;
 
     private int x, z;
-    private WorldChunk chunk;
+    private Chunk chunk;
 
-    public WorldChunkIterator() {
+    public ChunkIterator() {
         px = ChunkSectionPos.getSectionCoord(mc.player.getBlockX());
         pz = ChunkSectionPos.getSectionCoord(mc.player.getBlockZ());
         r = Utils.getRenderDistance();
@@ -39,7 +39,7 @@ public class WorldChunkIterator implements Iterator<WorldChunk> {
 
             if (x > px + r || z > pz + r) break;
 
-            chunk = (WorldChunk) mc.world.getChunk(x, z, ChunkStatus.FULL, false);
+            chunk = (Chunk) mc.world.getChunk(x, z, ChunkStatus.FULL, false);
             if (chunk != null) break;
         }
     }
@@ -50,8 +50,8 @@ public class WorldChunkIterator implements Iterator<WorldChunk> {
     }
 
     @Override
-    public WorldChunk next() {
-        WorldChunk chunk = this.chunk;
+    public Chunk next() {
+        Chunk chunk = this.chunk;
 
         nextChunk();
 

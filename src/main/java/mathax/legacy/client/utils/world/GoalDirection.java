@@ -1,12 +1,10 @@
 package mathax.legacy.client.utils.world;
 
-import baritone.api.BaritoneAPI;
-import baritone.api.pathing.goals.Goal;
-import baritone.api.utils.SettingsUtil;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-public class GoalDirection implements Goal {
+// TODO: Baritone
+public class GoalDirection /*implements Goal*/ {
     private static final double SQRT_2 = Math.sqrt(2.0D);
     private final float yaw;
     private int x;
@@ -32,7 +30,8 @@ public class GoalDirection implements Goal {
         }
 
         diagonal *= SQRT_2;
-        return (diagonal + straight) * BaritoneAPI.getSettings().costHeuristic.value;
+        // TODO: Baritone
+        return (diagonal + straight);// * BaritoneAPI.getSettings().costHeuristic.value;
     }
 
     public void recalculate(Vec3d origin) {
@@ -51,9 +50,9 @@ public class GoalDirection implements Goal {
         return calculate(xDiff, zDiff);
     }
 
-    public String toString() {
+    /*public String toString() {
         return String.format("GoalXZ{x=%s,z=%s}", SettingsUtil.maybeCensor(this.x), SettingsUtil.maybeCensor(this.z));
-    }
+    }*/
 
     public int getX() {
         return this.x;

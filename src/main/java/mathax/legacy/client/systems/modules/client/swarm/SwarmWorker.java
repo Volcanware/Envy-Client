@@ -1,6 +1,5 @@
 package mathax.legacy.client.systems.modules.client.swarm;
 
-import baritone.api.BaritoneAPI;
 import mathax.legacy.client.systems.commands.Commands;
 import mathax.legacy.client.utils.misc.ChatUtils;
 import net.minecraft.block.Block;
@@ -63,7 +62,8 @@ public class SwarmWorker extends Thread {
             e.printStackTrace();
         }
 
-        BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
+        // TODO: Baritone
+        //BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
 
         ChatUtils.info("Swarm", "Disconnected from host.");
 
@@ -72,8 +72,9 @@ public class SwarmWorker extends Thread {
 
     public void tick() {
         if (target == null) return;
-        BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
-        BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().mine(target);
+        // TODO: Baritone
+        //BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
+        //BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().mine(target);
         target = null;
     }
 

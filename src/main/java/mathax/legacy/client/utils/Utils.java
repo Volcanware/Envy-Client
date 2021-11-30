@@ -20,8 +20,8 @@ import mathax.legacy.client.utils.player.EChestMemory;
 import mathax.legacy.client.utils.render.PeekScreen;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.world.BlockEntityIterator;
+import mathax.legacy.client.utils.world.ChunkIterator;
 import mathax.legacy.client.utils.world.Dimension;
-import mathax.legacy.client.utils.world.WorldChunkIterator;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ShulkerBoxBlock;
@@ -41,6 +41,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.lang3.StringUtils;
@@ -101,8 +102,8 @@ public class Utils {
         return String.format("%02d:%02d:00", ticks / 1000, (int) (ticks % 1000 / 1000.0 * 60));
     }
 
-    public static Iterable<WorldChunk> chunks() {
-        return WorldChunkIterator::new;
+    public static Iterable<Chunk> chunks() {
+        return ChunkIterator::new;
     }
 
     public static Iterable<BlockEntity> blockEntities() {
@@ -287,7 +288,7 @@ public class Utils {
     public static String getWorldName() {
         if (mc.isInSingleplayer()) {
             // Singleplayer
-            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey());
+            File folder = ((MinecraftServerAccessor) mc.getServer()).getSession().getWorldDirectory(mc.world.getRegistryKey()).toFile();
             if (folder.toPath().relativize(mc.runDirectory.toPath()).getNameCount() != 2) folder = folder.getParentFile();
 
             return folder.getName();

@@ -1,6 +1,5 @@
 package mathax.legacy.client.systems.modules.movement;
 
-import baritone.api.BaritoneAPI;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.EnumSetting;
 import mathax.legacy.client.settings.Setting;
@@ -27,7 +26,8 @@ public class AutoWalk extends Module {
         .onChanged(mode1 -> {
                 if (isActive()) {
                     if (mode1 == Mode.Simple) {
-                        BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
+                        // TODO: Baritone
+                        // BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
                         goal = null;
                     } else {
                         timer = 0;
@@ -63,7 +63,8 @@ public class AutoWalk extends Module {
     @Override
     public void onDeactivate() {
         if (mode.get() == Mode.Simple) unpress();
-        else BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
+        // TODO: Baritone
+        //else BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
 
         goal = null;
     }
@@ -110,7 +111,8 @@ public class AutoWalk extends Module {
     private void createGoal() {
         timer = 0;
         goal = new GoalDirection(mc.player.getPos(), mc.player.getYaw());
-        BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath(goal);
+        // TODO: Baritone
+        //BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath(goal);
     }
     public enum Mode {
         Simple,

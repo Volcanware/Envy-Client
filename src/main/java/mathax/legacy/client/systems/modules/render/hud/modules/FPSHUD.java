@@ -16,7 +16,7 @@ public class FPSHUD extends TripleTextHUDElement {
 
     @Override
     protected String getRight() {
-        return Integer.toString(((MinecraftClientAccessor) mc).getFps());
+        return Integer.toString(MinecraftClientAccessor.getFps());
     }
 
     @Override

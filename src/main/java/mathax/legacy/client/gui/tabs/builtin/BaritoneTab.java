@@ -1,19 +1,12 @@
 package mathax.legacy.client.gui.tabs.builtin;
 
-import baritone.api.BaritoneAPI;
-import baritone.api.Settings$Setting;
-import baritone.api.utils.SettingsUtil;
 import mathax.legacy.client.gui.GuiTheme;
 import mathax.legacy.client.gui.tabs.Tab;
 import mathax.legacy.client.gui.tabs.TabScreen;
 import mathax.legacy.client.gui.tabs.WindowTabScreen;
 import mathax.legacy.client.gui.widgets.input.WTextBox;
-import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.settings.*;
 import net.minecraft.client.gui.screen.Screen;
-
-import java.awt.*;
-import java.lang.reflect.Field;
 
 public class BaritoneTab extends Tab {
     private static Settings settings;
@@ -32,7 +25,8 @@ public class BaritoneTab extends Tab {
         SettingGroup sgInt = settings.createGroup("Whole Numbers");
         SettingGroup sgColor = settings.createGroup("Colors");
 
-        try {
+        // TODO: Baritone
+        /*try {
             Class<? extends baritone.api.Settings> klass = BaritoneAPI.getSettings().getClass();
             for (Field field : klass.getDeclaredFields()) {
                 Object obj = field.get(BaritoneAPI.getSettings());
@@ -101,7 +95,7 @@ public class BaritoneTab extends Tab {
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return settings;
     }
@@ -139,7 +133,8 @@ public class BaritoneTab extends Tab {
 
         @Override
         protected void onClosed() {
-            SettingsUtil.save(BaritoneAPI.getSettings());
+            // TODO: Baritone
+            //SettingsUtil.save(BaritoneAPI.getSettings());
         }
     }
 }

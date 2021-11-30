@@ -1,33 +1,11 @@
 package mathax.legacy.client.systems.modules.render;
 
-import mathax.legacy.client.eventbus.EventHandler;
-import mathax.legacy.client.events.packets.PacketEvent;
-import mathax.legacy.client.events.render.Render3DEvent;
-import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.widgets.WWidget;
-import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
-import mathax.legacy.client.gui.widgets.pressable.WButton;
-import mathax.legacy.client.renderer.ShapeMode;
-import mathax.legacy.client.settings.*;
-import mathax.legacy.client.systems.modules.Categories;
-import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.render.color.Color;
-import mathax.legacy.client.utils.render.color.SettingColor;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.*;
-import net.minecraft.util.math.*;
-import net.minecraft.world.chunk.WorldChunk;
-
-import java.util.*;
-
 /*/------------------------/*/
 /*/ Ported from BleachHack /*/
 /*/ https://bleachhack.org /*/
 /*/------------------------/*/
 
-public class NewChunks extends Module {
+public class NewChunks /*extends Module {
     private static final Direction[] searchDirs = new Direction[] {
         Direction.EAST,
         Direction.NORTH,
@@ -119,6 +97,7 @@ public class NewChunks extends Module {
             newChunks.clear();
             oldChunks.clear();
         }
+
         super.onDeactivate();
     }
 
@@ -127,9 +106,7 @@ public class NewChunks extends Module {
         if (newChunksToggle.get()) {
             synchronized (newChunks) {
                 for (ChunkPos c : newChunks) {
-                    if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) {
-                        drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), newChunksFillColor.get(), newChunksLineColor.get(), event);
-                    }
+                    if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), newChunksFillColor.get(), newChunksLineColor.get(), event);
                 }
             }
         }
@@ -137,9 +114,7 @@ public class NewChunks extends Module {
         if (oldChunksToggle.get()){
             synchronized (oldChunks) {
                 for (ChunkPos c : oldChunks) {
-                    if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) {
-                        drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), oldChunksFillColor.get(), oldChunksLineColor.get(), event);
-                    }
+                    if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), oldChunksFillColor.get(), oldChunksLineColor.get(), event);
                 }
             }
         }
@@ -210,4 +185,4 @@ public class NewChunks extends Module {
             box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, fillColor, lineColor, ShapeMode.Lines, 0
         );
     }
-}
+}*/ {}

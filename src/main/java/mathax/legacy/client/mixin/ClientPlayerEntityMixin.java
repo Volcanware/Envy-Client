@@ -1,6 +1,5 @@
 package mathax.legacy.client.mixin;
 
-import baritone.api.BaritoneAPI;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import mathax.legacy.client.MatHaxLegacy;
@@ -52,7 +51,8 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     private void onSendChatMessage(String message, CallbackInfo info) {
         if (ignoreChatMessage) return;
 
-        if (!message.startsWith(Config.get().prefix) && !message.startsWith("/") && !message.startsWith(BaritoneAPI.getSettings().prefix.value)) {
+        // TODO: Baritone
+        if (!message.startsWith(Config.get().prefix) && !message.startsWith("/")/* && !message.startsWith(BaritoneAPI.getSettings().prefix.value)*/) {
             SendMessageEvent event = MatHaxLegacy.EVENT_BUS.post(SendMessageEvent.get(message));
 
             if (!event.isCancelled()) {

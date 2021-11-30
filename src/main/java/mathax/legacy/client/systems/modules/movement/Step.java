@@ -1,6 +1,5 @@
 package mathax.legacy.client.systems.modules.movement;
 
-import baritone.api.BaritoneAPI;
 import com.google.common.collect.Streams;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Categories;
@@ -60,9 +59,9 @@ public class Step extends Module {
     @Override
     public void onActivate() {
         prevStepHeight = mc.player.stepHeight;
-        prevBaritoneAssumeStep = BaritoneAPI.getSettings().assumeStep.value;
-
-        BaritoneAPI.getSettings().assumeStep.value = true;
+        // TODO: Baritone
+        /*prevBaritoneAssumeStep = BaritoneAPI.getSettings().assumeStep.value;
+        BaritoneAPI.getSettings().assumeStep.value = true;*/
     }
 
     @EventHandler
@@ -77,7 +76,8 @@ public class Step extends Module {
     @Override
     public void onDeactivate() {
         mc.player.stepHeight = prevStepHeight;
-        BaritoneAPI.getSettings().assumeStep.value = prevBaritoneAssumeStep;
+        // TODO: Baritone
+        //BaritoneAPI.getSettings().assumeStep.value = prevBaritoneAssumeStep;
     }
 
     private float getHealth(){

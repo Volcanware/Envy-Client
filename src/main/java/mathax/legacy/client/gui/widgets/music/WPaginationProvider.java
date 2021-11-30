@@ -1,13 +1,6 @@
 package mathax.legacy.client.gui.widgets.music;
 
-import mathax.legacy.client.gui.GuiTheme;
-import mathax.legacy.client.gui.tabs.builtin.MusicTab;
-import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
-import mathax.legacy.client.gui.widgets.containers.WTable;
-
-import java.util.function.Consumer;
-
-public class WPaginationProvider extends WMusicWidget {
+public class WPaginationProvider/* extends WMusicWidget {
     private int currentPage = 0;
     private int maxPage = 0;
     private final Consumer<Integer> onPageChange;
@@ -44,4 +37,4 @@ public class WPaginationProvider extends WMusicWidget {
     public WPaginationProvider(Consumer<Integer> onPageChange) {
         this.onPageChange = onPageChange;
     }
-}
+}*/ {}
