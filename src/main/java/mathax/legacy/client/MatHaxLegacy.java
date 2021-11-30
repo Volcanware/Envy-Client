@@ -121,6 +121,8 @@ public class MatHaxLegacy implements ClientModInitializer {
             Formatting.YELLOW + "I <3 forks",
             Formatting.YELLOW + "based",
             Formatting.YELLOW + "Pog",
+            Formatting.YELLOW + "Big Rat on top!",
+            Formatting.YELLOW + "bigrat.monster",
 
             // PERSONALIZED
             Formatting.YELLOW + "You're cool, " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername(),

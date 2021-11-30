@@ -46,28 +46,28 @@ public class DiscordRPC extends Module {
 
     public final Setting<Boolean> playerHealth = sgGeneral.add(new BoolSetting.Builder()
         .name("health")
-        .description("Determines if your Health will be visible on the RPC.")
+        .description("Determines if your health will be visible on the rpc.")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Boolean> worldVisibility = sgGeneral.add(new BoolSetting.Builder()
-        .name("world-visiblity")
-        .description("Determines if the singleplayer world name will be visible on the RPC.")
+        .name("world")
+        .description("Determines if the singleplayer world name will be visible on the rpc.")
         .defaultValue(true)
         .build()
     );
 
     public final Setting<Boolean> serverVisibility = sgGeneral.add(new BoolSetting.Builder()
-        .name("server-visiblity")
-        .description("Determines if the server IP will be visible on the RPC.")
+        .name("server")
+        .description("Determines if the server ip will be visible on the rpc.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<SmallImageMode> smallImageMode = sgGeneral.add(new EnumSetting.Builder<SmallImageMode>()
         .name("small-images")
-        .description("Shows cats or dogs on MatHax RPC.")
+        .description("Shows cats or dogs on MatHax rpc.")
         .defaultValue(SmallImageMode.Cats)
         .build()
     );
@@ -94,6 +94,7 @@ public class DiscordRPC extends Module {
         rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
         rpc.partyMax = 1;
         net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
+        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Discord Rich Presence enabled!");
         new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 net.arikia.dev.drpc.DiscordRPC.discordRunCallbacks();
@@ -118,7 +119,6 @@ public class DiscordRPC extends Module {
                 }
             }
         }, "RPC-Callback-Handler").start();
-        MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Discord Rich Presence enabled!");
     }
 
     @Override
@@ -211,6 +211,7 @@ public class DiscordRPC extends Module {
         return " | " + Math.round(mc.player.getHealth() + mc.player.getAbsorptionAmount()) + " HP";
     }
 
+    // Retarded af cope
     private String getWorldActivity(boolean naked, boolean upperCase) {
 
         // Disconnected etc...

@@ -608,7 +608,7 @@ public class Modules extends System<Modules> {
         add(new PacketSpammer());
         add(new Panic());
         add(new PingSpoof());
-        add(new Printer());
+        add(new LitematicaPrinter());
         add(new SoundBlocker());
         add(new SoundLocator());
         add(new SpinBot());

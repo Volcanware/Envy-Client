@@ -24,7 +24,7 @@ public class Timer extends Module {
         .description("The timer multiplier amount.")
         .defaultValue(1)
         .min(0.1)
-        .sliderMin(1)
+        .sliderMin(0.1)
         .build()
     );
 

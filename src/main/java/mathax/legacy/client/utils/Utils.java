@@ -252,23 +252,23 @@ public class Utils {
     }
 
     public static long packLong(int n, int n2, int n3, int n4) {
-        return ((long)n << 48) + ((long)n2 << 32) + ((long)n3 << 16) + (long)n4;
+        return ((long) n << 48) + ((long) n2 << 32) + ((long) n3 << 16) + (long) n4;
     }
 
     public static int unpackLong1(long l) {
-        return (int)(l >> 48 & 0xFFFFL);
+        return (int) (l >> 48 & 0xFFFFL);
     }
 
     public static int unpackLong2(long l) {
-        return (int)(l >> 32 & 0xFFFFL);
+        return (int) (l >> 32 & 0xFFFFL);
     }
 
     public static int unpackLong3(long l) {
-        return (int)(l >> 16 & 0xFFFFL);
+        return (int) (l >> 16 & 0xFFFFL);
     }
 
     public static int unpackLong4(long l) {
-        return (int)(l & 0xFFFFL);
+        return (int) (l & 0xFFFFL);
     }
 
     public static Dimension getDimension() {
@@ -316,7 +316,6 @@ public class Utils {
 
     public static String nameToTitle(String name) {
         name = Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
-
         String title = name.replace("Mathax", "MatHax");
         title = title.replace("Aac", "AAC");
         title = title.replace("Uuid", "UUID");
@@ -324,15 +323,8 @@ public class Utils {
         title = title.replace("Esp", "ESP");
         title = title.replace("Tps", "TPS");
         title = title.replace("Tp", "TP");
-        title = title.replace("Xp", "XP");
-        title = title.replace("Exp", "EXP");
-        title = title.replace("EXPloit", "Exploit");
-        title = title.replace("EXPlosion", "Explosion");
-        title = title.replace("EXPand", "Expand");
-        title = title.replace("EXPosed", "Exposed");
-        title = title.replace("EXPlore", "Explore");
-        title = title.replace("EXPloring", "Exploring");
-        title = title.replace("EXPiry", "Expiry");
+        title = title.replace("Xp ", "XP ");
+        title = title.replace("Exp ", "EXP ");
         title = title.replace("Gui", "GUI");
         title = title.replace("Hud", "HUD");
         title = title.replace("Fov", "FOV");
@@ -345,7 +337,6 @@ public class Utils {
         title = title.replace("Tnt", "TNT");
         title = title.replace("Blocks/tick", "Blocks/Tick");
         title = title.replace("Echest", "EChest");
-
         return title;
     }
 

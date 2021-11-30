@@ -104,7 +104,7 @@ public class CrystalAura extends Module {
         .description("Range in which to target entities.")
         .defaultValue(10)
         .min(0)
-        .sliderMax(16)
+        .sliderRange(0, 16)
         .build()
     );
 
@@ -135,6 +135,7 @@ public class CrystalAura extends Module {
         .description("Minimum damage the crystal needs to deal to your target.")
         .defaultValue(6)
         .range(0, 36)
+        .sliderRange(0, 36)
         .build()
     );
 
@@ -174,6 +175,7 @@ public class CrystalAura extends Module {
         .description("Maximum number of degrees its allowed to rotate in one tick.")
         .defaultValue(180)
         .range(1, 180)
+        .sliderRange(1, 180)
         .visible(rotate::get)
         .build()
     );
@@ -240,6 +242,7 @@ public class CrystalAura extends Module {
         .description("Delay in ticks after placing support block.")
         .defaultValue(1)
         .min(0)
+        .sliderRange(0, 5)
         .visible(() -> support.get() != SupportMode.Disabled)
         .build()
     );

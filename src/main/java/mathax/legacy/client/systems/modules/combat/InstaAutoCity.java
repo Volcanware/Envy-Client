@@ -53,7 +53,7 @@ public class InstaAutoCity extends Module {
         .description("The maximum range a city-able block will be found.")
         .defaultValue(5)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 
@@ -94,10 +94,10 @@ public class InstaAutoCity extends Module {
         .build()
     );
 
-    private final Setting<Boolean> autoToggle = sgGeneral.add(new BoolSetting.Builder()
-        .name("auto-toggle")
-        .description("Makes the module toggle itself off.")
-        .defaultValue(false)
+    private final Setting<Boolean> selfToggle = sgGeneral.add(new BoolSetting.Builder()
+        .name("self-toggle")
+        .description("Automatically toggles off after activation.")
+        .defaultValue(true)
         .build()
     );
 
@@ -171,7 +171,7 @@ public class InstaAutoCity extends Module {
 
         if (mineTarget != null && target != null) {
             if (mc.player.squaredDistanceTo(mineTarget.getX(), mineTarget.getY(), mineTarget.getZ()) > range.get()) {
-                if (autoToggle.get()) {
+                if (selfToggle.get()) {
                     if (chatInfo.get()) info("Target block out of reach, disabling...");
                     toggle();
                     return;
@@ -205,7 +205,7 @@ public class InstaAutoCity extends Module {
             mineTarget = null;
             target = null;
 
-            if (autoToggle.get()) {
+            if (selfToggle.get()) {
                 if (chatInfo.get()) info("No target block found, disabling...");
                 toggle();
             }
@@ -239,7 +239,7 @@ public class InstaAutoCity extends Module {
     private void onTick(TickEvent.Pre pre) {
         if (!assertionsDisabled && mc.world == null) throw new AssertionError();
 
-        if (autoToggle.get()) {
+        if (selfToggle.get()) {
             direction = BlockUtils.rayTraceCheck(mineTarget, true);
 
             if (!mc.world.isAir(mineTarget)) doMine();

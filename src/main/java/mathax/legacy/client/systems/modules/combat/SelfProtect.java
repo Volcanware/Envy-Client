@@ -3,6 +3,7 @@ package mathax.legacy.client.systems.modules.combat;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.BoolSetting;
+import mathax.legacy.client.settings.EnumSetting;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Categories;
@@ -54,8 +55,8 @@ public class SelfProtect extends Module {
     );
 
     private final Setting<Boolean> placeStringMiddle = sgGeneral.add(new BoolSetting.Builder()
-        .name("place-string-middle")
-        .description("Places string in your upper hitbox.")
+        .name("middle")
+        .description("Places string in your head.")
         .defaultValue(true)
         .build()
     );
@@ -108,17 +109,10 @@ public class SelfProtect extends Module {
         .build()
     );
 
-    private final Setting<Boolean> useString = sgBedAura.add(new BoolSetting.Builder()
-        .name("use-string")
-        .description("Uses strings.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> useWebs = sgBedAura.add(new BoolSetting.Builder()
-        .name("use-webs")
-        .description("Uses webs.")
-        .defaultValue(true)
+    private final Setting<Use> useStringWeb = sgGeneral.add(new EnumSetting.Builder<Use>()
+        .name("use")
+        .description("Determines what to use.")
+        .defaultValue(Use.String)
         .build()
     );
 
@@ -207,8 +201,8 @@ public class SelfProtect extends Module {
     }
 
     private void place(BlockPos blockPos) {
-        if (useString.get() && mc.world.getBlockState(blockPos).getBlock().asItem() != Items.STRING) BlockUtils.place(blockPos, InvUtils.findInHotbar(Items.STRING), 50, swing.get(), false);
-        else if (useWebs.get() && mc.world.getBlockState(blockPos).getBlock().asItem() != Items.COBWEB) BlockUtils.place(blockPos, InvUtils.findInHotbar(Items.COBWEB), 50, swing.get(), false);
+        if (useStringWeb.get() == Use.String && mc.world.getBlockState(blockPos).getBlock().asItem() != Items.STRING) BlockUtils.place(blockPos, InvUtils.findInHotbar(Items.STRING), 50, swing.get(), false);
+        else if (useStringWeb.get() == Use.Web && mc.world.getBlockState(blockPos).getBlock().asItem() != Items.COBWEB) BlockUtils.place(blockPos, InvUtils.findInHotbar(Items.COBWEB), 50, swing.get(), false);
     }
 
     private void mine(BlockPos blockPos) {
@@ -225,5 +219,10 @@ public class SelfProtect extends Module {
     private void sendStopPackets(BlockPos blockPos) {
         mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, blockPos, Direction.UP));
         mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
+    }
+
+    public enum Use {
+        String,
+        Web
     }
 }

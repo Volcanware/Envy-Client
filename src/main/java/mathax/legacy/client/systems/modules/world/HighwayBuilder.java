@@ -49,15 +49,18 @@ import java.util.function.Predicate;
 public class HighwayBuilder extends Module {
     private HorizontalDirection dir, leftDir, rightDir;
 
+    public Vec3d start;
+
     private Input prevInput;
     private CustomPlayerInput input;
 
     private State state, lastState;
     private IBlockPosProvider blockPosProvider;
 
-    public Vec3d start;
     public int blocksBroken, blocksPlaced;
+
     private final MBlockPos lastBreakingPos = new MBlockPos();
+
     private boolean displayInfo;
 
     private final MBlockPos posRender2 = new MBlockPos();

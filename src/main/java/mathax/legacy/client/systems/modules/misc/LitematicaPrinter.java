@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class Printer extends Module {
+public class LitematicaPrinter extends Module {
     private int timer, placed = 0;
     private int usedSlot = -1;
 
@@ -134,7 +134,7 @@ public class Printer extends Module {
         .build()
     );
 
-    public Printer() {
+    public LitematicaPrinter() {
         super(Categories.Misc, Items.COMMAND_BLOCK, "litematica-printer", "Prints litematica schematics.");
     }
 
