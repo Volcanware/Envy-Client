@@ -52,17 +52,18 @@ public class DiscordRPC extends Module {
         .build()
     );
 
-    public final Setting<Boolean> worldVisibility = sgGeneral.add(new BoolSetting.Builder()
-        .name("world")
-        .description("Determines if the singleplayer world name will be visible on the rpc.")
-        .defaultValue(true)
-        .build()
-    );
-
     public final Setting<Boolean> serverVisibility = sgGeneral.add(new BoolSetting.Builder()
         .name("server")
         .description("Determines if the server ip will be visible on the rpc.")
         .defaultValue(true)
+        .build()
+    );
+
+    public final Setting<Boolean> worldVisibility = sgGeneral.add(new BoolSetting.Builder()
+        .name("world")
+        .description("Determines if the singleplayer world name will be visible on the rpc.")
+        .defaultValue(true)
+        .visible(serverVisibility::get)
         .build()
     );
 
@@ -138,15 +139,15 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof ServerFinderScreen) return "Using server finder";
         else if (mc.currentScreen instanceof ServerCleanUpScreen) return "Using server cleanup";
         else if (mc.currentScreen instanceof ProtocolScreen) return "Changing protocol";
-        else if (mc.currentScreen instanceof ConnectScreen) return "Connecting to " + getWorldActivity(true, true);
-        else if (mc.currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + getWorldActivity(true, true);
-        else if (mc.currentScreen instanceof GameMenuScreen) return "Game paused on " + getWorldActivity(true, true);
-        else if (mc.currentScreen instanceof PeekScreen) return "Using .peek on " + getWorldActivity(true, true);
+        else if (mc.currentScreen instanceof ConnectScreen) return "Connecting to " + getWorldActivity(true, false);
+        else if (mc.currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + getWorldActivity(true, false);
+        else if (mc.currentScreen instanceof GameMenuScreen) return "Game paused on " + getWorldActivity(true, false);
+        else if (mc.currentScreen instanceof PeekScreen) return "Using .peek on " + getWorldActivity(true, false);
         else if (mc.currentScreen instanceof ModulesScreen) {
-            if (mc.world != null && serverVisibility.get()) return "In Click GUI (" + getWorldActivity(true, false) + ")";
+            if (mc.world != null && serverVisibility.get()) return "In Click GUI (" + getWorldActivity(true, true) + ")";
             else return "In Click GUI";
         } else if (mc.currentScreen instanceof ModuleScreen) {
-            if (mc.world != null && serverVisibility.get()) return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title + " (" + getWorldActivity(true, false) + ")";
+            if (mc.world != null && serverVisibility.get()) return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title + " (" + getWorldActivity(true, true) + ")";
             else return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title;
         } else if (mc.currentScreen instanceof PackScreen) return "Changing resourcepack";
         else if (mc.currentScreen instanceof OptionsScreen) return "Changing Minecraft settings";
