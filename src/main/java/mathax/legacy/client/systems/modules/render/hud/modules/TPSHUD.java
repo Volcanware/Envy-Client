@@ -16,7 +16,7 @@ public class TPSHUD extends TripleTextHUDElement {
 
     @Override
     protected String getRight() {
-        return String.format("%.1f", TickRate.INSTANCE.getTickRate());
+        return String.format("%.1f", TickRate.INSTANCE.getTickRate()).replace(",", ".");
     }
 
     @Override
