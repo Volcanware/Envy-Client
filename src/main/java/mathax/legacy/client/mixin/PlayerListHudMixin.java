@@ -17,6 +17,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 @Mixin(PlayerListHud.class)
 public class PlayerListHudMixin {
 
@@ -49,7 +51,6 @@ public class PlayerListHudMixin {
         BetterTab betterTab = Modules.get().get(BetterTab.class);
 
         if (betterTab.isActive() && betterTab.accurateLatency.get()) {
-            MinecraftClient mc = MinecraftClient.getInstance();
             TextRenderer textRenderer = mc.textRenderer;
 
             int latency = Utils.clamp(entry.getLatency(), 0, 99999);

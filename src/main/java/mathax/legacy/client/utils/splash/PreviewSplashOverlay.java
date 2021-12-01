@@ -8,10 +8,7 @@ public class PreviewSplashOverlay extends SplashOverlay {
     private final Runnable onDone;
 
     public PreviewSplashOverlay(long durationMs, Runnable onDone) {
-        super(
-            MinecraftClient.getInstance(), new FakeResourceReloadMonitor(durationMs),
-            optional -> {}, true
-        );
+        super(MinecraftClient.getInstance(), new FakeResourceReloadMonitor(durationMs), optional -> {}, true);
         this.onDone = onDone;
     }
 

@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 /*/---------------------------------------------------------------------------------------------------------------------------------------/*/
 /*/ Used from Meteor Rejects                                                                                                              /*/
 /*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/anticope/rejects/modules/InteractionMenu.java                    /*/
@@ -115,7 +117,7 @@ public class InteractionScreen extends Screen {
         }
 
         functions.put("Spectate", (Entity e) -> {
-            MinecraftClient.getInstance().setCameraEntity(e);
+            mc.setCameraEntity(e);
             client.player.sendMessage(new LiteralText("Sneak to un-spectate."), true);
             MatHaxLegacy.EVENT_BUS.subscribe(shiftListener);
             closeScreen();

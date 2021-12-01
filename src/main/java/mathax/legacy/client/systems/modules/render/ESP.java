@@ -333,7 +333,7 @@ public class ESP extends Module {
 
     public Color getColor(Entity entity) {
         if (entity instanceof PlayerEntity) {
-            if (entity.equals(MinecraftClient.getInstance().getCameraEntity())) return PlayerUtils.getPlayerColor(((PlayerEntity) entity), selfColor.get());
+            if (entity.equals(mc.getCameraEntity())) return PlayerUtils.getPlayerColor(((PlayerEntity) entity), selfColor.get());
             else return PlayerUtils.getPlayerColor(((PlayerEntity) entity), playersColor.get());
         }
 

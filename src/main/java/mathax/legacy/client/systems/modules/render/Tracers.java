@@ -159,7 +159,7 @@ public class Tracers extends Module {
             Color color;
             if (distance.get()) color = getColorFromDistance(entity);
             else if (entity instanceof PlayerEntity) {
-                if (entity.equals(MinecraftClient.getInstance().getCameraEntity())) color = PlayerUtils.getPlayerColor(((PlayerEntity) entity), selfColor.get());
+                if (entity.equals(mc.getCameraEntity())) color = PlayerUtils.getPlayerColor(((PlayerEntity) entity), selfColor.get());
                 else color = PlayerUtils.getPlayerColor(((PlayerEntity) entity), playersColor.get());
             } else {
                 color = switch (entity.getType().getSpawnGroup()) {

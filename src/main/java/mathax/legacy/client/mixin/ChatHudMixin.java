@@ -27,10 +27,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 @Mixin(ChatHud.class)
 public abstract class ChatHudMixin implements IChatHud {
-    private static final MinecraftClient mc = MinecraftClient.getInstance();
-
     private static final Pattern BARITONE_PREFIX_REGEX = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[Baritone\\]");
     private static final Pattern BARITONE_PREFIX_REGEX_2 = Pattern.compile("^\\s{0,2}(<[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}>\\s)?\\[Baritone\\]");
 

@@ -39,8 +39,6 @@ public class RenderUtils {
     }
 
     public static void updateScreenCenter() {
-        MinecraftClient mc = MinecraftClient.getInstance();
-
         Vec3d pos = new Vec3d(0, 0, 1);
 
         if (mc.options.bobView) {
@@ -58,10 +56,10 @@ public class RenderUtils {
     }
 
     private static void bobView(MatrixStack matrices) {
-        Entity cameraEntity = MinecraftClient.getInstance().getCameraEntity();
+        Entity cameraEntity = mc.getCameraEntity();
 
         if (cameraEntity instanceof PlayerEntity playerEntity) {
-            float f = MinecraftClient.getInstance().getTickDelta();
+            float f = mc.getTickDelta();
             float g = playerEntity.horizontalSpeed - playerEntity.prevHorizontalSpeed;
             float h = -(playerEntity.horizontalSpeed + g * f);
             float i = MathHelper.lerp(f, playerEntity.prevStrideDistance, playerEntity.strideDistance);

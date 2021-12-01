@@ -149,11 +149,11 @@ public class ClientSpoof extends Module {
     }
 
     public void setMeteorTitle() {
-        mc.getWindow().setTitle("Meteor Client " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft());
+        mc.getWindow().setTitle("Meteor Client " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft());
     }
 
     private void resetTitle() {
-        mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft());
+        mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft());
     }
 
     private void iconChanged() {

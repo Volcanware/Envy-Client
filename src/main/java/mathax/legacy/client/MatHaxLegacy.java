@@ -151,7 +151,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         mc.getWindow().setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
 
         // Title
-        mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
+        mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
 
         // Register event handlers
         EVENT_BUS.registerLambdaFactory("mathax.legacy.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
@@ -238,7 +238,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         GuiThemes.postInit();
 
         // Loaded window title
-        mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft() + " loaded!");
+        mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft() + " loaded!");
 
         // Shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -252,7 +252,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         if (cs.isActive() && cs.changeWindowIcon()) cs.setMeteorIcon();
         else mc.getWindow().setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
         if (cs.isActive() && cs.changeWindowTitle()) cs.setMeteorTitle();
-        else mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft());
+        else mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft());
 
         // Log
         LOG.info(logPrefix + "MatHax Legacy " + Version.getStylized() + " initialized!");

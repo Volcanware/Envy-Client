@@ -1125,12 +1125,9 @@ public class CrystalAura extends Module {
     }
 
     private Color getDamageTextColor(double renderDamage) {
-        Color RED = new Color(255, 0, 0, textColorDamageA.get());
-        Color GREEN = new Color(0, 255, 0, textColorDamageA.get());
-        Color YELLOW = new Color(255, 255, 0, textColorDamageA.get());
-        if (renderDamage < 7) return RED;
-        if (renderDamage < 17) return YELLOW;
-        else return GREEN;
+        if (renderDamage < 7) return new Color(255, 0, 0, textColorDamageA.get());
+        if (renderDamage < 17) return new Color(255, 255, 0, textColorDamageA.get());
+        else return new Color(0, 255, 0, textColorDamageA.get());
     }
 
     public enum ColorMode {

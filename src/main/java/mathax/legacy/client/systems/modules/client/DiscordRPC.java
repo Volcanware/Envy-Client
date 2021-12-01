@@ -91,7 +91,7 @@ public class DiscordRPC extends Module {
         rpc.details = Version.getStylized() + " | " + getUsername() + getPlayerHealth();
         rpc.state = getActivity();
         rpc.largeImageKey = "logo";
-        rpc.largeImageText = "MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft();
+        rpc.largeImageText = "MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
         applySmallImage();
         rpc.smallImageText = getActivity();
         rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
@@ -107,7 +107,7 @@ public class DiscordRPC extends Module {
                     rpc.details = Version.getStylized() + " | " + getUsername() + getPlayerHealth();
                     rpc.state = getActivity();
                     rpc.largeImageKey = "logo";
-                    rpc.largeImageText = "MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft();
+                    rpc.largeImageText = "MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
                     applySmallImage();
                     rpc.smallImageText = getActivity();
                     rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;

@@ -29,6 +29,6 @@ public class TitleScreenMixin extends Screen {
     }
 
     private void initTitleScreen(boolean fade) {
-        MinecraftClient.getInstance().setScreen(new mathax.legacy.client.gui.screens.TitleScreen(fade));
+        client.setScreen(new mathax.legacy.client.gui.screens.TitleScreen(fade));
     }
 }
