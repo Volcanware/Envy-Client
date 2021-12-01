@@ -129,6 +129,57 @@ public class Notebot extends Module {
         .build()
     );
 
+    // Buttons
+
+    @Override
+    public WWidget getWidget(GuiTheme theme) {
+        WTable table = theme.table();
+
+        // Label
+        status = table.add(theme.label(getStatus())).expandCellX().widget();
+
+        // Pause
+        WButton pauseBtn = table.add(theme.button(isPlaying ? "Pause" : "Resume")).right().widget();
+        pauseBtn.action = () -> {
+            pause();
+            pauseBtn.set(isPlaying ? "Pause" : "Resume");
+            status.set(getStatus());
+        };
+
+        // Stop
+        WButton stop = table.add(theme.button("Stop")).right().widget();
+        stop.action = this::stop;
+
+        table.row();
+
+        noSongsFound = true;
+
+        try {
+            Files.list(MatHaxLegacy.FOLDER.toPath().resolve("Notebot")).forEach(path -> {
+                if (isValidFile(path)) {
+                    noSongsFound = false;
+                    table.add(theme.label(getFileLabel(path))).expandCellX();
+                    WButton load = table.add(theme.button("Load")).right().widget();
+                    load.action = () -> {
+                        loadSong(path.toFile());
+                        status.set(getStatus());
+                    };
+                    WButton preview = table.add(theme.button("Preview")).right().widget();
+                    preview.action = () -> {
+                        previewSong(path.toFile());
+                        status.set(getStatus());
+                    };
+                    table.row();
+                }
+            });
+        }  catch (IOException e) {
+            table.add(theme.label("Missing \"Notebot\" folder.")).expandCellX();
+            table.row();
+        }
+
+        return table;
+    }
+
     public Notebot() {
         super(Categories.Misc, Items.NOTE_BLOCK, "notebot", "Plays noteblocks nicely.");
 
@@ -218,56 +269,6 @@ public class Notebot extends Module {
 
             if (status != null) status.set(getStatus());
         }
-    }
-
-
-    @Override
-    public WWidget getWidget(GuiTheme theme) {
-        WTable table = theme.table();
-
-        // Label
-        status = table.add(theme.label(getStatus())).expandCellX().widget();
-
-        // Pause
-        WButton pauseBtn = table.add(theme.button(isPlaying ? "Pause" : "Resume")).right().widget();
-        pauseBtn.action = () -> {
-            pause();
-            pauseBtn.set(isPlaying ? "Pause" : "Resume");
-            status.set(getStatus());
-        };
-
-        // Stop
-        WButton stop = table.add(theme.button("Stop")).right().widget();
-        stop.action = this::stop;
-
-        table.row();
-
-        noSongsFound = true;
-
-        try {
-            Files.list(MatHaxLegacy.FOLDER.toPath().resolve("Notebot")).forEach(path -> {
-                if (isValidFile(path)) {
-                    noSongsFound = false;
-                    table.add(theme.label(getFileLabel(path))).expandCellX();
-                    WButton load = table.add(theme.button("Load")).right().widget();
-                    load.action = () -> {
-                        loadSong(path.toFile());
-                        status.set(getStatus());
-                    };
-                    WButton preview = table.add(theme.button("Preview")).right().widget();
-                    preview.action = () -> {
-                        previewSong(path.toFile());
-                        status.set(getStatus());
-                    };
-                    table.row();
-                }
-            });
-        }  catch (IOException e) {
-            table.add(theme.label("Missing \"Notebot\" folder.")).expandCellX();
-            table.row();
-        }
-
-        return table;
     }
 
     private String getStatus() {

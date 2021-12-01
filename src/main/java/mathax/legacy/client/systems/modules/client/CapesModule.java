@@ -28,6 +28,21 @@ public class CapesModule extends Module {
         .build()
     );
 
+    // Buttons
+
+    @Override
+    public WWidget getWidget(GuiTheme theme) {
+        WHorizontalList w = theme.horizontalList();
+
+        WButton reload = w.add(theme.button("Reload")).widget();
+        reload.action = () -> {
+            if (isActive()) Capes.init();
+        };
+        w.add(theme.label("Reloads the capes."));
+
+        return w;
+    }
+
     public CapesModule() {
         super(Categories.Client, Items.CAKE, "capes", "Shows very cool capes on users which have them.");
     }
@@ -55,18 +70,5 @@ public class CapesModule extends Module {
     @Override
     public void onDeactivate() {
         Capes.disable();
-    }
-
-    @Override
-    public WWidget getWidget(GuiTheme theme) {
-        WHorizontalList w = theme.horizontalList();
-
-        WButton reload = w.add(theme.button("Reload")).widget();
-        reload.action = () -> {
-            if (isActive()) Capes.init();
-        };
-        w.add(theme.label("Reloads the capes."));
-
-        return w;
     }
 }

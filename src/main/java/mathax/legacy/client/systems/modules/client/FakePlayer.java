@@ -35,19 +35,7 @@ public class FakePlayer extends Module {
         .build()
     );
 
-    public FakePlayer() {
-        super(Categories.Client, Items.ARMOR_STAND, "fake-player", "Spawns a client-side fake player for testing usages.");
-    }
-
-    @Override
-    public void onActivate() {
-        FakePlayerManager.clear();
-    }
-
-    @Override
-    public void onDeactivate() {
-        FakePlayerManager.clear();
-    }
+    // Buttons
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
@@ -64,6 +52,20 @@ public class FakePlayer extends Module {
         };
 
         return w;
+    }
+
+    public FakePlayer() {
+        super(Categories.Client, Items.ARMOR_STAND, "fake-player", "Spawns a client-side fake player for testing usages.");
+    }
+
+    @Override
+    public void onActivate() {
+        FakePlayerManager.clear();
+    }
+
+    @Override
+    public void onDeactivate() {
+        FakePlayerManager.clear();
     }
 
     @Override

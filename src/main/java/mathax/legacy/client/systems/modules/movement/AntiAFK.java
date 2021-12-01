@@ -41,7 +41,7 @@ public class AntiAFK extends Module {
 
     private final Setting<Boolean> spin = sgActions.add(new BoolSetting.Builder()
         .name("spin")
-        .description("Spins.")
+        .description("Makes you spin.")
         .defaultValue(true)
         .build()
     );
@@ -136,83 +136,7 @@ public class AntiAFK extends Module {
         .build()
     );
 
-    public AntiAFK() {
-        super(Categories.Movement, Items.COMMAND_BLOCK, "anti-afk", "Performs different actions to prevent getting kicked for AFK reasons.");
-    }
-
-    @Override
-    public void onActivate() {
-        prevYaw = mc.player.getYaw();
-        timer = delay.get() * 20;
-    }
-
-    @Override
-    public void onDeactivate() {
-        if (strafe.get()) {
-            mc.options.keyLeft.setPressed(false);
-            mc.options.keyRight.setPressed(false);
-        }
-    }
-
-    @EventHandler
-    private void onTick(TickEvent.Pre event) {
-        if (Utils.canUpdate()) {
-            //Spin
-            if (spin.get()) {
-                prevYaw += spinSpeed.get();
-                switch (spinMode.get()) {
-                    case Client:
-                        mc.player.setYaw(prevYaw);
-                        break;
-                    case Server:
-                        Rotations.rotate(prevYaw, pitch.get(), -15, null);
-                        break;
-                }
-            }
-
-            //Jump
-            if (jump.get() && mc.options.keyJump.isPressed()) mc.options.keyJump.setPressed(false);
-            if (jump.get() && mc.options.keySneak.isPressed()) mc.options.keySneak.setPressed(false);
-            else if (jump.get() && random.nextInt(99) + 1 == 50) mc.options.keyJump.setPressed(true);
-
-            //Click
-            if (click.get() && random.nextInt(99) + 1 == 45) {
-                mc.options.keyAttack.setPressed(true);
-                Utils.leftClick();
-                mc.options.keyAttack.setPressed(false);
-            }
-
-            //Disco
-            if (disco.get() && random.nextInt(24) + 1 == 15) mc.options.keySneak.setPressed(true);
-
-            //Spam
-            if (sendMessages.get() && !messages.isEmpty())
-                if (timer <= 0) {
-                    int i;
-                    if (randomMessage.get()) {
-                        i = Utils.random(0, messages.size());
-                    } else {
-                        if (messageI >= messages.size()) messageI = 0;
-                        i = messageI++;
-                    }
-
-                    mc.player.sendChatMessage(messages.get(i));
-
-                    timer = delay.get() * 20;
-                } else {
-                    timer--;
-                }
-
-            //Strafe
-            if (strafe.get() && strafeTimer == 20) {
-                mc.options.keyLeft.setPressed(!direction);
-                mc.options.keyRight.setPressed(direction);
-                direction = !direction;
-                strafeTimer = 0;
-            } else
-                strafeTimer++;
-        }
-    }
+    // Buttons
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
@@ -254,6 +178,76 @@ public class AntiAFK extends Module {
             table.clear();
             fillTable(theme, table);
         };
+    }
+
+    public AntiAFK() {
+        super(Categories.Movement, Items.COMMAND_BLOCK, "anti-afk", "Performs different actions to prevent getting kicked for AFK reasons.");
+    }
+
+    @Override
+    public void onActivate() {
+        prevYaw = mc.player.getYaw();
+        timer = delay.get() * 20;
+    }
+
+    @Override
+    public void onDeactivate() {
+        if (strafe.get()) {
+            mc.options.keyLeft.setPressed(false);
+            mc.options.keyRight.setPressed(false);
+        }
+    }
+
+    @EventHandler
+    private void onTick(TickEvent.Pre event) {
+        if (Utils.canUpdate()) {
+            //Spin
+            if (spin.get()) {
+                prevYaw += spinSpeed.get();
+                switch (spinMode.get()) {
+                    case Client -> mc.player.setYaw(prevYaw);
+                    case Server -> Rotations.rotate(prevYaw, pitch.get(), -15, null);
+                }
+            }
+
+            //Jump
+            if (jump.get() && mc.options.keyJump.isPressed()) mc.options.keyJump.setPressed(false);
+            if (jump.get() && mc.options.keySneak.isPressed()) mc.options.keySneak.setPressed(false);
+            else if (jump.get() && random.nextInt(99) + 1 == 50) mc.options.keyJump.setPressed(true);
+
+            //Click
+            if (click.get() && random.nextInt(99) + 1 == 45) {
+                mc.options.keyAttack.setPressed(true);
+                Utils.leftClick();
+                mc.options.keyAttack.setPressed(false);
+            }
+
+            //Disco
+            if (disco.get() && random.nextInt(24) + 1 == 15) mc.options.keySneak.setPressed(true);
+
+            //Spam
+            if (sendMessages.get() && !messages.isEmpty())
+                if (timer <= 0) {
+                    int i;
+                    if (randomMessage.get()) i = Utils.random(0, messages.size());
+                    else {
+                        if (messageI >= messages.size()) messageI = 0;
+                        i = messageI++;
+                    }
+
+                    mc.player.sendChatMessage(messages.get(i));
+
+                    timer = delay.get() * 20;
+                } else timer--;
+
+            //Strafe
+            if (strafe.get() && strafeTimer == 20) {
+                mc.options.keyLeft.setPressed(!direction);
+                mc.options.keyRight.setPressed(direction);
+                direction = !direction;
+                strafeTimer = 0;
+            } else strafeTimer++;
+        }
     }
 
     @Override

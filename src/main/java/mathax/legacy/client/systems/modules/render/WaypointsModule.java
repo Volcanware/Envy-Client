@@ -64,71 +64,7 @@ public class WaypointsModule extends Module {
         .build()
     );
 
-    public WaypointsModule() {
-        super(Categories.Render, Items.BEACON, "waypoints", "Allows you to create waypoints.");
-    }
-
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
-    @EventHandler
-    private void onOpenScreen(OpenScreenEvent event) {
-        if (!(event.screen instanceof DeathScreen)) return;
-
-        if (!event.isCancelled()) addDeath(mc.player.getPos());
-    }
-
-    public void addDeath(Vec3d deathPos) {
-        String time = dateFormat.format(new Date());
-        if (dpChat.get()) {
-            BaseText text = new LiteralText("Died at ");
-            text.append(formatCoords(deathPos));
-            text.append(String.format(" on %s.", time));
-            info(text);
-        }
-
-        // Create waypoint
-        if (maxDeathPositions.get() > 0) {
-            Waypoint waypoint = new Waypoint();
-            waypoint.name = "Death " + time;
-            waypoint.icon = "skull";
-            waypoint.scale = 2;
-            waypoint.x = (int) deathPos.x;
-            waypoint.y = (int) deathPos.y + 2;
-            waypoint.z = (int) deathPos.z;
-            waypoint.maxVisibleDistance = Integer.MAX_VALUE;
-            waypoint.actualDimension = PlayerUtils.getDimension();
-
-            switch (waypoint.actualDimension) {
-                case Overworld:
-                    waypoint.overworld = true;
-                    break;
-                case Nether:
-                    waypoint.nether = true;
-                    break;
-                case End:
-                    waypoint.end = true;
-                    break;
-            }
-
-            Waypoints.get().add(waypoint);
-        }
-
-        cleanDeathWPs(maxDeathPositions.get());
-    }
-
-    private void cleanDeathWPs(int max) {
-        int oldWpC = 0;
-
-        ListIterator<Waypoint> wps = Waypoints.get().iteratorReverse();
-        while (wps.hasPrevious()) {
-            Waypoint wp = wps.previous();
-            if (wp.name.startsWith("Death ") && "skull".equals(wp.icon)) {
-                oldWpC++;
-                if (oldWpC > max)
-                    Waypoints.get().remove(wp);
-            }
-        }
-    }
+    // Buttons
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
@@ -196,6 +132,65 @@ public class WaypointsModule extends Module {
             }
 
             table.row();
+        }
+    }
+
+    public WaypointsModule() {
+        super(Categories.Render, Items.BEACON, "waypoints", "Allows you to create waypoints.");
+    }
+
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+    @EventHandler
+    private void onOpenScreen(OpenScreenEvent event) {
+        if (!(event.screen instanceof DeathScreen)) return;
+
+        if (!event.isCancelled()) addDeath(mc.player.getPos());
+    }
+
+    public void addDeath(Vec3d deathPos) {
+        String time = dateFormat.format(new Date());
+        if (dpChat.get()) {
+            BaseText text = new LiteralText("Died at ");
+            text.append(formatCoords(deathPos));
+            text.append(String.format(" on %s.", time));
+            info(text);
+        }
+
+        // Create waypoint
+        if (maxDeathPositions.get() > 0) {
+            Waypoint waypoint = new Waypoint();
+            waypoint.name = "Death " + time;
+            waypoint.icon = "skull";
+            waypoint.scale = 2;
+            waypoint.x = (int) deathPos.x;
+            waypoint.y = (int) deathPos.y + 2;
+            waypoint.z = (int) deathPos.z;
+            waypoint.maxVisibleDistance = Integer.MAX_VALUE;
+            waypoint.actualDimension = PlayerUtils.getDimension();
+
+            switch (waypoint.actualDimension) {
+                case Overworld -> waypoint.overworld = true;
+                case Nether -> waypoint.nether = true;
+                case End -> waypoint.end = true;
+            }
+
+            Waypoints.get().add(waypoint);
+        }
+
+        cleanDeathWPs(maxDeathPositions.get());
+    }
+
+    private void cleanDeathWPs(int max) {
+        int oldWpC = 0;
+
+        ListIterator<Waypoint> wps = Waypoints.get().iteratorReverse();
+        while (wps.hasPrevious()) {
+            Waypoint wp = wps.previous();
+            if (wp.name.startsWith("Death ") && "skull".equals(wp.icon)) {
+                oldWpC++;
+                if (oldWpC > max) Waypoints.get().remove(wp);
+            }
         }
     }
 

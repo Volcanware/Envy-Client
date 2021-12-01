@@ -90,20 +90,7 @@ public class InteractionMenu extends Module {
         .build()
     );
 
-    public InteractionMenu() {
-        super(Categories.Render, Items.ARMOR_STAND,"interaction-menu","An interaction screen when looking at an entity.");
-    }
-
-    public void onKey() {
-        if (mc.currentScreen != null) return;
-        Optional<Entity> lookingAt = DebugRenderer.getTargetedEntity(mc.player, 20);
-        if (lookingAt.isPresent()) {
-            Entity e = lookingAt.get();
-            if (entities.get().getBoolean(e.getType())) {
-                mc.setScreen(new InteractionScreen(e, this));
-            }
-        }
-    }
+    // Buttons
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
@@ -142,6 +129,21 @@ public class InteractionMenu extends Module {
         };
 
         table.row();
+    }
+
+    public InteractionMenu() {
+        super(Categories.Render, Items.ARMOR_STAND,"interaction-menu","An interaction screen when looking at an entity.");
+    }
+
+    public void onKey() {
+        if (mc.currentScreen != null) return;
+        Optional<Entity> lookingAt = DebugRenderer.getTargetedEntity(mc.player, 20);
+        if (lookingAt.isPresent()) {
+            Entity e = lookingAt.get();
+            if (entities.get().getBoolean(e.getType())) {
+                mc.setScreen(new InteractionScreen(e, this));
+            }
+        }
     }
 
     @Override

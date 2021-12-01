@@ -96,20 +96,7 @@ public class BookBot extends Module {
         .build()
     );
 
-    public BookBot() {
-        super(Categories.Misc, Items.WRITABLE_BOOK, "book-bot", "Automatically writes in books.");
-
-        if (!file.exists()) {
-            file = null;
-        }
-
-        filters = BufferUtils.createPointerBuffer(1);
-
-        ByteBuffer txtFilter = MemoryUtil.memASCII("*.txt");
-
-        filters.put(txtFilter);
-        filters.rewind();
-    }
+    // Buttons
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
@@ -135,6 +122,21 @@ public class BookBot extends Module {
         };
 
         return list;
+    }
+
+    public BookBot() {
+        super(Categories.Misc, Items.WRITABLE_BOOK, "book-bot", "Automatically writes in books.");
+
+        if (!file.exists()) {
+            file = null;
+        }
+
+        filters = BufferUtils.createPointerBuffer(1);
+
+        ByteBuffer txtFilter = MemoryUtil.memASCII("*.txt");
+
+        filters.put(txtFilter);
+        filters.rewind();
     }
 
     @Override

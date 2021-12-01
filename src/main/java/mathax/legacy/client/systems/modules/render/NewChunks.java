@@ -98,12 +98,17 @@ public class NewChunks extends Module {
         .build()
     );
 
+    // Buttons
+
     @Override
     public WWidget getWidget(GuiTheme theme) {
         WHorizontalList w = theme.horizontalList();
 
         WButton remove = w.add(theme.button("Remove")).widget();
-        remove.action = () -> { newChunks.clear(); oldChunks.clear(); };
+        remove.action = () -> {
+            newChunks.clear();
+            oldChunks.clear();
+        };
         w.add(theme.label("Removes all cached chunks."));
 
         return w;
@@ -203,8 +208,6 @@ public class NewChunks extends Module {
 
 
     private void drawBoxOutline(Box box, Color fillColor, Color lineColor, Render3DEvent event) {
-        event.renderer.box(
-            box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, fillColor, lineColor, ShapeMode.Lines, 0
-        );
+        event.renderer.box(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, fillColor, lineColor, ShapeMode.Lines, 0);
     }
 }

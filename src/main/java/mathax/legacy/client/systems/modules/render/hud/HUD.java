@@ -70,6 +70,25 @@ public class HUD extends Module {
         .build()
     );
 
+    // Buttons
+
+    @Override
+    public WWidget getWidget(GuiTheme theme) {
+        WTable table = theme.table();
+
+        WButton openEditor = table.add(theme.button(GuiRenderer.EDIT)).widget();
+        openEditor.action = this::openHudEditor;
+        table.add(theme.label("Opens HUD editor."));
+        table.row();
+
+        WButton reset = table.add(theme.button(GuiRenderer.RESET)).widget();
+        reset.action = this.reset;
+        table.add(theme.label("Resets positions (do this after changing scale)."));
+        table.row();
+
+        return table;
+    }
+
     public final List<HUDElement> elements = new ArrayList<>();
     private final HUDElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, time, radar, itemsArmor, crosshair, crosshair2;
 
@@ -213,23 +232,6 @@ public class HUD extends Module {
         }
 
         RENDERER.end();
-    }
-
-    @Override
-    public WWidget getWidget(GuiTheme theme) {
-        WTable table = theme.table();
-
-        WButton openEditor = table.add(theme.button(GuiRenderer.EDIT)).widget();
-        openEditor.action = this::openHudEditor;
-        table.add(theme.label("Opens HUD editor."));
-        table.row();
-
-        WButton reset = table.add(theme.button(GuiRenderer.RESET)).widget();
-        reset.action = this.reset;
-        table.add(theme.label("Resets positions (do this after changing scale)."));
-        table.row();
-
-        return table;
     }
 
     @Override

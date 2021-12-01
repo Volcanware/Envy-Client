@@ -104,7 +104,7 @@ public class Auto32K extends Module {
                     while (!BlockUtils.place(bestBlock, findHopper,true,100,false)) {
                         if (sortedIterator.hasNext()) {
                             bestBlock = sortedIterator.next().up();
-                        }else break;
+                        } else break;
                     }
                     mc.player.setSneaking(true);
                     if (!BlockUtils.place(bestBlock.up(),  findShulker,true,100,false)) {
@@ -151,25 +151,25 @@ public class Auto32K extends Module {
                 } else if (phase == 3) {
                     mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), mc.player.getHorizontalFacing().getOpposite(), bestBlock.up(), false));
                     phase += 1;
-                }else if (phase == 4 && mc.currentScreen instanceof Generic3x3ContainerScreen) {
+                } else if (phase == 4 && mc.currentScreen instanceof Generic3x3ContainerScreen) {
                     mc.player.getSpeed();
                     InvUtils.move().from(shulkerSlot.getSlot()).toId(4);
                     phase += 1;
-                }else if (phase == 5 && mc.currentScreen instanceof Generic3x3ContainerScreen) {
+                } else if (phase == 5 && mc.currentScreen instanceof Generic3x3ContainerScreen) {
                     mc.player.closeHandledScreen();
                     phase += 1;
-                }else if (phase == 6) {
+                } else if (phase == 6) {
                     mc.player.getInventory().selectedSlot = redstoneSlot.getSlot();
                     mc.player.setSneaking(true);
                     mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), mc.player.getHorizontalFacing().getOpposite(), bestBlock.up(2), false));
                     mc.player.setSneaking(false);
                     phase += 1;
-                }else if (phase == 7){
+                } else if (phase == 7){
                     mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), mc.player.getHorizontalFacing().getOpposite(), bestBlock.add(x, 0, z), false));
                     phase += 1;
                 }
             }
-        }else if (phase == 8) {
+        } else if (phase == 8) {
             if (mc.currentScreen instanceof HopperScreen) {
                 if (fillHopper.get() && !throwawayItems.get().isEmpty()) {
                     int slot = -1;
@@ -187,9 +187,7 @@ public class Auto32K extends Module {
                         if (count >= 4) break;
                     }
                     for (int i = 1; i < 5; i++) {
-                        if (mc.player.currentScreenHandler.getSlot(i).getStack().getItem() instanceof AirBlockItem) {
-                            InvUtils.move().from(slot - 4).toId(i);
-                        }
+                        if (mc.player.currentScreenHandler.getSlot(i).getStack().getItem() instanceof AirBlockItem) InvUtils.move().from(slot - 4).toId(i);
                     }
                 }
                 boolean manage = true;
@@ -200,7 +198,7 @@ public class Auto32K extends Module {
                         manage = false;
                         slot = i;
                         break;
-                    }else if (mc.player.currentScreenHandler.getSlot(i).getStack().getItem() instanceof SwordItem
+                    } else if (mc.player.currentScreenHandler.getSlot(i).getStack().getItem() instanceof SwordItem
                         && EnchantmentHelper.getLevel(Enchantments.SHARPNESS, mc.player.currentScreenHandler.getSlot(i).getStack()) <= 5) {
                         dropSlot = i;
                     }
@@ -208,15 +206,10 @@ public class Auto32K extends Module {
                 if (dropSlot != -1) InvUtils.drop().slot(dropSlot);
                 if (autoMove.get() && manage){
                     int slot2 = mc.player.getInventory().getEmptySlot();
-                    if (slot2 < 9 && slot2 != -1 && EnchantmentHelper.getLevel(Enchantments.SHARPNESS, mc.player.currentScreenHandler.getSlot(0).getStack()) > 5) {
-                        InvUtils.move().fromId(0).to(slot2 - 4);
-                    } else if (EnchantmentHelper.getLevel(Enchantments.SHARPNESS, mc.player.currentScreenHandler.getSlot(0).getStack()) <= 5 && mc.player.currentScreenHandler.getSlot(0).getStack().getItem() != Items.AIR) {
-                        InvUtils.drop().slotId(0);
-                    }
+                    if (slot2 < 9 && slot2 != -1 && EnchantmentHelper.getLevel(Enchantments.SHARPNESS, mc.player.currentScreenHandler.getSlot(0).getStack()) > 5) InvUtils.move().fromId(0).to(slot2 - 4);
+                    else if (EnchantmentHelper.getLevel(Enchantments.SHARPNESS, mc.player.currentScreenHandler.getSlot(0).getStack()) <= 5 && mc.player.currentScreenHandler.getSlot(0).getStack().getItem() != Items.AIR) InvUtils.drop().slotId(0);
                 }
-                if (slot != -1) {
-                    mc.player.getInventory().selectedSlot = slot - 32;
-                }
+                if (slot != -1) mc.player.getInventory().selectedSlot = slot - 32;
             } else toggle();
         }
     }
@@ -226,12 +219,9 @@ public class Auto32K extends Module {
         List<BlockPos> validBlocks = new ArrayList<>();
         for (BlockPos i = null; allBlocks.hasNext(); i = allBlocks.next()){
             if (i == null) continue;
-            if (!mc.world.getBlockState(i).getMaterial().isReplaceable()
-                && (mc.world.getBlockState(i.up()).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up().getX(), i.up().getY(), i.up().getZ(), i.up().getX() + 1.0D, i.up().getY() + 2.0D, i.up().getZ() + 1.0D)).isEmpty())
-                && mc.world.getBlockState(i.up(2)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(2).getX(), i.up(2).getY(), i.up(2).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty()){
-                validBlocks.add(i);
-            }
+            if (!mc.world.getBlockState(i).getMaterial().isReplaceable() && (mc.world.getBlockState(i.up()).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up().getX(), i.up().getY(), i.up().getZ(), i.up().getX() + 1.0D, i.up().getY() + 2.0D, i.up().getZ() + 1.0D)).isEmpty()) && mc.world.getBlockState(i.up(2)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(2).getX(), i.up(2).getY(), i.up(2).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty()) validBlocks.add(i);
         }
+
         return validBlocks;
     }
 
@@ -241,26 +231,23 @@ public class Auto32K extends Module {
         Iterator<BlockPos> allBlocks = allBlocksNotSorted.iterator();
         for (BlockPos i = null; allBlocks.hasNext(); i = allBlocks.next()){
             if (i == null) continue;
-            if (!mc.world.getBlockState(i).getMaterial().isReplaceable()
-                && (mc.world.getBlockState(i.up()).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up().getX(), i.up().getY(), i.up().getZ(), i.up().getX() + 1.0D, i.up().getY() + 2.0D, i.up().getZ() + 1.0D)).isEmpty())
-                && (mc.world.getBlockState(i.up(2)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(2).getX(), i.up(2).getY(), i.up(2).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty())
-                && (mc.world.getBlockState(i.up(3)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(3).getX(), i.up(3).getY(), i.up(3).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty())){
+            if (!mc.world.getBlockState(i).getMaterial().isReplaceable() && (mc.world.getBlockState(i.up()).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up().getX(), i.up().getY(), i.up().getZ(), i.up().getX() + 1.0D, i.up().getY() + 2.0D, i.up().getZ() + 1.0D)).isEmpty()) && (mc.world.getBlockState(i.up(2)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(2).getX(), i.up(2).getY(), i.up(2).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty()) && (mc.world.getBlockState(i.up(3)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(3).getX(), i.up(3).getY(), i.up(3).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty())){
                 if (mc.world.getBlockState(i.add(-1, 1, 0)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(-1, 1, 0).getX(), i.add(-1, 1, 0).getY(), i.add(-1, 1, 0).getZ(), i.add(-1, 1, 0).getX() + 1.0D, i.add(-1, 1, 0).getY() + 2.0D, i.add(-1, 1, 0).getZ() + 1.0D)).isEmpty()
                     && mc.world.getBlockState(i.add(-1, 0, 0)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(-1, 0, 0).getX(), i.add(-1, 0, 0).getY(), i.add(-1, 0, 0).getZ(), i.add(-1, 0, 0).getX() + 1.0D, i.add(-1, 0, 0).getY() + 2.0D, i.add(-1, 0, 0).getZ() + 1.0D)).isEmpty()) {
                     x = -1;
                     z = 0;
                     return i;
-                }else if (mc.world.getBlockState(i.add(1, 1, 0)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(1, 1, 0).getX(), i.add(1, 1, 0).getY(), i.add(1, 1, 0).getZ(), i.add(1, 1, 0).getX() + 1.0D, i.add(1, 1, 0).getY() + 2.0D, i.add(1, 1, 0).getZ() + 1.0D)).isEmpty()
+                } else if (mc.world.getBlockState(i.add(1, 1, 0)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(1, 1, 0).getX(), i.add(1, 1, 0).getY(), i.add(1, 1, 0).getZ(), i.add(1, 1, 0).getX() + 1.0D, i.add(1, 1, 0).getY() + 2.0D, i.add(1, 1, 0).getZ() + 1.0D)).isEmpty()
                     && mc.world.getBlockState(i.add(1, 0, 0)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(1, 0, 0).getX(), i.add(1, 0, 0).getY(), i.add(1, 0, 0).getZ(), i.add(1, 0, 0).getX() + 1.0D, i.add(1, 0, 0).getY() + 2.0D, i.add(1, 0, 0).getZ() + 1.0D)).isEmpty()) {
                     x = 1;
                     z = 0;
                     return i;
-                }else if (mc.world.getBlockState(i.add(0, 1, -1)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(0, 1, -1).getX(), i.add(0, 1, -1).getY(), i.add(0, 1, -1).getZ(), i.add(0, 1, -1).getX() + 1.0D, i.add(0, 1, -1).getY() + 2.0D, i.add(0, 1, -1).getZ() + 1.0D)).isEmpty()
+                } else if (mc.world.getBlockState(i.add(0, 1, -1)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(0, 1, -1).getX(), i.add(0, 1, -1).getY(), i.add(0, 1, -1).getZ(), i.add(0, 1, -1).getX() + 1.0D, i.add(0, 1, -1).getY() + 2.0D, i.add(0, 1, -1).getZ() + 1.0D)).isEmpty()
                     && mc.world.getBlockState(i.add(0, 0, -1)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(0, 0, -1).getX(), i.add(0, 0, -1).getY(), i.add(0, 0, -1).getZ(), i.add(0, 0, -1).getX() + 1.0D, i.add(0, 0, -1).getY() + 2.0D, i.add(0, 0, -1).getZ() + 1.0D)).isEmpty()) {
                     x = 0;
                     z = -1;
                     return i;
-                }else if (mc.world.getBlockState(i.add(0, 1, 1)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(0, 1, 1).getX(), i.add(0, 1, 1).getY(), i.add(0, 1, 1).getZ(), i.add(0, 1, 1).getX() + 1.0D, i.add(0, 1, 1).getY() + 2.0D, i.add(0, 1, 1).getZ() + 1.0D)).isEmpty()
+                } else if (mc.world.getBlockState(i.add(0, 1, 1)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(0, 1, 1).getX(), i.add(0, 1, 1).getY(), i.add(0, 1, 1).getZ(), i.add(0, 1, 1).getX() + 1.0D, i.add(0, 1, 1).getY() + 2.0D, i.add(0, 1, 1).getZ() + 1.0D)).isEmpty()
                     && mc.world.getBlockState(i.add(0, 0, 1)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(0, 0, 1).getX(), i.add(0, 0, 1).getY(), i.add(0, 0, 1).getZ(), i.add(0, 0, 1).getX() + 1.0D, i.add(0, 0, 1).getY() + 2.0D, i.add(0, 0, 1).getZ() + 1.0D)).isEmpty()) {
                     x = 0;
                     z = 1;
@@ -268,6 +255,7 @@ public class Auto32K extends Module {
                 }
             }
         }
+
         return null;
     }
 
@@ -288,6 +276,7 @@ public class Auto32K extends Module {
                 }
             }
         }
+
         return allBlocks;
     }
 

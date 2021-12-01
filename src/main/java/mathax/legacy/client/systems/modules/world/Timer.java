@@ -24,21 +24,11 @@ public class Timer extends Module {
         .description("The timer multiplier amount.")
         .defaultValue(1)
         .min(0.1)
-        .sliderMin(0.1)
+        .sliderRange(0.1, 2)
         .build()
     );
 
-    public Timer() {
-        super(Categories.World, Items.CLOCK, "timer", "Changes the speed of everything in your game.");
-    }
-
-    public double getMultiplier() {
-        return override != OFF ? override : (isActive() ? multiplier.get() : OFF);
-    }
-
-    public void setOverride(double override) {
-        this.override = override;
-    }
+    // Buttons
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
@@ -53,6 +43,19 @@ public class Timer extends Module {
             };
             return list;
         }
+
         return null;
+    }
+
+    public Timer() {
+        super(Categories.World, Items.CLOCK, "timer", "Changes the speed of everything in your game.");
+    }
+
+    public double getMultiplier() {
+        return override != OFF ? override : (isActive() ? multiplier.get() : OFF);
+    }
+
+    public void setOverride(double override) {
+        this.override = override;
     }
 }

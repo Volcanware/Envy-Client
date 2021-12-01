@@ -45,9 +45,7 @@ public class Swarm extends Module {
         .build()
     );
 
-    public Swarm() {
-        super(Categories.Client, Items.BEEHIVE, "Swarm", "Allows you to control multiple instances of MatHax Legacy from one central host.");
-    }
+    // Buttons
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
@@ -71,6 +69,10 @@ public class Swarm extends Module {
         guide.action = () -> Util.getOperatingSystem().open("https://mathaxclient.xyz/Swarm-Guide");
 
         return list;
+    }
+
+    public Swarm() {
+        super(Categories.Client, Items.BEEHIVE, "Swarm", "Allows you to control multiple instances of MatHax Legacy from one central host.");
     }
 
     @Override

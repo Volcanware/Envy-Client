@@ -105,6 +105,7 @@ public class MatHaxLegacy implements ClientModInitializer {
             Formatting.RED + "MatHaxClient.xyz",
             Formatting.RED + "MatHaxClient.xyz/Discord",
             Formatting.RED + Version.getStylized(),
+            Formatting.RED + Version.getMinecraft(),
 
             // MEME SPLASHES
             Formatting.YELLOW + "cope",
@@ -126,7 +127,8 @@ public class MatHaxLegacy implements ClientModInitializer {
 
             // PERSONALIZED
             Formatting.YELLOW + "You're cool, " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername(),
-            Formatting.YELLOW + "Owning with " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername()
+            Formatting.YELLOW + "Owning with " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername(),
+            Formatting.YELLOW + "Who is " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername() + Formatting.YELLOW + "?"
 
         );
     }

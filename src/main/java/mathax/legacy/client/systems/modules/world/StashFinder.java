@@ -79,6 +79,58 @@ public class StashFinder extends Module {
         .build()
     );
 
+    // Buttons
+
+    @Override
+    public WWidget getWidget(GuiTheme theme) {
+        // Sort
+        chunks.sort(Comparator.comparingInt(value -> -value.getTotal()));
+
+        WVerticalList list = theme.verticalList();
+
+        // Clear
+        WButton clear = list.add(theme.button("Clear")).widget();
+
+        WTable table = new WTable();
+        if (chunks.size() > 0) list.add(table);
+
+        clear.action = () -> {
+            chunks.clear();
+            table.clear();
+        };
+
+        // Chunks
+        fillTable(theme, table);
+
+        return list;
+    }
+
+    private void fillTable(GuiTheme theme, WTable table) {
+        for (Chunk chunk : chunks) {
+            table.add(theme.label("Pos: " + chunk.x + ", " + chunk.z));
+            table.add(theme.label("Total: " + chunk.getTotal()));
+
+            WButton open = table.add(theme.button("Open")).widget();
+            open.action = () -> mc.setScreen(new ChunkScreen(theme, chunk));
+
+            WButton gotoBtn = table.add(theme.button("Goto")).widget();
+            gotoBtn.action = () -> BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath(new GoalXZ(chunk.x, chunk.z));
+
+            WMinus delete = table.add(theme.minus()).widget();
+            delete.action = () -> {
+                if (chunks.remove(chunk)) {
+                    table.clear();
+                    fillTable(theme, table);
+
+                    saveJson();
+                    saveCsv();
+                }
+            };
+
+            table.row();
+        }
+    }
+
     public StashFinder() {
         super(Categories.World, Items.RED_SHULKER_BOX, "stash-finder", "Searches loaded chunks for storage blocks. Saves to <your minecraft folder>/MatHax/Legacy/Stashes folder.");
     }
@@ -129,56 +181,6 @@ public class StashFinder extends Module {
                     }
                 }
             }
-        }
-    }
-
-    @Override
-    public WWidget getWidget(GuiTheme theme) {
-        // Sort
-        chunks.sort(Comparator.comparingInt(value -> -value.getTotal()));
-
-        WVerticalList list = theme.verticalList();
-
-        // Clear
-        WButton clear = list.add(theme.button("Clear")).widget();
-
-        WTable table = new WTable();
-        if (chunks.size() > 0) list.add(table);
-
-        clear.action = () -> {
-            chunks.clear();
-            table.clear();
-        };
-
-        // Chunks
-        fillTable(theme, table);
-
-        return list;
-    }
-
-    private void fillTable(GuiTheme theme, WTable table) {
-        for (Chunk chunk : chunks) {
-            table.add(theme.label("Pos: " + chunk.x + ", " + chunk.z));
-            table.add(theme.label("Total: " + chunk.getTotal()));
-
-            WButton open = table.add(theme.button("Open")).widget();
-            open.action = () -> mc.setScreen(new ChunkScreen(theme, chunk));
-
-            WButton gotoBtn = table.add(theme.button("Goto")).widget();
-            gotoBtn.action = () -> BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath(new GoalXZ(chunk.x, chunk.z));
-
-            WMinus delete = table.add(theme.minus()).widget();
-            delete.action = () -> {
-                if (chunks.remove(chunk)) {
-                    table.clear();
-                    fillTable(theme, table);
-
-                    saveJson();
-                    saveCsv();
-                }
-            };
-
-            table.row();
         }
     }
 

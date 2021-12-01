@@ -26,6 +26,62 @@ public class Marker extends Module {
     private final MarkerFactory factory = new MarkerFactory();
     private final ArrayList<BaseMarker> markers = new ArrayList<>();
 
+    // Buttons
+
+    @Override
+    public WWidget getWidget(GuiTheme theme) {
+        WVerticalList list = theme.verticalList();
+        fillList(theme, list);
+        return list;
+    }
+
+    protected void fillList(GuiTheme theme, WVerticalList list) {
+        // Marker List
+        for (BaseMarker marker : markers) {
+            WHorizontalList hList = list.add(theme.horizontalList()).expandX().widget();
+
+            // Name
+            WLabel label = hList.add(theme.label(marker.name.get())).widget();
+            label.tooltip = marker.description.get();
+
+            // Dimension
+            hList.add(theme.label(" - " + marker.getDimension().toString())).expandX().widget().color = theme.textSecondaryColor();
+
+            // Toggle
+            WCheckbox checkbox = hList.add(theme.checkbox(marker.isActive())).widget();
+            checkbox.action = () -> {
+                if (marker.isActive() != checkbox.checked) marker.toggle();
+            };
+
+            // Edit
+            WButton edit = hList.add(theme.button(GuiRenderer.EDIT)).widget();
+            edit.action = () -> mc.setScreen(marker.getScreen(theme));
+
+            // Remove
+            WMinus remove = hList.add(theme.minus()).widget();
+            remove.action = () -> {
+                markers.remove(marker);
+                marker.settings.unregisterColorSettings();
+
+                list.clear();
+                fillList(theme, list);
+            };
+        }
+
+        // Bottom
+        WHorizontalList bottom = list.add(theme.horizontalList()).expandX().widget();
+
+        WDropdown<String> newMarker = bottom.add(theme.dropdown(factory.getNames(), factory.getNames()[0])).widget();
+        WButton add = bottom.add(theme.button("Add")).expandX().widget();
+        add.action = () -> {
+            String name = newMarker.get();
+            markers.add(factory.createMarker(name));
+
+            list.clear();
+            fillList(theme, list);
+        };
+    }
+
     public Marker() {
         super(Categories.Render, Items.FILLED_MAP, "marker", "Renders shapes. Useful for large scale projects.");
     }
@@ -83,60 +139,5 @@ public class Marker extends Module {
         }
 
         return this;
-    }
-
-    @Override
-    public WWidget getWidget(GuiTheme theme) {
-        WVerticalList list = theme.verticalList();
-        fillList(theme, list);
-        return list;
-    }
-
-    protected void fillList(GuiTheme theme, WVerticalList list) {
-        // Marker List
-        for (BaseMarker marker : markers) {
-            WHorizontalList hList = list.add(theme.horizontalList()).expandX().widget();
-
-            // Name
-            WLabel label = hList.add(theme.label(marker.name.get())).widget();
-            label.tooltip = marker.description.get();
-
-            // Dimension
-            hList.add(theme.label(" - " + marker.getDimension().toString())).expandX().widget().color = theme.textSecondaryColor();
-
-            // Toggle
-            WCheckbox checkbox = hList.add(theme.checkbox(marker.isActive())).widget();
-            checkbox.action = () -> {
-                if (marker.isActive() != checkbox.checked) marker.toggle();
-            };
-
-            // Edit
-            WButton edit = hList.add(theme.button(GuiRenderer.EDIT)).widget();
-            edit.action = () -> mc.setScreen(marker.getScreen(theme));
-
-            // Remove
-            WMinus remove = hList.add(theme.minus()).widget();
-            remove.action = () -> {
-                markers.remove(marker);
-                marker.settings.unregisterColorSettings();
-
-                list.clear();
-                fillList(theme, list);
-            };
-        }
-
-        // Bottom
-        WHorizontalList bottom = list.add(theme.horizontalList()).expandX().widget();
-
-        WDropdown<String> newMarker = bottom.add(theme.dropdown(factory.getNames(), factory.getNames()[0])).widget();
-        WButton add = bottom.add(theme.button("Add")).expandX().widget();
-        add.action = () -> {
-            String name = newMarker.get();
-            markers.add(factory.createMarker(name));
-
-            list.clear();
-            fillList(theme, list);
-        };
-
     }
 }
