@@ -136,10 +136,7 @@ public class DiscordRPC extends Module {
 
     // TODO: Rewrite
     private String getActivity() {
-        String className;
-        if (mc.currentScreen == null) className = mc.currentScreen.getClass().getName();
-        else className = "COPE";
-
+        String className = mc.currentScreen.getClass().getName();
         if (mc.getOverlay() instanceof SplashOverlay || mc.currentScreen instanceof ProgressScreen) {
             if (mc.world != null && serverVisibility.get()) return "Loading something (" + getWorldActivity(true, true) + ")";
             else return "Loading something...";
@@ -297,7 +294,6 @@ public class DiscordRPC extends Module {
         } else if (className.contains("com.viaversion.fabric.mc117.gui")) return "Changing Minecraft version";
         else if (mc.world != null) return getWorldActivity(false, false);
 
-        // MatHaxLegacy.LOG.info(className);
         return "Unknown Activity";
     }
 
