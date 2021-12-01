@@ -167,6 +167,7 @@ public class MatHaxLegacy implements ClientModInitializer {
                 Modules.get().get(HUD.class).forceToggle(true); // HUD
 
                 // VISIBILITY
+                Modules.get().get(ClientSpoof.class).setVisible(false); // CLIENT SPOOF
                 Modules.get().get(CapesModule.class).setVisible(false); // CAPES
                 Modules.get().get(DiscordRPC.class).setVisible(false); // DISCORD RPC
                 Modules.get().get(Background.class).setVisible(false); // BACKGROUND
