@@ -1,11 +1,33 @@
 package mathax.legacy.client.systems.modules.render;
 
+import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.events.packets.PacketEvent;
+import mathax.legacy.client.events.render.Render3DEvent;
+import mathax.legacy.client.gui.GuiTheme;
+import mathax.legacy.client.gui.widgets.WWidget;
+import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
+import mathax.legacy.client.gui.widgets.pressable.WButton;
+import mathax.legacy.client.renderer.ShapeMode;
+import mathax.legacy.client.settings.*;
+import mathax.legacy.client.systems.modules.Categories;
+import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.utils.render.color.Color;
+import mathax.legacy.client.utils.render.color.SettingColor;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.*;
+import net.minecraft.util.math.*;
+import net.minecraft.world.chunk.WorldChunk;
+
+import java.util.*;
+
 /*/------------------------/*/
 /*/ Ported from BleachHack /*/
 /*/ https://bleachhack.org /*/
 /*/------------------------/*/
 
-public class NewChunks /*extends Module {
+public class NewChunks extends Module {
     private static final Direction[] searchDirs = new Direction[] {
         Direction.EAST,
         Direction.NORTH,
@@ -160,8 +182,8 @@ public class NewChunks /*extends Module {
             ChunkPos pos = new ChunkPos(packet.getX(), packet.getZ());
 
             if (!newChunks.contains(pos) && mc.world.getChunkManager().getChunk(packet.getX(), packet.getZ()) == null) {
-                WorldChunk chunk = new WorldChunk(mc.world, pos, null);
-                chunk.loadFromPacket(null, packet.getReadBuffer(), new NbtCompound(), packet.getVerticalStripBitmask());
+                WorldChunk chunk = new WorldChunk(mc.world, pos);
+                chunk.loadFromPacket(packet.getChunkData().getSectionsDataBuf(), new NbtCompound(), packet.getChunkData().getBlockEntities(packet.getX(), packet.getZ()));
 
                 for (int x = 0; x < 16; x++) {
                     for (int y = mc.world.getBottomY(); y < mc.world.getTopY(); y++) {
@@ -185,4 +207,4 @@ public class NewChunks /*extends Module {
             box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, fillColor, lineColor, ShapeMode.Lines, 0
         );
     }
-}*/ {}
+}

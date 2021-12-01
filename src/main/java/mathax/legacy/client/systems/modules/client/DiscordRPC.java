@@ -22,6 +22,7 @@ import mathax.legacy.client.utils.render.prompts.OkPrompt;
 import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRichPresence;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.*;
@@ -86,7 +87,7 @@ public class DiscordRPC extends Module {
         rpc.details = Version.getStylized() + " | " + getUsername() + getPlayerHealth();
         rpc.state = getActivity();
         rpc.largeImageKey = "logo";
-        rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
+        rpc.largeImageText = "MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft();
         applySmallImage();
         rpc.smallImageText = getActivity();
         rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
@@ -102,7 +103,7 @@ public class DiscordRPC extends Module {
                     rpc.details = Version.getStylized() + " | " + getUsername() + getPlayerHealth();
                     rpc.state = getActivity();
                     rpc.largeImageKey = "logo";
-                    rpc.largeImageText = "MatHax Legacy " + Version.getStylized();
+                    rpc.largeImageText = "MatHax Legacy " + Version.getStylized() + " - " + MinecraftClient.getInstance().getVersionType() + " " + Version.getMinecraft();
                     applySmallImage();
                     rpc.smallImageText = getActivity();
                     rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
