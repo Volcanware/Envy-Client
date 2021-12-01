@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.player;
 
+import baritone.api.BaritoneAPI;
 import mathax.legacy.client.events.entity.player.ItemUseCrosshairTargetEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.BoolSetting;
@@ -186,11 +187,10 @@ public class AutoGap extends Module {
 
         // Pause baritone
         wasBaritone = false;
-        // TODO: Baritone
-        /*if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
+        if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
             wasBaritone = true;
             BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("pause");
-        }*/
+        }
     }
 
     private void eat() {
@@ -219,8 +219,7 @@ public class AutoGap extends Module {
         }
 
         // Resume baritone
-        // TODO: Baritone
-        //if (pauseBaritone.get() && wasBaritone) BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
+        if (pauseBaritone.get() && wasBaritone) BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
     }
 
     private void setPressed(boolean pressed) {

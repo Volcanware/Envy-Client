@@ -1,6 +1,7 @@
 package mathax.legacy.client.systems.modules.client;
 
-/*import mathax.legacy.client.eventbus.EventHandler;
+import baritone.api.BaritoneAPI;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.settings.BoolSetting;
 import mathax.legacy.client.settings.IntSetting;
@@ -8,9 +9,9 @@ import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import net.minecraft.item.Items;*/
+import net.minecraft.item.Items;
 
-public class BaritoneTweaks /*extends Module {
+public class BaritoneTweaks extends Module {
     private final SettingGroup sgSmartSprint = settings.createGroup("Smart Sprint");
 
     // Smart Sprint
@@ -41,4 +42,4 @@ public class BaritoneTweaks /*extends Module {
             else BaritoneAPI.getSettings().allowSprint.value = false;
         }
     }
-}*/ {}
+}

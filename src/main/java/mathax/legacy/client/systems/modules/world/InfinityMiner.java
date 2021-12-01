@@ -1,5 +1,9 @@
 package mathax.legacy.client.systems.modules.world;
 
+import baritone.api.BaritoneAPI;
+import baritone.api.IBaritone;
+import baritone.api.Settings;
+import baritone.api.pathing.goals.GoalBlock;
 import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.eventbus.EventHandler;
@@ -24,9 +28,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class InfinityMiner extends Module {
-    // TODO: Baritone
-    //private final IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
-    //private final Settings baritoneSettings = BaritoneAPI.getSettings();
+    private final IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
+    private final Settings baritoneSettings = BaritoneAPI.getSettings();
 
     private final BlockPos.Mutable homePos = new BlockPos.Mutable();
     private boolean repairing;
@@ -91,15 +94,13 @@ public class InfinityMiner extends Module {
 
     @Override
     public void onDeactivate() {
-        // TODO: Baritone
-        //baritone.getPathingBehavior().cancelEverything();
-        //baritoneSettings.mineScanDroppedItems.value = true;
+        baritone.getPathingBehavior().cancelEverything();
+        baritoneSettings.mineScanDroppedItems.value = true;
     }
 
     @EventHandler
     private void onGameDisconnect(GameLeftEvent event) {
-        // TODO: Baritone
-        //baritone.getPathingBehavior().cancelEverything();
+        baritone.getPathingBehavior().cancelEverything();
         toggle();
     }
 
@@ -109,12 +110,10 @@ public class InfinityMiner extends Module {
             switch (whenFull.get()) {
                 case Disconnect -> mc.player.networkHandler.sendPacket(new DisconnectS2CPacket(new LiteralText("[Infinity Miner] Inventory is full.")));
                 case Home -> {
-                    // TODO: Baritone
-                    /*if (!baritone.getPathingBehavior().isPathing() || !baritone.getPathingBehavior().getGoal().isInGoal(homePos)) {
+                    if (!baritone.getPathingBehavior().isPathing() || !baritone.getPathingBehavior().getGoal().isInGoal(homePos)) {
                         info("Walking home.");
                         baritone.getCustomGoalProcess().setGoalAndPath(new GoalBlock(homePos));
                     } else if (mc.player.getBlockPos().equals(homePos)) mc.player.networkHandler.sendPacket(new DisconnectS2CPacket(new LiteralText("[Infinity Miner] Inventory is full.")));
-                    */
                 }
             }
 
@@ -131,29 +130,25 @@ public class InfinityMiner extends Module {
             if (!needsRepair()) {
                 warning("Finished repairing, going back to mining.");
                 repairing = false;
-                // TODO: Baritone
-                /*baritone.getPathingBehavior().cancelEverything();
-                baritone.getMineProcess().mine(getTargetBlocks());*/
+                baritone.getPathingBehavior().cancelEverything();
+                baritone.getMineProcess().mine(getTargetBlocks());
                 return;
             }
 
-            // TODO: Baritone
-            /*if (baritoneSettings.mineScanDroppedItems.value) baritoneSettings.mineScanDroppedItems.value = false;
-            baritone.getMineProcess().mine(getRepairBlocks());*/
+            if (baritoneSettings.mineScanDroppedItems.value) baritoneSettings.mineScanDroppedItems.value = false;
+            baritone.getMineProcess().mine(getRepairBlocks());
         }
         else {
             if (needsRepair()) {
                 warning("Pickaxe needs repair, beginning repair process");
                 repairing = true;
-                // TODO: Baritone
-                /*baritone.getPathingBehavior().cancelEverything();
-                baritone.getMineProcess().mine(getRepairBlocks());*/
+                baritone.getPathingBehavior().cancelEverything();
+                baritone.getMineProcess().mine(getRepairBlocks());
                 return;
             }
 
-            // TODO: Baritone
-            /*if (!baritoneSettings.mineScanDroppedItems.value) baritoneSettings.mineScanDroppedItems.value = true;
-            baritone.getMineProcess().mine(getTargetBlocks());*/
+            if (!baritoneSettings.mineScanDroppedItems.value) baritoneSettings.mineScanDroppedItems.value = true;
+            baritone.getMineProcess().mine(getTargetBlocks());
         }
     }
 

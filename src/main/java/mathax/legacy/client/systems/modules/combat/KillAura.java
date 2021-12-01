@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.combat;
 
+import baritone.api.BaritoneAPI;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.events.game.GameLeftEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
@@ -246,20 +247,18 @@ public class KillAura extends Module {
         TargetUtils.getList(targets, this::entityCheck, priority.get(), maxTargets.get());
 
         if (targets.isEmpty()) {
-            // TODO: Baritone
-            /*if (wasPathing) {
+            if (wasPathing) {
                 BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
                 wasPathing = false;
-            }*/
+            }
 
             return;
         }
 
-        // TODO: Baritone
-        /*if (pauseOnCombat.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing() && !wasPathing) {
+        if (pauseOnCombat.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing() && !wasPathing) {
             BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("pause");
             wasPathing = true;
-        }*/
+        }
 
         Entity primary = targets.get(0);
         if (rotation.get() == RotationMode.Always) rotate(primary, null);

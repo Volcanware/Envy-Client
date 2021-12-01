@@ -1,5 +1,6 @@
 package mathax.legacy.client.mixin;
 
+import baritone.api.BaritoneAPI;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import mathax.legacy.client.MatHaxLegacy;
@@ -51,8 +52,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     private void onSendChatMessage(String message, CallbackInfo info) {
         if (ignoreChatMessage) return;
 
-        // TODO: Baritone
-        if (!message.startsWith(Config.get().prefix) && !message.startsWith("/")/* && !message.startsWith(BaritoneAPI.getSettings().prefix.value)*/) {
+        if (!message.startsWith(Config.get().prefix) && !message.startsWith("/") && !message.startsWith(BaritoneAPI.getSettings().prefix.value)) {
             SendMessageEvent event = MatHaxLegacy.EVENT_BUS.post(SendMessageEvent.get(message));
 
             if (!event.isCancelled()) {
@@ -101,9 +101,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     @Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
     private void onPushOutOfBlocks(double x, double d, CallbackInfo info) {
         Velocity velocity = Modules.get().get(Velocity.class);
-        if (velocity.isActive() && velocity.blocks.get()) {
-            info.cancel();
-        }
+        if (velocity.isActive() && velocity.blocks.get()) info.cancel();
     }
 
     // Rotations

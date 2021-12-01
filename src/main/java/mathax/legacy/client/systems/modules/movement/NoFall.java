@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.movement;
 
+import baritone.api.BaritoneAPI;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.mixininterface.IPlayerMoveC2SPacket;
@@ -65,16 +66,14 @@ public class NoFall extends Module {
 
     @Override
     public void onActivate() {
-        // TODO: Baritone
-        /*preBaritoneFallHeight = BaritoneAPI.getSettings().maxFallHeightNoWater.value;
-        if (mode.get() == Mode.Packet) BaritoneAPI.getSettings().maxFallHeightNoWater.value = 255;*/
+        preBaritoneFallHeight = BaritoneAPI.getSettings().maxFallHeightNoWater.value;
+        if (mode.get() == Mode.Packet) BaritoneAPI.getSettings().maxFallHeightNoWater.value = 255;
         placedWater = false;
     }
 
     @Override
     public void onDeactivate() {
-        // TODO: Baritone
-        //BaritoneAPI.getSettings().maxFallHeightNoWater.value = preBaritoneFallHeight;
+        BaritoneAPI.getSettings().maxFallHeightNoWater.value = preBaritoneFallHeight;
     }
 
     @EventHandler

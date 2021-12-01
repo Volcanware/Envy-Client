@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.commands.commands;
 
+import baritone.api.BaritoneAPI;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.eventbus.EventHandler;
@@ -21,6 +22,7 @@ import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.BaseText;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.Arrays;
@@ -144,8 +146,7 @@ public class LocateCommand extends Command {
             FindItemResult eye = InvUtils.findInHotbar(Items.ENDER_EYE);
 
             if (eye.found()) {
-                // TODO: Baritone
-                //BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("follow entity minecraft:eye_of_ender");
+                BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("follow entity minecraft:eye_of_ender");
                 firstStart = null;
                 firstEnd = null;
                 secondStart = null;
@@ -200,6 +201,7 @@ public class LocateCommand extends Command {
                     }
                 }
             }
+
             Vec3d coords = findByBlockList(monumentBlocks);
 
             if (coords == null ) {
@@ -226,12 +228,10 @@ public class LocateCommand extends Command {
     }
 
     private Vec3d findByBlockList(List<Block> blockList) {
-        // TODO: Baritone
-        /*List<BlockPos> posList = BaritoneAPI.getProvider().getWorldScanner().scanChunkRadius(BaritoneAPI.getProvider().getPrimaryBaritone().getPlayerContext(), blockList,64,10,32);
+        List<BlockPos> posList = BaritoneAPI.getProvider().getWorldScanner().scanChunkRadius(BaritoneAPI.getProvider().getPrimaryBaritone().getPlayerContext(), blockList,64,10,32);
         if (posList.isEmpty()) return null;
         if (posList.size() < 3) warning("Only %d block(s) found. This search might be a false positive.", posList.size());
-        return new Vec3d(posList.get(0).getX(),posList.get(0).getY(),posList.get(0).getZ());*/
-        return null;
+        return new Vec3d(posList.get(0).getX(),posList.get(0).getY(),posList.get(0).getZ());
     }
 
     @EventHandler
@@ -282,8 +282,7 @@ public class LocateCommand extends Command {
             return;
         }
 
-        // TODO: Baritone
-        //BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("stop");
+        BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("stop");
         MatHaxLegacy.EVENT_BUS.unsubscribe(this);
         Vec3d coords = new Vec3d(intersection[0],0,intersection[1]);
         BaseText text = new LiteralText("Stronghold roughly located at ");

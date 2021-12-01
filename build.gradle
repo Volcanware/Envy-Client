@@ -70,10 +70,9 @@ dependencies {
         transitive = false
     }
 
-    // TODO: Baritone
     // Baritone integration
-    /*modImplementation "baritone:baritone:${project.baritone_version}"
-    include "baritone:baritone:${project.baritone_version}"*/
+    modImplementation "baritone:baritone:${project.baritone_version}"
+    include "baritone:baritone:${project.baritone_version}"
 
     // TODO: Litematica & Malilib
     // Litematica integration
@@ -109,7 +108,9 @@ loom {
 }
 
 shadowJar {
-    configurations = [ project.configurations.shadow ]
+    configurations = [
+        project.configurations.shadow
+    ]
 }
 
 processResources {

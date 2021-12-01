@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.movement;
 
+import baritone.api.BaritoneAPI;
 import com.google.common.collect.Streams;
 import mathax.legacy.client.events.entity.player.CanWalkOnFluidEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
@@ -145,8 +146,7 @@ public class Jesus extends Module {
         super(Categories.Movement, Items.WATER_BUCKET, "jesus", "Walk on liquids and powder snow like Jesus.");
     }
 
-    // TODO: Baritone
-    /*@Override
+    @Override
     public void onActivate() {
         preBaritoneAssumeWalkOnWater = BaritoneAPI.getSettings().assumeWalkOnWater.value;
         preBaritoneAssumeWalkOnLava = BaritoneAPI.getSettings().assumeWalkOnLava.value;
@@ -159,7 +159,7 @@ public class Jesus extends Module {
     public void onDeactivate() {
         BaritoneAPI.getSettings().assumeWalkOnWater.value = preBaritoneAssumeWalkOnWater;
         BaritoneAPI.getSettings().assumeWalkOnLava.value = preBaritoneAssumeWalkOnLava;
-    }*/
+    }
 
     @EventHandler
     private void onTick(TickEvent.Post event) {

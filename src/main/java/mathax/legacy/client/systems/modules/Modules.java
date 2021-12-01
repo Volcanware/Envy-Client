@@ -618,7 +618,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initClient() {
-        //add(new BaritoneTweaks());
+        add(new BaritoneTweaks());
         add(new CapesModule());
         add(new ClientSpoof());
         add(new DiscordRPC());

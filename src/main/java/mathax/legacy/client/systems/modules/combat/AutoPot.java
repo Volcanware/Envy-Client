@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.combat;
 
+import baritone.api.BaritoneAPI;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.entity.player.ItemUseCrosshairTargetEvent;
 import mathax.legacy.client.events.world.TickEvent;
@@ -301,11 +302,10 @@ public class AutoPot extends Module {
 
         // Pause baritone
         wasBaritone = false;
-        // TODO: Baritone
-        /*if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
+        if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
             wasBaritone = true;
             BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("pause");
-        }*/
+        }
     }
 
     private void startSplashing() {
@@ -341,11 +341,10 @@ public class AutoPot extends Module {
 
         // Pause baritone
         wasBaritone = false;
-        // TODO: Baritone
-        /*if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
+        if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
             wasBaritone = true;
             BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("pause");
-        }*/
+        }
     }
 
     private void drink() {
@@ -379,8 +378,7 @@ public class AutoPot extends Module {
         }
 
         // Resume baritone
-        // TODO: Baritone
-        //if (pauseBaritone.get() && wasBaritone) BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
+        if (pauseBaritone.get() && wasBaritone) BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
     }
 
     private void stopSplashing() {
@@ -409,8 +407,7 @@ public class AutoPot extends Module {
         }
 
         // Resume baritone
-        // TODO: Baritone
-        //if (pauseBaritone.get() && wasBaritone) BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
+        if (pauseBaritone.get() && wasBaritone) BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
     }
 
     private double trueHealth() {
