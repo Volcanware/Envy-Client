@@ -5,7 +5,9 @@ import mathax.legacy.client.gui.screens.TitleScreen;
 import mathax.legacy.client.gui.screens.music.PlaylistViewScreen;
 import mathax.legacy.client.gui.screens.music.PlaylistsScreen;
 import mathax.legacy.client.gui.screens.server.ProtocolScreen;
+import mathax.legacy.client.gui.screens.settings.*;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
+import mathax.legacy.client.systems.modules.render.search.SBlockDataScreen;
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.screens.*;
 import mathax.legacy.client.gui.screens.accounts.*;
@@ -132,71 +134,168 @@ public class DiscordRPC extends Module {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Discord Rich Presence disabled!");
     }
 
+    // TODO: Rewrite
     private String getActivity() {
-        if (mc.getOverlay() instanceof SplashOverlay) return "Something is loading...";
-        else if (mc.currentScreen instanceof TitleScreen || mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) return "In main menu";
+        String className;
+        if (mc.currentScreen == null) className = mc.currentScreen.getClass().getName();
+        else className = "COPE";
+
+        if (mc.getOverlay() instanceof SplashOverlay || mc.currentScreen instanceof ProgressScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Loading something (" + getWorldActivity(true, true) + ")";
+            else return "Loading something...";
+        } else if (mc.currentScreen instanceof TitleScreen || mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) return "In main menu";
         else if (mc.currentScreen instanceof MultiplayerScreen || mc.currentScreen instanceof ServerManagerScreen) return "In server selection";
+        else if (mc.currentScreen instanceof RealmsScreen) return "Browsing Realms";
         else if (mc.currentScreen instanceof DirectConnectScreen) return "Using direct connect";
         else if (mc.currentScreen instanceof ServerFinderScreen) return "Using server finder";
         else if (mc.currentScreen instanceof ServerCleanUpScreen) return "Using server cleanup";
         else if (mc.currentScreen instanceof ProtocolScreen) return "Changing protocol";
+        else if (mc.currentScreen instanceof AddServerScreen addServerScreen) {
+            if (addServerScreen.getTitle().getString().contains("Edit")) return "Editing a server";
+            else return "Adding a server";
+        } else if (mc.currentScreen instanceof SelectWorldScreen) return "In world selection";
+        else if (mc.currentScreen instanceof EditWorldScreen) return "Editing a world";
+        else if (mc.currentScreen instanceof CreateWorldScreen || mc.currentScreen instanceof EditGameRulesScreen) return "Creating a new world";
+        else if (mc.currentScreen instanceof LevelLoadingScreen || mc.currentScreen instanceof SaveLevelScreen) return "Loading/Saving a world";
+        else if (mc.currentScreen instanceof CreditsScreen) return "Reading credits";
+        else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
+        else if (mc.currentScreen instanceof AddCrackedAccountScreen) return "Adding cracked account";
+        else if (mc.currentScreen instanceof AddPremiumAccountScreen) return "Adding premium account";
+        else if (mc.currentScreen instanceof AddAlteningAccountScreen) return "Adding The Altening account";
+        else if (mc.currentScreen instanceof ProxiesScreen) return "Editing proxies";
+        else if (mc.currentScreen instanceof YesNoPrompt.PromptScreen) return "Viewing a prompt";
+        else if (mc.currentScreen instanceof OkPrompt.PromptScreen) return "Viewing a prompt";
         else if (mc.currentScreen instanceof ConnectScreen) return "Connecting to " + getWorldActivity(true, false);
         else if (mc.currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + getWorldActivity(true, false);
         else if (mc.currentScreen instanceof GameMenuScreen) return "Game paused on " + getWorldActivity(true, false);
         else if (mc.currentScreen instanceof PeekScreen) return "Using .peek on " + getWorldActivity(true, false);
-        else if (mc.currentScreen instanceof ModulesScreen) {
+        else if (className.contains("com.terraformersmc.modmenu.gui")) {
+            if (mc.world != null && serverVisibility.get()) return "Viewing loaded mods (" + getWorldActivity(true, true) + ")";
+            else return "Viewing loaded mods";
+        } else if (mc.currentScreen instanceof BlockListSettingScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Selecting/Configuring blocks (" + getWorldActivity(true, true) + ")";
+            else return  "Selecting/Configuring blocks";
+        } else if (mc.currentScreen instanceof SBlockDataScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Configuring a block (" + getWorldActivity(true, true) + ")";
+            else return  "Configuring a block";
+        } else if (mc.currentScreen instanceof ItemSettingScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Selecting items (" + getWorldActivity(true, true) + ")";
+            else return  "Selecting items";
+        } else if (mc.currentScreen instanceof StatusEffectListSettingScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Selecting effects (" + getWorldActivity(true, true) + ")";
+            else return  "Selecting effects";
+        } else if (mc.currentScreen instanceof ParticleTypeListSettingScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Selecting particles (" + getWorldActivity(true, true) + ")";
+            else return  "Selecting particles";
+        } else if (mc.currentScreen instanceof SoundEventListSettingScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Selecting sounds (" + getWorldActivity(true, true) + ")";
+            else return  "Selecting sounds";
+        } else if (mc.currentScreen instanceof EnchantmentListSettingScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Selecting enchantments (" + getWorldActivity(true, true) + ")";
+            else return  "Selecting enchantments";
+        } else if (mc.currentScreen instanceof EntityTypeListSettingScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Selecting entities (" + getWorldActivity(true, true) + ")";
+            else return  "Selecting entities";
+        } else if (mc.currentScreen instanceof ModuleListSettingScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Selecting modules (" + getWorldActivity(true, true) + ")";
+            else return  "Selecting modules";
+        } else if (mc.currentScreen instanceof PacketBoolSettingScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Selecting packets (" + getWorldActivity(true, true) + ")";
+            else return  "Selecting packets";
+        } else if (mc.currentScreen instanceof ColorSettingScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Configuring a color (" + getWorldActivity(true, true) + ")";
+            else return "Configuring a color";
+        } else if (mc.currentScreen instanceof ModulesScreen) {
             if (mc.world != null && serverVisibility.get()) return "In Click GUI (" + getWorldActivity(true, true) + ")";
             else return "In Click GUI";
         } else if (mc.currentScreen instanceof ModuleScreen) {
             if (mc.world != null && serverVisibility.get()) return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title + " (" + getWorldActivity(true, true) + ")";
             else return "Editing module " + ((ModuleScreen) mc.currentScreen).module.title;
-        } else if (mc.currentScreen instanceof PackScreen) return "Changing resourcepack";
-        else if (mc.currentScreen instanceof OptionsScreen) return "Changing Minecraft settings";
-        else if (mc.currentScreen instanceof AccessibilityOptionsScreen) return "Changing Minecraft accessibility settings";
-        else if (mc.currentScreen instanceof ChatOptionsScreen) return "Changing Minecraft chat settings";
-        else if (mc.currentScreen instanceof SoundOptionsScreen) return "Changing Minecraft sound settings";
-        else if (mc.currentScreen instanceof LanguageOptionsScreen) return "Changing Minecraft language";
-        else if (mc.currentScreen instanceof VideoOptionsScreen) return "Changing Minecraft video settings";
-        else if (mc.currentScreen instanceof SkinOptionsScreen) return "Changing Minecraft skin settings";
-        else if (mc.currentScreen instanceof ControlsOptionsScreen) return "Changing Minecraft keybinds";
-        else if (mc.currentScreen instanceof NarratorOptionsScreen) return "Changing Narrator settings";
-        else if (mc.currentScreen instanceof StatsScreen) return "Viewing stats";
-        else if (mc.currentScreen instanceof SelectWorldScreen) return "In world selection";
-        else if (mc.currentScreen instanceof EditWorldScreen) return "Editing a world";
-        else if (mc.currentScreen instanceof CreateWorldScreen || mc.currentScreen instanceof EditGameRulesScreen) return "Creating a new world";
-        else if (mc.currentScreen instanceof LevelLoadingScreen || mc.currentScreen instanceof SaveLevelScreen) return "Loading/Saving a world";
-        else if (mc.currentScreen instanceof AddServerScreen) return "Adding/Editing a server";
-        else if (mc.currentScreen instanceof BaritoneTab.BaritoneScreen) return "Configuring Baritone";
-        else if (mc.currentScreen instanceof ConfigTab.ConfigScreen) return "Editing config";
-        else if (mc.currentScreen instanceof EnemiesTab.EnemiesScreen) return "Editing enemies";
-        else if (mc.currentScreen instanceof FriendsTab.FriendsScreen) return "Editing friends";
-        else if (mc.currentScreen instanceof GuiTab.GuiScreen) return "Editing GUI";
-        else if (mc.currentScreen instanceof HudTab.HudScreen || mc.currentScreen instanceof HudElementScreen) return "Editing HUD";
-        else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) return "Configuring macros";
-        else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) return "Configuring a macro";
-        else if (mc.currentScreen instanceof ProfilesTab.ProfilesScreen) return "Changing profiles";
-        else if (mc.currentScreen instanceof MusicTab.MusicScreen) return "Configuring music";
-        else if (mc.currentScreen instanceof PlaylistsScreen) return "Viewing playlists";
-        else if (mc.currentScreen instanceof PlaylistViewScreen) {
-            if (((PlaylistViewScreen) mc.currentScreen).getTitleString().contains("Search")) return "Searching for a song";
-            else return "Viewing a playlist";
-        } else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
-        else if (mc.currentScreen instanceof AddCrackedAccountScreen) return "Adding cracked account";
-        else if (mc.currentScreen instanceof AddPremiumAccountScreen) return "Adding premium account";
-        else if (mc.currentScreen instanceof AddAlteningAccountScreen) return "Adding The Altening account";
-        else if (mc.currentScreen instanceof ProxiesScreen) return "Editing proxies";
-        else if (mc.currentScreen instanceof CreditsScreen) return "Reading credits";
-        else if (mc.currentScreen instanceof RealmsScreen) return "Browsing Realms";
-        else if (mc.currentScreen instanceof YesNoPrompt.PromptScreen) return "Viewing a prompt";
-        else if (mc.currentScreen instanceof OkPrompt.PromptScreen) return "Viewing a prompt";
-        else if (mc.currentScreen instanceof ProgressScreen) return "Loading something...";
+        } else if (mc.currentScreen instanceof OpenToLanScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Opening to LAN (" + getWorldActivity(true, true) + ")";
+            return "Opening to LAN";
+        } else if (mc.currentScreen instanceof PackScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing resourcepack (" + getWorldActivity(true, true) + ")";
+            return "Changing resourcepack";
+        } else if (mc.currentScreen instanceof OptionsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing settings (" + getWorldActivity(true, true) + ")";
+            return "Changing settings";
+        } else if (mc.currentScreen instanceof AccessibilityOptionsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing accessibility settings (" + getWorldActivity(true, true) + ")";
+            return "Changing accessibility settings";
+        } else if (mc.currentScreen instanceof ChatOptionsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing chat settings (" + getWorldActivity(true, true) + ")";
+            return "Changing chat settings";
+        } else if (mc.currentScreen instanceof SoundOptionsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing sound settings (" + getWorldActivity(true, true) + ")";
+            return "Changing sound settings";
+        } else if (mc.currentScreen instanceof LanguageOptionsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing language (" + getWorldActivity(true, true) + ")";
+            return "Changing language";
+        } else if (mc.currentScreen instanceof VideoOptionsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing video settings (" + getWorldActivity(true, true) + ")";
+            return "Changing video settings";
+        } else if (mc.currentScreen instanceof SkinOptionsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing skin settings (" + getWorldActivity(true, true) + ")";
+            return "Changing Minecraft skin settings";
+        } else if (mc.currentScreen instanceof ControlsOptionsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing keybinds (" + getWorldActivity(true, true) + ")";
+            return "Changing keybinds";
+        } else if (mc.currentScreen instanceof NarratorOptionsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing narrator settings (" + getWorldActivity(true, true) + ")";
+            return "Changing narrator settings";
+        } else if (mc.currentScreen instanceof StatsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Viewing stats (" + getWorldActivity(true, true) + ")";
+            else return "Viewing stats";
+        } else if (mc.currentScreen instanceof BaritoneTab.BaritoneScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Configuring Baritone (" + getWorldActivity(true, true) + ")";
+            else return "Configuring Baritone";
+        } else if (mc.currentScreen instanceof ConfigTab.ConfigScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Editing config (" + getWorldActivity(true, true) + ")";
+            else return "Editing config";
+        } else if (mc.currentScreen instanceof EnemiesTab.EnemiesScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Editing enemies (" + getWorldActivity(true, true) + ")";
+            else return "Editing enemies";
+        } else if (mc.currentScreen instanceof FriendsTab.FriendsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Editing friends (" + getWorldActivity(true, true) + ")";
+            else return "Editing friends";
+        } else if (mc.currentScreen instanceof GuiTab.GuiScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Editing GUI (" + getWorldActivity(true, true) + ")";
+            else return "Editing GUI";
+        } else if (mc.currentScreen instanceof HudTab.HudScreen || mc.currentScreen instanceof HudElementScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Editing HUD (" + getWorldActivity(true, true) + ")";
+            else return "Editing HUD";
+        } else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Configuring macros (" + getWorldActivity(true, true) + ")";
+            else return "Configuring macros";
+        } else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Configuring a macro (" + getWorldActivity(true, true) + ")";
+            else return "Configuring a macro";
+        } else if (mc.currentScreen instanceof ProfilesTab.ProfilesScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Changing profiles (" + getWorldActivity(true, true) + ")";
+            else return "Changing profiles";
+        } else if (mc.currentScreen instanceof MusicTab.MusicScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Configuring music (" + getWorldActivity(true, true) + ")";
+            else return "Configuring music";
+        } else if (mc.currentScreen instanceof PlaylistsScreen) {
+            if (mc.world != null && serverVisibility.get()) return "Viewing playlists (" + getWorldActivity(true, true) + ")";
+            else return "Viewing playlists";
+        } else if (mc.currentScreen instanceof PlaylistViewScreen) {
+            if (((PlaylistViewScreen) mc.currentScreen).getTitleString().contains("Search")) {
+                if (mc.world != null && serverVisibility.get()) return "Searching for a song (" + getWorldActivity(true, true) + ")";
+                else return "Searching for a song";
+            } else {
+                if (mc.world != null && serverVisibility.get()) return "Viewing a playlist (" + getWorldActivity(true, true) + ")";
+                else return "Viewing a playlist";
+            }
+        } else if (className.contains("me.jellysquid.mods.sodium.client")) {
+            if (mc.world != null && serverVisibility.get()) return "Changing Sodium video settings (" + getWorldActivity(true, true) + ")";
+            else return "Changing Sodium video settings";
+        } else if (className.contains("net.coderbot.iris.gui.screen")) {
+            if (mc.world != null && serverVisibility.get()) return "Changing Iris shaderpack (" + getWorldActivity(true, true) + ")";
+            else return "Changing Iris shaderpack";
+        } else if (className.contains("com.viaversion.fabric.mc117.gui")) return "Changing Minecraft version";
         else if (mc.world != null) return getWorldActivity(false, false);
-
-        String className = mc.currentScreen.getClass().getName();
-        if (className.contains("me.jellysquid.mods.sodium.client")) return "Changing Sodium video settings";
-        else if (className.contains("net.coderbot.iris.gui.screen")) return "Changing Iris shaderpack";
-        else if (className.contains("com.terraformersmc.modmenu.gui")) return "Viewing loaded mods";
-        else if (className.contains("com.viaversion.fabric.mc117.gui")) return "Changing Minecraft version";
 
         // MatHaxLegacy.LOG.info(className);
         return "Unknown Activity";
