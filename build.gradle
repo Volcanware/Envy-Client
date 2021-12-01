@@ -88,10 +88,8 @@ dependencies {
 
     // Music
 
-    // TODO: Music Player
     // Lava Player
-    /*modImplementation "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
-    include "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
+    library "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
     library "com.sedmelluq:lava-common:${project.lava_common_version}"
     library "com.sedmelluq:lavaplayer-natives:${project.lavaplayer_natives_version}"
 
@@ -100,7 +98,7 @@ dependencies {
     library "com.fasterxml.jackson.core:jackson-core:${project.jackson_core_version}"
     library "com.fasterxml.jackson.core:jackson-databind:${project.jackson_databind_version}"
     library "com.fasterxml.jackson.core:jackson-annotations:${project.jackson_annotations_version}"
-    library "org.jsoup:jsoup:${project.jsoup_version}"*/
+    library "org.jsoup:jsoup:${project.jsoup_version}"
 }
 
 loom {

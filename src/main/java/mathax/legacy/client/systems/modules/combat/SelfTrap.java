@@ -7,7 +7,7 @@ import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.utils.misc.ChatUtils;
+import mathax.legacy.client.systems.modules.render.WallHack;
 import mathax.legacy.client.utils.player.FindItemResult;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;
@@ -18,7 +18,6 @@ import mathax.legacy.client.settings.*;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.item.Items;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -114,10 +113,9 @@ public class SelfTrap extends Module {
 
     @Override
     public void onActivate() {
-        if (Modules.get().isActive(SelfTrapPlus.class)) {
-            ChatUtils.sendMsg(this.hashCode(), "Self Trap", Formatting.DARK_RED, Formatting.WHITE + "Self Trap+" + Formatting.DARK_RED + " is already enabled, disabling...", Formatting.GRAY);
-            toggle();
-            return;
+        if (Modules.get().isActive(WallHack.class)) {
+            error("(highlight)Self Trap+(default) was enabled while enabling (highlight)Self Trap(default), disabling (highlight)Self Trap+(default)...");
+            Modules.get().get(SelfTrapPlus.class).toggle();
         }
 
         if (!placePositions.isEmpty()) placePositions.clear();

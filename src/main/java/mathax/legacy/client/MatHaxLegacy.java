@@ -214,8 +214,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         Fonts.init();
         DamageUtils.init();
         BlockUtils.init();
-        // TODO: Music Player
-        //Music.init();
+        Music.init();
 
         // Register module categories
         Categories.init();
@@ -260,12 +259,11 @@ public class MatHaxLegacy implements ClientModInitializer {
 
     // Music Volume
 
-    // TODO: Music Player
-    /*@EventHandler
+    @EventHandler
     private void onTick(TickEvent.Post event) {
         if (Music.player == null) return;
         if (Music.player.getVolume() != Config.get().musicVolume) Music.player.setVolume(Config.get().musicVolume);
-    }*/
+    }
 
     // Developer
 

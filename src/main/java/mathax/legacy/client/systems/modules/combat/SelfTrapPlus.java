@@ -10,14 +10,13 @@ import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
-import mathax.legacy.client.utils.misc.ChatUtils;
+import mathax.legacy.client.systems.modules.render.WallHack;
 import mathax.legacy.client.utils.player.FindItemResult;
 import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.world.BlockUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.TeleportConfirmC2SPacket;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
 public class SelfTrapPlus extends Module {
@@ -66,9 +65,9 @@ public class SelfTrapPlus extends Module {
 
     @Override
     public void onActivate() {
-        if (Modules.get().isActive(SelfTrap.class)) {
-            ChatUtils.sendMsg(this.hashCode(), "Self Trap+", Formatting.DARK_RED, Formatting.WHITE + "Self Trap" + Formatting.DARK_RED + " is already enabled, disabling...", Formatting.GRAY);
-            toggle();
+        if (Modules.get().isActive(WallHack.class)) {
+            error("(highlight)Self Trap(default) was enabled while enabling (highlight)Self Trap+(default), disabling (highlight)Self Trap(default)...");
+            Modules.get().get(SelfTrap.class).toggle();
         }
     }
 

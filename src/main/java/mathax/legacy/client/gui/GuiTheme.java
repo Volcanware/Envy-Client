@@ -6,7 +6,6 @@ import mathax.legacy.client.gui.screens.accounts.AccountsScreen;
 import mathax.legacy.client.gui.screens.clickgui.ModuleScreen;
 import mathax.legacy.client.gui.screens.clickgui.ModulesScreen;
 import mathax.legacy.client.gui.tabs.TabScreen;
-import mathax.legacy.client.gui.tabs.builtin.GuiTab;
 import mathax.legacy.client.gui.utils.CharFilter;
 import mathax.legacy.client.gui.utils.SettingsWidgetFactory;
 import mathax.legacy.client.gui.utils.WindowConfig;

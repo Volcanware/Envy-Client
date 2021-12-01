@@ -2,7 +2,8 @@ package mathax.legacy.client.systems.modules.client;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.gui.screens.TitleScreen;
-import mathax.legacy.client.gui.screens.music.*;
+import mathax.legacy.client.gui.screens.music.PlaylistViewScreen;
+import mathax.legacy.client.gui.screens.music.PlaylistsScreen;
 import mathax.legacy.client.gui.screens.server.ProtocolScreen;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.utils.Version;
@@ -174,12 +175,12 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof MacrosTab.MacrosScreen) return "Configuring macros";
         else if (mc.currentScreen instanceof MacrosTab.MacroEditorScreen) return "Configuring a macro";
         else if (mc.currentScreen instanceof ProfilesTab.ProfilesScreen) return "Changing profiles";
-        /*else if (mc.currentScreen instanceof MusicTab.MusicScreen) return "Configuring music";
+        else if (mc.currentScreen instanceof MusicTab.MusicScreen) return "Configuring music";
         else if (mc.currentScreen instanceof PlaylistsScreen) return "Viewing playlists";
         else if (mc.currentScreen instanceof PlaylistViewScreen) {
             if (((PlaylistViewScreen) mc.currentScreen).getTitleString().contains("Search")) return "Searching for a song";
             else return "Viewing a playlist";
-        }*/ else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
+        } else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
         else if (mc.currentScreen instanceof AddCrackedAccountScreen) return "Adding cracked account";
         else if (mc.currentScreen instanceof AddPremiumAccountScreen) return "Adding premium account";
         else if (mc.currentScreen instanceof AddAlteningAccountScreen) return "Adding The Altening account";
@@ -197,6 +198,7 @@ public class DiscordRPC extends Module {
         else if (className.contains("com.terraformersmc.modmenu.gui")) return "Viewing loaded mods";
         else if (className.contains("com.viaversion.fabric.mc117.gui")) return "Changing Minecraft version";
 
+        // MatHaxLegacy.LOG.info(className);
         return "Unknown Activity";
     }
 

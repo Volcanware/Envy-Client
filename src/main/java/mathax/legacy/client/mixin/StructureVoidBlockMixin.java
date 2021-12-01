@@ -1,6 +1,5 @@
 package mathax.legacy.client.mixin;
 
-import mathax.legacy.client.settings.Settings;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.Rendering;
 import net.minecraft.block.Block;

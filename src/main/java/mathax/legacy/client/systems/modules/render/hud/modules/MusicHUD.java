@@ -1,12 +1,28 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
 
-public class MusicHUD/* extends HUDElement {
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.music.Music;
+import mathax.legacy.client.renderer.Mesh;
+import mathax.legacy.client.renderer.Renderer2D;
+import mathax.legacy.client.renderer.text.TextRenderer;
+import mathax.legacy.client.settings.*;
+import mathax.legacy.client.systems.modules.render.hud.HUD;
+import mathax.legacy.client.systems.modules.render.hud.HUDElement;
+import mathax.legacy.client.systems.modules.render.hud.HUDRenderer;
+import mathax.legacy.client.utils.render.color.SettingColor;
+
+public class MusicHUD extends HUDElement {
     private static String time = "00:00:00";
     private static final String notPlaying = "Not playing";
     private static final String noAuthor = "No author";
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgColors = settings.createGroup("Colors");
+    private final SettingGroup sgSizes = settings.createGroup("Sizes");
+
+    // General
 
     private final Setting<Boolean> showTitle = sgGeneral.add(new BoolSetting.Builder()
         .name("show-title")
@@ -29,42 +45,46 @@ public class MusicHUD/* extends HUDElement {
         .build()
     );
 
-    private final Setting<SettingColor> backgroundColor = sgGeneral.add(new ColorSetting.Builder()
+    // Colors
+
+    private final Setting<SettingColor> backgroundColor = sgColors.add(new ColorSetting.Builder()
         .name("background-color")
         .description("Color of background.")
         .defaultValue(new SettingColor(0, 0, 0, 75))
         .build()
     );
 
-    private final Setting<SettingColor> progressColor = sgGeneral.add(new ColorSetting.Builder()
+    private final Setting<SettingColor> progressColor = sgColors.add(new ColorSetting.Builder()
         .name("progress-color")
         .description("Color of the progress bar.")
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
 
-    private final Setting<SettingColor> progressBackgroundColor = sgGeneral.add(new ColorSetting.Builder()
+    private final Setting<SettingColor> progressBackgroundColor = sgColors.add(new ColorSetting.Builder()
         .name("progress-background-color")
         .description("Color of the progress bars background.")
         .defaultValue(new SettingColor(35, 35, 35, 100))
         .build()
     );
 
-    private final Setting<SettingColor> textColor = sgGeneral.add(new ColorSetting.Builder()
+    private final Setting<SettingColor> textColor = sgColors.add(new ColorSetting.Builder()
         .name("text-color")
         .description("Color of text and controls.")
         .defaultValue(new SettingColor(255, 255, 255))
         .build()
     );
 
-    private final Setting<SettingColor> iconColor = sgGeneral.add(new ColorSetting.Builder()
+    private final Setting<SettingColor> iconColor = sgColors.add(new ColorSetting.Builder()
         .name("icon-color")
         .description("Color of status icon.")
         .defaultValue(new SettingColor(255, 255, 255))
         .build()
     );
 
-    private final Setting<Double> size = sgGeneral.add(new DoubleSetting.Builder()
+    // Sizes
+
+    private final Setting<Double> size = sgSizes.add(new DoubleSetting.Builder()
         .name("size")
         .description("The size of this element.")
         .defaultValue(100)
@@ -73,7 +93,7 @@ public class MusicHUD/* extends HUDElement {
         .build()
     );
 
-    private final Setting<Double> recordPart = sgGeneral.add(new DoubleSetting.Builder()
+    private final Setting<Double> recordPart = sgSizes.add(new DoubleSetting.Builder()
         .name("record-part")
         .description("The relative amount of space the progress bar should consume.")
         .defaultValue(0.8)
@@ -82,7 +102,7 @@ public class MusicHUD/* extends HUDElement {
         .build()
     );
 
-    private final Setting<Double> progressWidth = sgGeneral.add(new DoubleSetting.Builder()
+    private final Setting<Double> progressWidth = sgSizes.add(new DoubleSetting.Builder()
         .name("progress-width")
         .description("The relative amount of pixels to use in the actual progress part of the bar.")
         .defaultValue(5)
@@ -91,7 +111,7 @@ public class MusicHUD/* extends HUDElement {
         .build()
     );
 
-    private final Setting<Double> recordStatusPart = sgGeneral.add(new DoubleSetting.Builder()
+    private final Setting<Double> recordStatusPart = sgSizes.add(new DoubleSetting.Builder()
         .name("record-status-part")
         .description("The relative amount of space the status component of the progress bar should consume.")
         .defaultValue(0.5)
@@ -100,7 +120,7 @@ public class MusicHUD/* extends HUDElement {
         .build()
     );
 
-    private final Setting<Double> textScale = sgGeneral.add(new DoubleSetting.Builder()
+    private final Setting<Double> textScale = sgSizes.add(new DoubleSetting.Builder()
         .name("text-scale")
         .description("The relative amount of space the status component of the progress bar should consume.")
         .defaultValue(3)
@@ -197,4 +217,3 @@ public class MusicHUD/* extends HUDElement {
         });
     }
 }
-*/ {}

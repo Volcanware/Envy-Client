@@ -1,6 +1,14 @@
 package mathax.legacy.client.music;
 
-public class Music /*{
+import com.sedmelluq.discord.lavaplayer.format.StandardAudioDataFormats;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import mathax.legacy.client.utils.music.PlaylistUtils;
+import mathax.legacy.client.utils.music.StreamPlayer;
+
+public class Music {
     public static DefaultAudioPlayerManager playerManager;
     public static AudioPlayer player;
     public static TrackScheduler trackScheduler;
@@ -37,4 +45,3 @@ public class Music /*{
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 }
-*/ {}

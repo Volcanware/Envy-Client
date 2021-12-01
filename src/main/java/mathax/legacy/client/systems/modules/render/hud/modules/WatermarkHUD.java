@@ -16,6 +16,8 @@ import mathax.legacy.client.settings.SettingGroup;
 import net.minecraft.util.Identifier;
 
 public class WatermarkHUD extends TripleTextHUDElement {
+    private final ClientSpoof cs = Modules.get().get(ClientSpoof.class);
+
     private static final Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/icons/icon.png");
     private static final Identifier METEOR_LOGO = new Identifier("mathaxlegacy", "textures/icons/meteor.png");
     private final Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
@@ -48,16 +50,17 @@ public class WatermarkHUD extends TripleTextHUDElement {
     }
 
     protected String getLeft() {
-        ClientSpoof cs = Modules.get().get(ClientSpoof.class);
         if (cs.changeWatermark()) return cs.watermarkText.get() + " ";
         return "MatHax Legacy ";
     }
 
     protected String getRight() {
+        if (cs.changeVersion()) return "v" + cs.versionText.get();
         return Version.getStylized();
     }
 
     protected String getEnd() {
+        if (cs.changeVersion()) return "";
         return checkForUpdate();
     }
 
@@ -115,8 +118,6 @@ public class WatermarkHUD extends TripleTextHUDElement {
     }
 
     private void drawIcon(int x, int y, int textWidth) {
-        ClientSpoof cs = Modules.get().get(ClientSpoof.class);
-
         int w = 0;
 
         switch (mode.get()) {

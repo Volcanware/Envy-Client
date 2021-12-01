@@ -9,9 +9,24 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Items;
 
 public class ClientSpoof extends Module {
+    private final SettingGroup sgVersion = settings.createGroup("Version");
     private final SettingGroup sgWatermark = settings.createGroup("Watermark");
     private final SettingGroup sgChatFeedback = settings.createGroup("Chat Feedback");
     private final SettingGroup sgWindow = settings.createGroup("Window");
+
+    public final Setting<Boolean> version = sgVersion.add(new BoolSetting.Builder()
+        .name("enabled")
+        .description("Changes the client version.")
+        .defaultValue(false)
+        .build()
+    );
+
+    public final Setting<String> versionText = sgVersion.add(new StringSetting.Builder()
+        .name("text")
+        .description("The text to replace the version with.")
+        .defaultValue("0.4.7")
+        .build()
+    );
 
     // Watermark
 
@@ -154,6 +169,10 @@ public class ClientSpoof extends Module {
 
     private void resetIcon() {
         mc.getWindow().setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
+    }
+
+    public boolean changeVersion() {
+        return isActive() && version.get();
     }
 
     public boolean changeWatermark() {

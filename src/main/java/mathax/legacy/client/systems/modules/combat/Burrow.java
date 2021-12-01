@@ -12,7 +12,6 @@ import mathax.legacy.client.utils.player.*;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;

@@ -1,5 +1,7 @@
 package mathax.legacy.client.systems.commands.commands;
 
+// TODO: Add play command which searches for a song and plays it and stop command which removes all songs.
+
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.legacy.client.gui.tabs.builtin.ConfigTab;
@@ -9,9 +11,7 @@ import net.minecraft.command.CommandSource;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
-// TODO: Add play command which searches for a song and plays it and stop command which removes all songs.
-
-public class MusicCommand/* extends Command {
+public class MusicCommand extends Command {
     public MusicCommand() {
         super("music", "Music commands.");
     }
@@ -73,4 +73,3 @@ public class MusicCommand/* extends Command {
         );
     }
 }
-*/ {}

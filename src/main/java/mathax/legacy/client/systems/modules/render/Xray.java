@@ -74,7 +74,7 @@ public class Xray extends Module {
     @Override
     public void onActivate() {
         if (Modules.get().isActive(WallHack.class)) {
-            error("(highlight)WallHack(default) was enabled while enabling (highlight)Xray(default), disabling (highlight)WallHack(default)...");
+            error("(highlight)Wall Hack(default) was enabled while enabling (highlight)Xray(default), disabling (highlight)Wall Hack(default)...");
             Modules.get().get(WallHack.class).toggle();
         }
 

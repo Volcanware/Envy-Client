@@ -4,7 +4,6 @@ import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.TripleTextHUDElement;
 import mathax.legacy.client.utils.Utils;
-import net.minecraft.text.Text;
 
 public class ServerBrandHUD extends TripleTextHUDElement {
     public ServerBrandHUD(HUD hud) {

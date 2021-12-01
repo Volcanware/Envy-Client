@@ -1,6 +1,20 @@
 package mathax.legacy.client.gui.tabs.builtin;
 
-public class MusicTab/* extends Tab {
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import mathax.legacy.client.gui.GuiTheme;
+import mathax.legacy.client.gui.tabs.Tab;
+import mathax.legacy.client.gui.tabs.TabScreen;
+import mathax.legacy.client.gui.tabs.WindowTabScreen;
+import mathax.legacy.client.gui.widgets.containers.WTable;
+import mathax.legacy.client.gui.widgets.music.WCurrentTracksView;
+import mathax.legacy.client.gui.widgets.music.WMusicWidget;
+import mathax.legacy.client.gui.widgets.music.WSearchBar;
+import net.minecraft.client.gui.screen.Screen;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MusicTab extends Tab {
     public MusicTab() {
         super("Music");
     }
@@ -49,4 +63,4 @@ public class MusicTab/* extends Tab {
             return track.getInfo().title + " (" + track.getInfo().author + ")";
         }
     }
-}*/ {}
+}

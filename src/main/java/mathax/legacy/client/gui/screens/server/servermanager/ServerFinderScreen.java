@@ -15,7 +15,6 @@ import mathax.legacy.client.utils.network.serverfinder.IPAddress;
 import mathax.legacy.client.utils.network.serverfinder.IServerFinderDoneListener;
 import mathax.legacy.client.utils.network.serverfinder.MServerInfo;
 import mathax.legacy.client.utils.network.serverfinder.ServerPinger;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.network.ServerInfo;

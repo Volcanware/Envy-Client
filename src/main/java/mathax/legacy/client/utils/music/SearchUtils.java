@@ -1,6 +1,15 @@
 package mathax.legacy.client.utils.music;
 
-public class SearchUtils {/*
+import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
+import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
+import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import mathax.legacy.client.music.Music;
+import mathax.legacy.client.utils.misc.ChatUtils;
+
+import java.util.function.Consumer;
+
+public class SearchUtils {
     public static void search(String url, Consumer<AudioPlaylist> success) {
         if (url == null) ChatUtils.error("Music", "Could not load results.");
         else {
@@ -26,5 +35,5 @@ public class SearchUtils {/*
                 public void loadFailed(FriendlyException exception) {}
             });
         }
-    }*/
+    }
 }

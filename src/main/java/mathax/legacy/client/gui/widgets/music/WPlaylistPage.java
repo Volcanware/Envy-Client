@@ -1,6 +1,15 @@
 package mathax.legacy.client.gui.widgets.music;
 
-public class WPlaylistPage /*extends WMusicWidget {
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import mathax.legacy.client.gui.GuiTheme;
+import mathax.legacy.client.gui.tabs.builtin.MusicTab;
+import mathax.legacy.client.gui.widgets.containers.WTable;
+
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+public class WPlaylistPage extends WMusicWidget {
     private final WPaginationProvider pagination;
     private final Supplier<List<AudioTrack>> source;
     private final Consumer<Integer> select;
@@ -29,4 +38,4 @@ public class WPlaylistPage /*extends WMusicWidget {
         this.select = select;
         this.remove = remove;
     }
-}*/ {}
+}

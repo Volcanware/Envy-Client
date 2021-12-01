@@ -1,6 +1,19 @@
 package mathax.legacy.client.music;
 
-public class TrackScheduler/* extends AudioEventAdapter {
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
+import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import mathax.legacy.client.gui.tabs.builtin.MusicTab;
+import mathax.legacy.client.utils.misc.ChatUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
+public class TrackScheduler extends AudioEventAdapter {
     public List<AudioTrack> tracks = new ArrayList<>();
 
     public void queue(AudioTrack track) {
@@ -55,4 +68,3 @@ public class TrackScheduler/* extends AudioEventAdapter {
         if (mc.currentScreen instanceof MusicTab.MusicScreen) ((MusicTab.MusicScreen) mc.currentScreen).construct();
     }
 }
-*/ {}

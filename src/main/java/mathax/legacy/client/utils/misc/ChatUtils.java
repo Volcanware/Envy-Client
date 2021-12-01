@@ -6,7 +6,6 @@ import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.client.ClientSpoof;
 import mathax.legacy.client.utils.render.color.RainbowColor;
-import mathax.legacy.client.utils.render.color.RainbowColors;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;

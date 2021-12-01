@@ -49,7 +49,7 @@ public class VoidESP extends Module {
         .description("Horizontal radius in which to search for holes.")
         .defaultValue(64)
         .min(0)
-        .sliderMax(256)
+        .sliderRange(0, 256)
         .build()
     );
 

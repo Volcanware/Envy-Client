@@ -1,7 +1,6 @@
 package mathax.legacy.client.settings;
 
 import mathax.legacy.client.utils.misc.ISerializable;
-import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
