@@ -73,7 +73,7 @@ public class Version {
         public static boolean checkForLatest = true;
 
         public static String getLatest() {
-            String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/1-17-1").sendString();
+            String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/" + getMinecraft().replace(".", "-")).sendString();
 
             if (latestVer == null) return null;
             else return latestVer.replace("\n", "");
