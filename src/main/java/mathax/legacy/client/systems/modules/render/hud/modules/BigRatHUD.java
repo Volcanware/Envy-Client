@@ -17,21 +17,12 @@ public class BigRatHUD extends HUDElement {
 
     // General
 
-    private final Setting<Integer> width = sgGeneral.add(new IntSetting.Builder()
-        .name("width")
-        .description("The width of the image.")
-        .defaultValue(225)
-        .min(1)
-        .sliderRange(1, 1800)
-        .build()
-    );
-
-    private final Setting<Integer> height = sgGeneral.add(new IntSetting.Builder()
-        .name("height")
-        .description("The height of the image.")
-        .defaultValue(150)
-        .min(1)
-        .sliderRange(1, 1200)
+    private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
+        .name("scale")
+        .description("The scale of big rat.")
+        .defaultValue(0.25)
+        .min(0.001)
+        .sliderRange(0.1, 2)
         .build()
     );
 
@@ -41,7 +32,7 @@ public class BigRatHUD extends HUDElement {
 
     @Override
     public void update(HUDRenderer renderer) {
-        box.setSize(width.get(), height.get());
+        box.setSize(900 * scale.get(), 600 * scale.get());
     }
 
     @Override
