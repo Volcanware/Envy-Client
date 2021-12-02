@@ -25,6 +25,8 @@ public class BlockSelection extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgColors = settings.createGroup("Colors");
 
+    // General
+
     private final Setting<Boolean> cool = sgGeneral.add(new BoolSetting.Builder()
         .name("cool")
         .description("Makes the block selection cool.")
@@ -54,6 +56,8 @@ public class BlockSelection extends Module {
         .defaultValue(ShapeMode.Both)
         .build()
     );
+
+    // Colors
 
     private final Setting<SettingColor> sideColor = sgColors.add(new ColorSetting.Builder()
         .name("side")

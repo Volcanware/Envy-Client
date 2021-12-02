@@ -132,17 +132,13 @@ public class NewChunks extends Module {
     private void onRender3D(Render3DEvent event) {
         if (newChunksToggle.get()) {
             synchronized (newChunks) {
-                for (ChunkPos c : newChunks) {
-                    if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), newChunksFillColor.get(), newChunksLineColor.get(), event);
-                }
+                for (ChunkPos c : newChunks) if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), newChunksFillColor.get(), newChunksLineColor.get(), event);
             }
         }
 
         if (oldChunksToggle.get()){
             synchronized (oldChunks) {
-                for (ChunkPos c : oldChunks) {
-                    if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), oldChunksFillColor.get(), oldChunksLineColor.get(), event);
-                }
+                for (ChunkPos c : oldChunks) if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), 1024)) drawBoxOutline(new Box(c.getStartPos(), c.getStartPos().add(16, 0, 16)), oldChunksFillColor.get(), oldChunksLineColor.get(), event);
             }
         }
     }
@@ -208,6 +204,6 @@ public class NewChunks extends Module {
 
 
     private void drawBoxOutline(Box box, Color fillColor, Color lineColor, Render3DEvent event) {
-        event.renderer.box(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, fillColor, lineColor, ShapeMode.Lines, 0);
+        event.renderer.box(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, fillColor, lineColor, ShapeMode.Both, 0);
     }
 }

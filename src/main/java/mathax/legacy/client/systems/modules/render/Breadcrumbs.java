@@ -25,9 +25,11 @@ public class Breadcrumbs extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
         .name("color")
-        .description("The color of the Breadcrumbs trail.")
+        .description("The color of the breadcrumbs trail.")
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
@@ -46,7 +48,7 @@ public class Breadcrumbs extends Module {
         .description("The section length in blocks.")
         .defaultValue(0.5)
         .min(0)
-        .sliderMax(1)
+        .sliderRange(0, 1)
         .build()
     );
 

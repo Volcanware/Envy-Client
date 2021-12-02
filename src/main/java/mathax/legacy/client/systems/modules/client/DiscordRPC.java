@@ -136,7 +136,6 @@ public class DiscordRPC extends Module {
 
     // TODO: Rewrite
     private String getActivity() {
-        String className = mc.currentScreen.getClass().getName();
         if (mc.getOverlay() instanceof SplashOverlay || mc.currentScreen instanceof ProgressScreen) {
             if (mc.world != null && serverVisibility.get()) return "Loading something (" + getWorldActivity(true, true) + ")";
             else return "Loading something...";
@@ -166,7 +165,7 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof DisconnectedScreen) return "Got disconnected from " + getWorldActivity(true, false);
         else if (mc.currentScreen instanceof GameMenuScreen) return "Game paused on " + getWorldActivity(true, false);
         else if (mc.currentScreen instanceof PeekScreen) return "Using .peek on " + getWorldActivity(true, false);
-        else if (className.contains("com.terraformersmc.modmenu.gui")) {
+        else if (mc.currentScreen.getClass().getName().contains("com.terraformersmc.modmenu.gui")) {
             if (mc.world != null && serverVisibility.get()) return "Viewing loaded mods (" + getWorldActivity(true, true) + ")";
             else return "Viewing loaded mods";
         } else if (mc.currentScreen instanceof BlockListSettingScreen) {
@@ -285,13 +284,13 @@ public class DiscordRPC extends Module {
                 if (mc.world != null && serverVisibility.get()) return "Viewing a playlist (" + getWorldActivity(true, true) + ")";
                 else return "Viewing a playlist";
             }
-        } else if (className.contains("me.jellysquid.mods.sodium.client")) {
+        } else if (mc.currentScreen.getClass().getName().contains("me.jellysquid.mods.sodium.client")) {
             if (mc.world != null && serverVisibility.get()) return "Changing Sodium video settings (" + getWorldActivity(true, true) + ")";
             else return "Changing Sodium video settings";
-        } else if (className.contains("net.coderbot.iris.gui.screen")) {
+        } else if (mc.currentScreen.getClass().getName().contains("net.coderbot.iris.gui.screen")) {
             if (mc.world != null && serverVisibility.get()) return "Changing Iris shaderpack (" + getWorldActivity(true, true) + ")";
             else return "Changing Iris shaderpack";
-        } else if (className.contains("com.viaversion.fabric.mc117.gui")) return "Changing Minecraft version";
+        } else if (mc.currentScreen.getClass().getName().contains("com.viaversion.fabric.mc117.gui")) return "Changing Minecraft version";
         else if (mc.world != null) return getWorldActivity(false, false);
 
         return "Unknown Activity";
