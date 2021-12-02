@@ -6,6 +6,10 @@
   MatHax Legacy
 </h1>
 
+<p align="center">
+    A Minecraft 1.18 & 1.17.1 utility client for Fabric
+</p>
+
 <div align="center">
     <a href="https://meteorclient.com"><img src="https://img.shields.io/badge/Meteor%20Client-Fork-e64c65"></a>
     <br>
