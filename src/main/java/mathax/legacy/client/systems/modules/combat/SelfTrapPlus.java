@@ -19,6 +19,11 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.TeleportConfirmC2SPacket;
 import net.minecraft.util.math.BlockPos;
 
+/*/------------------------------------------------------------------------------------------------------------------/*/
+/*/ Used from Karasic Meteor Addon and edited a bit by Matejko06                                                     /*/
+/*/ https://github.com/Kiriyaga7615/karasic/blob/main/src/main/java/bedtrap/kiriyaga/karasic/modules/selftrapik.java /*/
+/*/------------------------------------------------------------------------------------------------------------------/*/
+
 public class SelfTrapPlus extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 

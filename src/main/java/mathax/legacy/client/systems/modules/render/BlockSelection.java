@@ -16,6 +16,11 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 
+/*/------------------------------------------------------------------------------------------------------------------/*/
+/*/ Cool mode used from Karasic Meteor Addon                                                                         /*/
+/*/ https://github.com/Kiriyaga7615/karasic/blob/main/src/main/java/bedtrap/kiriyaga/karasic/modules/selftrapik.java /*/
+/*/------------------------------------------------------------------------------------------------------------------/*/
+
 public class BlockSelection extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgColors = settings.createGroup("Colors");
@@ -121,9 +126,7 @@ public class BlockSelection extends Module {
         } else {
             if (advanced.get()) {
                 if (shapeMode.get() == ShapeMode.Both || shapeMode.get() == ShapeMode.Lines) {
-                    shape.forEachEdge((minX, minY, minZ, maxX, maxY, maxZ) -> {
-                        event.renderer.line(bp.getX() + minX, bp.getY() + minY, bp.getZ() + minZ, bp.getX() + maxX, bp.getY() + maxY, bp.getZ() + maxZ, lineColor.get());
-                    });
+                    shape.forEachEdge((minX, minY, minZ, maxX, maxY, maxZ) -> event.renderer.line(bp.getX() + minX, bp.getY() + minY, bp.getZ() + minZ, bp.getX() + maxX, bp.getY() + maxY, bp.getZ() + maxZ, lineColor.get()));
                 }
 
                 if (shapeMode.get() == ShapeMode.Both || shapeMode.get() == ShapeMode.Sides) {

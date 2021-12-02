@@ -29,6 +29,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
+import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.*;
@@ -546,5 +547,19 @@ public class Utils {
         Map<T, Boolean> map = new HashMap<>();
         for (T item : checked) map.put(item, true);
         return new Object2BooleanOpenHashMap<>(map);
+    }
+
+    public static String getRandomPlayer() {
+        Random random = new Random();
+        int size = mc.player.networkHandler.getPlayerList().size();
+        int r = random.nextInt(size);
+        int c = 0;
+
+        for (PlayerListEntry playerListEntry1 : mc.player.networkHandler.getPlayerList()) {
+            if (c == r) return playerListEntry1.getProfile().getName();
+            c++;
+        }
+
+        return "";
     }
 }

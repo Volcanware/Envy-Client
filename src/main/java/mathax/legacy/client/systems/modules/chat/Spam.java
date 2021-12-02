@@ -82,7 +82,7 @@ public class Spam extends Module {
 
             String text = messages.get().get(i);
             if (antiSpamBypass.get())  text += RandomStringUtils.randomAlphabetic(length.get()).toLowerCase();
-            mc.player.sendChatMessage(text);
+            mc.player.sendChatMessage(text.replace("%random_player%", Utils.getRandomPlayer()));
             timer = delay.get();
         } else timer--;
     }
