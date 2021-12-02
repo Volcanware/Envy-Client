@@ -107,6 +107,12 @@ public class ModulesScreen extends TabScreen {
             l.clear();
             createSearchW(l, text.get());
         };
+        text.actionOnEnter = () -> {
+            Set<Module> modules = Modules.get().searchTitles(text.get());
+            if (modules.size() != 1) return;
+            Module target = modules.iterator().next();
+            target.toggle();
+        };
 
         w.add(l).expandX();
         createSearchW(l, text.get());
@@ -162,6 +168,7 @@ public class ModulesScreen extends TabScreen {
                     x = windowWidth / 2.0 - cell.width / 2.0;
                     if (x < 0) x = 0;
                 }
+                
                 if (y > windowHeight) {
                     y = windowHeight / 2.0 - cell.height / 2.0;
                     if (y < 0) y = 0;
