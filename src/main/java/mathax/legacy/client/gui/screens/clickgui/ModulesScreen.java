@@ -168,7 +168,7 @@ public class ModulesScreen extends TabScreen {
                     x = windowWidth / 2.0 - cell.width / 2.0;
                     if (x < 0) x = 0;
                 }
-                
+
                 if (y > windowHeight) {
                     y = windowHeight / 2.0 - cell.height / 2.0;
                     if (y < 0) y = 0;
