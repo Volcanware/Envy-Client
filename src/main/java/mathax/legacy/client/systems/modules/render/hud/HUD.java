@@ -90,7 +90,7 @@ public class HUD extends Module {
     }
 
     public final List<HUDElement> elements = new ArrayList<>();
-    private final HUDElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, time, radar, itemsArmor, crosshair, crosshair2;
+    private final HUDElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, binds, radar, itemsArmor, crosshair, crosshair2;
 
     public final Runnable reset = () -> {
         align();
@@ -126,6 +126,9 @@ public class HUD extends Module {
         mainInfo.add(new BiomeHUD(this));
         mainInfo.add(new PlayerModelHUD(this));
         mainInfo.add(new MusicHUD(this));
+        mainInfo.add(new DateHUD(this));
+        mainInfo.add(new RealTimeHUD(this));
+        mainInfo.add(new InGameTimeHUD(this));
 
         // MODULE INFO
         moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 200);
@@ -162,12 +165,10 @@ public class HUD extends Module {
         invPot.add(new ContainerViewerHUD(this));
         invPot.add(new PotionTimersHUD(this));
 
-        // TIME
-        time = new HUDElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Center, 2, 5);
+        // BINDS
+        binds = new HUDElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Center, 2, 5);
         // Modules
-        time.add(new InGameTimeHUD(this));
-        time.add(new RealTimeHUD(this));
-        time.add(new DateHUD(this));
+        binds.add(new VisualBinds(this));
 
         // TEXT RADAR
         radar = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Center, 2, 100);
@@ -209,7 +210,7 @@ public class HUD extends Module {
         lag.align();
         modules.align();
         invPot.align();
-        time.align();
+        binds.align();
         radar.align();
         itemsArmor.align();
         crosshair.align();
