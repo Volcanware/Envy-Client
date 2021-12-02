@@ -48,9 +48,7 @@ public abstract class ClientWorldMixin {
     private void onGetSkyProperties(CallbackInfoReturnable<DimensionEffects> info) {
         Ambience ambience = Modules.get().get(Ambience.class);
 
-        if (ambience.isActive() && ambience.endSky.get()) {
-            info.setReturnValue(ambience.customSkyColor.get() ? customSky : endSky);
-        }
+        if (ambience.isActive() && ambience.endSky.get()) info.setReturnValue(ambience.customSkyColor.get() ? customSky : endSky);
     }
 
     /**
@@ -60,9 +58,7 @@ public abstract class ClientWorldMixin {
     private void onGetSkyColor(Vec3d cameraPos, float tickDelta, CallbackInfoReturnable<Vec3d> info) {
         Ambience ambience = Modules.get().get(Ambience.class);
 
-        if (ambience.isActive() && ambience.customSkyColor.get()) {
-            info.setReturnValue(ambience.skyColor.get().getVec3d());
-        }
+        if (ambience.isActive() && ambience.customSkyColor.get()) info.setReturnValue(ambience.skyColor.get().getVec3d());
     }
 
     /**
@@ -72,15 +68,11 @@ public abstract class ClientWorldMixin {
     private void onGetCloudsColor(float tickDelta, CallbackInfoReturnable<Vec3d> info) {
         Ambience ambience = Modules.get().get(Ambience.class);
 
-        if (ambience.isActive() && ambience.customCloudColor.get()) {
-            info.setReturnValue(ambience.cloudColor.get().getVec3d());
-        }
+        if (ambience.isActive() && ambience.customCloudColor.get()) info.setReturnValue(ambience.cloudColor.get().getVec3d());
     }
 
     @ModifyArgs(method = "doRandomBlockDisplayTicks", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;randomBlockDisplayTick(IIIILjava/util/Random;Lnet/minecraft/block/Block;Lnet/minecraft/util/math/BlockPos$Mutable;)V"))
     private void doRandomBlockDisplayTicks(Args args) {
-        if (Modules.get().get(NoRender.class).noBarrierInvis()) {
-            args.set(5, Blocks.BARRIER);
-        }
+        if (Modules.get().get(NoRender.class).noBarrierInvis()) args.set(5, Blocks.BARRIER);
     }
 }

@@ -31,7 +31,7 @@ public class LitematicaPrinter/* extends Module {
 
     private final Setting<Integer> bpt = sgGeneral.add(new IntSetting.Builder()
         .name("blocks/tick")
-        .description("How many blocks place in 1 tick.")
+        .description("How many blocks to place in 1 tick.")
         .defaultValue(5)
         .range(1, 100)
         .sliderRange(1, 100)
@@ -229,11 +229,6 @@ public class LitematicaPrinter/* extends Module {
 
     @EventHandler
     private void onRender3D(Render3DEvent event) {
-        placedFade.forEach(block -> {
-            Color side = new Color(sideColor.get().r, sideColor.get().g, sideColor.get().b, (int) (((float) block.getLeft() / (float) fadeTime.get()) * sideColor.get().a));
-            Color line = new Color(lineColor.get().r, lineColor.get().g, lineColor.get().b, (int) (((float) block.getLeft() / (float) fadeTime.get()) * lineColor.get().a));
-            event.renderer.box(block.getRight(), side, line, shapeMode.get(), 0);
-        });
+        placedFade.forEach(block -> event.renderer.box(block.getRight(), new Color(sideColor.get().r, sideColor.get().g, sideColor.get().b, (int) (((float) block.getLeft() / (float) fadeTime.get()) * sideColor.get().a)), new Color(lineColor.get().r, lineColor.get().g, lineColor.get().b, (int) (((float) block.getLeft() / (float) fadeTime.get()) * lineColor.get().a)), shapeMode.get(), 0));
     }
-}
-*/ {}
+}*/ {}
