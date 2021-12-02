@@ -502,7 +502,7 @@ public class Modules extends System<Modules> {
         add(new Marker());
         add(new MountHUD());
         add(new Nametags());
-        //add(new NewChunks());
+        add(new NewChunks());
         add(new NoBob());
         add(new NoRender());
         //add(new PenisESP());
