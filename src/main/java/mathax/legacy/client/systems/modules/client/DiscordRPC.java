@@ -136,7 +136,10 @@ public class DiscordRPC extends Module {
 
     // TODO: Rewrite
     private String getActivity() {
-        if (mc.getOverlay() instanceof SplashOverlay || mc.currentScreen instanceof ProgressScreen) {
+        if (mc.getOverlay() instanceof SplashOverlay || mc.currentScreen == null) {
+            if (mc.world != null && serverVisibility.get()) return "Loading something (" + getWorldActivity(true, true) + ")";
+            else return "Loading something...";
+        } else if (mc.currentScreen instanceof ProgressScreen) {
             if (mc.world != null && serverVisibility.get()) return "Loading something (" + getWorldActivity(true, true) + ")";
             else return "Loading something...";
         } else if (mc.currentScreen instanceof TitleScreen || mc.currentScreen instanceof net.minecraft.client.gui.screen.TitleScreen) return "In main menu";

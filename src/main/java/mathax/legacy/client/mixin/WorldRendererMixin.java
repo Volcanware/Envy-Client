@@ -22,10 +22,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldRenderer.class)
 public abstract class WorldRendererMixin {
+    @Shadow
+    protected abstract void renderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers);
 
-    @Shadow protected abstract void renderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers);
-
-    @Shadow private Framebuffer entityOutlinesFramebuffer;
+    @Shadow
+    private Framebuffer entityOutlinesFramebuffer;
 
     @Inject(method = "checkEmpty", at = @At("HEAD"), cancellable = true)
     private void onCheckEmpty(MatrixStack matrixStack, CallbackInfo info) {
@@ -52,6 +53,7 @@ public abstract class WorldRendererMixin {
     @Inject(method = "render", at = @At("HEAD"))
     private void onRenderHead(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
         Utils.minimumLightLevel = Modules.get().get(Fullbright.class).getMinimumLightLevel();
+
         EntityShaders.beginRender();
     }
 

@@ -136,20 +136,25 @@ public class AutoEZ extends Module {
                     if (msg.contains("by " + mc.getSession().getUsername()) || msg.contains("whilst fighting " + mc.getSession().getUsername()) || msg.contains(mc.getSession().getUsername() + " sniped") || msg.contains(mc.getSession().getUsername() + " annaly fucked") || msg.contains(mc.getSession().getUsername() + " destroyed") || msg.contains(mc.getSession().getUsername() + " killed") || msg.contains(mc.getSession().getUsername() + " fucked") || msg.contains(mc.getSession().getUsername() + " separated") || msg.contains(mc.getSession().getUsername() + " punched") || msg.contains(mc.getSession().getUsername() + " shoved")) {
                         if (msg.contains("end crystal") || msg.contains("end-crystal")) {
                             if (Modules.get().isActive(CrystalAura.class)) {
-                                if (!Modules.get().isActive(CEVBreaker.class)) {
-                                    if (mc.player.distanceTo(player) < Modules.get().get(CrystalAura.class).targetRange.get()) {
-                                        if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
-                                        if (EntityUtils.getGameMode(player).isCreative()) return;
-                                        String message = getMessageStyle();
-                                        mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
-                                    }
-                                } else {
-                                    if (mc.player.distanceTo(player) < 5) {
-                                        if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
-                                        if (EntityUtils.getGameMode(player).isCreative()) return;
-                                        String message = getMessageStyle();
-                                        mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
-                                    }
+                                if (mc.player.distanceTo(player) < Modules.get().get(CrystalAura.class).targetRange.get()) {
+                                    if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
+                                    if (EntityUtils.getGameMode(player).isCreative()) return;
+                                    String message = getMessageStyle();
+                                    mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
+                                }
+                            } else if (Modules.get().isActive(PistonAura.class)) {
+                                if (mc.player.distanceTo(player) < Modules.get().get(PistonAura.class).targetRange.get()) {
+                                    if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
+                                    if (EntityUtils.getGameMode(player).isCreative()) return;
+                                    String message = getMessageStyle();
+                                    mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
+                                }
+                            } else if (Modules.get().isActive(CEVBreaker.class)) {
+                                if (mc.player.distanceTo(player) < Modules.get().get(CEVBreaker.class).targetRange.get()) {
+                                    if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
+                                    if (EntityUtils.getGameMode(player).isCreative()) return;
+                                    String message = getMessageStyle();
+                                    mc.player.sendChatMessage(Placeholders.apply(message).replace("%killed_player%", player.getName().getString()));
                                 }
                             } else {
                                 if (mc.player.distanceTo(player) < 7) {

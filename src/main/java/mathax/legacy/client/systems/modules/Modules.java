@@ -390,7 +390,7 @@ public class Modules extends System<Modules> {
         add(new InstaAutoCity());
         add(new KillAura());
         add(new Offhand());
-        //add(new PistonAura());
+        add(new PistonAura());
         add(new Quiver());
         add(new SelfAnvil());
         add(new SelfProtect());

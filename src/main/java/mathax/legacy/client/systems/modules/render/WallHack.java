@@ -49,9 +49,9 @@ public class WallHack extends Module {
 
     @Override
     public void onActivate() {
-        if (Modules.get().isActive(WallHack.class)) {
+        if (Modules.get().isActive(Xray.class)) {
             error("(highlight)Xray(default) was enabled while enabling (highlight)Wall Hack(default), disabling (highlight)Xray(default)...");
-            Modules.get().get(WallHack.class).toggle();
+            Modules.get().get(Xray.class).toggle();
         }
 
         mc.worldRenderer.reload();
@@ -64,8 +64,6 @@ public class WallHack extends Module {
 
     @EventHandler
     private void onChunkOcclusion(ChunkOcclusionEvent event) {
-        if (!occludeChunks.get()) {
-            event.cancel();
-        }
+        if (!occludeChunks.get()) event.cancel();
     }
 }

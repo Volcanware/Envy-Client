@@ -51,10 +51,11 @@ public class CEVBreaker extends Module {
         .build()
     );
 
-    private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
+    public final Setting<Double> targetRange = sgGeneral.add(new DoubleSetting.Builder()
         .name("range")
         .description("The radius players can be in to be targeted.")
         .defaultValue(5)
+        .min(0)
         .sliderRange(0, 10)
         .build()
     );
@@ -151,7 +152,7 @@ public class CEVBreaker extends Module {
                 if (target != null) {
                     BlockPos blockPos;
                     BlockPos blockPos1 = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 2, target.getBlockPos().getZ());
-                    if (mc.player.distanceTo(target) <= range.get() && mc.world.getBlockState(blockPos = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 1, target.getBlockPos().getZ())).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK) {
+                    if (mc.player.distanceTo(target) <= targetRange.get() && mc.world.getBlockState(blockPos = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 1, target.getBlockPos().getZ())).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK) {
                         BlockPos blockPos2 = new BlockPos(target.getBlockPos().getX(), target.getBlockPos().getY() + 3, target.getBlockPos().getZ());
                         if (mc.world.getBlockState(blockPos1).getBlock() == Blocks.BEDROCK && !mc.player.isCreative()) {
                             error("Can't break bedrock, disabling...");
