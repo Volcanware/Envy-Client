@@ -10,6 +10,7 @@ import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.combat.CrystalAura;
+import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.utils.world.BlockUtils;
 import net.minecraft.entity.Entity;
@@ -88,7 +89,7 @@ public class NoobDetector extends Module {
     public void onTick(TickEvent.Post event) {
         if (this.count >= 20) {
             for (Entity entity : mc.world.getEntities()) {
-                if (entity.isAlive() && entity.distanceTo(mc.player) <= Modules.get().get(CrystalAura.class).targetRange.get() && entity != mc.player && BlockUtils.isNoob(target)) {
+                if (entity.isAlive() && entity.distanceTo(mc.player) <= Modules.get().get(CrystalAura.class).targetRange.get() && entity != mc.player && PlayerUtils.isNoob(target)) {
                     isTargetANoob = true;
                     if (chat.get()) info("Your target is a noob!");
                     count = 0;

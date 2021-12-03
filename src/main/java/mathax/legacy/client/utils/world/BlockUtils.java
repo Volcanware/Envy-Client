@@ -352,32 +352,6 @@ public class BlockUtils {
 
     // Other
 
-    public static boolean isNoob(LivingEntity target) {
-        assert mc.world != null;
-        assert mc.player != null;
-
-        int count = 0;
-        int count2 = 0;
-
-        if (isBurrowed(target)) return false;
-        if (isBurrowed(mc.player) && target.getBlockPos().getX() == mc.player.getBlockPos().getX() && target.getBlockPos().getZ() == mc.player.getBlockPos().getZ() && target.getBlockPos().getY() - mc.player.getBlockPos().getY() <= 2) return true;
-        if (!mc.world.getBlockState(target.getBlockPos().add(0, 2, 0)).isAir()) return true;
-        if (!mc.world.getBlockState(target.getBlockPos().add(1, 0, 0)).isAir()) ++count;
-        if (!mc.world.getBlockState(target.getBlockPos().add(-1, 0, 0)).isAir()) ++count;
-        if (!mc.world.getBlockState(target.getBlockPos().add(0, 0, 1)).isAir()) ++count;
-        if (!mc.world.getBlockState(target.getBlockPos().add(0, 0, -1)).isAir()) ++count;
-        if (count == 3) return true;
-        if (!mc.world.getBlockState(target.getBlockPos().add(1, 1, 0)).isAir()) ++count2;
-        if (!mc.world.getBlockState(target.getBlockPos().add(-1, 1, 0)).isAir()) ++count2;
-        if (!mc.world.getBlockState(target.getBlockPos().add(0, 1, 1)).isAir()) ++count2;
-        if (!mc.world.getBlockState(target.getBlockPos().add(0, 1, -1)).isAir()) ++count2;
-        return count < 4 && count2 == 4;
-    }
-
-    public static boolean isBurrowed(LivingEntity target) {
-        return !mc.world.getBlockState(target.getBlockPos()).isAir();
-    }
-
     public static boolean isClickable(Block block) {
         return block instanceof CraftingTableBlock || block instanceof AnvilBlock || block instanceof AbstractButtonBlock || block instanceof AbstractPressurePlateBlock || block instanceof BlockWithEntity || block instanceof BedBlock || block instanceof FenceGateBlock || block instanceof DoorBlock || block instanceof NoteBlock || block instanceof TrapdoorBlock;
     }

@@ -256,7 +256,7 @@ public class AutoBedCraft extends Module {
 
     private boolean canRefill(boolean checkSlots) {
         if (!autoWhileMoving.get() && PlayerUtils.isPlayerMoving(mc.player)) return false;
-        if (autoOnlyHole.get() && !PlayerUtils.isInHole2(mc.player)) return false;
+        if (autoOnlyHole.get() && !PlayerUtils.isInHole(mc.player)) return false;
         if (autoOnlyGround.get() && !mc.player.isOnGround()) return false;
         if (InvUtils.isInventoryFull()) return false;
         if (checkSlots) if (InvUtils.getEmptySlots() < emptySlotsNeeded.get()) return false;

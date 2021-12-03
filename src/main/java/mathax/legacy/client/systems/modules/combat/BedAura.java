@@ -403,7 +403,7 @@ public class BedAura extends Module {
             }
         }
 
-        if (preventEscape.get() && BlockUtils.getBlock(target.getBlockPos().up(2)) != Blocks.OBSIDIAN && PlayerUtils.isInHole2(target)) {
+        if (preventEscape.get() && BlockUtils.getBlock(target.getBlockPos().up(2)) != Blocks.OBSIDIAN && PlayerUtils.isInHole(target)) {
             FindItemResult obsidian = InvUtils.findObsidian();
             if (obsidian.found()) BlockUtils.place(target.getBlockPos().up(2), obsidian, true, 50, true, true, true);
             if (BlockUtils.getBlock(target.getBlockPos().up(2)) != Blocks.OBSIDIAN) return;

@@ -70,7 +70,7 @@ public class AntiBed extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        if (onlyInHole.get() && !PlayerUtils.isInHole(true)) return;
+        if (onlyInHole.get() && !PlayerUtils.isInHole2(true)) return;
 
         // Checking for and maybe breaking bed
         BlockPos head = mc.player.getBlockPos().up();

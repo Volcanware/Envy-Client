@@ -172,7 +172,7 @@ public class SelfProtect extends Module {
         }
 
         if (antiBedAura.get()) {
-            if (onlyInHole.get() && !PlayerUtils.isInHole(true)) return;
+            if (onlyInHole.get() && !PlayerUtils.isInHole2(true)) return;
 
             BlockPos head = mc.player.getBlockPos().up();
             if (mc.world.getBlockState(head).getBlock() instanceof BedBlock && !breaking) {

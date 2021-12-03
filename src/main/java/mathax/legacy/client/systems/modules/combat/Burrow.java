@@ -108,7 +108,7 @@ public class Burrow extends Module {
             return;
         }
 
-        if (!PlayerUtils.isInHole(false) && onlyInHole.get()) {
+        if (!PlayerUtils.isInHole2(false) && onlyInHole.get()) {
             error("Not in a hole, disabling...");
             toggle();
             return;
