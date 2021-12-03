@@ -146,7 +146,7 @@ public class TNTAura extends Module {
 
     private final Setting<ShapeMode> obsidianShapeMode = sgObsidianRender.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .description("Determines how the shapes are rendered.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
@@ -190,7 +190,7 @@ public class TNTAura extends Module {
 
     private final Setting<ShapeMode> tntShapeMode = sgTNTRender.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .description("Determines how the shapes are rendered.")
         .defaultValue(ShapeMode.Both).build()
     );
 
@@ -219,7 +219,7 @@ public class TNTAura extends Module {
 
     private final Setting<ShapeMode> breakShapeMode = sgBreakRender.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
-        .description("How the shapes are rendered.")
+        .description("Determines how the shapes are rendered.")
         .defaultValue(ShapeMode.Both)
         .build()
     );

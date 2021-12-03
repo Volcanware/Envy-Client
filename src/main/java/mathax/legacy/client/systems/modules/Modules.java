@@ -370,6 +370,7 @@ public class Modules extends System<Modules> {
         add(new AutoAnvil());
         add(new AutoArmor());
         add(new AutoCity());
+        add(new AutoEXP());
         add(new AutoLog());
         //add(new AutoMinecart());
         add(new AutoPot());
@@ -504,6 +505,7 @@ public class Modules extends System<Modules> {
         add(new Nametags());
         add(new NewChunks());
         add(new NoBob());
+        add(new NoobDetector());
         add(new NoRender());
         //add(new PenisESP());
         add(new PopChams());

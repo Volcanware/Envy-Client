@@ -19,6 +19,16 @@ public class Spam extends Module {
 
     // General
 
+    private final Setting<List<String>> messages = sgGeneral.add(new StringListSetting.Builder()
+        .name("messages")
+        .description("Messages to use for spam.")
+        .defaultValue(
+            "MatHax on top!",
+            "Matejko06 on top!"
+        )
+        .build()
+    );
+
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
         .name("delay")
         .description("The delay between specified messages in ticks.")
@@ -32,12 +42,6 @@ public class Spam extends Module {
         .name("randomise")
         .description("Selects a random message from your spam message list.")
         .defaultValue(false)
-        .build()
-    );
-
-    private final Setting<List<String>> messages = sgGeneral.add(new StringListSetting.Builder()
-        .name("messages")
-        .description("Messages to use for spam.")
         .build()
     );
 
@@ -81,7 +85,7 @@ public class Spam extends Module {
             }
 
             String text = messages.get().get(i);
-            if (antiSpamBypass.get())  text += RandomStringUtils.randomAlphabetic(length.get()).toLowerCase();
+            if (antiSpamBypass.get()) text += RandomStringUtils.randomAlphabetic(length.get()).toLowerCase();
             mc.player.sendChatMessage(text.replace("%random_player%", Utils.getRandomPlayer()));
             timer = delay.get();
         } else timer--;

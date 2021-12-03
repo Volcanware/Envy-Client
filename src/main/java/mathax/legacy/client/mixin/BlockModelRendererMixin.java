@@ -32,7 +32,7 @@ public class BlockModelRendererMixin {
             else alpha = wallHack.opacity.get();
 
             rewriteBuffer(vertexConsumer, alpha);
-        } else if (xray.isActive() && !wallHack.isActive() && xray.isBlocked(state.getBlock())) rewriteBuffer(vertexConsumer, xray.opacity.get());
+        } else if (xray.isActive() && !wallHack.isActive() && xray.isBlocked(state.getBlock(), pos)) rewriteBuffer(vertexConsumer, xray.opacity.get());
     }
 
     private void rewriteBuffer(VertexConsumer vertexConsumer, int alpha) {

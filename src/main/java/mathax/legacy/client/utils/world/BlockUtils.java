@@ -12,6 +12,7 @@ import mathax.legacy.client.eventbus.EventPriority;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.block.enums.SlabType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.util.ActionResult;
@@ -32,8 +33,10 @@ import static mathax.legacy.client.MatHaxLegacy.mc;
 public class BlockUtils {
     private static final Vec3d hitPos = new Vec3d(0, 0, 0);
 
-    public static boolean breaking;
+    private static final BlockPos.Mutable exposedPos = new BlockPos.Mutable();
+
     private static boolean breakingThisTick;
+    public static boolean breaking;
 
     public static void init() {
         MatHaxLegacy.EVENT_BUS.subscribe(BlockUtils.class);
@@ -349,6 +352,32 @@ public class BlockUtils {
 
     // Other
 
+    public static boolean isNoob(LivingEntity target) {
+        assert mc.world != null;
+        assert mc.player != null;
+
+        int count = 0;
+        int count2 = 0;
+
+        if (isBurrowed(target)) return false;
+        if (isBurrowed(mc.player) && target.getBlockPos().getX() == mc.player.getBlockPos().getX() && target.getBlockPos().getZ() == mc.player.getBlockPos().getZ() && target.getBlockPos().getY() - mc.player.getBlockPos().getY() <= 2) return true;
+        if (!mc.world.getBlockState(target.getBlockPos().add(0, 2, 0)).isAir()) return true;
+        if (!mc.world.getBlockState(target.getBlockPos().add(1, 0, 0)).isAir()) ++count;
+        if (!mc.world.getBlockState(target.getBlockPos().add(-1, 0, 0)).isAir()) ++count;
+        if (!mc.world.getBlockState(target.getBlockPos().add(0, 0, 1)).isAir()) ++count;
+        if (!mc.world.getBlockState(target.getBlockPos().add(0, 0, -1)).isAir()) ++count;
+        if (count == 3) return true;
+        if (!mc.world.getBlockState(target.getBlockPos().add(1, 1, 0)).isAir()) ++count2;
+        if (!mc.world.getBlockState(target.getBlockPos().add(-1, 1, 0)).isAir()) ++count2;
+        if (!mc.world.getBlockState(target.getBlockPos().add(0, 1, 1)).isAir()) ++count2;
+        if (!mc.world.getBlockState(target.getBlockPos().add(0, 1, -1)).isAir()) ++count2;
+        return count < 4 && count2 == 4;
+    }
+
+    public static boolean isBurrowed(LivingEntity target) {
+        return !mc.world.getBlockState(target.getBlockPos()).isAir();
+    }
+
     public static boolean isClickable(Block block) {
         return block instanceof CraftingTableBlock || block instanceof AnvilBlock || block instanceof AbstractButtonBlock || block instanceof AbstractPressurePlateBlock || block instanceof BlockWithEntity || block instanceof BedBlock || block instanceof FenceGateBlock || block instanceof DoorBlock || block instanceof NoteBlock || block instanceof TrapdoorBlock;
     }
@@ -371,6 +400,16 @@ public class BlockUtils {
     public static boolean topSurface(BlockState blockState) {
         if (blockState.getBlock() instanceof SlabBlock && blockState.get(SlabBlock.TYPE) == SlabType.TOP) return true;
         else return blockState.getBlock() instanceof StairsBlock && blockState.get(StairsBlock.HALF) == BlockHalf.TOP;
+    }
+
+    public static boolean isExposed(BlockPos blockPos) {
+        for (Direction direction : Direction.values()) {
+            exposedPos.set(blockPos, direction.getVector());
+            BlockState state = mc.world.getBlockState(exposedPos);
+            if (!state.isOpaque()) return true;
+        }
+
+        return false;
     }
 
     // Util

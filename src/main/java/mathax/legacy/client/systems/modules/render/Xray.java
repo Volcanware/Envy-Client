@@ -3,14 +3,12 @@ package mathax.legacy.client.systems.modules.render;
 import mathax.legacy.client.events.render.RenderBlockEntityEvent;
 import mathax.legacy.client.events.world.AmbientOcclusionEvent;
 import mathax.legacy.client.events.world.ChunkOcclusionEvent;
-import mathax.legacy.client.settings.BlockListSetting;
-import mathax.legacy.client.settings.IntSetting;
-import mathax.legacy.client.settings.Setting;
-import mathax.legacy.client.settings.SettingGroup;
+import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.utils.world.BlockUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -67,6 +65,16 @@ public class Xray extends Module {
         .build()
     );
 
+    private final Setting<Boolean> exposedOnly = sgGeneral.add(new BoolSetting.Builder()
+        .name("exposed only")
+        .description("Show only exposed ores.")
+        .defaultValue(false)
+        .onChanged(onChanged -> {
+            if (isActive()) mc.worldRenderer.reload();
+        })
+        .build()
+    );
+
     public Xray() {
         super(Categories.Render, Items.BARRIER, "xray", "Only renders specified blocks. Good for mining.");
     }
@@ -92,7 +100,7 @@ public class Xray extends Module {
 
     @EventHandler
     private void onRenderBlockEntity(RenderBlockEntityEvent event) {
-        if (isBlocked(event.blockEntity.getCachedState().getBlock())) event.cancel();
+        if (isBlocked(event.blockEntity.getCachedState().getBlock(), event.blockEntity.getPos())) event.cancel();
     }
 
     @EventHandler
@@ -106,16 +114,15 @@ public class Xray extends Module {
     }
 
     public boolean modifyDrawSide(BlockState state, BlockView view, BlockPos pos, Direction facing, boolean returns) {
-        if (!returns && !isBlocked(state.getBlock())) {
+        if (!returns && !isBlocked(state.getBlock(), pos)) {
             BlockPos adjPos = pos.offset(facing);
             BlockState adjState = view.getBlockState(adjPos);
-            return adjState.getCullingFace(view, adjPos, facing.getOpposite()) != VoxelShapes.fullCube() || adjState.getBlock() != state.getBlock();
+            return adjState.getCullingFace(view , adjPos,  facing.getOpposite()) != VoxelShapes.fullCube() || adjState.getBlock() != state.getBlock() || !BlockUtils.isExposed(adjPos);
         }
 
         return returns;
     }
-
-    public boolean isBlocked(Block block) {
-        return !blocks.get().contains(block);
+    public boolean isBlocked(Block block, BlockPos blockPos) {
+        return !(blocks.get().contains(block) && (!exposedOnly.get() || BlockUtils.isExposed(blockPos)));
     }
 }
