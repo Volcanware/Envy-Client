@@ -74,14 +74,13 @@ dependencies {
     modImplementation "baritone:baritone:${project.baritone_version}"
     include "baritone:baritone:${project.baritone_version}"
 
-    // TODO: Litematica & Malilib
     // Litematica integration
-    /*modImplementation "curse.maven:litematica-${project.litematica_project_id}:${project.litematica_file_id}"
+    modImplementation "curse.maven:litematica-${project.litematica_project_id}:${project.litematica_file_id}"
     include "curse.maven:litematica-${project.litematica_project_id}:${project.litematica_file_id}"
 
     // Malilib for Litematica
-    modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
-    include "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"*/
+    modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}.0:${project.malilib_version}"
+    include "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}.0:${project.malilib_version}"
 
     // Dependencies
     library "com.github.Vatuu:discord-rpc:${project.discord_version}"

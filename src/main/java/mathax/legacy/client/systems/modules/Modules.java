@@ -599,6 +599,7 @@ public class Modules extends System<Modules> {
         add(new CoordinateLogger());
         add(new InventoryTweaks());
         add(new ItemFrameDupe());
+        add(new LitematicaPrinter());
         add(new MessageLagger());
         add(new MiddleClickExtra());
         add(new MultiTask());
@@ -608,7 +609,6 @@ public class Modules extends System<Modules> {
         add(new PacketSpammer());
         add(new Panic());
         add(new PingSpoof());
-        //add(new LitematicaPrinter());
         add(new SoundBlocker());
         add(new SoundLocator());
         add(new SpinBot());

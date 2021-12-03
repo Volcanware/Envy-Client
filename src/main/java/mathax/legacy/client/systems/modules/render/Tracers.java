@@ -39,6 +39,22 @@ public class Tracers extends Module {
         .build()
     );
 
+    public final Setting<Boolean> showInvisible = sgGeneral.add(new BoolSetting.Builder()
+        .name("show-invisible")
+        .description("Shows invisible entities.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-friends")
+        .description("Stops tracer rendering for friends.")
+        .defaultValue(false)
+        .build()
+    );
+
+    // Appearance
+
     private final Setting<Target> target = sgAppearance.add(new EnumSetting.Builder<Target>()
         .name("target")
         .description("What part of the entity to target.")
@@ -59,20 +75,6 @@ public class Tracers extends Module {
         .defaultValue(256)
         .min(0)
         .sliderMax(256)
-        .build()
-    );
-
-    public final Setting<Boolean> showInvis = sgGeneral.add(new BoolSetting.Builder()
-        .name("show-invisible")
-        .description("Shows invisibile entities.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
-        .name("ignore-friends")
-        .description("Stops tracer rendering for friends.")
-        .defaultValue(false)
         .build()
     );
 
@@ -151,7 +153,7 @@ public class Tracers extends Module {
         count = 0;
 
         for (Entity entity : mc.world.getEntities()) {
-            if (mc.player.distanceTo(entity) > maxDist.get() || (!Modules.get().isActive(Freecam.class) && entity == mc.player) || !entities.get().getBoolean(entity.getType()) || (!showInvis.get() && entity.isInvisible()) | !EntityUtils.isInRenderDistance(entity)) continue;
+            if (mc.player.distanceTo(entity) > maxDist.get() || (!Modules.get().isActive(Freecam.class) && entity == mc.player) || !entities.get().getBoolean(entity.getType()) || (!showInvisible.get() && entity.isInvisible()) | !EntityUtils.isInRenderDistance(entity)) continue;
             if (ignoreFriends.get() && entity instanceof PlayerEntity player) {
                 if (Friends.get().isFriend(player)) return;
             }

@@ -18,6 +18,8 @@ import java.util.List;
 public class Trail extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<List<ParticleType<?>>> particles = sgGeneral.add(new ParticleTypeListSetting.Builder()
         .name("particles")
         .description("Particles to draw.")
