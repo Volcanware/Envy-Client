@@ -29,6 +29,7 @@ import net.minecraft.block.NoteBlock;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -175,6 +176,14 @@ public class Notebot extends Module {
         }  catch (IOException e) {
             table.add(theme.label("Missing \"Notebot\" folder.")).expandCellX();
             table.row();
+        }
+
+        if (noSongsFound) {
+            table.add(theme.label("No songs found.")).expandCellX();
+            table.row();
+
+            WButton guide = table.add(theme.button("Guide")).expandX().widget();
+            guide.action = () -> Util.getOperatingSystem().open("https://mathaxclient.xyz/Notebot-Guide");
         }
 
         return table;
