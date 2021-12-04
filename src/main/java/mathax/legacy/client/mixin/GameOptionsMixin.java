@@ -2,6 +2,8 @@ package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.game.ChangePerspectiveEvent;
+import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.systems.modules.render.Freecam;
 import mathax.legacy.client.utils.misc.input.KeyBinds;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
@@ -35,5 +37,7 @@ public class GameOptionsMixin {
         ChangePerspectiveEvent event = MatHaxLegacy.EVENT_BUS.post(ChangePerspectiveEvent.get(perspective));
 
         if (event.isCancelled()) info.cancel();
+
+        if (Modules.get().isActive(Freecam.class)) info.cancel();
     }
 }

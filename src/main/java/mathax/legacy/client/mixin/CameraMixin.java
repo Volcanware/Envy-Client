@@ -43,6 +43,7 @@ public abstract class CameraMixin {
     @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;moveBy(DDD)V", ordinal = 0))
     private void modifyCameraDistance(Args args) {
         args.set(0, -clipToSpace(Modules.get().get(CameraTweaks.class).getDistance()));
+        if (Modules.get().isActive(Freecam.class)) args.set(0, -clipToSpace(0));
     }
 
     @Inject(method = "clipToSpace", at = @At("HEAD"), cancellable = true)

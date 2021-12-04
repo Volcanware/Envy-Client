@@ -38,7 +38,7 @@ import java.util.List;
 public class KillAura extends Module {
     private final List<Entity> targets = new ArrayList<>();
 
-    private int hitDelayTimer, randomDelayTimer, switchTimer;
+    private int hitDelayTimer, switchTimer;
 
     private boolean wasPathing;
 
@@ -231,7 +231,6 @@ public class KillAura extends Module {
     @Override
     public void onDeactivate() {
         hitDelayTimer = 0;
-        randomDelayTimer = 0;
         targets.clear();
     }
 
@@ -331,19 +330,14 @@ public class KillAura extends Module {
 
         if (smartDelay.get()) return mc.player.getAttackCooldownProgress(0.5f) >= 1;
 
-        if (hitDelayTimer >= 0) {
+        if (hitDelayTimer > 0) {
             hitDelayTimer--;
             return false;
-        } else hitDelayTimer = hitDelay.get();
-
-        if (randomDelayEnabled.get()) {
-            if (randomDelayTimer > 0) {
-                randomDelayTimer--;
-                return false;
-            } else randomDelayTimer = (int) Math.round(Math.random() * randomDelayMax.get());
+        } else {
+            hitDelayTimer = hitDelay.get();
+            if (randomDelayEnabled.get()) hitDelayTimer += Math.round(Math.random() * randomDelayMax.get());
+            return true;
         }
-
-        return true;
     }
 
     private void attack(Entity target) {

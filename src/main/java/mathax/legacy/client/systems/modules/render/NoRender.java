@@ -314,6 +314,10 @@ public class NoRender extends Module {
         return isActive() && noPortalOverlay.get();
     }
 
+    public boolean noSpyglassOverlay() {
+        return isActive() && noSpyglassOverlay.get();
+    }
+
     public boolean noNausea() {
         return isActive() && noNausea.get();
     }
@@ -371,6 +375,7 @@ public class NoRender extends Module {
     public boolean noHeldItemName() {
         return isActive() && noHeldItemName.get();
     }
+
     public boolean noPotionIcons() {
         return isActive() && noPotionIcons.get();
     }

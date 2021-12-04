@@ -3,6 +3,7 @@ package mathax.legacy.client.mixin;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.render.Render2DEvent;
+import mathax.legacy.client.systems.modules.render.Freecam;
 import mathax.legacy.client.systems.modules.render.MountHUD;
 import mathax.legacy.client.systems.modules.render.NoRender;
 import mathax.legacy.client.systems.modules.Modules;
@@ -10,6 +11,7 @@ import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.option.Perspective;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -45,15 +47,6 @@ public abstract class InGameHudMixin {
         client.getProfiler().pop();
     }
 
-    /*@Redirect(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIIIII)V"))
-    public void redirectRenderCrosshair(InGameHud inGameHud, MatrixStack matrices, int x, int y, int u, int v, int width, int height) {
-        CustomCrosshair customCrosshair = Modules.get().get(CustomCrosshair.class);
-
-        if (!customCrosshair.isActive()) {
-            inGameHud.drawTexture(matrices, x, y, u, v, width, height);
-        }
-    }*/
-
     @Inject(method = "renderStatusEffectOverlay", at = @At("HEAD"), cancellable = true)
     private void onRenderStatusEffectOverlay(CallbackInfo info) {
         if (Modules.get().get(NoRender.class).noPotionIcons()) info.cancel();
@@ -86,7 +79,13 @@ public abstract class InGameHudMixin {
 
     @Inject(method = "renderSpyglassOverlay", at = @At("HEAD"), cancellable = true)
     private void onRenderSpyglassOverlay(float scale, CallbackInfo info) {
-        if (Modules.get().get(NoRender.class).noSpyglassOverlay.get()) info.cancel();
+        if (Modules.get().get(NoRender.class).noSpyglassOverlay()) info.cancel();
+    }
+
+    @Redirect(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/Perspective;isFirstPerson()Z"))
+    private boolean alwaysRenderCrosshairInFreecam(Perspective perspective) {
+        if (Modules.get().isActive(Freecam.class)) return true;
+        return perspective.isFirstPerson();
     }
 
     @Inject(method = "renderCrosshair", at = @At("HEAD"), cancellable = true)
