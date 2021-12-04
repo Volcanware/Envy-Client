@@ -590,9 +590,7 @@ public class Modules extends System<Modules> {
     private void initMisc() {
         add(new AntiGhostBlock());
         add(new AntiPacketKick());
-        add(new AutoAnvilDupe());
         add(new AutoClicker());
-        //add(new AutoCraft());
         add(new AutoMountBypassDupe());
         add(new AutoReconnect());
         add(new AutoRespawn());
@@ -609,7 +607,6 @@ public class Modules extends System<Modules> {
         add(new Notebot());
         add(new PacketCanceller());
         add(new PacketSpammer());
-        add(new Panic());
         add(new PingSpoof());
         add(new SoundBlocker());
         add(new SoundLocator());

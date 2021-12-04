@@ -16,7 +16,7 @@ public class PlaylistUtils {
     private static final Map<String, AudioPlaylist> playlists = new HashMap<>();
 
     private static final Path folderPath = MatHaxLegacy.FOLDER.toPath().resolve("Music");
-    private static final Path filePath = folderPath.resolve("Playlists.txt");
+    private static final Path filePath = MatHaxLegacy.MUSIC_FOLDER.toPath().resolve("Playlists.txt");
 
     public static void load() {
         if (!Files.exists(folderPath)) {

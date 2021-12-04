@@ -21,7 +21,7 @@ public class BigRatHUD extends HUDElement {
         .name("scale")
         .description("The scale of big rat.")
         .defaultValue(0.25)
-        .min(0.001)
+        .min(0.1)
         .sliderRange(0.1, 2)
         .build()
     );
