@@ -400,6 +400,7 @@ public class Modules extends System<Modules> {
         add(new Surround());
         add(new SurroundPlus());
         add(new TNTAura());
+        add(new TriggerBot());
     }
 
     private void initPlayer() {

@@ -24,6 +24,7 @@ import mathax.legacy.client.systems.modules.render.Background;
 import mathax.legacy.client.systems.modules.render.Zoom;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.utils.Version;
+import mathax.legacy.client.utils.WindowUtils;
 import mathax.legacy.client.utils.misc.FakeClientPlayer;
 import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.misc.Names;
@@ -148,10 +149,10 @@ public class MatHaxLegacy implements ClientModInitializer {
         mc = MinecraftClient.getInstance();
 
         // Icon
-        mc.getWindow().setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
+        WindowUtils.MatHax.setIcon();
 
         // Title
-        mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
+        WindowUtils.MatHax.setTitleLoading();
 
         // Register event handlers
         EVENT_BUS.registerLambdaFactory("mathax.legacy.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
@@ -238,7 +239,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         GuiThemes.postInit();
 
         // Loaded window title
-        mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft() + " loaded!");
+        WindowUtils.MatHax.setTitleLoaded();
 
         // Shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -249,10 +250,10 @@ public class MatHaxLegacy implements ClientModInitializer {
         }));
 
         ClientSpoof cs = Modules.get().get(ClientSpoof.class);
-        if (cs.isActive() && cs.changeWindowIcon()) cs.setMeteorIcon();
-        else mc.getWindow().setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
-        if (cs.isActive() && cs.changeWindowTitle()) cs.setMeteorTitle();
-        else mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft());
+        if (cs.isActive() && cs.changeWindowIcon()) WindowUtils.Meteor.setIcon();
+        else WindowUtils.MatHax.setIcon();
+        if (cs.isActive() && cs.changeWindowTitle()) WindowUtils.Meteor.setTitle();
+        else WindowUtils.MatHax.setTitle();
 
         // Log
         LOG.info(logPrefix + "MatHax Legacy " + Version.getStylized() + " initialized!");

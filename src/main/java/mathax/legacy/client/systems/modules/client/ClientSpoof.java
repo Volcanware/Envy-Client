@@ -3,9 +3,8 @@ package mathax.legacy.client.systems.modules.client;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.Version;
+import mathax.legacy.client.utils.WindowUtils;
 import mathax.legacy.client.utils.render.color.SettingColor;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Items;
 
 public class ClientSpoof extends Module {
@@ -126,49 +125,30 @@ public class ClientSpoof extends Module {
     @Override
     public void onActivate() {
         // Icon
-        if (window.get() && windowMeteorIcon.get()) setMeteorIcon();
+        if (window.get() && windowMeteorIcon.get()) WindowUtils.Meteor.setIcon();
 
         // Window Title
-        if (window.get() && windowMeteorTitle.get()) setMeteorTitle();
+        if (window.get() && windowMeteorTitle.get()) WindowUtils.Meteor.setTitle();
     }
 
     @Override
     public void onDeactivate() {
-        // Icon
-        resetIcon();
-
-        // Window Title
-        resetTitle();
+        // Icon & Window Title
+        WindowUtils.MatHax.set();
     }
 
     private void titleChanged() {
         if (window.get()) {
-            if (windowMeteorTitle.get()) setMeteorTitle();
-            else resetTitle();
-        } else resetTitle();
-    }
-
-    public void setMeteorTitle() {
-        mc.getWindow().setTitle("Meteor Client " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft());
-    }
-
-    private void resetTitle() {
-        mc.getWindow().setTitle("MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft());
+            if (windowMeteorTitle.get()) WindowUtils.Meteor.setTitle();
+            else WindowUtils.MatHax.setTitle();
+        } else WindowUtils.MatHax.setTitle();
     }
 
     private void iconChanged() {
         if (window.get()) {
-            if (windowMeteorIcon.get()) setMeteorIcon();
-            else resetIcon();
-        } else resetIcon();
-    }
-
-    public void setMeteorIcon() {
-        mc.getWindow().setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/meteor64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/meteor128.png"));
-    }
-
-    private void resetIcon() {
-        mc.getWindow().setIcon(getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
+            if (windowMeteorIcon.get()) WindowUtils.Meteor.setIcon();
+            else WindowUtils.MatHax.setIcon();
+        } else WindowUtils.MatHax.setIcon();
     }
 
     public boolean changeVersion() {
