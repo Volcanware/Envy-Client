@@ -25,7 +25,6 @@ import mathax.legacy.client.utils.render.prompts.OkPrompt;
 import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRichPresence;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.*;
@@ -295,7 +294,6 @@ public class DiscordRPC extends Module {
             else return "Changing Iris shaderpack";
         } else if (mc.currentScreen.getClass().getName().contains("com.viaversion.fabric.mc117.gui")) return "Changing Minecraft version";
         else if (mc.world != null) return getWorldActivity(false, false);
-
         return "Unknown Activity";
     }
 
