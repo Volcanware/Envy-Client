@@ -40,7 +40,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-// TODO: Make MatHax theme & widgets work instead of buttons.
+// TODO: Rewrite.
 
 public class TitleScreen extends Screen {
     private final int WHITE = Color.fromRGBA(255, 255, 255, 255);
@@ -174,22 +174,30 @@ public class TitleScreen extends Screen {
         // Logo
 
         if ((ceil & -67108864) != 0) {
-            RenderSystem.setShaderTexture(0, LOGO);
             int logoScale;
+            boolean a = false;
             if (client.options.guiScale == 1) logoScale = client.getWindow().getHeight() / 4;
             else if (client.options.guiScale == 2) logoScale = client.getWindow().getHeight() / 8;
             else if (client.options.guiScale == 3) logoScale = client.getWindow().getHeight() / 12;
             else if (client.options.guiScale == 4) logoScale = client.getWindow().getHeight() / 16;
-            else logoScale = client.getWindow().getHeight() / 32;
+            else {
+                if (client.getWindow().getHeight() < 1920) {
+                    logoScale = client.getWindow().getHeight() / 8;
+                    a = true;
+                } else logoScale = client.getWindow().getHeight() / 32;
+            }
 
+            RenderSystem.setShaderTexture(0, LOGO);
             drawTexture(matrices, widthHalf - (logoScale / 2), 10, 0.0F, 0.0F, logoScale, logoScale, logoScale, logoScale);
 
             // Splashes
 
             if (splashText != null) {
+                if (a) logoScale -= logoScale / 3;
                 int splashX = width / 2 + (logoScale / 2) - 32;
                 if (client.getWindow().getWidth() < 3072 && client.options.guiScale == 1) splashX += 32;
                 int splashY = logoScale - (logoScale / 5);
+                if (a) splashY += logoScale / 2;
 
                 if (client.options.guiScale == 1) splashY -= logoScale / 8;
                 if (client.options.guiScale == 3) splashX += logoScale / 6;
@@ -303,8 +311,7 @@ public class TitleScreen extends Screen {
         if (client.options.guiScale == 1) return false;
         else if (client.options.guiScale == 2) return false;
         else if (client.options.guiScale == 3) return false;
-        else if (client.options.guiScale == 4) return false;
-        else return true;
+        else return client.options.guiScale != 4;
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
