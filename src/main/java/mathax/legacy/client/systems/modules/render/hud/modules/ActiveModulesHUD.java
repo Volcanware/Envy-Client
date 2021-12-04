@@ -190,7 +190,7 @@ public class ActiveModulesHUD extends HUDElement {
         if (colorMode == ColorMode.Random) color = module.color;
         else if (colorMode == ColorMode.Rainbow) {
             rainbowHue2 += rainbowSpread.get();
-            int c = java.awt.Color.HSBtoRGB((float) rainbowHue2, (float) rainbowSaturation.get(), 1);
+            int c = java.awt.Color.HSBtoRGB((float) rainbowHue2, rainbowSaturation.get().floatValue(), 1);
 
             rainbow.r = Color.toRGBAR(c);
             rainbow.g = Color.toRGBAG(c);
