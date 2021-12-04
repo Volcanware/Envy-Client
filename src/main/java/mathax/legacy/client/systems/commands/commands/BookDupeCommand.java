@@ -33,9 +33,8 @@ public class BookDupeCommand extends Command {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             FindItemResult book = InvUtils.findInHotbar(Items.WRITABLE_BOOK);
-            if (book.getHand() == null) {
-                error("No book found, you must be holding a writable book!");
-            } else {
+            if (book.getHand() == null) error("No book found, you must be holding a writable book!");
+            else {
                 int i = book.isMainHand() ? mc.player.getInventory().selectedSlot : 40;
                 mc.player.networkHandler.sendPacket(new BookUpdateC2SPacket(i, DUPE_PAGES, Optional.of("Dupe Book")));
             }
