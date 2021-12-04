@@ -75,7 +75,7 @@ public class ActiveModulesHUD extends HUDElement {
         .build()
     );
 
-        private final Setting<Double> rainbowSaturation = sgGeneral.add(new DoubleSetting.Builder()
+    private final Setting<Double> rainbowSaturation = sgGeneral.add(new DoubleSetting.Builder()
         .name("rainbow-saturation")
         .description("Saturation of rainbow color mode.")
         .defaultValue(1)
