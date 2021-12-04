@@ -29,6 +29,9 @@
 - Clone this repository
 - Run `./gradlew build`
 
+### Installation
+Follow guide on the [wiki](https://github.com/MatHax/Legacy/wiki/Installation).
+
 ## Contribution Guidelines
 
 We will review and help with all reasonable pull requests as long as the guidelines below are met.
