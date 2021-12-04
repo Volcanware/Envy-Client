@@ -148,10 +148,8 @@ public class MatHaxLegacy implements ClientModInitializer {
         // Global Minecraft client accessor
         mc = MinecraftClient.getInstance();
 
-        // Icon
+        // Icon & Title
         WindowUtils.MatHax.setIcon();
-
-        // Title
         WindowUtils.MatHax.setTitleLoading();
 
         // Register event handlers
@@ -238,7 +236,7 @@ public class MatHaxLegacy implements ClientModInitializer {
         GuiRenderer.init();
         GuiThemes.postInit();
 
-        // Loaded window title
+        // Title
         WindowUtils.MatHax.setTitleLoaded();
 
         // Shutdown hook
@@ -249,6 +247,7 @@ public class MatHaxLegacy implements ClientModInitializer {
             GuiThemes.save();
         }));
 
+        // Icon & Title
         ClientSpoof cs = Modules.get().get(ClientSpoof.class);
         if (cs.isActive() && cs.changeWindowIcon()) WindowUtils.Meteor.setIcon();
         else WindowUtils.MatHax.setIcon();

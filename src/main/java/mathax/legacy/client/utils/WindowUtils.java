@@ -1,7 +1,5 @@
 package mathax.legacy.client.utils;
 
-import mathax.legacy.client.MatHaxLegacy;
-
 import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class WindowUtils {
@@ -12,7 +10,7 @@ public class WindowUtils {
         }
 
         public static void setIcon() {
-            mc.getWindow().setIcon(MatHaxLegacy.class.getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), MatHaxLegacy.class.getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
+            mc.getWindow().setIcon(WindowUtils.class.getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon64.png"), WindowUtils.class.getResourceAsStream("/assets/mathaxlegacy/textures/icons/icon128.png"));
         }
 
         public static void setTitleLoading() {
@@ -35,7 +33,7 @@ public class WindowUtils {
         }
 
         public static void setIcon() {
-            mc.getWindow().setIcon(MatHaxLegacy.class.getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/meteor64.png"), MatHaxLegacy.class.getClass().getResourceAsStream("/assets/mathaxlegacy/textures/icons/meteor128.png"));
+            mc.getWindow().setIcon(WindowUtils.class.getResourceAsStream("/assets/mathaxlegacy/textures/icons/meteor64.png"), WindowUtils.class.getResourceAsStream("/assets/mathaxlegacy/textures/icons/meteor128.png"));
         }
 
         public static void setTitle() {

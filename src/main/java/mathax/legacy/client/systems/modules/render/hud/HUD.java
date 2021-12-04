@@ -125,10 +125,10 @@ public class HUD extends Module {
         mainInfo.add(new DurabilityHUD(this));
         mainInfo.add(new BiomeHUD(this));
         mainInfo.add(new PlayerModelHUD(this));
-        mainInfo.add(new MusicHUD(this));
         mainInfo.add(new DateHUD(this));
         mainInfo.add(new RealTimeHUD(this));
         mainInfo.add(new InGameTimeHUD(this));
+        mainInfo.add(new MusicHUD(this));
 
         // MODULE INFO
         moduleInfo = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 200);
