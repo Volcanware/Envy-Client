@@ -364,7 +364,7 @@ public class InvUtils {
         add(Items.BLACK_WOOL);
     }};
 
-    public static ArrayList<Item> planks = new ArrayList<Item>() {{
+    public static ArrayList<Item> planks = new ArrayList<>() {{
         add(Items.OAK_PLANKS);
         add(Items.SPRUCE_PLANKS);
         add(Items.BIRCH_PLANKS);

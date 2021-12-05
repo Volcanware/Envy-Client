@@ -115,7 +115,7 @@ public class Offhand extends Module {
             // No offhand item
             if (!item.found()) {
                 if (!sentMessage) {
-                    warning("Chosen item not found." + (toggleNotFound.get() ? " Disabling." : ""));
+                    warning("Chosen item not found" + (toggleNotFound.get() ? ", disabling..." : "."));
                     if (toggleNotFound.get()) {
                         toggle();
                         return;
