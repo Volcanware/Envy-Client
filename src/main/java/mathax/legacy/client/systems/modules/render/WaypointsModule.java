@@ -262,11 +262,11 @@ public class WaypointsModule extends Module {
 
             // Y
             table.add(theme.label("Y:"));
-            WIntEdit y = theme.intEdit(waypoint.y, 0, Integer.MAX_VALUE, true);
+            WIntEdit y = theme.intEdit(waypoint.y, Utils.getMinHeight(), Utils.getMaxHeight(), true);
             y.noSlider = true;
             y.actionOnRelease = () -> {
-                if (y.get() < 0) y.set(0);
-                else if (y.get() > 255) y.set(255);
+                if (y.get() < Utils.getMinHeight()) y.set(Utils.getMinHeight());
+                else if (y.get() > Utils.getMaxHeight()) y.set(Utils.getMaxHeight());
 
                 waypoint.y = y.get();
             };

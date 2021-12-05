@@ -46,7 +46,7 @@ public class AutoTotem extends Module {
     private boolean shouldOverrideTotem, shouldClickBlank;
     public boolean locked;
 
-    //private static final double damage = (float)((int)((1 + 1) / 2.0D * 7.0D * 12.0D + 1.0D));
+    //private static final double damage = (float) ((int) ((1 + 1) / 2.0D * 7.0D * 12.0D + 1.0D));
 
     private int selectedSlot = 0;
     private int totems, ticks;

@@ -405,15 +405,16 @@ public class PlayerUtils {
         return air < 2;
     }
 
-    public static boolean isNoob(LivingEntity target) {
-        assert mc.world != null;
-        assert mc.player != null;
+    public static boolean isSurrounded(PlayerEntity target) {
+        return !mc.world.getBlockState(target.getBlockPos().add(1, 0, 0)).isAir() && !mc.world.getBlockState(target.getBlockPos().add(-1, 0, 0)).isAir() && !mc.world.getBlockState(target.getBlockPos().add(0, 0, 1)).isAir() && !mc.world.getBlockState(target.getBlockPos().add(0, 0, -1)).isAir();
+    }
 
+    public static boolean isNoob(PlayerEntity target) {
         int count = 0;
         int count2 = 0;
 
-        if (isBurrowed2(target)) return false;
-        if (isBurrowed2(mc.player) && target.getBlockPos().getX() == mc.player.getBlockPos().getX() && target.getBlockPos().getZ() == mc.player.getBlockPos().getZ() && target.getBlockPos().getY() - mc.player.getBlockPos().getY() <= 2) return true;
+        if (isBurrowed(target)) return false;
+        if (isBurrowed(mc.player) && target.getBlockPos().getX() == mc.player.getBlockPos().getX() && target.getBlockPos().getZ() == mc.player.getBlockPos().getZ() && target.getBlockPos().getY() - mc.player.getBlockPos().getY() <= 2) return true;
         if (!mc.world.getBlockState(target.getBlockPos().add(0, 2, 0)).isAir()) return true;
         if (!mc.world.getBlockState(target.getBlockPos().add(1, 0, 0)).isAir()) ++count;
         if (!mc.world.getBlockState(target.getBlockPos().add(-1, 0, 0)).isAir()) ++count;
@@ -427,14 +428,14 @@ public class PlayerUtils {
         return count < 4 && count2 == 4;
     }
 
+    public static boolean isBurrowed(PlayerEntity target) {
+        return !mc.world.getBlockState(target.getBlockPos()).isAir();
+    }
+
     public static boolean isBurrowed(PlayerEntity p, boolean holeCheck) {
         BlockPos pos = p.getBlockPos();
         if (holeCheck && !isInHole(p)) return false;
         return BlockUtils.getBlock(pos) == Blocks.ENDER_CHEST || BlockUtils.getBlock(pos) == Blocks.OBSIDIAN || BlockUtils.isAnvilBlock(pos);
-    }
-
-    public static boolean isBurrowed2(LivingEntity target) {
-        return !mc.world.getBlockState(target.getBlockPos()).isAir();
     }
 
     public static boolean isWebbed(PlayerEntity player) {

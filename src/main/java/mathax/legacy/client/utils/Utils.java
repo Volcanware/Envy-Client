@@ -285,6 +285,14 @@ public class Utils {
         return Dimension.Overworld;
     }
 
+    public static Integer getMaxHeight() {
+        return mc.world.getDimension().getHeight() - Math.abs(getMinHeight()) - 1;
+    }
+
+    public static Integer getMinHeight() {
+        return mc.world.getDimension().getMinimumY();
+    }
+
     public static String getWorldName() {
         if (mc.isInSingleplayer()) {
             // Singleplayer

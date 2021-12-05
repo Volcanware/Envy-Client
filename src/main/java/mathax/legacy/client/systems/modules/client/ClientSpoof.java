@@ -3,7 +3,7 @@ package mathax.legacy.client.systems.modules.client;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.utils.WindowUtils;
+import mathax.legacy.client.utils.misc.WindowUtils;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import net.minecraft.item.Items;
 

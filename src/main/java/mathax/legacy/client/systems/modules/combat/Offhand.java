@@ -44,6 +44,13 @@ public class Offhand extends Module {
         .build()
     );
 
+    private final Setting<Boolean> toggleNotFound = sgGeneral.add(new BoolSetting.Builder()
+        .name("toggle-not-found")
+        .description("Toggles when you dont have the item you chose.")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<Boolean> rightClick = sgGeneral.add(new BoolSetting.Builder()
         .name("right-click")
         .description("Only holds the item in your offhand when you are holding right click.")
@@ -86,7 +93,7 @@ public class Offhand extends Module {
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (autoTotem.mode.get() == AutoTotem.Mode.Strict && autoTotem.isActive()) {
-            info("(highlight)" + title + "(default) does not work with (highlight)" + autoTotem.title + "(default) set to (highlight)Strict(default) mode, disabling...");
+            info("(highlight)%s(default) does not work with (highlight)%s(default) set to (highlight)%s(default) mode, disabling...", title, autoTotem.title, "Strict");
             toggle();
             return;
         }
@@ -108,7 +115,11 @@ public class Offhand extends Module {
             // No offhand item
             if (!item.found()) {
                 if (!sentMessage) {
-                    warning("Chosen item not found.");
+                    warning("Chosen item not found." + (toggleNotFound.get() ? " Disabling." : ""));
+                    if (toggleNotFound.get()) {
+                        toggle();
+                        return;
+                    }
                     sentMessage = true;
                 }
             }
@@ -124,7 +135,6 @@ public class Offhand extends Module {
         else if (!isClicking && rightClick.get()) {
             if (autoTotem.isActive()) {
                 FindItemResult totem = InvUtils.find(itemStack -> itemStack.getItem() == Items.TOTEM_OF_UNDYING, hotbar.get() ? 0 : 9, 35);
-
                 if (totem.found() && !totem.isOffhand()) InvUtils.move().from(totem.getSlot()).toOffhand();
             } else {
                 FindItemResult empty = InvUtils.find(ItemStack::isEmpty, hotbar.get() ? 0 : 9, 35);

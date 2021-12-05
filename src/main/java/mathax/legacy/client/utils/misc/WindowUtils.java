@@ -1,4 +1,6 @@
-package mathax.legacy.client.utils;
+package mathax.legacy.client.utils.misc;
+
+import mathax.legacy.client.utils.Version;
 
 import static mathax.legacy.client.MatHaxLegacy.mc;
 

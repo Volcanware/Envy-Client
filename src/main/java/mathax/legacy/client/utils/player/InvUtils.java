@@ -16,6 +16,7 @@ import static mathax.legacy.client.MatHaxLegacy.mc;
 
 public class InvUtils {
     private static final Action ACTION = new Action();
+
     public static int previousSlot = -1;
 
     // Update Slot
@@ -69,6 +70,7 @@ public class InvUtils {
             for (Item item : items) {
                 if (itemStack.getItem() == item) return true;
             }
+
             return false;
         });
     }
@@ -122,6 +124,7 @@ public class InvUtils {
             ItemStack itemStack = mc.player.getInventory().getStack(i);
             if (itemStack == null || itemStack.getItem() instanceof AirBlockItem) return false;
         }
+
         return true;
     }
 
@@ -342,7 +345,7 @@ public class InvUtils {
 
     // Lists
 
-    public static ArrayList<Item> wools = new ArrayList<Item>() {{
+    public static ArrayList<Item> wools = new ArrayList<>() {{
         add(Items.WHITE_WOOL);
         add(Items.ORANGE_WOOL);
         add(Items.MAGENTA_WOOL);
