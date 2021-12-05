@@ -90,7 +90,7 @@ public class HUD extends Module {
     }
 
     public final List<HUDElement> elements = new ArrayList<>();
-    private final HUDElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, binds, radar, itemsArmor, crosshair, crosshair2;
+    private final HUDElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, radar, itemsArmor, crosshair, crosshair2;
 
     public final Runnable reset = () -> {
         align();
@@ -165,11 +165,6 @@ public class HUD extends Module {
         invPot.add(new ContainerViewerHUD(this));
         invPot.add(new PotionTimersHUD(this));
 
-        // BINDS
-        binds = new HUDElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Center, 2, 5);
-        // Modules
-        binds.add(new VisualBinds(this));
-
         // TEXT RADAR
         radar = new HUDElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Center, 2, 100);
         // Modules
@@ -210,7 +205,6 @@ public class HUD extends Module {
         lag.align();
         modules.align();
         invPot.align();
-        binds.align();
         radar.align();
         itemsArmor.align();
         crosshair.align();
