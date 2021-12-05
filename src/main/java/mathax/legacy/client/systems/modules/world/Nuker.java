@@ -18,6 +18,15 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Nuker extends Module {
+    private final Pool<BlockPos.Mutable> blockPosPool = new Pool<>(BlockPos.Mutable::new);
+    private final List<BlockPos.Mutable> blocks = new ArrayList<>();
+
+    private boolean firstBlock;
+    private final BlockPos.Mutable lastBlockPos = new BlockPos.Mutable();
+
+    private int noBlockTimer;
+    private int timer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgWhitelist = settings.createGroup("Whitelist");
 
@@ -84,15 +93,6 @@ public class Nuker extends Module {
         .build()
     );
 
-    private final Pool<BlockPos.Mutable> blockPosPool = new Pool<>(BlockPos.Mutable::new);
-    private final List<BlockPos.Mutable> blocks = new ArrayList<>();
-
-    private boolean firstBlock;
-    private final BlockPos.Mutable lastBlockPos = new BlockPos.Mutable();
-
-    private int timer;
-    private int noBlockTimer;
-
     public Nuker() {
         super(Categories.World, Items.TNT, "nuker", "Breaks blocks around you.");
     }
@@ -141,19 +141,14 @@ public class Nuker extends Module {
         // Break block if found
         BlockIterator.after(() -> {
             // Sort blocks
-            if (sortMode.get() != SortMode.None) {
-                blocks.sort(Comparator.comparingDouble(value -> Utils.squaredDistance(pX, pY, pZ, value.getX() + 0.5, value.getY() + 0.5, value.getZ() + 0.5) * (sortMode.get() == SortMode.Closest ? 1 : -1)));
-            }
+            if (sortMode.get() != SortMode.None) blocks.sort(Comparator.comparingDouble(value -> Utils.squaredDistance(pX, pY, pZ, value.getX() + 0.5, value.getY() + 0.5, value.getZ() + 0.5) * (sortMode.get() == SortMode.Closest ? 1 : -1)));
 
             // Check if some block was found
             if (blocks.isEmpty()) {
                 // If no block was found for long enough then set firstBlock flag to true to not wait before breaking another again
                 if (noBlockTimer++ >= delay.get()) firstBlock = true;
                 return;
-            }
-            else {
-                noBlockTimer = 0;
-            }
+            } else noBlockTimer = 0;
 
             // Update timer
             if (!firstBlock && !lastBlockPos.equals(blocks.get(0))) {

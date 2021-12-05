@@ -30,12 +30,14 @@ import net.minecraft.util.shape.VoxelShape;
 public class EChestFarmer extends Module {
     private final VoxelShape SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
 
-    private BlockPos target;
-
     private int startCount, prevSlot;
+
+    private BlockPos target;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
+
+    // General
 
     private final Setting<Boolean> selfToggle = sgGeneral.add(new BoolSetting.Builder()
         .name("self-toggle")
@@ -184,7 +186,6 @@ public class EChestFarmer extends Module {
     @EventHandler
     private void onRender3D(Render3DEvent event) {
         if (target == null || !render.get() || Modules.get().get(PacketMine.class).isMiningBlock(target)) return;
-
         Box box = SHAPE.getBoundingBoxes().get(0);
         event.renderer.box(target.getX() + box.minX, target.getY() + box.minY, target.getZ() + box.minZ, target.getX() + box.maxX, target.getY() + box.maxY, target.getZ() + box.maxZ, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
     }

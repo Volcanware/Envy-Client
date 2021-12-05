@@ -26,6 +26,8 @@ public class Flamethrower extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Double> distance = sgGeneral.add(new DoubleSetting.Builder()
         .name("distance")
         .description("The maximum distance the animal has to be to be roasted.")
@@ -139,19 +141,13 @@ public class Flamethrower extends Module {
     private boolean selectSlot() {
         boolean findNewFlintAndSteel = false;
         if (mc.player.getInventory().getMainHandStack().getItem() == Items.FLINT_AND_STEEL) {
-            if (antiBreak.get() && mc.player.getInventory().getMainHandStack().getDamage() >= mc.player.getInventory().getMainHandStack().getMaxDamage() - 1)
-                findNewFlintAndSteel = true;
+            if (antiBreak.get() && mc.player.getInventory().getMainHandStack().getDamage() >= mc.player.getInventory().getMainHandStack().getMaxDamage() - 1) findNewFlintAndSteel = true;
         } else if (mc.player.getInventory().offHand.get(0).getItem() == Items.FLINT_AND_STEEL) {
-            if (antiBreak.get() && mc.player.getInventory().offHand.get(0).getDamage() >= mc.player.getInventory().offHand.get(0).getMaxDamage() - 1)
-                findNewFlintAndSteel = true;
-        } else {
-            findNewFlintAndSteel = true;
-        }
+            if (antiBreak.get() && mc.player.getInventory().offHand.get(0).getDamage() >= mc.player.getInventory().offHand.get(0).getMaxDamage() - 1) findNewFlintAndSteel = true;
+        } else findNewFlintAndSteel = true;
 
         boolean foundFlintAndSteel = !findNewFlintAndSteel;
-        if (findNewFlintAndSteel) {
-            foundFlintAndSteel = InvUtils.swap(InvUtils.findInHotbar(itemStack -> (!antiBreak.get() || (antiBreak.get() && itemStack.getDamage() < itemStack.getMaxDamage() - 1)) && itemStack.getItem() == Items.FLINT_AND_STEEL).getSlot(), true);
-        }
+        if (findNewFlintAndSteel) foundFlintAndSteel = InvUtils.swap(InvUtils.findInHotbar(itemStack -> (!antiBreak.get() || (antiBreak.get() && itemStack.getDamage() < itemStack.getMaxDamage() - 1)) && itemStack.getItem() == Items.FLINT_AND_STEEL).getSlot(), true);
         return foundFlintAndSteel;
     }
 }

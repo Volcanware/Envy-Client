@@ -15,10 +15,13 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 
 public class AutoNametag extends Module {
-    private Entity target;
     private boolean offHand;
 
+    private Entity target;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    // General
 
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
@@ -31,7 +34,7 @@ public class AutoNametag extends Module {
         .description("The maximum range an entity can be to be nametagged.")
         .defaultValue(5)
         .min(0)
-        .sliderMax(6)
+        .sliderRange(0, 6)
         .build()
     );
 
@@ -76,9 +79,7 @@ public class AutoNametag extends Module {
         target = TargetUtils.get(entity -> {
             if (PlayerUtils.distanceTo(entity) > range.get()) return false;
             if (!entities.get().getBoolean(entity.getType())) return false;
-            if (entity.hasCustomName()) {
-                return renametag.get() && entity.getCustomName() != mc.player.getInventory().getStack(findNametag.getSlot()).getName();
-            }
+            if (entity.hasCustomName()) return renametag.get() && entity.getCustomName() != mc.player.getInventory().getStack(findNametag.getSlot()).getName();
             return false;
         }, priority.get());
 

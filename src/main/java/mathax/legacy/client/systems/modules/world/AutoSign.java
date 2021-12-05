@@ -21,6 +21,8 @@ import java.util.Calendar;
 public class AutoSign extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<String> lineone = sgGeneral.add(new StringSetting.Builder()
         .name("line-one")
         .description("Text of the first line of the sign.")
@@ -51,7 +53,7 @@ public class AutoSign extends Module {
 
     public final Setting<Boolean> euDate = sgGeneral.add(new BoolSetting.Builder()
         .name("EU-date")
-        .description("Changes the date to Europian format.")
+        .description("Changes the date in %date% to Europian format.")
         .defaultValue(false)
         .build()
     );

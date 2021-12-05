@@ -28,12 +28,14 @@ public class InstaMine extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
+    // General
+
     private final Setting<Integer> tickDelay = sgGeneral.add(new IntSetting.Builder()
         .name("delay")
         .description("The delay between breaks.")
         .defaultValue(0)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 

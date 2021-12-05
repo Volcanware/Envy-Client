@@ -26,15 +26,17 @@ import net.minecraft.util.registry.Registry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AutoExtinguish extends Module {
+    private static final StatusEffect FIRE_RESISTANCE = Registry.STATUS_EFFECT.get(new Identifier("fire_resistance"));
+
     private boolean doesWaterBucketWork = true;
     private boolean hasPlacedWater = false;
 
     private BlockPos blockPos = null;
 
-    private static final StatusEffect FIRE_RESISTANCE = Registry.STATUS_EFFECT.get(new Identifier("fire_resistance"));
+    private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgBucket = settings.createGroup("Bucket");
 
-    private final SettingGroup sgGeneral = settings.createGroup("Extinguish Fire around you");
-    private final SettingGroup sgBucket = settings.createGroup("Extinguish yourself");
+    // General
 
     private final Setting<Boolean> extinguish = sgGeneral.add(new BoolSetting.Builder()
         .name("extinguish")
@@ -69,6 +71,8 @@ public class AutoExtinguish extends Module {
         .sliderMax(50)
         .build()
     );
+
+    // Bucket
 
     private final Setting<Boolean> waterBucket = sgBucket.add(new BoolSetting.Builder()
         .name("water")
@@ -109,9 +113,8 @@ public class AutoExtinguish extends Module {
                 doesWaterBucketWork = true;
             }
         }
-        if (onGround.get() && !mc.player.isOnGround()) {
-            return;
-        }
+
+        if (onGround.get() && !mc.player.isOnGround()) return;
 
         if (waterBucket.get() && doesWaterBucketWork) {
             if (hasPlacedWater) {
@@ -119,7 +122,6 @@ public class AutoExtinguish extends Module {
                 blockPos = mc.player.getBlockPos();
                 place(slot);
                 hasPlacedWater = false;
-
             } else if (!mc.player.hasStatusEffect(FIRE_RESISTANCE) && mc.player.isOnFire()) {
                 blockPos = mc.player.getBlockPos();
                 final int slot = findSlot(Items.WATER_BUCKET);
@@ -157,9 +159,7 @@ public class AutoExtinguish extends Module {
     private void place(int slot) {
         if (slot != -1) {
             final int preSlot = mc.player.getInventory().selectedSlot;
-            if (center.get()) {
-                PlayerUtils.centerPlayer();
-            }
+            if (center.get()) PlayerUtils.centerPlayer();
             mc.player.getInventory().selectedSlot = slot;
             float yaw = mc.gameRenderer.getCamera().getYaw() % 360;
             float pitch = mc.gameRenderer.getCamera().getPitch() % 360;
@@ -190,5 +190,4 @@ public class AutoExtinguish extends Module {
 
         return slot;
     }
-
 }

@@ -108,24 +108,19 @@ public class AutoMount extends Module {
 
             if (mc.player.getMainHandStack().getItem() instanceof SpawnEggItem) return;
 
-            if (donkeys.get() && entity instanceof DonkeyEntity && (!checkSaddle.get() || ((DonkeyEntity) entity).isSaddled())) {
-                interact(entity);
-            } else if (llamas.get() && entity instanceof LlamaEntity) {
-                interact(entity);
-            } else if (boats.get() && entity instanceof BoatEntity) {
-                interact(entity);
-            } else if (minecarts.get() && entity instanceof MinecartEntity) {
-                interact(entity);
-            } else if (horses.get() && entity instanceof HorseEntity && (!checkSaddle.get() || ((HorseEntity) entity).isSaddled())) {
-                interact(entity);
-            } else if (pigs.get() && entity instanceof PigEntity && ((PigEntity) entity).isSaddled()) {
-                interact(entity);
-            } else if (mules.get() && entity instanceof MuleEntity && (!checkSaddle.get() || ((MuleEntity) entity).isSaddled())) {
-                interact(entity);
-            } else if (skeletonHorse.get() && entity instanceof SkeletonHorseEntity && (!checkSaddle.get() || ((SkeletonHorseEntity) entity).isSaddled())) {
-                interact(entity);
-            }
+            if (canInteract(entity)) interact(entity);
         }
+    }
+
+    private boolean canInteract(Entity entity) {
+        if (donkeys.get() && entity instanceof DonkeyEntity && (!checkSaddle.get() || ((DonkeyEntity) entity).isSaddled())) return true;
+        else if (llamas.get() && entity instanceof LlamaEntity) return true;
+        else if (boats.get() && entity instanceof BoatEntity) return true;
+        else if (minecarts.get() && entity instanceof MinecartEntity) return true;
+        else if (horses.get() && entity instanceof HorseEntity && (!checkSaddle.get() || ((HorseEntity) entity).isSaddled())) return true;
+        else if (pigs.get() && entity instanceof PigEntity && ((PigEntity) entity).isSaddled()) return true;
+        else if (mules.get() && entity instanceof MuleEntity && (!checkSaddle.get() || ((MuleEntity) entity).isSaddled())) return true;
+        else return skeletonHorse.get() && entity instanceof SkeletonHorseEntity && (!checkSaddle.get() || ((SkeletonHorseEntity) entity).isSaddled());
     }
 
     private void interact(Entity entity) {

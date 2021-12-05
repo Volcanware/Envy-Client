@@ -17,6 +17,8 @@ import net.minecraft.util.math.Vec3d;
 public class EndermanLook extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> lookMode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("look-mode")
         .description("How this module behaves.")
@@ -49,7 +51,6 @@ public class EndermanLook extends Module {
     private boolean shouldLook() {
         for (Entity entity : mc.world.getEntities()) {
             if (!(entity instanceof EndermanEntity)) continue;
-
             if (entity.isAlive() && angleCheck(entity)) return true;
         }
 

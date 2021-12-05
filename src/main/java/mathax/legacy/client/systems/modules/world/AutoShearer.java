@@ -24,6 +24,8 @@ public class AutoShearer extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Double> distance = sgGeneral.add(new DoubleSetting.Builder()
         .name("distance")
         .description("The maximum distance the sheep have to be to be sheared.")

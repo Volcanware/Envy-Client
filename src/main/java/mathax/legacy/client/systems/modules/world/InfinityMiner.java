@@ -32,15 +32,21 @@ public class InfinityMiner extends Module {
     private final Settings baritoneSettings = BaritoneAPI.getSettings();
 
     private final BlockPos.Mutable homePos = new BlockPos.Mutable();
+
     private boolean repairing;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgExtras = settings.createGroup("Extras");
 
+    // General
+
     public final Setting<List<Block>> targetBlocks = sgGeneral.add(new BlockListSetting.Builder()
         .name("target-blocks")
         .description("The target blocks to mine.")
-        .defaultValue(Blocks.DIAMOND_ORE, Blocks.DEEPSLATE_DIAMOND_ORE)
+        .defaultValue(
+            Blocks.DIAMOND_ORE,
+            Blocks.DEEPSLATE_DIAMOND_ORE
+        )
         .filter(this::filter)
         .build()
     );
@@ -48,7 +54,11 @@ public class InfinityMiner extends Module {
     public final Setting<List<Block>> repairBlocks = sgGeneral.add(new BlockListSetting.Builder()
         .name("repair-blocks")
         .description("The repair blocks to mine.")
-        .defaultValue(Blocks.COAL_ORE, Blocks.REDSTONE_ORE, Blocks.NETHER_QUARTZ_ORE)
+        .defaultValue(
+            Blocks.COAL_ORE,
+            Blocks.REDSTONE_ORE,
+            Blocks.NETHER_QUARTZ_ORE
+        )
         .filter(this::filter)
         .build()
     );
@@ -69,6 +79,8 @@ public class InfinityMiner extends Module {
         .build()
     );
 
+    // Extras
+
     public final Setting<Boolean> autoWalkHome = sgExtras.add(new BoolSetting.Builder()
         .name("walk-home")
         .description("Will walk 'home' when your inventory is full.")
@@ -84,7 +96,7 @@ public class InfinityMiner extends Module {
     );
 
     public InfinityMiner() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever.");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever. Requires mending to work.");
     }
 
     @Override
@@ -137,8 +149,7 @@ public class InfinityMiner extends Module {
 
             if (baritoneSettings.mineScanDroppedItems.value) baritoneSettings.mineScanDroppedItems.value = false;
             baritone.getMineProcess().mine(getRepairBlocks());
-        }
-        else {
+        } else {
             if (needsRepair()) {
                 warning("Pickaxe needs repair, beginning repair process");
                 repairing = true;

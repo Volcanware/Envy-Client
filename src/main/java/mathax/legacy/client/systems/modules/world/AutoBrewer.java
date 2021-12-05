@@ -21,6 +21,8 @@ public class AutoBrewer extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<MyPotion> potion = sgGeneral.add(new PotionSetting.Builder()
         .name("potion")
         .description("The type of potion to brew.")

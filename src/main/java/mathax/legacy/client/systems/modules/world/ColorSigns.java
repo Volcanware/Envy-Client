@@ -20,12 +20,14 @@ public class ColorSigns extends Module {
             checkWarning();
             return;
         }
+
         if (!(event.packet instanceof UpdateSignC2SPacket)) return;
         UpdateSignC2SPacket p = (UpdateSignC2SPacket)event.packet;
         for (int l = 0; l < p.getText().length; l++) {
             String newText = p.getText()[l].replaceAll("(?i)\u00a7|&([0-9A-FK-OR])", "\u00a7\u00a7$1$1");
             p.getText()[l] = newText;
         }
+
         event.packet = p;
     }
 

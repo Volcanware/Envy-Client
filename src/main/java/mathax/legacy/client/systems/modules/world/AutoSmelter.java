@@ -25,6 +25,8 @@ public class AutoSmelter extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<List<Item>> fuelItems = sgGeneral.add(new ItemListSetting.Builder()
         .name("fuel-items")
         .description("Items to use as fuel")
