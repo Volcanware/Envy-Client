@@ -7,20 +7,23 @@ import mathax.legacy.client.mixin.EntityTrackingSectionAccessor;
 import mathax.legacy.client.mixin.SectionedEntityCacheAccessor;
 import mathax.legacy.client.mixin.SimpleEntityLookupAccessor;
 import mathax.legacy.client.mixin.WorldAccessor;
+import mathax.legacy.client.mixininterface.IExplosion;
+import mathax.legacy.client.mixininterface.IVec3d;
+import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerEntity;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.entity.DamageUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.ChunkSectionPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.*;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.entity.EntityLookup;
 import net.minecraft.world.entity.EntityTrackingSection;
@@ -40,7 +43,11 @@ public class EntityUtils {
         return type != EntityType.AREA_EFFECT_CLOUD && type != EntityType.ARROW && type != EntityType.FALLING_BLOCK && type != EntityType.FIREWORK_ROCKET && type != EntityType.ITEM && type != EntityType.LLAMA_SPIT && type != EntityType.SPECTRAL_ARROW && type != EntityType.ENDER_PEARL && type != EntityType.EXPERIENCE_BOTTLE && type != EntityType.POTION && type != EntityType.TRIDENT && type != EntityType.LIGHTNING_BOLT && type != EntityType.FISHING_BOBBER && type != EntityType.EXPERIENCE_ORB && type != EntityType.EGG;
     }
 
-    public static float getTotalHealth(PlayerEntity target) {
+    public static float getTotalHealth(LivingEntity target) {
+        return target.getHealth() + target.getAbsorptionAmount();
+    }
+
+    public static float getTotalPlayerHealth(PlayerEntity target) {
         return target.getHealth() + target.getAbsorptionAmount();
     }
 

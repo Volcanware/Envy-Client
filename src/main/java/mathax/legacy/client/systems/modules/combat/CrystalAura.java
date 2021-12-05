@@ -2,6 +2,7 @@ package mathax.legacy.client.systems.modules.combat;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import it.unimi.dsi.fastutil.ints.*;
+import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.entity.EntityAddedEvent;
 import mathax.legacy.client.events.entity.EntityRemovedEvent;
@@ -17,6 +18,7 @@ import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.Target;
 import mathax.legacy.client.utils.entity.fakeplayer.FakePlayerManager;
@@ -33,6 +35,8 @@ import mathax.legacy.client.eventbus.EventPriority;
 import mathax.legacy.client.settings.*;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -52,7 +56,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class CrystalAura extends Module {
     private int breakTimer, placeTimer, switchTimer, ticksPassed;
-    private final List<PlayerEntity> targets = new ArrayList<>();
+    private final List<LivingEntity> targets = new ArrayList<>();
 
     private final Vec3d vec3d = new Vec3d(0, 0, 0);
     private final Vec3d playerEyePos = new Vec3d(0, 0, 0);
@@ -75,7 +79,7 @@ public class CrystalAura extends Module {
 
     private double serverYaw;
 
-    private PlayerEntity bestTarget;
+    private LivingEntity bestTarget;
     private double bestTargetDamage;
     private int bestTargetTimer;
 
@@ -99,6 +103,14 @@ public class CrystalAura extends Module {
 
     // General
 
+    private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
+        .name("entities")
+        .description("Entities to attack.")
+        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
+        .onlyAttackable()
+        .build()
+    );
+
     public final Setting<Double> targetRange = sgGeneral.add(new DoubleSetting.Builder()
         .name("target-range")
         .description("Range in which to target entities.")
@@ -107,14 +119,6 @@ public class CrystalAura extends Module {
         .sliderRange(0, 16)
         .build()
     );
-
-    /*private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
-        .description("Entities to attack.")
-        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
-        .onlyAttackable()
-        .build()
-    );*/
 
     private final Setting<Boolean> predictMovement = sgGeneral.add(new BoolSetting.Builder()
         .name("predict-movement")
@@ -988,7 +992,7 @@ public class CrystalAura extends Module {
 
     private boolean shouldFacePlace(BlockPos crystal) {
         // Checks if the provided crystal position should face place to any target
-        for (PlayerEntity target : targets) {
+        for (LivingEntity target : targets) {
             BlockPos pos = target.getBlockPos();
 
             if (crystal.getY() == pos.getY() + 1 && Math.abs(pos.getX() - crystal.getX()) <= 1 && Math.abs(pos.getZ() - crystal.getZ()) <= 1) {
@@ -1016,11 +1020,11 @@ public class CrystalAura extends Module {
         return distance > (behindWall ? (place ? placeWallsRange : breakWallsRange).get() : (place ? placeRange : breakRange).get());
     }
 
-    private PlayerEntity getNearestTarget() {
-        PlayerEntity nearestTarget = null;
+    private LivingEntity getNearestTarget() {
+        LivingEntity nearestTarget = null;
         double nearestDistance = Double.MAX_VALUE;
 
-        for (PlayerEntity target : targets) {
+        for (LivingEntity target : targets) {
             double distance = target.squaredDistanceTo(mc.player);
             if (distance < nearestDistance) {
                 nearestTarget = target;
@@ -1035,13 +1039,13 @@ public class CrystalAura extends Module {
         double damage = 0;
 
         if (fast) {
-            PlayerEntity target = getNearestTarget();
-            if (!(smartDelay.get() && breaking && target.hurtTime > 0)) damage = DamageUtils.crystalDamage(target, vec3d, predictMovement.get(), obsidianPos, ignoreTerrain.get());
+            LivingEntity target = getNearestTarget();
+            if (!(smartDelay.get() && breaking && target.hurtTime > 0)) damage = DamageUtils.crystalDamageLivingEntity(target, vec3d, predictMovement.get(), obsidianPos, ignoreTerrain.get());
         } else {
-            for (PlayerEntity target : targets) {
+            for (LivingEntity target : targets) {
                 if (smartDelay.get() && breaking && target.hurtTime > 0) continue;
 
-                double dmg = DamageUtils.crystalDamage(target, vec3d, predictMovement.get(), obsidianPos, ignoreTerrain.get());
+                double dmg = DamageUtils.crystalDamageLivingEntity(target, vec3d, predictMovement.get(), obsidianPos, ignoreTerrain.get());
 
                 // Update best target
                 if (dmg > bestTargetDamage) {
@@ -1059,15 +1063,24 @@ public class CrystalAura extends Module {
 
     @Override
     public String getInfoString() {
-        return bestTarget != null && bestTargetTimer > 0 ? bestTarget.getGameProfile().getName() : null;
+        if (bestTarget != null && bestTarget instanceof PlayerEntity bestPlayerTarget) return bestTargetTimer > 0 ? bestPlayerTarget.getGameProfile().getName() : null;
+        if (bestTarget != null) return bestTargetTimer > 0 ? bestTarget.getType().getName().getString() : null;
+        return null;
     }
 
     private void findTargets() {
         targets.clear();
 
+        // Entities
+        for (Entity entity : mc.world.getEntities()) {
+            if (entity instanceof PlayerEntity || !entities.get().containsKey(entity.getType())) continue;
+
+            if (entity instanceof LivingEntity livingEntity && entity.isAlive() && entity.distanceTo(mc.player) <= targetRange.get()) targets.add(livingEntity);
+        }
+
         // Players
         for (PlayerEntity player : mc.world.getPlayers()) {
-            if (player.getAbilities().creativeMode || player == mc.player) continue;
+            if (!entities.get().containsKey(EntityType.PLAYER) || player.getAbilities().creativeMode || player == mc.player) continue;
 
             if (!player.isDead() && player.isAlive() && Friends.get().shouldAttack(player) && player.distanceTo(mc.player) <= targetRange.get()) targets.add(player);
         }

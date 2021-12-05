@@ -51,6 +51,10 @@ public class DamageUtils {
 
     // Crystal damage
 
+    public static double crystalDamage(PlayerEntity player, Vec3d crystal) {
+        return crystalDamage(player, crystal, false, null, false);
+    }
+
     public static double crystalDamage(PlayerEntity player, Vec3d crystal, boolean predictMovement, BlockPos obsidianPos, boolean ignoreTerrain) {
         if (player == null) return 0;
         if (EntityUtils.getGameMode(player) == GameMode.CREATIVE && !(player instanceof FakePlayerEntity)) return 0;
@@ -75,8 +79,34 @@ public class DamageUtils {
         return damage < 0 ? 0 : damage;
     }
 
-    public static double crystalDamage(PlayerEntity player, Vec3d crystal) {
-        return crystalDamage(player, crystal, false, null, false);
+    public static double crystalDamageLivingEntity(LivingEntity livingEntity, Vec3d crystal) {
+        return crystalDamageLivingEntity(livingEntity, crystal, false, null, false);
+    }
+
+    public static double crystalDamageLivingEntity(LivingEntity livingEntity, Vec3d crystal, boolean predictMovement, BlockPos obsidianPos, boolean ignoreTerrain) {
+        if (livingEntity == null) return 0;
+        if (livingEntity instanceof PlayerEntity player) {
+            if (EntityUtils.getGameMode(player) == GameMode.CREATIVE && !(player instanceof FakePlayerEntity)) return 0;
+        }
+
+        ((IVec3d) vec3d).set(livingEntity.getPos().x, livingEntity.getPos().y, livingEntity.getPos().z);
+        if (predictMovement) ((IVec3d) vec3d).set(vec3d.x + livingEntity.getVelocity().x, vec3d.y + livingEntity.getVelocity().y, vec3d.z + livingEntity.getVelocity().z);
+
+        double modDistance = Math.sqrt(vec3d.squaredDistanceTo(crystal));
+        if (modDistance > 12) return 0;
+
+        double exposure = getExposure(crystal, livingEntity, predictMovement, raycastContext, obsidianPos, ignoreTerrain);
+        double impact = (1 - (modDistance / 12)) * exposure;
+        double damage = ((impact * impact + impact) / 2 * 7 * (6 * 2) + 1);
+
+        damage = getDamageForDifficulty(damage);
+        damage = DamageUtil.getDamageLeft((float) damage, (float) livingEntity.getArmor(), (float) livingEntity.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
+        damage = resistanceReduction(livingEntity, damage);
+
+        ((IExplosion) explosion).set(crystal, 6, false);
+        damage = blastProtReduction(livingEntity, damage, explosion);
+
+        return damage < 0 ? 0 : damage;
     }
 
     // Sword damage

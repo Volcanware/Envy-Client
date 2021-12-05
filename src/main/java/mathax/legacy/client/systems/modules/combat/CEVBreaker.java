@@ -185,7 +185,7 @@ public class CEVBreaker extends Module {
 
                                 if (endCrystalEntity != null) {
                                     double selfDamage = DamageUtils.crystalDamage(mc.player, endCrystalEntity.getPos(), false, endCrystalEntity.getBlockPos(), true);
-                                    if (selfDamage > maxDamage.get() || (antiSuicide.get() && selfDamage >= EntityUtils.getTotalHealth(mc.player))) return;
+                                    if (selfDamage > maxDamage.get() || (antiSuicide.get() && selfDamage >= EntityUtils.getTotalPlayerHealth(mc.player))) return;
                                 }
 
                                 if (canPlace(pos, endCrystalEntity)) {

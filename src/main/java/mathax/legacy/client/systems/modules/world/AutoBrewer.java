@@ -16,8 +16,9 @@ import net.minecraft.screen.BrewingStandScreenHandler;
 
 public class AutoBrewer extends Module {
     private int ingredientI;
-    private boolean first;
     private int timer;
+
+    private boolean first;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -49,7 +50,6 @@ public class AutoBrewer extends Module {
         // When the brewing stand is opened.
         if (!first) {
             first = true;
-
             ingredientI = -2;
             timer = 0;
         }
