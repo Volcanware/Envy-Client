@@ -25,7 +25,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
 public class ElytraFly extends Module {
-    private ElytraFlightMode currentMode;
+    private ElytraFlightMode currentMode = new Vanilla();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAutopilot = settings.createGroup("Autopilot");
