@@ -56,7 +56,7 @@ public class PistonAura extends Module {
     );
 
     public PistonAura() {
-        super(Categories.Combat, Items.PISTON, "piston-aura", "Moves crystals into people using pistons and explodes them.");
+        super(Categories.Combat, Items.PISTON, "piston-aura", "Moves crystals into people using pistons and attacks them.");
     }
 
     @EventHandler

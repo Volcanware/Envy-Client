@@ -53,7 +53,6 @@ public class EntityUtils {
 
     public static int getPing(PlayerEntity player) {
         if (mc.getNetworkHandler() == null) return 0;
-
         PlayerListEntry playerListEntry = mc.getNetworkHandler().getPlayerListEntry(player.getUuid());
         if (playerListEntry == null) return 0;
         return playerListEntry.getLatency();

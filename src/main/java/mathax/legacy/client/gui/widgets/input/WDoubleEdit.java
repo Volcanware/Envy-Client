@@ -37,8 +37,7 @@ public class WDoubleEdit extends WHorizontalList {
         if (noSlider) {
             add(theme.button("+")).widget().action = () -> setButton(get() + 1);
             add(theme.button("-")).widget().action = () -> setButton(get() - 1);
-        }
-        else slider = add(theme.slider(value, sliderMin, sliderMax)).minWidth(small ? 200 - 75 - spacing : 200).centerY().expandX().widget();
+        } else slider = add(theme.slider(value, sliderMin, sliderMax)).minWidth(small ? 200 - 75 - spacing : 200).centerY().expandX().widget();
 
         textBox.actionOnUnfocused = () -> {
             double lastValue = value;
@@ -83,15 +82,13 @@ public class WDoubleEdit extends WHorizontalList {
         boolean good;
         boolean validate = true;
 
-        if (c == '-' && text.isEmpty()) {
+        if (c == '-' && (text.isEmpty() || (textBox.selectionStart == 0 && textBox.selectionEnd == text.length()))) {
             good = true;
             validate = false;
-        }
-        else if (c == '.' && !text.contains(".")) {
+        } else if (c == '.' && !text.contains(".")) {
             good = true;
             if (text.isEmpty()) validate = false;
-        }
-        else good = Character.isDigit(c);
+        } else good = Character.isDigit(c);
 
         if (good && validate) {
             try {
