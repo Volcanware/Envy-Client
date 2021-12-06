@@ -365,8 +365,8 @@ public class BlockUtils {
             if (mc.world.getBlockState(blockPos.down()).isTranslucent(mc.world, blockPos.down())) return MobSpawn.Never;
         }
 
-        if (mc.world.getLightLevel(blockPos, 0) <= 7) return MobSpawn.Potential;
-        else if (mc.world.getLightLevel(LightType.BLOCK, blockPos) <= 7) return MobSpawn.Always;
+        if (mc.world.getLightLevel(blockPos, 0) < 1) return MobSpawn.Potential;
+        else if (mc.world.getLightLevel(LightType.BLOCK, blockPos) < 1) return MobSpawn.Always;
 
         return MobSpawn.Never;
     }
