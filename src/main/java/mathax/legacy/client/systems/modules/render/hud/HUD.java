@@ -32,6 +32,9 @@ import java.util.*;
 public class HUD extends Module {
     private static final HudRenderer RENDERER = new HudRenderer();
 
+    public final List<HudElement> elements = new ArrayList<>();
+    private final HudElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, binds, radar, itemsArmor, crosshair, crosshair2;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgEditor = settings.createGroup("Editor");
 
@@ -87,25 +90,6 @@ public class HUD extends Module {
         table.row();
 
         return table;
-    }
-
-    public final List<HudElement> elements = new ArrayList<>();
-    private final HudElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, radar, itemsArmor, crosshair, crosshair2;
-
-    public final Runnable reset = () -> {
-        align();
-        elements.forEach(element -> {
-            element.active = element.defaultActive;
-            element.settings.forEach(group -> group.forEach(Setting::reset));
-        });
-    };
-
-    public HudElement get(RegistryKey<HudElement> key) {
-        return null;
-    }
-
-    public HudElement get(Identifier id) {
-        return null;
     }
 
     public HUD() {
@@ -165,6 +149,11 @@ public class HUD extends Module {
         invPot.add(new ContainerViewerHud(this));
         invPot.add(new PotionTimersHud(this));
 
+        // BINDS
+        binds = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Center, 2, 5);
+        // Modules
+        binds.add(new VisualBinds(this));
+
         // TEXT RADAR
         radar = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Center, 2, 100);
         // Modules
@@ -205,12 +194,29 @@ public class HUD extends Module {
         lag.align();
         modules.align();
         invPot.align();
+        binds.align();
         radar.align();
         itemsArmor.align();
         crosshair.align();
         crosshair2.align();
 
         RENDERER.end();
+    }
+
+    public final Runnable reset = () -> {
+        align();
+        elements.forEach(element -> {
+            element.active = element.defaultActive;
+            element.settings.forEach(group -> group.forEach(Setting::reset));
+        });
+    };
+
+    public HudElement get(RegistryKey<HudElement> key) {
+        return null;
+    }
+
+    public HudElement get(Identifier id) {
+        return null;
     }
 
     @EventHandler

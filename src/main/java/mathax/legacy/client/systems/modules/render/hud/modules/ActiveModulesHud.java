@@ -7,6 +7,7 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
 import mathax.legacy.client.systems.modules.render.hud.HudElement;
 import mathax.legacy.client.systems.modules.render.hud.HudRenderer;
+import mathax.legacy.client.utils.render.ModuleColorMode;
 import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.settings.*;
@@ -20,7 +21,7 @@ public class ActiveModulesHud extends HudElement {
     private final Color rainbow = new Color(255, 255, 255);
     private double rainbowHue1, rainbowHue2;
 
-    private double prevX, prevY;
+    private double prevX;
     private double prevTextLength;
     private Color prevColor = new Color();
 
@@ -42,10 +43,10 @@ public class ActiveModulesHud extends HudElement {
         .build()
     );
 
-    private final Setting<ColorMode> colorMode = sgGeneral.add(new EnumSetting.Builder<ColorMode>()
+    private final Setting<ModuleColorMode> colorMode = sgGeneral.add(new EnumSetting.Builder<ModuleColorMode>()
         .name("color-mode")
         .description("What color to use for active modules.")
-        .defaultValue(ColorMode.Category)
+        .defaultValue(ModuleColorMode.Category)
         .build()
     );
 
@@ -53,7 +54,7 @@ public class ActiveModulesHud extends HudElement {
         .name("flat-color")
         .description("Color for flat color mode.")
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
-        .visible(() -> colorMode.get() == ColorMode.Flat)
+        .visible(() -> colorMode.get() == ModuleColorMode.Flat)
         .build()
     );
 
@@ -80,7 +81,7 @@ public class ActiveModulesHud extends HudElement {
         .defaultValue(1)
         .sliderRange(0, 1)
         .decimalPlaces(4)
-        .visible(() -> colorMode.get() == ColorMode.Rainbow)
+        .visible(() -> colorMode.get() == ModuleColorMode.Rainbow)
         .build()
     );
 
@@ -90,7 +91,7 @@ public class ActiveModulesHud extends HudElement {
         .defaultValue(0.75)
         .sliderRange(0.01, 2)
         .decimalPlaces(4)
-        .visible(() -> colorMode.get() == ColorMode.Rainbow)
+        .visible(() -> colorMode.get() == ModuleColorMode.Rainbow)
         .build()
     );
 
@@ -100,7 +101,7 @@ public class ActiveModulesHud extends HudElement {
         .defaultValue(0.05)
         .sliderRange(0.01, 1)
         .decimalPlaces(4)
-        .visible(() -> colorMode.get() == ColorMode.Rainbow)
+        .visible(() -> colorMode.get() == ModuleColorMode.Rainbow)
         .build()
     );
 
@@ -167,13 +168,11 @@ public class ActiveModulesHud extends HudElement {
         rainbowHue2 = rainbowHue1;
 
         prevX = x;
-        prevY = y;
         Renderer2D.COLOR.begin();
         for (int i = 0; i < modules.size(); i++) {
             renderModule(renderer, modules, i, x + box.alignX(getModuleWidth(renderer, modules.get(i))), y);
 
             prevX = x + box.alignX(getModuleWidth(renderer, modules.get(i)));
-            prevY = y;
 
             y += 2 + renderer.textHeight();
         }
@@ -185,9 +184,9 @@ public class ActiveModulesHud extends HudElement {
         Module module = modules.get(index);
         Color color = flatColor.get();
 
-        ColorMode colorMode = this.colorMode.get();
-        if (colorMode == ColorMode.Random) color = module.color;
-        else if (colorMode == ColorMode.Rainbow) {
+        ModuleColorMode colorMode = this.colorMode.get();
+        if (colorMode == ModuleColorMode.Random) color = module.color;
+        else if (colorMode == ModuleColorMode.Rainbow) {
             rainbowHue2 += rainbowSpread.get();
             int c = java.awt.Color.HSBtoRGB((float) rainbowHue2, rainbowSaturation.get().floatValue(), 1);
 
@@ -198,7 +197,7 @@ public class ActiveModulesHud extends HudElement {
             color = rainbow;
         }
 
-        else if (colorMode == ColorMode.Category) color = new Color(module.category.color);
+        else if (colorMode == ModuleColorMode.Category) color = new Color(module.category.color);
 
         renderer.text(module.title, x, y, color);
 
@@ -256,12 +255,5 @@ public class ActiveModulesHud extends HudElement {
     public enum Sort {
         Biggest,
         Smallest
-    }
-
-    public enum ColorMode {
-        Category,
-        Flat,
-        Random,
-        Rainbow
     }
 }
