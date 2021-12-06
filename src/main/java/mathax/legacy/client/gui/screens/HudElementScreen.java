@@ -9,17 +9,17 @@ import mathax.legacy.client.gui.widgets.containers.WHorizontalList;
 import mathax.legacy.client.gui.widgets.pressable.WButton;
 import mathax.legacy.client.gui.widgets.pressable.WCheckbox;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
-import mathax.legacy.client.systems.modules.render.hud.HUDElement;
+import mathax.legacy.client.systems.modules.render.hud.HudElement;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import net.minecraft.nbt.NbtCompound;
 
 public class HudElementScreen extends WindowScreen {
-    private final HUDElement element;
+    private final HudElement element;
     private WContainer settings;
 
-    public HudElementScreen(GuiTheme theme, HUDElement element) {
+    public HudElementScreen(GuiTheme theme, HudElement element) {
         super(theme, element.title);
 
         this.element = element;

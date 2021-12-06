@@ -10,7 +10,7 @@ import mathax.legacy.client.gui.tabs.WindowTabScreen;
 import mathax.legacy.client.renderer.Renderer2D;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
-import mathax.legacy.client.systems.modules.render.hud.HUDElement;
+import mathax.legacy.client.systems.modules.render.hud.HudElement;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.misc.NbtUtils;
 import mathax.legacy.client.utils.render.color.Color;
@@ -62,8 +62,8 @@ public class HudTab extends Tab {
 
         private boolean dragging, dragged;
         private double lastMouseX, lastMouseY;
-        private HUDElement hoveredModule;
-        private final List<HUDElement> selectedElements = new ArrayList<>();
+        private HudElement hoveredModule;
+        private final List<HudElement> selectedElements = new ArrayList<>();
 
         public HudScreen(GuiTheme theme, Tab tab) {
             super(theme, tab);
@@ -171,7 +171,7 @@ public class HudTab extends Tab {
             if (selecting) {
                 selectedElements.clear();
 
-                for (HUDElement module : hud.elements) {
+                for (HudElement module : hud.elements) {
                     double mX = module.box.getX();
                     double mY = module.box.getY();
                     double mW = module.box.width;
@@ -180,7 +180,7 @@ public class HudTab extends Tab {
                     if (isInSelection(mouseX, mouseY, mX, mY) || isInSelection(mouseX, mouseY, mX + mW, mY) || (isInSelection(mouseX, mouseY, mX, mY + mH) || isInSelection(mouseX, mouseY, mX + mW, mY + mH))) selectedElements.add(module);
                 }
             } else if (dragging) {
-                for (HUDElement element : selectedElements) {
+                for (HudElement element : selectedElements) {
                     element.box.addPos(mouseX - lastMouseX, mouseY - lastMouseY);
                 }
 
@@ -192,12 +192,12 @@ public class HudTab extends Tab {
                     double w = 0;
                     double h = 0;
 
-                    for (HUDElement element : selectedElements) {
+                    for (HudElement element : selectedElements) {
                         x = Math.min(x, element.box.getX());
                         y = Math.min(y, element.box.getY());
                     }
 
-                    for (HUDElement element : selectedElements) {
+                    for (HudElement element : selectedElements) {
                         w = Math.max(w, element.box.getX() - x + element.box.width);
                         h = Math.max(h, element.box.getY() - y + element.box.height);
                     }
@@ -205,7 +205,7 @@ public class HudTab extends Tab {
                     boolean movedX = false;
                     boolean movedY = false;
 
-                    for (HUDElement element : hud.elements) {
+                    for (HudElement element : hud.elements) {
                         if (selectedElements.contains(element)) continue;
 
                         double eX = element.box.getX();
@@ -240,7 +240,7 @@ public class HudTab extends Tab {
                         }
 
                         if (moveX != 0 || moveY != 0) {
-                            for (HUDElement e : selectedElements) e.box.addPos(moveX, moveY);
+                            for (HudElement e : selectedElements) e.box.addPos(moveX, moveY);
 
                             if (moveX != 0) movedX = true;
                             if (moveY != 0) movedY = true;
@@ -267,7 +267,7 @@ public class HudTab extends Tab {
                 dragging = false;
 
                 if (!dragged && !selectedElements.isEmpty()) {
-                    selectedElements.forEach(HUDElement::toggle);
+                    selectedElements.forEach(HudElement::toggle);
                     selectedElements.clear();
                 }
 
@@ -302,20 +302,20 @@ public class HudTab extends Tab {
 
             Renderer2D.COLOR.begin();
 
-            for (HUDElement element : hud.elements) {
+            for (HudElement element : hud.elements) {
                 if (element.active) continue;
 
                 renderElement(element, INACTIVE_BG_COLOR, INACTIVE_OL_COLOR);
             }
 
-            for (HUDElement element : selectedElements) {
+            for (HudElement element : selectedElements) {
                 renderElement(element, HOVER_BG_COLOR, HOVER_OL_COLOR);
             }
 
             if (!dragging) {
                 hoveredModule = null;
 
-                for (HUDElement module : hud.elements) {
+                for (HudElement module : hud.elements) {
                     if (module.box.isOver(mouseX, mouseY)) {
                         if (!selectedElements.contains(module)) renderElement(module, HOVER_BG_COLOR, HOVER_OL_COLOR);
                         hoveredModule = module;
@@ -333,7 +333,7 @@ public class HudTab extends Tab {
             runAfterRenderTasks();
         }
 
-        private void renderElement(HUDElement module, Color bgColor, Color olColor) {
+        private void renderElement(HudElement module, Color bgColor, Color olColor) {
             renderQuad(module.box.getX(), module.box.getY(), module.box.width, module.box.height, bgColor, olColor);
         }
 
