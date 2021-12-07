@@ -41,7 +41,7 @@ public abstract class TripleTextHudElement extends HudElement {
 
         renderer.text(left, x, y, hud.primaryColor.get());
         renderer.text(right, x + leftWidth, y, rightColor);
-        renderer.text(end, x + leftWidth + rightWidth, y, rightColor);
+        renderer.text(end, x + leftWidth + rightWidth, y, hud.primaryColor.get());
     }
 
     protected abstract String getLeft();
