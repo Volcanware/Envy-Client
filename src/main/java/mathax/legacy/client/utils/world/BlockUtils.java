@@ -356,17 +356,17 @@ public class BlockUtils {
         return block instanceof CraftingTableBlock || block instanceof AnvilBlock || block instanceof AbstractButtonBlock || block instanceof AbstractPressurePlateBlock || block instanceof BlockWithEntity || block instanceof BedBlock || block instanceof FenceGateBlock || block instanceof DoorBlock || block instanceof NoteBlock || block instanceof TrapdoorBlock;
     }
 
-    public static MobSpawn isValidMobSpawn(BlockPos blockPos) {
-        if (!(mc.world.getBlockState(blockPos).getBlock() instanceof AirBlock) ||
-            mc.world.getBlockState(blockPos.down()).getBlock() == Blocks.BEDROCK) return MobSpawn.Never;
+    public static MobSpawn isValidMobSpawn(BlockPos blockPos, boolean newMobSpawnLightLevel) {
+        int spawnLightLimit = newMobSpawnLightLevel ? 0 : 7;
+        if (!(mc.world.getBlockState(blockPos).getBlock() instanceof AirBlock) || mc.world.getBlockState(blockPos.down()).getBlock() == Blocks.BEDROCK) return MobSpawn.Never;
 
         if (!topSurface(mc.world.getBlockState(blockPos.down()))) {
             if (mc.world.getBlockState(blockPos.down()).getCollisionShape(mc.world, blockPos.down()) != VoxelShapes.fullCube()) return MobSpawn.Never;
             if (mc.world.getBlockState(blockPos.down()).isTranslucent(mc.world, blockPos.down())) return MobSpawn.Never;
         }
 
-        if (mc.world.getLightLevel(blockPos, 0) <= 0) return MobSpawn.Potential;
-        else if (mc.world.getLightLevel(LightType.BLOCK, blockPos) <= 0) return MobSpawn.Always;
+        if (mc.world.getLightLevel(blockPos, 0) <= spawnLightLimit) return MobSpawn.Potential;
+        else if (mc.world.getLightLevel(LightType.BLOCK, blockPos) <= spawnLightLimit) return MobSpawn.Always;
 
         return MobSpawn.Never;
     }
