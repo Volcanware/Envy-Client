@@ -308,7 +308,7 @@ public class DiscordRPC extends Module {
         else if (mc.player.isDead()) return " | Dead";
         else if (mc.player.isCreative()) return " | Creative Mode";
         else if (mc.player.isSpectator()) return " | Spectator Mode";
-        return " | " + Utils.getPlayerHealth(true) + " HP";
+        return " | " + Utils.getPlayerHealth() + " HP";
     }
 
     // Retarded af cope

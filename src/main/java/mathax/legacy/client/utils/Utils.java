@@ -313,8 +313,7 @@ public class Utils {
         return "";
     }
 
-    public static Float getPlayerHealth(boolean discord) {
-        if (discord && !Modules.get().get(DiscordRPC.class).playerHealth.get()) return 0f;
+    public static Float getPlayerHealth() {
         if (mc.world == null) return 0f;
         if (mc.player == null) return 0f;
         if (mc.player.isDead()) return 0f;

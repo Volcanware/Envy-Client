@@ -228,7 +228,7 @@ public class Blink extends Module {
 
     private class BlinkPlayer extends FakePlayerEntity {
         public BlinkPlayer(PlayerEntity player) {
-            super(player, "blink", Utils.getPlayerHealth(false), true);
+            super(player, "blink", Utils.getPlayerHealth(), true);
         }
 
         public void render(Render3DEvent event) {
