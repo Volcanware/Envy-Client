@@ -313,14 +313,14 @@ public class Utils {
         return "";
     }
 
-    public static Float getPlayerHealth() {
-        if (!Modules.get().get(DiscordRPC.class).playerHealth.get()) return 0f;
+    public static Float getPlayerHealth(boolean discord) {
+        if (discord && !Modules.get().get(DiscordRPC.class).playerHealth.get()) return 0f;
         if (mc.world == null) return 0f;
         if (mc.player == null) return 0f;
         if (mc.player.isDead()) return 0f;
         if (mc.player.isCreative()) return 0f;
         if (mc.player.isSpectator()) return 0f;
-        return (float)Math.round(mc.player.getHealth() + mc.player.getAbsorptionAmount());
+        return (float) Math.round(mc.player.getHealth() + mc.player.getAbsorptionAmount());
     }
 
     public static String nameToTitle(String name) {

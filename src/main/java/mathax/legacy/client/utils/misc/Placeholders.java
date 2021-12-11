@@ -35,7 +35,7 @@ public class Placeholders {
             case "%server%":
                 return Utils.getWorldName();
             case "%health%":
-                return String.valueOf(Utils.getPlayerHealth());
+                return String.valueOf(Utils.getPlayerHealth(false));
             default:
                 return "";
         }

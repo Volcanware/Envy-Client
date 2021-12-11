@@ -8,6 +8,7 @@ import mathax.legacy.client.gui.screens.server.ProtocolScreen;
 import mathax.legacy.client.gui.screens.settings.*;
 import mathax.legacy.client.systems.modules.misc.NameProtect;
 import mathax.legacy.client.systems.modules.render.search.SBlockDataScreen;
+import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.gui.screens.*;
 import mathax.legacy.client.gui.screens.accounts.*;
@@ -87,7 +88,7 @@ public class DiscordRPC extends Module {
         MatHaxLegacy.LOG.info(MatHaxLegacy.logPrefix + "Enabling Discord Rich Presence...");
         net.arikia.dev.drpc.DiscordRPC.discordInitialize(APP_ID, handlers, true, STEAM_ID);
         rpc.startTimestamp = System.currentTimeMillis() / 1000;
-        rpc.details = Version.getStylized() + " | " + getUsername() + getPlayerHealth();
+        rpc.details = Version.getStylized() + " | " + getUsername() + getHealth();
         rpc.state = getActivity();
         rpc.largeImageKey = "logo";
         rpc.largeImageText = "MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
@@ -103,7 +104,7 @@ public class DiscordRPC extends Module {
             while (!Thread.currentThread().isInterrupted()) {
                 net.arikia.dev.drpc.DiscordRPC.discordRunCallbacks();
                 try {
-                    rpc.details = Version.getStylized() + " | " + getUsername() + getPlayerHealth();
+                    rpc.details = Version.getStylized() + " | " + getUsername() + getHealth();
                     rpc.state = getActivity();
                     rpc.largeImageKey = "logo";
                     rpc.largeImageText = "MatHax Legacy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
@@ -302,12 +303,12 @@ public class DiscordRPC extends Module {
         else return mc.getSession().getUsername();
     }
 
-    private String getPlayerHealth() {
+    private String getHealth() {
         if (!Modules.get().get(DiscordRPC.class).playerHealth.get() || mc.world == null || mc.player == null) return "";
         else if (mc.player.isDead()) return " | Dead";
         else if (mc.player.isCreative()) return " | Creative Mode";
         else if (mc.player.isSpectator()) return " | Spectator Mode";
-        return " | " + Math.round(mc.player.getHealth() + mc.player.getAbsorptionAmount()) + " HP";
+        return " | " + Utils.getPlayerHealth(true) + " HP";
     }
 
     // Retarded af cope
