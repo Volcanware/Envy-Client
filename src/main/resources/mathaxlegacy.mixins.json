@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "mathax.legacy.client.mixin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_17",
   "plugin": "mathax.legacy.client.MixinPlugin",
   "client": [
     "AbstractBlockAccessor",

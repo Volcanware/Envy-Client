@@ -290,7 +290,7 @@ public class Utils {
     }
 
     public static Integer getMinHeight() {
-        return mc.world.getDimension().getMinimumY();
+        return -64;
     }
 
     public static String getWorldName() {

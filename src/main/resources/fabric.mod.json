@@ -38,8 +38,9 @@
     }
   },
   "depends": {
-    "java": ">=16",
-    "minecraft": ">=@mc_version@"
+    "java": ">=17",
+    "minecraft": ">=@mc_version@",
+    "fabricloader": ">=0.12.11"
   },
   "breaks": {
     "optifabric": "*"
