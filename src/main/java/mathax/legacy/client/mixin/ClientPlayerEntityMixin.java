@@ -33,11 +33,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
-    @Shadow @Final public ClientPlayNetworkHandler networkHandler;
+    @Shadow
+    @Final
+    public ClientPlayNetworkHandler networkHandler;
 
     private boolean ignoreChatMessage;
 
-    @Shadow public abstract void sendChatMessage(String string);
+    @Shadow
+    public abstract void sendChatMessage(String string);
 
     public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
         super(world, profile);

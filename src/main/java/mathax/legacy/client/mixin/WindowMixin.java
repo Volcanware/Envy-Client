@@ -18,10 +18,11 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 @Mixin(Window.class)
 public abstract class WindowMixin {
 
-    @Shadow private @Final long handle;
+    @Shadow
+    @Final
+    private long handle;
 
-    @Redirect(method = "<init>",
-        at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL;createCapabilities()Lorg/lwjgl/opengl/GLCapabilities;", remap = false))
+    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL;createCapabilities()Lorg/lwjgl/opengl/GLCapabilities;", remap = false))
     private GLCapabilities onCreateCapabilities() {
         glfwSwapBuffers(handle);
 

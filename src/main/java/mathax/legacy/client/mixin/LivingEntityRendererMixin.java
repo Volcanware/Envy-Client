@@ -32,7 +32,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityModel<T>> {
-    @Shadow @Nullable
+    @Shadow
+    @Nullable
     protected abstract RenderLayer getRenderLayer(T entity, boolean showBody, boolean translucent, boolean showOutline);
 
     // Freecam

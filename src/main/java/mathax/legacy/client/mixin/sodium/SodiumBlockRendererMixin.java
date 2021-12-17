@@ -52,15 +52,16 @@ public class SodiumBlockRendererMixin {
         }
     }
 
+    // https://github.com/CaffeineMC/sodium-fabric/blob/8b3015efe85be9336a150ff7c26085ea3d2d43d0/src/main/java/me/jellysquid/mods/sodium/client/render/pipeline/BlockRenderer.java#L119
+    // Copied from Sodium, for now, can't think of a better way, because of the nature of the locals, and for loop.
+    // Mixin seems to freak out when I try to do this the "right" way - Wala (sobbing)
     private void whRenderQuad(BlockRenderView world, BlockState state, BlockPos pos, BlockPos origin, ModelVertexSink vertices, IndexBufferBuilder indices, Vec3d blockOffset, ModelQuadColorProvider<BlockState> colorProvider, BakedQuad bakedQuad, QuadLightData light, ChunkModelBuilder model, int alpha) {
         ModelQuadView src = (ModelQuadView) bakedQuad;
         ModelQuadOrientation orientation = ModelQuadOrientation.orientByBrightness(light.br);
 
         int[] colors = null;
 
-        if (bakedQuad.hasColor()) {
-            colors = this.biomeColorBlender.getColors(world, pos, src, colorProvider, state);
-        }
+        if (bakedQuad.hasColor()) colors = this.biomeColorBlender.getColors(world, pos, src, colorProvider, state);
 
         int vertexStart = vertices.getVertexCount();
 
@@ -91,8 +92,6 @@ public class SodiumBlockRendererMixin {
 
         Sprite sprite = src.getSprite();
 
-        if (sprite != null) {
-            model.addSprite(sprite);
-        }
+        if (sprite != null) model.addSprite(sprite);
     }
 }

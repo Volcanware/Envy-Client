@@ -96,7 +96,7 @@ public class InfinityMiner extends Module {
     );
 
     public InfinityMiner() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever. Requires mending to work.");
+        super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever by mining repair blocks when the durability gets low. Needs a mending pickaxe.");
     }
 
     @Override
@@ -133,7 +133,7 @@ public class InfinityMiner extends Module {
         }
 
         if (!findBestPick()) {
-            error("Could not find a usable pickaxe.");
+            error("Could not find a usable mending pickaxe.");
             toggle();
             return;
         }

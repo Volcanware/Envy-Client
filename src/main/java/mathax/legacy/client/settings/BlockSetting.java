@@ -33,16 +33,14 @@ public class BlockSetting extends Setting<Block> {
     }
 
     @Override
-    public NbtCompound toTag() {
-        NbtCompound tag = new NbtCompound();
-
+    public NbtCompound save(NbtCompound tag) {
         tag.putString("value", Registry.BLOCK.getId(get()).toString());
 
         return tag;
     }
 
     @Override
-    public Block fromTag(NbtCompound tag) {
+    public Block load(NbtCompound tag) {
         value = Registry.BLOCK.get(new Identifier(tag.getString("value")));
 
         if (filter != null && !filter.test(value)) {
@@ -54,7 +52,6 @@ public class BlockSetting extends Setting<Block> {
             }
         }
 
-        onChanged();
         return get();
     }
 

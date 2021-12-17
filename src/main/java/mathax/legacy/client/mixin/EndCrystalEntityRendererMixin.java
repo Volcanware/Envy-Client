@@ -27,16 +27,21 @@ import static net.minecraft.client.render.entity.EndCrystalEntityRenderer.getYOf
 
 @Mixin(EndCrystalEntityRenderer.class)
 public abstract class EndCrystalEntityRendererMixin {
-    @Mutable @Shadow @Final
+    @Mutable
+    @Shadow
+    @Final
     private static RenderLayer END_CRYSTAL;
 
-    @Shadow @Final
+    @Shadow
+    @Final
     private static Identifier TEXTURE;
 
-    @Shadow @Final
+    @Shadow
+    @Final
     public ModelPart core;
 
-    @Shadow @Final
+    @Shadow
+    @Final
     public ModelPart frame;
 
     // Texture

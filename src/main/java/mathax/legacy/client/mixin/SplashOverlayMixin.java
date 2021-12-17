@@ -61,10 +61,7 @@ public abstract class SplashOverlayMixin {
     private int progressBarBorderProxy(int a, int r, int g, int b, MatrixStack matrices, int x1, int y1, int x2, int y2, float opacity) {
 
         // Bar background
-        DrawableHelper.fill(
-            matrices, x1 + 1, y1 + 1, x2 - 1, y2 - 1,
-            withAlpha(0x1e1e2d, a)
-        );
+        DrawableHelper.fill(matrices, x1 + 1, y1 + 1, x2 - 1, y2 - 1, withAlpha(0x1e1e2d, a));
 
         // Bar border
         return withAlpha(0xe64c65, a);
@@ -83,10 +80,8 @@ public abstract class SplashOverlayMixin {
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;setOverlay(Lnet/minecraft/client/gui/screen/Overlay;)V"))
     private void onSetOverlay(CallbackInfo info) {
-        if ((Object) this instanceof PreviewSplashOverlay previewScreen) {
-            // Casting because SplashOverlayMixin doesn't extend PreviewSplashOverlay
-            previewScreen.onDone();
-        }
+        // Casting because SplashOverlayMixin doesn't extend PreviewSplashOverlay
+        if ((Object) this instanceof PreviewSplashOverlay previewScreen) previewScreen.onDone();
     }
 
     // Fade

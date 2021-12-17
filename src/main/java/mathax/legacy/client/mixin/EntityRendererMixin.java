@@ -23,7 +23,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityRenderer.class)
 public abstract class EntityRendererMixin<T extends Entity> implements IEntityRenderer {
-    @Shadow public abstract Identifier getTexture(Entity entity);
+    @Shadow
+    public abstract Identifier getTexture(Entity entity);
 
     @Inject(method = "renderLabelIfPresent", at = @At("HEAD"), cancellable = true)
     private void onRenderLabel(T entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
@@ -32,9 +33,9 @@ public abstract class EntityRendererMixin<T extends Entity> implements IEntityRe
     }
 
     @Inject(method = "shouldRender", at = @At("HEAD"), cancellable = true)
-    private void shouldRender(T entity, Frustum frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> info) {
-        if (Modules.get().get(NoRender.class).noEntity(entity)) info.cancel();
-        if (Modules.get().get(NoRender.class).noFallingBlocks() && entity instanceof FallingBlockEntity) info.cancel();
+    private void shouldRender(T entity, Frustum frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> infor) {
+        if (Modules.get().get(NoRender.class).noEntity(entity)) infor.cancel();
+        if (Modules.get().get(NoRender.class).noFallingBlocks() && entity instanceof FallingBlockEntity) infor.cancel();
     }
 
     @Inject(method = "getSkyLight", at = @At("RETURN"), cancellable = true)

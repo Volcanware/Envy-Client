@@ -32,14 +32,14 @@ public class BoolSetting extends Setting<Boolean> {
     }
 
     @Override
-    public NbtCompound toTag() {
-        NbtCompound tag = saveGeneral();
+    public NbtCompound save(NbtCompound tag) {
         tag.putBoolean("value", get());
+
         return tag;
     }
 
     @Override
-    public Boolean fromTag(NbtCompound tag) {
+    public Boolean load(NbtCompound tag) {
         set(tag.getBoolean("value"));
 
         return get();

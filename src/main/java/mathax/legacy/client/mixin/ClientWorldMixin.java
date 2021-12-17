@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 public abstract class ClientWorldMixin {
     @Unique
     private final DimensionEffects endSky = new DimensionEffects.End();
+
     @Unique
     private final DimensionEffects customSky = new Ambience.Custom();
 

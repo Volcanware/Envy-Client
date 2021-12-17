@@ -27,6 +27,7 @@ public class BannerBlockEntityRendererMixin {
 
     @Final
     @Shadow private ModelPart pillar;
+
     @Final
     @Shadow private ModelPart crossbar;
 
@@ -41,7 +42,7 @@ public class BannerBlockEntityRendererMixin {
                     this.pillar.visible = true;
                     this.crossbar.visible = false;
                     renderPillar(bannerBlockEntity, matrixStack, vertexConsumerProvider, i, j);
-                } else { //Wall banner
+                } else { // Wall banner
                     this.pillar.visible = false;
                     this.crossbar.visible = true;
                     renderCrossbar(bannerBlockEntity, matrixStack, vertexConsumerProvider, i, j);
@@ -70,7 +71,7 @@ public class BannerBlockEntityRendererMixin {
         matrixStack.push();
         BlockState blockState = bannerBlockEntity.getCachedState();
         matrixStack.translate(0.5D, -0.1666666716337204D, 0.5D);
-        float h = -((Direction)blockState.get(WallBannerBlock.FACING)).asRotation();
+        float h = -(blockState.get(WallBannerBlock.FACING)).asRotation();
         matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(h));
         matrixStack.translate(0.0D, -0.3125D, -0.4375D);
         matrixStack.push();
@@ -80,5 +81,4 @@ public class BannerBlockEntityRendererMixin {
         matrixStack.pop();
         matrixStack.pop();
     }
-
 }

@@ -50,6 +50,13 @@ public class BlockSelection extends Module {
         .build()
     );
 
+    private final Setting<Boolean> hideInside = sgGeneral.add(new BoolSetting.Builder()
+        .name("hide-when-inside")
+        .description("Hide selection when inside target block.")
+        .defaultValue(true)
+        .build()
+    );
+
     private final Setting<ShapeMode> shapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
         .description("Determines how the shapes are rendered.")
@@ -96,6 +103,9 @@ public class BlockSelection extends Module {
     @EventHandler
     private void onRender3D(Render3DEvent event) {
         if (mc.crosshairTarget == null || !(mc.crosshairTarget instanceof BlockHitResult result)) return;
+
+        if (hideInside.get() && result.isInsideBlock()) return;
+
         if (cool.get()) {
             BlockPos pos = result.getBlockPos();
 

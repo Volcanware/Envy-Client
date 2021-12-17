@@ -8,7 +8,6 @@ import mathax.legacy.client.events.game.ReceiveMessageEvent;
 import mathax.legacy.client.mixininterface.IChatHud;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.chat.BetterChat;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.hud.ChatHudLine;

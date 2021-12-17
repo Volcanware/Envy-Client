@@ -23,7 +23,9 @@ import java.util.Arrays;
 
 @Mixin(value = FluidRenderer.class, remap = false)
 public class SodiumFluidRendererMixin {
-    @Final @Shadow(remap = false) private int[] quadColors;
+    @Final
+    @Shadow(remap = false)
+    private int[] quadColors;
 
     /**
      * @author Walaryne

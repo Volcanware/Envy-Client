@@ -28,5 +28,4 @@ public abstract class StructureVoidBlockMixin extends Block {
     public boolean isSideInvisible(BlockState state, BlockState neighbor, Direction facing) {
         return !(Modules.get().get(Rendering.class).renderStructureVoid());
     }
-
 }

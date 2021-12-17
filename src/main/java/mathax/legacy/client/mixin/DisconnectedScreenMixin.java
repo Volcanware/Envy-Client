@@ -23,10 +23,14 @@ public abstract class DisconnectedScreenMixin extends Screen {
     @Final
     private Screen parent;
 
-    @Shadow private int reasonHeight;
+    @Shadow
+    private int reasonHeight;
 
-    @Unique private ButtonWidget autoReconnectBtn;
-    @Unique private double time = Modules.get().get(AutoReconnect.class).time.get() * 20;
+    @Unique
+    private ButtonWidget autoReconnectBtn;
+
+    @Unique
+    private double time = Modules.get().get(AutoReconnect.class).time.get() * 20;
 
     protected DisconnectedScreenMixin(Text title) {
         super(title);
@@ -61,18 +65,13 @@ public abstract class DisconnectedScreenMixin extends Screen {
         if (!autoReconnect.isActive() || LastServerInfo.getLastServer() == null) return;
 
         if (time <= 0) {
-            if (!Modules.get().isActive(AutoReconnect.class)) {
-                time = Modules.get().get(AutoReconnect.class).time.get() * 20;
-            } else {
-                LastServerInfo.reconnect(parent);
-            }
+            if (!Modules.get().isActive(AutoReconnect.class)) time = Modules.get().get(AutoReconnect.class).time.get() * 20;
+            else LastServerInfo.reconnect(parent);
         } else {
-            if (!Modules.get().isActive(AutoReconnect.class)) {
-                time = Modules.get().get(AutoReconnect.class).time.get() * 20;
-            } else {
-                time--;
-            }
+            if (!Modules.get().isActive(AutoReconnect.class)) time = Modules.get().get(AutoReconnect.class).time.get() * 20;
+            else time--;
         }
+
         ((AbstractButtonWidgetAccessor) autoReconnectBtn).setText(new LiteralText(getText()));
     }
 

@@ -11,8 +11,13 @@ import static mathax.legacy.client.MatHaxLegacy.mc;
 
 @Mixin(PlayerInteractEntityC2SPacket.class)
 public class PlayerInteractEntityC2SPacketMixin implements IPlayerInteractEntityC2SPacket {
-    @Shadow @Final private PlayerInteractEntityC2SPacket.InteractTypeHandler type;
-    @Shadow @Final private int entityId;
+    @Shadow
+    @Final
+    private PlayerInteractEntityC2SPacket.InteractTypeHandler type;
+
+    @Shadow
+    @Final
+    private int entityId;
 
     @Override
     public PlayerInteractEntityC2SPacket.InteractType getType() {

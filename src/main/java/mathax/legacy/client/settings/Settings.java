@@ -59,6 +59,7 @@ public class Settings implements ISerializable<Settings>, Iterable<SettingGroup>
         groups.add(group);
         return group;
     }
+
     public SettingGroup createGroup(String name) {
         return createGroup(name, true);
     }

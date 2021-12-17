@@ -27,9 +27,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public abstract class ClientPlayNetworkHandlerMixin {
-    @Shadow @Final private MinecraftClient client;
+    @Shadow
+    @Final
+    private MinecraftClient client;
 
-    @Shadow private ClientWorld world;
+    @Shadow
+    private ClientWorld world;
 
     private boolean worldNotNull;
 
@@ -41,6 +44,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
     @Inject(at = @At("TAIL"), method = "onGameJoin")
     private void onGameJoinTail(GameJoinS2CPacket packet, CallbackInfo info) {
         if (worldNotNull) MatHaxLegacy.EVENT_BUS.post(GameLeftEvent.get());
+
         MatHaxLegacy.EVENT_BUS.post(GameJoinedEvent.get());
     }
 
@@ -69,7 +73,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "onExplosion", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkThreadUtils;forceMainThread(Lnet/minecraft/network/Packet;Lnet/minecraft/network/listener/PacketListener;Lnet/minecraft/util/thread/ThreadExecutor;)V", shift = At.Shift.AFTER))
     private void onExplosionVelocity(ExplosionS2CPacket packet, CallbackInfo info) {
-        Velocity velocity = Modules.get().get(Velocity.class); //Velocity for explosions
+        Velocity velocity = Modules.get().get(Velocity.class); // Velocity for explosions
         if (!velocity.explosions.get()) return;
 
         ((IExplosionS2CPacket) packet).setVelocityX((float) (packet.getPlayerVelocityX() * velocity.getHorizontal(velocity.explosionsHorizontal)));
@@ -82,8 +86,6 @@ public abstract class ClientPlayNetworkHandlerMixin {
         Entity itemEntity = client.world.getEntityById(packet.getEntityId());
         Entity entity = client.world.getEntityById(packet.getCollectorEntityId());
 
-        if (itemEntity instanceof ItemEntity && entity == client.player) {
-            MatHaxLegacy.EVENT_BUS.post(PickItemsEvent.get(((ItemEntity) itemEntity).getStack(), packet.getStackAmount()));
-        }
+        if (itemEntity instanceof ItemEntity && entity == client.player) MatHaxLegacy.EVENT_BUS.post(PickItemsEvent.get(((ItemEntity) itemEntity).getStack(), packet.getStackAmount()));
     }
 }

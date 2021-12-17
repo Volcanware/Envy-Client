@@ -8,8 +8,12 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(Slot.class)
 public class SlotMixin implements ISlot {
-    @Shadow public int id;
-    @Shadow @Final private int index;
+    @Shadow
+    public int id;
+
+    @Shadow
+    @Final
+    private int index;
 
     @Override
     public int getId() {

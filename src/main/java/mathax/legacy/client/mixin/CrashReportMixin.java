@@ -37,9 +37,7 @@ public class CrashReportMixin {
                     sb.append("[").append(category).append("]:").append("\n");
 
                     for (Module module : modules) {
-                        if (module instanceof Module && module.isActive()) {
-                            sb.append(module.title).append(" (").append(module.name).append(")\n");
-                        }
+                        if (module instanceof Module && module.isActive()) sb.append(module.title).append(" (").append(module.name).append(")\n");
                     }
                 }
             }

@@ -29,9 +29,15 @@ import static mathax.legacy.client.MatHaxLegacy.mc;
 
 @Mixin(BookEditScreen.class)
 public abstract class BookEditScreenMixin extends Screen {
-    @Shadow @Final private List<String> pages;
-    @Shadow private int currentPage;
-    @Shadow private boolean dirty;
+    @Shadow
+    @Final
+    private List<String> pages;
+
+    @Shadow
+    private int currentPage;
+
+    @Shadow
+    private boolean dirty;
 
     public BookEditScreenMixin(Text title) {
         super(title);

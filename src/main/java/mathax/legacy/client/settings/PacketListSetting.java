@@ -26,9 +26,9 @@ public class PacketListSetting extends Setting<Set<Class<? extends Packet<?>>>> 
     }
 
     @Override
-    public void reset(boolean callbacks) {
+    public void reset() {
         value = new ObjectOpenHashSet<>(defaultValue);
-        if (callbacks) onChanged();
+        onChanged();
     }
 
     @Override
@@ -69,9 +69,7 @@ public class PacketListSetting extends Setting<Set<Class<? extends Packet<?>>>> 
     }
 
     @Override
-    public NbtCompound toTag() {
-        NbtCompound tag = saveGeneral();
-
+    public NbtCompound save(NbtCompound tag) {
         NbtList valueTag = new NbtList();
         for (Class<? extends Packet<?>> packet : get()) {
             valueTag.add(NbtString.of(PacketUtils.getName(packet)));
@@ -82,7 +80,7 @@ public class PacketListSetting extends Setting<Set<Class<? extends Packet<?>>>> 
     }
 
     @Override
-    public Set<Class<? extends Packet<?>>> fromTag(NbtCompound tag) {
+    public Set<Class<? extends Packet<?>>> load(NbtCompound tag) {
         get().clear();
 
         NbtElement valueTag = tag.get("value");
@@ -93,7 +91,6 @@ public class PacketListSetting extends Setting<Set<Class<? extends Packet<?>>>> 
             }
         }
 
-        onChanged();
         return get();
     }
 

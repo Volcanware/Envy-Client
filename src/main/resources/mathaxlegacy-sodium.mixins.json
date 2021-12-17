@@ -5,8 +5,7 @@
   "client": [
     "SodiumBlockOcculsionCacheMixin",
     "SodiumBlockRendererMixin",
-    "SodiumFluidRendererMixin",
-    "SodiumLightDataAccessMixin"
+    "SodiumFluidRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

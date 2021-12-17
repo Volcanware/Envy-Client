@@ -1,10 +1,13 @@
 package mathax.legacy.client.mixin;
 
+import mathax.legacy.client.mixininterface.ICamera;
 import mathax.legacy.client.systems.modules.render.CameraTweaks;
 import mathax.legacy.client.systems.modules.render.FreeLook;
 import mathax.legacy.client.systems.modules.render.Freecam;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.InstantSneak;
+import mathax.legacy.client.systems.modules.world.HighwayBuilder;
+import mathax.legacy.client.utils.Utils;
 import net.minecraft.client.render.Camera;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.BlockView;
@@ -19,24 +22,33 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(Camera.class)
-public abstract class CameraMixin {
+public abstract class CameraMixin implements ICamera {
     @Shadow
     private boolean thirdPerson;
 
     @Shadow
     protected abstract double clipToSpace(double desiredCameraDistance);
 
-    @Unique
-    private float tickDelta;
+    @Shadow
+    private float yaw;
+
+    @Shadow
+    private float pitch;
 
     @Shadow
     private float cameraY;
 
     @Shadow
+    protected abstract void setRotation(float yaw, float pitch);
+
+    @Unique
+    private float tickDelta;
+
+    @Shadow
     private Entity focusedEntity;
 
     @Inject(at = @At("HEAD"), method = "updateEyeHeight")
-    public void updateEyeHeight(CallbackInfo ci) {
+    public void updateEyeHeight(CallbackInfo info) {
         if (Modules.get().isActive(InstantSneak.class) && focusedEntity != null) cameraY = focusedEntity.getStandingEyeHeight();
     }
 
@@ -80,11 +92,17 @@ public abstract class CameraMixin {
         if (freecam.isActive()) {
             args.set(0, (float) freecam.getYaw(tickDelta));
             args.set(1, (float) freecam.getPitch(tickDelta));
-        }
-
-        if (freeLook.isActive()) {
+        } else if (Modules.get().isActive(HighwayBuilder.class)) {
+            args.set(0, yaw);
+            args.set(1, pitch);
+        } else if (freeLook.isActive()) {
             args.set(0, freeLook.cameraYaw);
             args.set(1, freeLook.cameraPitch);
         }
+    }
+
+    @Override
+    public void setRot(double yaw, double pitch) {
+        setRotation((float) yaw, (float) Utils.clamp(pitch, -90, 90));
     }
 }

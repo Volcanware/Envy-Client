@@ -25,9 +25,9 @@ public class BlockListSetting extends Setting<List<Block>> {
     }
 
     @Override
-    public void reset(boolean callbacks) {
+    public void reset() {
         value = new ArrayList<>(defaultValue);
-        if (callbacks) onChanged();
+        onChanged();
     }
 
     @Override
@@ -56,9 +56,7 @@ public class BlockListSetting extends Setting<List<Block>> {
     }
 
     @Override
-    public NbtCompound toTag() {
-        NbtCompound tag = saveGeneral();
-
+    protected NbtCompound save(NbtCompound tag) {
         NbtList valueTag = new NbtList();
         for (Block block : get()) {
             valueTag.add(NbtString.of(Registry.BLOCK.getId(block).toString()));
@@ -69,7 +67,7 @@ public class BlockListSetting extends Setting<List<Block>> {
     }
 
     @Override
-    public List<Block> fromTag(NbtCompound tag) {
+    protected List<Block> load(NbtCompound tag) {
         get().clear();
 
         NbtList valueTag = tag.getList("value", 8);
@@ -79,7 +77,6 @@ public class BlockListSetting extends Setting<List<Block>> {
             if (filter == null || filter.test(block)) get().add(block);
         }
 
-        onChanged();
         return get();
     }
 

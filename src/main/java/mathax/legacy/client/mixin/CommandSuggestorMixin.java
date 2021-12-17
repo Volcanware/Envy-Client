@@ -44,10 +44,7 @@ public abstract class CommandSuggestorMixin {
     @Shadow
     CommandSuggestor.SuggestionWindow window;
 
-    @Inject(method = "refresh",
-            at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false),
-            cancellable = true,
-            locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "refresh", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     public void onRefresh(CallbackInfo info, String string, StringReader reader) {
         String prefix = Config.get().prefix;
         int length = prefix.length();

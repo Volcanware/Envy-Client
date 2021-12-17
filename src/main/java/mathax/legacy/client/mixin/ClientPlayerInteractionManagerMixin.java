@@ -35,12 +35,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public abstract class ClientPlayerInteractionManagerMixin implements IClientPlayerInteractionManager {
-    @Shadow private int blockBreakingCooldown;
-    @Shadow protected abstract void syncSelectedSlot();
+    @Shadow
+    private int blockBreakingCooldown;
 
     @Shadow
-    @Final
-    private MinecraftClient client;
+    protected abstract void syncSelectedSlot();
 
     @Inject(method = "clickSlot", at = @At("HEAD"), cancellable = true)
     private void onClickSlot(int syncId, int slotId, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo info) {

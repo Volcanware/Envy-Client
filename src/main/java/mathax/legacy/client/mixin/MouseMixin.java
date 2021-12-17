@@ -3,24 +3,33 @@ package mathax.legacy.client.mixin;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.events.mathaxlegacy.MouseButtonEvent;
 import mathax.legacy.client.events.mathaxlegacy.MouseScrollEvent;
+import mathax.legacy.client.mixininterface.ICamera;
 import mathax.legacy.client.systems.modules.render.FreeLook;
 import mathax.legacy.client.systems.modules.render.Freecam;
+import mathax.legacy.client.systems.modules.world.HighwayBuilder;
 import mathax.legacy.client.utils.misc.input.Input;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.systems.modules.Modules;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.Camera;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 @Mixin(Mouse.class)
 public class MouseMixin {
+    @Shadow
+    @Final
+    private MinecraftClient client;
+
     @Inject(method = "onMouseButton", at = @At("HEAD"), cancellable = true)
     private void onMouseButton(long window, int button, int action, int mods, CallbackInfo info) {
         Input.setButtonState(button, action != GLFW_RELEASE);
@@ -39,7 +48,10 @@ public class MouseMixin {
         FreeLook freeLook = Modules.get().get(FreeLook.class);
 
         if (freecam.isActive()) freecam.changeLookDirection(cursorDeltaX * 0.15, cursorDeltaY * 0.15);
-        else if (freeLook.cameraMode()) {
+        else if (Modules.get().isActive(HighwayBuilder.class)) {
+            Camera camera = client.gameRenderer.getCamera();
+            ((ICamera) camera).setRot(camera.getYaw() + cursorDeltaX * 0.15, camera.getPitch() + cursorDeltaY * 0.15);
+        } else if (freeLook.cameraMode()) {
             freeLook.cameraYaw += cursorDeltaX / freeLook.sensitivity.get().floatValue();
             freeLook.cameraPitch += cursorDeltaY / freeLook.sensitivity.get().floatValue();
 

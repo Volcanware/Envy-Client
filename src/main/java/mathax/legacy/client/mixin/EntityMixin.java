@@ -38,10 +38,14 @@ import static mathax.legacy.client.MatHaxLegacy.mc;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-    @Shadow public World world;
+    @Shadow
+    public World world;
 
-    @Shadow public abstract BlockPos getBlockPos();
-    @Shadow protected abstract BlockPos getVelocityAffectingPos();
+    @Shadow
+    public abstract BlockPos getBlockPos();
+
+    @Shadow
+    protected abstract BlockPos getVelocityAffectingPos();
 
     @Redirect(method = "updateMovementInFluid", at = @At(value = "INVOKE", target = "Lnet/minecraft/fluid/FluidState;getVelocity(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/Vec3d;"))
     private Vec3d updateMovementInFluidFluidStateGetVelocity(FluidState state, BlockView world, BlockPos pos) {

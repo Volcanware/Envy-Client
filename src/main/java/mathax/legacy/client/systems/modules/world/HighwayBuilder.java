@@ -364,7 +364,7 @@ public class HighwayBuilder extends Module {
     }
 
     private void disconnect(String message, Object... args) {
-        MutableText text = new LiteralText(String.format("%s[%s%s%s] %s", Formatting.GRAY, Formatting.BLUE, title, Formatting.GRAY, Formatting.RED) + String.format(message, args)).append("\n");
+        MutableText text = new LiteralText(String.format("%s[%s%s%s] %s\n", Formatting.GRAY, Formatting.DARK_RED, title, Formatting.GRAY, Formatting.RED) + String.format(message, args)).append("\n");
         text.append(getStatsText());
 
         mc.getNetworkHandler().getConnection().disconnect(text);

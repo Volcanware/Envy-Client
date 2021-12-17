@@ -39,14 +39,22 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
-    @Shadow @Final private MinecraftClient client;
+    @Shadow
+    @Final
+    private MinecraftClient client;
 
-    @Shadow public abstract void updateTargetedEntity(float tickDelta);
+    @Shadow
+    public abstract void updateTargetedEntity(float tickDelta);
 
-    @Shadow public abstract void reset();
+    @Shadow
+    public abstract void reset();
 
-    @Shadow @Final private Camera camera;
-    @Unique private Renderer3D renderer;
+    @Shadow
+    @Final
+    private Camera camera;
+
+    @Unique
+    private Renderer3D renderer;
 
     @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
     private void injectBobView(MatrixStack matrixStack, float f, CallbackInfo info) {

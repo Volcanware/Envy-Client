@@ -20,24 +20,6 @@ import static mathax.legacy.client.MatHaxLegacy.mc;
 
 @Mixin(HeldItemRenderer.class)
 public abstract class HeldItemRendererMixin {
-    @Shadow
-    private float prevEquipProgressMainHand;
-
-    @Shadow
-    private float prevEquipProgressOffHand;
-
-    @Shadow
-    private float equipProgressOffHand;
-
-    @Shadow
-    private float equipProgressMainHand;
-
-    @Shadow
-    private ItemStack mainHand;
-
-    @Shadow
-    private ItemStack offHand;
-
     @ModifyVariable(method = "renderItem(FLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;Lnet/minecraft/client/network/ClientPlayerEntity;I)V", at = @At(value = "STORE", ordinal = 0), index = 6)
     private float modifySwing(float swingProgress) {
         HandView module = Modules.get().get(HandView.class);

@@ -15,7 +15,6 @@ import mathax.legacy.client.utils.render.color.Color;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -59,6 +58,13 @@ public class Tracers extends Module {
         .name("target")
         .description("What part of the entity to target.")
         .defaultValue(Target.Body)
+        .build()
+    );
+
+    private final Setting<Boolean> hideHud = sgAppearance.add(new BoolSetting.Builder()
+        .name("auto-hide")
+        .description("Hide tracers when game HUD is hidden.")
+        .defaultValue(true)
         .build()
     );
 
@@ -150,6 +156,8 @@ public class Tracers extends Module {
 
     @EventHandler
     private void onRender3D(Render3DEvent event) {
+        if (hideHud.get() && mc.options.hudHidden) return;
+
         count = 0;
 
         for (Entity entity : mc.world.getEntities()) {
