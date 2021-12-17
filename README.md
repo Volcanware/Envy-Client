@@ -7,7 +7,7 @@
 </h1>
 
 <p align="center">
-    A Minecraft 1.18 & 1.17.1 utility client for Fabric
+    A Minecraft 1.18 utility client for Fabric
 </p>
 
 <div align="center">
