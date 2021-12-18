@@ -12,7 +12,6 @@ import mathax.legacy.client.eventbus.EventPriority;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.block.enums.SlabType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.util.ActionResult;
@@ -165,7 +164,6 @@ public class BlockUtils {
 
             if (swapBack) InvUtils.swapBack();
         }
-
 
         return true;
     }

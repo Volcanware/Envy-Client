@@ -398,7 +398,6 @@ public class Modules extends System<Modules> {
         add(new SelfTrapPlus());
         add(new SelfWeb());
         add(new Surround());
-        add(new SurroundPlus());
         add(new TNTAura());
         add(new TriggerBot());
     }
