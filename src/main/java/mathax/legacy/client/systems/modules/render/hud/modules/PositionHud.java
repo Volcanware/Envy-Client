@@ -1,6 +1,7 @@
 package mathax.legacy.client.systems.modules.render.hud.modules;
 
 import mathax.legacy.client.settings.BoolSetting;
+import mathax.legacy.client.settings.DoubleSetting;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Modules;
@@ -20,6 +21,9 @@ public class PositionHud extends HudElement {
     private String right2;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgSpoof = settings.createGroup("Spoof");
+
+    // General
 
     private final Setting<Boolean> accurate = sgGeneral.add(new BoolSetting.Builder()
         .name("accurate")
@@ -32,6 +36,58 @@ public class PositionHud extends HudElement {
         .name("opposite-dimension")
         .description("Displays the coordinates of the opposite dimension (Nether or Overworld).")
         .defaultValue(true)
+        .build()
+    );
+
+    // Spoof
+
+    private final Setting<Boolean> spoofX = sgSpoof.add(new BoolSetting.Builder()
+        .name("x")
+        .description("Spoofs the X coordinate.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> xValue = sgSpoof.add(new DoubleSetting.Builder()
+        .name("x-value")
+        .description("Determines the X value.")
+        .defaultValue(0.0)
+        .min(0.0)
+        .sliderRange(0.0, 30000000)
+        .visible(spoofX::get)
+        .build()
+    );
+
+    private final Setting<Boolean> spoofY = sgSpoof.add(new BoolSetting.Builder()
+        .name("y")
+        .description("Spoofs the Y coordinate.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> yValue = sgSpoof.add(new DoubleSetting.Builder()
+        .name("y-value")
+        .description("Determines the Y value.")
+        .defaultValue(120.0)
+        .sliderRange(-64.0, 320.0)
+        .visible(spoofY::get)
+        .build()
+    );
+
+    private final Setting<Boolean> spoofZ = sgSpoof.add(new BoolSetting.Builder()
+        .name("z")
+        .description("Spoofs the Z coordinate.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> zValue = sgSpoof.add(new DoubleSetting.Builder()
+        .name("z-value")
+        .description("Determines the Z value.")
+        .defaultValue(0.0)
+        .min(0.0)
+        .sliderRange(0.0, 30000000)
+        .visible(spoofZ::get)
         .build()
     );
 
@@ -49,7 +105,7 @@ public class PositionHud extends HudElement {
         if (oppositeDimension.get()) height = height * 2 + 2;
 
         if (isInEditor()) {
-            right1 = accurate.get() ? "0,0 0,0 0,0" : "0, 0, 0";
+            right1 = accurate.get() ? "0,0 0,0 0,0" : "0 0 0";
             if (oppositeDimension.get()) {
                 left2 = "Editor XYZ ";
                 right2 = right1;
@@ -70,15 +126,25 @@ public class PositionHud extends HudElement {
         double x, y, z;
 
         if (accurate.get()) {
-            x = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().x : mc.player.getX();
-            y = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().y - mc.player.getEyeHeight(mc.player.getPose()) : mc.player.getY();
-            z = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().z : mc.player.getZ();
+            if (spoofX.get()) x = xValue.get();
+            else x = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().x : mc.player.getX();
+
+            if (spoofY.get()) y = yValue.get();
+            else y = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().y - mc.player.getEyeHeight(mc.player.getPose()) : mc.player.getY();
+
+            if (spoofZ.get()) z = zValue.get();
+            else z = freecam.isActive() ? mc.gameRenderer.getCamera().getPos().z : mc.player.getZ();
 
             right1 = String.format("%.1f %.1f %.1f", x, y, z);
         } else {
-            x = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getX() : mc.player.getBlockX();
-            y = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getY() : mc.player.getBlockY();
-            z = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getZ() : mc.player.getBlockZ();
+            if (spoofX.get()) x = xValue.get();
+            else x = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getX() : mc.player.getBlockX();
+
+            if (spoofY.get()) y = yValue.get();
+            else y = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getY() : mc.player.getBlockY();
+
+            if (spoofZ.get()) z = zValue.get();
+            else z = freecam.isActive() ? mc.gameRenderer.getCamera().getBlockPos().getZ() : mc.player.getBlockZ();
 
             right1 = String.format("%d %d %d", (int) x, (int) y, (int) z);
         }
