@@ -12,8 +12,6 @@ import mathax.legacy.client.eventbus.EventHandler;
 import net.minecraft.item.Items;
 
 public class AntiVoid extends Module {
-    private final Flight flight = Modules.get().get(Flight.class);
-
     private boolean wasFlightEnabled, hasRun;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -34,19 +32,19 @@ public class AntiVoid extends Module {
 
     @Override
     public void onActivate() {
-        if (mode.get() == Mode.Flight) wasFlightEnabled = flight.isActive();
+        if (mode.get() == Mode.Flight) wasFlightEnabled = Modules.get().isActive(Flight.class);
     }
 
     @Override
     public void onDeactivate() {
-        if (!wasFlightEnabled && mode.get() == Mode.Flight && Utils.canUpdate() && flight.isActive()) flight.toggle();
+        if (!wasFlightEnabled && mode.get() == Mode.Flight && Utils.canUpdate() && Modules.get().isActive(Flight.class)) Modules.get().get(Flight.class).toggle();
     }
 
     @EventHandler
     private void onPreTick(TickEvent.Pre event) {
         if (mc.player.getY() > Utils.getMinHeight() || mc.player.getY() < -15) {
-            if (hasRun && mode.get() == Mode.Flight && flight.isActive()) {
-                flight.toggle();
+            if (hasRun && mode.get() == Mode.Flight && Modules.get().isActive(Flight.class)) {
+                Modules.get().get(Flight.class).toggle();
                 hasRun = false;
             }
 
@@ -55,7 +53,7 @@ public class AntiVoid extends Module {
 
         switch (mode.get()) {
             case Flight -> {
-                if (!flight.isActive()) flight.toggle();
+                if (!Modules.get().isActive(Flight.class)) Modules.get().get(Flight.class).toggle();
                 hasRun = true;
             }
             case Jump -> mc.player.jump();
