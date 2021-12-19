@@ -29,7 +29,7 @@ public class VerticalLayout implements LayoutManager {
     }
 
     public VerticalLayout(int vgap, int alignment, int anchor) {
-        this. = vgap;
+        this.vgap = vgap;
         this.alignment = alignment;
         this.anchor = anchor;
     }

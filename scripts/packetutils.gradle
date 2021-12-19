@@ -102,14 +102,9 @@ task generatePacketUtils() {
         }
 
         // Generate PacketUtils.java
-        def writer = new File("src/main/java/matejko06/mathax/utils/network/PacketUtils.java").newWriter()
+        def writer = new File("src/main/java/mathax/legacy/client/utils/network/PacketUtils.java").newWriter()
 
-        writer << "/*\n"
-        writer << " * This file is part of the MatHax Client distribution (https://github.com/Matejko06/MatHaxClient/).\n"
-        writer << " * Copyright (c) 2021 Matejko06.\n"
-        writer << " */\n\n"
-
-        writer << "package matejko06.mathax.utils.network;\n\n"
+        writer << "package mathax.legacy.client.utils.network;\n\n"
 
         //   Write imports
         writer << "import com.google.common.collect.Iterators;\n"
