@@ -13,11 +13,8 @@ public class GenericSetting<T extends ICopyable<T> & ISerializable<T> & IScreenF
     }
 
     @Override
-    public void reset() {
-        if (value == null) value = defaultValue.copy();
-        value.set(defaultValue);
-
-        onChanged();
+    public void resetImpl() {
+        if (value == null) value = defa
     }
 
     @Override

@@ -24,9 +24,8 @@ public class StringListSetting extends Setting<List<String>>{
     }
 
     @Override
-    public void reset() {
+    public void resetImpl() {
         value = new ArrayList<>(defaultValue);
-        onChanged();
     }
 
     @Override

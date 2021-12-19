@@ -32,11 +32,12 @@ public abstract class Setting<T> implements IGetter<T>, ISerializable<T> {
         this.name = name;
         this.title = Utils.nameToTitle(name);
         this.description = description;
-        this.defaultValue = defaultValue;
         this.value = defaultValue;
         this.onChanged = onChanged;
         this.onModuleActivated = onModuleActivated;
         this.visible = visible;
+
+        resetImpl();
     }
 
     @Override
@@ -51,8 +52,12 @@ public abstract class Setting<T> implements IGetter<T>, ISerializable<T> {
         return true;
     }
 
-    public void reset() {
+    protected void resetImpl() {
         value = defaultValue;
+    }
+
+    public void reset() {
+        resetImpl();
         onChanged();
     }
 
