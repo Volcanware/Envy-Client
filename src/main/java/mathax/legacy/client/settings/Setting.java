@@ -32,7 +32,7 @@ public abstract class Setting<T> implements IGetter<T>, ISerializable<T> {
         this.name = name;
         this.title = Utils.nameToTitle(name);
         this.description = description;
-        this.value = defaultValue;
+        this.defaultValue = defaultValue;
         this.onChanged = onChanged;
         this.onModuleActivated = onModuleActivated;
         this.visible = visible;
