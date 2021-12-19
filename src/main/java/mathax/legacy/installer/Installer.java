@@ -1,103 +1,375 @@
 package mathax.legacy.installer;
 
-import net.minecraft.util.Util;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import mathax.legacy.installer.layouts.VerticalLayout;
+import net.fabricmc.installer.Main;
+import net.fabricmc.installer.util.MetaHandler;
+import net.fabricmc.installer.util.Reference;
+import net.fabricmc.installer.util.Utils;
+import org.json.JSONException;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.*;
+import java.util.*;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+/*/-------------------------------------------------/*/
+/*/ THANKS TO IRIS DEVELOPERS FOR MOST OF THIS CODE /*/
+/*/ https://irisshaders.net                         /*/
+/*/ https://github.com/IrisShaders/Iris-Installer/  /*/
+/*/-------------------------------------------------/*/
 
 public class Installer {
-    public static final Color MATHAX_COLOR = new Color(230, 75, 100);
-    public static final Color MATHAX_BACKGROUND_COLOR = new Color(30, 30, 45);
+    InstallerMeta INSTALLER_META;
+    List<String> CLIENT_VERSIONS;
+    List<String> GAME_VERSIONS;
+    String API_URL = "https://api.mathaxclient.xyz/Installer/";
 
-    //TODO: MAKE THIS SHIT AN INSTALLER
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
+    String selectedClientVersion;
+    String selectedGameVersion;
+    Path customInstallDir;
 
-        // Icon
-        ImageIcon icon = createImageIcon();
+    JButton button;
+    JComboBox<String> clientVersionDropdown;
+    JComboBox<String> gameVersionDropdown;
+    JButton installDirectoryPicker;
+    JProgressBar progressBar;
 
-        // Colors & Fonts
-        // TODO: Load Comfortaa font and make it work. :)
-        UIManager.put("OptionPane.background", MATHAX_BACKGROUND_COLOR);
-        UIManager.put("Panel.background", MATHAX_BACKGROUND_COLOR);
-        UIManager.put("Button.background", MATHAX_COLOR);
-        UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Comfortaa", Font.BOLD, 16)));
-        UIManager.put("Panel.messageFont", new FontUIResource(new Font("Comfortaa", Font.BOLD, 16)));
-        UIManager.put("Button.font", new FontUIResource(new Font("Comfortaa", Font.BOLD, 16)));
-        UIManager.put("OptionPane.messageForeground", MATHAX_COLOR);
-        UIManager.put("Panel.messageForeground", MATHAX_COLOR);
-        UIManager.put("Button.foreground", MATHAX_BACKGROUND_COLOR);
+    boolean finishedSuccessfulInstall = false;
 
-        // Options
-        int option = JOptionPane.showOptionDialog(
-            null,
-            "\nHow to install:\nPut this .jar file to your mods folder and run Fabric for Minecraft version specified in the jar name.\n\n",
-            "MatHax Legacy",
-            JOptionPane.YES_NO_CANCEL_OPTION,
-            JOptionPane.ERROR_MESSAGE,
-            icon,
-            new String[]{"Download Fabric", "Open mods folder", "MatHax Website"},
-            null
-        );
+    public Installer() {}
 
-        switch (option) {
-            case 0 -> {
-                openUrl("https://fabricmc.net/use/");
-            }
-            case 1 -> {
-                String path = switch (Util.getOperatingSystem()) {
-                    case WINDOWS -> System.getenv("AppData") + "/.minecraft/mods";
-                    case OSX -> System.getProperty("user.home") + "/Library/Application Support/minecraft/mods";
-                    default -> System.getProperty("user.home") + "/.minecraft";
-                };
-
-                File mods = new File(path);
-                if (!mods.exists()) mods.mkdirs();
-
-                Util.getOperatingSystem().open(mods);
-            }
-            case 2 -> {
-                openUrl("https://mathaxclient.xyz");
-            }
-        }
+    public static void main(String[] args) {
+        System.out.println("Launching installer...");
+        new Installer().start();
     }
 
-    // URL
-    public static void openUrl(String url) {
-        String os = System.getProperty("os.name").toLowerCase();
+    public void start() {
+        boolean dark = DarkModeDetector.isDarkMode();
+        System.setProperty("apple.awt.application.appearance", "system");
+        if (dark) FlatDarkLaf.setup();
+        else FlatLightLaf.setup();
 
+        Main.LOADER_META = new MetaHandler(Reference.getMetaServerEndpoint("v2/versions/loader"));
         try {
-            if (os.contains("win")) {
-                if (Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                    Desktop.getDesktop().browse(new URI(url));
+            Main.LOADER_META.load();
+        } catch (Exception e) {
+            System.out.println("Failed to fetch fabric version info from the server!");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "The installer was unable to fetch fabric version info from the server, please check your internet connection and try again later.", "Please check your internet connection!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        INSTALLER_META = new InstallerMeta(API_URL + "metadata.json");
+        try {
+            INSTALLER_META.load();
+        } catch (IOException e) {
+            System.out.println("Failed to fetch installer metadata from the server!");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "The installer was unable to fetch metadata from the server, please check your internet connection and try again later.", "Please check your internet connection!", JOptionPane.ERROR_MESSAGE);
+            return;
+        } catch (JSONException e) {
+            System.out.println("Failed to fetch installer metadata from the server!");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Installer metadata parsing failed, please contact the MatHax Legacy support team via Discord! \nError: " + e, "Metadata Parsing Failed!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        CLIENT_VERSIONS = INSTALLER_META.getClientVersions();
+        GAME_VERSIONS = INSTALLER_META.getGameVersions();
+
+        JFrame frame = new JFrame("MatHax Legacy Installer");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+        frame.setSize(350,350);
+        frame.setLocationRelativeTo(null);
+        frame.setIconImage(new ImageIcon(Objects.requireNonNull(Utils.class.getClassLoader().getResource("assets/mathaxlegacy/textures/icons/icon.png"))).getImage());
+
+        JPanel topPanel = new JPanel(new VerticalLayout());
+
+        JPanel clientVersionPanel = new JPanel();
+
+        JLabel clientVersionDropdownLabel = new JLabel("Select Client Version:");
+        clientVersionDropdownLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        List<String> clientVersions = CLIENT_VERSIONS.subList(0, CLIENT_VERSIONS.size());
+        Collections.reverse(clientVersions);
+        String[] clientVersionList = clientVersions.toArray(new String[0]);
+        selectedClientVersion = clientVersionList[0];
+
+        clientVersionDropdown = new JComboBox<>(clientVersionList);
+        clientVersionDropdown.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                selectedClientVersion = (String) e.getItem();
+
+                readyAll();
+            }
+        });
+
+        clientVersionPanel.add(clientVersionDropdownLabel);
+        clientVersionPanel.add(clientVersionDropdown);
+
+        JPanel gameVersionPanel = new JPanel();
+
+        JLabel gameVersionDropdownLabel = new JLabel("Select Game Version:");
+        gameVersionDropdownLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        List<String> gameVersions = GAME_VERSIONS.subList(0, GAME_VERSIONS.size());
+        Collections.reverse(gameVersions);
+        String[] gameVersionList = gameVersions.toArray(new String[0]);
+        selectedGameVersion = gameVersionList[0];
+
+        gameVersionDropdown = new JComboBox<>(gameVersionList);
+        gameVersionDropdown.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                selectedGameVersion = (String) e.getItem();
+
+                readyAll();
+            }
+        });
+
+        gameVersionPanel.add(gameVersionDropdownLabel);
+        gameVersionPanel.add(gameVersionDropdown);
+
+        JPanel installDirectoryPanel = new JPanel();
+
+        JLabel installDirectoryPickerLabel = new JLabel("Select Install Directory:");
+        installDirectoryPickerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        installDirectoryPicker = new JButton(getDefaultInstallDir().toFile().getName());
+        installDirectoryPicker.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            fileChooser.setFileHidingEnabled(false);
+            int option = fileChooser.showOpenDialog(frame);
+            if (option == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                customInstallDir = file.toPath();
+                installDirectoryPicker.setText(file.getName());
+
+                readyAll();
+            }
+        });
+
+        installDirectoryPanel.add(installDirectoryPickerLabel);
+        installDirectoryPanel.add(installDirectoryPicker);
+
+        topPanel.add(clientVersionPanel);
+        topPanel.add(gameVersionPanel);
+        topPanel.add(installDirectoryPanel);
+
+        JPanel bottomPanel = new JPanel();
+
+        progressBar = new JProgressBar();
+        progressBar.setValue(0);
+        progressBar.setMaximum(100);
+        progressBar.setStringPainted(true);
+
+        button = new JButton("Install");
+        button.addActionListener(action -> {
+            File storageDir = getStorageDirectory().toFile();
+            if (!storageDir.exists() || !storageDir.isDirectory()) storageDir.mkdir();
+
+            button.setText("Downloading...");
+            progressBar.setValue(0);
+            setInteractionEnabled(false);
+
+            String jarName = "MatHax_Legacy-v" + selectedClientVersion + "-Fabric_" + selectedGameVersion + ".jar";
+
+            String downloadURL = "https://api.mathaxclient.xyz/Download/Legacy/" + selectedGameVersion.replace(".", "-") + "/" + jarName;
+
+            File saveLocation = getStorageDirectory().resolve(jarName).toFile();
+
+            final Downloader downloader = new Downloader(downloadURL, saveLocation);
+            downloader.addPropertyChangeListener(event -> {
+                if ("progress".equals(event.getPropertyName())) progressBar.setValue((Integer) event.getNewValue());
+                else if (event.getNewValue() == SwingWorker.StateValue.DONE) {
+                    try {
+                        downloader.get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        System.out.println("Failed to download jar!");
+                        e.getCause().printStackTrace();
+
+                        String msg = String.format("An error occurred while attempting to download the required files, please check your internet connection and try again! \nError: %s", e.getCause().toString());
+                        JOptionPane.showMessageDialog(frame, msg, "Download Failed!", JOptionPane.ERROR_MESSAGE, null);
+                        readyAll();
+
+                        return;
+                    }
+
+                    button.setText("Download completed!");
+                    System.out.println(saveLocation);
+
+                    boolean cancelled = false;
+
+                    File installDir = getInstallDir().toFile();
+                    if (!installDir.exists() || !installDir.isDirectory()) installDir.mkdir();
+
+                    File modsFolder = getInstallDir().resolve("mods").toFile();
+                    File[] modsFolderContents = modsFolder.listFiles();
+
+                    if (modsFolderContents != null) {
+                        boolean isEmpty = modsFolderContents.length == 0;
+
+                        if (modsFolder.exists() && modsFolder.isDirectory() && !isEmpty) {
+                            int result = JOptionPane.showConfirmDialog(frame,"An existing mods folder was found in the selected game directory. Do you want to update/install MatHax Legacy?", "Mods Folder Detected", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            if (result != JOptionPane.YES_OPTION) cancelled = true;
+                        }
+
+                        if (!cancelled) {
+                            boolean shownOptifineDialog = false;
+                            boolean failedToRemoveOptifine = false;
+
+                            for (File mod : modsFolderContents) {
+                                if (mod.getName().toLowerCase().contains("optifine") || mod.getName().toLowerCase().contains("optifabric")) {
+                                    if (!shownOptifineDialog) {
+                                        int result = JOptionPane.showOptionDialog(frame,"Optifine was found in your mods folder, but Optifine is incompatible with MatHax Legacy. Do you want to remove it, or cancel the installation?", "Optifine Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
+
+                                        shownOptifineDialog = true;
+                                        if (result != JOptionPane.YES_OPTION) {
+                                            cancelled = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!mod.delete()) failedToRemoveOptifine = true;
+                                }
+                            }
+
+                            if (failedToRemoveOptifine) {
+                                System.out.println("Failed to delete optifine from mods folder");
+                                JOptionPane.showMessageDialog(frame, "Failed to remove optifine from your mods folder, please make sure your game is closed and try again!", "Failed to remove optifine", JOptionPane.ERROR_MESSAGE);
+                                cancelled = true;
+                            }
+                        }
+                    }
+
+                    if (cancelled) {
+                        readyAll();
+                        return;
+                    }
+
+                    if (!modsFolder.exists() || !modsFolder.isDirectory()) modsFolder.mkdir();
+
+                    boolean installSuccess = installJar(saveLocation, jarName, modsFolder);
+                    if (installSuccess) {
+                        button.setText("Installation succeeded!");
+                        finishedSuccessfulInstall = true;
+                        clientVersionDropdown.setEnabled(true);
+                        gameVersionDropdown.setEnabled(true);
+                        installDirectoryPicker.setEnabled(true);
+                    } else {
+                        button.setText("Installation failed!");
+                        System.out.println("Failed to install to mods folder!");
+                        JOptionPane.showMessageDialog(frame, "Failed to install to mods folder, please make sure your game is closed and try again!", "Installation Failed!", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
-            } else if (os.contains("mac")) {
-                Runtime.getRuntime().exec("open " + url);
-            } else if (os.contains("nix") || os.contains("nux")) {
-                Runtime.getRuntime().exec("xdg-open " + url);
-            }
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
-        }
+            });
+
+            downloader.execute();
+        });
+
+        bottomPanel.add(progressBar);
+        bottomPanel.add(button);
+
+        frame.getContentPane().add(topPanel, BorderLayout.NORTH);
+        frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+
+        frame.setVisible(true);
+
+        System.out.println("Installer launched!");
     }
 
-    // ICON
-    protected static ImageIcon createImageIcon() {
-        URL imgURL = Installer.class.getResource("/assets/mathaxlegacy/textures/icons/icon64.png");
-        if (imgURL != null) {
-            return new ImageIcon(imgURL, "MatHax Legacy");
-        } else {
-            System.err.println("Couldn't find icon: " + "/assets/mathaxlegacy/textures/icons/icon64.png");
+    class Downloader extends SwingWorker<Void, Void> {
+        private final String url;
+        private final File file;
+
+        public Downloader(String url, File file) {
+            this.url = url;
+            this.file = file;
+        }
+
+        @Override
+        protected Void doInBackground() throws Exception {
+            URL url = new URL(this.url);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            long filesize = connection.getContentLengthLong();
+            if (filesize == -1) throw new Exception("Content length must not be -1 (unknown)!");
+            long totalDataRead = 0;
+            try (java.io.BufferedInputStream in = new java.io.BufferedInputStream(connection.getInputStream())) {
+                java.io.FileOutputStream fos = new java.io.FileOutputStream(file);
+                try (java.io.BufferedOutputStream bout = new BufferedOutputStream(fos, 1024)) {
+                    byte[] data = new byte[1024];
+                    int i;
+                    while ((i = in.read(data, 0, 1024)) >= 0) {
+                        totalDataRead = totalDataRead + i;
+                        bout.write(data, 0, i);
+                        int percent = (int) ((totalDataRead * 100) / filesize);
+                        setProgress(percent);
+                    }
+                }
+            }
+
             return null;
         }
+    }
+
+    public boolean installJar(File jar, String jarName, File mods) {
+        try {
+            Files.copy(jar.toPath(), new File(mods + "/" + jarName).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Files.exists(mods.toPath().resolve(jarName));
+    }
+
+    public Path getStorageDirectory() {
+        return getAppDataDirectory().resolve(getStorageDirectoryName());
+    }
+
+    public Path getInstallDir() {
+        return customInstallDir != null ? customInstallDir : getDefaultInstallDir();
+    }
+
+    public Path getAppDataDirectory() {
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("win")) return new File(System.getenv("APPDATA")).toPath();
+        else if (os.contains("mac")) return new File(System.getProperty("user.home") + "/Library/Application Support").toPath();
+        else if (os.contains("nux")) return new File(System.getProperty("user.home")).toPath();
+        else return new File(System.getProperty("user.dir")).toPath();
+    }
+
+    public String getStorageDirectoryName() {
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("mac")) return "mathax-legacy-installer";
+        else return ".mathax-legacy-installer";
+    }
+
+    public Path getDefaultInstallDir() {
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("mac")) return getAppDataDirectory().resolve("minecraft");
+        else return getAppDataDirectory().resolve(".minecraft");
+    }
+
+    public void setInteractionEnabled(boolean enabled) {
+        clientVersionDropdown.setEnabled(enabled);
+        gameVersionDropdown.setEnabled(enabled);
+        installDirectoryPicker.setEnabled(enabled);
+        button.setEnabled(enabled);
+    }
+
+    public void readyAll() {
+        finishedSuccessfulInstall = false;
+        button.setText("Install");
+        progressBar.setValue(0);
+        setInteractionEnabled(true);
     }
 }

@@ -60,6 +60,11 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.minecraft_version}+${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc:fabric-installer:${project.installer_version}"
+
+    // Installer
+    implementation "org.json:json:${project.json_version}"
+    implementation "com.formdev:flatlaf:${project.flatlaf_version}"
 
     // Compat fixes
     modCompileOnly fabricApi.module("fabric-renderer-indigo", project.api_version)
