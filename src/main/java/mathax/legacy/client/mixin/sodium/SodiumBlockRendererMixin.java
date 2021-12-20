@@ -29,7 +29,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = BlockRenderer.class, remap = false)
 public class SodiumBlockRendererMixin {
-    @Shadow @Final private BiomeColorBlender biomeColorBlender;
+    @Shadow
+    @Final
+    private BiomeColorBlender biomeColorBlender;
 
     @Inject(method = "renderQuad", at = @At(value = "HEAD"), cancellable = true)
     private void onRenderQuad(BlockRenderView world, BlockState state, BlockPos pos, BlockPos origin, ModelVertexSink vertices, IndexBufferBuilder indices, Vec3d blockOffset, ModelQuadColorProvider<BlockState> colorProvider, BakedQuad bakedQuad, QuadLightData light, ChunkModelBuilder model, CallbackInfo info) {

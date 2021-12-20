@@ -43,7 +43,6 @@ public abstract class AbstractQuadRendererMixin {
     @Shadow
     protected abstract int overlay();
 
-    @SuppressWarnings("UnresolvedMixinReference")
     @Inject(method = "bufferQuad(Lnet/fabricmc/fabric/impl/client/indigo/renderer/mesh/MutableQuadViewImpl;Lnet/minecraft/class_1921;)V", at = @At("HEAD"), cancellable = true, remap = false)
     private void onBufferQuad(MutableQuadViewImpl quad, RenderLayer renderLayer, CallbackInfo ci) {
         WallHack wallHack = Modules.get().get(WallHack.class);

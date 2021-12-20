@@ -175,41 +175,33 @@ public class TitleScreen extends Screen {
 
         if ((ceil & -67108864) != 0) {
             int logoScale;
-            boolean a = false;
+            boolean b = false;
             if (client.options.guiScale == 1) logoScale = client.getWindow().getHeight() / 4;
             else if (client.options.guiScale == 2) logoScale = client.getWindow().getHeight() / 8;
             else if (client.options.guiScale == 3) logoScale = client.getWindow().getHeight() / 12;
             else if (client.options.guiScale == 4) logoScale = client.getWindow().getHeight() / 16;
             else {
                 if (client.getWindow().getHeight() < 1920) {
-                    logoScale = client.getWindow().getHeight() / 8;
-                    a = true;
+                    b = true;
+                    if (client.getWindow().getHeight() < 720) logoScale = client.getWindow().getHeight() / 2;
+                    else logoScale = client.getWindow().getHeight() / 4;
                 } else logoScale = client.getWindow().getHeight() / 32;
             }
 
+            int logoX = widthHalf - (logoScale / 2);
+            int logoY = 10;
+
             RenderSystem.setShaderTexture(0, LOGO);
-            drawTexture(matrices, widthHalf - (logoScale / 2), 10, 0.0F, 0.0F, logoScale, logoScale, logoScale, logoScale);
+            drawTexture(matrices, logoX, logoY, 0.0F, 0.0F, logoScale, logoScale, logoScale, logoScale);
 
             // Splashes
 
             if (splashText != null) {
-                if (a) logoScale -= logoScale / 3;
-                int splashX = width / 2 + (logoScale / 2) - 32;
-                if (client.getWindow().getWidth() < 3072 && client.options.guiScale == 1) splashX += 32;
-                int splashY = logoScale - (logoScale / 5);
-                if (a) splashY += logoScale / 2;
+                int splashX = widthHalf + (logoScale / 3);
+                if (b) splashX -= logoScale / 8;
 
-                if (client.options.guiScale == 1) splashY -= logoScale / 8;
-                if (client.options.guiScale == 3) splashX += logoScale / 6;
-                if (client.options.guiScale == 4) splashX += logoScale / 4;
-                if (isAutoGUIScale()) splashX += (logoScale / 2) + (logoScale / 8);
-
-                if (client.getWindow().getHeight() < 1200) splashX += 32;
-                if (client.getWindow().getHeight() < 500) splashX += logoScale / 3;
-                if (client.getWindow().getHeight() < 350) {
-                    splashY += logoScale / 2;
-                    splashX += logoScale / 2;
-                }
+                int splashY = logoY + logoScale - (logoScale / 4);
+                if (b) splashY += logoScale / 2;
 
                 matrices.push();
                 matrices.translate(splashX, splashY, 0);
