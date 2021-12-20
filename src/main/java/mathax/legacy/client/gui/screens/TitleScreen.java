@@ -299,13 +299,6 @@ public class TitleScreen extends Screen {
         }
     }
 
-    private boolean isAutoGUIScale() {
-        if (client.options.guiScale == 1) return false;
-        else if (client.options.guiScale == 2) return false;
-        else if (client.options.guiScale == 3) return false;
-        else return client.options.guiScale != 4;
-    }
-
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (super.mouseClicked(mouseX, mouseY, button)) return true;
         else if (areRealmsNotificationsEnabled() && realmsNotificationGui.mouseClicked(mouseX, mouseY, button)) return true;
