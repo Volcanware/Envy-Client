@@ -27,10 +27,11 @@ import java.util.concurrent.ExecutionException;
 /*/-------------------------------------------------/*/
 
 public class Installer {
+    String API_URL = "https://api.mathaxclient.xyz/Installer/";
+
     InstallerMeta INSTALLER_META;
     List<String> CLIENT_VERSIONS;
     List<String> GAME_VERSIONS;
-    String API_URL = "https://api.mathaxclient.xyz/Installer/";
 
     String selectedClientVersion;
     String selectedGameVersion;
@@ -205,7 +206,6 @@ public class Installer {
                     }
 
                     button.setText("Download completed!");
-                    System.out.println(saveLocation);
 
                     boolean cancelled = false;
 

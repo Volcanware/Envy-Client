@@ -60,7 +60,7 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.minecraft_version}+${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    implementation "net.fabricmc:fabric-installer:${project.installer_version}"
+    implementation "net.fabricmc:fabric-installer:${project.fabric_installer_version}"
 
     // Installer
     implementation "org.json:json:${project.json_version}"
@@ -135,7 +135,7 @@ jar {
     from "LICENSE"
 
     manifest {
-        attributes("Main-Class": "mathax.legacy.installer.Installer")
+        attributes("Main-Class": ${project.installer_class})
     }
 }
 

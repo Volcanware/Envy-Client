@@ -6,14 +6,6 @@ import java.io.InputStreamReader;
 import java.util.regex.Pattern;
 
 public class DarkModeDetector {
-    public enum OperatingSystem {
-        WINDOWS,
-        MACOS,
-        LINUX,
-        SOLARIS,
-        NONE
-    }
-
     private static final String REGQUERY_UTIL = "reg query ";
     private static final String REGDWORD_TOKEN = "REG_DWORD";
     private static final String DARK_THEME_CMD = REGQUERY_UTIL + "\"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\"" + " /v AppsUseLightTheme";
@@ -89,5 +81,13 @@ public class DarkModeDetector {
             e.printStackTrace();
             return "";
         }
+    }
+
+    public enum OperatingSystem {
+        WINDOWS,
+        MACOS,
+        LINUX,
+        SOLARIS,
+        NONE
     }
 }
