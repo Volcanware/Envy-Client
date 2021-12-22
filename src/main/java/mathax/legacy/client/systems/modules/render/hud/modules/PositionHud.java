@@ -44,7 +44,7 @@ public class PositionHud extends HudElement {
     private final Setting<Boolean> spoofX = sgSpoof.add(new BoolSetting.Builder()
         .name("x")
         .description("Spoofs the X coordinate.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 
@@ -61,7 +61,7 @@ public class PositionHud extends HudElement {
     private final Setting<Boolean> spoofY = sgSpoof.add(new BoolSetting.Builder()
         .name("y")
         .description("Spoofs the Y coordinate.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 
@@ -77,7 +77,7 @@ public class PositionHud extends HudElement {
     private final Setting<Boolean> spoofZ = sgSpoof.add(new BoolSetting.Builder()
         .name("z")
         .description("Spoofs the Z coordinate.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 
