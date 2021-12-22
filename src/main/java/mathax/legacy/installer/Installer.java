@@ -249,6 +249,22 @@ public class Installer {
                                 cancelled = true;
                             }
                         }
+
+                        if (!cancelled) {
+                            boolean failedToRemoveMatHaxLegacy = false;
+
+                            for (File mod : modsFolderContents) {
+                                if (mod.getName().toLowerCase().contains("mathax") || mod.getName().toLowerCase().contains("mathax_legacy")) {
+                                    if (!mod.delete()) failedToRemoveMatHaxLegacy = true;
+                                }
+                            }
+
+                            if (failedToRemoveMatHaxLegacy) {
+                                System.out.println("Failed to remove MatHax Legacy from mods folder to update them!");
+                                JOptionPane.showMessageDialog(frame, "Failed to remove MatHax Legacy from your mods folder to update them, please make sure your game is closed and try again!", "Failed to prepare MatHax Legacy for update", JOptionPane.ERROR_MESSAGE);
+                                cancelled = true;
+                            }
+                        }
                     }
 
                     if (cancelled) {
