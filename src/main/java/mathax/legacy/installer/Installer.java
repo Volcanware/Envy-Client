@@ -14,6 +14,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.*;
 import java.util.*;
@@ -41,6 +43,7 @@ public class Installer {
     JComboBox<String> clientVersionDropdown;
     JComboBox<String> gameVersionDropdown;
     JButton installDirectoryPicker;
+    JButton installHelpButton;
     JProgressBar progressBar;
 
     boolean finishedSuccessfulInstall = false;
@@ -89,7 +92,7 @@ public class Installer {
         JFrame frame = new JFrame("MatHax Legacy Installer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
-        frame.setSize(350,350);
+        frame.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 8, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 6);
         frame.setLocationRelativeTo(null);
         frame.setIconImage(new ImageIcon(Objects.requireNonNull(Utils.class.getClassLoader().getResource("assets/mathaxlegacy/textures/icons/icon.png"))).getImage());
 
@@ -162,9 +165,21 @@ public class Installer {
         installDirectoryPanel.add(installDirectoryPickerLabel);
         installDirectoryPanel.add(installDirectoryPicker);
 
+        JPanel installHelpPanel = new JPanel();
+
+        JLabel installHelpLabel = new JLabel("Installation Help:");
+        installHelpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        installHelpButton = new JButton("Help");
+        installHelpButton.addActionListener(e -> openUrl("https://mathaxclient.xyz/Installation"));
+
+        installHelpPanel.add(installHelpLabel);
+        installHelpPanel.add(installHelpButton);
+
         topPanel.add(clientVersionPanel);
         topPanel.add(gameVersionPanel);
         topPanel.add(installDirectoryPanel);
+        topPanel.add(installHelpPanel);
 
         JPanel bottomPanel = new JPanel();
 
@@ -183,7 +198,6 @@ public class Installer {
             setInteractionEnabled(false);
 
             String jarName = "MatHax_Legacy-v" + selectedClientVersion + "-Fabric_" + selectedGameVersion + ".jar";
-
             String downloadURL = "https://api.mathaxclient.xyz/Download/Legacy/" + selectedGameVersion.replace(".", "-") + "/" + jarName;
 
             File saveLocation = getStorageDirectory().resolve(jarName).toFile();
@@ -219,8 +233,28 @@ public class Installer {
                         boolean isEmpty = modsFolderContents.length == 0;
 
                         if (modsFolder.exists() && modsFolder.isDirectory() && !isEmpty) {
-                            int result = JOptionPane.showConfirmDialog(frame,"An existing mods folder was found in the selected game directory. Do you want to update/install MatHax Legacy?", "Mods Folder Detected", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                            if (result != JOptionPane.YES_OPTION) cancelled = true;
+                            boolean shownMatHaxLegacyDialog = false;
+                            boolean failedToRemoveMatHaxLegacy = false;
+
+                            for (File mod : modsFolderContents) {
+                                if (!shownMatHaxLegacyDialog && mod.getName().toLowerCase().contains("mathax") || mod.getName().toLowerCase().contains("mathax_legacy")) {
+                                    int result = JOptionPane.showOptionDialog(frame, "Another installation of MatHax Legacy was found in your mods folder. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Installed MatHax Legacy Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
+
+                                    shownMatHaxLegacyDialog = true;
+                                    if (result != JOptionPane.YES_OPTION) {
+                                        cancelled = true;
+                                        break;
+                                    }
+
+                                    if (!mod.delete()) failedToRemoveMatHaxLegacy = true;
+                                }
+                            }
+
+                            if (failedToRemoveMatHaxLegacy) {
+                                System.out.println("Failed to remove MatHax Legacy from mods folder to update them!");
+                                JOptionPane.showMessageDialog(frame, "Failed to remove MatHax Legacy from your mods folder to update them, please make sure your game is closed and try again!", "Failed to prepare MatHax Legacy for update", JOptionPane.ERROR_MESSAGE);
+                                cancelled = true;
+                            }
                         }
 
                         if (!cancelled) {
@@ -230,10 +264,10 @@ public class Installer {
                             for (File mod : modsFolderContents) {
                                 if (mod.getName().toLowerCase().contains("optifine") || mod.getName().toLowerCase().contains("optifabric")) {
                                     if (!shownOptifineDialog) {
-                                        int result = JOptionPane.showOptionDialog(frame,"Optifine was found in your mods folder, but Optifine is incompatible with MatHax Legacy. Do you want to remove it, or cancel the installation?", "Optifine Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
+                                        int ofResult = JOptionPane.showOptionDialog(frame,"Optifine was found in your mods folder, but Optifine is incompatible with MatHax Legacy. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Optifine Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
 
                                         shownOptifineDialog = true;
-                                        if (result != JOptionPane.YES_OPTION) {
+                                        if (ofResult != JOptionPane.YES_OPTION) {
                                             cancelled = true;
                                             break;
                                         }
@@ -246,22 +280,6 @@ public class Installer {
                             if (failedToRemoveOptifine) {
                                 System.out.println("Failed to delete optifine from mods folder");
                                 JOptionPane.showMessageDialog(frame, "Failed to remove optifine from your mods folder, please make sure your game is closed and try again!", "Failed to remove optifine", JOptionPane.ERROR_MESSAGE);
-                                cancelled = true;
-                            }
-                        }
-
-                        if (!cancelled) {
-                            boolean failedToRemoveMatHaxLegacy = false;
-
-                            for (File mod : modsFolderContents) {
-                                if (mod.getName().toLowerCase().contains("mathax") || mod.getName().toLowerCase().contains("mathax_legacy")) {
-                                    if (!mod.delete()) failedToRemoveMatHaxLegacy = true;
-                                }
-                            }
-
-                            if (failedToRemoveMatHaxLegacy) {
-                                System.out.println("Failed to remove MatHax Legacy from mods folder to update them!");
-                                JOptionPane.showMessageDialog(frame, "Failed to remove MatHax Legacy from your mods folder to update them, please make sure your game is closed and try again!", "Failed to prepare MatHax Legacy for update", JOptionPane.ERROR_MESSAGE);
                                 cancelled = true;
                             }
                         }
@@ -281,6 +299,7 @@ public class Installer {
                         clientVersionDropdown.setEnabled(true);
                         gameVersionDropdown.setEnabled(true);
                         installDirectoryPicker.setEnabled(true);
+                        installHelpButton.setEnabled(true);
                     } else {
                         button.setText("Installation failed!");
                         System.out.println("Failed to install to mods folder!");
@@ -379,6 +398,7 @@ public class Installer {
         clientVersionDropdown.setEnabled(enabled);
         gameVersionDropdown.setEnabled(enabled);
         installDirectoryPicker.setEnabled(enabled);
+        installHelpButton.setEnabled(enabled);
         button.setEnabled(enabled);
     }
 
@@ -387,5 +407,18 @@ public class Installer {
         button.setText("Install");
         progressBar.setValue(0);
         setInteractionEnabled(true);
+    }
+
+    public static void openUrl(String url) {
+        String os = System.getProperty("os.name").toLowerCase();
+
+        try {
+            if (os.contains("win")) {
+                if (Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) Desktop.getDesktop().browse(new URI(url));
+            } else if (os.contains("mac")) Runtime.getRuntime().exec("open " + url);
+            else if (os.contains("nix") || os.contains("nux")) Runtime.getRuntime().exec("xdg-open " + url);
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
