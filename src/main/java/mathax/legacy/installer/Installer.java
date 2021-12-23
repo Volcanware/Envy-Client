@@ -29,9 +29,10 @@ import java.util.concurrent.ExecutionException;
 /*/-------------------------------------------------/*/
 
 public class Installer {
-    String API_URL = "https://api.mathaxclient.xyz/Version/Legacy/Installer/";
+    public static String API_URL = "https://api.mathaxclient.xyz/Version/Legacy/Installer/";
 
     InstallerMeta INSTALLER_META;
+    Version INSTALLER_VERSION;
     List<String> CLIENT_VERSIONS;
     List<String> GAME_VERSIONS;
 
@@ -56,6 +57,8 @@ public class Installer {
     }
 
     public void start() {
+        INSTALLER_VERSION = Version.get();
+
         boolean dark = DarkModeDetector.isDarkMode();
         System.setProperty("apple.awt.application.appearance", "system");
         if (dark) FlatDarkLaf.setup();
@@ -82,17 +85,27 @@ public class Installer {
         } catch (JSONException e) {
             System.out.println("Failed to fetch installer metadata from the server!");
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Installer metadata parsing failed, please contact the MatHax Legacy support team via Discord! \nError: " + e, "Metadata Parsing Failed!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Installer metadata parsing failed, please contact the MatHax Legacy support team via Discord! \nError: " + e, "Metadata parsing failed!", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         CLIENT_VERSIONS = INSTALLER_META.getClientVersions();
         GAME_VERSIONS = INSTALLER_META.getGameVersions();
 
-        JFrame frame = new JFrame("MatHax Legacy Installer");
+        boolean newerFound;
+        Version latest = Version.getLatest();
+        if (latest == null) newerFound = false;
+        else newerFound = latest.isHigherThan(INSTALLER_VERSION);
+        if (newerFound) {
+            System.out.println("There is a new version of MatHax Legacy Installer, v" + Version.getLatest() + "! You are using v" + INSTALLER_VERSION + "!");
+            JOptionPane.showMessageDialog(null, "There is a new version of MatHax Legacy Installer, v" + Version.getLatest() + "! You are using v" + INSTALLER_VERSION + "!", "Newer MatHax Legacy Installer found!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JFrame frame = new JFrame("MatHax Legacy Installer - v" + INSTALLER_VERSION);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
-        frame.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 8, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 6);
+        frame.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 5, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 4);
         frame.setLocationRelativeTo(null);
         frame.setIconImage(new ImageIcon(Objects.requireNonNull(Utils.class.getClassLoader().getResource("assets/mathaxlegacy/textures/icons/icon.png"))).getImage());
 
@@ -233,8 +246,8 @@ public class Installer {
                         boolean isEmpty = modsFolderContents.length == 0;
 
                         if (modsFolder.exists() && modsFolder.isDirectory() && !isEmpty) {
-                            boolean shownMatHaxLegacyDialog = false;
                             boolean failedToRemoveMatHaxLegacy = false;
+                            boolean shownMatHaxLegacyDialog = false;
 
                             for (File mod : modsFolderContents) {
                                 if (!shownMatHaxLegacyDialog && mod.getName().toLowerCase().contains("mathax") || mod.getName().toLowerCase().contains("mathax_legacy")) {
@@ -264,10 +277,10 @@ public class Installer {
                             for (File mod : modsFolderContents) {
                                 if (mod.getName().toLowerCase().contains("optifine") || mod.getName().toLowerCase().contains("optifabric")) {
                                     if (!shownOptifineDialog) {
-                                        int ofResult = JOptionPane.showOptionDialog(frame,"Optifine was found in your mods folder, but Optifine is incompatible with MatHax Legacy. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Optifine Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
+                                        int result = JOptionPane.showOptionDialog(frame,"Optifine was found in your mods folder, but Optifine is incompatible with MatHax Legacy. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Installed Optifine Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
 
                                         shownOptifineDialog = true;
-                                        if (ofResult != JOptionPane.YES_OPTION) {
+                                        if (result != JOptionPane.YES_OPTION) {
                                             cancelled = true;
                                             break;
                                         }
@@ -278,8 +291,8 @@ public class Installer {
                             }
 
                             if (failedToRemoveOptifine) {
-                                System.out.println("Failed to delete optifine from mods folder");
-                                JOptionPane.showMessageDialog(frame, "Failed to remove optifine from your mods folder, please make sure your game is closed and try again!", "Failed to remove optifine", JOptionPane.ERROR_MESSAGE);
+                                System.out.println("Failed to delete Optifine from mods folder");
+                                JOptionPane.showMessageDialog(frame, "Failed to remove Optifine from your mods folder, please make sure your game is closed and try again!", "Failed to remove Optifine", JOptionPane.ERROR_MESSAGE);
                                 cancelled = true;
                             }
                         }

@@ -124,6 +124,13 @@ processResources {
             line -> line.replace("@mc_version@", project.minecraft_version)
         }
     }
+
+    filesMatching("metadata.json") {
+        expand "version": project.installer_version
+        filter {
+            line -> line.replace("@installer_version@", project.installer_version)
+        }
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
