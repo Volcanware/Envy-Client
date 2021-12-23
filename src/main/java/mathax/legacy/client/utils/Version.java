@@ -1,12 +1,15 @@
 package mathax.legacy.client.utils;
 
 import mathax.legacy.client.MatHaxLegacy;
-import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.render.prompts.OkPrompt;
 import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
+import mathax.legacy.json.JSONUtils;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 import net.minecraft.util.Util;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class Version {
     private final String string;
@@ -73,10 +76,16 @@ public class Version {
         public static boolean checkForLatest = true;
 
         public static String getLatest() {
-            String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/" + getMinecraft().replace(".", "-")).sendString();
+            String latestVer = null;
+            try {
+                JSONObject json = JSONUtils.readJsonFromUrl(MatHaxLegacy.API_URL + "Version/Legacy/metadata.json");
+                latestVer = json.getString(getMinecraft().replace(".", "-"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             if (latestVer == null) return null;
-            else return latestVer.replace("\n", "");
+            return latestVer.replace("\n", "");
         }
 
         public static CheckStatus checkLatest() {

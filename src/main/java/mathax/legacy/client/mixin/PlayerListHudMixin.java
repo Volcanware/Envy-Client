@@ -3,7 +3,6 @@ package mathax.legacy.client.mixin;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.misc.BetterTab;
 import mathax.legacy.client.utils.Utils;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.PlayerListHud;
 import net.minecraft.client.network.PlayerListEntry;

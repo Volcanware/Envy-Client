@@ -9,7 +9,6 @@ import mathax.legacy.client.mixin.EntityAccessor;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.InteractionMenu;
 import mathax.legacy.client.utils.render.PeekScreen;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;

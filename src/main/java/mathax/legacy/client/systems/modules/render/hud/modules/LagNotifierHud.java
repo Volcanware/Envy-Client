@@ -5,7 +5,6 @@ import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.render.hud.DoubleTextHudElement;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
-import mathax.legacy.client.systems.modules.render.hud.TripleTextHudElement;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import mathax.legacy.client.utils.world.TickRate;
 

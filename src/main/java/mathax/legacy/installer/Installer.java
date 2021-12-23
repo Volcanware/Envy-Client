@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutionException;
 /*/-------------------------------------------------/*/
 
 public class Installer {
-    String API_URL = "https://api.mathaxclient.xyz/Installer/";
+    String API_URL = "https://api.mathaxclient.xyz/Version/Legacy/Installer/";
 
     InstallerMeta INSTALLER_META;
     List<String> CLIENT_VERSIONS;
@@ -171,7 +171,7 @@ public class Installer {
         installHelpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         installHelpButton = new JButton("Help");
-        installHelpButton.addActionListener(e -> openUrl("https://mathaxclient.xyz/Installation"));
+        installHelpButton.addActionListener(e -> openUrl("https://mathaxclient.xyz/Installation/"));
 
         installHelpPanel.add(installHelpLabel);
         installHelpPanel.add(installHelpButton);

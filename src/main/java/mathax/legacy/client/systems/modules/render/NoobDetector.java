@@ -12,7 +12,6 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.combat.CrystalAura;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.render.color.SettingColor;
-import mathax.legacy.client.utils.world.BlockUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;

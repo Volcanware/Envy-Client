@@ -13,7 +13,6 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.legacy.client.mixininterface.IMatrix4f;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.render.NoBob;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
