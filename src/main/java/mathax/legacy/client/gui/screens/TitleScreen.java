@@ -75,7 +75,7 @@ public class TitleScreen extends Screen {
         return CompletableFuture.allOf(textureManager.loadTextureAsync(LOGO, executor), textureManager.loadTextureAsync(BACKGROUND, executor));
     }
 
-    public boolean isPauseScreen() {
+    public boolean shouldPause() {
         return false;
     }
 
@@ -175,18 +175,11 @@ public class TitleScreen extends Screen {
 
         if ((ceil & -67108864) != 0) {
             int logoScale;
-            boolean b = false;
             if (client.options.guiScale == 1) logoScale = client.getWindow().getHeight() / 4;
             else if (client.options.guiScale == 2) logoScale = client.getWindow().getHeight() / 8;
             else if (client.options.guiScale == 3) logoScale = client.getWindow().getHeight() / 12;
             else if (client.options.guiScale == 4) logoScale = client.getWindow().getHeight() / 16;
-            else {
-                if (client.getWindow().getHeight() < 1920) {
-                    b = true;
-                    if (client.getWindow().getHeight() < 720) logoScale = client.getWindow().getHeight() / 2;
-                    else logoScale = client.getWindow().getHeight() / 4;
-                } else logoScale = client.getWindow().getHeight() / 32;
-            }
+            else logoScale = client.getWindow().getHeight() / 32;
 
             int logoX = widthHalf - (logoScale / 2);
             int logoY = 10;
@@ -197,11 +190,9 @@ public class TitleScreen extends Screen {
             // Splashes
 
             if (splashText != null) {
-                int splashX = widthHalf + (logoScale / 3);
-                if (b) splashX -= logoScale / 8;
-
-                int splashY = logoY + logoScale - (logoScale / 4);
-                if (b) splashY += logoScale / 2;
+                int splashX = width / 2 + (logoScale / 2) - 32;
+                if (client.getWindow().getWidth() < 3072 && client.options.guiScale == 1) splashX += 32;
+                int splashY = logoScale - (logoScale / 5);
 
                 matrices.push();
                 matrices.translate(splashX, splashY, 0);

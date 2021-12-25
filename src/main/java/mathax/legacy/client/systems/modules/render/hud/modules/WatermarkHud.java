@@ -2,6 +2,7 @@ package mathax.legacy.client.systems.modules.render.hud.modules;
 
 import mathax.legacy.client.renderer.GL;
 import mathax.legacy.client.renderer.Renderer2D;
+import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.client.ClientSpoof;
 import mathax.legacy.client.systems.modules.render.hud.HUD;
@@ -9,10 +10,6 @@ import mathax.legacy.client.systems.modules.render.hud.HudRenderer;
 import mathax.legacy.client.systems.modules.render.hud.TripleTextHudElement;
 import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.utils.render.color.Color;
-import mathax.legacy.client.settings.DoubleSetting;
-import mathax.legacy.client.settings.EnumSetting;
-import mathax.legacy.client.settings.Setting;
-import mathax.legacy.client.settings.SettingGroup;
 import net.minecraft.util.Identifier;
 
 public class WatermarkHud extends TripleTextHudElement {
@@ -45,6 +42,13 @@ public class WatermarkHud extends TripleTextHudElement {
         .build()
     );
 
+    private final Setting<Boolean> updateCheck = sgGeneral.add(new BoolSetting.Builder()
+        .name("update-checker")
+        .description("Checks if a new version of MatHax Legacy is available.")
+        .defaultValue(true)
+        .build()
+    );
+
     public WatermarkHud(HUD hud) {
         super(hud, "watermark", "Displays a MatHax Legacy watermark.", true);
     }
@@ -60,7 +64,7 @@ public class WatermarkHud extends TripleTextHudElement {
     }
 
     protected String getEnd() {
-        if (cs.changeVersion()) return "";
+        if (!updateCheck.get() || cs.changeVersion()) return "";
         return checkForUpdate();
     }
 

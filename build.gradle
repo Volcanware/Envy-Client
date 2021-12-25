@@ -84,8 +84,9 @@ dependencies {
     include "curse.maven:litematica-${project.litematica_project_id}:${project.litematica_file_id}"
 
     // Malilib for Litematica
-    modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}.0:${project.malilib_version}"
-    include "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}.0:${project.malilib_version}"
+    modImplementation "fi.dy.masa.malilib:malilib-fabric-1.18.0:${project.malilib_version}"
+    include "fi.dy.masa.malilib:malilib-fabric-1.18.0:${project.malilib_version}"
+    // ${project.minecraft_version}.0
 
     // Dependencies
     library "com.github.Vatuu:discord-rpc:${project.discord_version}"

@@ -76,10 +76,12 @@ public class Version {
         public static boolean checkForLatest = true;
 
         public static String getLatest() {
+            String key = getMinecraft().replace(".", "-");
+
             String latestVer = null;
             try {
                 JSONObject json = JSONUtils.readJsonFromUrl(MatHaxLegacy.API_URL + "Version/Legacy/metadata.json");
-                latestVer = json.getString(getMinecraft().replace(".", "-"));
+                if (json.has(key)) latestVer = json.getString(key);
             } catch (IOException e) {
                 e.printStackTrace();
             }
