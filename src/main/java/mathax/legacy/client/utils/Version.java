@@ -1,6 +1,7 @@
 package mathax.legacy.client.utils;
 
 import mathax.legacy.client.MatHaxLegacy;
+import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.render.prompts.OkPrompt;
 import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
 import mathax.legacy.json.JSONUtils;
@@ -75,7 +76,8 @@ public class Version {
         public static boolean checkForLatestTitle = true;
         public static boolean checkForLatest = true;
 
-        public static String getLatest() {
+        // TODO: Fix, crashes outside IDE.
+        /*public static String getLatest() {
             String key = getMinecraft().replace(".", "-");
 
             String latestVer = null;
@@ -88,6 +90,12 @@ public class Version {
 
             if (latestVer == null) return null;
             return latestVer.replace("\n", "");
+        }*/
+
+        public static String getLatest() {
+            String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/" + getMinecraft().replace(".", "-")).sendString();
+            if (latestVer == null) return null;
+            else return latestVer.replace("\n", "");
         }
 
         public static CheckStatus checkLatest() {
