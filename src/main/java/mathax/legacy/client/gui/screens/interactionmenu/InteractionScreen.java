@@ -229,7 +229,7 @@ public class InteractionScreen extends Screen {
         else client.setScreen(null);
     }
 
-    public boolean shouldPause() {
+    public boolean isPauseScreen() {
         return false;
     }
 

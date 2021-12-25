@@ -75,7 +75,7 @@ public class TitleScreen extends Screen {
         return CompletableFuture.allOf(textureManager.loadTextureAsync(LOGO, executor), textureManager.loadTextureAsync(BACKGROUND, executor));
     }
 
-    public boolean shouldPause() {
+    public boolean isPauseScreen() {
         return false;
     }
 
@@ -193,6 +193,7 @@ public class TitleScreen extends Screen {
                 int splashX = width / 2 + (logoScale / 2) - 32;
                 if (client.getWindow().getWidth() < 3072 && client.options.guiScale == 1) splashX += 32;
                 int splashY = logoScale - (logoScale / 5);
+
 
                 matrices.push();
                 matrices.translate(splashX, splashY, 0);
