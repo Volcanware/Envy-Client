@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.objectweb.asm.tree.ClassNode;
-import org.spongepowered.asm.mixin.transformer.IMixinTransformer;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
@@ -42,11 +41,13 @@ public class MixinPlugin implements IMixinConfigPlugin {
             Unsafe unsafe = (Unsafe) unsafeField.get(null);
 
             // Create Asm
-            new Asm();
+            Asm asm = new Asm();
 
             // Change delegate
-            Asm.Transformer mixinTransformer = (Asm.Transformer) unsafe.allocateInstance(Asm.Transformer.class);
-            mixinTransformer.delegate = (IMixinTransformer) mixinTransformerField.get(delegate);
+            Class<?> klass = asm.createTransformer();
+
+            Object mixinTransformer = unsafe.allocateInstance(klass);
+            mixinTransformer.getClass().getDeclaredField("delegate").set(mixinTransformer, mixinTransformerField.get(delegate));
 
             mixinTransformerField.set(delegate, mixinTransformer);
         } catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {

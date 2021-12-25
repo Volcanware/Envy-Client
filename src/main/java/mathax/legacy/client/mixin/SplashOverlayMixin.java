@@ -2,10 +2,12 @@ package mathax.legacy.client.mixin;
 
 import mathax.legacy.client.utils.splash.PreviewSplashOverlay;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.resource.ResourceReload;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -15,27 +17,58 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.IntSupplier;
 
+import static net.minecraft.client.gui.DrawableHelper.fill;
+
+// TODO: Rewrite
+
 @Mixin(SplashOverlay.class)
 public abstract class SplashOverlayMixin {
+    @Shadow
+    private float progress;
 
-    // Logo
+    @Shadow
+    private long reloadCompleteTime;
+
+    @Shadow
+    @Final
+    private ResourceReload reload;
 
     @Mutable
     @Shadow
     @Final
     static Identifier LOGO;
 
-    private static Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/splash/splash.png");
+    @Shadow
+    @Final
+    private MinecraftClient client;
+
+    private static final Identifier MATHAX_LOGO = new Identifier("mathaxlegacy", "textures/splash/splash.png");
 
     @Inject(method = "init(Lnet/minecraft/client/MinecraftClient;)V", at = @At("HEAD"), cancellable = true)
     private static void init(MinecraftClient client, CallbackInfo info) {
         LOGO = MATHAX_LOGO;
         info.cancel();
+    }
+
+    // Render
+
+    @Inject(method = "render", at = @At("TAIL"))
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+        int width = client.getWindow().getScaledWidth();
+        int height = client.getWindow().getScaledHeight();
+        long l = Util.getMeasuringTimeMs();
+        float f = this.reloadCompleteTime > -1L ? (float) (l - this.reloadCompleteTime) / 1000.0F : -1.0F;
+        int x = (int) ((double) client.getWindow().getScaledHeight() * 0.8325D);
+        float y = this.reload.getProgress();
+        double d = Math.min((double) client.getWindow().getScaledWidth() * 0.75D, client.getWindow().getScaledHeight()) * 0.25D;
+        double e = d * 4.0D;
+        int w = (int) (e * 0.5D);
+        this.progress = MathHelper.clamp(this.progress * 0.95F + y * 0.050000012F, 0.0F, 1.0F);
+        if (f < 1.0F) this.renderProgressBar(matrices, width / 2 - w, x - 5, width / 2 + w, x + 5, 1.0F - MathHelper.clamp(f, 0.0F, 1.0F), null);
     }
 
     // Background
@@ -52,19 +85,18 @@ public abstract class SplashOverlayMixin {
 
     // Progress bar
 
-    @Shadow
-    private static int withAlpha(int color, int alpha) {
-        return 0;
-    }
+    @Inject(at = @At("TAIL"), method = "renderProgressBar")
+    private void renderProgressBar(MatrixStack matrices, int x1, int y1, int x2, int y2, float opacity, CallbackInfo ci) {
+        int i = MathHelper.ceil((float) (x2 - x1 - 2) * this.progress);
 
-    @Redirect(method = "renderProgressBar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/BackgroundHelper$ColorMixer;getArgb(IIII)I"))
-    private int progressBarBorderProxy(int a, int r, int g, int b, MatrixStack matrices, int x1, int y1, int x2, int y2, float opacity) {
-
-        // Bar background
-        DrawableHelper.fill(matrices, x1 + 1, y1 + 1, x2 - 1, y2 - 1, withAlpha(0x1e1e2d, a));
-
-        // Bar border
-        return withAlpha(0xe64c65, a);
+        int j = Math.round(opacity * 255.0F);
+        int k = 0xe64c65 | 255 << 24;
+        int kk = 0xe64c65 | 255 << 24;
+        fill(matrices, x1 + 2, y1 + 2, x1 + i, y2 - 2, k);
+        fill(matrices, x1 + 1, y1, x2 - 1, y1 + 1, kk);
+        fill(matrices, x1 + 1, y2, x2 - 1, y2 - 1, kk);
+        fill(matrices, x1, y1, x1 + 1, y2, kk);
+        fill(matrices, x2, y1, x2 - 1, y2, kk);
     }
 
     // Bar color
