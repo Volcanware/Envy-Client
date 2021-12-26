@@ -16,10 +16,10 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 
-/*/------------------------------------------------------------------------------------------------------------------/*/
-/*/ Cool mode used from Karasic Meteor Addon                                                                         /*/
-/*/ https://github.com/Kiriyaga7615/karasic/blob/main/src/main/java/bedtrap/kiriyaga/karasic/modules/selftrapik.java /*/
-/*/------------------------------------------------------------------------------------------------------------------/*/
+/*/---------------------------------------------------------------------------------------------------------------------/*/
+/*/ Cool mode used from Karasic Meteor Addon                                                                            /*/
+/*/ https://github.com/Kiriyaga7615/karasic/blob/main/src/main/java/bedtrap/kiriyaga/karasic/modules/blockrenderer.java /*/
+/*/---------------------------------------------------------------------------------------------------------------------/*/
 
 public class BlockSelection extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
