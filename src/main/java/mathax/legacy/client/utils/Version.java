@@ -4,13 +4,11 @@ import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.render.prompts.OkPrompt;
 import mathax.legacy.client.utils.render.prompts.YesNoPrompt;
-import mathax.legacy.json.JSONUtils;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 import net.minecraft.util.Util;
 import org.json.JSONObject;
-
-import java.io.IOException;
+import org.json.JSONTokener;
 
 public class Version {
     private final String string;
@@ -46,8 +44,8 @@ public class Version {
         return string;
     }
 
-    public static String get() {
-        return FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata().getVersion().getFriendlyString();
+    public static Version get() {
+        return new Version(FabricLoader.getInstance().getModContainer("mathaxlegacy").get().getMetadata().getVersion().getFriendlyString());
     }
 
     public static Integer getDev() {
@@ -76,38 +74,24 @@ public class Version {
         public static boolean checkForLatestTitle = true;
         public static boolean checkForLatest = true;
 
-        // TODO: Fix, crashes outside IDE.
-        /*public static String getLatest() {
-            String key = getMinecraft().replace(".", "-");
-
+        public static Version getLatest() {
             String latestVer = null;
-            try {
-                JSONObject json = JSONUtils.readJsonFromUrl(MatHaxLegacy.API_URL + "Version/Legacy/metadata.json");
-                if (json.has(key)) latestVer = json.getString(key);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            String key = getMinecraft().replace(".", "-");
+            JSONObject json = new JSONObject(new JSONTokener(HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/metadata.json").sendInputStream()));
+            if (json.has(key)) latestVer = json.getString(key);
             if (latestVer == null) return null;
-            return latestVer.replace("\n", "");
-        }*/
-
-        public static String getLatest() {
-            String latestVer = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/" + getMinecraft().replace(".", "-")).sendString();
-            if (latestVer == null) return null;
-            else return latestVer.replace("\n", "");
+            return new Version(latestVer);
         }
 
         public static CheckStatus checkLatest() {
             if (getDev() > 0) return CheckStatus.Running_Dev;
 
-            String latestVersion = getLatest();
+            Version latestVersion = getLatest();
 
             if (latestVersion == null) return CheckStatus.Cant_Check;
             else {
-                Version latestVer = new Version(latestVersion);
-                Version currentVer = new Version(get());
-                if (latestVer.isHigherThan(currentVer)) return CheckStatus.Newer_Found;
+                Version currentVer = get();
+                if (latestVersion.isHigherThan(currentVer)) return CheckStatus.Newer_Found;
                 else return CheckStatus.Latest;
             }
         }

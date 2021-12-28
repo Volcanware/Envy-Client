@@ -8,6 +8,7 @@ import mathax.legacy.client.mixin.SectionedEntityCacheAccessor;
 import mathax.legacy.client.mixin.SimpleEntityLookupAccessor;
 import mathax.legacy.client.mixin.WorldAccessor;
 import mathax.legacy.client.utils.player.PlayerUtils;
+import mathax.legacy.client.utils.world.BlockUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -181,5 +182,39 @@ public class EntityUtils {
         });
 
         return found.get();
+    }
+
+    public static boolean isSurrounded(LivingEntity targetEntity) {
+        assert mc.world != null;
+        return BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(1, 0, 0)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(-1, 0, 0)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(0, 0, 1)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(0, 0, -1));
+    }
+
+    public static boolean isSurroundBroken(LivingEntity targetEntity) {
+        assert mc.world != null;
+        return (!BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(1, 0, 0)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(-1, 0, 0)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(0, 0, 1)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(0, 0, -1))) || (BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(1, 0, 0)) && !BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(-1, 0, 0)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(0, 0, 1)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(0, 0, -1))) || (BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(1, 0, 0)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(-1, 0, 0)) && !BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(0, 0, 1)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(0, 0, -1))) || (BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(1, 0, 0)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(-1, 0, 0)) && BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(0, 0, 1)) && !BlockUtils.isBlastResistant2(targetEntity.getBlockPos().add(0, 0, -1)));
+    }
+
+    public static boolean isBurrowed(LivingEntity targetEntity) {
+        assert mc.world != null;
+        return BlockUtils.isBlastResistant2(targetEntity.getBlockPos());
+    }
+
+    public static boolean isTopTrapped(LivingEntity target) {
+        assert mc.world != null;
+        return BlockUtils.isBlastResistant2(target.getBlockPos().add(0, 2, 0));
+    }
+
+    public static boolean isFaceSurrounded(LivingEntity target) {
+        assert mc.world != null;
+        return BlockUtils.isBlastResistant2(target.getBlockPos().add(1, 1, 0)) && BlockUtils.isBlastResistant2(target.getBlockPos().add(-1, 1, 0)) && BlockUtils.isBlastResistant2(target.getBlockPos().add(0, 1, 1)) && BlockUtils.isBlastResistant2(target.getBlockPos().add(0, 1, -1));
+    }
+
+    public static boolean isGreenHole(LivingEntity target) {
+        assert mc.world != null;
+        return mc.world.getBlockState(target.getBlockPos().add(1, 0, 0)).isOf(Blocks.BEDROCK) && mc.world.getBlockState(target.getBlockPos().add(-1, 0, 0)).isOf(Blocks.BEDROCK) && mc.world.getBlockState(target.getBlockPos().add(0, 0, 1)).isOf(Blocks.BEDROCK) && mc.world.getBlockState(target.getBlockPos().add(0, 0, -1)).isOf(Blocks.BEDROCK);
+    }
+
+    public static boolean isBedrock(BlockPos pos) {
+        return mc.world.getBlockState(pos).isOf(Blocks.BEDROCK);
     }
 }

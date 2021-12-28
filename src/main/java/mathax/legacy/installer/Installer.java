@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutionException;
 /*/-------------------------------------------------/*/
 
 public class Installer {
-    public static String API_URL = "https://api.mathaxclient.xyz/Version/Legacy/Installer/";
+    public static String API_URL = "https://api.mathaxclient.xyz/";
 
     InstallerMeta INSTALLER_META;
     Version INSTALLER_VERSION;
@@ -74,7 +74,17 @@ public class Installer {
             return;
         }
 
-        INSTALLER_META = new InstallerMeta(API_URL + "metadata.json");
+        boolean newerFound;
+        Version latest = Version.getLatest();
+        if (latest == null) newerFound = false;
+        else newerFound = latest.isHigherThan(INSTALLER_VERSION);
+        if (newerFound) {
+            System.out.println("There is a new version of MatHax Legacy Installer, v" + Version.getLatest() + "! You are using v" + INSTALLER_VERSION + "!");
+            JOptionPane.showMessageDialog(null, "There is a new version of MatHax Legacy Installer, v" + Version.getLatest() + "! You are using v" + INSTALLER_VERSION + "!", "Newer MatHax Legacy Installer found!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        INSTALLER_META = new InstallerMeta(API_URL + "Version/Legacy/Installer/metadata.json");
         try {
             INSTALLER_META.load();
         } catch (IOException e) {
@@ -91,16 +101,6 @@ public class Installer {
 
         CLIENT_VERSIONS = INSTALLER_META.getClientVersions();
         GAME_VERSIONS = INSTALLER_META.getGameVersions();
-
-        boolean newerFound;
-        Version latest = Version.getLatest();
-        if (latest == null) newerFound = false;
-        else newerFound = latest.isHigherThan(INSTALLER_VERSION);
-        if (newerFound) {
-            System.out.println("There is a new version of MatHax Legacy Installer, v" + Version.getLatest() + "! You are using v" + INSTALLER_VERSION + "!");
-            JOptionPane.showMessageDialog(null, "There is a new version of MatHax Legacy Installer, v" + Version.getLatest() + "! You are using v" + INSTALLER_VERSION + "!", "Newer MatHax Legacy Installer found!", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
 
         JFrame frame = new JFrame("MatHax Legacy Installer - v" + INSTALLER_VERSION);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

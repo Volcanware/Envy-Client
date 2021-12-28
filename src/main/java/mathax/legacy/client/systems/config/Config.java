@@ -3,7 +3,6 @@ package mathax.legacy.client.systems.config;
 import mathax.legacy.client.gui.tabs.builtin.ConfigTab;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.systems.Systems;
-import mathax.legacy.client.utils.Version;
 import mathax.legacy.client.systems.System;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -51,7 +50,6 @@ public class Config extends System<Config> {
     @Override
     public NbtCompound toTag() {
         NbtCompound tag = new NbtCompound();
-        tag.putString("version", Version.get());
 
         tag.putBoolean("customFont", customFont);
         tag.putString("font", font);

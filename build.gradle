@@ -63,7 +63,6 @@ dependencies {
     implementation "net.fabricmc:fabric-installer:${project.fabric_installer_version}"
 
     // Installer
-    implementation "org.json:json:${project.json_version}"
     implementation "com.formdev:flatlaf:${project.flatlaf_version}"
 
     // Compat fixes
@@ -88,6 +87,7 @@ dependencies {
     include "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}.0:${project.malilib_version}"
 
     // Dependencies
+    library "org.json:json:${project.json_version}"
     library "com.github.Vatuu:discord-rpc:${project.discord_version}"
 
     // Music

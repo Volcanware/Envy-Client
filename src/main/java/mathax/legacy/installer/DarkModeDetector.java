@@ -11,13 +11,13 @@ public class DarkModeDetector {
     private static final String DARK_THEME_CMD = REGQUERY_UTIL + "\"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\"" + " /v AppsUseLightTheme";
 
     public static boolean isDarkMode() {
-        return switch (getOperatingSystem()) {
-            case WINDOWS -> isWindowsDarkMode();
-            case MACOS -> isMacOsDarkMode();
-            case LINUX -> isGnome() && isGnomeDarkMode();
-            // Solaris is screwed so we'll just return false.
-            default -> false;
-        };
+        switch (getOperatingSystem()) {
+            case WINDOWS: return isWindowsDarkMode();
+            case MACOS: return isMacOsDarkMode();
+            case LINUX: return isGnome() && isGnomeDarkMode();
+            case SOLARIS: // Solaris is screwed so we'll just return false.
+            default: return false;
+        }
     }
 
     public static boolean isMacOsDarkMode() {

@@ -48,6 +48,11 @@ public class BlockUtils {
         return mc.world.getBlockState(p).getBlock();
     }
 
+    public static BlockState getBlockState(BlockPos pos) {
+        if (pos == null) return null;
+        return mc.world.getBlockState(pos);
+    }
+
     public static boolean isAir(Block block) {
         return block == Blocks.AIR;
     }
@@ -67,6 +72,10 @@ public class BlockUtils {
     public static boolean isBlastResistant(Block block) {
         if (block == Blocks.BEDROCK || block == Blocks.OBSIDIAN || block == Blocks.ENDER_CHEST || block == Blocks.ANCIENT_DEBRIS || block == Blocks.CRYING_OBSIDIAN || block == Blocks.ENCHANTING_TABLE || block == Blocks.NETHERITE_BLOCK || block == Blocks.ANVIL || block == Blocks.CHIPPED_ANVIL || block == Blocks.DAMAGED_ANVIL) return true;
         return block == Blocks.RESPAWN_ANCHOR && Utils.getDimension() == Dimension.Nether;
+    }
+
+    public static boolean isBlastResistant2(BlockPos pos) {
+        return mc.world.getBlockState(pos).getBlock().getBlastResistance() >= 600;
     }
 
     public static List<BlockPos> getSphere(BlockPos centerPos, int radius, int height) {
@@ -391,6 +400,38 @@ public class BlockUtils {
         double e = pos1.getY() - pos2.getY();
         double f = pos1.getZ() - pos2.getZ();
         return MathHelper.sqrt((float) (d * d + e * e + f * f));
+    }
+
+    public static double distanceBetweenXZ(BlockPos pos1, BlockPos pos2) {
+        double d = pos1.getX() - pos2.getX();
+        double f = pos1.getZ() - pos2.getZ();
+        return MathHelper.sqrt((float) (d * d + f * f));
+    }
+
+    public static double distance(double x1, double y1, double z1, double x2, double y2, double z2) {
+        double dX = x2 - x1;
+        double dY = y2 - y1;
+        double dZ = z2 - z1;
+        return Math.sqrt(dX * dX + dY * dY + dZ * dZ);
+    }
+
+    public static double distance(double y1, double y2) {
+        double dY = y2 - y1;
+        return Math.sqrt(dY * dY);
+    }
+
+    public static double distance(Vec3d vec1, Vec3d vec2) {
+        double dX = vec2.x - vec1.x;
+        double dY = vec2.y - vec1.y;
+        double dZ = vec2.z - vec1.z;
+        return Math.sqrt(dX * dX + dY * dY + dZ * dZ);
+    }
+
+    public static double distance(BlockPos block1, BlockPos block2) {
+        double dX = block2.getX() - block1.getX();
+        double dY = block2.getY() - block1.getY();
+        double dZ = block2.getZ() - block1.getZ();
+        return Math.sqrt(dX * dX + dY * dY + dZ * dZ);
     }
 
     public enum MobSpawn {

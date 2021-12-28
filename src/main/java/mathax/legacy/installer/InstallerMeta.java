@@ -1,6 +1,5 @@
 package mathax.legacy.installer;
 
-import mathax.legacy.json.JSONUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 

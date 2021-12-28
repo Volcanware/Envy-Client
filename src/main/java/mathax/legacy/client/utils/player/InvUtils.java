@@ -156,6 +156,10 @@ public class InvUtils {
         return mc.player.getInventory().getStack(slot).getItem();
     }
 
+    public static boolean swap(int slot) {
+        return swap(slot, false);
+    }
+
     public static boolean swap(int slot, boolean swapBack) {
         if (slot < 0 || slot > 8) return false;
         if (swapBack && previousSlot == -1) previousSlot = mc.player.getInventory().selectedSlot;
@@ -163,6 +167,10 @@ public class InvUtils {
         mc.player.getInventory().selectedSlot = slot;
         ((IClientPlayerInteractionManager) mc.interactionManager).syncSelected();
         return true;
+    }
+
+    public static void swap2(int slot) {
+        if (slot != mc.player.getInventory().selectedSlot && slot >= 0 && slot < 9) mc.player.getInventory().selectedSlot = slot;
     }
 
     public static boolean swapBack() {

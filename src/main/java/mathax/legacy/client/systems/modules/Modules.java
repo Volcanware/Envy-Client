@@ -398,6 +398,7 @@ public class Modules extends System<Modules> {
         add(new SelfTrapPlus());
         add(new SelfWeb());
         add(new Surround());
+        add(new SurroundBreak());
         add(new TNTAura());
         add(new TriggerBot());
     }
@@ -531,6 +532,7 @@ public class Modules extends System<Modules> {
         add(new AirPlace());
         add(new Ambience());
         add(new AntiCactus());
+        add(new AntiGhostBlock());
         add(new AutoBreed());
         add(new AutoBrewer());
         add(new AutoExtinguish());
@@ -585,6 +587,7 @@ public class Modules extends System<Modules> {
         add(new StayHydrated());
         add(new TotemNotifier());
         add(new VisualRange());
+        add(new Welcomer());
     }
 
     private void initMisc() {

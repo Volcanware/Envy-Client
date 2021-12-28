@@ -1,4 +1,4 @@
-package mathax.legacy.json;
+package mathax.legacy.installer;
 
 import org.json.JSONObject;
 

@@ -28,7 +28,7 @@ public class HTTP {
 
         public Request(Method method, String url) {
             try {
-                this.builder = HttpRequest.newBuilder().uri(new URI(url)).header("User-Agent", "MatHax Client");
+                this.builder = HttpRequest.newBuilder().uri(new URI(url)).header("User-Agent", "MatHax Legacy");
                 this.method = method;
             } catch (URISyntaxException e) {
                 e.printStackTrace();

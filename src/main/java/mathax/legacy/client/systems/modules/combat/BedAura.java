@@ -7,7 +7,7 @@ import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
-import mathax.legacy.client.systems.modules.misc.AntiGhostBlock;
+import mathax.legacy.client.systems.modules.world.AntiGhostBlock;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.entity.SortPriority;
@@ -277,7 +277,7 @@ public class BedAura extends Module {
 
     private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
         .name("swing")
-        .description("Swings your hand client-side when placing.")
+        .description("Swings your hand client-side when placing or interacting.")
         .defaultValue(true)
         .build()
     );

@@ -212,7 +212,7 @@ public class NoRender extends Module {
     private final Setting<Boolean> noSkylightUpdates = sgWorld.add(new BoolSetting.Builder()
         .name("skylight-updates")
         .description("Disables rendering of skylight updates.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 
@@ -254,10 +254,11 @@ public class NoRender extends Module {
     private final Setting<List<ParticleType<?>>> particles = sgWorld.add(new ParticleTypeListSetting.Builder()
         .name("particles")
         .description("Particles to not render.")
+        .defaultValue(ParticleTypes.EXPLOSION)
         .build()
     );
 
-    private final Setting<Boolean> noBarrierInvis = sgWorld.add(new BoolSetting.Builder()
+    private final Setting<Boolean> noBarrierInvisible = sgWorld.add(new BoolSetting.Builder()
         .name("barrier-invisibility")
         .description("Disables barriers being invisible when not holding one.")
         .defaultValue(false)
@@ -443,8 +444,8 @@ public class NoRender extends Module {
         else if (particles.get().contains(event.particle.getType())) event.cancel();
     }
 
-    public boolean noBarrierInvis() {
-        return isActive() && noBarrierInvis.get();
+    public boolean noBarrierInvisible() {
+        return isActive() && noBarrierInvisible.get();
     }
 
     // Entity

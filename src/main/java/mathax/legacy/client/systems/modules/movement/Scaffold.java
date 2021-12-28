@@ -96,7 +96,7 @@ public class Scaffold extends Module {
 
     private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
         .name("swing")
-        .description("Swings your hand client-side when placing.")
+        .description("Swings your hand client-side when placing or interacting.")
         .defaultValue(true)
         .build()
     );

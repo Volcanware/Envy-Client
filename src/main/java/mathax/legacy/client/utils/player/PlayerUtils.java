@@ -61,6 +61,27 @@ public class PlayerUtils {
         return p.forwardSpeed != 0 || p.sidewaysSpeed != 0;
     }
 
+    public static double[] directionSpeed(float speed) {
+        float forward = mc.player.input.movementForward;
+        float side = mc.player.input.movementSideways;
+        float yaw = mc.player.prevYaw + (mc.player.getYaw() - mc.player.prevYaw);
+
+        if (forward != 0.0f) {
+            if (side > 0.0f) yaw += ((forward > 0.0f) ? -45 : 45);
+            else if (side < 0.0f) yaw += ((forward > 0.0f) ? 45 : -45);
+            side = 0.0f;
+            if (forward > 0.0f) forward = 1.0f;
+            else if (forward < 0.0f) forward = -1.0f;
+        }
+
+        final double sin = Math.sin(Math.toRadians(yaw + 90.0f));
+        final double cos = Math.cos(Math.toRadians(yaw + 90.0f));
+        final double posX = forward * speed * cos + side * speed * sin;
+        final double posZ = forward * speed * sin - side * speed * cos;
+
+        return new double[] {posX, posZ};
+    }
+
     // Place Block Main Hand
 
     public static boolean placeBlockMainHand(BlockPos pos) {
