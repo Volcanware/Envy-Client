@@ -29,7 +29,9 @@ public class Sniper extends Module {
         .min(1.001)
         .max(2147483647)
         .sliderMin(1.001)
-        .sliderMax(2147483647).build());
+        .sliderMax(2147483647)
+        .build()
+    );
 
     private final Setting<Double> exponent = sgGeneral.add(new DoubleSetting.Builder()
         .name("hide-exponent")

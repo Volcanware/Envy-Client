@@ -27,6 +27,8 @@ public class Quiver extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<List<StatusEffect>> effects = sgGeneral.add(new StatusEffectListSetting.Builder()
         .name("effects")
         .description("Which effects to shoot you with.")

@@ -47,11 +47,11 @@ public class TNTAura extends Module {
     private int ticks;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgAutoBreak = settings.createGroup("Auto-Break");
+    private final SettingGroup sgAutoBreak = settings.createGroup("Auto Break");
     private final SettingGroup sgPause = settings.createGroup("Pause");
-    private final SettingGroup sgObsidianRender = settings.createGroup("Obsidian-Render");
-    private final SettingGroup sgTNTRender = settings.createGroup("TNT-Render");
-    private final SettingGroup sgBreakRender = settings.createGroup("Break-Render");
+    private final SettingGroup sgObsidianRender = settings.createGroup("Obsidian Render");
+    private final SettingGroup sgTNTRender = settings.createGroup("TNT Render");
+    private final SettingGroup sgBreakRender = settings.createGroup("Break Render");
 
     // General
 
@@ -59,14 +59,20 @@ public class TNTAura extends Module {
         .name("target-range")
         .description("max range to target.")
         .defaultValue(4)
+        .min(0)
+        .sliderRange(0, 5)
         .build()
     );
+
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
         .name("place-delay")
-        .description("How many ticks between obsidian placement.")
+        .description("Delay between obsidian placement in ticks.")
         .defaultValue(1)
+        .min(0)
+        .sliderRange(0, 40)
         .build()
     );
+
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
         .name("rotate")
         .description("Rotates towards blocks when interacting.")
@@ -87,7 +93,6 @@ public class TNTAura extends Module {
         .name("break-mode")
         .description("Determines how to break.")
         .defaultValue(Mode.Normal)
-        .visible(autoBreak::get)
         .build()
     );
 
@@ -191,7 +196,8 @@ public class TNTAura extends Module {
     private final Setting<ShapeMode> tntShapeMode = sgTNTRender.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
         .description("Determines how the shapes are rendered.")
-        .defaultValue(ShapeMode.Both).build()
+        .defaultValue(ShapeMode.Both)
+        .build()
     );
 
     private final Setting<SettingColor> tntSideColor = sgTNTRender.add(new ColorSetting.Builder()
@@ -294,6 +300,7 @@ public class TNTAura extends Module {
         }
 
         if (TargetUtils.isBadTarget(target, range.get())) target = TargetUtils.getPlayerTarget(range.get(), SortPriority.Lowest_Distance);
+
         if (target == null) return;
 
         if (burrowPause.get() && isBurrowed(target) && !toggled) {
@@ -363,10 +370,10 @@ public class TNTAura extends Module {
         }
     }
 
-    private void onStartBreakingBlock(StartBreakingBlockEvent event) {
+    @EventHandler
+    public void onStartBreakingBlock(StartBreakingBlockEvent event) {
         direction = event.direction;
     }
-
 
     private void placeObsidian(PlayerEntity target) {
         obsidianPos.clear();
@@ -440,8 +447,7 @@ public class TNTAura extends Module {
     }
 
     private boolean antiSelf(LivingEntity target){
-        if (!(mc.player.getBlockPos().getX() == target.getBlockPos().getX() && mc.player.getBlockPos().getZ() == target.getBlockPos().getZ() && mc.player.getBlockPos().getY() == target.getBlockPos().getY())) return false;
-        return true;
+        return mc.player.getBlockPos().getX() == target.getBlockPos().getX() && mc.player.getBlockPos().getZ() == target.getBlockPos().getZ() && mc.player.getBlockPos().getY() == target.getBlockPos().getY();
     }
 
     @Override

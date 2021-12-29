@@ -183,7 +183,6 @@ public class SelfTrap extends Module {
         if (bottomPlacement.get() == BottomMode.Single) add(pos.add(0, -1, 0));
     }
 
-
     private void add(BlockPos blockPos) {
         if (!placePositions.contains(blockPos) && mc.world.getBlockState(blockPos).getMaterial().isReplaceable() && mc.world.canPlace(Blocks.OBSIDIAN.getDefaultState(), blockPos, ShapeContext.absent())) placePositions.add(blockPos);
     }

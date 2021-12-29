@@ -23,7 +23,9 @@ import net.minecraft.util.math.BlockPos;
 
 public class AutoAnvil extends Module {
     private PlayerEntity target;
+
     private int timer;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
@@ -33,7 +35,7 @@ public class AutoAnvil extends Module {
         .description("The radius in which players get targeted.")
         .defaultValue(4)
         .min(0)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -49,7 +51,7 @@ public class AutoAnvil extends Module {
         .description("The height to place anvils at.")
         .defaultValue(2)
         .range(0, 5)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -58,7 +60,7 @@ public class AutoAnvil extends Module {
         .description("The delay in between anvil placements.")
         .defaultValue(10)
         .min(0)
-        .sliderMax(50)
+        .sliderRange(0, 50)
         .build()
     );
 
@@ -107,14 +109,12 @@ public class AutoAnvil extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        // Head check
         if (toggleOnBreak.get() && target != null && target.getInventory().getArmorStack(3).isEmpty()) {
             error("Target head slot is empty, disabling...");
             toggle();
             return;
         }
 
-        // Check distance + alive
         if (TargetUtils.isBadTarget(target, range.get())) target = TargetUtils.getPlayerTarget(range.get(), priority.get());
         if (TargetUtils.isBadTarget(target, range.get())) return;
 

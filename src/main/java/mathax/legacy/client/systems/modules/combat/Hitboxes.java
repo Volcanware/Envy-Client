@@ -27,6 +27,7 @@ public class Hitboxes extends Module {
         .name("expand")
         .description("How much to expand the hitbox of the entity.")
         .defaultValue(0.5)
+        .sliderRange(0, 1)
         .build()
     );
 

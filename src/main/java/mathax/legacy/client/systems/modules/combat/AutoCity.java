@@ -23,18 +23,22 @@ import net.minecraft.util.math.Direction;
 
 public class AutoCity extends Module {
     private PlayerEntity target;
+
     private BlockPos mineTarget;
+
     private boolean sentMessage;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
+
+    // General
 
     private final Setting<Double> targetRange = sgGeneral.add(new DoubleSetting.Builder()
         .name("target-range")
         .description("The radius in which players get targeted.")
         .defaultValue(4)
         .min(0)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 

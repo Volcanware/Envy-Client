@@ -36,13 +36,18 @@ public class ArrowDodge extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgMovement = settings.createGroup("Movement");
 
+    // General
+
     private final Setting<Integer> arrowLookahead = sgGeneral.add(new IntSetting.Builder()
         .name("arrow-lookahead")
         .description("How many steps into the future should be taken into consideration when deciding the direction")
         .defaultValue(500)
         .range(1, 750)
+        .sliderRange(1, 750)
         .build()
     );
+
+    // Movement
 
     private final Setting<MoveType> moveType = sgMovement.add(new EnumSetting.Builder<MoveType>()
         .name("move-type")
@@ -94,7 +99,7 @@ public class ArrowDodge extends Module {
             for (Box arrowHitbox : futureArrowHitboxes) {
                 if (!playerHitbox.intersects(arrowHitbox)) continue;
 
-                Collections.shuffle(possibleMoveDirections); //Make the direction unpredictable
+                Collections.shuffle(possibleMoveDirections);
 
                 boolean didMove = false;
 
@@ -107,7 +112,7 @@ public class ArrowDodge extends Module {
                     }
                 }
 
-                if (!didMove) { //If didn't find a suitable position, run back
+                if (!didMove) {
                     double yaw = Math.toRadians(e.getYaw());
                     double pitch = Math.toRadians(e.getPitch());
                     move(

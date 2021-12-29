@@ -15,6 +15,8 @@ import net.minecraft.item.SwordItem;
 public class AutoWeapon extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Weapon> weapon = sgGeneral.add(new EnumSetting.Builder<Weapon>()
         .name("weapon")
         .description("What type of weapon to use.")
@@ -26,6 +28,7 @@ public class AutoWeapon extends Module {
         .name("threshold")
         .description("If the non-preferred weapon produces this much damage this will favor it over your preferred weapon.")
         .defaultValue(4)
+        .sliderRange(0, 7)
         .build()
     );
 
@@ -49,10 +52,12 @@ public class AutoWeapon extends Module {
         int slotS = mc.player.getInventory().selectedSlot;
         int slotA = mc.player.getInventory().selectedSlot;
         int slot = mc.player.getInventory().selectedSlot;
+
         double damageS = 0;
         double damageA = 0;
         double currentDamageS;
         double currentDamageA;
+
         for (int i = 0; i < 9; i++) {
             if (mc.player.getInventory().getStack(i).getItem() instanceof SwordItem
                 && (!antiBreak.get() || (mc.player.getInventory().getStack(i).getMaxDamage() - mc.player.getInventory().getStack(i).getDamage()) > 10)) {
@@ -63,6 +68,7 @@ public class AutoWeapon extends Module {
                 }
             }
         }
+
         for (int i = 0; i < 9; i++) {
             if (mc.player.getInventory().getStack(i).getItem() instanceof AxeItem
                 && (!antiBreak.get() || (mc.player.getInventory().getStack(i).getMaxDamage() - mc.player.getInventory().getStack(i).getDamage()) > 10)) {
@@ -73,15 +79,12 @@ public class AutoWeapon extends Module {
                 }
             }
         }
-        if (weapon.get() == Weapon.Sword && threshold.get() > damageA - damageS) {
-            slot = slotS;
-        } else if (weapon.get() == Weapon.Axe && threshold.get() > damageS - damageA) {
-            slot = slotA;
-        } else if (weapon.get() == Weapon.Sword && threshold.get() < damageA - damageS) {
-            slot = slotA;
-        } else if (weapon.get() == Weapon.Axe && threshold.get() < damageS - damageA) {
-            slot = slotS;
-        }
+
+        if (weapon.get() == Weapon.Sword && threshold.get() > damageA - damageS) slot = slotS;
+        else if (weapon.get() == Weapon.Axe && threshold.get() > damageS - damageA) slot = slotA;
+        else if (weapon.get() == Weapon.Sword && threshold.get() < damageA - damageS) slot = slotA;
+        else if (weapon.get() == Weapon.Axe && threshold.get() < damageS - damageA) slot = slotS;
+
         return slot;
     }
 

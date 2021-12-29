@@ -16,6 +16,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 
 public class AutoEXP extends Module {
+    private int repairingI;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
@@ -61,8 +63,6 @@ public class AutoEXP extends Module {
         .sliderRange(1, 100)
         .build()
     );
-
-    private int repairingI;
 
     public AutoEXP() {
         super(Categories.Combat, Items.EXPERIENCE_BOTTLE, "auto-exp", "Automatically repairs your armor and tools in pvp.");

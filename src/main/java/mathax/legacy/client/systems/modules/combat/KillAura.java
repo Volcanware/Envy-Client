@@ -125,7 +125,7 @@ public class KillAura extends Module {
 
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgTargeting.add(new EntityTypeListSetting.Builder()
         .name("entities")
-        .description("Determines which entities to attack.")
+        .description("Entities to attack.")
         .defaultValue(EntityType.PLAYER)
         .onlyAttackable()
         .build()
@@ -136,7 +136,7 @@ public class KillAura extends Module {
         .description("The maximum range the entity can be to attack it.")
         .defaultValue(4.5)
         .min(0)
-        .sliderMax(6)
+        .sliderRange(0, 6)
         .build()
     );
 
@@ -145,7 +145,7 @@ public class KillAura extends Module {
         .description("The maximum range the entity can be attacked through walls.")
         .defaultValue(3.5)
         .min(0)
-        .sliderMax(6)
+        .sliderRange(0, 6)
         .build()
     );
 
@@ -221,6 +221,7 @@ public class KillAura extends Module {
         .description("How many ticks to wait before hitting an entity after switching hotbar slots.")
         .defaultValue(0)
         .min(0)
+        .sliderRange(0, 40)
         .build()
     );
 

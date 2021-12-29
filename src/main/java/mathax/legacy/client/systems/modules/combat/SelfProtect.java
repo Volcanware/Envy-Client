@@ -13,7 +13,9 @@ import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.player.Rotations;
 import mathax.legacy.client.utils.world.BlockUtils;
 import net.minecraft.block.BedBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.item.Items;
@@ -33,9 +35,10 @@ public class SelfProtect extends Module {
     private boolean breaking;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgAnchorAura = settings.createGroup("Anchor Aura");
+    private final SettingGroup sgBedAura = settings.createGroup("Bed Aura");
     private final SettingGroup sgCEVBreaker = settings.createGroup("CEV Breaker");
     private final SettingGroup sgTNTAura = settings.createGroup("TNT Aura");
-    private final SettingGroup sgBedAura = settings.createGroup("Bed Aura");
     private final SettingGroup sgRender = settings.createGroup("Render");
 
     // General
@@ -68,27 +71,11 @@ public class SelfProtect extends Module {
         .build()
     );
 
-    // CEV Breaker
+    // Anchor Aura
 
-    private final Setting<Boolean> antiCEVBreaker = sgCEVBreaker.add(new BoolSetting.Builder()
+    private final Setting<Boolean> antiAnchorAura = sgAnchorAura.add(new BoolSetting.Builder()
         .name("enabled")
-        .description("prevents cev breaker.")
-        .defaultValue(true)
-        .build()
-    );
-
-    // TNT Aura
-
-    private final Setting<Boolean> antiTntAura = sgTNTAura.add(new BoolSetting.Builder()
-        .name("enabled")
-        .description("Prevents tnt aura.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> placeObsidian = sgTNTAura.add(new BoolSetting.Builder()
-        .name("place-obdisian")
-        .description("Places obsidian.")
+        .description("Prevents Anchor Aura.")
         .defaultValue(true)
         .build()
     );
@@ -97,7 +84,7 @@ public class SelfProtect extends Module {
 
     private final Setting<Boolean> antiBedAura = sgBedAura.add(new BoolSetting.Builder()
         .name("enabled")
-        .description("Prevents bed aura.")
+        .description("Prevents Bed Aura.")
         .defaultValue(true)
         .build()
     );
@@ -123,6 +110,31 @@ public class SelfProtect extends Module {
         .build()
     );
 
+    // CEV Breaker
+
+    private final Setting<Boolean> antiCEVBreaker = sgCEVBreaker.add(new BoolSetting.Builder()
+        .name("enabled")
+        .description("Prevents CEV Breaker.")
+        .defaultValue(true)
+        .build()
+    );
+
+    // TNT Aura
+
+    private final Setting<Boolean> antiTNTAura = sgTNTAura.add(new BoolSetting.Builder()
+        .name("enabled")
+        .description("Prevents TNT Aura.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> placeObsidian = sgTNTAura.add(new BoolSetting.Builder()
+        .name("place-obdisian")
+        .description("Places obsidian.")
+        .defaultValue(true)
+        .build()
+    );
+
     // Render
 
     private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
@@ -138,6 +150,8 @@ public class SelfProtect extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
+        if (antiAnchorAura.get() && mc.world.getBlockState(mc.player.getBlockPos().up(2)).getBlock() == Blocks.RESPAWN_ANCHOR && mc.world.getBlockState(mc.player.getBlockPos().up()).getBlock() == Blocks.AIR) BlockUtils.place(mc.player.getBlockPos().add(0, 1, 0), InvUtils.findInHotbar(itemStack -> Block.getBlockFromItem(itemStack.getItem()) instanceof SlabBlock), rotate.get(), 15, swing.get(), false, true);
+
         BlockPos top = mc.player.getBlockPos().up(2);
         if (antiCEVBreaker.get() && mc.world.getBlockState(top).getBlock() == Blocks.OBSIDIAN) {
             Iterator<Entity> iterator = mc.world.getEntities().iterator();
@@ -159,7 +173,7 @@ public class SelfProtect extends Module {
             }
         }
 
-        if (antiTntAura.get()) {
+        if (antiTNTAura.get()) {
             if (mc.world.getBlockState(top).getBlock().equals(Blocks.TNT)) {
                 if (rotate.get()) Rotations.rotate(Rotations.getYaw(top), Rotations.getPitch(top), () -> mine(top));
                 else mine(top);
