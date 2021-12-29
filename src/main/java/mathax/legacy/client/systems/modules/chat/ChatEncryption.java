@@ -75,9 +75,9 @@ public class ChatEncryption extends Module {
         .build()
     );
 
-    private final Setting<SettingColor> decryptionColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("decryption-color")
-        .description("The color of the decrypted message.")
+    private final Setting<SettingColor> decryptedColor = sgGeneral.add(new ColorSetting.Builder()
+        .name("decrypted-color")
+        .description("The color of decrypted messages.")
         .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
@@ -86,27 +86,16 @@ public class ChatEncryption extends Module {
         super(Categories.Client, Items.BARRIER, "chat-encryption", "Encrypts your chat messages.");
     }
 
-    public int getIntFromColor(int Red, int Green, int Blue){
-        Red = (Red << 16) & 0x00FF0000;
-        Green = (Green << 8) & 0x0000FF00;
-        Blue = Blue & 0x000000FF;
-        return 0xFF000000 | Red | Green | Blue;
-    }
-
     @EventHandler
     private void onMessageReceive(ReceiveMessageEvent event) {
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).getVisibleMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
 
         Text message = event.getMessage();
-        if (message.getString().endsWith(suffix.get())){
+        if (message.getString().endsWith(suffix.get())) {
             String[] msg = message.getString().split(" ",2);
             msg[1] = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
-            message = new LiteralText(msg[0] + " " + msg[1]).setStyle(message.getStyle().withColor(getIntFromColor(
-                decryptionColor.get().r,
-                decryptionColor.get().g,
-                decryptionColor.get().b
-            )));
+            message = new LiteralText(msg[0] + " " + msg[1]).setStyle(message.getStyle().withColor(getIntFromColor(decryptedColor.get().r, decryptedColor.get().g, decryptedColor.get().b)));
         }
 
         event.setMessage(message);
@@ -116,10 +105,11 @@ public class ChatEncryption extends Module {
     private void onMessageSend(SendMessageEvent event) {
         String message = event.message;
 
-        if (encryptAll.get() || message.startsWith(prefix.get())){
+        if (encryptAll.get() || message.startsWith(prefix.get())) {
             if (!encryptAll.get()) message = message.substring(prefix.get().length());
             message = encrypt(message, (customKey.get() ? groupKey.get() : password));
         }
+
         event.message = message;
     }
 
@@ -157,5 +147,12 @@ public class ChatEncryption extends Module {
         }
 
         return strToDecrypt;
+    }
+
+    public int getIntFromColor(int r, int g, int b) {
+        r = (r << 16) & 0x00FF0000;
+        g = (g << 8) & 0x0000FF00;
+        b = b & 0x000000FF;
+        return 0xFF000000 | r | g | b;
     }
 }
