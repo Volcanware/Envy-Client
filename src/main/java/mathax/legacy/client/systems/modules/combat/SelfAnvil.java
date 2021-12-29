@@ -24,8 +24,6 @@ public class SelfAnvil extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        if (BlockUtils.place(mc.player.getBlockPos().add(0, 2, 0), InvUtils.findInHotbar(itemStack -> Block.getBlockFromItem(itemStack.getItem()) instanceof AnvilBlock), 0)) {
-            toggle();
-        }
+        if (BlockUtils.place(mc.player.getBlockPos().add(0, 2, 0), InvUtils.findInHotbar(itemStack -> Block.getBlockFromItem(itemStack.getItem()) instanceof AnvilBlock), 0)) toggle();
     }
 }

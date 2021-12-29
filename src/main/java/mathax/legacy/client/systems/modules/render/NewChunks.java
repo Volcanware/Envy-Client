@@ -22,13 +22,13 @@ import net.minecraft.world.chunk.WorldChunk;
 
 import java.util.*;
 
-/*/------------------------/*/
-/*/ Ported from BleachHack /*/
-/*/ https://bleachhack.org /*/
-/*/------------------------/*/
+/*/--------------------------------------------------/*/
+/*/ Ported from BleachHack and modified by Matejko06 /*/
+/*/ https://bleachhack.org                           /*/
+/*/--------------------------------------------------/*/
 
 public class NewChunks extends Module {
-    private static final Direction[] searchDirs = new Direction[] {
+    private static final Direction[] searchDirections = new Direction[] {
         Direction.EAST,
         Direction.NORTH,
         Direction.WEST,
@@ -44,6 +44,13 @@ public class NewChunks extends Module {
     private final SettingGroup sgOldChunks = settings.createGroup("Old Chunks");
 
     // General
+
+    private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+        .name("mode")
+        .description("Determines how New Chunks operates.")
+        .defaultValue(Mode.Both)
+        .build()
+    );
 
     private final Setting<Boolean> remove = sgGeneral.add(new BoolSetting.Builder()
         .name("remove")
@@ -115,7 +122,7 @@ public class NewChunks extends Module {
     }
 
     public NewChunks() {
-        super(Categories.Render, Items.GRASS_BLOCK, "new-chunks", "Detects completely new chunks using certain traits of them.");
+        super(Categories.Render, Items.GRASS_BLOCK, "new-chunks", "Detects completely new and old chunks using certain traits of them.");
     }
 
     @Override
@@ -124,8 +131,75 @@ public class NewChunks extends Module {
             newChunks.clear();
             oldChunks.clear();
         }
+    }
 
-        super.onDeactivate();
+    @EventHandler
+    private void onReadPacket(PacketEvent.Receive event) {
+        if (mode.get() == Mode.Liquids || mode.get() == Mode.Both) {
+            Direction[] searchDirs = new Direction[] {
+                Direction.EAST,
+                Direction.NORTH,
+                Direction.WEST,
+                Direction.SOUTH,
+                Direction.UP
+            };
+
+            if (event.packet instanceof ChunkDeltaUpdateS2CPacket packet) {
+                packet.visitUpdates((position, state) -> {
+                    if (!state.getFluidState().isEmpty() && !state.getFluidState().isStill()) {
+                        ChunkPos chunkPos = new ChunkPos(position);
+                        Direction[] directions = searchDirs;
+                        int length = searchDirs.length;
+
+                        for (int value = 0; value < length; ++value) {
+                            Direction dir = directions[value];
+                            if (mc.world.getBlockState(position.offset(dir)).getFluidState().isStill() && !oldChunks.contains(chunkPos)) {
+                                newChunks.add(chunkPos);
+                                return;
+                            }
+                        }
+                    }
+
+                });
+            } else {
+                ChunkPos pos;
+                int x;
+                int y;
+                if (event.packet instanceof BlockUpdateS2CPacket packet) {
+                    if (!packet.getState().getFluidState().isEmpty() && !packet.getState().getFluidState().isStill()) {
+                        pos = new ChunkPos(packet.getPos());
+                        Direction[] directions = searchDirs;
+                        x = searchDirs.length;
+
+                        for (y = 0; y < x; y++) {
+                            Direction dir = directions[y];
+                            if (mc.world.getBlockState(packet.getPos().offset(dir)).getFluidState().isStill() && !oldChunks.contains(pos)) {
+                                newChunks.add(pos);
+                                return;
+                            }
+                        }
+                    }
+                } else if (event.packet instanceof ChunkDataS2CPacket packet && mc.world != null) {
+                    pos = new ChunkPos(packet.getX(), packet.getZ());
+                    if (!newChunks.contains(pos) && mc.world.getChunkManager().getChunk(packet.getX(), packet.getZ()) == null) {
+                        WorldChunk chunk = new WorldChunk(mc.world, pos);
+                        chunk.loadFromPacket(packet.getChunkData().getSectionsDataBuf(), new NbtCompound(), packet.getChunkData().getBlockEntities(packet.getX(), packet.getZ()));
+
+                        for (x = 0; x < 16; x++) {
+                            for (y = 0; y < mc.world.getHeight(); y++) {
+                                for (int z = 0; z < 16; z++) {
+                                    FluidState fluid = chunk.getFluidState(x, y, z);
+                                    if (!fluid.isEmpty() && !fluid.isStill()) {
+                                        oldChunks.add(pos);
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -143,67 +217,13 @@ public class NewChunks extends Module {
         }
     }
 
-    @EventHandler
-    private void onReadPacket(PacketEvent.Receive event) {
-        if (event.packet instanceof ChunkDeltaUpdateS2CPacket) {
-            ChunkDeltaUpdateS2CPacket packet = (ChunkDeltaUpdateS2CPacket) event.packet;
-
-            packet.visitUpdates((pos, state) -> {
-                if (!state.getFluidState().isEmpty() && !state.getFluidState().isStill()) {
-                    ChunkPos chunkPos = new ChunkPos(pos);
-
-                    for (Direction dir: searchDirs) {
-                        if (mc.world.getBlockState(pos.offset(dir)).getFluidState().isStill() && !oldChunks.contains(chunkPos) && newChunksToggle.get()) {
-                            newChunks.add(chunkPos);
-                            return;
-                        }
-                    }
-                }
-            });
-        }
-
-        else if (event.packet instanceof BlockUpdateS2CPacket) {
-            BlockUpdateS2CPacket packet = (BlockUpdateS2CPacket) event.packet;
-
-            if (!packet.getState().getFluidState().isEmpty() && !packet.getState().getFluidState().isStill()) {
-                ChunkPos chunkPos = new ChunkPos(packet.getPos());
-
-                for (Direction dir: searchDirs) {
-                    if (mc.world.getBlockState(packet.getPos().offset(dir)).getFluidState().isStill() && !oldChunks.contains(chunkPos) && newChunksToggle.get()) {
-                        newChunks.add(chunkPos);
-                        return;
-                    }
-                }
-            }
-        }
-
-        else if (event.packet instanceof ChunkDataS2CPacket && mc.world != null) {
-            ChunkDataS2CPacket packet = (ChunkDataS2CPacket) event.packet;
-
-            ChunkPos pos = new ChunkPos(packet.getX(), packet.getZ());
-
-            if (!newChunks.contains(pos) && mc.world.getChunkManager().getChunk(packet.getX(), packet.getZ()) == null) {
-                WorldChunk chunk = new WorldChunk(mc.world, pos);
-                chunk.loadFromPacket(packet.getChunkData().getSectionsDataBuf(), new NbtCompound(), packet.getChunkData().getBlockEntities(packet.getX(), packet.getZ()));
-
-                for (int x = 0; x < 16; x++) {
-                    for (int y = mc.world.getBottomY(); y < mc.world.getTopY(); y++) {
-                        for (int z = 0; z < 16; z++) {
-                            FluidState fluid = chunk.getFluidState(x, y, z);
-
-                            if (!fluid.isEmpty() && !fluid.isStill() && oldChunksToggle.get()) {
-                                oldChunks.add(pos);
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
     private void drawBoxOutline(Box box, Color fillColor, Color lineColor, Render3DEvent event) {
         event.renderer.box(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, fillColor, lineColor, ShapeMode.Both, 0);
+    }
+
+    public enum Mode {
+        Mobs,
+        Liquids,
+        Both
     }
 }

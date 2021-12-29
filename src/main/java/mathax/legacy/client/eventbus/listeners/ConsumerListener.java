@@ -22,7 +22,6 @@ public class ConsumerListener<T> implements IListener {
         this(target, EventPriority.MEDIUM, executor);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void call(Object event) {
         executor.accept((T) event);

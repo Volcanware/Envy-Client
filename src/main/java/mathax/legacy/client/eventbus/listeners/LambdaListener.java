@@ -35,7 +35,6 @@ public class LambdaListener implements IListener {
      * @param object Object, null if static
      * @param method Method to create lambda for
      */
-    @SuppressWarnings("unchecked")
     public LambdaListener(Factory factory, Class<?> klass, Object object, Method method) {
         this.target = method.getParameters()[0].getType();
         this.isStatic = Modifier.isStatic(method.getModifiers());

@@ -120,7 +120,6 @@ public class Commands extends System<Commands> {
         return commands;
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends Command> T get(Class<T> klass) {
         return (T) commandInstances.get(klass);
     }

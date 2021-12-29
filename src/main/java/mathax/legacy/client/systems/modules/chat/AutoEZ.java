@@ -117,7 +117,7 @@ public class AutoEZ extends Module {
     );
 
     public AutoEZ() {
-        super(Categories.Chat, Items.LIGHTNING_ROD, "auto-ez", "Announces EASY when you kill or pop someone.");
+        super(Categories.Chat, Items.LIGHTNING_ROD, "auto-ez", "Announces EASY or GG when you kill or pop someone.");
     }
 
     // Kills

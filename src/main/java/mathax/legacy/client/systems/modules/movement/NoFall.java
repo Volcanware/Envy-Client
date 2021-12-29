@@ -1,17 +1,17 @@
 package mathax.legacy.client.systems.modules.movement;
 
 import baritone.api.BaritoneAPI;
+import mathax.legacy.client.events.entity.player.PlayerMoveEvent;
 import mathax.legacy.client.events.packets.PacketEvent;
 import mathax.legacy.client.events.world.TickEvent;
+import mathax.legacy.client.mixin.PlayerPositionLookS2CPacketAccessor;
 import mathax.legacy.client.mixininterface.IPlayerMoveC2SPacket;
 import mathax.legacy.client.mixininterface.IVec3d;
-import mathax.legacy.client.settings.BoolSetting;
-import mathax.legacy.client.settings.EnumSetting;
-import mathax.legacy.client.settings.Setting;
-import mathax.legacy.client.settings.SettingGroup;
+import mathax.legacy.client.settings.*;
 import mathax.legacy.client.mixin.PlayerMoveC2SPacketAccessor;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.entity.EntityUtils;
 import mathax.legacy.client.utils.player.FindItemResult;
@@ -19,36 +19,81 @@ import mathax.legacy.client.utils.player.InvUtils;
 import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.player.Rotations;
 import mathax.legacy.client.utils.world.BlockUtils;
-import mathax.legacy.client.eventbus.EventHandler;
+import mathax.legacy.client.utils.world.Dimension;
+import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.network.packet.c2s.play.TeleportConfirmC2SPacket;
+import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.RaycastContext;
 
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.function.Predicate;
 
 public class NoFall extends Module {
-    private boolean placedWater;
+    private final ArrayList<PlayerMoveC2SPacket> packets = new ArrayList<>();
+
+    private final Random random = new Random();
+
     private int preBaritoneFallHeight;
+    private int ticksExisted = 0;
+    private int teleportId;
+
+    private boolean placedWater;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
-        .description("The way you are saved from fall damage.")
+        .description("How to cancel the fall damage.")
         .defaultValue(Mode.Packet)
+        .build()
+    );
+
+    private final Setting<PacketMode> packetMode = sgGeneral.add(new EnumSetting.Builder<PacketMode>()
+        .name("packet-mode")
+        .description("Which packets to send to the server.")
+        .defaultValue(PacketMode.Down)
+        .build()
+    );
+
+    private final Setting<Double> fallDistance = sgGeneral.add(new DoubleSetting.Builder()
+        .name("fall-distance")
+        .description("After what fall distance to trigger this module.")
+        .defaultValue(5)
+        .min(3)
+        .build()
+    );
+
+    private final Setting<Double> fallSpeed = sgGeneral.add(new DoubleSetting.Builder()
+        .name("fall-speed")
+        .description("After what fall distance to trigger this module.")
+        .defaultValue(0.062)
+        .min(0)
+        .sliderRange(0.01, 1)
+        .build()
+    );
+
+    private final Setting<Boolean> bounds = sgGeneral.add(new BoolSetting.Builder()
+        .name("bounds")
+        .description("Bounds for the player.")
+        .defaultValue(true)
         .build()
     );
 
     private final Setting<PlaceMode> airPlaceMode = sgGeneral.add(new EnumSetting.Builder<PlaceMode>()
         .name("place-mode")
-        .description("Whether place mode places before you die or before you take damage.")
+        .description("Determines if place mode places before you die or before you take damage.")
         .defaultValue(PlaceMode.Before_Death)
-        .visible(() -> mode.get() == Mode.AirPlace)
+        .visible(() -> mode.get() == Mode.Air_Place)
         .build()
     );
 
@@ -56,7 +101,7 @@ public class NoFall extends Module {
         .name("anchor")
         .description("Centers the player and reduces movement when using bucket or air place mode.")
         .defaultValue(true)
-        .visible(() -> mode.get() != Mode.Packet)
+        .visible(() -> mode.get() == Mode.Bucket || mode.get() == Mode.Air_Place)
         .build()
     );
 
@@ -68,7 +113,7 @@ public class NoFall extends Module {
     public void onActivate() {
         preBaritoneFallHeight = BaritoneAPI.getSettings().maxFallHeightNoWater.value;
         if (mode.get() == Mode.Packet) BaritoneAPI.getSettings().maxFallHeightNoWater.value = 255;
-        placedWater = false;
+        ticksExisted = 0;
     }
 
     @Override
@@ -78,86 +123,113 @@ public class NoFall extends Module {
 
     @EventHandler
     private void onSendPacket(PacketEvent.Send event) {
-        if (mc.player.getAbilities().creativeMode
-            || !(event.packet instanceof PlayerMoveC2SPacket)
-            || mode.get() != Mode.Packet
-            || ((IPlayerMoveC2SPacket) event.packet).getNbt() == 1337) return;
-
+        if (mode.get() != Mode.Packet || mc.player.getAbilities().creativeMode || !(event.packet instanceof PlayerMoveC2SPacket) || ((IPlayerMoveC2SPacket) event.packet).getNbt() == 1337) return;
 
         if ((mc.player.isFallFlying() || Modules.get().isActive(Flight.class)) && mc.player.getVelocity().y < 1) {
-            BlockHitResult result = mc.world.raycast(new RaycastContext(
-                mc.player.getPos(),
-                mc.player.getPos().subtract(0, 0.5, 0),
-                RaycastContext.ShapeType.OUTLINE,
-                RaycastContext.FluidHandling.NONE,
-                mc.player)
-            );
-
-            if (result != null && result.getType() == HitResult.Type.BLOCK) {
-                ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(true);
-            }
-        } else {
-            ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(true);
-        }
+            BlockHitResult result = mc.world.raycast(new RaycastContext(mc.player.getPos(), mc.player.getPos().subtract(0, 0.5, 0), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player));
+            if (result != null && result.getType() == HitResult.Type.BLOCK) ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(true);
+        } else ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(true);
     }
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (mc.player.getAbilities().creativeMode) return;
 
-        // Airplace mode
-        if (mode.get() == Mode.AirPlace) {
-            // Test if fall damage setting is valid
-            if (!airPlaceMode.get().test(mc.player.fallDistance)) return;
+        switch (mode.get()) {
+            case Air_Place -> {
+                if (!airPlaceMode.get().test(mc.player.fallDistance)) return;
 
-            // Center and place block
-            if (anchor.get()) PlayerUtils.centerPlayer();
-
-            Rotations.rotate(mc.player.getYaw(), 90, Integer.MAX_VALUE, () -> {
-                double preY = mc.player.getVelocity().y;
-                ((IVec3d) mc.player.getVelocity()).setY(0);
-
-                BlockUtils.place(mc.player.getBlockPos().down(), InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof BlockItem), false, 0, true);
-
-                ((IVec3d) mc.player.getVelocity()).setY(preY);
-            });
-        }
-
-        // Bucket mode
-        if (mode.get() == Mode.Bucket) {
-            if (mc.player.fallDistance > 3 && !EntityUtils.isAboveWater(mc.player)) {
-                // Place water
-                FindItemResult waterBucket = InvUtils.findInHotbar(Items.WATER_BUCKET);
-
-                if (!waterBucket.found()) return;
-
-                // Center player
                 if (anchor.get()) PlayerUtils.centerPlayer();
 
-                // Check if there is a block within 5 blocks
-                BlockHitResult result = mc.world.raycast(new RaycastContext(mc.player.getPos(), mc.player.getPos().subtract(0, 5, 0), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player));
+                Rotations.rotate(mc.player.getYaw(), 90, Integer.MAX_VALUE, () -> {
+                    double preY = mc.player.getVelocity().y;
+                    ((IVec3d) mc.player.getVelocity()).setY(0);
 
-                // Place water
-                if (result != null && result.getType() == HitResult.Type.BLOCK) {
-                    useBucket(waterBucket, true);
-                }
+                    BlockUtils.place(mc.player.getBlockPos().down(), InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof BlockItem), false, 0, true);
+
+                    ((IVec3d) mc.player.getVelocity()).setY(preY);
+                });
             }
+            case Bucket -> {
+                if (mc.player.fallDistance > 3 && !EntityUtils.isAboveWater(mc.player)) {
+                    FindItemResult waterBucket = InvUtils.findInHotbar(Items.WATER_BUCKET);
+                    if (!waterBucket.found() || PlayerUtils.getDimension().equals(Dimension.Nether)) waterBucket = InvUtils.findInHotbar(Items.POWDER_SNOW_BUCKET);
 
-            // Remove water
-            if (placedWater && mc.player.getBlockStateAtPos().getFluidState().getFluid() == Fluids.WATER) {
-                useBucket(InvUtils.findInHotbar(Items.BUCKET), false);
+                    if (!waterBucket.found()) return;
+
+                    if (anchor.get()) PlayerUtils.centerPlayer();
+
+                    BlockHitResult result = mc.world.raycast(new RaycastContext(mc.player.getPos(), mc.player.getPos().subtract(0, 5, 0), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player));
+
+                    if (result != null && result.getType() == HitResult.Type.BLOCK) useBucket(waterBucket, true);
+                }
+
+                if (placedWater && (mc.player.getBlockStateAtPos().getFluidState().getFluid() == Fluids.WATER || mc.player.getBlockStateAtPos().getBlock() == Blocks.POWDER_SNOW)) useBucket(InvUtils.findInHotbar(Items.BUCKET), false);
             }
         }
+    }
+
+    @EventHandler
+    private void onPreTick(TickEvent.Pre event) {
+        ticksExisted++;
+
+        switch (mode.get()) {
+            case Packet_Plus:
+                if (mc.player.fallDistance > fallDistance.get()) {
+                    if (teleportId <= 0) {
+                        PlayerMoveC2SPacket boundsPos = new PlayerMoveC2SPacket.PositionAndOnGround(randomHorizontal(), 1, randomHorizontal(), mc.player.isOnGround());
+                        packets.add(boundsPos);
+                        mc.getNetworkHandler().sendPacket(boundsPos);
+                    } else {
+                        PlayerMoveC2SPacket nextPos = new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.062, mc.player.getZ(), mc.player.isOnGround());
+                        packets.add(nextPos);
+                        mc.getNetworkHandler().sendPacket(nextPos);
+
+                        PlayerMoveC2SPacket downPacket = new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), 1, mc.player.getZ(), mc.player.isOnGround());
+                        packets.add(downPacket);
+                        mc.getNetworkHandler().sendPacket(downPacket);
+
+                        teleportId++;
+
+                        mc.getNetworkHandler().sendPacket(new TeleportConfirmC2SPacket(teleportId - 1));
+                        mc.getNetworkHandler().sendPacket(new TeleportConfirmC2SPacket(teleportId));
+                        mc.getNetworkHandler().sendPacket(new TeleportConfirmC2SPacket(teleportId + 1));
+                    }
+                }
+                break;
+            case TP:
+                if (mc.player.fallDistance > fallDistance.get()) mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), 10000, mc.player.getZ(), mc.player.isOnGround()));
+                break;
+        }
+    }
+
+    @EventHandler
+    public void onPacketSend(PacketEvent.Send event) {
+        if (event.packet instanceof PlayerMoveC2SPacket && mode.get() == Mode.Vanilla && mc.player.fallDistance > fallDistance.get()) ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(true);
+    }
+
+    @EventHandler
+    public void onReceivePacket(PacketEvent.Receive event) {
+        if (mc.player.isAlive() && mode.get() == Mode.Packet_Plus && mc.player.fallDistance > fallDistance.get() && event.packet instanceof PlayerPositionLookS2CPacket packet) {
+            if (teleportId <= 0) teleportId = packet.getTeleportId();
+            else {
+                ((PlayerPositionLookS2CPacketAccessor) event.packet).setYaw(mc.player.getYaw());
+                ((PlayerPositionLookS2CPacketAccessor) event.packet).setPitch(mc.player.getPitch());
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        if (mode.get() == Mode.Packet_Plus && mc.player.fallDistance > fallDistance.get() && !mc.player.isOnGround()) ((IVec3d) event.movement).set(0, -fallSpeed.get(), 0);
     }
 
     private void useBucket(FindItemResult bucket, boolean placedWater) {
         if (!bucket.found()) return;
 
         Rotations.rotate(mc.player.getYaw(), 90, 10, true, () -> {
-            if (bucket.isOffhand()) {
-                mc.interactionManager.interactItem(mc.player, mc.world, Hand.OFF_HAND);
-            } else {
-                int preSlot = mc.player.getInventory().selectedSlot;
+            if (bucket.isOffhand()) mc.interactionManager.interactItem(mc.player, mc.world, Hand.OFF_HAND);
+            else {
                 InvUtils.swap(bucket.getSlot(), true);
                 mc.interactionManager.interactItem(mc.player, mc.world, Hand.MAIN_HAND);
                 InvUtils.swapBack();
@@ -167,15 +239,32 @@ public class NoFall extends Module {
         });
     }
 
-    @Override
-    public String getInfoString() {
-        return mode.get().toString();
+    private double randomHorizontal() {
+        int randomValue = random.nextInt(bounds.get() ? 80 : (packetMode.get() == PacketMode.Obscure ? (ticksExisted % 2 == 0 ? 480 : 100) : 29000000)) + (bounds.get() ? 5 : 500);
+        if (random.nextBoolean()) return randomValue;
+        return -randomValue;
     }
 
     public enum Mode {
+        Vanilla,
         Packet,
-        AirPlace,
-        Bucket
+        Packet_Plus,
+        Bucket,
+        Air_Place,
+        TP;
+
+        @Override
+        public String toString() {
+            if (this == Packet_Plus) return "Packet+";
+            return super.toString().replace("_", " ");
+        }
+    }
+
+    public enum PacketMode {
+        Preserve,
+        Down,
+        Bypass,
+        Obscure
     }
 
     public enum PlaceMode {
@@ -190,7 +279,7 @@ public class NoFall extends Module {
 
         public boolean test(float fallheight) {
             return fallHeight.test(fallheight);
-        };
+        }
 
         @Override
         public String toString() {

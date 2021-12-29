@@ -99,9 +99,9 @@ dependencies {
 
     // Other
     library "org.apache.httpcomponents:httpclient:${project.apache_http_client_version}"
-    library "com.fasterxml.jackson.core:jackson-core:${project.jackson_core_version}"
-    library "com.fasterxml.jackson.core:jackson-databind:${project.jackson_databind_version}"
-    library "com.fasterxml.jackson.core:jackson-annotations:${project.jackson_annotations_version}"
+    library "com.fasterxml.jackson.core:jackson-core:${project.jackson_version}"
+    library "com.fasterxml.jackson.core:jackson-databind:${project.jackson_version}"
+    library "com.fasterxml.jackson.core:jackson-annotations:${project.jackson_version}"
     library "org.jsoup:jsoup:${project.jsoup_version}"
 }
 

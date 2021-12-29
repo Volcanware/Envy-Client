@@ -149,7 +149,7 @@ public class SurroundBreak extends Module {
     );
 
     public SurroundBreak() {
-        super(Categories.Combat, Items.OBSIDIAN, "surround-break", "Automatically places a crystal next to CA target's surround.");
+        super(Categories.Combat, Items.OBSIDIAN, "surround-break", "Automatically places a crystal next to Crystal Aura target's surround.");
     }
 
     @Override

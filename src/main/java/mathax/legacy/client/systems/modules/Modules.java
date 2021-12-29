@@ -18,6 +18,7 @@ import mathax.legacy.client.systems.System;
 import mathax.legacy.client.systems.Systems;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.chat.*;
+import mathax.legacy.client.systems.modules.chat.ChatEncryption;
 import mathax.legacy.client.systems.modules.client.*;
 import mathax.legacy.client.systems.modules.combat.*;
 import mathax.legacy.client.systems.modules.crash.*;
@@ -116,7 +117,6 @@ public class Modules extends System<Modules> {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends Module> T get(Class<T> klass) {
         return (T) moduleInstances.get(klass);
     }
@@ -383,6 +383,7 @@ public class Modules extends System<Modules> {
         add(new BowSpam());
         add(new Burrow());
         add(new CEVBreaker());
+        add(new Confuse());
         add(new Criticals());
         add(new CrystalAura());
         add(new Hitboxes());
@@ -397,6 +398,7 @@ public class Modules extends System<Modules> {
         add(new SelfTrap());
         add(new SelfTrapPlus());
         add(new SelfWeb());
+        add(new Sniper());
         add(new Surround());
         add(new SurroundBreak());
         add(new TNTAura());
@@ -473,6 +475,7 @@ public class Modules extends System<Modules> {
         add(new Spider());
         add(new Sprint());
         add(new Step());
+        add(new Tower());
         add(new TridentBoost());
         add(new Velocity());
     }
@@ -581,6 +584,7 @@ public class Modules extends System<Modules> {
         add(new AutoLogin());
         add(new BetterChat());
         add(new BurrowNotifier());
+        add(new ChatEncryption());
         //add(new ChatBot());
         add(new MessageAura());
         add(new Spam());
@@ -591,7 +595,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initMisc() {
-        add(new AntiGhostBlock());
+        add(new AntiDesync());
         add(new AntiPacketKick());
         add(new AutoClicker());
         add(new AutoMountBypassDupe());
@@ -627,7 +631,6 @@ public class Modules extends System<Modules> {
         add(new MiddleClickFriend());
         add(new Panic());
         add(new Swarm());
-        add(new ChatEncryption());
     }
 
     public static class ModuleRegistry extends Registry<Module> {

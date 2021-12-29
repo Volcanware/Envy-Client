@@ -6,6 +6,7 @@ import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.renderer.ShapeMode;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.misc.Pool;
 import mathax.legacy.client.utils.player.FindItemResult;
 import mathax.legacy.client.utils.player.InvUtils;
@@ -40,6 +41,8 @@ public class Scaffold extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
+
+    // General
 
     private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
         .name("blocks")
@@ -157,12 +160,9 @@ public class Scaffold extends Module {
         if (airPlace.get()) {
             Vec3d vec = mc.player.getPos().add(mc.player.getVelocity()).add(0, -0.5f, 0);
             bp.set(vec.getX(), vec.getY(), vec.getZ());
-
         } else {
-            if (BlockUtils.getPlaceSide(mc.player.getBlockPos().down()) != null) {
-                bp.set(mc.player.getBlockPos().down());
-
-            } else {
+            if (BlockUtils.getPlaceSide(mc.player.getBlockPos().down()) != null) bp.set(mc.player.getBlockPos().down());
+            else {
                 Vec3d pos = mc.player.getPos();
                 pos = pos.add(0, -0.98f, 0);
                 pos.add(mc.player.getVelocity());
@@ -178,26 +178,21 @@ public class Scaffold extends Module {
                             }
                         }
                     }
-                    if (blockPosArray.size() == 0) {
-                        return;
-                    }
+
+                    if (blockPosArray.size() == 0) return;
 
                     blockPosArray.sort(Comparator.comparingDouble(PlayerUtils::distanceTo));
 
                     prevBp.set(blockPosArray.get(0));
                 }
 
-                Vec3d vecPrevBP = new Vec3d((double) prevBp.getX() + 0.5f,
-                    (double) prevBp.getY() + 0.5f,
-                    (double) prevBp.getZ() + 0.5f);
-
+                Vec3d vecPrevBP = new Vec3d((double) prevBp.getX() + 0.5f, (double) prevBp.getY() + 0.5f, (double) prevBp.getZ() + 0.5f);
                 Vec3d sub = pos.subtract(vecPrevBP);
                 Direction facing;
-                if (sub.getY() < -0.5f) {
-                    facing = Direction.DOWN;
-                } else if (sub.getY() > 0.5f) {
-                    facing = Direction.UP;
-                } else facing = Direction.getFacing(sub.getX(), 0, sub.getZ());
+
+                if (sub.getY() < -0.5f) facing = Direction.DOWN;
+                else if (sub.getY() > 0.5f) facing = Direction.UP;
+                else facing = Direction.getFacing(sub.getX(), 0, sub.getZ());
 
                 bp.set(prevBp.offset(facing));
             }
@@ -215,19 +210,14 @@ public class Scaffold extends Module {
                 lastWasSneaking = false;
                 return;
             }
-        } else {
-            lastWasSneaking = false;
-        }
+        } else lastWasSneaking = false;
         if (!lastWasSneaking) lastSneakingY = mc.player.getY();
 
-        if (mc.options.keyJump.isPressed() && !mc.options.keySneak.isPressed() && fastTower.get()) {
-            mc.player.setVelocity(0, 0.42f, 0);
-        }
+        if (mc.options.keyJump.isPressed() && !mc.options.keySneak.isPressed() && fastTower.get() && !Modules.get().isActive(Tower.class)) mc.player.setVelocity(0, 0.42f, 0);
 
         if (BlockUtils.place(bp, item, rotate.get(), 50, swing.get(), true)) {
             if (!mc.world.isOutOfHeightLimit(bp.getY())) renderBlocks.add(renderBlockPool.get().set(bp));
-
-            if (mc.options.keyJump.isPressed() && !mc.options.keySneak.isPressed() && !mc.player.isOnGround() && !mc.world.getBlockState(bp).isAir() && fastTower.get()) mc.player.setVelocity(0, -0.28f, 0);
+            if (mc.options.keyJump.isPressed() && !mc.options.keySneak.isPressed() && !mc.player.isOnGround() && !mc.world.getBlockState(bp).isAir() && fastTower.get() && !Modules.get().isActive(Tower.class)) mc.player.setVelocity(0, -0.28f, 0);
         }
 
         if (!mc.world.getBlockState(bp).isAir()) prevBp.set(bp);

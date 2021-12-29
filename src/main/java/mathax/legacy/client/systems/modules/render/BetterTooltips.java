@@ -232,15 +232,7 @@ public class BetterTooltips extends Module {
         }
 
         // Hold to preview tooltip
-        if ((Utils.hasItems(event.itemStack) && shulkers.get() && !previewShulkers())
-            || (event.itemStack.getItem() == Items.ENDER_CHEST && echest.get() && !previewEChest())
-            || (event.itemStack.getItem() == Items.FILLED_MAP && maps.get() && !previewMaps())
-            || (event.itemStack.getItem() == Items.WRITABLE_BOOK && books.get() && !previewBooks())
-            || (event.itemStack.getItem() == Items.WRITTEN_BOOK && books.get() && !previewBooks())
-            || (event.itemStack.getItem() instanceof EntityBucketItem && entities.get() && !previewEntities())
-            || (event.itemStack.getItem() instanceof BannerItem && banners.get() && !previewBanners())
-            || (event.itemStack.getItem() instanceof BannerPatternItem && banners.get()  && !previewBanners())
-            || (event.itemStack.getItem() == Items.SHIELD && banners.get() && !previewBanners())) {
+        if ((Utils.hasItems(event.itemStack) && shulkers.get() && !previewShulkers()) || (event.itemStack.getItem() == Items.ENDER_CHEST && echest.get() && !previewEChest()) || (event.itemStack.getItem() == Items.FILLED_MAP && maps.get() && !previewMaps()) || (event.itemStack.getItem() == Items.WRITABLE_BOOK && books.get() && !previewBooks()) || (event.itemStack.getItem() == Items.WRITTEN_BOOK && books.get() && !previewBooks()) || (event.itemStack.getItem() instanceof EntityBucketItem && entities.get() && !previewEntities()) || (event.itemStack.getItem() instanceof BannerItem && banners.get() && !previewBanners()) || (event.itemStack.getItem() instanceof BannerPatternItem && banners.get()  && !previewBanners()) || (event.itemStack.getItem() == Items.SHIELD && banners.get() && !previewBanners())) {
             event.list.add(new LiteralText(""));
             event.list.add(new LiteralText("Hold " + Formatting.YELLOW + keybind + Formatting.RESET + " to preview"));
         }
@@ -268,8 +260,7 @@ public class BetterTooltips extends Module {
         }
 
         // Book preview
-        else if ((event.itemStack.getItem() == Items.WRITABLE_BOOK
-            || event.itemStack.getItem() == Items.WRITTEN_BOOK)
+        else if ((event.itemStack.getItem() == Items.WRITABLE_BOOK || event.itemStack.getItem() == Items.WRITTEN_BOOK)
             && previewBooks()) {
             Text page = getFirstPage(event.itemStack);
             if (page != null) event.tooltipData = new BookTooltipComponent(page);
