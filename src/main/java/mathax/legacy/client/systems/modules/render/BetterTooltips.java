@@ -295,7 +295,7 @@ public class BetterTooltips extends Module {
         }
     }
 
-    public void applyCompactShulkerTooltip(ItemStack stack, List<Text> tooltip) {
+    public void applyCompactShulkerTooltip(ItemStack stack, List<Text> tooltip ) {
         NbtCompound tag = stack.getSubNbt("BlockEntityTag");
         if (tag != null) {
             if (tag.contains("LootTable", 8)) tooltip.add(new LiteralText("???????"));

@@ -627,6 +627,7 @@ public class Modules extends System<Modules> {
         add(new MiddleClickFriend());
         add(new Panic());
         add(new Swarm());
+        add(new ChatEncryption());
     }
 
     public static class ModuleRegistry extends Registry<Module> {

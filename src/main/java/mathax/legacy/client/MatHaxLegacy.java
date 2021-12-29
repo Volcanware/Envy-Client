@@ -38,6 +38,7 @@ import mathax.legacy.client.utils.world.BlockIterator;
 import mathax.legacy.client.utils.world.BlockUtils;
 import mathax.legacy.client.systems.config.Config;
 import mathax.legacy.client.systems.modules.Modules;
+import mathax.legacy.client.systems.System;
 import mathax.legacy.client.utils.Utils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -89,7 +90,10 @@ public class MatHaxLegacy implements ClientModInitializer {
 
             // MATEJKO06
             "3e24ef27e66d45d2bf4b2c7ade68ff47",
-            "7c73f84473c33a7d9978004ba0a6436e"
+            "7c73f84473c33a7d9978004ba0a6436e",
+            //NobreHD
+            "2905e61c51794d0d967c255a16287056",
+            "4c3d2322a3df30fcb371837ba257ea37"
 
         );
     }
