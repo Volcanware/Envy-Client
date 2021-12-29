@@ -24,9 +24,9 @@ public class AutoWalk extends Module {
         .name("mode")
         .description("Walking mode.")
         .defaultValue(Mode.Smart)
-        .onChanged(mode1 -> {
+        .onChanged(mode -> {
                 if (isActive()) {
-                    if (mode1 == Mode.Simple) {
+                    if (mode == Mode.Simple) {
                         BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
                         goal = null;
                     } else {
@@ -72,18 +72,10 @@ public class AutoWalk extends Module {
     private void onTick(TickEvent.Pre event) {
         if (mode.get() == Mode.Simple) {
             switch (direction.get()) {
-                case Forwards:
-                    setPressed(mc.options.keyForward, true);
-                    break;
-                case Backwards:
-                    setPressed(mc.options.keyBack, true);
-                    break;
-                case Left:
-                    setPressed(mc.options.keyLeft, true);
-                    break;
-                case Right:
-                    setPressed(mc.options.keyRight, true);
-                    break;
+                case Forwards -> setPressed(mc.options.keyForward, true);
+                case Backwards -> setPressed(mc.options.keyBack, true);
+                case Left -> setPressed(mc.options.keyLeft, true);
+                case Right -> setPressed(mc.options.keyRight, true);
             }
         } else {
             if (timer > 20) {

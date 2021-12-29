@@ -47,26 +47,27 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class HighwayBuilder extends Module {
-    private HorizontalDirection dir, leftDir, rightDir;
-
-    public Vec3d start;
-
-    private Input prevInput;
-    private CustomPlayerInput input;
-
-    private State state, lastState;
-    private IBlockPosProvider blockPosProvider;
-
-    public int blocksBroken, blocksPlaced;
+    private static final BlockPos ZERO = new BlockPos(0, 0, 0);
 
     private final MBlockPos lastBreakingPos = new MBlockPos();
-
-    private boolean displayInfo;
 
     private final MBlockPos posRender2 = new MBlockPos();
     private final MBlockPos posRender3 = new MBlockPos();
 
-    private static final BlockPos ZERO = new BlockPos(0, 0, 0);
+    private HorizontalDirection dir, leftDir, rightDir;
+
+    private IBlockPosProvider blockPosProvider;
+
+    private State state, lastState;
+
+    private CustomPlayerInput input;
+    private Input prevInput;
+
+    public Vec3d start;
+
+    public int blocksBroken, blocksPlaced;
+
+    private boolean displayInfo;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRenderMine = settings.createGroup("Render Mine");
@@ -143,10 +144,10 @@ public class HighwayBuilder extends Module {
         .build()
     );
 
-    private final Setting<Boolean> dontBreakTools = sgGeneral.add(new BoolSetting.Builder()
-        .name("dont-break-tools")
-        .description("Don't break tools.")
-        .defaultValue(false)
+    private final Setting<Boolean> breakTools = sgGeneral.add(new BoolSetting.Builder()
+        .name("break-tools")
+        .description("Allows Highway Builder to break tools.")
+        .defaultValue(true)
         .build()
     );
 
@@ -843,7 +844,7 @@ public class HighwayBuilder extends Module {
             for (int i = 0; i < b.mc.player.getInventory().main.size(); i++) {
                 double score = AutoTool.getScore(b.mc.player.getInventory().getStack(i), blockState, false, AutoTool.EnchantPreference.None, itemStack -> {
                     if (noSilkTouch && EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, itemStack) != 0) return false;
-                    return !b.dontBreakTools.get() || itemStack.getMaxDamage() - itemStack.getDamage() > 1;
+                    return b.breakTools.get() || itemStack.getMaxDamage() - itemStack.getDamage() > 1;
                 });
 
                 if (score > bestScore) {

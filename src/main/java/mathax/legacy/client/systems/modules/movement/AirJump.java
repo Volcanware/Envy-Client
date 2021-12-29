@@ -18,6 +18,8 @@ public class AirJump extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Boolean> maintainLevel = sgGeneral.add(new BoolSetting.Builder()
         .name("maintain-level")
         .description("Maintains your current Y level when holding the jump key.")
@@ -43,17 +45,13 @@ public class AirJump extends Module {
         if (mc.options.keyJump.matchesKey(event.key, 0)) {
             level = mc.player.getBlockPos().getY();
             mc.player.jump();
-        } else if (mc.options.keySneak.matchesKey(event.key, 0)) {
-            level--;
-        }
+        } else if (mc.options.keySneak.matchesKey(event.key, 0)) level--;
     }
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (Modules.get().isActive(Freecam.class) || mc.player.isOnGround()) return;
 
-        if (maintainLevel.get() && mc.player.getBlockPos().getY() == level && mc.options.keyJump.isPressed()) {
-            mc.player.jump();
-        }
+        if (maintainLevel.get() && mc.player.getBlockPos().getY() == level && mc.options.keyJump.isPressed()) mc.player.jump();
     }
 }

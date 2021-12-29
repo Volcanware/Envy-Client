@@ -23,7 +23,7 @@ public class BoatFly extends Module {
         .description("Horizontal speed in blocks per second.")
         .defaultValue(10)
         .min(0)
-        .sliderMax(50)
+        .sliderRange(0, 50)
         .build()
     );
 
@@ -32,7 +32,7 @@ public class BoatFly extends Module {
         .description("Vertical speed in blocks per second.")
         .defaultValue(6)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 
@@ -41,6 +41,7 @@ public class BoatFly extends Module {
         .description("How fast you fall in blocks per second.")
         .defaultValue(0.1)
         .min(0)
+        .sliderRange(0, 1)
         .build()
     );
 
@@ -61,25 +62,20 @@ public class BoatFly extends Module {
 
         event.boat.setYaw(mc.player.getYaw());
 
-        // Horizontal movement
         Vec3d vel = PlayerUtils.getHorizontalVelocity(speed.get());
         double velX = vel.getX();
         double velY = 0;
         double velZ = vel.getZ();
 
-        // Vertical movement
         if (mc.options.keyJump.isPressed()) velY += verticalSpeed.get() / 20;
         if (mc.options.keySprint.isPressed()) velY -= verticalSpeed.get() / 20;
         else velY -= fallSpeed.get() / 20;
 
-        // Apply velocity
         ((IVec3d) event.boat.getVelocity()).set(velX, velY, velZ);
     }
 
     @EventHandler
     private void onReceivePacket(PacketEvent.Receive event) {
-        if (event.packet instanceof VehicleMoveS2CPacket && cancelServerPackets.get()) {
-            event.cancel();
-        }
+        if (event.packet instanceof VehicleMoveS2CPacket && cancelServerPackets.get()) event.cancel();
     }
 }

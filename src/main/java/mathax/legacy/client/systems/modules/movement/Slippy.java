@@ -17,15 +17,14 @@ public class Slippy extends Module {
     public final Setting<Double> slippness = sgGeneral.add(new DoubleSetting.Builder()
         .name("slippness")
         .description("Decide how slippery blocks should be")
-        .min(0.0)
-        .max(1.10)
-        .sliderMax(1.10)
         .defaultValue(1.02)
+        .range(0.0, 1.10)
+        .sliderRange(0, 1.10)
         .build()
     );
 
     public final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
-        .name("ignored blocks")
+        .name("ignored-blocks")
         .description("Decide which blocks not to slip on")
         .build()
     );

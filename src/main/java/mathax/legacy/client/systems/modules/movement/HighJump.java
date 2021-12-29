@@ -12,11 +12,14 @@ import net.minecraft.item.Items;
 public class HighJump extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Double> multiplier = sgGeneral.add(new DoubleSetting.Builder()
         .name("jump-multiplier")
         .description("Jump height multiplier.")
         .defaultValue(1)
         .min(0)
+        .sliderRange(0, 5)
         .build()
     );
 

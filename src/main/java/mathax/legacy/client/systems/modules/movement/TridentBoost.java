@@ -11,12 +11,14 @@ import net.minecraft.item.Items;
 public class TridentBoost extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Double> multiplier = sgGeneral.add(new DoubleSetting.Builder()
         .name("boost")
         .description("How much your velocity is multiplied by when using riptide.")
         .defaultValue(2)
         .min(0.1)
-        .sliderMin(1)
+        .sliderRange(1, 5)
         .build()
     );
 

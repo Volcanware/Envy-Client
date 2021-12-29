@@ -9,7 +9,6 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
 public class Gravity extends Module {
-
     public Gravity() {
         super(Categories.Movement, Items.FEATHER, "gravity", "Changes gravity to moon gravity.");
     }

@@ -17,7 +17,18 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
 public class LongJump extends Module {
+    private boolean jumping = false;
+    private boolean jumped = false;
+
+    private double moveSpeed;
+
+    private int groundTicks;
+    private int airTicks;
+    private int stage;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    // General
 
     public final Setting<JumpMode> jumpMode = sgGeneral.add(new EnumSetting.Builder<JumpMode>()
         .name("mode")
@@ -32,7 +43,7 @@ public class LongJump extends Module {
         .visible(() -> jumpMode.get() == JumpMode.Vanilla)
         .defaultValue(1.261)
         .min(0)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -42,7 +53,7 @@ public class LongJump extends Module {
         .visible(() -> jumpMode.get() == JumpMode.Burst)
         .defaultValue(6)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 
@@ -52,7 +63,7 @@ public class LongJump extends Module {
         .visible(() -> jumpMode.get() == JumpMode.Burst)
         .defaultValue(2.149)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 
@@ -78,7 +89,7 @@ public class LongJump extends Module {
         .visible(() -> jumpMode.get() == JumpMode.Glide)
         .defaultValue(1)
         .min(0)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -87,7 +98,7 @@ public class LongJump extends Module {
         .description("Timer override.")
         .defaultValue(1)
         .min(0.01)
-        .sliderMin(0.01)
+        .sliderRange(0.01, 3)
         .build()
     );
 
@@ -109,13 +120,6 @@ public class LongJump extends Module {
     public LongJump() {
         super(Categories.Movement, Items.FEATHER, "long-jump", "Allows you to jump further than normal.");
     }
-
-    private int stage;
-    private double moveSpeed;
-    private boolean jumping = false;
-    private int airTicks;
-    private int groundTicks;
-    private boolean jumped = false;
 
     @Override
     public void onActivate() {
@@ -172,8 +176,7 @@ public class LongJump extends Module {
                     else if (stage == 1) {
                         ((IVec3d) event.movement).setY(0.42);
                         moveSpeed *= burstBoostFactor.get();
-                    }
-                    else if (stage == 2) {
+                    } else if (stage == 2) {
                         final double difference = lastDist - getMoveSpeed();
                         moveSpeed = lastDist - difference;
                     } else moveSpeed = lastDist - lastDist / 159;
@@ -221,6 +224,7 @@ public class LongJump extends Module {
                     toggle();
                     info("Disabling after jump.");
                 }
+
                 airTicks = 0;
                 groundTicks += 1;
                 if (groundTicks <= 2) mc.player.setVelocity(forward * 0.009999999776482582 * cos * glideMultiplier.get(), mc.player.getVelocity().y, forward * 0.009999999776482582 * sin * glideMultiplier.get());
@@ -257,9 +261,7 @@ public class LongJump extends Module {
         double strafe = mc.player.sidewaysSpeed;
         float yaw = mc.player.getYaw();
 
-        if (!PlayerUtils.isMoving()) {
-            ((IVec3d) event.movement).setXZ(0, 0);
-        }
+        if (!PlayerUtils.isMoving()) ((IVec3d) event.movement).setXZ(0, 0);
         else {
             if (forward != 0) {
                 if (strafe > 0) yaw += ((forward > 0) ? -45 : 45);

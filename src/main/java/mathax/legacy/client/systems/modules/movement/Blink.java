@@ -22,22 +22,22 @@ import net.minecraft.world.dimension.DimensionType;
 import java.util.*;
 
 public class Blink extends Module {
+    private final List<PlayerMoveC2SPacket> packets = new ArrayList<>();
+    private final List<BlinkPlayer> blinks = new ArrayList<>();
+
     private final Pool<Section> sectionPool = new Pool<>(Section::new);
     private final Queue<Section> sections = new ArrayDeque<>();
 
-    private Section section;
-
     private DimensionType lastDimension;
 
-    private final List<PlayerMoveC2SPacket> packets = new ArrayList<>();
-    private final List<BlinkPlayer> blinks = new ArrayList<>();
+    private Section section;
 
     private int timer = 0;
 
     private final SettingGroup sgGhost = settings.createGroup("Ghost");
     private final SettingGroup sgBreadcrumbs = settings.createGroup("Breadcrumbs");
 
-    // Render
+    // Ghost
 
     private final Setting<Boolean> ghost = sgGhost.add(new BoolSetting.Builder()
         .name("ghost")
@@ -190,9 +190,7 @@ public class Blink extends Module {
             int iLast = -1;
 
             for (Section section : sections) {
-                if (iLast == -1) {
-                    iLast = event.renderer.lines.vec3(section.x1, section.y1, section.z1).color(color.get()).next();
-                }
+                if (iLast == -1) iLast = event.renderer.lines.vec3(section.x1, section.y1, section.z1).color(color.get()).next();
 
                 int i = event.renderer.lines.vec3(section.x2, section.y2, section.z2).color(color.get()).next();
                 event.renderer.lines.line(iLast, i);

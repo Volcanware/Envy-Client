@@ -21,8 +21,10 @@ import static org.lwjgl.glfw.GLFW.*;
 public class GUIMove extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Screens> screens = sgGeneral.add(new EnumSetting.Builder<Screens>()
-        .name("GUIs")
+        .name("guis")
         .description("Which GUIs to move in.")
         .defaultValue(Screens.Inventory)
         .build()
@@ -70,6 +72,7 @@ public class GUIMove extends Module {
         .description("Rotation speed while in GUIs.")
         .defaultValue(4)
         .min(0)
+        .sliderRange(0, 10)
         .build()
     );
 

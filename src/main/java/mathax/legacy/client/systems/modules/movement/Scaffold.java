@@ -33,10 +33,11 @@ public class Scaffold extends Module {
     private final Pool<RenderBlock> renderBlockPool = new Pool<>(RenderBlock::new);
     private final List<RenderBlock> renderBlocks = new ArrayList<>();
 
-    private final BlockPos.Mutable bp = new BlockPos.Mutable();
     private final BlockPos.Mutable prevBp = new BlockPos.Mutable();
+    private final BlockPos.Mutable bp = new BlockPos.Mutable();
 
     private boolean lastWasSneaking;
+
     private double lastSneakingY;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -90,7 +91,7 @@ public class Scaffold extends Module {
         .description("How far can scaffold place blocks.")
         .defaultValue(4)
         .min(0)
-        .sliderMax(8)
+        .sliderRange(0, 8)
         .visible(() -> !airPlace.get())
         .build()
     );
@@ -153,7 +154,6 @@ public class Scaffold extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        // Ticking fade animation
         renderBlocks.forEach(RenderBlock::tick);
         renderBlocks.removeIf(renderBlock -> renderBlock.ticks <= 0);
 
@@ -204,7 +204,6 @@ public class Scaffold extends Module {
 
         if (item.getHand() == null && !autoSwitch.get()) return;
 
-        // Move down if shifting
         if (mc.options.keySneak.isPressed() && !mc.options.keyJump.isPressed()) {
             if (lastSneakingY - mc.player.getY() < 0.1) {
                 lastWasSneaking = false;
@@ -239,8 +238,6 @@ public class Scaffold extends Module {
         Whitelist,
         Blacklist
     }
-
-    // Rendering
 
     @EventHandler
     private void onRender3D(Render3DEvent event) {

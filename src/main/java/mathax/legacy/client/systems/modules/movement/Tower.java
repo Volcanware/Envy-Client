@@ -126,7 +126,7 @@ public class Tower extends Module {
         .build()
     );
 
-    private final Setting<Boolean> stopmove = sgSafe.add(new BoolSetting.Builder()
+    private final Setting<Boolean> stopMove = sgSafe.add(new BoolSetting.Builder()
         .name("stop-move")
         .description("Stops your movement that you tower right.")
         .defaultValue(true)
@@ -149,7 +149,7 @@ public class Tower extends Module {
         if (isDangerousCrystal() || !InvUtils.findInHotbar(itemStack -> validItem(itemStack, mc.player.getBlockPos())).found()) return;
 
         if ((mc.options.keyJump.isPressed() && jump.get()) || !jump.get()) {
-            if (stopmove.get() && mc.player.prevY < mc.player.getY()) mc.player.setVelocity(0, 0, 0);
+            if (stopMove.get() && mc.player.prevY < mc.player.getY()) mc.player.setVelocity(0, 0, 0);
 
             if (timer > delay.get() || delay.get() == 0) {
                 if (rotate.get()) Rotations.rotate(Rotations.getYaw(mc.player.getBlockPos()), Rotations.getPitch(mc.player.getBlockPos()), 50, this::tower);
@@ -174,7 +174,7 @@ public class Tower extends Module {
         BlockPos pos = mc.player.getBlockPos();
 
         if (!Block.isShapeFullCube(BlockUtils.getBlockState(pos).getCollisionShape(mc.world, pos))) return;
-        if (stopmove.get() && mc.player.prevY < mc.player.getY()) ((IVec3d) event.movement).setY(-1);
+        if (stopMove.get() && mc.player.prevY < mc.player.getY()) ((IVec3d) event.movement).setY(-1);
     }
 
     private boolean validBlock(BlockPos pos) {

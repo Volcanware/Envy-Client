@@ -13,11 +13,14 @@ import net.minecraft.util.math.Vec3d;
 public class FastClimb extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
         .name("climb-speed")
         .description("Your climb speed.")
         .defaultValue(0.2872)
         .min(0.0)
+        .sliderRange(0.0, 1.0)
         .build()
     );
 

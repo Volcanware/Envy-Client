@@ -16,6 +16,8 @@ public class NoSlow extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Boolean> items = sgGeneral.add(new BoolSetting.Builder()
         .name("items")
         .description("Whether or not using items will slow you.")
@@ -35,7 +37,7 @@ public class NoSlow extends Module {
         .description("The timer value for WebMode Timer.")
         .defaultValue(10)
         .min(1)
-        .sliderMin(1)
+        .sliderRange(1, 20)
         .visible(() -> web.get() == WebMode.Timer)
         .build()
     );

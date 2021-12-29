@@ -18,6 +18,8 @@ import java.util.List;
 public class SafeWalk extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Boolean> ledge = sgGeneral.add(new BoolSetting.Builder()
         .name("ledge")
         .description("Prevents you from walking of blocks, like pressing shift.")
@@ -52,9 +54,8 @@ public class SafeWalk extends Module {
     private void onCollisionShape(CollisionShapeEvent event) {
         if (mc.world == null || mc.player == null) return;
         if (event.type != CollisionShapeEvent.CollisionType.BLOCK) return;
-        if (blocks.get().contains(event.state.getBlock())) {
-            event.shape = VoxelShapes.fullCube();
-        } else if (magma.get() && !mc.player.isSneaking()
+        if (blocks.get().contains(event.state.getBlock())) event.shape = VoxelShapes.fullCube();
+        else if (magma.get() && !mc.player.isSneaking()
             && event.state.isAir()
             && mc.world.getBlockState(event.pos.down()).getBlock() == Blocks.MAGMA_BLOCK) {
             event.shape = VoxelShapes.fullCube();
@@ -73,7 +74,6 @@ public class SafeWalk extends Module {
         if (block instanceof AbstractRailBlock) return true;
         if (block instanceof TrapdoorBlock) return true;
         if (block instanceof PowderSnowBlock) return true;
-        if (block instanceof AbstractCauldronBlock) return true;
-        return false;
+        return block instanceof AbstractCauldronBlock;
     }
 }

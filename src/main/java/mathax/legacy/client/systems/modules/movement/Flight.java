@@ -9,16 +9,24 @@ import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.settings.*;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.util.math.Vec3d;
 
 public class Flight extends Module {
+    private double lastY = Double.MAX_VALUE;
+
+    private long lastModifiedTime = 0;
+
     private float lastYaw;
 
     private boolean flip;
 
+    private int delayLeft;
+    private int offLeft;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAntiKick = settings.createGroup("Anti Kick");
+
+    // General
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
@@ -32,6 +40,7 @@ public class Flight extends Module {
         .description("Your speed when flying.")
         .defaultValue(0.1)
         .min(0.0)
+        .sliderRange(0.0, 2.0)
         .build()
     );
 
@@ -66,12 +75,10 @@ public class Flight extends Module {
         .description("The amount of delay, in ticks, that Flight is toggled off for in normal mode.")
         .defaultValue(5)
         .range(1, 20)
+        .sliderRange(1, 20)
         .visible(() -> antiKickMode.get() == AntiKickMode.Normal)
         .build()
     );
-
-    private int delayLeft = delay.get();
-    private int offLeft = offTime.get();
 
     public Flight() {
         super(Categories.Movement, Items.COMMAND_BLOCK, "flight", "Allows you to fly. No Fall is recommended with this module.");
@@ -79,6 +86,9 @@ public class Flight extends Module {
 
     @Override
     public void onActivate() {
+        delayLeft = delay.get();
+        offLeft = offTime.get();
+
         if (mode.get() == Mode.Abilities && !mc.player.isSpectator()) {
             mc.player.getAbilities().flying = true;
             if (mc.player.getAbilities().creativeMode) return;
@@ -99,16 +109,18 @@ public class Flight extends Module {
     @EventHandler
     private void onPreTick(TickEvent.Pre event) {
         float currentYaw = mc.player.getYaw();
+
         if (mc.player.fallDistance >= 3f && currentYaw == lastYaw && mc.player.getVelocity().length() < 0.003d) {
             mc.player.setYaw(currentYaw + (flip ? 1 : -1));
             flip = !flip;
         }
+
         lastYaw = currentYaw;
     }
 
     @EventHandler
     private void onPostTick(TickEvent.Post event) {
-        if (antiKickMode.get() == AntiKickMode.Normal && delayLeft > 0) delayLeft --;
+        if (antiKickMode.get() == AntiKickMode.Normal && delayLeft > 0) delayLeft--;
 
         else if (antiKickMode.get() == AntiKickMode.Normal && delayLeft <= 0 && offLeft > 0) {
             offLeft --;
@@ -121,9 +133,7 @@ public class Flight extends Module {
             }
 
             return;
-        }
-
-        else if (antiKickMode.get() == AntiKickMode.Normal && delayLeft <=0 && offLeft <= 0) {
+        } else if (antiKickMode.get() == AntiKickMode.Normal && delayLeft <=0 && offLeft <= 0) {
             delayLeft = delay.get();
             offLeft = offTime.get();
         }
@@ -132,19 +142,12 @@ public class Flight extends Module {
 
         switch (mode.get()) {
             case Velocity -> {
-
-                 /*TODO: deal with underwater movement, find a way to "spoof" not being in water
-                also, all of the multiplication below is to get the speed to roughly match the speed
-                you get when using vanilla fly*/
-
                 mc.player.getAbilities().flying = false;
                 mc.player.airStrafingSpeed = speed.get().floatValue() * (mc.player.isSprinting() ? 15f : 10f);
                 mc.player.setVelocity(0, 0, 0);
                 Vec3d initialVelocity = mc.player.getVelocity();
-                if (mc.options.keyJump.isPressed())
-                    mc.player.setVelocity(initialVelocity.add(0, speed.get() * (verticalSpeedMatch.get() ? 10f : 5f), 0));
-                if (mc.options.keySneak.isPressed())
-                    mc.player.setVelocity(initialVelocity.subtract(0, speed.get() * (verticalSpeedMatch.get() ? 10f : 5f), 0));
+                if (mc.options.keyJump.isPressed()) mc.player.setVelocity(initialVelocity.add(0, speed.get() * (verticalSpeedMatch.get() ? 10f : 5f), 0));
+                if (mc.options.keySneak.isPressed()) mc.player.setVelocity(initialVelocity.subtract(0, speed.get() * (verticalSpeedMatch.get() ? 10f : 5f), 0));
             }
             case Abilities -> {
                 if (mc.player.isSpectator()) return;
@@ -156,12 +159,6 @@ public class Flight extends Module {
         }
     }
 
-    private long lastModifiedTime = 0;
-    private double lastY = Double.MAX_VALUE;
-
-    /**
-     * @see ServerPlayNetworkHandler#onPlayerMove(PlayerMoveC2SPacket)
-     */
     @EventHandler
     private void onSendPacket(PacketEvent.Send event) {
         if (!(event.packet instanceof PlayerMoveC2SPacket) || antiKickMode.get() != AntiKickMode.Packet) return;
@@ -170,17 +167,10 @@ public class Flight extends Module {
         long currentTime = System.currentTimeMillis();
         double currentY = packet.getY(Double.MAX_VALUE);
         if (currentY != Double.MAX_VALUE) {
-            // maximum time we can be "floating" is 80 ticks, so 4 seconds max
-            if (currentTime - lastModifiedTime > 1000
-                    && lastY != Double.MAX_VALUE
-                    && mc.world.getBlockState(mc.player.getBlockPos().down()).isAir()) {
-                // actual check is for >= -0.03125D but we have to do a bit more than that
-                // probably due to compression or some shit idk
+            if (currentTime - lastModifiedTime > 1000 && lastY != Double.MAX_VALUE && mc.world.getBlockState(mc.player.getBlockPos().down()).isAir()) {
                 ((PlayerMoveC2SPacketAccessor) packet).setY(lastY - 0.03130D);
                 lastModifiedTime = currentTime;
-            } else {
-                lastY = currentY;
-            }
+            } else lastY = currentY;
         }
     }
 

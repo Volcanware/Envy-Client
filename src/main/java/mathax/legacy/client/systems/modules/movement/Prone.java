@@ -7,12 +7,7 @@ import mathax.legacy.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.util.shape.VoxelShapes;
 
-/*/--------------------/*/
-/*/ Made by C10udburst /*/
-/*/--------------------/*/
-
 public class Prone extends Module {
-
     public Prone() {
         super(Categories.Movement, Items.WATER_BUCKET, "prone", "Become prone on demand.");
     }

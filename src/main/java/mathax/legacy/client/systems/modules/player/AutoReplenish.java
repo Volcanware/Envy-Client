@@ -23,6 +23,8 @@ public class AutoReplenish extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Integer> threshold = sgGeneral.add(new IntSetting.Builder()
         .name("threshold")
         .description("The threshold of items left this actives at.")

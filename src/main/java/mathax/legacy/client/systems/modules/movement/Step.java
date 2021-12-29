@@ -85,8 +85,6 @@ public class Step extends Module {
 
         double[] dir = PlayerUtils.directionSpeed(0.1f);
 
-        // One Block
-
         if (shouldStep(dir, 1.0, 0.6) && height.get() >= 1.0){
             for (double y : new double[] {0.42, 0.753}) {
                 mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + y, mc.player.getZ(), mc.player.isOnGround()));
@@ -96,7 +94,6 @@ public class Step extends Module {
             mc.player.setPosition(mc.player.getX(), mc.player.getY() + 1.0, mc.player.getZ());
         } else Modules.get().get(Timer.class).setOverride(Timer.OFF);
 
-        // Tall One Block
         if (shouldStep(dir, 1.6, 1.4) && height.get() >= 1.5){
             for (double y : new double[] {0.42, 0.75, 1.0, 1.16, 1.23, 1.2}) {
                 mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + y, mc.player.getZ(), mc.player.isOnGround()));

@@ -110,7 +110,7 @@ public class AutoGap extends Module {
         .description("Health threshold to eat at. Includes absorption.")
         .defaultValue(20)
         .min(0)
-        .sliderMax(40)
+        .sliderRange(0, 40)
         .build()
     );
 
@@ -126,38 +126,22 @@ public class AutoGap extends Module {
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (eating) {
-            // If we are eating check if we should still be still eating
             if (shouldEat()) {
-                // Check if the item in current slot is not gap or egap
                 if (isNotGapOrEGap(mc.player.getInventory().getStack(slot))) {
-                    // If not try finding a new slot
                     int slot = findSlot();
 
-                    // If no valid slot was found then stop eating
                     if (slot == -1) {
                         stopEating();
                         return;
-                    }
-                    // Otherwise change to the new slot
-                    else {
-                        changeSlot(slot);
-                    }
+                    } else changeSlot(slot);
                 }
 
-                // Continue eating
                 eat();
-            }
-            // If we shouldn't be eating anymore then stop
-            else {
-                stopEating();
-            }
+            } else stopEating();
         } else {
-            // If we are not eating check if we should start eating
             if (shouldEat()) {
-                // Try to find a valid slot
                 slot = findSlot();
 
-                // If slot was found then start eating
                 if (slot != -1) startEating();
             }
         }
@@ -185,7 +169,6 @@ public class AutoGap extends Module {
             }
         }
 
-        // Pause baritone
         wasBaritone = false;
         if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
             wasBaritone = true;
@@ -207,7 +190,6 @@ public class AutoGap extends Module {
 
         eating = false;
 
-        // Resume auras
         if (pauseAuras.get()) {
             for (Class<? extends Module> klass : AURAS) {
                 Module module = Modules.get().get(klass);
@@ -218,7 +200,6 @@ public class AutoGap extends Module {
             }
         }
 
-        // Resume baritone
         if (pauseBaritone.get() && wasBaritone) BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
     }
 
@@ -242,16 +223,13 @@ public class AutoGap extends Module {
     private boolean shouldEatPotions() {
         Map<StatusEffect, StatusEffectInstance> effects = mc.player.getActiveStatusEffects();
 
-        // Regeneration
         if (potionsRegeneration.get() && !effects.containsKey(StatusEffects.REGENERATION)) return true;
 
-        // Fire resistance
         if (potionsFireResistance.get() && !effects.containsKey(StatusEffects.FIRE_RESISTANCE)) {
             requiresEGap = true;
             return true;
         }
 
-        // Absorption
         if (potionsResistance.get() && !effects.containsKey(StatusEffects.RESISTANCE)) {
             requiresEGap = true;
             return true;
@@ -275,31 +253,24 @@ public class AutoGap extends Module {
         Item currentItem = null;
 
         for (int i = 0; i < 9; i++) {
-            // Skip if item stack is empty
             ItemStack stack = mc.player.getInventory().getStack(i);
             if (stack.isEmpty()) continue;
 
-            // Skip if item isn't a gap or egap
             if (isNotGapOrEGap(stack)) continue;
             Item item = stack.getItem();
 
-            // If this is the first apple found then set it without looking at preferEGap setting
             if (currentItem == null) {
                 slot = i;
                 currentItem = item;
             } else {
-                // Skip if current item and item are the same
                 if (currentItem == item) continue;
 
-                // If egap was found and preferEGap is true we can return the current slot
                 if (item == Items.ENCHANTED_GOLDEN_APPLE && preferEGap) {
                     slot = i;
                     currentItem = item;
 
                     break;
-                }
-                // If gap was found and preferEGap is false we can return the current slot
-                else if (item == Items.GOLDEN_APPLE && !preferEGap) {
+                } else if (item == Items.GOLDEN_APPLE && !preferEGap) {
                     slot = i;
                     currentItem = item;
 
@@ -308,7 +279,6 @@ public class AutoGap extends Module {
             }
         }
 
-        // If requiresEGap is true but no egap was found return -1
         if (requiresEGap && currentItem != Items.ENCHANTED_GOLDEN_APPLE) return -1;
 
         return slot;

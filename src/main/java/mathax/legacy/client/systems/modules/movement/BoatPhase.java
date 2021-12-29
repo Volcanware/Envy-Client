@@ -24,7 +24,9 @@ public class BoatPhase extends Module {
     private BoatEntity boat = null;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgSpeeds = settings.createGroup("Speeds");
+    private final SettingGroup sgSpeed = settings.createGroup("Speed");
+
+    // General
 
     private final Setting<Boolean> lockYaw = sgGeneral.add(new BoolSetting.Builder()
         .name("lock-boat-yaw")
@@ -54,7 +56,9 @@ public class BoatPhase extends Module {
         .build()
     );
 
-    private final Setting<Double> horizontalSpeed = sgSpeeds.add(new DoubleSetting.Builder()
+    // Speed
+
+    private final Setting<Double> horizontalSpeed = sgSpeed.add(new DoubleSetting.Builder()
         .name("horizontal-speed")
         .description("Horizontal speed in blocks per second.")
         .defaultValue(10)
@@ -63,7 +67,7 @@ public class BoatPhase extends Module {
         .build()
     );
 
-    private final Setting<Double> verticalSpeed = sgSpeeds.add(new DoubleSetting.Builder()
+    private final Setting<Double> verticalSpeed = sgSpeed.add(new DoubleSetting.Builder()
         .name("vertical-speed")
         .description("Vertical speed in blocks per second.")
         .defaultValue(5)
@@ -72,7 +76,7 @@ public class BoatPhase extends Module {
         .build()
     );
 
-    private final Setting<Double> fallSpeed = sgSpeeds.add(new DoubleSetting.Builder()
+    private final Setting<Double> fallSpeed = sgSpeed.add(new DoubleSetting.Builder()
         .name("fall-speed")
         .description("How fast you fall in blocks per second.")
         .defaultValue(0.625)

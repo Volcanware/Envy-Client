@@ -17,6 +17,8 @@ import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 public class Velocity extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     public final Setting<Boolean> knockback = sgGeneral.add(new BoolSetting.Builder()
         .name("knockback")
         .description("Modifies the amount of knockback you take from attacks.")
@@ -28,7 +30,7 @@ public class Velocity extends Module {
         .name("knockback-horizontal")
         .description("How much horizontal knockback you will take.")
         .defaultValue(0)
-        .sliderMin(0).sliderMax(1)
+        .sliderRange(0, 1)
         .visible(knockback::get)
         .build()
     );
@@ -37,7 +39,7 @@ public class Velocity extends Module {
         .name("knockback-vertical")
         .description("How much vertical knockback you will take.")
         .defaultValue(0)
-        .sliderMin(0).sliderMax(1)
+        .sliderRange(0, 1)
         .visible(knockback::get)
         .build()
     );
@@ -53,7 +55,7 @@ public class Velocity extends Module {
         .name("explosions-horizontal")
         .description("How much velocity you will take from explosions horizontally.")
         .defaultValue(0)
-        .sliderMin(0).sliderMax(1)
+        .sliderRange(0, 1)
         .visible(explosions::get)
         .build()
     );
@@ -62,7 +64,7 @@ public class Velocity extends Module {
         .name("explosions-vertical")
         .description("How much velocity you will take from explosions vertically.")
         .defaultValue(0)
-        .sliderMin(0).sliderMax(1)
+        .sliderRange(0, 1)
         .visible(explosions::get)
         .build()
     );
@@ -78,7 +80,7 @@ public class Velocity extends Module {
         .name("liquids-horizontal")
         .description("How much velocity you will take from liquids horizontally.")
         .defaultValue(0)
-        .sliderMin(0).sliderMax(1)
+        .sliderRange(0, 1)
         .visible(liquids::get)
         .build()
     );
@@ -87,7 +89,7 @@ public class Velocity extends Module {
         .name("liquids-vertical")
         .description("How much velocity you will take from liquids vertically.")
         .defaultValue(0)
-        .sliderMin(0).sliderMax(1)
+        .sliderRange(0, 1)
         .visible(liquids::get)
         .build()
     );
@@ -103,7 +105,7 @@ public class Velocity extends Module {
         .name("entity-push-amount")
         .description("How much you will be pushed.")
         .defaultValue(0)
-        .sliderMin(0).sliderMax(1)
+        .sliderRange(0, 1)
         .visible(entityPush::get)
         .build()
     );
@@ -131,15 +133,12 @@ public class Velocity extends Module {
         if (!sinking.get()) return;
         if (mc.options.keyJump.isPressed() || mc.options.keySneak.isPressed()) return;
 
-        if ((mc.player.isTouchingWater() || mc.player.isInLava()) && mc.player.getVelocity().y < 0) {
-            ((IVec3d) mc.player.getVelocity()).setY(0);
-        }
+        if ((mc.player.isTouchingWater() || mc.player.isInLava()) && mc.player.getVelocity().y < 0) ((IVec3d) mc.player.getVelocity()).setY(0);
     }
 
     @EventHandler
     private void onPacketReceive(PacketEvent.Receive event) {
-        if (knockback.get() && event.packet instanceof EntityVelocityUpdateS2CPacket packet
-            && ((EntityVelocityUpdateS2CPacket) event.packet).getId() == mc.player.getId()) {
+        if (knockback.get() && event.packet instanceof EntityVelocityUpdateS2CPacket packet && ((EntityVelocityUpdateS2CPacket) event.packet).getId() == mc.player.getId()) {
             double velX = (packet.getVelocityX() / 8000d - mc.player.getVelocity().x) * knockbackHorizontal.get();
             double velY = (packet.getVelocityY() / 8000d - mc.player.getVelocity().y) * knockbackVertical.get();
             double velZ = (packet.getVelocityZ() / 8000d - mc.player.getVelocity().z) * knockbackHorizontal.get();

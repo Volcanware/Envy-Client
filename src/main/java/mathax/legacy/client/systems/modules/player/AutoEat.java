@@ -89,42 +89,25 @@ public class AutoEat extends Module {
 
     @EventHandler(priority = EventPriority.LOW)
     private void onTick(TickEvent.Pre event) {
-        // Skip if Auto Gap is already eating
         if (Modules.get().get(AutoGap.class).isEating()) return;
 
         if (eating) {
-            // If we are eating check if we should still be still eating
             if (shouldEat()) {
-                // Check if the item in current slot is not food
                 if (!mc.player.getInventory().getStack(slot).isFood()) {
-                    // If not try finding a new slot
                     int slot = findSlot();
 
-                    // If no valid slot was found then stop eating
                     if (slot == -1) {
                         stopEating();
                         return;
-                    }
-                    // Otherwise change to the new slot
-                    else {
-                        changeSlot(slot);
-                    }
+                    } else changeSlot(slot);
                 }
 
-                // Continue eating
                 eat();
-            }
-            // If we shouldn't be eating anymore then stop
-            else {
-                stopEating();
-            }
+            } else stopEating();
         } else {
-            // If we are not eating check if we should start eating
             if (shouldEat()) {
-                // Try to find a valid slot
                 slot = findSlot();
 
-                // If slot was found then start eating
                 if (slot != -1) startEating();
             }
         }
@@ -139,7 +122,6 @@ public class AutoEat extends Module {
         prevSlot = mc.player.getInventory().selectedSlot;
         eat();
 
-        // Pause auras
         wasAura.clear();
         if (pauseAuras.get()) {
             for (Class<? extends Module> klass : AURAS) {
@@ -152,7 +134,6 @@ public class AutoEat extends Module {
             }
         }
 
-        // Pause baritone
         wasBaritone = false;
         if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
             wasBaritone = true;
@@ -174,7 +155,6 @@ public class AutoEat extends Module {
 
         eating = false;
 
-        // Resume auras
         if (pauseAuras.get()) {
             for (Class<? extends Module> klass : AURAS) {
                 Module module = Modules.get().get(klass);
@@ -185,7 +165,6 @@ public class AutoEat extends Module {
             }
         }
 
-        // Resume baritone
         if (pauseBaritone.get() && wasBaritone) BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
     }
 
@@ -207,17 +186,13 @@ public class AutoEat extends Module {
         int bestHunger = -1;
 
         for (int i = 0; i < 9; i++) {
-            // Skip if item isn't food
             Item item = mc.player.getInventory().getStack(i).getItem();
             if (!item.isFood()) continue;
 
-            // Check if hunger value is better
             int hunger = item.getFoodComponent().getHunger();
             if (hunger > bestHunger) {
-                // Skip if item is in blacklist
                 if (blacklist.get().contains(item)) continue;
 
-                // Select the current item
                 slot = i;
                 bestHunger = hunger;
             }

@@ -8,7 +8,6 @@ import mathax.legacy.client.mixin.PlayerPositionLookS2CPacketAccessor;
 import mathax.legacy.client.mixininterface.IVec3d;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.settings.DoubleSetting;
-import mathax.legacy.client.settings.EnumSetting;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.utils.misc.TimeVec;
@@ -33,8 +32,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class Phase extends Module {
-    private ArrayList<PlayerMoveC2SPacket> packets = new ArrayList<>();
-    private Map<Integer, TimeVec> posLooks = new ConcurrentHashMap<>();
+    private final ArrayList<PlayerMoveC2SPacket> packets = new ArrayList<>();
+    private final Map<Integer, TimeVec> posLooks = new ConcurrentHashMap<>();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -148,9 +147,7 @@ public class Phase extends Module {
 
     @EventHandler
     public void onSendPacket(PacketEvent.Send event) {
-        if (event.packet instanceof PlayerMoveC2SPacket && !(event.packet instanceof PlayerMoveC2SPacket.PositionAndOnGround)) {
-            event.cancel();
-        }
+        if (event.packet instanceof PlayerMoveC2SPacket && !(event.packet instanceof PlayerMoveC2SPacket.PositionAndOnGround)) event.cancel();
         if (event.packet instanceof PlayerMoveC2SPacket packet) {
             if (this.packets.contains(packet)) {
                 this.packets.remove(packet);

@@ -14,6 +14,8 @@ import net.minecraft.item.Items;
 public class AutoJump extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("The method of jumping.")
@@ -33,7 +35,7 @@ public class AutoJump extends Module {
         .description("The distance that velocity mode moves you.")
         .defaultValue(0.25)
         .min(0)
-        .sliderMax(2)
+        .sliderRange(0, 2)
         .build()
     );
 
@@ -42,12 +44,11 @@ public class AutoJump extends Module {
     }
 
     private boolean jump() {
-        switch (jumpIf.get()) {
-            case Sprinting: return mc.player.isSprinting() && (mc.player.forwardSpeed != 0 || mc.player.sidewaysSpeed != 0);
-            case Walking:   return mc.player.forwardSpeed != 0 || mc.player.sidewaysSpeed != 0;
-            case Always:    return true;
-            default:        return false;
-        }
+        return switch (jumpIf.get()) {
+            case Sprinting -> mc.player.isSprinting() && (mc.player.forwardSpeed != 0 || mc.player.sidewaysSpeed != 0);
+            case Walking -> mc.player.forwardSpeed != 0 || mc.player.sidewaysSpeed != 0;
+            case Always -> true;
+        };
     }
 
     @EventHandler
@@ -66,6 +67,11 @@ public class AutoJump extends Module {
 
     public enum Mode {
         Jump,
-        LowHop
+        Low_Hop;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

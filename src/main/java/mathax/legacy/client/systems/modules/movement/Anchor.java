@@ -32,7 +32,7 @@ public class Anchor extends Module {
         .description("The maximum height Anchor will work at.")
         .defaultValue(10)
         .range(0, 255)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 
@@ -64,7 +64,7 @@ public class Anchor extends Module {
         .description("How fast to pull towards the hole in blocks per second.")
         .defaultValue(0.3)
         .min(0)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -129,11 +129,7 @@ public class Anchor extends Module {
     }
 
     private boolean isHole(int x, int y, int z) {
-        return isHoleBlock(x, y - 1, z) &&
-                isHoleBlock(x + 1, y, z) &&
-                isHoleBlock(x - 1, y, z) &&
-                isHoleBlock(x, y, z + 1) &&
-                isHoleBlock(x, y, z - 1);
+        return isHoleBlock(x, y - 1, z) && isHoleBlock(x + 1, y, z) && isHoleBlock(x - 1, y, z) && isHoleBlock(x, y, z + 1) && isHoleBlock(x, y, z - 1);
     }
 
     private boolean isHoleBlock(int x, int y, int z) {

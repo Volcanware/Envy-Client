@@ -10,6 +10,8 @@ import net.minecraft.item.Items;
 public class AntiLevitation extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Boolean> applyGravity = sgGeneral.add(new BoolSetting.Builder()
         .name("gravity")
         .description("Applies gravity.")

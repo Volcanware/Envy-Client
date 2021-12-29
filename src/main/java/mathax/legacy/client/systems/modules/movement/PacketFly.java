@@ -49,7 +49,7 @@ public class PacketFly extends Module {
     private boolean limitStrict = false;
     private boolean forceLimit = true;
     private boolean oddJitter = false;
-    boolean lastDown = false;
+    private boolean lastDown = false;
 
     private int factorCounter = 0;
     private int antiKickTicks = 0;
@@ -67,7 +67,7 @@ public class PacketFly extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgFly = settings.createGroup("Fly");
     private final SettingGroup sgAntiKick = settings.createGroup("Anti Kick");
-    private final SettingGroup sgKeybind = settings.createGroup("Keybind");
+    private final SettingGroup sgKeybind = settings.createGroup("KeyBind");
     private final SettingGroup sgPhase = settings.createGroup("Phase");
 
     // General
@@ -143,6 +143,7 @@ public class PacketFly extends Module {
         .description("Your flight factor.")
         .defaultValue(5)
         .min(0)
+        .sliderRange(0, 10)
         .visible(() -> type.get() == Type.Factor || type.get() == Type.Desync)
         .build()
     );
@@ -152,6 +153,7 @@ public class PacketFly extends Module {
         .description("How many steps in a row should be ignored.")
         .defaultValue(0)
         .min(0)
+        .sliderRange(0, 5)
         .visible(() -> type.get() == Type.Factor || type.get() == Type.Desync)
         .build()
     );
@@ -174,6 +176,7 @@ public class PacketFly extends Module {
         .description("Your flight speed.")
         .defaultValue(1)
         .min(0)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -182,8 +185,7 @@ public class PacketFly extends Module {
         .description("The motion applied when factorize is pressed.")
         .defaultValue(100)
         .min(0)
-        .sliderMin(50)
-        .sliderMax(200)
+        .sliderRange(50, 200)
         .visible(() -> type.get() == Type.Factor || type.get() == Type.Desync)
         .build()
     );
@@ -227,7 +229,7 @@ public class PacketFly extends Module {
         .build()
     );
 
-    // Keybind
+    // KeyBind
 
     private final Setting<Boolean> message = sgKeybind.add(new BoolSetting.Builder()
         .name("keybind-message")
@@ -301,9 +303,7 @@ public class PacketFly extends Module {
 
     @Override
     public void onDeactivate() {
-        if (mc.player != null) {
-            mc.player.setVelocity(0, 0, 0);
-        }
+        if (mc.player != null) mc.player.setVelocity(0, 0, 0);
 
         GameMode mode = EntityUtils.getGameMode(mc.player);
         if (mode != GameMode.CREATIVE && mode != GameMode.SPECTATOR) {
@@ -367,11 +367,8 @@ public class PacketFly extends Module {
 
     @EventHandler
     public void onPreTick(TickEvent.Pre event) {
-        if (boost.get()) {
-            Modules.get().get(Timer.class).setOverride(boostTimer.get().floatValue());
-        } else {
-            Modules.get().get(Timer.class).setOverride(Timer.OFF);
-        }
+        if (boost.get()) Modules.get().get(Timer.class).setOverride(boostTimer.get().floatValue());
+        else Modules.get().get(Timer.class).setOverride(Timer.OFF);
 
         if (type.get() == Type.Off_Ground) {
             if (isMoving() && onGround()) {
@@ -402,11 +399,8 @@ public class PacketFly extends Module {
                 vec3d.rotateY((float) Math.toRadians(mc.player.getYaw()));
             }
 
-            if (mc.options.keyJump.isPressed()) {
-                vec3d.add(0, speed.get(), 0);
-            } else if (mc.options.keySneak.isPressed()) {
-                vec3d.add(0, -speed.get(), 0);
-            }
+            if (mc.options.keyJump.isPressed()) vec3d.add(0, speed.get(), 0);
+            else if (mc.options.keySneak.isPressed()) vec3d.add(0, -speed.get(), 0);
 
             mc.player.setVelocity(vec3d);
             mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
@@ -419,9 +413,7 @@ public class PacketFly extends Module {
 
         if (ticksExisted % 20 == 0) {
             posLooks.forEach((tp, timeVec3d) -> {
-                if (System.currentTimeMillis() - timeVec3d.getTime() > TimeUnit.SECONDS.toMillis(30L)) {
-                    posLooks.remove(tp);
-                }
+                if (System.currentTimeMillis() - timeVec3d.getTime() > TimeUnit.SECONDS.toMillis(30L)) posLooks.remove(tp);
             });
         }
 

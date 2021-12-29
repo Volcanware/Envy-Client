@@ -20,6 +20,8 @@ public class AntiHunger extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Boolean> sprint = sgGeneral.add(new BoolSetting.Builder()
         .name("sprint")
         .description("Spoofs sprinting packets.")
@@ -58,14 +60,10 @@ public class AntiHunger extends Module {
         if (event.packet instanceof ClientCommandC2SPacket && sprint.get()) {
             ClientCommandC2SPacket.Mode mode = ((ClientCommandC2SPacket) event.packet).getMode();
 
-            if (mode == ClientCommandC2SPacket.Mode.START_SPRINTING || mode == ClientCommandC2SPacket.Mode.STOP_SPRINTING) {
-                event.cancel();
-            }
+            if (mode == ClientCommandC2SPacket.Mode.START_SPRINTING || mode == ClientCommandC2SPacket.Mode.STOP_SPRINTING) event.cancel();
         }
 
-        if (event.packet instanceof PlayerMoveC2SPacket && onGround.get() && mc.player.isOnGround() && mc.player.fallDistance <= 0.0 && !mc.interactionManager.isBreakingBlock()) {
-            ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(false);
-        }
+        if (event.packet instanceof PlayerMoveC2SPacket && onGround.get() && mc.player.isOnGround() && mc.player.fallDistance <= 0.0 && !mc.interactionManager.isBreakingBlock()) ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(false);
     }
 
     @EventHandler

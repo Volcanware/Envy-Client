@@ -17,6 +17,8 @@ import net.minecraft.item.Items;
 public class EntityControl extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Boolean> maxJump = sgGeneral.add(new BoolSetting.Builder()
         .name("max-jump")
         .description("Sets jump power to maximum.")

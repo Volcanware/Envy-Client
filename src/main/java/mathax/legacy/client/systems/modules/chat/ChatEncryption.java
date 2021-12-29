@@ -27,7 +27,7 @@ import javax.crypto.spec.SecretKeySpec;
 /*/-----------------/*/
 
 public class ChatEncryption extends Module {
-    private static final String password = "MatHaxOnTop";
+    private static final String password = "MatHaxEncryption";
 
     private static SecretKeySpec secretKey;
 
@@ -37,10 +37,18 @@ public class ChatEncryption extends Module {
 
     // General
 
+    private final Setting<Boolean> encryptAll = sgGeneral.add(new BoolSetting.Builder()
+        .name("encrypt-all")
+        .description("Encrypts all sent messages.")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<String> prefix = sgGeneral.add(new StringSetting.Builder()
         .name("prefix")
         .description("The prefix determining which messages will get encrypted.")
         .defaultValue(";")
+        .visible(() -> !encryptAll.get())
         .build()
     );
 
@@ -76,7 +84,7 @@ public class ChatEncryption extends Module {
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
 
         Text message = event.getMessage();
-        if(message.getString().endsWith(suffix.get())){
+        if (message.getString().endsWith(suffix.get())){
             String[] msg = message.getString().split(" ",2);
             msg[1] = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
             message = new LiteralText(msg[0] + " " + msg[1]);
@@ -88,21 +96,21 @@ public class ChatEncryption extends Module {
     @EventHandler
     private void onMessageSend(SendMessageEvent event) {
         String message = event.message;
-        if (message.startsWith(prefix.get())) {
-            message = message.substring(prefix.get().length());
-            message = encrypt(message, (customKey.get() ? groupKey.get() : password));
-        }
+
+        if (encryptAll.get() || message.startsWith(prefix.get())) message = messageSendUtil(message);
 
         event.message = message;
     }
 
+    private String messageSendUtil(String message) {
+        message = message.substring(prefix.get().length());
+        return encrypt(message, (customKey.get() ? groupKey.get() : password));
+    }
+
     public static void setKey(String myKey) {
-        MessageDigest sha;
         try {
-            key = myKey.getBytes(StandardCharsets.UTF_8);
-            sha = MessageDigest.getInstance("SHA-1");
-            key = sha.digest(key);
-            key = Arrays.copyOf(key, 16);
+            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            key = Arrays.copyOf(sha.digest(myKey.getBytes(StandardCharsets.UTF_8)), 16);
             secretKey = new SecretKeySpec(key, "AES");
         } catch (NoSuchAlgorithmException exception) {
             exception.printStackTrace();

@@ -41,11 +41,11 @@ public class NoFall extends Module {
 
     private final Random random = new Random();
 
+    private boolean placedWater;
+
     private int preBaritoneFallHeight;
     private int ticksExisted = 0;
     private int teleportId;
-
-    private boolean placedWater;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -69,7 +69,7 @@ public class NoFall extends Module {
         .name("fall-distance")
         .description("After what fall distance to trigger this module.")
         .defaultValue(5)
-        .min(3)
+        .range(3, 6)
         .build()
     );
 

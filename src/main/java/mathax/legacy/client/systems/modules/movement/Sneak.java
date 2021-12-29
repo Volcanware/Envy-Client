@@ -12,6 +12,8 @@ import net.minecraft.item.Items;
 public class Sneak extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Which method to sneak.")

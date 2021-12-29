@@ -21,7 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ElytraBoost extends Module {
+    private final List<FireworkRocketEntity> fireworks = new ArrayList<>();
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    // General
 
     private final Setting<Boolean> dontConsumeFirework = sgGeneral.add(new BoolSetting.Builder()
         .name("anti-consume")
@@ -35,7 +39,7 @@ public class ElytraBoost extends Module {
         .description("The duration of the firework.")
         .defaultValue(0)
         .range(0, 255)
-        .sliderMax(255)
+        .sliderRange(0, 255)
         .build()
     );
 
@@ -46,14 +50,12 @@ public class ElytraBoost extends Module {
         .build()
     );
 
-    private final Setting<KeyBind> keybind = sgGeneral.add(new KeyBindSetting.Builder()
+    private final Setting<KeyBind> keyBind = sgGeneral.add(new KeyBindSetting.Builder()
         .name("keybind")
         .description("The keybind to boost.")
         .action(this::boost)
         .build()
     );
-
-    private final List<FireworkRocketEntity> fireworks = new ArrayList<>();
 
     public ElytraBoost() {
         super(Categories.Movement, Items.ELYTRA, "elytra-boost", "Boosts your elytra as if you used a firework.");

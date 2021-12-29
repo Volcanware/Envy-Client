@@ -21,10 +21,13 @@ import net.minecraft.util.shape.VoxelShape;
 public class ClickTP extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Double> maxDistance = sgGeneral.add(new DoubleSetting.Builder()
         .name("max-distance")
         .description("The maximum distance you can teleport.")
         .defaultValue(5)
+        .sliderRange(0.5, 10)
         .build()
     );
 

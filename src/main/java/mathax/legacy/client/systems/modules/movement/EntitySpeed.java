@@ -17,12 +17,14 @@ import net.minecraft.util.math.Vec3d;
 public class EntitySpeed extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
         .name("speed")
         .description("Horizontal speed in blocks per second.")
         .defaultValue(10)
         .min(0)
-        .sliderMax(50)
+        .sliderRange(0, 50)
         .build()
     );
 
@@ -48,12 +50,10 @@ public class EntitySpeed extends Module {
     private void onLivingEntityMove(LivingEntityMoveEvent event) {
         if (event.entity.getPrimaryPassenger() != mc.player) return;
 
-        // Check for onlyOnGround and inWater
         LivingEntity entity = event.entity;
         if (onlyOnGround.get() && !entity.isOnGround()) return;
         if (!inWater.get() && entity.isTouchingWater()) return;
 
-        // Set horizontal velocity
         Vec3d vel = PlayerUtils.getHorizontalVelocity(speed.get());
         ((IVec3d) event.movement).setXZ(vel.x, vel.z);
     }
