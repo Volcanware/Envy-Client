@@ -184,7 +184,7 @@ public class Installer {
         installHelpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         installHelpButton = new JButton("Help");
-        installHelpButton.addActionListener(e -> openUrl("https://mathaxclient.xyz/Installation/"));
+        installHelpButton.addActionListener(event -> openUrl("https://mathaxclient.xyz/Installation/"));
 
         installHelpPanel.add(installHelpLabel);
         installHelpPanel.add(installHelpButton);
@@ -250,7 +250,8 @@ public class Installer {
                             boolean shownMatHaxLegacyDialog = false;
 
                             for (File mod : modsFolderContents) {
-                                if (!shownMatHaxLegacyDialog && mod.getName().toLowerCase().contains("mathax") || mod.getName().toLowerCase().contains("mathax_legacy")) {
+                                String modName = mod.getName().toLowerCase();
+                                if (!shownMatHaxLegacyDialog && !modName.contains("installer") && (modName.contains("mathax") || modName.contains("mathax_legacy"))) {
                                     int result = JOptionPane.showOptionDialog(frame, "Another installation of MatHax Legacy was found in your mods folder. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Installed MatHax Legacy Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
 
                                     shownMatHaxLegacyDialog = true;
@@ -275,7 +276,8 @@ public class Installer {
                             boolean failedToRemoveOptifine = false;
 
                             for (File mod : modsFolderContents) {
-                                if (mod.getName().toLowerCase().contains("optifine") || mod.getName().toLowerCase().contains("optifabric")) {
+                                String modName = mod.getName().toLowerCase();
+                                if (modName.contains("optifine") || modName.contains("optifabric")) {
                                     if (!shownOptifineDialog) {
                                         int result = JOptionPane.showOptionDialog(frame,"Optifine was found in your mods folder, but Optifine is incompatible with MatHax Legacy. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Installed Optifine Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
 
