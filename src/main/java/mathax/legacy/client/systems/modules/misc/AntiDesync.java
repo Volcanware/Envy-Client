@@ -12,7 +12,6 @@ import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.systems.modules.movement.PacketFly;
 import mathax.legacy.client.systems.modules.movement.Phase;
 import mathax.legacy.client.systems.modules.movement.Step;
-import mathax.legacy.client.systems.modules.movement.Tower;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.TeleportConfirmC2SPacket;
 
@@ -27,7 +26,7 @@ public class AntiDesync extends Module {
     private final Setting<List<Module>> modules = sgGeneral.add(new ModuleListSetting.Builder()
         .name("modules")
         .description("Determines which modules to ignore.")
-        .defaultValue(PacketFly.class, Phase.class, Step.class, Tower.class)
+        .defaultValue(PacketFly.class, Phase.class, Step.class)
         .build()
     );
 

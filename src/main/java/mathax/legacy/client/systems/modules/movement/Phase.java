@@ -1,195 +1,201 @@
 package mathax.legacy.client.systems.modules.movement;
 
 import mathax.legacy.client.eventbus.EventHandler;
-import mathax.legacy.client.events.entity.player.PlayerMoveEvent;
-import mathax.legacy.client.events.packets.PacketEvent;
-import mathax.legacy.client.events.world.ChunkOcclusionEvent;
-import mathax.legacy.client.mixin.PlayerPositionLookS2CPacketAccessor;
-import mathax.legacy.client.mixininterface.IVec3d;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.settings.DoubleSetting;
+import mathax.legacy.client.settings.EnumSetting;
 import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
-import mathax.legacy.client.utils.misc.TimeVec;
-import mathax.legacy.client.utils.player.PlayerUtils;
-import mathax.legacy.client.utils.world.BlockUtils;
 import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.network.packet.c2s.play.TeleportConfirmC2SPacket;
-import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.shape.VoxelShapes;
 
 import mathax.legacy.client.events.world.CollisionShapeEvent;
 import mathax.legacy.client.events.world.TickEvent;
 import mathax.legacy.client.systems.modules.Module;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
-
 public class Phase extends Module {
-    private final ArrayList<PlayerMoveC2SPacket> packets = new ArrayList<>();
-    private final Map<Integer, TimeVec> posLooks = new ConcurrentHashMap<>();
+    private double prevX = Double.NaN;
+    private double prevZ = Double.NaN;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    private static final Random random = new Random();
+    private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+        .name("mode")
+        .description("The phase mode used.")
+        .defaultValue(Mode.NRNB)
+        .onChanged(mode -> setPos())
+        .build()
+    );
 
-    private int teleportId = 0;
-    private int ticksExisted;
-
-    double speedX = 0;
-    double speedY = 0;
-    double speedZ = 0;
-
-    // General
-
-    private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
+    private final Setting<Double> distance = sgGeneral.add(new DoubleSetting.Builder()
         .name("speed")
-        .description("At which speed to travel.")
-        .defaultValue(1)
+        .description("The X and Z distance per clip.")
+        .defaultValue(0.1)
         .min(0)
+        .sliderRange(0, 10.0)
+        .visible(() -> mode.get() != Mode.Collision_Shape && mode.get() != Mode.No_NCP)
+        .build()
+    );
+
+    private final Setting<Double> clipDistance = sgGeneral.add(new DoubleSetting.Builder()
+        .name("speed")
+        .description("Determines the clip distance.")
+        .defaultValue(0.1)
+        .range(0.01, 10)
+        .sliderRange(0.01, 10)
+        .visible(() -> mode.get() == Mode.No_NCP)
         .build()
     );
 
     public Phase() {
-        super(Categories.Movement, Items.BEDROCK, "phase", "Allows you to phase trough walls.");
+        super(Categories.Movement, Items.ELYTRA, "phase", "Lets you clip through ground sometimes.");
     }
 
     @Override
     public void onActivate() {
-        mc.worldRenderer.reload();
-        packets.clear();
-        posLooks.clear();
-        teleportId = -1;
-        ticksExisted = 0;
+        if (mc.player == null) return;
+        setPos();
+    }
+
+    @Override
+    public void onDeactivate() {
+        prevX = Double.NaN;
+        prevZ = Double.NaN;
     }
 
     @EventHandler
-    public void isCube(CollisionShapeEvent event) {
-        if (BlockUtils.distance(mc.player.getX(), mc.player.getY(), mc.player.getZ(), event.pos.getX(), event.pos.getY(), event.pos.getZ()) > 3) return;
-
-        event.shape = VoxelShapes.empty();
+    private void onCollisionShape(CollisionShapeEvent event) {
+        if (mc.world == null || mc.player == null) return;
+        if (mode.get() != Mode.Collision_Shape) return;
+        if (event == null || event.pos == null) return;
+        if (event.type != CollisionShapeEvent.CollisionType.BLOCK) return;
+        if (event.pos.getY() < mc.player.getY()) {
+            if (mc.player.isSneaking()) event.shape = VoxelShapes.empty();
+        } else event.shape = VoxelShapes.empty();
     }
 
     @EventHandler
-    public void onChunkOcclusion(ChunkOcclusionEvent event) {
-        event.cancel();
-    }
+    public void onTick(TickEvent.Pre event){
+        if (mode.get() != Mode.No_NCP) return;
 
-    @EventHandler
-    public void onPostTick(TickEvent.Post event) {
-        if (ticksExisted % 20 == 0) {
-            posLooks.forEach((tp, timeVec3d) -> {
-                if (System.currentTimeMillis() - timeVec3d.getTime() > TimeUnit.SECONDS.toMillis(30L)) posLooks.remove(tp);
-            });
+        double blocks = clipDistance.get();
+        if (!mc.player.isOnGround()) return;
+
+        if(mc.options.keyForward.isPressed()){
+            Vec3d forward = Vec3d.fromPolar(0, mc.player.getYaw());
+            mc.player.updatePosition(mc.player.getX() + forward.x * blocks, mc.player.getY(), mc.player.getZ() + forward.z * blocks);
         }
 
-        ticksExisted++;
-
-        mc.player.setVelocity(0.0D, 0.0D, 0.0D);
-
-        if (teleportId <= 0) {
-            PlayerMoveC2SPacket startingOutOfBoundsPos = new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + randomLimitedVertical(), mc.player.getZ(), mc.player.isOnGround());
-            packets.add(startingOutOfBoundsPos);
-            mc.getNetworkHandler().sendPacket(startingOutOfBoundsPos);
+        if(mc.options.keyBack.isPressed()){
+            Vec3d forward = Vec3d.fromPolar(0, mc.player.getYaw() - 180);
+            mc.player.updatePosition(mc.player.getX() + forward.x * blocks, mc.player.getY(), mc.player.getZ() + forward.z * blocks);
         }
 
-        double[] dir = PlayerUtils.directionSpeed(speed.get().floatValue());
-
-        speedX = dir[0];
-        speedY = 0;
-        speedZ = dir[1];
-
-        Vec3d newPos = new Vec3d(mc.player.getX() + speedX, mc.player.getY(), mc.player.getZ() + speedZ);
-        Vec3d blockCenter = new Vec3d(Math.floor(mc.player.getX()), Math.floor(mc.player.getY()), Math.floor(mc.player.getZ())).add(0.5, 0, 0.5);
-
-        Vec3d min = newPos.subtract(0.3, 0, 0.3);
-        Vec3d max = newPos.add(0.3, 0, 0.3);
-
-        Vec3i minI = new Vec3i(Math.floor(min.x), Math.floor(min.y), Math.floor(min.z));
-        Vec3i maxI = new Vec3i(Math.floor(max.x), Math.floor(max.y), Math.floor(max.z));
-
-        if (!minI.equals(maxI) && newPos.distanceTo(blockCenter) > mc.player.getPos().distanceTo(blockCenter)) {
-            dir = PlayerUtils.directionSpeed(0.062f);
-            speedX = dir[0];
-            speedY = 0;
-            speedZ = dir[1];
-
-            PlayerMoveC2SPacket move = new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX() + speedX, mc.player.getY() + speedY, mc.player.getZ() + speedZ, mc.player.isOnGround());
-            packets.add(move);
-            mc.getNetworkHandler().sendPacket(move);
-            PlayerMoveC2SPacket extremeMove = new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX() + speedX, mc.player.getY() + randomLimitedVertical(), mc.player.getZ() + speedZ, mc.player.isOnGround());
-            packets.add(extremeMove);
-            mc.getNetworkHandler().sendPacket(extremeMove);
-            teleportId++;
-            mc.getNetworkHandler().sendPacket(new TeleportConfirmC2SPacket(teleportId));
-            posLooks.put(teleportId, new TimeVec(mc.player.getX(), mc.player.getY(), mc.player.getZ(), System.currentTimeMillis()));
-        } else {
-            PlayerMoveC2SPacket move = new PlayerMoveC2SPacket.PositionAndOnGround(newPos.x, newPos.y, newPos.z, mc.player.isOnGround());
-            packets.add(move);
-            mc.getNetworkHandler().sendPacket(move);
+        if(mc.options.keyLeft.isPressed()){
+            Vec3d forward = Vec3d.fromPolar(0, mc.player.getYaw() - 90);
+            mc.player.updatePosition(mc.player.getX() + forward.x * blocks, mc.player.getY(), mc.player.getZ() + forward.z * blocks);
         }
 
-        mc.player.setVelocity(speedX, speedY, speedZ);
+        if(mc.options.keyRight.isPressed()) {
+            Vec3d forward = Vec3d.fromPolar(0, mc.player.getYaw() - 270);
+            mc.player.updatePosition(mc.player.getX() + forward.x * blocks, mc.player.getY(), mc.player.getZ() + forward.z * blocks);
+        }
+
+        if (mc.options.keyJump.isPressed()) mc.player.updatePosition(mc.player.getX(), mc.player.getY() + 0.05, mc.player.getZ());
+
+        if (mc.options.keySneak.isPressed()) mc.player.updatePosition(mc.player.getX(), mc.player.getY() - 0.05, mc.player.getZ());
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
-        mc.player.noClip = true;
+    private void onTick(TickEvent.Post event) {
+        if (mode.get() == Mode.Collision_Shape || mode.get() == Mode.No_NCP) return;
+        if (mc.player == null) return;
 
-        ((IVec3d) event.movement).set(speedX, speedY, speedZ);
-    }
+        if (Double.isNaN(prevX) || Double.isNaN(prevZ)) setPos();
 
-    @EventHandler
-    public void onSendPacket(PacketEvent.Send event) {
-        if (event.packet instanceof PlayerMoveC2SPacket && !(event.packet instanceof PlayerMoveC2SPacket.PositionAndOnGround)) event.cancel();
-        if (event.packet instanceof PlayerMoveC2SPacket packet) {
-            if (this.packets.contains(packet)) {
-                this.packets.remove(packet);
-                return;
+        Vec3d yawForward = Vec3d.fromPolar(0.0f, mc.player.getYaw());
+        Vec3d yawBack = Vec3d.fromPolar(0.0f, mc.player.getYaw() - 180f);
+        Vec3d yawLeft = Vec3d.fromPolar(0.0f, mc.player.getYaw() - 90f);
+        Vec3d yawRight = Vec3d.fromPolar(0.0f, mc.player.getYaw() - 270f);
+
+        if (mode.get() == Mode.Normal) {
+
+            if (mc.options.keyForward.isPressed()) {
+                mc.player.setPos(
+                    mc.player.getX() + yawForward.x * distance.get(),
+                    mc.player.getY(),
+                    mc.player.getZ() + yawForward.z * distance.get()
+                );
             }
 
-            event.cancel();
-        }
-    }
-
-    @EventHandler
-    public void onReceive(PacketEvent.Receive event) {
-        if (event.packet instanceof PlayerPositionLookS2CPacket) {
-            PlayerPositionLookS2CPacket packet = (PlayerPositionLookS2CPacket) event.packet;
-            if (mc.player.isAlive()) {
-                if (this.teleportId <= 0) this.teleportId = packet.getTeleportId();
-                else {
-                    if (mc.world.isPosLoaded(mc.player.getBlockX(), mc.player.getBlockZ())) {
-                        if (posLooks.containsKey(packet.getTeleportId())) {
-                            TimeVec vec = posLooks.get(packet.getTeleportId());
-                            if (vec.x == packet.getX() && vec.y == packet.getY() && vec.z == packet.getZ()) {
-                                posLooks.remove(packet.getTeleportId());
-                                event.setCancelled(true);
-                                return;
-                            }
-                        }
-                    }
-                }
+            if (mc.options.keyBack.isPressed()) {
+                mc.player.setPos(
+                    mc.player.getX() + yawBack.x * distance.get(),
+                    mc.player.getY(),
+                    mc.player.getZ() + yawBack.z * distance.get()
+                );
             }
 
-            ((PlayerPositionLookS2CPacketAccessor) event.packet).setYaw(mc.player.getYaw());
-            ((PlayerPositionLookS2CPacketAccessor) event.packet).setPitch(mc.player.getPitch());
-            packet.getFlags().remove(PlayerPositionLookS2CPacket.Flag.X_ROT);
-            packet.getFlags().remove(PlayerPositionLookS2CPacket.Flag.Y_ROT);
-            teleportId = packet.getTeleportId();
+            if (mc.options.keyLeft.isPressed()) {
+                mc.player.setPos(
+                    mc.player.getX() + yawLeft.x * distance.get(),
+                    mc.player.getY(),
+                    mc.player.getZ() + yawLeft.z * distance.get()
+                );
+            }
+
+            if (mc.options.keyRight.isPressed()) {
+                mc.player.setPos(
+                    mc.player.getX() + yawRight.x * distance.get(),
+                    mc.player.getY(),
+                    mc.player.getZ() + yawRight.z * distance.get()
+                );
+            }
+        }
+
+        else if (mode.get() == Mode.NRNB) {
+            if (mc.options.keyForward.isPressed()) {
+                prevX += yawForward.x * distance.get();
+                prevZ += yawForward.z * distance.get();
+                mc.player.setPos(prevX, mc.player.getY(), prevZ);
+            }
+
+            if (mc.options.keyBack.isPressed()) {
+                prevX += yawBack.x * distance.get();
+                prevZ += yawBack.z * distance.get();
+                mc.player.setPos(prevX, mc.player.getY(), prevZ);
+            }
+
+            if (mc.options.keyLeft.isPressed()) {
+                prevX += yawLeft.x * distance.get();
+                prevZ += yawLeft.z * distance.get();
+                mc.player.setPos(prevX, mc.player.getY(), prevZ);
+            }
+
+            if (mc.options.keyRight.isPressed()) {
+                prevX += yawRight.x * distance.get();
+                prevZ += yawRight.z * distance.get();
+                mc.player.setPos(prevX, mc.player.getY(), prevZ);
+            }
         }
     }
 
-    private double randomLimitedVertical() {
-        int randomValue = random.nextInt(22);
-        randomValue += 70;
-        if (random.nextBoolean()) return randomValue;
-        return -randomValue;
+    private void setPos() {
+        if (mc.player == null) return;
+        prevX = mc.player.getX();
+        prevZ = mc.player.getZ();
+    }
+
+    public enum Mode {
+        NRNB,
+        Normal,
+        No_NCP,
+        Collision_Shape;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }

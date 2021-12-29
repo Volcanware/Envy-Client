@@ -27,6 +27,7 @@ import mathax.legacy.client.utils.misc.KeyBind;
 import mathax.legacy.client.utils.misc.Names;
 import mathax.legacy.client.utils.misc.input.KeyAction;
 import mathax.legacy.client.utils.misc.input.KeyBinds;
+import mathax.legacy.client.utils.network.HTTP;
 import mathax.legacy.client.utils.network.MatHaxExecutor;
 import mathax.legacy.client.utils.player.DamageUtils;
 import mathax.legacy.client.utils.player.EChestMemory;
@@ -48,10 +49,13 @@ import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.util.Formatting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -95,6 +99,7 @@ public class MatHaxLegacy implements ClientModInitializer {
             //NobreHD
             "2905e61c51794d0d967c255a16287056",
             "4c3d2322a3df30fcb371837ba257ea37"
+
         );
     }
 

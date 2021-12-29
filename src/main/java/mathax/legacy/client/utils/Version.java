@@ -10,6 +10,8 @@ import net.minecraft.util.Util;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.io.InputStream;
+
 public class Version {
     private final String string;
     private final int[] numbers;
@@ -75,9 +77,12 @@ public class Version {
         public static boolean checkForLatest = true;
 
         public static Version getLatest() {
+            InputStream api = HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/metadata.json").sendInputStream();
+            if (api == null) return null;
+
             String latestVer = null;
             String key = getMinecraft().replace(".", "-");
-            JSONObject json = new JSONObject(new JSONTokener(HTTP.get(MatHaxLegacy.API_URL + "Version/Legacy/metadata.json").sendInputStream()));
+            JSONObject json = new JSONObject(new JSONTokener(api));
             if (json.has(key)) latestVer = json.getString(key);
             if (latestVer == null) return null;
             return new Version(latestVer);
@@ -87,7 +92,6 @@ public class Version {
             if (getDev() > 0) return CheckStatus.Running_Dev;
 
             Version latestVersion = getLatest();
-
             if (latestVersion == null) return CheckStatus.Cant_Check;
             else {
                 Version currentVer = get();

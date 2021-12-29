@@ -157,7 +157,7 @@ public class PositionHud extends HudElement {
                 }
                 case Nether -> {
                     left2 = "Overworld XYZ ";
-                    right2 = accurate.get() ? String.format("%.1f %.1f %.1f", x * 8.0, y, z * 8.0) : String.format("%d %d %d", (int) x * 8, (int) y, (int) z / 8);
+                    right2 = accurate.get() ? String.format("%.1f %.1f %.1f", x * 8.0, y, z * 8.0) : String.format("%d %d %d", (int) x * 8, (int) y, (int) z * 8);
                 }
             }
         }
