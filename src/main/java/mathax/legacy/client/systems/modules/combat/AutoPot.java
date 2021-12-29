@@ -60,8 +60,8 @@ public class AutoPot extends Module {
         .name("health")
         .description("If health goes below this point, Healing Pot will trigger.")
         .defaultValue(15)
-        .min(0)
-        .sliderMax(20)
+        .min(1)
+        .sliderRange(1, 36)
         .build()
     );
 
@@ -76,13 +76,6 @@ public class AutoPot extends Module {
         .name("splash-pots")
         .description("Allow the use of splash pots")
         .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Boolean> chatInfo = sgGeneral.add(new BoolSetting.Builder()
-        .name("chat-info")
-        .description("Sends information to chat.")
-        .defaultValue(false)
         .build()
     );
 
@@ -122,10 +115,8 @@ public class AutoPot extends Module {
         .name("splashing")
         .description("The pitch when you are splashing potions.")
         .defaultValue(90)
-        .min(-90)
-        .max(90)
-        .sliderMin(-90)
-        .sliderMax(90)
+        .range(-90, 90)
+        .sliderRange(-90, 90)
         .build()
     );
 
@@ -141,10 +132,8 @@ public class AutoPot extends Module {
         .name("stopped")
         .description("The pitch when stopping splashing.")
         .defaultValue(0)
-        .min(-90)
-        .max(90)
-        .sliderMin(-90)
-        .sliderMax(90)
+        .range(-90, 90)
+        .sliderRange(-90, 90)
         .visible(() -> rotateMode.get() == RotateMode.Client && !previousPitch.get())
         .build()
     );
@@ -168,18 +157,12 @@ public class AutoPot extends Module {
 
         if (healing.get()) {
             if (shouldDrinkHealth()) {
-
-                //Heal Pot Slot
                 int slot = healingPotionSlot();
 
-                //Slot Not Invalid
-                if (slot != -1) {
-                    startDrinking();
-                } else if (healingPotionSlot() == -1 && useSplashPots.get()) {
+                if (slot != -1) startDrinking();
+                else if (healingPotionSlot() == -1 && useSplashPots.get()) {
                     slot = healingSplashPotionSlot();
-                    if (slot != -1) {
-                        startSplashing();
-                    }
+                    if (slot != -1) startSplashing();
                 }
             }
 
@@ -188,15 +171,15 @@ public class AutoPot extends Module {
                     if (isNotPotion(mc.player.getInventory().getStack(slot))) {
                         slot = healingPotionSlot();
                         if (slot == -1) {
-                            if (chatInfo.get()) info("Ran out of Pots while drinking...");
                             stopDrinking();
                             return;
                         }
                     } else changeSlot(slot);
                 }
+
                 drink();
+
                 if (shouldNotDrinkHealth()) {
-                    if (chatInfo.get()) info("Health full!");
                     stopDrinking();
                     return;
                 }
@@ -207,14 +190,14 @@ public class AutoPot extends Module {
                     if (isNotSplashPotion(mc.player.getInventory().getStack(slot))) {
                         slot = healingSplashPotionSlot();
                         if (slot == -1) {
-                            if (chatInfo.get()) info("Ran out of Pots while splashing...");
                             stopSplashing();
                             return;
                         } else changeSlot(slot);
                     }
+
                     splash();
+
                     if (shouldNotDrinkHealth()) {
-                        if (chatInfo.get()) info("Health full!");
                         stopSplashing();
                         return;
                     }
@@ -224,19 +207,12 @@ public class AutoPot extends Module {
 
         if (strength.get()) {
             if (shouldDrinkStrength()) {
-
-                //Strength Pot Slot
                 int slot = strengthPotionSlot();
 
-                //Slot Not Invalid
-                if (slot != -1) {
-                    startDrinking();
-                }
+                if (slot != -1) startDrinking();
                 else if (strengthPotionSlot() == -1 && useSplashPots.get()) {
                     slot = strengthSplashPotionSlot();
-                    if (slot != -1) {
-                        startSplashing();
-                    }
+                    if (slot != -1) startSplashing();
                 }
             }
 
@@ -246,14 +222,12 @@ public class AutoPot extends Module {
                         slot = strengthPotionSlot();
                         if (slot == -1) {
                             stopDrinking();
-                            if (chatInfo.get()) info("Out of Pots...");
                             return;
                         } else changeSlot(slot);
                     }
+
                     drink();
-                } else {
-                    stopDrinking();
-                }
+                } else stopDrinking();
             }
 
             if (splashing) {
@@ -261,15 +235,13 @@ public class AutoPot extends Module {
                     if (isNotSplashPotion(mc.player.getInventory().getStack(slot))) {
                         slot = strengthSplashPotionSlot();
                         if (slot == -1) {
-                            if (chatInfo.get()) info("Ran out of Pots while splashing...");
                             stopSplashing();
                             return;
                         } else changeSlot(slot);
                     }
+
                     splash();
-                } else {
-                    stopSplashing();
-                }
+                } else stopSplashing();
             }
         }
     }
@@ -285,9 +257,9 @@ public class AutoPot extends Module {
 
     private void startDrinking() {
         prevSlot = mc.player.getInventory().selectedSlot;
+
         drink();
 
-        // Pause auras
         wasAura.clear();
         if (pauseAuras.get()) {
             for (Class<? extends Module> klass : AURA_LIST) {
@@ -300,7 +272,6 @@ public class AutoPot extends Module {
             }
         }
 
-        // Pause baritone
         wasBaritone = false;
         if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
             wasBaritone = true;
@@ -316,17 +287,15 @@ public class AutoPot extends Module {
                     Rotations.rotate(mc.player.getYaw(), splashingPitch.get().floatValue());
                     splash();
                 case Client:
-                    if (mc.player.getPitch() != splashingPitch.get().floatValue()) {
-                        prevPitch = mc.player.getPitch();
-                    }
+                    if (mc.player.getPitch() != splashingPitch.get().floatValue()) prevPitch = mc.player.getPitch();
                     pitched = true;
                     mc.player.setPitch(splashingPitch.get().floatValue());
                     splash();
             }
         }
+
         splash();
 
-        // Pause auras
         wasAura.clear();
         if (pauseAuras.get()) {
             for (Class<? extends Module> klass : AURA_LIST) {
@@ -339,7 +308,6 @@ public class AutoPot extends Module {
             }
         }
 
-        // Pause baritone
         wasBaritone = false;
         if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
             wasBaritone = true;
@@ -351,7 +319,6 @@ public class AutoPot extends Module {
         changeSlot(slot);
         setPressed(true);
         if (!mc.player.isUsingItem()) Utils.rightClick();
-
         drinking = true;
     }
 
@@ -366,7 +333,6 @@ public class AutoPot extends Module {
         setPressed(false);
         drinking = false;
 
-        // Resume auras
         if (pauseAuras.get()) {
             for (Class<? extends Module> klass : AURA_LIST) {
                 Module module = Modules.get().get(klass);
@@ -377,7 +343,6 @@ public class AutoPot extends Module {
             }
         }
 
-        // Resume baritone
         if (pauseBaritone.get() && wasBaritone) BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
     }
 
@@ -385,28 +350,21 @@ public class AutoPot extends Module {
         changeSlot(prevSlot);
         setPressed(false);
         if (pitched) {
-            if (previousPitch.get()) {
-                mc.player.setPitch(prevPitch);
-            } else {
-                mc.player.setPitch(stoppedPitch.get().floatValue());
-            }
+            if (previousPitch.get()) mc.player.setPitch(prevPitch);
+            else mc.player.setPitch(stoppedPitch.get().floatValue());
             pitched = false;
         }
 
         splashing = false;
 
-        // Resume auras
         if (pauseAuras.get()) {
             for (Class<? extends Module> klass : AURA_LIST) {
                 Module module = Modules.get().get(klass);
 
-                if (wasAura.contains(klass) && !module.isActive()) {
-                    module.toggle();
-                }
+                if (wasAura.contains(klass) && !module.isActive()) module.toggle();
             }
         }
 
-        // Resume baritone
         if (pauseBaritone.get() && wasBaritone) BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
     }
 
@@ -420,15 +378,11 @@ public class AutoPot extends Module {
         this.slot = slot;
     }
 
-    //Heal pot checks
     private int healingPotionSlot() {
         int slot = -1;
         for (int i = 0; i < 9; i++) {
-
-            // Skip if item stack is empty
             ItemStack stack = mc.player.getInventory().getStack(i);
             if (stack.isEmpty()) continue;
-            if (stack.getItem() != Items.POTION) continue;
             if (stack.getItem() == Items.POTION) {
                 List<StatusEffectInstance> effects = PotionUtil.getPotion(mc.player.getInventory().getStack(i)).getEffects();
                 if (effects.size() > 0) {
@@ -447,11 +401,8 @@ public class AutoPot extends Module {
     private int healingSplashPotionSlot() {
         int slot = -1;
         for (int i = 0; i < 9; i++) {
-
-            // Skip if item stack is empty
             ItemStack stack = mc.player.getInventory().getStack(i);
             if (stack.isEmpty()) continue;
-            if (stack.getItem() != Items.SPLASH_POTION) continue;
             if (stack.getItem() == Items.SPLASH_POTION) {
                 List<StatusEffectInstance> effects = PotionUtil.getPotion(mc.player.getInventory().getStack(i)).getEffects();
                 if (effects.size() > 0) {
@@ -467,15 +418,11 @@ public class AutoPot extends Module {
         return slot;
     }
 
-    //Strength Pot Checks
     private int strengthSplashPotionSlot () {
         int slot = -1;
         for (int i = 0; i < 9; i++) {
-
-            // Skip if item stack is empty
             ItemStack stack = mc.player.getInventory().getStack(i);
             if (stack.isEmpty()) continue;
-            if (stack.getItem() != Items.SPLASH_POTION) continue;
             if (stack.getItem() == Items.SPLASH_POTION) {
                 List<StatusEffectInstance> effects = PotionUtil.getPotion(mc.player.getInventory().getStack(i)).getEffects();
                 if (effects.size() > 0) {
@@ -485,7 +432,6 @@ public class AutoPot extends Module {
                         break;
                     }
                 }
-
             }
         }
 
@@ -495,11 +441,8 @@ public class AutoPot extends Module {
     private int strengthPotionSlot () {
         int slot = -1;
         for (int i = 0; i < 9; i++) {
-
-            // Skip if item stack is empty
             ItemStack stack = mc.player.getInventory().getStack(i);
             if (stack.isEmpty()) continue;
-            if (stack.getItem() != Items.POTION) continue;
             if (stack.getItem() == Items.POTION) {
                 List<StatusEffectInstance> effects = PotionUtil.getPotion(mc.player.getInventory().getStack(i)).getEffects();
                 if (effects.size() > 0) {
@@ -509,7 +452,6 @@ public class AutoPot extends Module {
                         break;
                     }
                 }
-
             }
         }
 

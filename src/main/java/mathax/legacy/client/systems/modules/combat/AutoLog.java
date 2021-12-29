@@ -24,12 +24,14 @@ import net.minecraft.text.LiteralText;
 public class AutoLog extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Integer> health = sgGeneral.add(new IntSetting.Builder()
         .name("health")
-        .description("Automatically disconnects when health is lower or equal to this value.")
+        .description("Automatically disconnects when your health is lower or equal to this value.")
         .defaultValue(6)
-        .range(0, 20)
-        .sliderMax(20)
+        .range(0, 36)
+        .sliderRange(0, 36)
         .build()
     );
 

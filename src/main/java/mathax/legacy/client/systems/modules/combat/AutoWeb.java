@@ -25,7 +25,7 @@ public class AutoWeb extends Module {
         .description("The maximum distance to target players.")
         .defaultValue(4)
         .range(0, 5)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -53,8 +53,8 @@ public class AutoWeb extends Module {
     // Render
 
     private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
-        .name("rotate")
-        .description("Rotates towards the webs when placing.")
+        .name("swing")
+        .description("Swings your hand client-side when placing or interacting.")
         .defaultValue(true)
         .build()
     );

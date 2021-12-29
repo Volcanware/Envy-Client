@@ -21,10 +21,10 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 public class Offhand extends Module {
     private final AutoTotem autoTotem = Modules.get().get(AutoTotem.class);
 
+    private Item currentItem;
+
     private boolean isClicking;
     private boolean sentMessage;
-
-    private Item currentItem;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -65,8 +65,8 @@ public class Offhand extends Module {
         .build()
     );
 
-    private final Setting<Boolean> crystalCA = sgGeneral.add(new BoolSetting.Builder()
-        .name("crystal-on-ca")
+    private final Setting<Boolean> crystalCrystalAura = sgGeneral.add(new BoolSetting.Builder()
+        .name("crystal-on-crystal-aura")
         .description("Holds a crystal when you have Crystal Aura enabled.")
         .defaultValue(true)
         .build()
@@ -100,19 +100,12 @@ public class Offhand extends Module {
 
         if (autoTotem.mode.get() != AutoTotem.Mode.Strict && autoTotem.isActive() && PlayerUtils.getTotalHealth() - PlayerUtils.possibleHealthReductions(autoTotem.explosion.get(), autoTotem.fall.get()) <= autoTotem.health.get()) return;
 
-        // Sword Gap
         if ((mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem) && swordGap.get()) currentItem = Item.EGap;
-
-            // CA and Mining
-        else if ((Modules.get().isActive(CrystalAura.class) && crystalCA.get()) || mc.interactionManager.isBreakingBlock() && crystalMine.get()) currentItem = Item.Crystal;
-
+        else if ((Modules.get().isActive(CrystalAura.class) && crystalCrystalAura.get()) || mc.interactionManager.isBreakingBlock() && crystalMine.get()) currentItem = Item.Crystal;
         else currentItem = item.get();
 
-        // Checking offhand item
         if (mc.player.getOffHandStack().getItem() != currentItem.item) {
             FindItemResult item = InvUtils.find(itemStack -> itemStack.getItem() == currentItem.item, hotbar.get() ? 0 : 9, 35);
-
-            // No offhand item
             if (!item.found()) {
                 if (!sentMessage) {
                     warning("Chosen item not found" + (toggleNotFound.get() ? ", disabling..." : "."));
@@ -120,18 +113,15 @@ public class Offhand extends Module {
                         toggle();
                         return;
                     }
+
                     sentMessage = true;
                 }
-            }
-
-            // Swap to offhand
-            else if ((isClicking || !rightClick.get()) && !autoTotem.isLocked() && !item.isOffhand()) {
+            } else if ((isClicking || !rightClick.get()) && !autoTotem.isLocked() && !item.isOffhand()) {
                 InvUtils.move().from(item.getSlot()).toOffhand();
                 sentMessage = false;
             }
         }
 
-        // If not clicking, set to totem if auto totem is on
         else if (!isClicking && rightClick.get()) {
             if (autoTotem.isActive()) {
                 FindItemResult totem = InvUtils.find(itemStack -> itemStack.getItem() == Items.TOTEM_OF_UNDYING, hotbar.get() ? 0 : 9, 35);

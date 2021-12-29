@@ -67,6 +67,7 @@ public class AutoTotem extends Module {
         .description("The ticks between slot movements.")
         .defaultValue(0)
         .min(0)
+        .sliderRange(0, 40)
         .visible(() -> mode.get() != Mode.Enhanced)
         .build()
     );
@@ -76,7 +77,7 @@ public class AutoTotem extends Module {
         .description("The health to hold a totem at. (36 to disable)")
         .defaultValue(36)
         .range(0, 36)
-        .sliderMax(36)
+        .sliderRange(0, 36)
         .visible(() -> mode.get() != Mode.Strict)
         .build()
     );
@@ -176,7 +177,6 @@ public class AutoTotem extends Module {
             case Strict, Smart:
             if (totems <= 0) locked = false;
             else if (ticks >= delay.get()) {
-
                 locked = mode.get() == Mode.Strict || (mode.get() == Mode.Smart && (low || elytras));
 
                 if (locked && mc.player.getOffHandStack().getItem() != Items.TOTEM_OF_UNDYING) InvUtils.move().from(result.getSlot()).toOffhand();

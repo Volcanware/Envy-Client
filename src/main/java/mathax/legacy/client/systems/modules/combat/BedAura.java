@@ -46,11 +46,11 @@ public class BedAura extends Module {
 
     private BlockPos placePos, breakPos, stb;
 
-    private int timer, webTimer;
-
     private Item ogItem;
 
     private boolean sentTrapMine, sentBurrowMine, safetyToggled;
+
+    private int timer, webTimer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgTargeting = settings.createGroup("Targeting");
@@ -67,7 +67,7 @@ public class BedAura extends Module {
         .description("The delay between placing beds in ticks.")
         .defaultValue(9)
         .min(0)
-        .sliderRange(0, 20)
+        .sliderRange(0, 40)
         .build()
     );
 
@@ -259,8 +259,8 @@ public class BedAura extends Module {
         .build()
     );
 
-    private final Setting<Boolean> pauseOnCa = sgPause.add(new BoolSetting.Builder()
-        .name("pause-on-ca")
+    private final Setting<Boolean> pauseOnCrystalAura = sgPause.add(new BoolSetting.Builder()
+        .name("pause-on-crystal-aura")
         .description("Pause while Crystal Aura is active.")
         .defaultValue(false)
         .build()
@@ -318,7 +318,7 @@ public class BedAura extends Module {
     public void onActivate() {
         target = null;
         ogItem = InvUtils.getItemFromSlot(autoMoveSlot.get() - 1);
-        if (ogItem instanceof BedItem) ogItem = null; // Ignore if we already have a bed there.
+        if (ogItem instanceof BedItem) ogItem = null;
         safetyToggled = false;
         sentTrapMine = false;
         sentBurrowMine = false;
@@ -346,9 +346,7 @@ public class BedAura extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        CrystalAura ca = Modules.get().get(CrystalAura.class);
-
-        // Safe HP
+        CrystalAura crystalAura = Modules.get().get(CrystalAura.class);
 
         if (PlayerUtils.getTotalHealth() <= safetyHP.get()) {
             if (disableOnSafety.get()) {
@@ -359,21 +357,15 @@ public class BedAura extends Module {
             return;
         }
 
-        // Dimensíon
-
         if (mc.world.getDimension().isBedWorking()) {
             error("You can't blow up beds in this dimension, disabling...");
             toggle();
             return;
         }
 
-        // Pausing
-
         if (PlayerUtils.shouldPause(pauseOnMine.get(), pauseOnEat.get(), pauseOnDrink.get())) return;
         if (pauseOnCraft.get() && mc.player.currentScreenHandler instanceof CraftingScreenHandler) return;
-        if (pauseOnCa.get() && ca.isActive()) return;
-
-        // Target
+        if (pauseOnCrystalAura.get() && crystalAura.isActive()) return;
 
         target = TargetUtils.getPlayerTarget(targetRange.get(), priority.get());
         if (TargetUtils.isBadTarget(target, targetRange.get())) target = null;
@@ -387,11 +379,7 @@ public class BedAura extends Module {
             return;
         }
 
-        // Surround & wrong placement
-
         if (placePos != null) resetPlacePosIfCantPlace();
-
-        // Auto move
 
         if (autoMove.get()) {
             FindItemResult bed = InvUtils.find(itemStack -> itemStack.getItem() instanceof BedItem);
@@ -417,7 +405,6 @@ public class BedAura extends Module {
             FindItemResult pick = InvUtils.findPick();
             if (pick.found()) {
                 InvUtils.updateSlot(pick.getSlot());
-                info("Breaking " + target.getEntityName() + "'s self-trap...");
                 stb = PlayerUtils.getSelfTrapBlock(target, preventEscape.get());
                 PlayerUtils.doPacketMine(stb);
                 sentTrapMine = true;
@@ -429,7 +416,6 @@ public class BedAura extends Module {
             FindItemResult pick = InvUtils.findPick();
             if (pick.found()) {
                 InvUtils.updateSlot(pick.getSlot());
-                info("Breaking " + target.getEntityName() + "'s burrow...");
                 PlayerUtils.doPacketMine(target.getBlockPos());
                 sentBurrowMine = true;
                 return;
@@ -440,10 +426,8 @@ public class BedAura extends Module {
             FindItemResult sword = InvUtils.findSword();
             if (sword.found()) {
                 InvUtils.updateSlot(sword.getSlot());
-                if (webTimer <= 0) {
-                    info("Breaking " + target.getEntityName() + "'s web...");
-                    webTimer = 100;
-                } else webTimer--;
+                if (webTimer <= 0) webTimer = 100;
+                else webTimer--;
                 PlayerUtils.mineWeb(target, sword.getSlot());
                 return;
             }
@@ -453,9 +437,8 @@ public class BedAura extends Module {
             sentTrapMine = false;
             stb = null;
         }
-        if (sentBurrowMine && !PlayerUtils.isBurrowed(target, false)) sentBurrowMine = false;
 
-        // Place bed
+        if (sentBurrowMine && !PlayerUtils.isBurrowed(target, false)) sentBurrowMine = false;
 
         if (timer <= 0 && placeBed(placePos)) timer = delay.get();
         else timer--;
@@ -530,11 +513,11 @@ public class BedAura extends Module {
         boolean wasSneaking = mc.player.isSneaking();
         if (wasSneaking) mc.player.setSneaking(false);
 
-        Hand bHand;
-        if (breakHand.get() == BreakHand.Mainhand) { bHand = Hand.MAIN_HAND;
-        } else { bHand = Hand.OFF_HAND; }
+        Hand hand;
+        if (breakHand.get() == BreakHand.Mainhand) hand = Hand.MAIN_HAND;
+        else hand = Hand.OFF_HAND;
 
-        mc.interactionManager.interactBlock(mc.player, mc.world, bHand, new BlockHitResult(mc.player.getPos(), Direction.UP, pos, false));
+        mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(mc.player.getPos(), Direction.UP, pos, false));
         mc.player.setSneaking(wasSneaking);
     }
 

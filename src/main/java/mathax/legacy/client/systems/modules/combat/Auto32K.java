@@ -29,12 +29,15 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Auto32K extends Module {
-    private int x;
-    private int z;
-    private int phase = 0;
     private BlockPos bestBlock;
 
+    private int phase = 0;
+    private int x;
+    private int z;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    // General
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
@@ -48,7 +51,7 @@ public class Auto32K extends Module {
         .description("The distance in a single direction the shulker is placed.")
         .defaultValue(3)
         .min(0)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -102,9 +105,8 @@ public class Auto32K extends Module {
 
                 if (bestBlock != null) {
                     while (!BlockUtils.place(bestBlock, findHopper,true,100,false)) {
-                        if (sortedIterator.hasNext()) {
-                            bestBlock = sortedIterator.next().up();
-                        } else break;
+                        if (sortedIterator.hasNext()) bestBlock = sortedIterator.next().up();
+                        else break;
                     }
                     mc.player.setSneaking(true);
                     if (!BlockUtils.place(bestBlock.up(),  findShulker,true,100,false)) {
@@ -121,8 +123,7 @@ public class Auto32K extends Module {
                 FindItemResult hopperSlot = InvUtils.find(Items.HOPPER);
                 FindItemResult dispenserSlot = InvUtils.find(Items.DISPENSER);
                 FindItemResult redstoneSlot = InvUtils.find(Items.REDSTONE_BLOCK);
-                if ((isValidSlot(shulkerSlot) && mode.get() == Mode.Hopper) || isValidSlot(hopperSlot) || isValidSlot(dispenserSlot) || isValidSlot(redstoneSlot))
-                    return;
+                if ((isValidSlot(shulkerSlot) && mode.get() == Mode.Hopper) || isValidSlot(hopperSlot) || isValidSlot(dispenserSlot) || isValidSlot(redstoneSlot)) return;
                 if (phase == 0) {
                     bestBlock = findValidBlocksDispenser();
                     if (bestBlock == null) return;
@@ -131,19 +132,16 @@ public class Auto32K extends Module {
                         toggle();
                         return;
                     }
+
                     phase += 1;
                 } else if (phase == 1) {
                     mc.player.getInventory().selectedSlot = dispenserSlot.getSlot();
-                    if (x == -1) {
-                        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(-90f, mc.player.getPitch(), mc.player.isOnGround()));
-                    } else if (x == 1) {
-                        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(90f, mc.player.getPitch(), mc.player.isOnGround()) {
-                        });
-                    } else if (z == -1) {
-                        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(1f, mc.player.getPitch(), mc.player.isOnGround()));
-                    } else if (z == 1) {
-                        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(179f, mc.player.getPitch(), mc.player.isOnGround()));
-                    }
+
+                    if (x == -1) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(-90f, mc.player.getPitch(), mc.player.isOnGround()));
+                    else if (x == 1) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(90f, mc.player.getPitch(), mc.player.isOnGround()));
+                    else if (z == -1) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(1f, mc.player.getPitch(), mc.player.isOnGround()));
+                    else if (z == 1) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(179f, mc.player.getPitch(), mc.player.isOnGround()));
+
                     phase += 1;
                 } else if (phase == 2) {
                     mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), Direction.UP, bestBlock, false));
@@ -184,12 +182,15 @@ public class Auto32K extends Module {
                                 break;
                             }
                         }
+
                         if (count >= 4) break;
                     }
+
                     for (int i = 1; i < 5; i++) {
                         if (mc.player.currentScreenHandler.getSlot(i).getStack().getItem() instanceof AirBlockItem) InvUtils.move().from(slot - 4).toId(i);
                     }
                 }
+
                 boolean manage = true;
                 int slot = -1;
                 int dropSlot = -1;
@@ -203,12 +204,15 @@ public class Auto32K extends Module {
                         dropSlot = i;
                     }
                 }
+
                 if (dropSlot != -1) InvUtils.drop().slot(dropSlot);
+
                 if (autoMove.get() && manage){
                     int slot2 = mc.player.getInventory().getEmptySlot();
                     if (slot2 < 9 && slot2 != -1 && EnchantmentHelper.getLevel(Enchantments.SHARPNESS, mc.player.currentScreenHandler.getSlot(0).getStack()) > 5) InvUtils.move().fromId(0).to(slot2 - 4);
                     else if (EnchantmentHelper.getLevel(Enchantments.SHARPNESS, mc.player.currentScreenHandler.getSlot(0).getStack()) <= 5 && mc.player.currentScreenHandler.getSlot(0).getStack().getItem() != Items.AIR) InvUtils.drop().slotId(0);
                 }
+
                 if (slot != -1) mc.player.getInventory().selectedSlot = slot - 32;
             } else toggle();
         }

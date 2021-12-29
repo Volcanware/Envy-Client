@@ -31,12 +31,14 @@ import net.minecraft.util.math.Vec3d;
 /*/--------------------------------------------------------------------------------------------------------------/*/
 
 public class AnchorAura extends Module {
-    private int placeDelayLeft;
-    private int breakDelayLeft;
     private PlayerEntity target;
+
     private boolean sentTrapMine;
     private boolean sentBurrowMine;
     private boolean sentAntiStuck;
+
+    private int placeDelayLeft;
+    private int breakDelayLeft;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgPlace = settings.createGroup("Place");
@@ -52,7 +54,7 @@ public class AnchorAura extends Module {
         .description("The radius in which players get targeted.")
         .defaultValue(4)
         .min(0)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -74,6 +76,8 @@ public class AnchorAura extends Module {
         .name("max-self-damage")
         .description("The maximum self-damage allowed.")
         .defaultValue(8)
+        .range(0, 36)
+        .sliderRange(0, 36)
         .build()
     );
 
@@ -81,6 +85,8 @@ public class AnchorAura extends Module {
         .name("min-health")
         .description("The minimum health you have to be for Anchor Aura to work.")
         .defaultValue(15)
+        .range(1, 36)
+        .sliderRange(1, 36)
         .build()
     );
 
@@ -105,6 +111,7 @@ public class AnchorAura extends Module {
         .description("The tick delay between placing anchors.")
         .defaultValue(2)
         .range(0, 20)
+        .sliderRange(0, 20)
         .visible(place::get)
         .build()
     );
@@ -122,7 +129,7 @@ public class AnchorAura extends Module {
         .description("The radius in which anchors are placed in.")
         .defaultValue(5)
         .min(0)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .visible(place::get)
         .build()
     );
@@ -142,6 +149,7 @@ public class AnchorAura extends Module {
         .description("The tick delay between breaking anchors.")
         .defaultValue(10)
         .range(0, 10)
+        .sliderRange(0, 10)
         .build()
     );
 
@@ -157,7 +165,7 @@ public class AnchorAura extends Module {
         .description("The radius in which anchors are broken in.")
         .defaultValue(5)
         .min(0)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -286,7 +294,6 @@ public class AnchorAura extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        // Check if can explode
         if (mc.world.getDimension().isRespawnAnchorWorking()) {
             error("You are in the Nether, disabling...");
             toggle();
@@ -304,7 +311,6 @@ public class AnchorAura extends Module {
 
         if (!anchor.found() || !glowStone.found()) return;
 
-        //Anti Stuck
         if (antiStuck.get() && !sentAntiStuck) {
             if (findBreakPos(target.getBlockPos()) == null && findPlacePos(target.getBlockPos()) == null && BlockUtils.getBlock(target.getBlockPos().up(2)) == Blocks.GLOWSTONE) {
                 FindItemResult pick = InvUtils.findPick();
@@ -319,7 +325,6 @@ public class AnchorAura extends Module {
 
         if (sentAntiStuck && BlockUtils.getBlock(target.getBlockPos().up(2)) != Blocks.GLOWSTONE) sentAntiStuck = false;
 
-        //Anti Self Trap
         if (breakSelfTrap.get() && !sentTrapMine) {
             if (findBreakPos(target.getBlockPos()) == null && findPlacePos(target.getBlockPos()) == null && BlockUtils.isTrapBlock(target.getBlockPos().up(2))) {
                 FindItemResult pick = InvUtils.findPick();
@@ -338,7 +343,6 @@ public class AnchorAura extends Module {
             sentTrapMine = false;
         }
 
-        //Anti Burrow
         if (breakBurrow.get() && !sentBurrowMine && PlayerUtils.isBurrowed(target, true)) {
             FindItemResult pick = InvUtils.findPick();
             if (pick.found()) {
@@ -488,8 +492,7 @@ public class AnchorAura extends Module {
 
         @Override
         public String toString() {
-            if (this == Above_and_Below) return "Above & Below";
-            return super.toString();
+            return super.toString().replace("_", " ");
         }
     }
 

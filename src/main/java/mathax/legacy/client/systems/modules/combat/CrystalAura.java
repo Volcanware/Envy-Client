@@ -209,6 +209,15 @@ public class CrystalAura extends Module {
         .build()
     );
 
+    private final Setting<Double> minPlaceDamage = sgPlace.add(new DoubleSetting.Builder()
+        .name("min-place-damage")
+        .description("Minimum place damage the crystal needs to deal to your target.")
+        .defaultValue(6)
+        .min(0)
+        .sliderRange(0, 10)
+        .build()
+    );
+
     private final Setting<Integer> placeDelay = sgPlace.add(new IntSetting.Builder()
         .name("place-delay")
         .description("The delay to wait to place a crystal after it's exploded in ticks.")
@@ -294,30 +303,6 @@ public class CrystalAura extends Module {
         .build()
     );
 
-    private final Setting<Boolean> surroundHoldPause = sgFacePlace.add(new BoolSetting.Builder()
-        .name("pause-on-surround-hold")
-        .description("Will pause face-placing when surround hold is active.")
-        .defaultValue(true)
-        .visible(facePlace::get)
-        .build()
-    );
-
-    private final Setting<Boolean> killAuraPause = sgFacePlace.add(new BoolSetting.Builder()
-        .name("pause-on-kill-aura")
-        .description("Will pause face-placing when Kill Aura is active.")
-        .defaultValue(true)
-        .visible(facePlace::get)
-        .build()
-    );
-
-    private final Setting<Boolean> cevPause = sgFacePlace.add(new BoolSetting.Builder()
-        .name("pause-on-cev-break")
-        .description("Will pause face-placing when CEV Breaker is active.")
-        .defaultValue(false)
-        .visible(facePlace::get)
-        .build()
-    );
-
     private final Setting<Boolean> greenHolers = sgFacePlace.add(new BoolSetting.Builder()
         .name("green-holers")
         .description("Will automatically face-place when target is in greenhole.")
@@ -338,7 +323,7 @@ public class CrystalAura extends Module {
         .name("face-place-health")
         .description("The health the target has to be at to start face-placing.")
         .defaultValue(8)
-        .min(1)
+        .range(1, 36)
         .sliderRange(1, 36)
         .visible(facePlace::get)
         .build()
@@ -368,6 +353,30 @@ public class CrystalAura extends Module {
         .build()
     );
 
+    private final Setting<Boolean> surroundHoldPause = sgFacePlace.add(new BoolSetting.Builder()
+        .name("pause-on-surround-hold")
+        .description("Will pause face-placing when surround hold is active.")
+        .defaultValue(true)
+        .visible(facePlace::get)
+        .build()
+    );
+
+    private final Setting<Boolean> killAuraPause = sgFacePlace.add(new BoolSetting.Builder()
+        .name("pause-on-kill-aura")
+        .description("Will pause face-placing when Kill Aura is active.")
+        .defaultValue(true)
+        .visible(facePlace::get)
+        .build()
+    );
+
+    private final Setting<Boolean> cevPause = sgFacePlace.add(new BoolSetting.Builder()
+        .name("pause-on-cev-break")
+        .description("Will pause face-placing when CEV Breaker is active.")
+        .defaultValue(false)
+        .visible(facePlace::get)
+        .build()
+    );
+
     // Surround
 
     private final Setting<Boolean> surroundBreak = sgSurround.add(new BoolSetting.Builder()
@@ -377,7 +386,7 @@ public class CrystalAura extends Module {
         .build()
     );
 
-    private final Setting<SurroundBreakHoldWhen> surroundBWhen = sgSurround.add(new EnumSetting.Builder<SurroundBreakHoldWhen>()
+    private final Setting<SurroundBreakHoldWhen> surroundBreakWhen = sgSurround.add(new EnumSetting.Builder<SurroundBreakHoldWhen>()
         .name("surround-break-when")
         .description("When to start surround breaking.")
         .defaultValue(SurroundBreakHoldWhen.Face_Trapped)
@@ -406,7 +415,7 @@ public class CrystalAura extends Module {
         .build()
     );
 
-    private final Setting<SurroundBreakHoldWhen> surroundHWhen = sgSurround.add(new EnumSetting.Builder<SurroundBreakHoldWhen>()
+    private final Setting<SurroundBreakHoldWhen> surroundHoldWhen = sgSurround.add(new EnumSetting.Builder<SurroundBreakHoldWhen>()
         .name("surround-hold-when")
         .description("When to start surround holding.")
         .defaultValue(SurroundBreakHoldWhen.Any_Trapped)
@@ -446,6 +455,7 @@ public class CrystalAura extends Module {
         .description("Minimum break damage the crystal needs to deal to your target.")
         .defaultValue(6)
         .min(0)
+        .sliderRange(0, 10)
         .build()
     );
 
@@ -470,6 +480,7 @@ public class CrystalAura extends Module {
         .description("The delay to wait to break a crystal after switching hotbar slot in ticks.")
         .defaultValue(0)
         .min(0)
+        .sliderRange(0, 60)
         .build()
     );
 
@@ -502,6 +513,7 @@ public class CrystalAura extends Module {
         .name("break-attempts")
         .description("How many times to hit a crystal before stopping to target it.")
         .defaultValue(2)
+        .min(1)
         .sliderRange(1, 5)
         .build()
     );
@@ -511,6 +523,7 @@ public class CrystalAura extends Module {
         .description("Amount of ticks a crystal needs to have lived for it to be attacked by Crystal Aura.")
         .defaultValue(0)
         .min(0)
+        .sliderRange(0, 60)
         .build()
     );
 
@@ -616,7 +629,7 @@ public class CrystalAura extends Module {
         .description("Determines how big the damage text should be.")
         .defaultValue(1.25)
         .min(1)
-        .sliderMax(4)
+        .sliderRange(1, 4)
         .visible(renderDamageText::get)
         .build()
     );
@@ -651,7 +664,7 @@ public class CrystalAura extends Module {
         .description("How long to render for.")
         .defaultValue(10)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 
@@ -660,7 +673,7 @@ public class CrystalAura extends Module {
         .description("How long to render breaking for.")
         .defaultValue(13)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .visible(renderBreak::get)
         .build()
     );
@@ -713,11 +726,9 @@ public class CrystalAura extends Module {
 
     @EventHandler(priority = EventPriority.HIGH)
     private void onPreTick(TickEvent.Pre event) {
-        // Update last rotation
         didRotateThisTick = false;
         lastRotationTimer++;
 
-        // Decrement placing timer
         if (placing) {
             if (placingTimer > 0) placingTimer--;
             else placing = false;
@@ -729,20 +740,16 @@ public class CrystalAura extends Module {
             attacks = 0;
         }
 
-        // Decrement best target timer
         if (bestTargetTimer > 0) bestTargetTimer--;
         bestTargetDamage = 0;
 
-        // Decrement break, place and switch timers
         if (breakTimer > 0) breakTimer--;
         if (placeTimer > 0) placeTimer--;
         if (switchTimer > 0) switchTimer--;
 
-        // Decrement render timers
         if (renderTimer > 0) renderTimer--;
         if (breakRenderTimer > 0) breakRenderTimer--;
 
-        // Update waiting to explode crystals and mark them as existing if reached threshold
         for (IntIterator it = waitingToExplode.keySet().iterator(); it.hasNext();) {
             int id = it.nextInt();
             int ticks = waitingToExplode.get(id);
@@ -753,13 +760,10 @@ public class CrystalAura extends Module {
             } else waitingToExplode.put(id, ticks + 1);
         }
 
-        // Check pause settings
         if (PlayerUtils.shouldPause(minePause.get(), eatPause.get(), drinkPause.get())) return;
 
-        // Set player eye pos
         ((IVec3d) playerEyePos).set(mc.player.getPos().x, mc.player.getPos().y + mc.player.getEyeHeight(mc.player.getPose()), mc.player.getPos().z);
 
-        // Find targets, break and place
         findTargets();
 
         if (targets.size() > 0) {
@@ -770,7 +774,6 @@ public class CrystalAura extends Module {
 
     @EventHandler(priority = EventPriority.LOWEST - 666)
     private void onPreTickLast(TickEvent.Pre event) {
-        // Rotate to last rotation
         if (rotate.get() && lastRotationTimer < getLastRotationStopDelay() && !didRotateThisTick) Rotations.rotate(isLastRotationPos ? Rotations.getYaw(lastRotationPos) : lastYaw, isLastRotationPos ? Rotations.getPitch(lastRotationPos) : lastPitch, -100, null);
     }
 
@@ -824,15 +827,12 @@ public class CrystalAura extends Module {
         } else breakTimer = breakDelay.get();
     }
 
-    // Break
-
     private void doBreak() {
         if (!doBreak.get() || breakTimer > 0 || switchTimer > 0 || attacks >= attackFrequency.get()) return;
 
         double bestDamage = 0;
         Entity crystal = null;
 
-        // Find best crystal to break
         for (Entity entity : mc.world.getEntities()) {
             double damage = getBreakDamage(entity, true);
 
@@ -842,7 +842,6 @@ public class CrystalAura extends Module {
             }
         }
 
-        // Break the crystal
         if (crystal != null) doBreak(crystal);
     }
 
@@ -892,27 +891,20 @@ public class CrystalAura extends Module {
     private double getBreakDamage(Entity entity, boolean checkCrystalAge) {
         if (!(entity instanceof EndCrystalEntity)) return 0;
 
-        // Check only break own
         if (onlyBreakOwn.get() && !placedCrystals.contains(entity.getId())) return 0;
 
-        // Check if it should already be removed
         if (removed.contains(entity.getId())) return 0;
 
-        // Check attempted breaks
         if (attemptedBreaks.get(entity.getId()) > breakAttempts.get()) return 0;
 
-        // Check crystal age
         if (checkCrystalAge && entity.age < ticksExisted.get()) return 0;
 
-        // Check range
         if (isOutOfRange(entity.getPos(), entity.getBlockPos(), false)) return 0;
 
-        // Check damage to self and anti suicide
         blockPos.set(entity.getBlockPos()).move(0, -1, 0);
         double selfDamage = DamageUtils.crystalDamage(mc.player, entity.getPos(), predictMovement.get(), blockPos, ignoreTerrain.get());
         if (selfDamage > maxDamage.get() || (antiSuicide.get() && selfDamage >= EntityUtils.getTotalHealth(mc.player))) return 0;
 
-        // Check damage to targets and face place
         double damage = getDamageToTargets(entity.getPos(), blockPos, true, false);
         boolean facePlaced = (facePlace.get() && shouldFacePlace(entity.getBlockPos()) || forceFacePlace.get().isPressed());
 
@@ -929,7 +921,6 @@ public class CrystalAura extends Module {
     }
 
     private void attackCrystal(Entity entity) {
-        // Attack
         mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(entity, mc.player.isSneaking()));
 
         Hand hand = InvUtils.findInHotbar(Items.END_CRYSTAL).getHand();
@@ -946,34 +937,25 @@ public class CrystalAura extends Module {
         if (event.packet instanceof UpdateSelectedSlotC2SPacket) switchTimer = switchDelay.get();
     }
 
-    // Place
-
     private void doPlace() {
         if (!doPlace.get() || placeTimer > 0) return;
 
-        // Return if there are no crystals in hotbar or offhand
         if (!InvUtils.findInHotbar(Items.END_CRYSTAL).found()) return;
 
-        // Return if there are no crystals in either hand and auto switch mode is none
         if (autoSwitch.get() == AutoSwitchMode.None && mc.player.getOffHandStack().getItem() != Items.END_CRYSTAL && mc.player.getMainHandStack().getItem() != Items.END_CRYSTAL) return;
 
-        // Check for multiplace
         for (Entity entity : mc.world.getEntities()) {
             if (getBreakDamage(entity, false) > 0) return;
         }
 
-        // Setup variables
         AtomicDouble bestDamage = new AtomicDouble(0);
         AtomicReference<BlockPos.Mutable> bestBlockPos = new AtomicReference<>(new BlockPos.Mutable());
         AtomicBoolean isSupport = new AtomicBoolean(support.get() != SupportMode.Disabled);
 
-        // Find best position to place the crystal on
         BlockIterator.register((int) Math.ceil(placeRange.get()), (int) Math.ceil(placeRange.get()), (bp, blockState) -> {
-            // Check if its bedrock or obsidian and return if isSupport is false
             boolean hasBlock = blockState.isOf(Blocks.BEDROCK) || blockState.isOf(Blocks.OBSIDIAN);
             if (!hasBlock && (!isSupport.get() || !blockState.getMaterial().isReplaceable())) return;
 
-            // Check if there is air on top
             blockPos.set(bp.getX(), bp.getY() + 1, bp.getZ());
             if (!mc.world.getBlockState(blockPos).isAir()) return;
 
@@ -982,16 +964,13 @@ public class CrystalAura extends Module {
                 if (!mc.world.getBlockState(blockPos).isAir()) return;
             }
 
-            // Check range
             ((IVec3d) vec3d).set(bp.getX() + 0.5, bp.getY() + 1, bp.getZ() + 0.5);
             blockPos.set(bp).move(0, 1, 0);
             if (isOutOfRange(vec3d, blockPos, true)) return;
 
-            // Check damage to self and anti suicide
             double selfDamage = DamageUtils.crystalDamage(mc.player, vec3d, predictMovement.get(), bp, ignoreTerrain.get());
             if (selfDamage > maxDamage.get() || (antiSuicide.get() && selfDamage >= EntityUtils.getTotalHealth(mc.player))) return;
 
-            // Check damage to targets and face place
             double damage = getDamageToTargets(vec3d, bp, false, !hasBlock && support.get() == SupportMode.Fast);
 
             boolean facePlaced = (facePlace.get() && shouldFacePlace(blockPos)) || (forceFacePlace.get().isPressed());
@@ -1000,7 +979,8 @@ public class CrystalAura extends Module {
 
             boolean surroundBreaking = (isSurroundBreaking() && shouldSurroundBreak(blockPos));
 
-            // Check if it can be placed
+            if ((!facePlaced && !surroundBreaking) && damage < minPlaceDamage.get()) return;
+
             double x = bp.getX();
             double y = bp.getY() + 1;
             double z = bp.getZ();
@@ -1008,7 +988,6 @@ public class CrystalAura extends Module {
 
             if (intersectsWithEntities(box)) return;
 
-            // Compare damage
             if (damage > bestDamage.get() || (isSupport.get() && hasBlock)) {
                 bestDamage.set(damage);
                 bestBlockPos.get().set(bp);
@@ -1017,7 +996,6 @@ public class CrystalAura extends Module {
             if (hasBlock) isSupport.set(false);
         });
 
-        // Place the crystal
         BlockIterator.after(() -> {
             if (bestDamage.get() == 0) return;
 
@@ -1067,7 +1045,6 @@ public class CrystalAura extends Module {
     }
 
     private void placeCrystal(BlockHitResult result, double damage, BlockPos supportBlock) {
-        // Switch
         Item targetItem = supportBlock == null ? Items.END_CRYSTAL : Items.OBSIDIAN;
 
         FindItemResult item = InvUtils.findInHotbar(targetItem);
@@ -1080,9 +1057,7 @@ public class CrystalAura extends Module {
         Hand hand = item.getHand();
         if (hand == null) return;
 
-        // Place
         if (supportBlock == null) {
-            // Place crystal
             mc.player.networkHandler.sendPacket(new PlayerInteractBlockC2SPacket(hand, result));
 
             if (swing.get()) mc.player.swingHand(hand);
@@ -1096,18 +1071,14 @@ public class CrystalAura extends Module {
             renderPos.set(result.getBlockPos());
             renderDamage = damage;
         } else {
-            // Place support block
             BlockUtils.place(supportBlock, item, false, 0, swing.get(), true, false);
             placeTimer += supportDelay.get();
 
             if (supportDelay.get() == 0) placeCrystal(result, damage, null);
         }
 
-        // Switch back
         if (autoSwitch.get() == AutoSwitchMode.Silent) InvUtils.swap(prevSlot, false);
     }
-
-    // Yaw steps
 
     @EventHandler
     private void onPacketSent(PacketEvent.Sent event) {
@@ -1132,7 +1103,7 @@ public class CrystalAura extends Module {
         }
 
         setRotation(false, null, yaw, targetPitch);
-        Rotations.rotate(yaw, targetPitch, -100, null); // Priority -100 so it sends the packet as the last one, im pretty sure it doesn't matte but idc
+        Rotations.rotate(yaw, targetPitch, -100, null);
         return false;
     }
 
@@ -1140,8 +1111,6 @@ public class CrystalAura extends Module {
         double phi = Math.abs(beta - alpha) % 360;
         return phi > 180 ? 360 - phi : phi;
     }
-
-    // Face place
 
     private boolean shouldFacePlace(BlockPos crystal) {
         for (LivingEntity target : targets) {
@@ -1188,11 +1157,11 @@ public class CrystalAura extends Module {
             if (!EntityUtils.isSurrounded(bestTarget)) return false;
             if (EntityUtils.isGreenHole(bestTarget)) return false;
             if (ignoreBurrowed.get() && EntityUtils.isBurrowed(bestTarget)) return false;
-            if (surroundBWhen.get() == SurroundBreakHoldWhen.Both_Trapped && (EntityUtils.isTopTrapped(bestTarget) && EntityUtils.isFaceSurrounded(bestTarget))) return true;
-            else if (surroundBWhen.get() == SurroundBreakHoldWhen.Any_Trapped && (EntityUtils.isTopTrapped(bestTarget) || EntityUtils.isFaceSurrounded(bestTarget))) return true;
-            else if (surroundBWhen.get() == SurroundBreakHoldWhen.Top_Trapped && EntityUtils.isTopTrapped(bestTarget)) return true;
-            else if (surroundBWhen.get() == SurroundBreakHoldWhen.Face_Trapped && EntityUtils.isFaceSurrounded(bestTarget)) return true;
-            else return surroundBWhen.get() == SurroundBreakHoldWhen.Always;
+            if (surroundBreakWhen.get() == SurroundBreakHoldWhen.Both_Trapped && (EntityUtils.isTopTrapped(bestTarget) && EntityUtils.isFaceSurrounded(bestTarget))) return true;
+            else if (surroundBreakWhen.get() == SurroundBreakHoldWhen.Any_Trapped && (EntityUtils.isTopTrapped(bestTarget) || EntityUtils.isFaceSurrounded(bestTarget))) return true;
+            else if (surroundBreakWhen.get() == SurroundBreakHoldWhen.Top_Trapped && EntityUtils.isTopTrapped(bestTarget)) return true;
+            else if (surroundBreakWhen.get() == SurroundBreakHoldWhen.Face_Trapped && EntityUtils.isFaceSurrounded(bestTarget)) return true;
+            else return surroundBreakWhen.get() == SurroundBreakHoldWhen.Always;
         }
 
         return false;
@@ -1200,17 +1169,15 @@ public class CrystalAura extends Module {
 
     private boolean isSurroundHolding() {
         if (surroundHold.get() && bestTarget != null && EntityUtils.isSurroundBroken(bestTarget)) {
-            if (surroundHWhen.get() == SurroundBreakHoldWhen.Both_Trapped && (EntityUtils.isTopTrapped(bestTarget) && EntityUtils.isFaceSurrounded(bestTarget))) return true;
-            else if (surroundHWhen.get() == SurroundBreakHoldWhen.Any_Trapped && (EntityUtils.isTopTrapped(bestTarget) || EntityUtils.isFaceSurrounded(bestTarget))) return true;
-            else if (surroundHWhen.get() == SurroundBreakHoldWhen.Top_Trapped && EntityUtils.isTopTrapped(bestTarget)) return true;
-            else if (surroundHWhen.get() == SurroundBreakHoldWhen.Face_Trapped && EntityUtils.isFaceSurrounded(bestTarget)) return true;
-            else return surroundHWhen.get() == SurroundBreakHoldWhen.Always;
+            if (surroundHoldWhen.get() == SurroundBreakHoldWhen.Both_Trapped && (EntityUtils.isTopTrapped(bestTarget) && EntityUtils.isFaceSurrounded(bestTarget))) return true;
+            else if (surroundHoldWhen.get() == SurroundBreakHoldWhen.Any_Trapped && (EntityUtils.isTopTrapped(bestTarget) || EntityUtils.isFaceSurrounded(bestTarget))) return true;
+            else if (surroundHoldWhen.get() == SurroundBreakHoldWhen.Top_Trapped && EntityUtils.isTopTrapped(bestTarget)) return true;
+            else if (surroundHoldWhen.get() == SurroundBreakHoldWhen.Face_Trapped && EntityUtils.isFaceSurrounded(bestTarget)) return true;
+            else return surroundHoldWhen.get() == SurroundBreakHoldWhen.Always;
         }
 
         return false;
     }
-
-    // Others
 
     private boolean isOutOfRange(Vec3d vec3d, BlockPos blockPos, boolean place) {
         ((IRaycastContext) raycastContext).set(playerEyePos, vec3d, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player);
@@ -1249,7 +1216,6 @@ public class CrystalAura extends Module {
 
                 double dmg = DamageUtils.crystalDamageLivingEntity(target, vec3d, predictMovement.get(), obsidianPos, ignoreTerrain.get());
 
-                // Update best target
                 if (dmg > bestTargetDamage) {
                     bestTarget = target;
                     bestTargetDamage = dmg;
@@ -1273,21 +1239,18 @@ public class CrystalAura extends Module {
     private void findTargets() {
         targets.clear();
 
-        // Entities
         for (Entity entity : mc.world.getEntities()) {
             if (entity instanceof PlayerEntity || !entities.get().containsKey(entity.getType())) continue;
 
             if (entity instanceof LivingEntity livingEntity && entity.isAlive() && entity.distanceTo(mc.player) <= targetRange.get()) targets.add(livingEntity);
         }
 
-        // Players
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (!entities.get().containsKey(EntityType.PLAYER) || player.getAbilities().creativeMode || player == mc.player) continue;
 
             if (!player.isDead() && player.isAlive() && Friends.get().shouldAttack(player) && player.distanceTo(mc.player) <= targetRange.get()) targets.add(player);
         }
 
-        // Fake players
         for (PlayerEntity player : FakePlayerManager.getPlayers()) {
             if (!player.isDead() && player.isAlive() && Friends.get().shouldAttack(player) && player.distanceTo(mc.player) <= targetRange.get()) targets.add(player);
         }
@@ -1302,8 +1265,6 @@ public class CrystalAura extends Module {
     private boolean intersectsWithEntities(Box box) {
         return EntityUtils.intersectsWithEntity(box, entity -> !entity.isSpectator() && !removed.contains(entity.getId()));
     }
-
-    // Render
 
     @EventHandler
     private void onRender3D(Render3DEvent event) {

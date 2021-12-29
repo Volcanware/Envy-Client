@@ -41,6 +41,7 @@ public class AutoTrap extends Module {
         .name("target-range")
         .description("The range players can be targeted.")
         .defaultValue(4)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -55,6 +56,8 @@ public class AutoTrap extends Module {
         .name("place-delay")
         .description("How many ticks between block placements.")
         .defaultValue(1)
+        .min(0)
+        .sliderRange(0, 60)
         .build()
     );
 
@@ -177,9 +180,7 @@ public class AutoTrap extends Module {
             }
 
             timer = 0;
-        } else {
-            timer++;
-        }
+        } else timer++;
     }
 
     @EventHandler
