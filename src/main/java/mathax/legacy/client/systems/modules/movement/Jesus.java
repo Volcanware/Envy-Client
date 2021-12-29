@@ -233,7 +233,7 @@ public class Jesus extends Module {
 
         Packet<?> newPacket;
         if (packet instanceof PlayerMoveC2SPacket.PositionAndOnGround) newPacket = new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, true);
-        else newPacket = new PlayerMoveC2SPacket.Full(x, y, z, packet.getYaw(0), packet.getPitch(0), true)
+        else newPacket = new PlayerMoveC2SPacket.Full(x, y, z, packet.getYaw(0), packet.getPitch(0), true);
 
         mc.getNetworkHandler().getConnection().send(newPacket);
     }
