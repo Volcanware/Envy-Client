@@ -138,7 +138,7 @@ public class ChatEncryption extends Module {
             setKey(secret);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8))).replace("==", suffix.get());
+            return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8))).replace("=", suffix.get());
         } catch (Exception exception) {
             error("Error while encrypting: " + exception);
         }
@@ -151,7 +151,7 @@ public class ChatEncryption extends Module {
             setKey(secret);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt.replace(suffix.get(), "=="))), StandardCharsets.UTF_8);
+            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt.replace(suffix.get(), "="))), StandardCharsets.UTF_8);
         } catch (Exception exception) {
             error("Error while decrypting: " + exception);
         }
