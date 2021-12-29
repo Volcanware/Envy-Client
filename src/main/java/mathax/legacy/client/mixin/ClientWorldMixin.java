@@ -59,7 +59,7 @@ public abstract class ClientWorldMixin {
     private void onGetSkyColor(Vec3d cameraPos, float tickDelta, CallbackInfoReturnable<Vec3d> info) {
         Ambience ambience = Modules.get().get(Ambience.class);
 
-        if (ambience.isActive() && ambience.customSkyColor.get()) info.setReturnValue(ambience.skyColor.get().getVec3d());
+        if (ambience.isActive() && ambience.customSkyColor.get()) info.setReturnValue(ambience.skyColor().getVec3d());
     }
 
     /**

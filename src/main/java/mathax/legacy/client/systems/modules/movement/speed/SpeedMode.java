@@ -35,10 +35,12 @@ public class SpeedMode {
             int amplifier = mc.player.getStatusEffect(StatusEffects.SPEED).getAmplifier();
             defaultSpeed *= 1.0 + 0.2 * (amplifier + 1);
         }
+
         if (mc.player.hasStatusEffect(StatusEffects.SLOWNESS)) {
             int amplifier = mc.player.getStatusEffect(StatusEffects.SLOWNESS).getAmplifier();
             defaultSpeed /= 1.0 + 0.2 * (amplifier + 1);
         }
+
         return defaultSpeed;
     }
 

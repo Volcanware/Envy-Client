@@ -6,6 +6,7 @@ import mathax.legacy.client.settings.Setting;
 import mathax.legacy.client.settings.SettingGroup;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.utils.player.PlayerUtils;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import net.minecraft.client.render.DimensionEffects;
 import net.minecraft.item.Items;
@@ -31,10 +32,26 @@ public class Ambience extends Module {
         .build()
     );
 
-    public final Setting<SettingColor> skyColor = sgSky.add(new ColorSetting.Builder()
-        .name("sky-color")
-        .description("The color of the sky.")
-        .defaultValue(new SettingColor(102, 0, 0))
+    public final Setting<SettingColor> overworldSkyColor = sgSky.add(new ColorSetting.Builder()
+        .name("overworld-sky-color")
+        .description("The color of the overworld sky.")
+        .defaultValue(new SettingColor(0, 125, 255))
+        .visible(customSkyColor::get)
+        .build()
+    );
+
+    public final Setting<SettingColor> netherSkyColor = sgSky.add(new ColorSetting.Builder()
+        .name("nether-sky-color")
+        .description("The color of the nether sky.")
+        .defaultValue(new SettingColor(105, 0, 0))
+        .visible(customSkyColor::get)
+        .build()
+    );
+
+    public final Setting<SettingColor> endSkyColor = sgSky.add(new ColorSetting.Builder()
+        .name("end-sky-color")
+        .description("The color of the end sky.")
+        .defaultValue(new SettingColor(65, 30, 90))
         .visible(customSkyColor::get)
         .build()
     );
@@ -49,7 +66,7 @@ public class Ambience extends Module {
     public final Setting<SettingColor> cloudColor = sgSky.add(new ColorSetting.Builder()
         .name("cloud-color")
         .description("The color of the clouds.")
-        .defaultValue(new SettingColor(102, 0, 0))
+        .defaultValue(new SettingColor(105, 0, 0))
         .visible(customCloudColor::get)
         .build()
     );
@@ -64,7 +81,7 @@ public class Ambience extends Module {
     public final Setting<SettingColor> lightningColor = sgSky.add(new ColorSetting.Builder()
         .name("lightning-color")
         .description("The color of the lightning.")
-        .defaultValue(new SettingColor(102, 0, 0))
+        .defaultValue(new SettingColor(105, 0, 0))
         .visible(changeLightningColor::get)
         .build()
     );
@@ -82,7 +99,7 @@ public class Ambience extends Module {
     public final Setting<SettingColor> grassColor = sgWorld.add(new ColorSetting.Builder()
         .name("grass-color")
         .description("The color of the grass.")
-        .defaultValue(new SettingColor(102, 0, 0))
+        .defaultValue(new SettingColor(105, 0, 0))
         .visible(customGrassColor::get)
         .onChanged(val -> mc.worldRenderer.reload())
         .build()
@@ -99,7 +116,7 @@ public class Ambience extends Module {
     public final Setting<SettingColor> foliageColor = sgWorld.add(new ColorSetting.Builder()
         .name("foliage-color")
         .description("The color of the foliage.")
-        .defaultValue(new SettingColor(102, 0, 0))
+        .defaultValue(new SettingColor(105, 0, 0))
         .visible(customFoliageColor::get)
         .onChanged(val -> mc.worldRenderer.reload())
         .build()
@@ -116,7 +133,7 @@ public class Ambience extends Module {
     public final Setting<SettingColor> waterColor = sgWorld.add(new ColorSetting.Builder()
         .name("water-color")
         .description("The color of the water.")
-        .defaultValue(new SettingColor(102, 0, 0))
+        .defaultValue(new SettingColor(105, 0, 0))
         .visible(customWaterColor::get)
         .onChanged(val -> mc.worldRenderer.reload())
         .build()
@@ -133,7 +150,7 @@ public class Ambience extends Module {
     public final Setting<SettingColor> lavaColor = sgWorld.add(new ColorSetting.Builder()
         .name("lava-color")
         .description("The color of the lava.")
-        .defaultValue(new SettingColor(102, 0, 0))
+        .defaultValue(new SettingColor(105, 0, 0))
         .visible(customLavaColor::get)
         .onChanged(val -> mc.worldRenderer.reload())
         .build()
@@ -172,5 +189,21 @@ public class Ambience extends Module {
         public float[] getFogColorOverride(float skyAngle, float tickDelta) {
             return null;
         }
+    }
+
+    public SettingColor skyColor() {
+        switch (PlayerUtils.getDimension()) {
+            case Overworld -> {
+                return overworldSkyColor.get();
+            }
+            case Nether -> {
+                return netherSkyColor.get();
+            }
+            case End -> {
+                return endSkyColor.get();
+            }
+        }
+
+        return null;
     }
 }

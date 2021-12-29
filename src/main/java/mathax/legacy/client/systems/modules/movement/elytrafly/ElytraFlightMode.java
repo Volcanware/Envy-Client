@@ -12,22 +12,26 @@ import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 
+import static mathax.legacy.client.MatHaxLegacy.mc;
+
 public class ElytraFlightMode {
-    protected final MinecraftClient mc;
-    protected final ElytraFly elytraFly;
     private final ElytraFlightModes type;
+
+    protected final ElytraFly elytraFly;
+
+    protected Vec3d forward, right;
 
     protected boolean lastJumpPressed;
     protected boolean incrementJumpTimer;
     protected boolean lastForwardPressed;
-    protected int jumpTimer;
+
     protected double velX, velY, velZ;
     protected double ticksLeft;
-    protected Vec3d forward, right;
+
+    protected int jumpTimer;
 
     public ElytraFlightMode(ElytraFlightModes type) {
         this.elytraFly = Modules.get().get(ElytraFly.class);
-        this.mc = MinecraftClient.getInstance();
         this.type = type;
     }
 
@@ -108,6 +112,7 @@ public class ElytraFlightMode {
                     InvUtils.swapBack();
                 }
             }
+
             ticksLeft--;
         }
     }

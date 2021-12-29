@@ -28,7 +28,7 @@ public class ElytraFly extends Module {
     private ElytraFlightMode currentMode = new Vanilla();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgAutopilot = settings.createGroup("Autopilot");
+    private final SettingGroup sgAutoPilot = settings.createGroup("Auto Pilot");
 
     // General
 
@@ -70,6 +70,7 @@ public class ElytraFly extends Module {
         .description("Controls how fast will you go down naturally.")
         .defaultValue(0.01)
         .min(0)
+        .sliderRange(0, 1)
         .visible(() -> flightMode.get() != ElytraFlightModes.Pitch40)
         .build()
     );
@@ -79,6 +80,7 @@ public class ElytraFly extends Module {
         .description("How fast you go forward and backward.")
         .defaultValue(1)
         .min(0)
+        .sliderRange(0, 3)
         .visible(() -> flightMode.get() != ElytraFlightModes.Pitch40)
         .build()
     );
@@ -88,6 +90,7 @@ public class ElytraFly extends Module {
         .description("How fast you go up and down.")
         .defaultValue(1)
         .min(0)
+        .sliderRange(0, 3)
         .visible(() -> flightMode.get() != ElytraFlightModes.Pitch40)
         .build()
     );
@@ -118,7 +121,7 @@ public class ElytraFly extends Module {
         .description("Distance to look ahead when flying.")
         .defaultValue(5)
         .range(1, 15)
-        .sliderMin(1)
+        .sliderRange(1, 15)
         .visible(noCrash::get)
         .build()
     );
@@ -142,7 +145,7 @@ public class ElytraFly extends Module {
         .description("The bottom height boundary for pitch40.")
         .defaultValue(80)
         .min(0)
-        .sliderMax(260)
+        .sliderRange(0, 260)
         .visible(() -> flightMode.get() == ElytraFlightModes.Pitch40)
         .build()
     );
@@ -152,7 +155,7 @@ public class ElytraFly extends Module {
         .description("The upper height boundary for pitch40.")
         .defaultValue(120)
         .min(0)
-        .sliderMax(260)
+        .sliderRange(0, 260)
         .visible(() -> flightMode.get() == ElytraFlightModes.Pitch40)
         .build()
     );
@@ -162,14 +165,14 @@ public class ElytraFly extends Module {
         .description("The speed for pitch rotation (degrees/tick)")
         .defaultValue(4)
         .min(0)
-        .sliderMax(6)
+        .sliderRange(0, 6)
         .visible(() -> flightMode.get() == ElytraFlightModes.Pitch40)
         .build()
     );
 
-    // Autopilot
+    // Auto Pilot
 
-    public final Setting<Boolean> autoPilot = sgAutopilot.add(new BoolSetting.Builder()
+    public final Setting<Boolean> autoPilot = sgAutoPilot.add(new BoolSetting.Builder()
         .name("auto-pilot")
         .description("Moves forward while elytra flying.")
         .defaultValue(false)
@@ -177,7 +180,7 @@ public class ElytraFly extends Module {
         .build()
     );
 
-    public final Setting<Boolean> useFireworks = sgAutopilot.add(new BoolSetting.Builder()
+    public final Setting<Boolean> useFireworks = sgAutoPilot.add(new BoolSetting.Builder()
         .name("use-fireworks")
         .description("Uses firework rockets every second of your choice.")
         .defaultValue(false)
@@ -185,22 +188,22 @@ public class ElytraFly extends Module {
         .build()
     );
 
-    public final Setting<Double> autoPilotFireworkDelay = sgAutopilot.add(new DoubleSetting.Builder()
+    public final Setting<Double> autoPilotFireworkDelay = sgAutoPilot.add(new DoubleSetting.Builder()
         .name("firework-delay")
         .description("The delay in seconds in between using fireworks if \"Use Fireworks\" is enabled.")
-        .min(1)
         .defaultValue(8)
-        .sliderMax(20)
+        .min(1)
+        .sliderRange(1, 20)
         .visible(useFireworks::get)
         .build()
     );
 
-    public final Setting<Double> autoPilotMinimumHeight = sgAutopilot.add(new DoubleSetting.Builder()
+    public final Setting<Double> autoPilotMinimumHeight = sgAutoPilot.add(new DoubleSetting.Builder()
         .name("minimum-height")
         .description("The minimum height for autopilot.")
         .defaultValue(120)
         .min(0)
-        .sliderMax(260)
+        .sliderRange(0, 260)
         .visible(autoPilot::get)
         .build()
     );
@@ -240,7 +243,6 @@ public class ElytraFly extends Module {
             currentMode.forward = Vec3d.fromPolar(0, mc.player.getYaw()).multiply(0.1);
             currentMode.right = Vec3d.fromPolar(0, mc.player.getYaw() + 90).multiply(0.1);
 
-            // Handle stopInWater
             if (mc.player.isTouchingWater() && stopInWater.get()) {
                 mc.getNetworkHandler().sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
                 return;
@@ -291,7 +293,7 @@ public class ElytraFly extends Module {
             case Packet -> currentMode = new Packet();
             case Pitch40 -> {
                 currentMode = new Pitch40();
-                autoPilot.set(false); // Pitch 40 is an autopilot of its own
+                autoPilot.set(false);
             }
         }
     }
@@ -319,16 +321,13 @@ public class ElytraFly extends Module {
         MatHaxLegacy.EVENT_BUS.unsubscribe(staticGroundListener);
     }
 
-    //Drop
     private class StaticInstaDropListener {
         @EventHandler
-        private void onInstadropTick(TickEvent.Post event) {
+        private void onInstaDropTick(TickEvent.Post event) {
             if (mc.player != null && mc.player.isFallFlying()) {
                 mc.player.setVelocity(0, 0, 0);
                 mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(true));
-            } else {
-                disableInstaDropListener();
-            }
+            } else disableInstaDropListener();
         }
     }
 

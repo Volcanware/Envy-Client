@@ -10,30 +10,29 @@ import mathax.legacy.client.utils.misc.Vec2;
 import mathax.legacy.client.utils.player.PlayerUtils;
 
 public class Strafe extends SpeedMode {
+    private long timer = 0L;
 
     public Strafe() {
         super(SpeedModes.Strafe);
     }
 
-    private long timer = 0L;
-
     @Override
     public void onMove(PlayerMoveEvent event) {
         switch (stage) {
-            case 0: // Reset
+            case 0:
                 if (PlayerUtils.isMoving()) {
                     stage++;
                     speed = 1.18f * getDefaultSpeed() - 0.01;
                 }
-            case 1: // Jump
+            case 1:
                 if (!PlayerUtils.isMoving() || !mc.player.isOnGround()) break;
 
                 ((IVec3d) event.movement).setY(getHop(0.40123128));
                 speed *= settings.ncpSpeed.get();
                 stage++;
                 break;
-            case 2: speed = distance - 0.76 * (distance - getDefaultSpeed()); stage++; break; //Slowdown after jump
-            case 3: // Reset on collision or predict and update speed
+            case 2: speed = distance - 0.76 * (distance - getDefaultSpeed()); stage++; break;
+            case 3:
                 if (!mc.world.isSpaceEmpty(mc.player.getBoundingBox().offset(0.0, mc.player.getVelocity().y, 0.0)) || mc.player.verticalCollision && stage > 0) {
                     stage = 0;
                 }
@@ -81,11 +80,8 @@ public class Strafe extends SpeedMode {
                 side = 0.0f;
             }
 
-            if (forward > 0.0f)
-                forward = 1.0f;
-
-            else if (forward < 0.0f)
-                forward = -1.0f;
+            if (forward > 0.0f) forward = 1.0f;
+            else if (forward < 0.0f) forward = -1.0f;
         }
 
         double mx = Math.cos(Math.toRadians(yaw + 90.0f));
