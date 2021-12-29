@@ -62,7 +62,7 @@ public class BetterTooltips extends Module {
         .name("keybind")
         .description("The bind for keybind mode.")
         .defaultValue(KeyBind.fromKey(GLFW_KEY_LEFT_ALT))
-        .visible(() -> displayWhen.get() == DisplayWhen.KeyBind)
+        .visible(() -> displayWhen.get() == DisplayWhen.Key_Bind)
         .build()
     );
 
@@ -387,11 +387,16 @@ public class BetterTooltips extends Module {
     }
 
     private boolean isPressed() {
-        return (keybind.get().isPressed() && displayWhen.get() == DisplayWhen.KeyBind) || displayWhen.get() == DisplayWhen.Always;
+        return (keybind.get().isPressed() && displayWhen.get() == DisplayWhen.Key_Bind) || displayWhen.get() == DisplayWhen.Always;
     }
 
     public enum DisplayWhen {
-        KeyBind,
-        Always
+        Key_Bind,
+        Always;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 }
