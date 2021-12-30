@@ -1,5 +1,6 @@
 package mathax.legacy.client.systems.modules.chat;
 
+import io.netty.handler.codec.compression.ZlibEncoder;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.game.ReceiveMessageEvent;
@@ -8,17 +9,20 @@ import mathax.legacy.client.mixin.ChatHudAccessor;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.utils.base91.Base91;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import net.minecraft.item.Items;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Base64;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterOutputStream;
+
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -92,30 +96,36 @@ public class ChatEncryption extends Module {
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
 
         Text message = event.getMessage();
-        if (message.getString().endsWith(suffix.get())) {
+        if (message.getString().endsWith(suffix.get()) && !suffix.get().isEmpty()) {
             String[] msg = message.getString().split(" ",2);
             msg[1] = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
             message = new LiteralText(msg[0] + " " + msg[1]).setStyle(message.getStyle().withColor(getIntFromColor(decryptedColor.get().r, decryptedColor.get().g, decryptedColor.get().b)));
         }
-
         event.setMessage(message);
     }
 
     @EventHandler
     private void onMessageSend(SendMessageEvent event) {
         String message = event.message;
-
-        if (encryptAll.get() || message.startsWith(prefix.get())) {
+        if (suffix.get().isEmpty()) {
+            error("Suffix is empty, not sending.");
+            event.message = null;
+            event.setCancelled(true);
+        } else if (encryptAll.get() || message.startsWith(prefix.get())) {
             if (!encryptAll.get()) message = message.substring(prefix.get().length());
             message = encrypt(message, (customKey.get() ? groupKey.get() : password));
+            if(message.length() > 256) {
+                error("Message is too long, not sending.");
+                event.message = null;
+                event.setCancelled(true);
+            }
         }
-
         event.message = message;
     }
 
     public static void setKey(String myKey) {
         try {
-            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            MessageDigest sha = MessageDigest.getInstance("SHA-256");
             key = Arrays.copyOf(sha.digest(myKey.getBytes(StandardCharsets.UTF_8)), 16);
             secretKey = new SecretKeySpec(key, "AES");
         } catch (NoSuchAlgorithmException exception) {
@@ -128,7 +138,7 @@ public class ChatEncryption extends Module {
             setKey(secret);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8))).replace("=", suffix.get());
+            return Base91.encodeToString(cipher.doFinal(compress(strToEncrypt.getBytes(StandardCharsets.UTF_8)))) + suffix.get();
         } catch (Exception exception) {
             error("Error while encrypting: " + exception);
         }
@@ -141,7 +151,7 @@ public class ChatEncryption extends Module {
             setKey(secret);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt.replace(suffix.get(), "="))), StandardCharsets.UTF_8);
+            return new String(decompress(cipher.doFinal(Base91.decode(strToDecrypt.substring(0, strToDecrypt.length() - suffix.get().length())))), StandardCharsets.UTF_8);
         } catch (Exception exception) {
             error("Error while decrypting: " + exception);
         }
@@ -154,5 +164,37 @@ public class ChatEncryption extends Module {
         g = (g << 8) & 0x0000FF00;
         b = b & 0x000000FF;
         return 0xFF000000 | r | g | b;
+    }
+
+    public static byte[] compress(byte[] in) {
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            DeflaterOutputStream defl = new DeflaterOutputStream(out);
+            defl.write(in);
+            defl.flush();
+            defl.close();
+
+            return out.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(150);
+            return null;
+        }
+    }
+
+    public static byte[] decompress(byte[] in) {
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            InflaterOutputStream infl = new InflaterOutputStream(out);
+            infl.write(in);
+            infl.flush();
+            infl.close();
+
+            return out.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(150);
+            return null;
+        }
     }
 }
