@@ -5,6 +5,7 @@ import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.entity.EntityAddedEvent;
 import mathax.legacy.client.events.entity.EntityRemovedEvent;
 import mathax.legacy.client.settings.*;
+import mathax.legacy.client.systems.enemies.Enemies;
 import mathax.legacy.client.systems.friends.Friends;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
@@ -42,6 +43,13 @@ public class VisualRange extends Module {
         .name("ignore-friends")
         .description("Ignores friends.")
         .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> ignoreEnemies = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-enemies")
+        .description("Ignores enemies.")
+        .defaultValue(false)
         .build()
     );
 
@@ -83,8 +91,8 @@ public class VisualRange extends Module {
     private void onEntityRemoved(EntityRemovedEvent event) {
         if (event.entity.getUuid().equals(mc.player.getUuid()) || !entities.get().getBoolean(event.entity.getType()) || eventMode.get() == Event.Spawn) return;
 
-        if (event.entity instanceof PlayerEntity) {
-            if ((!ignoreFriends.get() || !Friends.get().isFriend(((PlayerEntity) event.entity))) && (!ignoreFakes.get() || !(event.entity instanceof FakePlayerEntity))) ChatUtils.sendMsg(event.entity.getId() + 100, Formatting.GRAY, "(highlight)%s(default) has left your visual range!", event.entity.getEntityName());
+        if (event.entity instanceof PlayerEntity player) {
+            if ((!ignoreFriends.get() || !Friends.get().isFriend(player)) && (!ignoreEnemies.get() || !Enemies.get().isEnemy(player)) && (!ignoreFakes.get() || !(player instanceof FakePlayerEntity))) ChatUtils.sendMsg(player.getId() + 100, Formatting.GRAY, "(highlight)%s(default) has left your visual range!", player.getName().getString());
         } else {
             MutableText text = new LiteralText(event.entity.getType().getName().getString()).formatted(Formatting.WHITE);
             text.append(new LiteralText(" has despawned at ").formatted(Formatting.GRAY));
