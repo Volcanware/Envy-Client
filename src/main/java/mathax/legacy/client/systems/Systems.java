@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Systems {
-    @SuppressWarnings("rawtypes")
     private static final Map<Class<? extends System>, System<?>> systems = new HashMap<>();
     private static final List<Runnable> preLoadTasks = new ArrayList<>(1);
 
