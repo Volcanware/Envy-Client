@@ -187,6 +187,8 @@ public class Version {
             String id = "running-dev";
             if (cantDisable) id += "-cant-disable";
 
+            Version latest = getLatest();
+
             OkPrompt.create()
                 .title("Running a Developer build")
                 .message("Developer builds do not get update notifications")
@@ -194,7 +196,7 @@ public class Version {
                 .message("version they are a developer build of!")
                 .message("\n")
                 .message("Your version: %s", Version.getStylized())
-                .message("Latest version: v%s", getLatest())
+                .message(latest == null ? "Couldn't get latest version from the API." : "Latest version: v%s", latest)
                 .id(id)
                 .show();
         }

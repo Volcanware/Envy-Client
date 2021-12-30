@@ -181,7 +181,7 @@ public class Surround extends Module {
     private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
         .name("swing")
         .description("Swings your hand client-side when placing or interacting.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 

@@ -11,8 +11,10 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.base91.Base91;
 import mathax.legacy.client.utils.render.color.SettingColor;
 import net.minecraft.item.Items;
+import net.minecraft.text.BaseText;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
@@ -41,14 +43,14 @@ public class ChatEncryption extends Module {
 
     // General
 
-    private final Setting<Boolean> encryptAll = sgGeneral.add(new BoolSetting.Builder()
+    public final Setting<Boolean> encryptAll = sgGeneral.add(new BoolSetting.Builder()
         .name("encrypt-all")
         .description("Encrypts all sent messages.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<String> prefix = sgGeneral.add(new StringSetting.Builder()
+    public final Setting<String> prefix = sgGeneral.add(new StringSetting.Builder()
         .name("prefix")
         .description("The prefix determining which messages will get encrypted.")
         .defaultValue(";")
@@ -78,13 +80,6 @@ public class ChatEncryption extends Module {
         .build()
     );
 
-    private final Setting<SettingColor> decryptedColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("decrypted-color")
-        .description("The color of decrypted messages.")
-        .defaultValue(new SettingColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.r, MatHaxLegacy.INSTANCE.MATHAX_COLOR.g, MatHaxLegacy.INSTANCE.MATHAX_COLOR.b))
-        .build()
-    );
-
     public ChatEncryption(){
         super(Categories.Client, Items.BARRIER, "chat-encryption", "Encrypts your chat messages.");
     }
@@ -95,10 +90,32 @@ public class ChatEncryption extends Module {
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
 
         Text message = event.getMessage();
+
         if (message.getString().endsWith(suffix.get()) && !suffix.get().isEmpty()) {
-            String[] msg = message.getString().split(" ",2);
-            msg[1] = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
-            message = new LiteralText(msg[0] + " " + msg[1]).setStyle(message.getStyle().withColor(getIntFromColor(decryptedColor.get().r, decryptedColor.get().g, decryptedColor.get().b)));
+            String[] msg = message.getString().split(" ", 2);
+
+            try {
+                msg[1] = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
+
+                BaseText prefixOpenBorder = new LiteralText("[");
+                prefixOpenBorder.setStyle(prefixOpenBorder.getStyle().withFormatting(Formatting.GRAY));
+
+                BaseText prefix = new LiteralText("Encrypted Chat");
+                prefix.setStyle(prefix.getStyle().withColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
+
+                BaseText prefixCloseBorder = new LiteralText("] ");
+                prefixCloseBorder.setStyle(prefixCloseBorder.getStyle().withFormatting(Formatting.GRAY));
+
+                BaseText chatMessage = new LiteralText("");
+                chatMessage.append(prefixOpenBorder);
+                chatMessage.append(prefix);
+                chatMessage.append(prefixCloseBorder);
+                chatMessage.append(new LiteralText(msg[0] + " " + msg[1]));
+
+                message = chatMessage;
+            } catch (Exception exception) {
+                message = event.getMessage();
+            }
         }
 
         event.setMessage(message);
@@ -107,17 +124,18 @@ public class ChatEncryption extends Module {
     @EventHandler
     private void onMessageSend(SendMessageEvent event) {
         String message = event.message;
+
         if (suffix.get().isEmpty()) {
-            error("Suffix is empty, not sending...");
-            event.setCancelled(true);
+            error("Suffix is empty, not sending!");
             event.message = null;
+            event.setCancelled(true);
         } else if (encryptAll.get() || message.startsWith(prefix.get())) {
             if (!encryptAll.get()) message = message.substring(prefix.get().length());
 
             message = encrypt(message, (customKey.get() ? groupKey.get() : password));
 
             if (message.length() > 256) {
-                error("Message is too long, not sending.");
+                error("Message is too long, not sending!");
                 event.message = null;
                 event.setCancelled(true);
             }
@@ -149,17 +167,17 @@ public class ChatEncryption extends Module {
         return null;
     }
 
-    public String decrypt(String strToDecrypt, String secret) {
+    public String decrypt(String toDecrypt, String secret) {
         try {
             setKey(secret);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(decompress(cipher.doFinal(Base91.decode(strToDecrypt.substring(0, strToDecrypt.length() - suffix.get().length())))), StandardCharsets.UTF_8);
+            return new String(decompress(cipher.doFinal(Base91.decode(toDecrypt.substring(0, toDecrypt.length() - suffix.get().length())))), StandardCharsets.UTF_8);
         } catch (Exception exception) {
             error("Error while decrypting: " + exception);
         }
 
-        return strToDecrypt;
+        return toDecrypt;
     }
 
     public static byte[] compress(byte[] in) {
@@ -192,12 +210,5 @@ public class ChatEncryption extends Module {
             System.exit(150);
             return null;
         }
-    }
-
-    public int getIntFromColor(int r, int g, int b) {
-        r = (r << 16) & 0x00FF0000;
-        g = (g << 8) & 0x0000FF00;
-        b = b & 0x000000FF;
-        return 0xFF000000 | r | g | b;
     }
 }

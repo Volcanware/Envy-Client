@@ -12,11 +12,12 @@ import java.nio.charset.StandardCharsets;
  */
 
 public class Base91 {
-
-    static final byte[] ENCODING_TABLE;
-    private static final byte[] DECODING_TABLE;
-    static final int BASE;
     private static final float AVERAGE_ENCODING_RATIO = 1.2297f;
+
+    private static final byte[] DECODING_TABLE;
+    static final byte[] ENCODING_TABLE;
+
+    static final int BASE;
 
     static {
         String ts = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&()*+,./:;<=>?@[]^_`{|}~\"";

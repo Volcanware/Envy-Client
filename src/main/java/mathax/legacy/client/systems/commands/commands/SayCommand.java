@@ -14,7 +14,7 @@ import net.minecraft.text.LiteralText;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class SayCommand extends Command {
-    public String messageTextRaw = "";
+    public String messageText = "";
 
     public SayCommand() {
         super("say", "Sends messages in chat.");
@@ -23,26 +23,32 @@ public class SayCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(argument("message", StringArgumentType.greedyString()).executes(context -> {
-            if (Modules.get().isActive(BetterChat.class)) {
-                messageTextRaw = context.getArgument("message", String.class);
+            BetterChat bc = Modules.get().get(BetterChat.class);
 
-                String message = messageTextRaw;
+            if (bc.isActive()) {
+                messageText = context.getArgument("message", String.class);
 
-                if (Modules.get().get(BetterChat.class).annoy.get()) message = Modules.get().get(BetterChat.class).applyAnnoy(message);
+                String message = messageText;
 
-                switch (Modules.get().get(BetterChat.class).fancy.get()) {
-                    case Full_Width -> message = Modules.get().get(BetterChat.class).applyFull(message);
-                    case Small_CAPS -> message = Modules.get().get(BetterChat.class).applySmall(message);
-                    case UwU -> message = Modules.get().get(BetterChat.class).applyUwU(message);
-                    case Leet -> message = Modules.get().get(BetterChat.class).applyLeet(message);
+                if (bc.emojiFix.get()) message = bc.applyEmojiFix(message);
+
+                if (bc.annoy.get()) message = bc.applyAnnoy(message);
+
+                switch (bc.fancy.get()) {
+                    case Full_Width -> message = bc.applyFull(message);
+                    case Small_CAPS -> message = bc.applySmall(message);
+                    case UwU -> message = bc.applyUwU(message);
+                    case Leet -> message = bc.applyLeet(message);
                 }
 
-                message = Modules.get().get(BetterChat.class).getPrefix() + message + Modules.get().get(BetterChat.class).getSuffix();
+                if (bc.prefix.get()) message = bc.getAffix(bc.prefixText.get(), bc.prefixFont.get(), bc.prefixRandom.get()) + message;
 
-                if (Modules.get().get(BetterChat.class).coordsProtection.get() && Modules.get().get(BetterChat.class).containsCoordinates(message)) {
+                if (bc.suffix.get()) message = bc.getAffix(bc.suffixText.get(), bc.suffixFont.get(), bc.suffixRandom.get()) + message;
+
+                if (bc.coordsProtection.get() && bc.containsCoordinates(message)) {
                     BaseText warningMessage = new LiteralText("It looks like there are coordinates in your message! ");
 
-                    BaseText sendButton = Modules.get().get(BetterChat.class).getSendButton(message);
+                    BaseText sendButton = bc.getSendButton(message);
                     warningMessage.append(sendButton);
 
                     ChatUtils.sendMsg(warningMessage);

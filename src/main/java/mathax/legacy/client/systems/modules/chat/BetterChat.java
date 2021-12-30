@@ -2,6 +2,7 @@ package mathax.legacy.client.systems.modules.chat;
 
 import it.unimi.dsi.fastutil.chars.Char2CharArrayMap;
 import it.unimi.dsi.fastutil.chars.Char2CharMap;
+import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.Utils;
 import mathax.legacy.client.events.game.ReceiveMessageEvent;
 import mathax.legacy.client.events.game.SendMessageEvent;
@@ -164,21 +165,21 @@ public class BetterChat extends Module {
 
     // Prefix
 
-    private final Setting<Boolean> prefix = sgPrefix.add(new BoolSetting.Builder()
+    public final Setting<Boolean> prefix = sgPrefix.add(new BoolSetting.Builder()
         .name("enabled")
         .description("Adds a prefix to your chat messages.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<Boolean> prefixRandom = sgPrefix.add(new BoolSetting.Builder()
+    public final Setting<Boolean> prefixRandom = sgPrefix.add(new BoolSetting.Builder()
         .name("random")
         .description("Uses a random number as your prefix.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<String> prefixText = sgPrefix.add(new StringSetting.Builder()
+    public final Setting<String> prefixText = sgPrefix.add(new StringSetting.Builder()
         .name("text")
         .description("The text to add as your prefix.")
         .defaultValue("> ")
@@ -186,7 +187,7 @@ public class BetterChat extends Module {
         .build()
     );
 
-    private final Setting<Fonts> prefixFont = sgPrefix.add(new EnumSetting.Builder<Fonts>()
+    public final Setting<Fonts> prefixFont = sgPrefix.add(new EnumSetting.Builder<Fonts>()
         .name("font")
         .description("Determines what font to use in the prefix.")
         .defaultValue(Fonts.Full_Width)
@@ -195,21 +196,21 @@ public class BetterChat extends Module {
 
     // Suffix
 
-    private final Setting<Boolean> suffix = sgSuffix.add(new BoolSetting.Builder()
+    public final Setting<Boolean> suffix = sgSuffix.add(new BoolSetting.Builder()
         .name("enabled")
         .description("Adds a suffix to your chat messages.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<Boolean> suffixRandom = sgSuffix.add(new BoolSetting.Builder()
+    public final Setting<Boolean> suffixRandom = sgSuffix.add(new BoolSetting.Builder()
         .name("random")
         .description("Uses a random number as your suffix.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<String> suffixText = sgSuffix.add(new StringSetting.Builder()
+    public final Setting<String> suffixText = sgSuffix.add(new StringSetting.Builder()
         .name("text")
         .description("The text to add as your suffix.")
         .defaultValue(" | MatHax Legacy")
@@ -217,7 +218,7 @@ public class BetterChat extends Module {
         .build()
     );
 
-    private final Setting<Fonts> suffixFont = sgSuffix.add(new EnumSetting.Builder<Fonts>()
+    public final Setting<Fonts> suffixFont = sgSuffix.add(new EnumSetting.Builder<Fonts>()
         .name("font")
         .description("Determines what font to use in the suffix.")
         .defaultValue(Fonts.Full_Width)
@@ -240,8 +241,7 @@ public class BetterChat extends Module {
                 Pattern p;
                 try {
                     p = Pattern.compile(regexFilters.get().get(i));
-                }
-                catch (PatternSyntaxException e) {
+                } catch (PatternSyntaxException e) {
                     error("Removing Invalid regex: %s", regexFilters.get().get(i));
                     regexFilters.get().remove(i);
                     continue;
@@ -267,9 +267,7 @@ public class BetterChat extends Module {
             message = new LiteralText("").append(timestamp).append(message);
         }
 
-        if (playerHeads.get()) {
-            message = new LiteralText("  ").append(message);
-        }
+        if (playerHeads.get()) message = new LiteralText("  ").append(message);
 
         for (int i = 0; i < antiSpamDepth.get(); i++) {
             if (antiSpam.get()) {
@@ -326,20 +324,6 @@ public class BetterChat extends Module {
     private void onMessageSend(SendMessageEvent event) {
         String message = event.message;
 
-        if (emojiFix.get()) {
-            message = applyEmojiFix(message);
-            event.message = message;
-        }
-
-        if (annoy.get()) message = applyAnnoy(message);
-
-        if (fancy.get() == FancyType.Full_Width) message = applyFull(message);
-        else if (fancy.get() == FancyType.Small_CAPS) message = applySmall(message);
-        else if (fancy.get() == FancyType.UwU) message = applyUwU(message);
-        else if (fancy.get() == FancyType.Leet) message = applyLeet(message);
-
-        message = getPrefix() + message + getSuffix();
-
         if (coordsProtection.get() && containsCoordinates(message)) {
             BaseText warningMessage = new LiteralText(Formatting.GRAY + "It looks like there are coordinates in your message! ");
 
@@ -352,10 +336,32 @@ public class BetterChat extends Module {
             return;
         }
 
+        ChatEncryption chatEncryption = Modules.get().get(ChatEncryption.class);
+        if (chatEncryption.isActive()) {
+            if (chatEncryption.encryptAll.get()) return;
+            else if (message.startsWith(chatEncryption.prefix.get())) return;
+        }
+
+        if (emojiFix.get()) {
+            message = applyEmojiFix(message);
+            event.message = message;
+        }
+
+        if (annoy.get()) message = applyAnnoy(message);
+
+        switch (fancy.get()) {
+            case Full_Width -> message = applyFull(message);
+            case Small_CAPS -> message = applySmall(message);
+            case UwU -> message = applyUwU(message);
+            case Leet -> message = applyLeet(message);
+        }
+
+        if (prefix.get()) message = getAffix(prefixText.get(), prefixFont.get(), prefixRandom.get()) + message;
+
+        if (suffix.get()) message = getAffix(suffixText.get(), suffixFont.get(), suffixRandom.get()) + message;
+
         event.message = message;
     }
-
-    // Annoy
 
     public String applyAnnoy(String message) {
         StringBuilder sb = new StringBuilder(message.length());
@@ -371,8 +377,6 @@ public class BetterChat extends Module {
         return message;
     }
 
-    // Full Width
-
     public String applyFull(String message) {
         StringBuilder sb = new StringBuilder();
 
@@ -384,8 +388,6 @@ public class BetterChat extends Module {
         return sb.toString();
     }
 
-    // Small CAPS
-
     public String applySmall(String message) {
         StringBuilder sb = new StringBuilder();
 
@@ -396,8 +398,6 @@ public class BetterChat extends Module {
 
         return sb.toString();
     }
-
-    // UwU
 
     public String applyUwU(String message) {
         message = message.replace("ove", "uv");
@@ -412,8 +412,6 @@ public class BetterChat extends Module {
         message = message.replace("L", "W");
         return message.replace("l", "w");
     }
-
-    // Leet
 
     public String applyLeet(String message) {
         message = message.replace("a", "4");
@@ -434,39 +432,31 @@ public class BetterChat extends Module {
         return message.replace("t", "7");
     }
 
-    // Emoji Fix
-
-    public static String applyEmojiFix(String msg) {
+    public String applyEmojiFix(String msg) {
         if (msg.contains("😄")) msg = msg.replace("😄", "☺");
         if (msg.contains(":sad:")) msg = msg.replace(":sad:", "☹");
         if (msg.contains("❤️")) msg = msg.replace("❤️", "❤");
         if (msg.contains("💀")) msg = msg.replace("💀", "☠");
         if (msg.contains("⭐")) msg = msg.replace("⭐", "★");
         if (msg.contains(":flower:")) msg = msg.replace(":flower:", "❀");
-        if (msg.contains("⛏")) msg = msg.replace("⛏", "⛏");
-        if (msg.contains("♿")) msg = msg.replace("♿", "♿");
         if (msg.contains(":lightning:")) msg = msg.replace(":lightning:", "⚡");
         return msg;
     }
 
-    // Prefix & Suffix
-
-    public String getPrefix() {
-        return prefix.get() ? getAffix(prefixText.get(), prefixFont.get(), prefixRandom.get()) : "";
-    }
-
-    public String getSuffix() {
-        return suffix.get() ? getAffix(suffixText.get(), suffixFont.get(), suffixRandom.get()) : "";
-    }
-
-    private String getAffix(String text, Fonts font, boolean random) {
+    public String getAffix(String text, Fonts font, boolean random) {
         if (random) return String.format("(%03d) ", Utils.random(0, 1000));
-        else if (font == Fonts.Full_Width) return applyFull(text);
-        else if (font == Fonts.Small_CAPS) return applySmall(text);
-        else return text;
-    }
 
-    // Coords Protection
+        switch (font) {
+            case Full_Width -> {
+                return applyFull(text);
+            }
+            case Small_CAPS -> {
+                return applySmall(text);
+            }
+        }
+
+        return text;
+    }
 
     public boolean containsCoordinates(String message) {
         return message.matches(".*(?<x>-?\\d{3,}(?:\\.\\d*)?)(?:\\s+(?<y>\\d{1,3}(?:\\.\\d*)?))?\\s+(?<z>-?\\d{3,}(?:\\.\\d*)?).*");
@@ -482,22 +472,10 @@ public class BetterChat extends Module {
 
         hintBaseText.append(new LiteralText('\n' + message));
 
-        sendButton.setStyle(sendButton.getStyle()
-        .withFormatting(Formatting.DARK_RED)
-        .withClickEvent(new ClickEvent(
-                ClickEvent.Action.RUN_COMMAND,
-                Commands.get().get(SayCommand.class).toString(message)
-            )
-        )
-        .withHoverEvent(new HoverEvent(
-                HoverEvent.Action.SHOW_TEXT,
-                hintBaseText
-            )
-        ));
+        sendButton.setStyle(sendButton.getStyle().withFormatting(Formatting.DARK_RED).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, Commands.get().get(SayCommand.class).toString(message))).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hintBaseText)));
+
         return sendButton;
     }
-
-    // Longer chat
 
     public boolean isInfiniteChatBox() {
         return isActive() && infiniteChatBox.get();
