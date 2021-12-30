@@ -25,7 +25,9 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterOutputStream;
 
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.SecretKeySpec;
 
 /*/-----------------/*/
@@ -167,17 +169,11 @@ public class ChatEncryption extends Module {
         return null;
     }
 
-    public String decrypt(String toDecrypt, String secret) {
-        try {
-            setKey(secret);
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(decompress(cipher.doFinal(Base91.decode(toDecrypt.substring(0, toDecrypt.length() - suffix.get().length())))), StandardCharsets.UTF_8);
-        } catch (Exception exception) {
-            error("Error while decrypting: " + exception);
-        }
-
-        return toDecrypt;
+    public String decrypt(String toDecrypt, String secret) throws Exception {
+        setKey(secret);
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        return new String(decompress(cipher.doFinal(Base91.decode(toDecrypt.substring(0, toDecrypt.length() - suffix.get().length())))), StandardCharsets.UTF_8);
     }
 
     public static byte[] compress(byte[] in) {
