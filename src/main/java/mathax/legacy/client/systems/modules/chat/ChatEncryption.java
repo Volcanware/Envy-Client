@@ -9,7 +9,6 @@ import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.base91.Base91;
-import mathax.legacy.client.utils.render.color.SettingColor;
 import net.minecraft.item.Items;
 import net.minecraft.text.BaseText;
 import net.minecraft.text.LiteralText;
@@ -24,10 +23,7 @@ import java.util.Arrays;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterOutputStream;
 
-
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.SecretKeySpec;
 
 /*/-----------------/*/
