@@ -16,7 +16,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
@@ -131,10 +133,6 @@ public abstract class SplashOverlayMixin {
         }
     }
 
-    private static int withAlpha(int color, int alpha) {
-        return color | alpha << 24;
-    }
-
     @Inject(method = "renderProgressBar", at = @At("TAIL"))
     private void renderProgressBar(MatrixStack matrices, int x1, int y1, int x2, int y2, float opacity, CallbackInfo info) {
         int i = MathHelper.ceil((float) (x2 - x1 - 2) * progress);
@@ -145,5 +143,19 @@ public abstract class SplashOverlayMixin {
         DrawableHelper.fill(matrices, x1 + 1, y2, x2 - 1, y2 - 1, color);
         DrawableHelper.fill(matrices, x1, y1, x1 + 1, y2, color);
         DrawableHelper.fill(matrices, x2, y1, x2 - 1, y2, color);
+    }
+
+    private static int withAlpha(int color, int alpha) {
+        return color | alpha << 24;
+    }
+
+    @ModifyConstant(method = "render", constant = @Constant(floatValue = 500))
+    private float getFadeInTime(float old) {
+        return 0;
+    }
+
+    @ModifyConstant(method = "render", constant = @Constant(floatValue = 1000))
+    private float getFadeOutTime(float old) {
+        return 1500;
     }
 }

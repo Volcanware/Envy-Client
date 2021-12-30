@@ -1,6 +1,5 @@
 package mathax.legacy.client.systems.modules.chat;
 
-import io.netty.handler.codec.compression.ZlibEncoder;
 import mathax.legacy.client.MatHaxLegacy;
 import mathax.legacy.client.eventbus.EventHandler;
 import mathax.legacy.client.events.game.ReceiveMessageEvent;
@@ -101,6 +100,7 @@ public class ChatEncryption extends Module {
             msg[1] = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
             message = new LiteralText(msg[0] + " " + msg[1]).setStyle(message.getStyle().withColor(getIntFromColor(decryptedColor.get().r, decryptedColor.get().g, decryptedColor.get().b)));
         }
+
         event.setMessage(message);
     }
 
@@ -108,18 +108,21 @@ public class ChatEncryption extends Module {
     private void onMessageSend(SendMessageEvent event) {
         String message = event.message;
         if (suffix.get().isEmpty()) {
-            error("Suffix is empty, not sending.");
-            event.message = null;
+            error("Suffix is empty, not sending...");
             event.setCancelled(true);
+            event.message = null;
         } else if (encryptAll.get() || message.startsWith(prefix.get())) {
             if (!encryptAll.get()) message = message.substring(prefix.get().length());
+
             message = encrypt(message, (customKey.get() ? groupKey.get() : password));
-            if(message.length() > 256) {
+
+            if (message.length() > 256) {
                 error("Message is too long, not sending.");
                 event.message = null;
                 event.setCancelled(true);
             }
         }
+
         event.message = message;
     }
 
@@ -159,13 +162,6 @@ public class ChatEncryption extends Module {
         return strToDecrypt;
     }
 
-    public int getIntFromColor(int r, int g, int b) {
-        r = (r << 16) & 0x00FF0000;
-        g = (g << 8) & 0x0000FF00;
-        b = b & 0x000000FF;
-        return 0xFF000000 | r | g | b;
-    }
-
     public static byte[] compress(byte[] in) {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -196,5 +192,12 @@ public class ChatEncryption extends Module {
             System.exit(150);
             return null;
         }
+    }
+
+    public int getIntFromColor(int r, int g, int b) {
+        r = (r << 16) & 0x00FF0000;
+        g = (g << 8) & 0x0000FF00;
+        b = b & 0x000000FF;
+        return 0xFF000000 | r | g | b;
     }
 }
