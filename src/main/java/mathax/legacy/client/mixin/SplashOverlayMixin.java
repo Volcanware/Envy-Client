@@ -76,13 +76,13 @@ public abstract class SplashOverlayMixin {
             if (client.currentScreen != null) client.currentScreen.render(matrices, 0, 0, delta);
 
             color = MathHelper.ceil((1.0F - MathHelper.clamp(completeTime - 1.0F, 0.0F, 1.0F)) * 255.0F);
-            DrawableHelper.fill(matrices, 0, 0, width, height, withAlpha(color));
+            DrawableHelper.fill(matrices, 0, 0, width, height, withAlpha(0x1e1e2d, color));
             floatTime = 1.0F - MathHelper.clamp(completeTime - 1.0F, 0.0F, 1.0F);
         } else if (reloading) {
             if (client.currentScreen != null && g < 1.0F) client.currentScreen.render(matrices, mouseX, mouseY, delta);
 
             color = MathHelper.ceil(MathHelper.clamp(g, 0.15D, 1.0D) * 255.0D);
-            DrawableHelper.fill(matrices, 0, 0, width, height, withAlpha(color));
+            DrawableHelper.fill(matrices, 0, 0, width, height, withAlpha(0x1e1e2d, color));
             floatTime = MathHelper.clamp(g, 0.0F, 1.0F);
         } else {
             color = 0x1e1e2d;
@@ -131,14 +131,14 @@ public abstract class SplashOverlayMixin {
         }
     }
 
-    private static int withAlpha(int alpha) {
-        return 0x1e1e2d | alpha << 24;
+    private static int withAlpha(int color, int alpha) {
+        return color | alpha << 24;
     }
 
     @Inject(method = "renderProgressBar", at = @At("TAIL"))
     private void renderProgressBar(MatrixStack matrices, int x1, int y1, int x2, int y2, float opacity, CallbackInfo info) {
         int i = MathHelper.ceil((float) (x2 - x1 - 2) * progress);
-        int color = 0xe64c65 | 255 << 24;
+        int color = withAlpha(0xe64c65, 255);
 
         DrawableHelper.fill(matrices, x1 + 2, y1 + 2, x1 + i, y2 - 2, color);
         DrawableHelper.fill(matrices, x1 + 1, y1, x2 - 1, y1 + 1, color);

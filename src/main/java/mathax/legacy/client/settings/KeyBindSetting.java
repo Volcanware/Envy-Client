@@ -47,6 +47,8 @@ public class KeyBindSetting extends Setting<KeyBind> {
     public void resetImpl() {
         if (value == null) value = defaultValue.copy();
         else value.set(defaultValue);
+
+        if (widget != null) widget.reset();
     }
 
     @Override
