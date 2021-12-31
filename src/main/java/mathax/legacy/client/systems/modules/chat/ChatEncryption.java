@@ -33,8 +33,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class ChatEncryption extends Module {
     private static final String password = "MatHaxEncryption";
-    private String actualPassword = "";
     public final String encryptedPrefix = "Ø";
+    private String actualPassword = "";
 
     private static SecretKeySpec secretKey;
 
@@ -98,13 +98,13 @@ public class ChatEncryption extends Module {
             try {
                 String chat = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
 
-                BaseText prefixOpenBorder = new LiteralText(" [");
+                BaseText prefixOpenBorder = new LiteralText("[");
                 prefixOpenBorder.setStyle(prefixOpenBorder.getStyle().withFormatting(Formatting.GRAY));
 
                 BaseText prefix = new LiteralText("Encrypted Chat");
                 prefix.setStyle(prefix.getStyle().withColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
 
-                BaseText prefixCloseBorder = new LiteralText("]");
+                BaseText prefixCloseBorder = new LiteralText("] ");
                 prefixCloseBorder.setStyle(prefixCloseBorder.getStyle().withFormatting(Formatting.GRAY));
 
                 BaseText chatText = new LiteralText(msg[0] + chat);
