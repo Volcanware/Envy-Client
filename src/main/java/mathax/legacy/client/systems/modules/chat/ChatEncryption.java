@@ -34,6 +34,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class ChatEncryption extends Module {
     private static final String password = "MatHaxEncryption";
     private String actualPassword = "";
+    public final String encryptedPrefix = "Ø";
 
     private static SecretKeySpec secretKey;
 
@@ -81,7 +82,7 @@ public class ChatEncryption extends Module {
     );
 
     public ChatEncryption(){
-        super(Categories.Client, Items.BARRIER, "chat-encryption", "Encrypts your chat messages.");
+        super(Categories.Chat, Items.BARRIER, "chat-encryption", "Encrypts your chat messages.");
     }
 
     @EventHandler
@@ -92,7 +93,7 @@ public class ChatEncryption extends Module {
         Text message = event.getMessage();
 
         if (message.getString().endsWith(suffix.get()) && !suffix.get().isEmpty()) {
-            String[] msg = message.getString().split("Ø");
+            String[] msg = message.getString().split(encryptedPrefix);
 
             try {
                 String chat = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
@@ -135,7 +136,7 @@ public class ChatEncryption extends Module {
         } else if (encryptAll.get() || message.startsWith(prefix.get())) {
             if (!encryptAll.get()) message = message.substring(prefix.get().length());
 
-            message = "Ø" + encrypt(message, (customKey.get() ? groupKey.get() : password));
+            message = encryptedPrefix + encrypt(message, (customKey.get() ? groupKey.get() : password));
 
             if (message.length() > 256) {
                 error("Message is too long, not sending!");

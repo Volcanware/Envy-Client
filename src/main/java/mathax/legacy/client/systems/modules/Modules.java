@@ -579,9 +579,9 @@ public class Modules extends System<Modules> {
         add(new ArmorNotifier());
         add(new AutoEZ());
         add(new AutoLogin());
-        add(new BetterChat());
-        add(new BurrowNotifier());
         add(new ChatEncryption());
+        add(new BetterChat(this));
+        add(new BurrowNotifier());
         //add(new ChatBot());
         add(new MessageAura());
         add(new Spam());

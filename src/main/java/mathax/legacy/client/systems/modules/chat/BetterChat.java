@@ -27,6 +27,8 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class BetterChat extends Module {
+    ChatEncryption encryption;
+
     private final Char2CharMap FULL_WIDTH = new Char2CharArrayMap(); {
         String[] chars = "aábcčdďeéěfghchiíjklmnňoópqrřsštťuúůvwxyýzžAÁBCČDĎEÉĚFGHCHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ0123456789|[]!?.,{}()\"'".split("");
         String[] fontchars = "ａáｂｃčｄďｅéěｆｇｈｃｈｉíｊｋｌｍｎňｏóｐｑｒřｓšｔťｕúůｖｗｘｙýｚžＡÁＢＣČＤĎＥÉĚＦＧＨＣＨＩÍＪＫＬＭＮŇＯÓＰＱＲŘＳŠＴŤＵÚŮＶＷＸＹÝＺŽ０１２３４５６７８９｜［］！？．，｛｝（）\"＇".split("");
@@ -225,8 +227,9 @@ public class BetterChat extends Module {
         .build()
     );
 
-    public BetterChat() {
+    public BetterChat(Modules modules) {
         super(Categories.Chat, Items.DROPPER, "better-chat", "Improves your chat experience in various ways.");
+        encryption = (ChatEncryption) modules.get("chat-encryption");
     }
 
     @EventHandler
@@ -235,6 +238,11 @@ public class BetterChat extends Module {
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
 
         Text message = event.getMessage();
+
+        if (message.getString().contains(encryption.encryptedPrefix)){
+            event.setMessage(message);
+            return;
+        }
 
         if (filterRegex.get()) {
             for (int i = 0; i < regexFilters.get().size(); i++) {
@@ -323,6 +331,11 @@ public class BetterChat extends Module {
     @EventHandler
     public void onMessageSend(SendMessageEvent event) {
         String message = event.message;
+
+        if (message.startsWith(encryption.prefix.get()) || encryption.encryptAll.get()) {
+            event.message = message;
+            return;
+        }
 
         if (coordsProtection.get() && containsCoordinates(message)) {
             BaseText warningMessage = new LiteralText(Formatting.GRAY + "It looks like there are coordinates in your message! ");
