@@ -87,6 +87,22 @@ public class BetterChat extends Module {
         .build()
     );
 
+    // Fancy Chat
+
+    public final Setting<FancyType> fancy = sgFancyChat.add(new EnumSetting.Builder<FancyType>()
+        .name("fancy")
+        .description("Determines what font or style to use in the your messages.")
+        .defaultValue(FancyType.None)
+        .build()
+    );
+
+    public final Setting<Boolean> annoy = sgFancyChat.add(new BoolSetting.Builder()
+        .name("annoy")
+        .description("Makes your messages aNnOyInG.")
+        .defaultValue(false)
+        .build()
+    );
+
     // Filter
 
     private final Setting<Boolean> antiSpam = sgFilter.add(new BoolSetting.Builder()
@@ -144,22 +160,6 @@ public class BetterChat extends Module {
         .min(100)
         .sliderRange(100, 1000)
         .visible(longerChatHistory::get)
-        .build()
-    );
-
-    // Fancy Chat
-
-    public final Setting<FancyType> fancy = sgFancyChat.add(new EnumSetting.Builder<FancyType>()
-        .name("fancy")
-        .description("Determines what font or style to use in the your messages.")
-        .defaultValue(FancyType.None)
-        .build()
-    );
-
-    public final Setting<Boolean> annoy = sgFancyChat.add(new BoolSetting.Builder()
-        .name("annoy")
-        .description("Makes your messages aNnOyInG.")
-        .defaultValue(false)
         .build()
     );
 
@@ -230,7 +230,7 @@ public class BetterChat extends Module {
     }
 
     @EventHandler
-    private void onMessageReceive(ReceiveMessageEvent event) {
+    public void onMessageReceive(ReceiveMessageEvent event) {
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).getVisibleMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
 
@@ -321,7 +321,7 @@ public class BetterChat extends Module {
     }
 
     @EventHandler
-    private void onMessageSend(SendMessageEvent event) {
+    public void onMessageSend(SendMessageEvent event) {
         String message = event.message;
 
         if (coordsProtection.get() && containsCoordinates(message)) {
@@ -337,10 +337,7 @@ public class BetterChat extends Module {
         }
 
         ChatEncryption chatEncryption = Modules.get().get(ChatEncryption.class);
-        if (chatEncryption.isActive()) {
-            if (chatEncryption.encryptAll.get()) return;
-            else if (message.startsWith(chatEncryption.prefix.get())) return;
-        }
+        if (chatEncryption.isActive() && (chatEncryption.encryptAll.get() || message.startsWith(chatEncryption.prefix.get()))) return;
 
         if (emojiFix.get()) {
             message = applyEmojiFix(message);
