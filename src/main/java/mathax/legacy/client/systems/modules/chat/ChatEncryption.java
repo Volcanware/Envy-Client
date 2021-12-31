@@ -8,6 +8,7 @@ import mathax.legacy.client.mixin.ChatHudAccessor;
 import mathax.legacy.client.settings.*;
 import mathax.legacy.client.systems.modules.Categories;
 import mathax.legacy.client.systems.modules.Module;
+import mathax.legacy.client.systems.modules.Modules;
 import mathax.legacy.client.utils.base91.Base91;
 import net.minecraft.item.Items;
 import net.minecraft.text.BaseText;
@@ -111,6 +112,7 @@ public class ChatEncryption extends Module {
                 chatText.setStyle(chatText.getStyle().withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText(msg[1]))));
 
                 BaseText chatMessage = new LiteralText("");
+                if (Modules.get().get(BetterChat.class).displayPlayerHeads()) chatMessage.append("  ");
                 chatMessage.append(prefixOpenBorder);
                 chatMessage.append(prefix);
                 chatMessage.append(prefixCloseBorder);

@@ -236,8 +236,6 @@ public class BetterChat extends Module {
 
         Text message = event.getMessage();
 
-        if (playerHeads.get()) message = new LiteralText("  ").append(message);
-
         ChatEncryption chatEncryption = Modules.get().get(ChatEncryption.class);
         if (chatEncryption.isActive() && (chatEncryption.encryptAll.get() || message.getString().contains(chatEncryption.prefix.get()))) return;
 
@@ -271,6 +269,8 @@ public class BetterChat extends Module {
 
             message = new LiteralText("").append(timestamp).append(message);
         }
+
+        if (playerHeads.get()) message = new LiteralText("  ").append(message);
 
         for (int i = 0; i < antiSpamDepth.get(); i++) {
             if (antiSpam.get()) {
