@@ -11,6 +11,7 @@ import mathax.legacy.client.systems.modules.Module;
 import mathax.legacy.client.utils.base91.Base91;
 import net.minecraft.item.Items;
 import net.minecraft.text.BaseText;
+import net.minecraft.text.HoverEvent;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -32,6 +33,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class ChatEncryption extends Module {
     private static final String password = "MatHaxEncryption";
+    private String actualPassword = "";
 
     private static SecretKeySpec secretKey;
 
@@ -90,25 +92,28 @@ public class ChatEncryption extends Module {
         Text message = event.getMessage();
 
         if (message.getString().endsWith(suffix.get()) && !suffix.get().isEmpty()) {
-            String[] msg = message.getString().split(" ", 2);
+            String[] msg = message.getString().split("Ø");
 
             try {
-                msg[1] = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
+                String chat = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
 
-                BaseText prefixOpenBorder = new LiteralText("[");
+                BaseText prefixOpenBorder = new LiteralText(" [");
                 prefixOpenBorder.setStyle(prefixOpenBorder.getStyle().withFormatting(Formatting.GRAY));
 
                 BaseText prefix = new LiteralText("Encrypted Chat");
                 prefix.setStyle(prefix.getStyle().withColor(MatHaxLegacy.INSTANCE.MATHAX_COLOR.getPacked()));
 
-                BaseText prefixCloseBorder = new LiteralText("] ");
+                BaseText prefixCloseBorder = new LiteralText("]");
                 prefixCloseBorder.setStyle(prefixCloseBorder.getStyle().withFormatting(Formatting.GRAY));
+
+                BaseText chatText = new LiteralText(msg[0] + chat);
+                chatText.setStyle(chatText.getStyle().withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText(msg[1]))));
 
                 BaseText chatMessage = new LiteralText("");
                 chatMessage.append(prefixOpenBorder);
                 chatMessage.append(prefix);
                 chatMessage.append(prefixCloseBorder);
-                chatMessage.append(new LiteralText(msg[0] + " " + msg[1]));
+                chatMessage.append(chatText);
 
                 message = chatMessage;
             } catch (Exception exception) {
@@ -130,7 +135,7 @@ public class ChatEncryption extends Module {
         } else if (encryptAll.get() || message.startsWith(prefix.get())) {
             if (!encryptAll.get()) message = message.substring(prefix.get().length());
 
-            message = encrypt(message, (customKey.get() ? groupKey.get() : password));
+            message = "Ø" + encrypt(message, (customKey.get() ? groupKey.get() : password));
 
             if (message.length() > 256) {
                 error("Message is too long, not sending!");
@@ -142,12 +147,14 @@ public class ChatEncryption extends Module {
         event.message = message;
     }
 
-    public static void setKey(String myKey) {
+    public void setKey(String myKey) {
         try {
+            if (actualPassword.isEmpty()) actualPassword = password;
+            else if (actualPassword.equals(myKey)) return;
             MessageDigest sha = MessageDigest.getInstance("SHA-256");
             key = Arrays.copyOf(sha.digest(myKey.getBytes(StandardCharsets.UTF_8)), 16);
             secretKey = new SecretKeySpec(key, "AES");
-        } catch (NoSuchAlgorithmException exception) {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
