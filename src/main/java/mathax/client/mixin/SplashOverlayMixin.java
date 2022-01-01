@@ -156,6 +156,6 @@ public abstract class SplashOverlayMixin {
 
     @ModifyConstant(method = "render", constant = @Constant(floatValue = 1000))
     private float getFadeOutTime(float old) {
-        return 1500;
+        return 0;
     }
 }

@@ -13,6 +13,7 @@ import mathax.client.renderer.GL;
 import mathax.client.renderer.Renderer2D;
 import mathax.client.renderer.text.TextRenderer;
 import mathax.client.settings.*;
+import mathax.client.systems.enemies.Enemies;
 import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
@@ -101,6 +102,13 @@ public class Nametags extends Module {
         .build()
     );
 
+    private final Setting<Boolean> selfAlways = sgGeneral.add(new BoolSetting.Builder()
+        .name("always-self")
+        .description("Renders your nametag even if you're not in Freecam.")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<SettingColor> selfColor = sgGeneral.add(new ColorSetting.Builder()
         .name("self-color")
         .description("The color of your nametag in Freecam.")
@@ -119,6 +127,13 @@ public class Nametags extends Module {
     private final Setting<Boolean> ignoreFriends = sgGeneral.add(new BoolSetting.Builder()
         .name("ignore-friends")
         .description("Stops nametag rendering for friends.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Boolean> ignoreEnemies = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-enemies")
+        .description("Stops nametag rendering for enemies.")
         .defaultValue(false)
         .build()
     );
@@ -163,7 +178,7 @@ public class Nametags extends Module {
         .description("The spacing between items.")
         .defaultValue(2)
         .range(0, 10)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .visible(displayItems::get)
         .build()
     );
@@ -245,7 +260,7 @@ public class Nametags extends Module {
         .build()
     );
 
-    //Items
+    // Items
 
     private final Setting<Boolean> itemCount = sgItems.add(new BoolSetting.Builder()
         .name("show-count")
@@ -311,13 +326,12 @@ public class Nametags extends Module {
             EntityType<?> type = entity.getType();
             if (!entities.get().containsKey(type)) continue;
 
-            if (type == EntityType.PLAYER) {
-                if ((!self.get() || freecamNotActive) && entity == mc.player) continue;
-            }
+            boolean isLocalPlayer = type == EntityType.PLAYER && entity == mc.player;
 
-            if (!culling.get() || entity.getPos().distanceTo(cameraPos) < maxCullRange.get()) {
-                entityList.add(entity);
-            }
+            if (isLocalPlayer && !self.get()) continue;
+            if (isLocalPlayer && self.get() && !selfAlways.get() && freecamNotActive) continue;
+
+            if (!culling.get() || entity.getPos().distanceTo(cameraPos) < maxCullRange.get()) entityList.add(entity);
         }
 
         entityList.sort(Comparator.comparing(e -> e.squaredDistanceTo(cameraPos)));
@@ -368,6 +382,7 @@ public class Nametags extends Module {
 
     private void renderNametagPlayer(PlayerEntity player) {
         if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
+        if (ignoreEnemies.get() && Enemies.get().isEnemy(player)) return;
 
         TextRenderer text = TextRenderer.get();
         NametagUtils.begin(pos);
@@ -391,10 +406,10 @@ public class Nametags extends Module {
         // Name
         String name;
         Color nameColor = PlayerUtils.getPlayerColor(player, names.get());
-        if (self.get() && player.getUuidAsString().equals(mc.player.getUuidAsString())) nameColor = selfColor.get();
-
-        if (player == mc.player) name = Modules.get().get(NameProtect.class).getName(player.getEntityName());
-        else name = player.getEntityName();
+        if (player == mc.player) {
+            if (self.get()) nameColor = selfColor.get();
+            name = Modules.get().get(NameProtect.class).getName(player.getEntityName());
+        } else name = player.getEntityName();
 
         name = name + " ";
 
@@ -477,9 +492,7 @@ public class Nametags extends Module {
                     enchantmentsToShowScale.clear();
 
                     for (Enchantment enchantment : enchantments.keySet()) {
-                        if (!ignoredEnchantments.get().contains(enchantment)) {
-                            enchantmentsToShowScale.put(enchantment, enchantments.get(enchantment));
-                        }
+                        if (!ignoredEnchantments.get().contains(enchantment)) enchantmentsToShowScale.put(enchantment, enchantments.get(enchantment));
                     }
 
                     for (Enchantment enchantment : enchantmentsToShowScale.keySet()) {
@@ -512,9 +525,7 @@ public class Nametags extends Module {
                     Map<Enchantment, Integer> enchantmentsToShow = new HashMap<>();
 
                     for (Enchantment enchantment : enchantments.keySet()) {
-                        if (!ignoredEnchantments.get().contains(enchantment)) {
-                            enchantmentsToShow.put(enchantment, enchantments.get(enchantment));
-                        }
+                        if (!ignoredEnchantments.get().contains(enchantment)) enchantmentsToShow.put(enchantment, enchantments.get(enchantment));
                     }
 
                     double aW = itemWidths[i];
