@@ -58,8 +58,5 @@ accessible   field   net/minecraft/client/render/entity/EndCrystalEntityRenderer
 
 Accessible   field   net/minecraft/client/render/entity/BoatEntityRenderer texturesAndModels Ljava/util/Map;
 
-accessible	class	net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$RebuildTask
-accessible	class	net/minecraft/client/render/WorldRenderer$ChunkInfo
-
 Accessible   class   net/minecraft/client/render/MapRenderer$MapTexture
 Accessible   field   net/minecraft/client/render/MapRenderer$MapTexture texture Lnet/minecraft/client/texture/NativeImageBackedTexture;

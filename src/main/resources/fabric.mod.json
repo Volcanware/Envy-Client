@@ -22,10 +22,10 @@
   },
   "mixins": [
     "mathax.mixins.json",
+    "mathax-baritone.mixins.json",
     "mathax-canvas.mixins.json",
-    "mathax-sodium.mixins.json",
     "mathax-indigo.mixins.json",
-    "mathax-baritone.mixins.json"
+    "mathax-sodium.mixins.json"
   ],
   "accessWidener": "mathax.accesswidener",
   "custom": {

@@ -133,6 +133,7 @@ public class AutoEZ extends Module {
 
     @EventHandler
     public void onPacketReadMessage(PacketEvent.Receive event) {
+        if (mc.player == null || mc.world == null) return;
         if (EntityUtils.getGameMode(mc.player).isCreative()) return;
 
         if (!kills.get()) return;
@@ -198,6 +199,7 @@ public class AutoEZ extends Module {
 
     @EventHandler
     private void onReceivePacket(PacketEvent.Receive event) {
+        if (mc.player == null || mc.world == null) return;
         if (EntityUtils.getGameMode(mc.player).isCreative()) return;
 
         if (!totems.get()) return;

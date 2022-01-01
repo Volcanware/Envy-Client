@@ -358,7 +358,7 @@ public class BetterChat extends Module {
 
         if (prefix.get()) message = getAffix(prefixText.get(), prefixFont.get(), prefixRandom.get()) + message;
 
-        if (suffix.get()) message = getAffix(suffixText.get(), suffixFont.get(), suffixRandom.get()) + message;
+        if (suffix.get()) message = message + getAffix(suffixText.get(), suffixFont.get(), suffixRandom.get());
 
         event.message = message;
     }

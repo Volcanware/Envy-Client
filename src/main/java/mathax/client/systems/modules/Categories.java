@@ -19,6 +19,7 @@ public class Categories {
 
     public static void init() {
         REGISTERING = true;
+
         Modules.registerCategory(Combat);
         Modules.registerCategory(Movement);
         Modules.registerCategory(Render);
@@ -28,6 +29,7 @@ public class Categories {
         Modules.registerCategory(Chat);
         Modules.registerCategory(Misc);
         Modules.registerCategory(Client);
+
         REGISTERING = false;
     }
 }

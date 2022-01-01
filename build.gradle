@@ -32,15 +32,6 @@ repositories {
         url = "https://maven.meteordev.org/snapshots"
     }
 
-    // Litematica
-    maven {
-        url = "https://www.cursemaven.com"
-    }
-
-    maven {
-        url 'https://masa.dy.fi/maven'
-    }
-
     // Other
     maven {
         name = "vram"

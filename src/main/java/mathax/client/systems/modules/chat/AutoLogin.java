@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class AutoLogin extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<String> password = sgGeneral.add(new StringSetting.Builder()
         .name("password")
         .description("The password to log in with.")
@@ -22,7 +24,7 @@ public class AutoLogin extends Module {
         .build()
     );
 
-    private final ArrayList<String> loginMessages = new ArrayList<String>() {{
+    private final ArrayList<String> loginMessages = new ArrayList<>() {{
         add("/login ");
         add("/login <password>");
     }};
@@ -33,14 +35,8 @@ public class AutoLogin extends Module {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onMessageRecieve(ReceiveMessageEvent event) {
-        if (mc.world == null || mc.player == null) return;
-        String msg = event.getMessage().getString();
-        if (msg.startsWith(">")) return; // Ignore chat messages
-        for (String loginMsg: loginMessages) {
-            if (msg.contains(loginMsg)) {
-                mc.player.sendChatMessage("/login " + password.get());
-                break;
-            }
+        for (String loginMessage: loginMessages) {
+            if (event.getMessage().getString().contains(loginMessage)) mc.player.sendChatMessage("/login " + password.get());
         }
     }
 }
