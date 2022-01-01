@@ -110,8 +110,6 @@ shadowJar {
 }
 
 processResources {
-    inputs.property "version", project.version
-
     filesMatching("fabric.mod.json") {
         expand "version": project.version
         filter {
@@ -128,8 +126,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = "UTF-8"
-    it.options.release = 16
+    it.options.encoding("UTF-8")
 }
 
 jar {
