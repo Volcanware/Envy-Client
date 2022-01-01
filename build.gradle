@@ -100,7 +100,7 @@ dependencies {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/mathaxlegacy.accesswidener")
+    accessWidenerPath = file("src/main/resources/mathax.accesswidener")
 }
 
 shadowJar {

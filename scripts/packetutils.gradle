@@ -3,7 +3,7 @@ import java.util.jar.JarFile
 final packetRegistryClass = """
     private static class PacketRegistry extends Registry<Class<? extends Packet<?>>> {
         public PacketRegistry() {
-            super(RegistryKey.ofRegistry(new Identifier("mathaxlegacy", "packets")), Lifecycle.stable());
+            super(RegistryKey.ofRegistry(new Identifier("mathax", "packets")), Lifecycle.stable());
         }
 
         @Override
@@ -102,9 +102,9 @@ task generatePacketUtils() {
         }
 
         // Generate PacketUtils.java
-        def writer = new File("src/main/java/mathax/legacy/client/utils/network/PacketUtils.java").newWriter()
+        def writer = new File("src/main/java/mathax/client/utils/network/PacketUtils.java").newWriter()
 
-        writer << "package mathax.legacy.client.utils.network;\n\n"
+        writer << "package mathax.client.utils.network;\n\n"
 
         //   Write imports
         writer << "import com.google.common.collect.Iterators;\n"

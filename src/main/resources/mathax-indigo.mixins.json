@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "mathax.client.mixin.indigo",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "AbstractQuadRendererMixin",
+    "TerrainRenderContextMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

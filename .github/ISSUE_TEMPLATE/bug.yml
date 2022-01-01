@@ -1,5 +1,5 @@
 name: Bug
-description: Report a bug to help us improve MatHax Legacy.
+description: Report a bug to help us improve MatHax.
 title: '[Bug] '
 labels: bug
 body:
@@ -22,9 +22,9 @@ body:
     validations:
       required: true
   - type: input
-    id: mathax-legacy-version
+    id: mathax-version
     attributes:
-      label: MatHax Legacy Version
+      label: MatHax Version
     validations:
       required: true
   - type: input

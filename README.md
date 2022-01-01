@@ -3,11 +3,11 @@
 </div>
 
 <h1 align="center">
-  MatHax Legacy
+  MatHax
 </h1>
 
 <p align="center">
-    A Minecraft 1.18 utility client for Fabric
+    A Minecraft 1.17.1-1.18.1 utility client for Fabric
 </p>
 
 <div align="center">
@@ -15,12 +15,12 @@
     <br>
     <a href="https://mathaxclient.xyz/Discord"><img src="https://img.shields.io/discord/823286525402939402?logo=discord" alt="Discord"/></a>
     <br><br>
-    <img src="https://img.shields.io/github/last-commit/MatHax/Legacy" alt="GitHub last commit"/>
-    <img src="https://img.shields.io/github/commit-activity/w/MatHax/Legacy" alt="GitHub commit activity"/>
+    <img src="https://img.shields.io/github/last-commit/MatHax/Client" alt="GitHub last commit"/>
+    <img src="https://img.shields.io/github/commit-activity/w/MatHax/Client" alt="GitHub commit activity"/>
     <br>
-    <img src="https://img.shields.io/github/languages/code-size/MatHax/Legacy" alt="GitHub code size in bytes"/>
-    <img src="https://tokei.rs/b1/github/MatHax/Legacy" alt="GitHub lines of code"/>
-    <img src="https://img.shields.io/github/contributors/MatHax/Legacy" alt="GitHub contributors"/>
+    <img src="https://img.shields.io/github/languages/code-size/MatHax/Client" alt="GitHub code size in bytes"/>
+    <img src="https://tokei.rs/b1/github/MatHax/Client" alt="GitHub lines of code"/>
+    <img src="https://img.shields.io/github/contributors/MatHax/Client" alt="GitHub contributors"/>
 </div>
 
 ## Usage
@@ -30,7 +30,7 @@
 - Run `./gradlew build`
 
 ### Installation
-Follow guide on the [wiki](https://github.com/MatHax/Legacy/wiki/Installation).
+Follow guide on the [wiki](https://github.com/MatHax/Client/wiki/Installation).
 
 ## Contribution Guidelines
 
@@ -42,6 +42,6 @@ We will review and help with all reasonable pull requests as long as the guideli
 - If you need help, check out the [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html).
 
 ## Bugs and Suggestions
-Bug reports and suggestions should be made in this repo's [issue tracker](https://github.com/MatHax/Legacy/issues) using the templates provided. Please provide as much information as you can to best help us understand your issue and give a better chance of it being resolved.
+Bug reports and suggestions should be made in this repo's [issue tracker](https://github.com/MatHax/Client/issues) using the templates provided. Please provide as much information as you can to best help us understand your issue and give a better chance of it being resolved.
 
 *If you have any other questions, check our [FAQ](https://mathaxclient.xyz/FAQ).*

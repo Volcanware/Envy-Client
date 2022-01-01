@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "name": "MatHax Legacy",
-  "id": "mathaxlegacy",
+  "name": "MatHax",
+  "id": "mathax",
   "version": "${version}",
-  "description": "MatHax Legacy is an advanced Minecraft utility client for Fabric forked from Meteor Client.",
+  "description": "MatHax is an advanced Minecraft utility client for Fabric forked from Meteor Client.",
   "authors": [
     "Matejko06"
   ],
-  "icon": "assets/mathaxlegacy/textures/icons/icon.png",
+  "icon": "assets/mathax/textures/icons/icon.png",
   "license": "GPL-3.0",
   "contact": {
     "homepage": "https://mathaxclient.xyz",
@@ -17,17 +17,17 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "mathax.legacy.client.MatHaxLegacy"
+      "mathax.client.MatHax"
     ]
   },
   "mixins": [
-    "mathaxlegacy.mixins.json",
-    "mathaxlegacy-canvas.mixins.json",
-    "mathaxlegacy-sodium.mixins.json",
-    "mathaxlegacy-indigo.mixins.json",
-    "mathaxlegacy-baritone.mixins.json"
+    "mathax.mixins.json",
+    "mathax-canvas.mixins.json",
+    "mathax-sodium.mixins.json",
+    "mathax-indigo.mixins.json",
+    "mathax-baritone.mixins.json"
   ],
-  "accessWidener": "mathaxlegacy.accesswidener",
+  "accessWidener": "mathax.accesswidener",
   "custom": {
     "modmenu": {
       "links": {
