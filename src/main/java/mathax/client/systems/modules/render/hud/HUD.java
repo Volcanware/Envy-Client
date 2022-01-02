@@ -45,8 +45,7 @@ public class HUD extends Module {
         .description("Scale of the HUD.")
         .defaultValue(1)
         .min(0.75)
-        .sliderMin(0.75)
-        .sliderMax(5)
+        .sliderRange(0.75, 5)
         .build()
     );
 

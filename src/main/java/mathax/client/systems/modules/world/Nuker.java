@@ -1,12 +1,17 @@
 package mathax.client.systems.modules.world;
 
+import mathax.client.MatHax;
 import mathax.client.eventbus.EventHandler;
+import mathax.client.events.render.Render3DEvent;
 import mathax.client.events.world.TickEvent;
+import mathax.client.renderer.ShapeMode;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.Pool;
+import mathax.client.utils.render.color.Color;
+import mathax.client.utils.render.color.SettingColor;
 import mathax.client.utils.world.BlockIterator;
 import mathax.client.utils.world.BlockUtils;
 import net.minecraft.block.Block;
@@ -21,14 +26,19 @@ public class Nuker extends Module {
     private final Pool<BlockPos.Mutable> blockPosPool = new Pool<>(BlockPos.Mutable::new);
     private final List<BlockPos.Mutable> blocks = new ArrayList<>();
 
-    private boolean firstBlock;
+    private final Pool<RenderBlock> renderBlockPool = new Pool<>(RenderBlock::new);
+    private final List<RenderBlock> renderBlocks = new ArrayList<>();
+
     private final BlockPos.Mutable lastBlockPos = new BlockPos.Mutable();
+
+    private boolean firstBlock;
 
     private int noBlockTimer;
     private int timer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgWhitelist = settings.createGroup("Whitelist");
+    private final SettingGroup sgRender = settings.createGroup("Render");
 
     // General
 
@@ -70,13 +80,6 @@ public class Nuker extends Module {
         .build()
     );
 
-    private final Setting<Boolean> swingHand = sgGeneral.add(new BoolSetting.Builder()
-        .name("swing-hand")
-        .description("Swing hand client side.")
-        .defaultValue(true)
-        .build()
-    );
-
     // Whitelist
 
     private final Setting<Boolean> whitelistEnabled = sgWhitelist.add(new BoolSetting.Builder()
@@ -93,6 +96,43 @@ public class Nuker extends Module {
         .build()
     );
 
+    // Render
+
+    private final Setting<Boolean> swingHand = sgRender.add(new BoolSetting.Builder()
+        .name("swing-hand")
+        .description("Swing hand client side.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
+        .name("render")
+        .description("Renders a block overlay on the block being broken.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
+        .name("shape-mode")
+        .description("Determines how the shapes are rendered.")
+        .defaultValue(ShapeMode.Both)
+        .build()
+    );
+
+    private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
+        .name("side-color")
+        .description("The color of the sides of the blocks being rendered.")
+        .defaultValue(new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b, 75))
+        .build()
+    );
+
+    private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
+        .name("line-color")
+        .description("The color of the lines of the blocks being rendered.")
+        .defaultValue(new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b))
+        .build()
+    );
+
     public Nuker() {
         super(Categories.World, Items.TNT, "nuker", "Breaks blocks around you.");
     }
@@ -100,13 +140,23 @@ public class Nuker extends Module {
     @Override
     public void onActivate() {
         firstBlock = true;
-
+        for (RenderBlock renderBlock : renderBlocks) renderBlockPool.free(renderBlock);
+        renderBlocks.clear();
         timer = 0;
         noBlockTimer = 0;
     }
 
+    @Override
+    public void onDeactivate() {
+        for (RenderBlock renderBlock : renderBlocks) renderBlockPool.free(renderBlock);
+        renderBlocks.clear();
+    }
+
+
     @EventHandler
     private void onTickPre(TickEvent.Pre event) {
+        renderBlocks.forEach(RenderBlock::tick);
+
         // Update timer
         if (timer > 0) {
             timer--;
@@ -169,6 +219,7 @@ public class Nuker extends Module {
                 boolean canInstaMine = BlockUtils.canInstaBreak(block);
 
                 BlockUtils.breakBlock(block, swingHand.get());
+                renderBlocks.add(renderBlockPool.get().set(block));
                 lastBlockPos.set(block);
 
                 count++;
@@ -181,6 +232,43 @@ public class Nuker extends Module {
             for (BlockPos.Mutable blockPos : blocks) blockPosPool.free(blockPos);
             blocks.clear();
         });
+    }
+
+    @EventHandler
+    private void onRender(Render3DEvent event) {
+        if (!render.get()) return;
+
+        renderBlocks.sort(Comparator.comparingInt(o -> -o.ticks));
+        renderBlocks.forEach(renderBlock -> renderBlock.render(event, sideColor.get(), lineColor.get(), shapeMode.get()));
+    }
+
+    public static class RenderBlock {
+        public BlockPos.Mutable pos = new BlockPos.Mutable();
+        public int ticks;
+
+        public RenderBlock set(BlockPos blockPos) {
+            pos.set(blockPos);
+            ticks = 8;
+
+            return this;
+        }
+
+        public void tick() {
+            ticks--;
+        }
+
+        public void render(Render3DEvent event, Color sides, Color lines, ShapeMode shapeMode) {
+            int preSideA = sides.a;
+            int preLineA = lines.a;
+
+            sides.a *= (double) ticks / 8;
+            lines.a *= (double) ticks / 8;
+
+            event.renderer.box(pos, sides, lines, shapeMode, 0);
+
+            sides.a = preSideA;
+            lines.a = preLineA;
+        }
     }
 
     public enum Mode {

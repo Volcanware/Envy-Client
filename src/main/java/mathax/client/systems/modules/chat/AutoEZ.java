@@ -134,7 +134,6 @@ public class AutoEZ extends Module {
     @EventHandler
     public void onPacketReadMessage(PacketEvent.Receive event) {
         if (mc.player == null || mc.world == null) return;
-        if (EntityUtils.getGameMode(mc.player).isCreative()) return;
 
         if (!kills.get()) return;
         if (killMessages.get().isEmpty() && killMode.get() == Mode.Custom) return;
@@ -142,6 +141,7 @@ public class AutoEZ extends Module {
             String msg = ((GameMessageS2CPacket) event.packet).getMessage().getString();
             for (PlayerEntity player : mc.world.getPlayers()) {
                 if (player == mc.player) return;
+                if (EntityUtils.getGameMode(mc.player).isCreative()) return;
                 if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
 
                 String message = getMessageStyle();
@@ -200,7 +200,6 @@ public class AutoEZ extends Module {
     @EventHandler
     private void onReceivePacket(PacketEvent.Receive event) {
         if (mc.player == null || mc.world == null) return;
-        if (EntityUtils.getGameMode(mc.player).isCreative()) return;
 
         if (!totems.get()) return;
         if (totemMessages.get().isEmpty() && totemMode.get() == Mode.Custom) return;
@@ -214,6 +213,7 @@ public class AutoEZ extends Module {
 
         if (player == mc.player) return;
         if (mc.player.distanceTo(player) > 8) return;
+        if (EntityUtils.getGameMode(mc.player).isCreative()) return;
         if (totemIgnoreFriends.get() && Friends.get().isFriend(player)) return;
 
         if (canSendPop) {

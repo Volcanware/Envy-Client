@@ -141,21 +141,21 @@ public class Renderer2D {
 
     public void quadRoundedOutline(double x, double y, double width, double height, Color color, double r, double s) {
         r = getR(r, width, height);
+
         if (r <= 0) {
             quad(x, y, width, s, color);
             quad(x, y + height - s, width, s, color);
             quad(x, y + s, s, height - s * 2, color);
             quad(x + width - s, y + s, s, height - s * 2, color);
-        }
-        else {
-            //top
+        } else {
+
             circlePartOutline(x + r, y + r, r, circleThreeQuarter, circleQuarter, color, s);
             quad(x + r, y, width - r * 2, s, color);
             circlePartOutline(x + width - r, y + r, r, circleNone, circleQuarter, color, s);
-            //middle
+
             quad(x, y + r, s, height - r * 2, color);
             quad(x + width - s, y + r, s, height - r * 2, color);
-            //bottom
+
             circlePartOutline(x + width - r, y + height - r, r, circleQuarter, circleQuarter, color, s);
             quad(x + r, y + height - s, width - r * 2, s, color);
             circlePartOutline(x + r, y + height - r, r, circleHalf, circleQuarter, color, s);
@@ -164,21 +164,17 @@ public class Renderer2D {
 
     public void quadRounded(double x, double y, double width, double height, Color color, double r, boolean roundTop) {
         r = getR(r, width, height);
-        if (r <= 0)
-            quad(x, y, width, height, color);
+
+        if (r <= 0) quad(x, y, width, height, color);
         else {
             if (roundTop) {
-                //top
                 circlePart(x + r, y + r, r, circleThreeQuarter, circleQuarter, color);
                 quad(x + r, y, width - 2 * r, r, color);
                 circlePart(x + width - r, y + r, r, circleNone, circleQuarter, color);
-                //middle
+
                 quad(x, y + r, width, height - 2 * r, color);
-            } else {
-                //middle
-                quad(x, y, width, height - r, color);
-            }
-            //bottom
+            } else quad(x, y, width, height - r, color);
+
             circlePart(x + width - r, y + height - r, r, circleQuarter, circleQuarter, color);
             quad(x + r, y + height - r, width - 2 * r, r, color);
             circlePart(x + r, y + height - r, r, circleHalf, circleQuarter, color);

@@ -50,7 +50,7 @@ public class MusicHud extends HudElement {
     private final Setting<SettingColor> backgroundColor = sgColors.add(new ColorSetting.Builder()
         .name("background-color")
         .description("Color of background.")
-        .defaultValue(new SettingColor(0, 0, 0, 75))
+        .defaultValue(new SettingColor(MatHax.INSTANCE.MATHAX_BACKGROUND_COLOR.r, MatHax.INSTANCE.MATHAX_BACKGROUND_COLOR.g, MatHax.INSTANCE.MATHAX_BACKGROUND_COLOR.b, 75))
         .build()
     );
 

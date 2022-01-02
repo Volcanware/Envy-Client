@@ -1493,7 +1493,7 @@ public class HighwayBuilder extends Module {
 
     public enum Floor {
         Replace,
-        PlaceMissing;
+        Place_Missing;
 
         @Override
         public String toString() {

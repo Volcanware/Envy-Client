@@ -1,11 +1,11 @@
 package mathax.client.systems.modules.chat;
 
-import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
-import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.systems.modules.Categories;
 import mathax.client.utils.Utils;
+import mathax.client.eventbus.EventHandler;
 import net.minecraft.item.Items;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -21,7 +21,7 @@ public class Spam extends Module {
 
     private final Setting<List<String>> messages = sgGeneral.add(new StringListSetting.Builder()
         .name("messages")
-        .description("Messages to use for spam.")
+        .description("Messages to use for spam. Use %player% for a name of a random player.")
         .defaultValue(
             "MatHax on top!",
             "Matejko06 on top!"
@@ -47,18 +47,19 @@ public class Spam extends Module {
 
     // Anti Spam Bypass
 
-    private final Setting<Boolean> antiSpamBypass = sgAntiSpamBypass.add(new BoolSetting.Builder()
-        .name("enabled")
+    private final Setting<Boolean> randomText = sgAntiSpamBypass.add(new BoolSetting.Builder()
+        .name("random-text")
         .description("Adds random text at the bottom of the text.")
         .defaultValue(false)
         .build()
     );
 
-    private final Setting<Integer> length = sgAntiSpamBypass.add(new IntSetting.Builder()
+    private final Setting<Integer> randomTextLength = sgAntiSpamBypass.add(new IntSetting.Builder()
         .name("length")
         .description("Text length of anti spam bypass.")
         .defaultValue(16)
         .sliderRange(1, 256)
+        .visible(randomText::get)
         .build()
     );
 
@@ -85,8 +86,10 @@ public class Spam extends Module {
             }
 
             String text = messages.get().get(i);
-            if (antiSpamBypass.get()) text += RandomStringUtils.randomAlphabetic(length.get()).toLowerCase();
-            mc.player.sendChatMessage(text.replace("%random_player%", Utils.getRandomPlayer()));
+            if (randomText.get()) text += " " + RandomStringUtils.randomAlphabetic(randomTextLength.get()).toLowerCase();
+
+            mc.player.sendChatMessage(text.replace("%player%", Utils.getRandomPlayer()));
+
             timer = delay.get();
         } else timer--;
     }
