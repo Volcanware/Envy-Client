@@ -137,14 +137,20 @@ public class Criticals extends Module {
     }
 
     public enum Mode {
-        Packet,
-        Bypass,
-        Jump,
-        Mini_Jump;
+        Packet("Packet"),
+        Bypass("Bypass"),
+        Jump("Jump"),
+        Mini_Jump("Mini Jump");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

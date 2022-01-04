@@ -55,7 +55,7 @@ public class VisualBinds extends HudElement {
             height += renderer.textHeight();
         } else {
             for (Module boundModule : boundModules) {
-                String length = boundModule.title + getSeparator() + Utils.getKeyName(boundModule.keybind.getValue());
+                String length = boundModule.title + separator.get().separator + Utils.getKeyName(boundModule.keybind.getValue());
                 width = Math.max(width, renderer.textWidth(length));
                 height += renderer.textHeight();
                 if (i > 0) height += 2;
@@ -85,12 +85,12 @@ public class VisualBinds extends HudElement {
             renderer.text(t, x + box.alignX(renderer.textWidth(t)), y, hud.primaryColor.get());
         } else {
             for (Module boundModule: boundModules) {
-                String separator = getSeparator();
-                String length = boundModule.title + separator + Utils.getKeyName(boundModule.keybind.getValue());
+                String separatorString = separator.get().separator;
+                String length = boundModule.title + separatorString + Utils.getKeyName(boundModule.keybind.getValue());
 
                 renderer.text(boundModule.title, x + box.alignX(renderer.textWidth(length)), y, hud.primaryColor.get());
-                renderer.text(separator, x + renderer.textWidth(boundModule.title) + box.alignX(renderer.textWidth(length)), y, hud.secondaryColor.get());
-                renderer.text(Utils.getKeyName(boundModule.keybind.getValue()), x + renderer.textWidth(boundModule.title) + renderer.textWidth(separator) + box.alignX(renderer.textWidth(length)), y, hud.primaryColor.get());
+                renderer.text(separatorString, x + renderer.textWidth(boundModule.title) + box.alignX(renderer.textWidth(length)), y, hud.secondaryColor.get());
+                renderer.text(Utils.getKeyName(boundModule.keybind.getValue()), x + renderer.textWidth(boundModule.title) + renderer.textWidth(separatorString) + box.alignX(renderer.textWidth(length)), y, hud.primaryColor.get());
 
                 y += renderer.textHeight();
                 if (i > 0) y += 2;
@@ -104,15 +104,21 @@ public class VisualBinds extends HudElement {
         boundModules.addAll(Modules.get().getAll().stream().filter(module -> module.keybind.isSet()).collect(Collectors.toList()));
     }
 
-    private String getSeparator() {
-        return switch (separator.get()) {
-            case Arrow -> " -> ";
-            case Colon -> ": ";
-        };
-    }
-
     public enum Separator {
-        Arrow,
-        Colon
+        Arrow("Arrow", " -> "),
+        Colon("Colon", ": ");
+
+        private final String title;
+        private final String separator;
+
+        Separator(String title, String separator) {
+            this.title = title;
+            this.separator = separator;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

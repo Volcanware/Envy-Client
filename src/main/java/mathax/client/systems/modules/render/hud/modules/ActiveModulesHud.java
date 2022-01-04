@@ -253,7 +253,18 @@ public class ActiveModulesHud extends HudElement {
     }
 
     public enum Sort {
-        Biggest,
-        Smallest
+        Biggest("Biggest"),
+        Smallest("Smallest");
+
+        private final String title;
+
+        Sort(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

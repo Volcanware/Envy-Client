@@ -365,23 +365,36 @@ public class AutoTotem extends Module {
     }
 
     public enum Mode {
-        Strict,
-        Enhanced,
-        Smart
-    }
+        Strict("Strict"),
+        Enhanced("Enhanced"),
+        Smart("Smart");
 
-    public enum Versions {
-        mc_1_12,
-        mc_1_16,
-        mc_1_17;
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return switch (this) {
-                case mc_1_12 -> "1.12";
-                case mc_1_16 -> "1.16";
-                case mc_1_17 -> "1.17";
-            };
+            return title;
+        }
+    }
+
+    public enum Versions {
+        mc_1_12("1.12"),
+        mc_1_16("1.16"),
+        mc_1_17("1.17");
+
+        private final String title;
+
+        Versions(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 }

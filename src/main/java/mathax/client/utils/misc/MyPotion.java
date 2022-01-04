@@ -66,7 +66,7 @@ public enum MyPotion {
     MyPotion(Potion potion, Item... ingredients) {
         this.potion = PotionUtil.setPotion(new ItemStack(Items.POTION), potion);
         this.ingredients = ingredients;
-    };
+    }
 
     @Override
     public String toString() {

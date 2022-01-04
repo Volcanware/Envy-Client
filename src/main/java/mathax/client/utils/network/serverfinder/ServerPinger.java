@@ -2,7 +2,6 @@ package mathax.client.utils.network.serverfinder;
 
 import mathax.client.gui.screens.server.servermanager.ServerFinderScreen;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -57,22 +56,16 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
     }
 
     public void ping(String ip, int port) {
-        if (isOldSearch())
-            return;
+        if (isOldSearch()) return;
 
         pingIP = ip;
         pingPort = port;
         server = new MServerInfo("", ip + ":" + port, false);
         server.version = null;
 
-        if (scanPorts) {
-            thread = new Thread(() -> pingInCurrentThread(ip, port),
-                "Server Pinger #" + threadNumber.incrementAndGet());
-        }
-        else {
-            thread = new Thread(() -> pingInCurrentThread(ip, port),
-                "Server Pinger #" + threadNumber + ", " + port);
-        }
+        if (scanPorts) thread = new Thread(() -> pingInCurrentThread(ip, port), "Server Pinger #" + threadNumber.incrementAndGet());
+        else thread = new Thread(() -> pingInCurrentThread(ip, port), "Server Pinger #" + threadNumber + ", " + port);
+
         thread.start();
     }
 
@@ -81,7 +74,7 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
     }
 
     private boolean isOldSearch() {
-        return ServerFinderScreen.instance == null || ServerFinderScreen.instance.getState() == ServerFinderScreen.ServerFinderState.CANCELLED || ServerFinderScreen.getSearchNumber() != searchNumber;
+        return ServerFinderScreen.instance == null || ServerFinderScreen.instance.getState() == ServerFinderScreen.ServerFinderState.Cancelled || ServerFinderScreen.getSearchNumber() != searchNumber;
     }
 
     private void runPortIncrement(String ip) {
@@ -89,6 +82,7 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
             portPingers = 0;
             successfulPortPingers = 0;
         }
+
         for (int i = startingIncrement ? 1 : currentIncrement; i < currentIncrement * 2; i++) {
             if (isOldSearch()) return;
             ServerPinger pp1 = new ServerPinger(false, searchNumber);
@@ -103,6 +97,7 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
             pp1.ping(ip, 25565 - i);
             pp2.ping(ip, 25565 + i);
         }
+
         synchronized(portPingerLock) {
             currentIncrement *= 2;
         }
@@ -113,20 +108,14 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
 
         try {
             pinger.add(server, () -> {});
-        } catch(UnknownHostException e) {
-            failed = true;
-        } catch(Exception e2) {
+        } catch(Exception exception) {
             failed = true;
         }
 
         startingIncrement =  true;
-        if (!failed) {
-            currentIncrement = 8;
-        }
+        if (!failed) currentIncrement = 8;
 
-        if (!failed && scanPorts) {
-            runPortIncrement(ip);
-        }
+        if (!failed && scanPorts) runPortIncrement(ip);
 
         if (failed) {
             pinger.cancel();
@@ -153,8 +142,7 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
 
     @Override
     public void onServerDisconnect() {
-        if (isOldSearch())
-            return;
+        if (isOldSearch()) return;
 
         pinger.cancel();
         done = true;
@@ -167,12 +155,8 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
                 notifiedDoneListeners = true;
                 for (IServerFinderDoneListener doneListener : doneListeners) {
                     if (doneListener != null) {
-                        if (failure) {
-                            doneListener.onServerFailed(this);
-                        }
-                        else {
-                            doneListener.onServerDone(this);
-                        }
+                        if (failure) doneListener.onServerFailed(this);
+                        else doneListener.onServerDone(this);
                     }
                 }
             }
@@ -181,8 +165,7 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
 
     @Override
     public void onServerFailed() {
-        if (isOldSearch())
-            return;
+        if (isOldSearch()) return;
 
         pinger.cancel();
         done = true;
@@ -193,8 +176,7 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
     public void onServerDone(ServerPinger pinger) {
         synchronized(portPingerLock) {
             portPingers += 1;
-            if (pinger.isWorking())
-                successfulPortPingers += 1;
+            if (pinger.isWorking()) successfulPortPingers += 1;
             if (portPingers == (startingIncrement ? currentIncrement * 2 - 2 : currentIncrement) && currentIncrement <= 5000 && successfulPortPingers > 0) {
                 startingIncrement = false;
                 new Thread(() -> runPortIncrement(pingIP)).start();

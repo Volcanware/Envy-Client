@@ -80,6 +80,17 @@ public class CuboidMarker extends BaseMarker {
     }
 
     public enum Mode {
-        Full
+        Full("Full");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

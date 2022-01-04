@@ -68,7 +68,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
         this.searchButton = theme.button("Search");
         this.workingLabel = theme.label("");
         this.scanPortsBox = theme.checkbox(true);
-        this.state = ServerFinderState.NOT_RUNNING;
+        this.state = ServerFinderState.Not_Running;
         newSearch();
         instance = this;
     }
@@ -105,7 +105,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
 
     public void incrementTargetChecked(int amount) {
         synchronized(serverFinderLock) {
-            if (state != ServerFinderState.CANCELLED) targetChecked += amount;
+            if (state != ServerFinderState.Cancelled) targetChecked += amount;
         }
     }
 
@@ -155,12 +155,12 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
     }
 
     private void searchOrCancel() {
-        if(state.isRunning()) {
-            state = ServerFinderState.CANCELLED;
+        if (state.isRunning()) {
+            state = ServerFinderState.Cancelled;
             return;
         }
 
-        state = ServerFinderState.RESOLVING;
+        state = ServerFinderState.Resolving;
         maxThreads = maxThreadsBox.get();
         ipsToPing.clear();
         targetChecked = 1792;
@@ -194,12 +194,11 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
             for (int i = 0; i < 4; i++)
                 ipParts[i] = addr.getAddress()[i] & 0xff;
 
-            state = ServerFinderState.SEARCHING;
+            state = ServerFinderState.Searching;
             int[] changes = { 0, 1, -1, 2, -2, 3, -3 };
             for (int change : changes)
                 for (int i2 = 0; i2 <= 255; i2++) {
-                    if (state == ServerFinderState.CANCELLED)
-                        return;
+                    if (state == ServerFinderState.Cancelled) return;
 
                     int[] ipParts2 = ipParts.clone();
                     ipParts2[2] = ipParts[2] + change & 0xff;
@@ -208,15 +207,12 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
 
                     ipsToPing.push(ip);
                 }
-            while (numActiveThreads < maxThreads && pingNewIP()) {
-            }
-
+            while (numActiveThreads < maxThreads && pingNewIP()) {}
         } catch (UnknownHostException e) {
-            state = ServerFinderState.UNKNOWN_HOST;
-
+            state = ServerFinderState.Unknown_Host;
         } catch (Exception e) {
             e.printStackTrace();
-            state = ServerFinderState.ERROR;
+            state = ServerFinderState.Error;
         }
     }
 
@@ -249,7 +245,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
     }
 
     private boolean isServerInList(String ip) {
-        for(int i = 0; i < multiplayerScreen.getServerList().size(); i++) {
+        for (int i = 0; i < multiplayerScreen.getServerList().size(); i++) {
             if(multiplayerScreen.getServerList().get(i).address.equals(ip)) return true;
         }
 
@@ -258,35 +254,32 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
 
     @Override
     public void onClose() {
-        state = ServerFinderState.CANCELLED;
+        state = ServerFinderState.Cancelled;
         super.onClose();
     }
 
     public enum ServerFinderState {
-        NOT_RUNNING(""),
-        SEARCHING("Searching..."),
-        RESOLVING("Resolving..."),
-        UNKNOWN_HOST("Unknown Host!"),
-        CANCELLED("Cancelled!"),
-        DONE("Done!"),
-        ERROR("An error occurred!");
+        Not_Running(""),
+        Searching("Searching..."),
+        Resolving("Resolving..."),
+        Unknown_Host("Unknown Host!"),
+        Cancelled("Cancelled!"),
+        Done("Done!"),
+        Error("An error occurred!");
 
-        private final String name;
+        private final String title;
 
-        ServerFinderState(String name)
-        {
-            this.name = name;
+        ServerFinderState(String title) {
+            this.title = title;
         }
 
-        public boolean isRunning()
-        {
-            return this == SEARCHING || this == RESOLVING;
+        public boolean isRunning() {
+            return this == Searching || this == Resolving;
         }
 
         @Override
-        public String toString()
-        {
-            return name;
+        public String toString() {
+            return title;
         }
     }
 
@@ -305,7 +298,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
 
     @Override
     public void onServerDone(ServerPinger pinger) {
-        if (state == ServerFinderState.CANCELLED || pinger == null || pinger.getSearchNumber() != searchNumber) return;
+        if (state == ServerFinderState.Cancelled || pinger == null || pinger.getSearchNumber() != searchNumber) return;
         synchronized (serverFinderLock) {
             checked++;
             numActiveThreads--;
@@ -325,13 +318,13 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
 
         while (numActiveThreads < maxThreads && pingNewIP());
         synchronized (serverFinderLock) {
-            if (checked == targetChecked) state = ServerFinderState.DONE;
+            if (checked == targetChecked) state = ServerFinderState.Done;
         }
     }
 
     @Override
     public void onServerFailed(ServerPinger pinger) {
-        if (state == ServerFinderState.CANCELLED || pinger == null || pinger.getSearchNumber() != searchNumber) return;
+        if (state == ServerFinderState.Cancelled || pinger == null || pinger.getSearchNumber() != searchNumber) return;
         synchronized (serverFinderLock) {
             checked++;
             numActiveThreads--;
@@ -339,7 +332,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
 
         while (numActiveThreads < maxThreads && pingNewIP());
         synchronized (serverFinderLock) {
-            if (checked == targetChecked) state = ServerFinderState.DONE;
+            if (checked == targetChecked) state = ServerFinderState.Done;
         }
     }
 }

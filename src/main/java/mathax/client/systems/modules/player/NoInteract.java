@@ -38,7 +38,7 @@ public class NoInteract extends Module {
     private final Setting<ListMode> blockMineMode = sgBlocks.add(new EnumSetting.Builder<ListMode>()
         .name("block-mine-mode")
         .description("List mode to use for block mine.")
-        .defaultValue(ListMode.BlackList)
+        .defaultValue(ListMode.Blacklist)
         .build()
     );
 
@@ -51,7 +51,7 @@ public class NoInteract extends Module {
     private final Setting<ListMode> blockInteractMode = sgBlocks.add(new EnumSetting.Builder<ListMode>()
         .name("block-interact-mode")
         .description("List mode to use for block interact.")
-        .defaultValue(ListMode.BlackList)
+        .defaultValue(ListMode.Blacklist)
         .build()
     );
 
@@ -74,7 +74,7 @@ public class NoInteract extends Module {
     private final Setting<ListMode> entityHitMode = sgEntities.add(new EnumSetting.Builder<ListMode>()
         .name("entity-hit-mode")
         .description("List mode to use for entity hit.")
-        .defaultValue(ListMode.BlackList)
+        .defaultValue(ListMode.Blacklist)
         .build()
     );
 
@@ -88,7 +88,7 @@ public class NoInteract extends Module {
     private final Setting<ListMode> entityInteractMode = sgEntities.add(new EnumSetting.Builder<ListMode>()
         .name("entity-interact-mode")
         .description("List mode to use for entity interact.")
-        .defaultValue(ListMode.BlackList)
+        .defaultValue(ListMode.Blacklist)
         .build()
     );
 
@@ -145,9 +145,9 @@ public class NoInteract extends Module {
     }
 
     private boolean shouldAttackBlock(BlockPos blockPos) {
-        if (blockMineMode.get() == ListMode.WhiteList && blockMine.get().contains(mc.world.getBlockState(blockPos).getBlock())) return false;
+        if (blockMineMode.get() == ListMode.Whitelist && blockMine.get().contains(mc.world.getBlockState(blockPos).getBlock())) return false;
 
-        return blockMineMode.get() != ListMode.BlackList || !blockMine.get().contains(mc.world.getBlockState(blockPos).getBlock());
+        return blockMineMode.get() != ListMode.Blacklist || !blockMine.get().contains(mc.world.getBlockState(blockPos).getBlock());
     }
 
     private boolean shouldInteractBlock(BlockHitResult hitResult, Hand hand) {
@@ -155,9 +155,9 @@ public class NoInteract extends Module {
         if (blockInteractHand.get() == HandMode.Both || (blockInteractHand.get() == HandMode.Mainhand && hand == Hand.MAIN_HAND) || (blockInteractHand.get() == HandMode.Offhand && hand == Hand.OFF_HAND)) return false;
 
         // Blocks
-        if (blockInteractMode.get() == ListMode.BlackList && blockInteract.get().contains(mc.world.getBlockState(hitResult.getBlockPos()).getBlock())) return false;
+        if (blockInteractMode.get() == ListMode.Blacklist && blockInteract.get().contains(mc.world.getBlockState(hitResult.getBlockPos()).getBlock())) return false;
 
-        return blockInteractMode.get() != ListMode.WhiteList || blockInteract.get().contains(mc.world.getBlockState(hitResult.getBlockPos()).getBlock());
+        return blockInteractMode.get() != ListMode.Whitelist || blockInteract.get().contains(mc.world.getBlockState(hitResult.getBlockPos()).getBlock());
     }
 
     private boolean shouldAttackEntity(Entity entity) {
@@ -171,9 +171,9 @@ public class NoInteract extends Module {
         if ((nametagged.get() == InteractMode.Both || nametagged.get() == InteractMode.Hit) && entity.hasCustomName()) return false;
 
         // Entities
-        if (entityHitMode.get() == ListMode.BlackList && entityHit.get().getBoolean(entity.getType())) return false;
+        if (entityHitMode.get() == ListMode.Blacklist && entityHit.get().getBoolean(entity.getType())) return false;
 
-        else return entityHitMode.get() != ListMode.WhiteList || entityHit.get().getBoolean(entity.getType());
+        else return entityHitMode.get() != ListMode.Whitelist || entityHit.get().getBoolean(entity.getType());
     }
 
     private boolean shouldInteractEntity(Entity entity, Hand hand) {
@@ -190,26 +190,59 @@ public class NoInteract extends Module {
         if ((nametagged.get() == InteractMode.Both || nametagged.get() == InteractMode.Interact) && entity.hasCustomName()) return false;
 
         // Entities
-        if (entityInteractMode.get() == ListMode.BlackList && entityInteract.get().getBoolean(entity.getType())) return false;
-        else return entityInteractMode.get() != ListMode.WhiteList || entityInteract.get().getBoolean(entity.getType());
+        if (entityInteractMode.get() == ListMode.Blacklist && entityInteract.get().getBoolean(entity.getType())) return false;
+        else return entityInteractMode.get() != ListMode.Whitelist || entityInteract.get().getBoolean(entity.getType());
     }
 
     public enum HandMode {
-        Mainhand,
-        Offhand,
-        Both,
-        None
+        Mainhand("Mainhand"),
+        Offhand("Offhand"),
+        Both("Both"),
+        None("None");
+
+        private final String title;
+
+        HandMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum ListMode {
-        WhiteList,
-        BlackList
+        Whitelist("Whitelist"),
+        Blacklist("Blacklist");
+
+        private final String title;
+
+        ListMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum InteractMode {
-        Hit,
-        Interact,
-        Both,
-        None
+        Hit("Hit"),
+        Interact("Interact"),
+        Both("Both"),
+        None("None");
+
+        private final String title;
+
+        InteractMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

@@ -251,16 +251,38 @@ public class AutoTrap extends Module {
     }
 
     public enum TopMode {
-        Full,
-        Top,
-        Face,
-        None
+        Full("Full"),
+        Top("Top"),
+        Face("Face"),
+        None("None");
+
+        private final String title;
+
+        TopMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum BottomMode {
-        Single,
-        Platform,
-        Full,
-        None
+        Single("Single"),
+        Platform("Platform"),
+        Full("Full"),
+        None("None");
+
+        private final String title;
+
+        BottomMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

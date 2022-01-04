@@ -113,19 +113,25 @@ public class HeadScreen extends WindowScreen {
     }
 
     public enum Categories {
-        Alphabet,
-        Animals,
-        Blocks,
-        Decoration,
-        Food_Drinks,
-        Humanoid,
-        Miscellaneous,
-        Monsters,
-        Plants;
+        Alphabet("Alphabet"),
+        Animals("Animals"),
+        Blocks("Blocks"),
+        Decoration("Decoration"),
+        Food_Drinks("Food and Drinks"),
+        Humanoid("Humanoid"),
+        Miscellaneous("Miscellaneous"),
+        Monsters("Monsters"),
+        Plants("Plants");
+
+        private final String title;
+
+        Categories(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

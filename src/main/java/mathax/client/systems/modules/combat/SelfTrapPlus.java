@@ -138,16 +138,20 @@ public class SelfTrapPlus extends Module {
     }
 
     public enum Mode {
-        Full,
-        Full_Plus,
-        Full_Plus_Plus,
-        Top;
+        Full("Full"),
+        Full_Plus("Full+"),
+        Full_Plus_Plus("Full++"),
+        Top("Top");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            if (this == Full_Plus) return "Full+";
-            else if (this == Full_Plus_Plus) return "Full++";
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

@@ -1313,47 +1313,119 @@ public class CrystalAura extends Module {
     }
 
     public enum ColorMode {
-        Damage,
-        Static
-    }
+        Damage("Damage"),
+        Static("Static");
 
-    public enum YawStepMode {
-        Break,
-        All
-    }
+        private final String title;
 
-    public enum AutoSwitchMode {
-        Normal,
-        Silent,
-        None
-    }
-
-    public enum SupportMode {
-        Disabled,
-        Accurate,
-        Fast
-    }
-
-    public enum SurroundHold {
-        Auto,
-        Custom
-    }
-
-    public enum SurroundBreakHoldWhen {
-        Always,
-        Top_Trapped,
-        Face_Trapped,
-        Both_Trapped,
-        Any_Trapped;
+        ColorMode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
+        }
+    }
+
+    public enum YawStepMode {
+        Break("Break"),
+        All("All");
+
+        private final String title;
+
+        YawStepMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
+    }
+
+    public enum AutoSwitchMode {
+        Normal("Normal"),
+        Silent("Silent"),
+        None("None");
+
+        private final String title;
+
+        AutoSwitchMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
+    }
+
+    public enum SupportMode {
+        Disabled("Disabled"),
+        Accurate("Accurate"),
+        Fast("Fast");
+
+        private final String title;
+
+        SupportMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
+    }
+
+    public enum SurroundHold {
+        Auto("Auto"),
+        Custom("Custom");
+
+        private final String title;
+
+        SurroundHold(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
+    }
+
+    public enum SurroundBreakHoldWhen {
+        Always("Always"),
+        Top_Trapped("Top Trapped"),
+        Face_Trapped("Face Trapped"),
+        Both_Trapped("Both Trapped"),
+        Any_Trapped("Any Trapped");
+
+        private final String title;
+
+        SurroundBreakHoldWhen(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 
     public enum SlowFacePlace {
-        Auto,
-        Custom
+        Auto("Auto"),
+        Custom("Custom");
+
+        private final String title;
+
+        SlowFacePlace(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

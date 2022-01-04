@@ -67,7 +67,18 @@ public class FastUse extends Module {
     }
 
     public enum Mode {
-        All,
-        Some
+        All("All"),
+        Some("Some");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

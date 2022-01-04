@@ -175,13 +175,35 @@ public class Flight extends Module {
     }
 
     public enum Mode {
-        Abilities,
-        Velocity
+        Abilities("Abilities"),
+        Velocity("Velocity");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum AntiKickMode {
-        Normal,
-        Packet,
-        None
+        Normal("Normal"),
+        Packet("Packet"),
+        None("None");
+
+        private final String title;
+
+        AntiKickMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

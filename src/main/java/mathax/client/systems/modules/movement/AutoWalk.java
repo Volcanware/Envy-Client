@@ -20,6 +20,8 @@ public class AutoWalk extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Walking mode.")
@@ -43,7 +45,7 @@ public class AutoWalk extends Module {
     private final Setting<Direction> direction = sgGeneral.add(new EnumSetting.Builder<Direction>()
         .name("simple-direction")
         .description("The direction to walk in simple mode.")
-        .defaultValue(Direction.Forwards)
+        .defaultValue(Direction.Forward)
         .onChanged(direction1 -> {
                 if (isActive()) unpress();
             })
@@ -72,7 +74,7 @@ public class AutoWalk extends Module {
     private void onTick(TickEvent.Pre event) {
         if (mode.get() == Mode.Simple) {
             switch (direction.get()) {
-                case Forwards -> setPressed(mc.options.keyForward, true);
+                case Forward -> setPressed(mc.options.keyForward, true);
                 case Backwards -> setPressed(mc.options.keyBack, true);
                 case Left -> setPressed(mc.options.keyLeft, true);
                 case Right -> setPressed(mc.options.keyRight, true);
@@ -104,15 +106,38 @@ public class AutoWalk extends Module {
         goal = new GoalDirection(mc.player.getPos(), mc.player.getYaw());
         BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath(goal);
     }
+
     public enum Mode {
-        Simple,
-        Smart
+        Simple("Simple"),
+        Smart("Smart");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum Direction {
-        Forwards,
-        Backwards,
-        Left,
-        Right
+        Forward("Forward"),
+        Backwards("Backwards"),
+        Left("Left"),
+        Right("Right");
+
+        private final String title;
+
+        Direction(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

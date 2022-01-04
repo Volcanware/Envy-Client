@@ -1,7 +1,6 @@
 package mathax.client.systems.modules.combat;
 
 import mathax.client.MatHax;
-import mathax.client.eventbus.EventHandler;
 import mathax.client.events.render.Render3DEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.renderer.ShapeMode;
@@ -11,12 +10,14 @@ import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.Blink;
 import mathax.client.systems.modules.movement.Scaffold;
-import mathax.client.utils.misc.ChatUtils;
 import mathax.client.utils.misc.KeyBind;
 import mathax.client.utils.misc.Pool;
 import mathax.client.utils.misc.Timer;
+import mathax.client.utils.misc.ChatUtils;
+import mathax.client.utils.player.FindItemResult;
 import mathax.client.utils.player.InvUtils;
 import mathax.client.utils.player.PlayerUtils;
+import mathax.client.eventbus.EventHandler;
 import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.SettingColor;
 import net.minecraft.block.Block;
@@ -92,17 +93,11 @@ public class Surround extends Module {
 
     // General
 
-    private final Setting<Primary> primary = sgGeneral.add(new EnumSetting.Builder<Primary>()
-        .name("primary-block")
-        .description("Primary block to use.")
-        .defaultValue(Primary.Obsidian)
-        .build()
-    );
-
-    private final Setting<Boolean> allBlocks = sgGeneral.add(new BoolSetting.Builder()
-        .name("blastproof-only")
-        .description("Places blastproof blocks only.")
-        .defaultValue(true)
+    private final Setting<List<Block>> blocks = sgGeneral.add(new BlockListSetting.Builder()
+        .name("blocks")
+        .description("What blocks to use for surround.")
+        .defaultValue(Blocks.OBSIDIAN)
+        .filter(this::blockFilter)
         .build()
     );
 
@@ -228,16 +223,15 @@ public class Surround extends Module {
 
     @Override
     public void onDeactivate() {
-        ticks = 0;
         timeToStart = 0;
+        ticks = 0;
 
         for (Scaffold.RenderBlock renderBlock : renderBlocks) renderBlockPool.free(renderBlock);
         renderBlocks.clear();
     }
 
     @EventHandler
-    private void onTick(final TickEvent.Pre event) {
-        // Ticking fade animation
+    private void onTick(TickEvent.Pre event) {
         renderBlocks.forEach(Scaffold.RenderBlock::tick);
         renderBlocks.removeIf(renderBlock -> renderBlock.ticks <= 0);
 
@@ -267,15 +261,15 @@ public class Surround extends Module {
                 }
             }
 
-            int obbyIndex = findBlock();
-            if (obbyIndex == -1) return;
+            int blockIndex = getInvBlock().getSlot();
+            if (blockIndex == -1) return;
             int prevSlot = mc.player.getInventory().selectedSlot;
 
             if (needsToPlace()) {
                 for (BlockPos pos : getPositions()) {
-                    if (mc.world.getBlockState(pos).getMaterial().isReplaceable()) mc.player.getInventory().selectedSlot = obbyIndex;
+                    if (mc.world.getBlockState(pos).getMaterial().isReplaceable()) mc.player.getInventory().selectedSlot = blockIndex;
                     if (!mc.world.isOutOfHeightLimit(pos.getY()) && canPlace(pos)) renderBlocks.add(renderBlockPool.get().set(pos));
-                    if (PlayerUtils.placeBlockMainHand(pos, oldPlacement.get(), obbyIndex, rotate.get(), swing.get(), !onlyOnGround.get(), placeOnCrystal.get()) && delay.get() != 0) {
+                    if (PlayerUtils.placeBlockMainHand(pos, oldPlacement.get(), blockIndex, rotate.get(), swing.get(), !onlyOnGround.get(), placeOnCrystal.get()) && delay.get() != 0) {
                         mc.player.getInventory().selectedSlot = prevSlot;
                         return;
                     }
@@ -350,62 +344,9 @@ public class Surround extends Module {
         return Arrays.stream(pos).anyMatch(blockPos -> mc.world.getBlockState(blockPos).isAir());
     }
 
-    private Block primaryBlock() {
-        Block index = null;
-        if (primary.get() == Primary.Obsidian) index = Blocks.OBSIDIAN;
-        else if (primary.get() == Primary.Ender_Chest) index = Blocks.ENDER_CHEST;
-        else if (primary.get() == Primary.Crying_Obsidian) index = Blocks.CRYING_OBSIDIAN;
-        else if (primary.get() == Primary.Netherite_Block) index = Blocks.NETHERITE_BLOCK;
-        else if (primary.get() == Primary.Ancient_Debris) index = Blocks.ANCIENT_DEBRIS;
-        else if (primary.get() == Primary.Respawn_Anchor) index = Blocks.RESPAWN_ANCHOR;
-        else if (primary.get() == Primary.Anvil) index = Blocks.ANVIL;
-        return index;
+    private FindItemResult getInvBlock() {
+        return InvUtils.findInHotbar(itemStack -> blocks.get().contains(Block.getBlockFromItem(itemStack.getItem())));
     }
-
-    private int findBlock() {
-        int index = InvUtils.findBlockInHotbar(primaryBlock());
-        if (index == -1 && allBlocks.get()) {
-            index = InvUtils.findBlockInHotbar(Blocks.OBSIDIAN);
-            if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.ENDER_CHEST);
-            if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.CRYING_OBSIDIAN);
-            if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.NETHERITE_BLOCK);
-            if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.ANCIENT_DEBRIS);
-            if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.RESPAWN_ANCHOR);
-            if (index == -1) index = InvUtils.findBlockInHotbar(Blocks.ANVIL);
-        }
-
-        return index;
-    }
-
-    public enum HorizontalMode {
-        Normal,
-        Big,
-        Giant
-    }
-
-    public enum VerticalMode {
-        Under,
-        Double,
-        Both,
-        None
-    }
-
-    public enum Primary {
-        Obsidian,
-        Ender_Chest,
-        Crying_Obsidian,
-        Netherite_Block,
-        Ancient_Debris,
-        Respawn_Anchor,
-        Anvil;
-
-        @Override
-        public String toString() {
-            return super.toString().replace("_", " ");
-        }
-    }
-
-    // Rendering
 
     @EventHandler
     private void onRender3D(Render3DEvent event) {
@@ -440,6 +381,45 @@ public class Surround extends Module {
 
             sides.a = preSideA;
             lines.a = preLineA;
+        }
+    }
+
+    private boolean blockFilter(Block block) {
+        return block == Blocks.OBSIDIAN || block == Blocks.ENDER_CHEST || block == Blocks.CRYING_OBSIDIAN || block == Blocks.NETHERITE_BLOCK || block == Blocks.ANCIENT_DEBRIS || block == Blocks.RESPAWN_ANCHOR || block == Blocks.ANVIL;
+    }
+
+    public enum HorizontalMode {
+        Normal("Normal"),
+        Big("Big"),
+        Giant("Giant");
+
+        private final String title;
+
+        HorizontalMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
+    }
+
+    public enum VerticalMode {
+        Under("Under"),
+        Double("Double"),
+        Both("Both"),
+        None("None");
+
+        private final String title;
+
+        VerticalMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 }

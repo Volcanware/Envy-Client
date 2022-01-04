@@ -219,19 +219,21 @@ public class Chams extends Module {
     }
 
     public enum Shader {
-        Liquid("chams/liquid"),
-        Liquid_2("chams/liquid_two"),
-        None(null);
+        Liquid("Liquid", "chams/liquid"),
+        Liquid_2("Liquid 2", "chams/liquid_two"),
+        None("None", null);
+
+        private final String title;
+        public final String shaderName;
+
+        Shader(String title, String shaderName) {
+            this.title = title;
+            this.shaderName = shaderName;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
-        }
-
-        public final String shaderName;
-
-        Shader(String shaderName) {
-            this.shaderName = shaderName;
+            return title;
         }
     }
 }

@@ -63,7 +63,18 @@ public class AntiVoid extends Module {
     }
 
     public enum Mode {
-        Flight,
-        Jump
+        Flight("Flight"),
+        Jump("Jump");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

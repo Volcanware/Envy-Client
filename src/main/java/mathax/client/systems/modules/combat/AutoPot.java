@@ -482,7 +482,18 @@ public class AutoPot extends Module {
     }
 
     public enum RotateMode {
-        Server,
-        Client
+        Server("Server"),
+        Client("Client");
+
+        private final String title;
+
+        RotateMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

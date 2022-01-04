@@ -127,8 +127,19 @@ public class AutoEXP extends Module {
     }
 
     public enum Mode {
-        Armor,
-        Hands,
-        Both
+        Armor("Armor"),
+        Hands("Hands"),
+        Both("Both");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

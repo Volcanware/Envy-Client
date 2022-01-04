@@ -53,6 +53,17 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
         this.color = new Color(Utils.random(0, 255), Utils.random(0, 255), Utils.random(0, 255));
     }
 
+    public Module(Category category, Item icon, String name, String description, boolean runInMainMenu) {
+        this.mc = MinecraftClient.getInstance();
+        this.category = category;
+        this.icon = icon;
+        this.name = name;
+        this.title = Utils.nameToTitle(name);
+        this.description = description;
+        this.runInMainMenu = runInMainMenu;
+        this.color = new Color(Utils.random(0, 255), Utils.random(0, 255), Utils.random(0, 255));
+    }
+
     public WWidget getWidget(GuiTheme theme) {
         return null;
     }

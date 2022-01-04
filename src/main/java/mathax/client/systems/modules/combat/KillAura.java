@@ -380,27 +380,39 @@ public class KillAura extends Module {
     }
 
     public enum Weapon {
-        Sword,
-        Axe,
-        Hoe,
-        Sword_and_Axe,
-        All_Three,
-        Any;
+        Sword("Sword"),
+        Axe("Axe"),
+        Hoe("Hoe"),
+        Sword_and_Axe("Sword and Axe"),
+        All_Three("All Three"),
+        Any("Any");
+
+        private final String title;
+
+        Weapon(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 
     public enum RotationMode {
-        Always,
-        On_Hit,
-        None;
+        Always("Always"),
+        On_Hit("On Hit"),
+        None("None");
+
+        private final String title;
+
+        RotationMode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

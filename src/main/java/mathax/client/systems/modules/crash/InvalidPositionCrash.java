@@ -113,16 +113,21 @@ public class InvalidPositionCrash extends Module {
     }
 
     public enum Mode {
-        Twenty_Million,
-        Infinity,
-        TP,
-        Velt,
-        Switch;
+        Twenty_Million("Twenty Million"),
+        Infinity("Infinity"),
+        TP("TP"),
+        Velt("Velt"),
+        Switch("Switch");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            if (this == Twenty_Million) return "20 Million";
-            return super.toString();
+            return title;
         }
     }
 }

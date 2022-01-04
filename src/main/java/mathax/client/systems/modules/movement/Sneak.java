@@ -34,7 +34,18 @@ public class Sneak extends Module {
     }
 
     public enum Mode {
-        Packet,
-        Vanilla
+        Packet("Packet"),
+        Vanilla("Vanilla");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

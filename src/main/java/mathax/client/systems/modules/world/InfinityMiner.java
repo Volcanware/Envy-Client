@@ -193,12 +193,34 @@ public class InfinityMiner extends Module {
     }
 
     public enum Mode {
-        Target,
-        Repair
+        Target("Target"),
+        Repair("Repair");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum WhenFull {
-        Home,
-        Disconnect
+        Home("Home"),
+        Disconnect("Disconnect");
+
+        private final String title;
+
+        WhenFull(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

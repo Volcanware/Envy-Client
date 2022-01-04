@@ -283,8 +283,19 @@ public class Jesus extends Module {
     }
 
     public enum Mode {
-        Solid,
-        Bob,
-        Ignore
+        Solid("Solid"),
+        Bob("Bob"),
+        Ignore("Ignore");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

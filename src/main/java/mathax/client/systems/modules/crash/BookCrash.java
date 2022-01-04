@@ -97,12 +97,18 @@ public class BookCrash extends Module {
     }
 
     public enum Mode {
-        Book_Update,
-        Creative_Action;
+        Book_Update("Book Update"),
+        Creative_Action("Creative Action");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

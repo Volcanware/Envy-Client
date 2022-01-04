@@ -163,6 +163,8 @@ public class Nuker extends Module {
             return;
         }
 
+        if (mc.player.isDead()) return;
+
         // Calculate some stuff
         double pX = mc.player.getX();
         double pY = mc.player.getY();
@@ -272,14 +274,36 @@ public class Nuker extends Module {
     }
 
     public enum Mode {
-        All,
-        Flatten,
-        Smash
+        All("All"),
+        Flatten("Flatten"),
+        Smash("Smash");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum SortMode {
-        None,
-        Closest,
-        Furthest
+        Closest("Closest"),
+        Furthest("Furthest"),
+        None("None");
+
+        private final String title;
+
+        SortMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

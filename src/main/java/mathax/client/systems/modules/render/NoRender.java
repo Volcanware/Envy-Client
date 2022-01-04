@@ -471,8 +471,19 @@ public class NoRender extends Module {
     }
 
     public enum BannerRenderMode {
-        Everything,
-        Pillar,
-        None
+        Everything("Everything"),
+        Pillar("Pillar"),
+        None("None");
+
+        private final String title;
+
+        BannerRenderMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

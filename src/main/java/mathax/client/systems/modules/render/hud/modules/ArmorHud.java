@@ -135,14 +135,36 @@ public class ArmorHud extends HudElement {
     }
 
     public enum Durability {
-        None,
-        Bar,
-        Total,
-        Percentage
+        Bar("Bar"),
+        Total("Total"),
+        Percentage("Percentage"),
+        None("None");
+
+        private final String title;
+
+        Durability(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum Orientation {
-        Horizontal,
-        Vertical
+        Horizontal("Horizontal"),
+        Vertical("Vertical");
+
+        private final String title;
+
+        Orientation(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

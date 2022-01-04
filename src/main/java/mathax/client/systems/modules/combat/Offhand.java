@@ -148,15 +148,22 @@ public class Offhand extends Module {
     }
 
     public enum Item {
-        EGap(Items.ENCHANTED_GOLDEN_APPLE),
-        Gap(Items.GOLDEN_APPLE),
-        Crystal(Items.END_CRYSTAL),
-        Shield(Items.SHIELD);
+        EGap("EGap", Items.ENCHANTED_GOLDEN_APPLE),
+        Gap("Gap", Items.GOLDEN_APPLE),
+        Crystal("Crystal", Items.END_CRYSTAL),
+        Shield("Shield", Items.SHIELD);
 
-        net.minecraft.item.Item item;
+        private final String title;
+        private final net.minecraft.item.Item item;
 
-        Item(net.minecraft.item.Item item) {
+        Item(String title, net.minecraft.item.Item item) {
+            this.title = title;
             this.item = item;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 }

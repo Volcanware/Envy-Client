@@ -206,13 +206,19 @@ public class Confuse extends Module {
     }
 
     public enum Mode {
-        Random_TP,
-        Switch,
-        Circle;
+        Random_TP("Random TP"),
+        Switch("Switch"),
+        Circle("Client");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

@@ -106,33 +106,44 @@ public class MiddleClickExtra extends Module {
     }
 
     private enum Type {
-        Immediate,
-        Longer_Single_Click,
-        Longer;
+        Immediate("Immediate"),
+        Longer_Single_Click("Longer Single Click"),
+        Longer("Longer");
+
+        private final String title;
+
+        Type(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 
     public enum Mode {
-        Pearl(Items.ENDER_PEARL, Type.Immediate),
-        Rocket(Items.FIREWORK_ROCKET, Type.Immediate),
+        Pearl("Pearl", Items.ENDER_PEARL, Type.Immediate),
+        Rocket("Rocket", Items.FIREWORK_ROCKET, Type.Immediate),
+        Rod("Rod", Items.FISHING_ROD, Type.Longer_Single_Click),
+        Bow("Bow", Items.BOW, Type.Longer),
+        Gap("Gap", Items.GOLDEN_APPLE, Type.Longer),
+        EGap("EGap", Items.ENCHANTED_GOLDEN_APPLE, Type.Longer),
+        Chorus("Chorus", Items.CHORUS_FRUIT, Type.Longer);
 
-        Rod(Items.FISHING_ROD, Type.Longer_Single_Click),
-
-        Bow(Items.BOW, Type.Longer),
-        Gap(Items.GOLDEN_APPLE, Type.Longer),
-        EGap(Items.ENCHANTED_GOLDEN_APPLE, Type.Longer),
-        Chorus(Items.CHORUS_FRUIT, Type.Longer);
-
+        private final String title;
         private final Item item;
         private final Type type;
 
-        Mode(Item item, Type type) {
+        Mode(String title, Item item, Type type) {
+            this.title = title;
             this.item = item;
             this.type = type;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 }

@@ -1,12 +1,12 @@
 package mathax.client.systems.modules.render;
 
-import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
-import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.input.Input;
+import mathax.client.eventbus.EventHandler;
+import mathax.client.settings.*;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.item.Items;
 import org.lwjgl.glfw.GLFW;
@@ -41,7 +41,7 @@ public class FreeLook extends Module {
         .description("How fast the camera moves in camera mode.")
         .defaultValue(8)
         .min(0)
-        .sliderMax(10)
+        .sliderRange(0, 10)
         .build()
     );
 
@@ -59,6 +59,7 @@ public class FreeLook extends Module {
         .description("Rotation speed with arrow keys.")
         .defaultValue(4)
         .min(0)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -120,7 +121,18 @@ public class FreeLook extends Module {
     }
 
     public enum Mode {
-        Player,
-        Camera
+        Player("Player"),
+        Camera("Camera");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

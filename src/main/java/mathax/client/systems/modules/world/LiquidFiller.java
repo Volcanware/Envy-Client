@@ -119,8 +119,19 @@ public class LiquidFiller extends Module {
     }
 
     public enum PlaceIn {
-        Lava,
-        Water,
-        Both
+        Lava("Lava"),
+        Water("Water"),
+        Both("Both");
+
+        private final String title;
+
+        PlaceIn(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

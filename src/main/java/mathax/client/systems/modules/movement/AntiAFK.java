@@ -270,15 +270,24 @@ public class AntiAFK extends Module {
         if (tag.contains("messages")) {
             NbtList messagesTag = tag.getList("messages", 8);
             for (NbtElement messageTag : messagesTag) messages.add(messageTag.asString());
-        } else {
-            messages.add("This is an AntiAFK message. MatHax on top!");
-        }
+        } else messages.add("This is an AntiAFK message. MatHax on top!");
 
         return super.fromTag(tag);
     }
 
     public enum SpinMode {
-        Server,
-        Client
+        Server("Server"),
+        Client("Client");
+
+        private final String title;
+
+        SpinMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

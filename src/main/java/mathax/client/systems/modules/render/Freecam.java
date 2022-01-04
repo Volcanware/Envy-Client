@@ -2,7 +2,7 @@ package mathax.client.systems.modules.render;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.eventbus.EventPriority;
-import mathax.client.events.entity.TookDamageEvent;
+import mathax.client.events.entity.DamageEvent;
 import mathax.client.events.game.GameLeftEvent;
 import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.mathax.KeyEvent;
@@ -15,6 +15,8 @@ import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.movement.GUIMove;
 import mathax.client.utils.misc.Vec3;
 import mathax.client.utils.misc.input.Input;
 import mathax.client.utils.misc.input.KeyAction;
@@ -160,14 +162,11 @@ public class Freecam extends Module {
         if (mc.cameraEntity.isInsideWall()) mc.getCameraEntity().noClip = true;
         if (!perspective.isFirstPerson()) mc.options.setPerspective(Perspective.FIRST_PERSON);
 
-        if (mc.currentScreen != null) return;
-
         Vec3d forward = Vec3d.fromPolar(0, yaw);
         Vec3d right = Vec3d.fromPolar(0, yaw + 90);
         double velX = 0;
         double velY = 0;
         double velZ = 0;
-
 
         if (rotate.get()) {
             BlockPos crossHairPos;
@@ -180,9 +179,7 @@ public class Freecam extends Module {
                 crossHairPosition = mc.crosshairTarget.getPos();
                 crossHairPos = ((BlockHitResult) mc.crosshairTarget).getBlockPos();
 
-                if (!mc.world.getBlockState(crossHairPos).isAir()) {
-                    Rotations.rotate(Rotations.getYaw(crossHairPosition), Rotations.getPitch(crossHairPosition), 0, null);
-                }
+                if (!mc.world.getBlockState(crossHairPos).isAir()) Rotations.rotate(Rotations.getYaw(crossHairPosition), Rotations.getPitch(crossHairPosition), 0, null);
             }
         }
 
@@ -195,6 +192,7 @@ public class Freecam extends Module {
             velZ += forward.z * s * speedValue;
             a = true;
         }
+
         if (this.backward) {
             velX -= forward.x * s * speedValue;
             velZ -= forward.z * s * speedValue;
@@ -207,6 +205,7 @@ public class Freecam extends Module {
             velZ += right.z * s * speedValue;
             b = true;
         }
+
         if (this.left) {
             velX -= right.x * s * speedValue;
             velZ -= right.z * s * speedValue;
@@ -219,38 +218,42 @@ public class Freecam extends Module {
             velZ *= diagonal;
         }
 
-        if (this.up) {
-            velY += s * speedValue;
-        }
-        if (this.down) {
-            velY -= s * speedValue;
-        }
+        if (this.up) velY += s * speedValue;
+        if (this.down) velY -= s * speedValue;
 
         prevPos.set(pos);
         pos.set(pos.x + velX, pos.y + velY, pos.z + velZ);
     }
 
     @EventHandler
-    private void onKey(KeyEvent event) {
+    public void onKey(KeyEvent event) {
         if (Input.isKeyPressed(GLFW.GLFW_KEY_F3)) return;
+
+        // TODO: This is very bad but you all can cope :cope:
+        GUIMove guiMove = Modules.get().get(GUIMove.class);
+        if ((mc.currentScreen != null && !guiMove.isActive()) || (mc.currentScreen != null && guiMove.isActive() && guiMove.skip())) return;
 
         boolean cancel = true;
 
         if (mc.options.keyForward.matchesKey(event.key, 0) || mc.options.keyForward.matchesMouse(event.key)) {
             forward = event.action != KeyAction.Release;
+            mc.options.keyForward.setPressed(false);
         } else if (mc.options.keyBack.matchesKey(event.key, 0) || mc.options.keyBack.matchesMouse(event.key)) {
             backward = event.action != KeyAction.Release;
+            mc.options.keyBack.setPressed(false);
         } else if (mc.options.keyRight.matchesKey(event.key, 0) || mc.options.keyRight.matchesMouse(event.key)) {
             right = event.action != KeyAction.Release;
+            mc.options.keyRight.setPressed(false);
         } else if (mc.options.keyLeft.matchesKey(event.key, 0) || mc.options.keyLeft.matchesMouse(event.key)) {
             left = event.action != KeyAction.Release;
+            mc.options.keyLeft.setPressed(false);
         } else if (mc.options.keyJump.matchesKey(event.key, 0) || mc.options.keyJump.matchesMouse(event.key)) {
             up = event.action != KeyAction.Release;
+            mc.options.keyJump.setPressed(false);
         } else if (mc.options.keySneak.matchesKey(event.key, 0) || mc.options.keySneak.matchesMouse(event.key)) {
             down = event.action != KeyAction.Release;
-        } else {
-            cancel = false;
-        }
+            mc.options.keySneak.setPressed(false);
+        } else cancel = false;
 
         if (cancel) event.cancel();
     }
@@ -271,7 +274,7 @@ public class Freecam extends Module {
     }
 
     @EventHandler
-    private void onTookDamage(TookDamageEvent event) {
+    private void onDamage(DamageEvent event) {
         if (event.entity.getUuid() == null) return;
         if (!event.entity.getUuid().equals(mc.player.getUuid())) return;
 
@@ -283,9 +286,7 @@ public class Freecam extends Module {
 
     @EventHandler
     private void onGameLeft(GameLeftEvent event) {
-        if (!autoDisableOnLog.get()) return;
-
-        toggle();
+        if (autoDisableOnLog.get()) toggle();
     }
 
     public void changeLookDirection(double deltaX, double deltaY) {
@@ -305,9 +306,11 @@ public class Freecam extends Module {
     public double getX(float tickDelta) {
         return MathHelper.lerp(tickDelta, prevPos.x, pos.x);
     }
+
     public double getY(float tickDelta) {
         return MathHelper.lerp(tickDelta, prevPos.y, pos.y);
     }
+
     public double getZ(float tickDelta) {
         return MathHelper.lerp(tickDelta, prevPos.z, pos.z);
     }
@@ -315,6 +318,7 @@ public class Freecam extends Module {
     public double getYaw(float tickDelta) {
         return MathHelper.lerp(tickDelta, prevYaw, yaw);
     }
+
     public double getPitch(float tickDelta) {
         return MathHelper.lerp(tickDelta, prevPitch, pitch);
     }

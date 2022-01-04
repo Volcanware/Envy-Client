@@ -390,15 +390,20 @@ public class ESP extends Module {
     }
 
     public enum Mode {
-        Box,
-        Wireframe,
-        Shader,
-        CSGO;
+        Box("Box"),
+        Wireframe("Wireframe"),
+        Shader("Shader"),
+        CSGO("CS:GO");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            if (this == CSGO) return "CS:GO";
-            return super.toString();
+            return title;
         }
     }
 }

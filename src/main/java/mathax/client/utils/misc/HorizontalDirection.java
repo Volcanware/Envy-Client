@@ -1,24 +1,26 @@
 package mathax.client.utils.misc;
 
 public enum HorizontalDirection {
-    South("South", "Z+", false, 0, 0, 1),
-    South_East("South East", "Z+ X+", true, -45, 1, 1),
-    West("West", "X-", false, 90, -1, 0),
-    North_West("North West", "Z- X-", true, 135, -1, -1),
-    North("North", "Z-", false, 180, 0, -1),
-    North_East("North East", "Z- X+", true, -135, 1, -1),
-    East("East", "X+", false, -90, 1, 0),
-    South_West("South West", "Z+ X-", true, 45, -1, 1);
+    South("South or Z+", "South", "Z+", false, 0, 0, 1),
+    South_East("South East or Z+ X+", "South East", "Z+ X+", true, -45, 1, 1),
+    West("West or X-", "West", "X-", false, 90, -1, 0),
+    North_West("North West or Z- X-", "North West", "Z- X-", true, 135, -1, -1),
+    North("North or Z-", "North", "Z-", false, 180, 0, -1),
+    North_East("North East or Z- X+", "North East", "Z- X+", true, -135, 1, -1),
+    East("East or X+", "East", "X+", false, -90, 1, 0),
+    South_West("South West or Z+ X-","South West", "Z+ X-", true, 45, -1, 1);
 
+    private final String title;
     public final String name;
     public final String axis;
     public final boolean diagonal;
     public final float yaw;
     public final int offsetX, offsetZ;
 
-    HorizontalDirection(String name, String axis, boolean diagonal, float yaw, int offsetX, int offsetZ) {
-        this.axis = axis;
+    HorizontalDirection(String title, String name, String axis, boolean diagonal, float yaw, int offsetX, int offsetZ) {
+        this.title = title;
         this.name = name;
+        this.axis = axis;
         this.diagonal = diagonal;
         this.yaw = yaw;
         this.offsetX = offsetX;
@@ -95,6 +97,6 @@ public enum HorizontalDirection {
 
     @Override
     public String toString() {
-        return super.toString().replace("_", " ");
+        return title;
     }
 }

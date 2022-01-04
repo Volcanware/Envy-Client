@@ -30,17 +30,17 @@ public class LongJump extends Module {
 
     // General
 
-    public final Setting<JumpMode> jumpMode = sgGeneral.add(new EnumSetting.Builder<JumpMode>()
+    public final Setting<Mode> jumpMode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("The method of jumping.")
-        .defaultValue(JumpMode.Vanilla)
+        .defaultValue(Mode.Vanilla)
         .build()
     );
 
     private final Setting<Double> vanillaBoostFactor = sgGeneral.add(new DoubleSetting.Builder()
         .name("vanilla-boost-factor")
         .description("The amount by which to boost the jump.")
-        .visible(() -> jumpMode.get() == JumpMode.Vanilla)
+        .visible(() -> jumpMode.get() == Mode.Vanilla)
         .defaultValue(1.261)
         .min(0)
         .sliderRange(0, 5)
@@ -50,7 +50,7 @@ public class LongJump extends Module {
     private final Setting<Double> burstInitialSpeed = sgGeneral.add(new DoubleSetting.Builder()
         .name("burst-initial-speed")
         .description("The initial speed of the runup.")
-        .visible(() -> jumpMode.get() == JumpMode.Burst)
+        .visible(() -> jumpMode.get() == Mode.Burst)
         .defaultValue(6)
         .min(0)
         .sliderRange(0, 20)
@@ -60,7 +60,7 @@ public class LongJump extends Module {
     private final Setting<Double> burstBoostFactor = sgGeneral.add(new DoubleSetting.Builder()
         .name("burst-boost-factor")
         .description("The amount by which to boost the jump.")
-        .visible(() -> jumpMode.get() == JumpMode.Burst)
+        .visible(() -> jumpMode.get() == Mode.Burst)
         .defaultValue(2.149)
         .min(0)
         .sliderRange(0, 20)
@@ -70,7 +70,7 @@ public class LongJump extends Module {
     private final Setting<Boolean> onlyOnGround = sgGeneral.add(new BoolSetting.Builder()
         .name("only-on-ground")
         .description("Only performs the jump if you are on the ground.")
-        .visible(() -> jumpMode.get() == JumpMode.Burst)
+        .visible(() -> jumpMode.get() == Mode.Burst)
         .defaultValue(true)
         .build()
     );
@@ -78,7 +78,7 @@ public class LongJump extends Module {
     private final Setting<Boolean> onJump = sgGeneral.add(new BoolSetting.Builder()
         .name("on-jump")
         .description("Whether the player needs to jump first or not.")
-        .visible(() -> jumpMode.get() == JumpMode.Burst)
+        .visible(() -> jumpMode.get() == Mode.Burst)
         .defaultValue(false)
         .build()
     );
@@ -86,7 +86,7 @@ public class LongJump extends Module {
     private final Setting<Double> glideMultiplier = sgGeneral.add(new DoubleSetting.Builder()
         .name("glide-multiplier")
         .description("The amount by to multiply the glide velocity.")
-        .visible(() -> jumpMode.get() == JumpMode.Glide)
+        .visible(() -> jumpMode.get() == Mode.Glide)
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 5)
@@ -105,7 +105,7 @@ public class LongJump extends Module {
     private final Setting<Boolean> autoDisable = sgGeneral.add(new BoolSetting.Builder()
         .name("auto-disable")
         .description("Automatically disabled the module after jumping.")
-        .visible(() -> jumpMode.get() != JumpMode.Vanilla)
+        .visible(() -> jumpMode.get() != Mode.Vanilla)
         .defaultValue(true)
         .build()
     );
@@ -192,7 +192,7 @@ public class LongJump extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        if (Utils.canUpdate() && jumpMode.get() == JumpMode.Glide) {
+        if (Utils.canUpdate() && jumpMode.get() == Mode.Glide) {
             if (!PlayerUtils.isMoving()) return;
 
             float yaw = mc.player.getYaw() + 90;
@@ -278,9 +278,20 @@ public class LongJump extends Module {
         ((IVec3d) event.movement).setXZ((forward * speed * cos) + (strafe * speed * sin), (forward * speed * sin) + (strafe * speed * cos));
     }
 
-    public enum JumpMode {
-        Vanilla,
-        Burst,
-        Glide
+    public enum Mode {
+        Vanilla("Vanilla"),
+        Burst("Burst"),
+        Glide("Glide");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

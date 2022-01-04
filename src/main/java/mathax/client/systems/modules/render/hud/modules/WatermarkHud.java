@@ -158,8 +158,19 @@ public class WatermarkHud extends TripleTextHudElement {
     }
 
     public enum Mode {
-        Text,
-        Icon,
-        Both
+        Text("Text"),
+        Icon("Icon"),
+        Both("Both");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

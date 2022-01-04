@@ -91,7 +91,18 @@ public class SelfWeb extends Module {
     }
 
     public enum Mode {
-        Normal,
-        Smart
+        Normal("Normal"),
+        Smart("Smart");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

@@ -636,15 +636,21 @@ public class Notebot extends Module {
     }
 
     private enum Stage {
-        None,
-        Set_Up,
-        Tune,
-        Playing,
-        Preview;
+        None("None"),
+        Set_Up("Set Up"),
+        Tune("Tune"),
+        Playing("Playing"),
+        Preview("Preview");
+
+        private final String title;
+
+        Stage(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

@@ -87,12 +87,34 @@ public class AutoClicker extends Module {
     }
 
     public enum Mode {
-        Hold,
-        Press
+        Hold("Hold"),
+        Press("Press");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum Button {
-        Right,
-        Left
+        Right("Right"),
+        Left("Left");
+
+        private final String title;
+
+        Button(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

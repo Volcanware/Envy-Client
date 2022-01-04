@@ -133,7 +133,18 @@ public class Swarm extends Module {
     }
 
     public enum Mode {
-        Host,
-        Worker
+        Host("Host"),
+        Worker("Worker");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

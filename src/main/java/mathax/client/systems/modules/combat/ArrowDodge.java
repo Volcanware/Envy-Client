@@ -156,7 +156,18 @@ public class ArrowDodge extends Module {
     }
 
     public enum MoveType {
-        Client,
-        Packet
+        Client("Client"),
+        Packet("Packet");
+
+        private final String title;
+
+        MoveType(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

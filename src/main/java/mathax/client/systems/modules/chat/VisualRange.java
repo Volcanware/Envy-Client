@@ -101,8 +101,19 @@ public class VisualRange extends Module {
     }
 
     public enum Event {
-        Spawn,
-        Despawn,
-        Both
+        Spawn("Spawn"),
+        Despawn("Despawn"),
+        Both("Both");
+
+        private final String title;
+
+        Event(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

@@ -102,15 +102,21 @@ public class WelcomeHud extends TripleTextHudElement {
     }
 
     public enum Message {
-        Welcome,
-        Using,
-        Time,
-        Retarded_Time,
-        Sussy;
+        Welcome("Welcome"),
+        Using("Using"),
+        Time("Time"),
+        Retarded_Time("Retarded Time"),
+        Sussy("Sussy");
+
+        private final String title;
+
+        Message(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

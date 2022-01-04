@@ -3,12 +3,17 @@ package mathax.client.utils.misc;
 import org.lwjgl.glfw.GLFW;
 
 public enum CursorStyle {
-    Default,
-    Click,
-    Type;
+    Default("Default"),
+    Click("Click"),
+    Type("Type");
 
+    private final String title;
     private boolean created;
     private long cursor;
+
+    CursorStyle(String title) {
+        this.title = title;
+    }
 
     public long getGlfwCursor() {
         if (!created) {
@@ -21,5 +26,10 @@ public enum CursorStyle {
         }
 
         return cursor;
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

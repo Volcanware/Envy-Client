@@ -164,9 +164,20 @@ public class SpawnProofer extends Module {
     }
 
     public enum Mode {
-        Always,
-        Potential,
-        Both,
-        None
+        Always("Always"),
+        Potential("Potential"),
+        Both("Both"),
+        None("None");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

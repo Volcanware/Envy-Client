@@ -533,7 +533,7 @@ public class Nametags extends Module {
 
                     double addY = switch (enchantPos.get()) {
                         case Above -> -((enchantmentsToShow.size() + 1) * text.getHeight(true));
-                        case OnTop -> (itemsHeight - enchantmentsToShow.size() * text.getHeight(true)) / 2;
+                        case On_Top -> (itemsHeight - enchantmentsToShow.size() * text.getHeight(true)) / 2;
                     };
 
                     double enchantX;
@@ -546,7 +546,7 @@ public class Nametags extends Module {
 
                         enchantX = switch (enchantPos.get()) {
                             case Above -> x + (aW / 2) - (text.getWidth(enchantName, true) / 2);
-                            case OnTop -> x + (aW - text.getWidth(enchantName, true)) / 2;
+                            case On_Top -> x + (aW - text.getWidth(enchantName, true)) / 2;
                         };
 
                         text.render(enchantName, enchantX, y + addY + enchantY, enchantColor, true);
@@ -687,7 +687,18 @@ public class Nametags extends Module {
     }
 
     public enum Position {
-        Above,
-        OnTop
+        Above("Above"),
+        On_Top("On Top");
+
+        private final String title;
+
+        Position(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

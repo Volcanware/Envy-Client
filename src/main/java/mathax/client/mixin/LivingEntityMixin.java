@@ -2,7 +2,6 @@ package mathax.client.mixin;
 
 import mathax.client.MatHax;
 import mathax.client.events.entity.DamageEvent;
-import mathax.client.events.entity.TookDamageEvent;
 import mathax.client.events.entity.player.CanWalkOnFluidEvent;
 import mathax.client.events.entity.player.TeleportParticleEvent;
 import mathax.client.systems.modules.Modules;
@@ -40,12 +39,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "damage", at = @At("HEAD"))
     private void onDamageHead(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
-        if (Utils.canUpdate()) MatHax.EVENT_BUS.post(DamageEvent.get((LivingEntity) (Object) this, source));
-    }
-
-    @Inject(method = "damage", at = @At("TAIL"))
-    private void onDamageTail(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
-        if (Utils.canUpdate()) MatHax.EVENT_BUS.post(TookDamageEvent.get((LivingEntity) (Object) this, source));
+        if (Utils.canUpdate() && world.isClient) MatHax.EVENT_BUS.post(DamageEvent.get((LivingEntity) (Object) this, source));
     }
 
     @Inject(method = "canWalkOnFluid", at = @At("HEAD"), cancellable = true)

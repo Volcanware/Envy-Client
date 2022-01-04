@@ -117,9 +117,7 @@ public class ClientSpoof extends Module {
     );
 
     public ClientSpoof() {
-        super(Categories.Client, Items.COMMAND_BLOCK, "client-spoof", "Allows you to change the name of the client.");
-
-        runInMainMenu = true;
+        super(Categories.Client, Items.COMMAND_BLOCK, "client-spoof", "Allows you to change the name of the client.", true);
     }
 
     @Override

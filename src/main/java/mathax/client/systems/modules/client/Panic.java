@@ -10,9 +10,7 @@ import java.util.ArrayList;
 public class Panic extends Module {
 
     public Panic(){
-        super(Categories.Client, Items.COMMAND_BLOCK, "panic", "Disables all active modules.");
-
-        runInMainMenu = true;
+        super(Categories.Client, Items.COMMAND_BLOCK, "panic", "Disables all active modules.", true);
     }
 
     @Override

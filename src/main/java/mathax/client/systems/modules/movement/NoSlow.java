@@ -123,8 +123,19 @@ public class NoSlow extends Module {
     }
 
     public enum WebMode {
-        Vanilla,
-        Timer,
-        None
+        Vanilla("Vanilla"),
+        Timer("Timer"),
+        None("None");
+
+        private final String title;
+
+        WebMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

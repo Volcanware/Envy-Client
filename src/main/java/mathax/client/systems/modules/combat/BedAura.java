@@ -563,7 +563,18 @@ public class BedAura extends Module {
     }
 
     public enum BreakHand {
-        Mainhand,
-        Offhand
+        Mainhand("Mainhand"),
+        Offhand("Offhand");
+
+        private final String title;
+
+        BreakHand(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

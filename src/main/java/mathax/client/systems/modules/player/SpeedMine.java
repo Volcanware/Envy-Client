@@ -40,9 +40,7 @@ public class SpeedMine extends Module {
 
         int amplifier = mode.get() == Mode.Haste2 ? 1 : 0;
 
-        if (!mc.player.hasStatusEffect(HASTE)) {
-            mc.player.addStatusEffect(new StatusEffectInstance(HASTE, 255, amplifier, false, false, false));
-        }
+        if (!mc.player.hasStatusEffect(HASTE)) mc.player.addStatusEffect(new StatusEffectInstance(HASTE, 255, amplifier, false, false, false));
 
         StatusEffectInstance effect = mc.player.getStatusEffect(HASTE);
         ((StatusEffectInstanceAccessor) effect).setAmplifier(amplifier);
@@ -50,8 +48,19 @@ public class SpeedMine extends Module {
     }
 
     public enum Mode {
-        Normal,
-        Haste1,
-        Haste2
+        Normal("Normal"),
+        Haste1("Haste I"),
+        Haste2("Haste II");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

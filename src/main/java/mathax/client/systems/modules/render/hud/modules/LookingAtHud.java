@@ -87,8 +87,19 @@ public class LookingAtHud extends DoubleTextHudElement {
     }
 
     public enum Mode {
-        Entities,
-        Blocks,
-        Both
+        Entities("Entities"),
+        Blocks("Blocks"),
+        Both("Both");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

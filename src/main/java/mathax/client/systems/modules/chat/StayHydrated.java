@@ -9,6 +9,7 @@ import mathax.client.settings.SettingGroup;
 import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.utils.misc.NotificationMode;
 import mathax.client.utils.render.ToastSystem;
 import mathax.client.utils.render.color.Color;
 import net.minecraft.item.Items;
@@ -23,10 +24,10 @@ public class StayHydrated extends Module {
 
     //General
 
-    private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+    private final Setting<NotificationMode> mode = sgGeneral.add(new EnumSetting.Builder<NotificationMode>()
         .name("mode")
         .description("Determines how to notify you when its time to drink.")
-        .defaultValue(Mode.Both)
+        .defaultValue(NotificationMode.Both)
         .build()
     );
 
@@ -40,9 +41,7 @@ public class StayHydrated extends Module {
     );
 
     public StayHydrated() {
-        super(Categories.Chat, Items.WATER_BUCKET, "stay-hydrated", "Notifies you when its time to drink. #StayHydrated");
-
-        runInMainMenu = true;
+        super(Categories.Chat, Items.WATER_BUCKET, "stay-hydrated", "Notifies you when its time to drink. #StayHydrated", true);
     }
 
     @EventHandler
@@ -53,8 +52,6 @@ public class StayHydrated extends Module {
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (count) ticks++;
-
-        if (mc.world != null) count = true;
 
         if (notifyOnJoin && mc.world != null) {
             notifyOnJoin = false;
@@ -71,6 +68,9 @@ public class StayHydrated extends Module {
             }
 
             return;
+        } else {
+            count = true;
+            menuCounting = false;
         }
 
         if (ticks > (delay.get() * 20) * 60) {
@@ -88,11 +88,5 @@ public class StayHydrated extends Module {
                 mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!", Config.get().toastDuration));
             }
         }
-    }
-
-    public enum Mode {
-        Chat,
-        Toast,
-        Both
     }
 }

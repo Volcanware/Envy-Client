@@ -22,7 +22,7 @@ public class HandView extends Module {
         .name("x")
         .description("The X scale of your hands.")
         .defaultValue(0.250)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -30,7 +30,7 @@ public class HandView extends Module {
         .name("y")
         .description("The Y scale of your hands.")
         .defaultValue(0.250)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -38,7 +38,7 @@ public class HandView extends Module {
         .name("z")
         .description("The Z scale of your hands.")
         .defaultValue(0.250)
-        .sliderMax(5)
+        .sliderRange(0, 5)
         .build()
     );
 
@@ -108,7 +108,7 @@ public class HandView extends Module {
         .description("The swing progress of your main hand.")
         .defaultValue(0)
         .range(0, 1)
-        .sliderMax(1)
+        .sliderRange(0, 1)
         .build()
     );
 
@@ -117,7 +117,7 @@ public class HandView extends Module {
         .description("The swing progress of your offhand.")
         .defaultValue(0)
         .range(0, 1)
-        .sliderMax(1)
+        .sliderRange(0, 1)
         .build()
     );
 
@@ -134,8 +134,19 @@ public class HandView extends Module {
     }
 
     public enum SwingMode {
-        Offhand,
-        Mainhand,
-        None
+        Offhand("Offhand"),
+        Mainhand("Mainhand"),
+        None("None");
+
+        private final String title;
+
+        SwingMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

@@ -105,13 +105,20 @@ public class AutoBreed extends Module {
     }
 
     public enum Hand {
-        Mainhand(net.minecraft.util.Hand.MAIN_HAND),
-        Offhand(net.minecraft.util.Hand.OFF_HAND);
+        Mainhand("Mainhand", net.minecraft.util.Hand.MAIN_HAND),
+        Offhand("Offhand", net.minecraft.util.Hand.OFF_HAND);
 
-        net.minecraft.util.Hand hand;
+        private final String title;
+        private final net.minecraft.util.Hand hand;
 
-        Hand(net.minecraft.util.Hand hand) {
+        Hand(String title, net.minecraft.util.Hand hand) {
+            this.title = title;
             this.hand = hand;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 }

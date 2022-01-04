@@ -318,7 +318,18 @@ public class BookBot extends Module {
     }
 
     public enum Mode {
-        File,
-        Random
+        File("File"),
+        Random("Random");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

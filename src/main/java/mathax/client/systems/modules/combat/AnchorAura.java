@@ -486,20 +486,37 @@ public class AnchorAura extends Module {
     }
 
     public enum PlaceMode {
-        Above,
-        Above_and_Below,
-        All;
+        Above("Above"),
+        Above_and_Below("Above and Below"),
+        All("All");
+
+        private final String title;
+
+        PlaceMode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 
     public enum RotationMode {
-        Place,
-        Break,
-        Both,
-        None
+        Place("Place"),
+        Break("Break"),
+        Both("Both"),
+        None("None");
+
+        private final String title;
+
+        RotationMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

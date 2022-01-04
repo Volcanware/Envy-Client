@@ -184,24 +184,6 @@ public class AutoArmor extends Module {
         }
     }
 
-    public enum Protection {
-        Protection(Enchantments.PROTECTION),
-        Blast_Protection(Enchantments.BLAST_PROTECTION),
-        Fire_Protection(Enchantments.FIRE_PROTECTION),
-        Projectile_Protection(Enchantments.PROJECTILE_PROTECTION);
-
-        private final Enchantment enchantment;
-
-        Protection(Enchantment enchantment) {
-            this.enchantment = enchantment;
-        }
-
-        @Override
-        public String toString() {
-            return super.toString().replace("_", " ");
-        }
-    }
-
     private class ArmorPiece {
         private final int id;
 
@@ -279,6 +261,26 @@ public class AutoArmor extends Module {
             if (antiBreak.get() && itemStack.isDamageable() && itemStack.getMaxDamage() - itemStack.getDamage() <= 10) return -1;
 
             return score;
+        }
+    }
+
+    public enum Protection {
+        Protection("Protection", Enchantments.PROTECTION),
+        Blast_Protection("Blast Protection", Enchantments.BLAST_PROTECTION),
+        Fire_Protection("Fire Protection", Enchantments.FIRE_PROTECTION),
+        Projectile_Protection("Projectile Protection", Enchantments.PROJECTILE_PROTECTION);
+
+        private final String title;
+        private final Enchantment enchantment;
+
+        Protection(String title, Enchantment enchantment) {
+            this.enchantment = enchantment;
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 }

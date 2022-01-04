@@ -69,7 +69,18 @@ public class EndermanLook extends Module {
     }
 
     public enum Mode {
-        At,
-        Away
+        At("At"),
+        Away("Away");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

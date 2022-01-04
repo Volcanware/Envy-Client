@@ -6,7 +6,6 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import mathax.client.MatHax;
-import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.ChunkDataEvent;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.WindowScreen;
@@ -20,6 +19,8 @@ import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
+import mathax.client.eventbus.EventHandler;
+import mathax.client.utils.misc.NotificationMode;
 import mathax.client.utils.render.ToastSystem;
 import net.minecraft.block.entity.*;
 import net.minecraft.item.Items;
@@ -51,7 +52,7 @@ public class StashFinder extends Module {
         .description("The minimum amount of storage blocks in a chunk to record the chunk.")
         .defaultValue(4)
         .min(1)
-        .sliderMin(1)
+        .sliderRange(1, 10)
         .build()
     );
 
@@ -60,7 +61,7 @@ public class StashFinder extends Module {
         .description("The minimum distance you must be from spawn to record a certain chunk.")
         .defaultValue(0)
         .min(0)
-        .sliderMax(10000)
+        .sliderRange(0, 10000)
         .build()
     );
 
@@ -71,10 +72,10 @@ public class StashFinder extends Module {
         .build()
     );
 
-    private final Setting<Mode> notificationMode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+    private final Setting<NotificationMode> notificationMode = sgGeneral.add(new EnumSetting.Builder<NotificationMode>()
         .name("notification-mode")
         .description("The mode to use for notifications.")
-        .defaultValue(Mode.Both)
+        .defaultValue(NotificationMode.Both)
         .visible(notifications::get)
         .build()
     );
@@ -364,11 +365,5 @@ public class StashFinder extends Module {
             t.add(theme.label("Hoppers:"));
             t.add(theme.label(chunk.hoppers + ""));
         }
-    }
-
-    public enum Mode {
-        Chat,
-        Toast,
-        Both
     }
 }

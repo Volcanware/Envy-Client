@@ -49,6 +49,7 @@ import net.minecraft.util.registry.RegistryKey;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
+import java.io.File;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -88,6 +89,17 @@ public class Modules extends System<Modules> {
 
         // This is here because some hud elements depend on modules to be initialised before them
         add(new HUD());
+    }
+
+    @Override
+    public void load(File folder) {
+        for (Module module : modules) {
+            for (SettingGroup group : module.settings) {
+                for (Setting<?> setting : group) setting.reset();
+            }
+        }
+
+        super.load(folder);
     }
 
     public void sortModules() {
@@ -574,7 +586,6 @@ public class Modules extends System<Modules> {
 
     private void initChat() {
         add(new Announcer());
-        add(new AntiVanish());
         add(new ArmorNotifier());
         add(new AutoEZ());
         add(new AutoLogin());
@@ -601,6 +612,7 @@ public class Modules extends System<Modules> {
         add(new BookBot());
         add(new CoordinateLogger());
         add(new InventoryTweaks());
+        //add(new LitematicaPrinter());
         add(new MiddleClickExtra());
         add(new MultiTask());
         add(new NameProtect());

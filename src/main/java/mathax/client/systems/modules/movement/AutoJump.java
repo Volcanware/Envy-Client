@@ -60,18 +60,35 @@ public class AutoJump extends Module {
     }
 
     public enum JumpWhen {
-        Sprinting,
-        Walking,
-        Always
-    }
+        Sprinting("Sprinting"),
+        Walking("Walking"),
+        Always("Always");
 
-    public enum Mode {
-        Jump,
-        Low_Hop;
+        private final String title;
+
+        JumpWhen(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
+        }
+    }
+
+    public enum Mode {
+        Jump("Jump"),
+        Low_Hop("Low Hop");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 }

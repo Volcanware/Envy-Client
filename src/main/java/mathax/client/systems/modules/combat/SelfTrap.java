@@ -172,7 +172,7 @@ public class SelfTrap extends Module {
                 add(pos.add(0, 1, -1));
             }
             case Top -> add(pos.add(0, 2, 0));
-            case Anti_FacePlace -> {
+            case Anti_Face_Place -> {
                 add(pos.add(1, 1, 0));
                 add(pos.add(-1, 1, 0));
                 add(pos.add(0, 1, 1));
@@ -188,19 +188,36 @@ public class SelfTrap extends Module {
     }
 
     public enum TopMode {
-        Anti_FacePlace,
-        Full,
-        Top,
-        None;
+        Anti_Face_Place("Anti Face Place"),
+        Full("Full"),
+        Top("Top"),
+        None("None");
+
+        private final String title;
+
+        TopMode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 
     public enum BottomMode {
-        Single,
-        None
+        Single("Single"),
+        None("None");
+
+        private final String title;
+
+        BottomMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

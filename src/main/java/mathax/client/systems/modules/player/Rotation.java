@@ -27,8 +27,8 @@ public class Rotation extends Module {
         .name("yaw-angle")
         .description("Yaw angle in degrees.")
         .defaultValue(0)
-        .sliderMax(360)
         .max(360)
+        .sliderMax(360)
         .build()
     );
 
@@ -87,8 +87,19 @@ public class Rotation extends Module {
     }
 
     public enum LockMode {
-        Smart,
-        Simple,
-        None
+        Smart("Smart"),
+        Simple("Simple"),
+        None("None");
+
+        private final String title;
+
+        LockMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

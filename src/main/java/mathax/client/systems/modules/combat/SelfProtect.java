@@ -236,7 +236,18 @@ public class SelfProtect extends Module {
     }
 
     public enum Use {
-        String,
-        Web
+        String("String"),
+        Web("Web");
+
+        private final String title;
+
+        Use(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

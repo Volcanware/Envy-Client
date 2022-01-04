@@ -101,8 +101,19 @@ public class AACCrash extends Module {
     }
 
     public enum Mode {
-        New,
-        Old,
-        Other
+        New("New"),
+        Old("Old"),
+        Other("Other");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

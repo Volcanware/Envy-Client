@@ -295,8 +295,19 @@ public class Auto32K extends Module {
         return list;
     }
 
-    public enum Mode{
-        Hopper,
-        Dispenser
+    public enum Mode {
+        Hopper("Hopper"),
+        Dispenser("Dispenser");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

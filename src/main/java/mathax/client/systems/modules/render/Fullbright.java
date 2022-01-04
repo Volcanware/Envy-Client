@@ -16,6 +16,8 @@ import net.minecraft.item.Items;
 public class Fullbright extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     public final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("The mode to use for Fullbright.")
@@ -37,7 +39,7 @@ public class Fullbright extends Module {
             if (mc.worldRenderer != null) mc.worldRenderer.reload();
         })
         .range(0, 15)
-        .sliderMax(15)
+        .sliderRange(0, 15)
         .build()
     );
 
@@ -108,7 +110,18 @@ public class Fullbright extends Module {
     }
 
     public enum Mode {
-        Gamma,
-        Luminance
+        Gamma("Gamma"),
+        Luminance("Luminace");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

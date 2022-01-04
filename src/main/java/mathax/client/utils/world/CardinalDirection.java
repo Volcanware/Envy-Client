@@ -3,10 +3,16 @@ package mathax.client.utils.world;
 import net.minecraft.util.math.Direction;
 
 public enum CardinalDirection {
-    North,
-    East,
-    South,
-    West;
+    North("North"),
+    East("East"),
+    South("South"),
+    West("West");
+
+    private final String title;
+
+    CardinalDirection(String title) {
+        this.title = title;
+    }
 
     public Direction toDirection() {
         return switch (this) {
@@ -25,5 +31,10 @@ public enum CardinalDirection {
             case EAST -> West;
             case DOWN, UP -> null;
         };
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

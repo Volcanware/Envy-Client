@@ -9,7 +9,6 @@ import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
-import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.misc.Placeholders;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -134,14 +133,13 @@ public class AutoEZ extends Module {
     @EventHandler
     public void onPacketReadMessage(PacketEvent.Receive event) {
         if (mc.player == null || mc.world == null) return;
+        if (!kills.get() || killMessages.get().isEmpty() && killMode.get() == Mode.Custom) return;
 
-        if (!kills.get()) return;
-        if (killMessages.get().isEmpty() && killMode.get() == Mode.Custom) return;
         if (event.packet instanceof GameMessageS2CPacket) {
             String msg = ((GameMessageS2CPacket) event.packet).getMessage().getString();
             for (PlayerEntity player : mc.world.getPlayers()) {
                 if (player == mc.player) return;
-                if (EntityUtils.getGameMode(mc.player).isCreative()) return;
+                if (mc.player.isCreative() || mc.player.isSpectator()) return;
                 if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
 
                 String message = getMessageStyle();
@@ -168,14 +166,14 @@ public class AutoEZ extends Module {
     public String getMessageStyle() {
         return switch (killMode.get()) {
             case MatHax -> switch (killMessageStyle.get()) {
-                case EZ -> getMessage().get(random.nextInt(getMessage().size()));
-                case GG -> getGGMessage().get(random.nextInt(getGGMessage().size()));
+                case EZ -> getMessages().get(random.nextInt(getMessages().size()));
+                case GG -> getGGMessages().get(random.nextInt(getGGMessages().size()));
             };
             case Custom -> killMessages.get().get(random.nextInt(killMessages.get().size()));
         };
     }
 
-    private static List<String> getMessage() {
+    private static List<String> getMessages() {
         return Arrays.asList(
             "%player% just got raped by MatHax!",
             "%player% just got ended by MatHax!",
@@ -188,7 +186,7 @@ public class AutoEZ extends Module {
         );
     }
 
-    private static List<String> getGGMessage() {
+    private static List<String> getGGMessages() {
         return Arrays.asList(
             "GG %player%! MatHax is so op!",
             "Nice fight but MatHax is better, %player%! I really enjoyed it!",
@@ -200,11 +198,9 @@ public class AutoEZ extends Module {
     @EventHandler
     private void onReceivePacket(PacketEvent.Receive event) {
         if (mc.player == null || mc.world == null) return;
+        if (!totems.get() || totemMessages.get().isEmpty() && totemMode.get() == Mode.Custom) return;
 
-        if (!totems.get()) return;
-        if (totemMessages.get().isEmpty() && totemMode.get() == Mode.Custom) return;
         if (!(event.packet instanceof EntityStatusS2CPacket)) return;
-
         EntityStatusS2CPacket packet = (EntityStatusS2CPacket) event.packet;
         if (packet.getStatus() != 35) return;
 
@@ -213,7 +209,7 @@ public class AutoEZ extends Module {
 
         if (player == mc.player) return;
         if (mc.player.distanceTo(player) > 8) return;
-        if (EntityUtils.getGameMode(mc.player).isCreative()) return;
+        if (mc.player.isCreative() || mc.player.isSpectator()) return;
         if (totemIgnoreFriends.get() && Friends.get().isFriend(player)) return;
 
         if (canSendPop) {
@@ -234,12 +230,12 @@ public class AutoEZ extends Module {
 
     public String getTotemMessageStyle() {
         return switch (totemMode.get()) {
-            case MatHax -> getTotemMessage().get(random.nextInt(getTotemMessage().size()));
+            case MatHax -> getTotemMessages().get(random.nextInt(getTotemMessages().size()));
             case Custom -> totemMessages.get().get(random.nextInt(totemMessages.get().size()));
         };
     }
 
-    private static List<String> getTotemMessage() {
+    private static List<String> getTotemMessages() {
         return Arrays.asList(
             "%player% just got popped by MatHax!",
             "Keep popping %player%! MatHax owns you!",
@@ -250,12 +246,34 @@ public class AutoEZ extends Module {
     }
 
     public enum Mode {
-        MatHax,
-        Custom
+        MatHax("MatHax"),
+        Custom("Custom");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum MessageStyle {
-        EZ,
-        GG
+        EZ("EZ"),
+        GG("GG");
+
+        private final String title;
+
+        MessageStyle(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

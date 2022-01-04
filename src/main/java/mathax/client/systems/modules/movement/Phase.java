@@ -187,14 +187,20 @@ public class Phase extends Module {
     }
 
     public enum Mode {
-        NRNB,
-        Normal,
-        No_NCP,
-        Collision_Shape;
+        NRNB("NRNB"),
+        Normal("Normal"),
+        No_NCP("No NCP"),
+        Collision_Shape("Collision Shape");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

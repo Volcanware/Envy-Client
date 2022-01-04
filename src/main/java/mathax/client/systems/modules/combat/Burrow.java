@@ -213,9 +213,20 @@ public class Burrow extends Module {
     }
 
     public enum Block {
-        EChest,
-        Obsidian,
-        Anvil,
-        Held
+        EChest("EChest"),
+        Obsidian("Obsidian"),
+        Anvil("Anvil"),
+        Held("Held");
+
+        private final String title;
+
+        Block(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

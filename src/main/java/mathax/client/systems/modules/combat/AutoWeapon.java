@@ -89,7 +89,18 @@ public class AutoWeapon extends Module {
     }
 
     public enum Weapon {
-        Sword,
-        Axe
+        Sword("Sword"),
+        Axe("Axe");
+
+        private final String title;
+
+        Weapon(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

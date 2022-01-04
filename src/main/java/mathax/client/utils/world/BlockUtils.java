@@ -435,8 +435,19 @@ public class BlockUtils {
     }
 
     public enum MobSpawn {
-        Never,
-        Potential,
-        Always
+        Never("Never"),
+        Potential("Potential"),
+        Always("Always");
+
+        private final String title;
+
+        MobSpawn(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

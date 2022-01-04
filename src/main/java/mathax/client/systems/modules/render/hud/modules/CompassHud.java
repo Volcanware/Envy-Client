@@ -85,25 +85,43 @@ public class CompassHud extends HudElement {
         return yaw + direction.ordinal() * Math.PI / 2;
     }
 
-    private enum Direction {
-        N("Z-"),
-        W("X-"),
-        S("Z+"),
-        E("X+");
+    public enum Mode {
+        Direction("Direction"),
+        Axis("Axis");
 
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
+    }
+
+    private enum Direction {
+        N("N or Z-", "Z-"),
+        W("W or X-", "X-"),
+        S("S or Z+", "Z+"),
+        E("E or X+", "X+");
+
+        private final String title;
         private final String axis;
 
-        Direction(String axis) {
+        Direction(String title, String axis) {
+            this.title = title;
             this.axis = axis;
         }
 
         public String getAxis() {
             return axis;
         }
-    }
 
-    public enum Mode {
-        Direction,
-        Axis
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

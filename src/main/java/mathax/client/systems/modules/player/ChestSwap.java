@@ -126,14 +126,20 @@ public class ChestSwap extends Module {
     }
 
     public enum Chestplate {
-        Diamond,
-        Netherite,
-        Prefer_Diamond,
-        Prefer_Netherite;
+        Diamond("Diamond"),
+        Netherite("Netherite"),
+        Prefer_Diamond("Prefer Diamond"),
+        Prefer_Netherite("Prefer Netherite");
+
+        private final String title;
+
+        Chestplate(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

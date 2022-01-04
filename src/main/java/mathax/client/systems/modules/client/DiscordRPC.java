@@ -79,7 +79,7 @@ public class DiscordRPC extends Module {
         .build()
     );
 
-    private final Setting<SmallImageMode> smallImageMode = sgGeneral.add(new EnumSetting.Builder<SmallImageMode>()
+    public final Setting<SmallImageMode> smallImageMode = sgGeneral.add(new EnumSetting.Builder<SmallImageMode>()
         .name("small-images")
         .description("Shows cats or dogs on MatHax rpc.")
         .defaultValue(SmallImageMode.Cats)
@@ -87,9 +87,7 @@ public class DiscordRPC extends Module {
     );
 
     public DiscordRPC() {
-        super(Categories.Client, Items.COMMAND_BLOCK, "discord-rpc", "Shows MatHax as your Discord status.");
-
-        runInMainMenu = true;
+        super(Categories.Client, Items.COMMAND_BLOCK, "discord-rpc", "Shows MatHax as your Discord status.", true);
     }
 
     @Override
@@ -399,18 +397,30 @@ public class DiscordRPC extends Module {
 
     private static void applySmallImage() {
         if (delay == 5) {
+            delay = 0;
+
             if (number == 16) number = 1;
 
             if (Modules.get().get(DiscordRPC.class).smallImageMode.get() == SmallImageMode.Dogs) rpc.smallImageKey = "dog-" + number;
             else rpc.smallImageKey = "cat-" + number;
 
-            ++number;
-            delay = 0;
-        } else ++delay;
+            number++;
+        } else delay++;
     }
 
     public enum SmallImageMode {
-        Cats,
-        Dogs
+        Cats("Cats"),
+        Dogs("Dogs");
+
+        private final String title;
+
+        SmallImageMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }
