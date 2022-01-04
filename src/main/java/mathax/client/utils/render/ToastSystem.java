@@ -74,7 +74,7 @@ public class ToastSystem implements Toast {
 
         if (icon != null) mc.getItemRenderer().renderInGui(icon, 8, 8);
 
-        if (!playedSound && Config.get().toastSound) {
+        if (!playedSound && Config.get().toastSound.get()) {
             mc.getSoundManager().play(getSound());
             playedSound = true;
         }

@@ -5,6 +5,7 @@ import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.misc.NameProtect;
 import mathax.client.systems.proxies.Proxies;
 import mathax.client.systems.proxies.Proxy;
+import mathax.client.utils.Utils;
 import mathax.client.utils.Version;
 import mathax.client.utils.render.color.Color;
 import net.minecraft.client.gui.screen.TitleScreen;
@@ -71,7 +72,7 @@ public class TitleScreenMixin extends Screen {
         drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, (int) y, GRAY);
         drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, (int) y, WHITE);
 
-        if (!(Modules.get() == null) && !Modules.get().isActive(NameProtect.class) && MatHax.isDeveloper(client.getSession().getUuid())) {
+        if (Modules.get() != null && !Modules.get().isActive(NameProtect.class) && Utils.isDeveloper(client.getSession().getUuid())) {
             drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, (int) y, GRAY);
             drawStringWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, (int) y, GRAY);
             drawStringWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, (int) y, MatHax.INSTANCE.MATHAX_COLOR_INT);

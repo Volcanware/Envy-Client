@@ -2,7 +2,6 @@ package mathax.client.systems.commands.commands;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import mathax.client.gui.tabs.builtin.ConfigTab;
 import mathax.client.systems.commands.Command;
 import mathax.client.systems.config.Config;
 import net.minecraft.command.CommandSource;
@@ -25,7 +24,7 @@ public class PrefixCommand extends Command {
         builder.then(literal("set")
             .then(argument("new-prefix", StringArgumentType.string())
                 .executes(context -> {
-                    ConfigTab.prefix.set(StringArgumentType.getString(context, "new-prefix"));
+                    Config.get().prefix.set(StringArgumentType.getString(context, "new-prefix"));
                     info("Command prefix set to (highlight)(bold)%s(reset)(default)!", Config.get().prefix);
                     return SINGLE_SUCCESS;
                 })

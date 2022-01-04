@@ -7,7 +7,6 @@ import mathax.client.systems.commands.arguments.WaypointArgumentType;
 import mathax.client.systems.waypoints.Waypoint;
 import mathax.client.systems.waypoints.Waypoints;
 import mathax.client.utils.player.PlayerUtils;
-import mathax.client.utils.world.Dimension;
 import net.minecraft.command.CommandSource;
 import net.minecraft.util.Formatting;
 

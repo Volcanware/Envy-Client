@@ -1,7 +1,7 @@
 package mathax.client.systems.modules.client;
 
 import mathax.client.MatHax;
-import mathax.client.gui.screens.HudElementScreen;
+import mathax.client.gui.screens.hud.HudElementScreen;
 import mathax.client.gui.screens.ProxiesScreen;
 import mathax.client.gui.screens.accounts.AccountsScreen;
 import mathax.client.gui.screens.accounts.AddAlteningAccountScreen;

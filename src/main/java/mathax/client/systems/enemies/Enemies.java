@@ -42,8 +42,8 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
     public boolean add(Enemy enemy) {
         if (enemy.name.isEmpty()) return false;
         if (enemy.name.equals(mc.getSession().getUsername())) {
-            ChatUtils.error("Enemies", "You can't add yourself to enemies!");
-            if (Config.get().toastFeedback) mc.getToastManager().add(new ToastSystem(Items.REDSTONE_BLOCK, color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + mc.getSession().getUsername() + Formatting.GRAY + "]", null, Formatting.RED + "You can't add yourself!", Config.get().toastDuration));
+            if (Config.get().chatFeedback.get()) ChatUtils.error("Enemies", "You can't add yourself to enemies!");
+            if (Config.get().toastFeedback.get()) mc.getToastManager().add(new ToastSystem(Items.REDSTONE_BLOCK, color.getPacked(), "Enemies " + Formatting.GRAY + "[" + Formatting.WHITE + mc.getSession().getUsername() + Formatting.GRAY + "]", null, Formatting.RED + "You can't add yourself!", Config.get().toastDuration.get()));
             return false;
         }
 

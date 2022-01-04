@@ -117,12 +117,12 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
 
     public void sendToggledMsg(String name, Module module) {
         if (!module.isMessageEnabled()) return;
-        if (Config.get().chatFeedback) ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY, "Toggled (highlight)%s(default) %s(default).", title, getOnOff(module));
+        if (Config.get().chatFeedback.get()) ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY, "Toggled (highlight)%s(default) %s(default).", title, getOnOff(module));
     }
 
     public void sendToggledToast(String name, Module module) {
         if (!module.isToastEnabled()) return;
-        mc.getToastManager().add(new ToastSystem(module.icon, module.category.color, title, null, Formatting.GRAY + "Toggled " + getOnOff(module) + Formatting.GRAY + ".", Config.get().toastDuration));
+        mc.getToastManager().add(new ToastSystem(module.icon, module.category.color, title, null, Formatting.GRAY + "Toggled " + getOnOff(module) + Formatting.GRAY + ".", Config.get().toastDuration.get()));
     }
 
     private String getOnOff(Module module) {

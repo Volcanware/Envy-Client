@@ -78,6 +78,11 @@ public class Utils {
         }
     }
 
+    public static boolean isDeveloper(String uuid) {
+        uuid = uuid.replace("-", "");
+        return MatHax.getDeveloperUUIDs().contains(uuid);
+    }
+
     public static double getPlayerSpeed() {
         if (mc.player == null) return 0;
 

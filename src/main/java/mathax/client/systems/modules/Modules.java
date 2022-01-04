@@ -32,7 +32,6 @@ import mathax.client.systems.Systems;
 import mathax.client.systems.modules.client.swarm.Swarm;
 import mathax.client.systems.modules.movement.elytrafly.ElytraFly;
 import mathax.client.systems.modules.movement.speed.Speed;
-import mathax.client.systems.modules.render.hud.HUD;
 import mathax.client.systems.modules.render.marker.Marker;
 import mathax.client.systems.modules.render.search.Search;
 import mathax.client.utils.Utils;
@@ -86,9 +85,6 @@ public class Modules extends System<Modules> {
         initCrash();
         initMisc();
         initClient();
-
-        // This is here because some hud elements depend on modules to be initialised before them
-        add(new HUD());
     }
 
     @Override
@@ -229,7 +225,7 @@ public class Modules extends System<Modules> {
             if (value != GLFW.GLFW_KEY_ESCAPE) {
                 moduleToBind.keybind.set(isKey, value);
                 ChatUtils.info("KeyBinds", "Module (highlight)%s (default)bound to (highlight)%s(default).", moduleToBind.title, moduleToBind.keybind);
-                mc.getToastManager().add(new ToastSystem(moduleToBind.icon, moduleToBind.category.color, moduleToBind.title, null, Formatting.GRAY + "Bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + ".", Config.get().toastDuration));
+                mc.getToastManager().add(new ToastSystem(moduleToBind.icon, moduleToBind.category.color, moduleToBind.title, null, Formatting.GRAY + "Bound to " + Formatting.WHITE + moduleToBind.keybind + Formatting.GRAY + ".", Config.get().toastDuration.get()));
             }
 
             MatHax.EVENT_BUS.post(ModuleBindChangedEvent.get(moduleToBind));

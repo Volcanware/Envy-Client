@@ -25,28 +25,32 @@ import java.util.concurrent.CompletableFuture;
 
 @Mixin(CommandSuggestor.class)
 public abstract class CommandSuggestorMixin {
+    @Shadow
+    private ParseResults<CommandSource> parse;
 
-    @Shadow private ParseResults<CommandSource> parse;
-
-    @Shadow @Final
+    @Shadow
+    @Final
     TextFieldWidget textField;
 
-    @Shadow @Final
+    @Shadow
+    @Final
     MinecraftClient client;
 
     @Shadow
     boolean completingSuggestions;
 
-    @Shadow private CompletableFuture<Suggestions> pendingSuggestions;
+    @Shadow
+    private CompletableFuture<Suggestions> pendingSuggestions;
 
-    @Shadow protected abstract void show();
+    @Shadow
+    protected abstract void show();
 
     @Shadow
     CommandSuggestor.SuggestionWindow window;
 
     @Inject(method = "refresh", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     public void onRefresh(CallbackInfo info, String string, StringReader reader) {
-        String prefix = Config.get().prefix;
+        String prefix = Config.get().prefix.get();
         int length = prefix.length();
         if (reader.canRead(length) && reader.getString().startsWith(prefix, reader.getCursor())) {
             reader.setCursor(reader.getCursor() + length);

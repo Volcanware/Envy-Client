@@ -39,22 +39,22 @@ public class Fonts {
 
         File file = new File(FONTS_FOLDER, Config.get().font + ".ttf");
         if (!file.exists()) {
-            Config.get().font = DEFAULT_FONT;
+            Config.get().font.set(DEFAULT_FONT);
             file = new File(FONTS_FOLDER, Config.get().font + ".ttf");
         }
 
         try {
             CUSTOM_FONT = new CustomTextRenderer(file);
         } catch (Exception ignored) {
-            Config.get().font = DEFAULT_FONT;
+            Config.get().font.set(DEFAULT_FONT);
             file = new File(FONTS_FOLDER, Config.get().font + ".ttf");
 
             CUSTOM_FONT = new CustomTextRenderer(file);
         }
 
-        if (mc.currentScreen instanceof WidgetScreen && Config.get().customFont) ((WidgetScreen) mc.currentScreen).invalidate();
+        if (mc.currentScreen instanceof WidgetScreen && Config.get().customFont.get()) ((WidgetScreen) mc.currentScreen).invalidate();
 
-        lastFont = Config.get().font;
+        lastFont = Config.get().font.get();
     }
 
     public static String[] getAvailableFonts() {

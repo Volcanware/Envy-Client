@@ -175,10 +175,10 @@ public class StashFinder extends Module {
             if (notifications.get() && (!chunk.equals(prevChunk) || !chunk.countsEqual(prevChunk))) {
                 switch (notificationMode.get()) {
                     case Chat -> info("Found stash at (highlight)%s(default), (highlight)%s(default).", chunk.x, chunk.z);
-                    case Toast -> mc.getToastManager().add(new ToastSystem(Items.CHEST, color.getPacked(), title, null, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!", Config.get().toastDuration));
+                    case Toast -> mc.getToastManager().add(new ToastSystem(Items.CHEST, color.getPacked(), title, null, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!", Config.get().toastDuration.get()));
                     case Both -> {
                         info("Found stash at (highlight)%s(default), (highlight)%s(default).", chunk.x, chunk.z);
-                        mc.getToastManager().add(new ToastSystem(Items.CHEST, color.getPacked(), title, null, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!", Config.get().toastDuration));
+                        mc.getToastManager().add(new ToastSystem(Items.CHEST, color.getPacked(), title, null, Formatting.GRAY + "Found " + Formatting.WHITE + "stash" + Formatting.GRAY + "!", Config.get().toastDuration.get()));
                     }
                 }
             }

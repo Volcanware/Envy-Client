@@ -1,5 +1,6 @@
 package mathax.client.utils.misc;
 
+import baritone.api.BaritoneAPI;
 import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.Modules;
 import mathax.client.utils.render.color.RainbowColor;
@@ -78,7 +79,7 @@ public class ChatUtils {
         if (prefixTitle != null) message.append(getCustomPrefix(prefixTitle, prefixColor));
         message.append(msg);
 
-        if (!Config.get().deleteChatFeedback) id = 0;
+        if (!Config.get().deleteChatFeedback.get()) id = 0;
 
         ((ChatHudAccessor) mc.inGameHud.getChatHud()).add(message, id);
     }
@@ -135,7 +136,7 @@ public class ChatUtils {
             .withFormatting(Formatting.BOLD)
             .withClickEvent(new ClickEvent(
                 ClickEvent.Action.RUN_COMMAND,
-                String.format("%sb goto %d %d %d", Config.get().prefix, (int) pos.x, (int) pos.y, (int) pos.z)
+                String.format("%sgoto %d %d %d", BaritoneAPI.getSettings().prefix.value, (int) pos.x, (int) pos.y, (int) pos.z)
             ))
             .withHoverEvent(new HoverEvent(
                 HoverEvent.Action.SHOW_TEXT,

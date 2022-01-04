@@ -3,7 +3,6 @@ package mathax.client;
 import mathax.client.eventbus.EventBus;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.eventbus.IEventBus;
-import mathax.client.events.mathax.CharTypedEvent;
 import mathax.client.events.mathax.KeyEvent;
 import mathax.client.events.mathax.MouseButtonEvent;
 import mathax.client.events.world.TickEvent;
@@ -18,6 +17,7 @@ import mathax.client.renderer.Shaders;
 import mathax.client.renderer.text.Fonts;
 import mathax.client.systems.Systems;
 import mathax.client.systems.config.Config;
+import mathax.client.systems.hud.HUD;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.client.CapesModule;
@@ -44,7 +44,6 @@ import mathax.client.utils.world.BlockIterator;
 import mathax.client.utils.world.BlockUtils;
 import mathax.client.systems.modules.render.Background;
 import mathax.client.systems.modules.render.Zoom;
-import mathax.client.systems.modules.render.hud.HUD;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
@@ -70,8 +69,8 @@ import java.util.List;
 /*/------------------------------------------------------------------/*/
 
 public class MatHax implements ClientModInitializer {
-    public static MinecraftClient mc;
     public static MatHax INSTANCE;
+    public static MinecraftClient mc;
     public static final IEventBus EVENT_BUS = new EventBus();
 
     public static final File GAME_FOLDER = new File(FabricLoader.getInstance().getGameDir().toString());
@@ -150,7 +149,7 @@ public class MatHax implements ClientModInitializer {
         }
 
         // Log
-        LOG.info(logPrefix + "Initializing MatHax " + Version.getStylized() + "...");
+        LOG.info(logPrefix + "Initializing MatHax " + Version.getStylized() + " for Minecraft " + Version.getMinecraft() + "...");
 
         // Global Minecraft client accessor
         mc = MinecraftClient.getInstance();
@@ -170,7 +169,6 @@ public class MatHax implements ClientModInitializer {
                 Modules.get().get(DiscordRPC.class).forceToggle(true); // DISCORD RPC
                 Modules.get().get(Background.class).forceToggle(true); // BACKGROUND
                 Modules.get().get(MiddleClickFriend.class).forceToggle(true); // MIDDLE CLICK FRIEND
-                Modules.get().get(HUD.class).forceToggle(true); // HUD
 
                 // VISIBILITY
                 Modules.get().get(ClientSpoof.class).setVisible(false); // CLIENT SPOOF
@@ -179,7 +177,6 @@ public class MatHax implements ClientModInitializer {
                 Modules.get().get(Background.class).setVisible(false); // BACKGROUND
                 Modules.get().get(MiddleClickFriend.class).setVisible(false); // MIDDLE CLICK FRIEND
                 Modules.get().get(Zoom.class).setVisible(false); // ZOOM
-                Modules.get().get(HUD.class).setVisible(false); // HUD
 
                 // KEYBINDS
                 Modules.get().get(Zoom.class).keybind.set(KeyBind.fromKey(GLFW.GLFW_KEY_C)); // ZOOM
@@ -196,10 +193,10 @@ public class MatHax implements ClientModInitializer {
 
                 // MESSAGES
                 Modules.get().get(Zoom.class).setToggleMessage(false); // ZOOM
-
-                // RESET HUD LOCATIONS
-                Modules.get().get(HUD.class).reset.run(); // HUD
             }
+
+            // RESET HUD LOCATIONS
+            if (!Systems.get(HUD.class).getFile().exists()) Systems.get(HUD.class).reset.run(); // HUD
         });
 
         // Pre init
@@ -209,7 +206,6 @@ public class MatHax implements ClientModInitializer {
         Renderer2D.init();
         EntityShaders.initOutlines();
         MatHaxExecutor.init();
-        RainbowColors.init();
         BlockIterator.init();
         EChestMemory.init();
         Rotations.init();
@@ -242,6 +238,7 @@ public class MatHax implements ClientModInitializer {
         Fonts.load();
         GuiRenderer.init();
         GuiThemes.postInit();
+        RainbowColors.init();
 
         // Title
         WindowUtils.MatHax.setTitleLoaded();
@@ -262,54 +259,29 @@ public class MatHax implements ClientModInitializer {
         else WindowUtils.MatHax.setTitle();
 
         // Log
-        LOG.info(logPrefix + "MatHax " + Version.getStylized() + " initialized!");
+        LOG.info(logPrefix + "MatHax " + Version.getStylized() + " initialized for Minecraft " + Version.getMinecraft() + "!");
     }
-
-    // Music Volume
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
+        if (mc.currentScreen == null && mc.getOverlay() == null && KeyBinds.OPEN_COMMANDS.wasPressed()) mc.setScreen(new ChatScreen(Config.get().prefix.get()));
+
         if (Music.player == null) return;
-        if (Music.player.getVolume() != Config.get().musicVolume) Music.player.setVolume(Config.get().musicVolume);
-    }
-
-    // Developer
-
-    public static boolean isDeveloper(String uuid) {
-        uuid = uuid.replace("-", "");
-        return getDeveloperUUIDs().contains(uuid);
-    }
-
-    // Click GUI keys
-
-    @EventHandler
-    private void onKeyGUI(KeyEvent event) {
-        if (event.action == KeyAction.Press && KeyBinds.OPEN_CLICK_GUI.matchesKey(event.key, 0)) {
-            if (mc.getOverlay() instanceof SplashOverlay) return;
-            if (Utils.canOpenClickGUI()) openClickGUI();
-        }
+        if (Music.player.getVolume() != Config.get().musicVolume.get()) Music.player.setVolume(Config.get().musicVolume.get());
     }
 
     @EventHandler
-    private void onMouseButtonGUI(MouseButtonEvent event) {
-        if (event.action == KeyAction.Press && event.button != GLFW.GLFW_MOUSE_BUTTON_LEFT && KeyBinds.OPEN_CLICK_GUI.matchesMouse(event.button) && Utils.canOpenClickGUI()) openClickGUI();
+    private void onKey(KeyEvent event) {
+        if (mc.getOverlay() instanceof SplashOverlay) return;
+        if (event.action == KeyAction.Press && KeyBinds.OPEN_CLICK_GUI.matchesKey(event.key, 0)) openClickGUI();
     }
 
-    // Click GUI
+    private void onMouseButton(MouseButtonEvent event) {
+        if (mc.getOverlay() instanceof SplashOverlay) return;
+        if (event.action == KeyAction.Press && KeyBinds.OPEN_CLICK_GUI.matchesMouse(event.button)) openClickGUI();
+    }
 
     private void openClickGUI() {
-        Tabs.get().get(0).openScreen(GuiThemes.get());
-    }
-
-    // Console
-
-    @EventHandler
-    private void onCharTyped(CharTypedEvent event) {
-        if (mc.currentScreen != null || !Config.get().prefixOpensConsole || Config.get().prefix.isBlank()) return;
-
-        if (event.c == Config.get().prefix.charAt(0)) {
-            mc.setScreen(new ChatScreen(Config.get().prefix));
-            event.cancel();
-        }
+        if (Utils.canOpenClickGUI()) Tabs.get().get(0).openScreen(GuiThemes.get());
     }
 }

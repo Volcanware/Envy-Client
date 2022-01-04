@@ -4,10 +4,10 @@ import mathax.client.MatHax;
 import mathax.client.events.world.TickEvent;
 import mathax.client.gui.GuiThemes;
 import mathax.client.gui.WidgetScreen;
-import mathax.client.gui.tabs.builtin.ConfigTab;
 import mathax.client.settings.ColorSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
+import mathax.client.systems.config.Config;
 import mathax.client.systems.waypoints.Waypoint;
 import mathax.client.systems.waypoints.Waypoints;
 import mathax.client.utils.misc.UnorderedArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
 import static mathax.client.MatHax.mc;
 
 public class RainbowColors {
-    public static final RainbowColor GLOBAL = new RainbowColor().setSpeed(ConfigTab.rainbowSpeed.get() / 100);
+    public static final RainbowColor GLOBAL = new RainbowColor().setSpeed(Config.get().rainbowSpeed.get() / 100);
 
     private static final List<Setting<SettingColor>> colorSettings = new UnorderedArrayList<>();
     private static final List<SettingColor> colors = new UnorderedArrayList<>();

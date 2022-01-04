@@ -43,8 +43,8 @@ public class Friends extends System<Friends> implements Iterable<Friend> {
     public boolean add(Friend friend) {
         if (friend.name.isEmpty()) return false;
         if (friend.name.equals(mc.getSession().getUsername())) {
-            ChatUtils.error("Friends", "You can't add yourself to friends!");
-            if (Config.get().toastFeedback) mc.getToastManager().add(new ToastSystem(Items.EMERALD, color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", null, Formatting.RED + "You can't add yourself!", Config.get().toastDuration));
+            if (Config.get().chatFeedback.get()) ChatUtils.error("Friends", "You can't add yourself to friends!");
+            if (Config.get().toastFeedback.get()) mc.getToastManager().add(new ToastSystem(Items.EMERALD, color.getPacked(), "Friends " + Formatting.GRAY + "[" + Formatting.WHITE + friend.name + Formatting.GRAY + "]", null, Formatting.RED + "You can't add yourself!", Config.get().toastDuration.get()));
             return false;
         }
 

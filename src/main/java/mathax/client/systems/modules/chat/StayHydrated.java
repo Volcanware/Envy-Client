@@ -82,10 +82,10 @@ public class StayHydrated extends Module {
     private void sendNotification() {
         switch (mode.get()) {
             case Chat -> info("Its time to drink! #StayHydrated");
-            case Toast -> mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!", Config.get().toastDuration));
+            case Toast -> mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!", Config.get().toastDuration.get()));
             case Both -> {
                 info("Its time to drink! #StayHydrated");
-                mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!", Config.get().toastDuration));
+                mc.getToastManager().add(new ToastSystem(Items.WATER_BUCKET, BLUE, "Stay Hydrated", null, "Its time to drink!", Config.get().toastDuration.get()));
             }
         }
     }

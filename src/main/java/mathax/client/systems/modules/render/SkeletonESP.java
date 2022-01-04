@@ -106,7 +106,7 @@ public class SkeletonESP extends Module {
             if (!(entity instanceof PlayerEntity player)) return;
             if (ignoreFriends.get() && Friends.get().isFriend((PlayerEntity) entity)) return;
             if (!firstPerson.get() && player == mc.player && mc.options.getPerspective() == Perspective.FIRST_PERSON && !Modules.get().isActive(Freecam.class) && !Modules.get().isActive(FreeLook.class)) return;
-            int rotationHoldTicks = Config.get().rotationHoldTicks;
+            int rotationHoldTicks = Config.get().rotationHoldTicks.get();
 
             Color color;
             if (distance.get()) color = getColorFromDistance(player);

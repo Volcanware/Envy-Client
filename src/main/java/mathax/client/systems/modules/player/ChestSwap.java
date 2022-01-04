@@ -116,13 +116,13 @@ public class ChestSwap extends Module {
     @Override
     public void sendToggledMsg(String name, Module module) {
         if (stayOn.get()) super.sendToggledMsg(name, module);
-        else if (Config.get().chatFeedback) info("Triggered (highlight)%s(default).", title);
+        else if (Config.get().chatFeedback.get()) info("Triggered (highlight)%s(default).", title);
     }
 
     @Override
     public void sendToggledToast(String name, Module module) {
         if (stayOn.get()) super.sendToggledToast(name, module);
-        else if (Config.get().toastFeedback) mc.getToastManager().add(new ToastSystem(module.icon, module.category.color, title, null, Formatting.GRAY + "Has been triggered.", Config.get().toastDuration));
+        else if (Config.get().toastFeedback.get()) mc.getToastManager().add(new ToastSystem(module.icon, module.category.color, title, null, Formatting.GRAY + "Has been triggered.", Config.get().toastDuration.get()));
     }
 
     public enum Chestplate {

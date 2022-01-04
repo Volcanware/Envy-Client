@@ -3,11 +3,13 @@ package mathax.client.systems.commands.commands;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.client.gui.GuiThemes;
 import mathax.client.settings.Setting;
+import mathax.client.systems.Systems;
 import mathax.client.systems.commands.Command;
 import mathax.client.systems.commands.arguments.ModuleArgumentType;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.render.hud.HUD;
+import mathax.client.systems.hud.HUD;
+import mathax.client.utils.misc.ChatUtils;
 import net.minecraft.command.CommandSource;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
@@ -28,7 +30,7 @@ public class ResetCommand extends Command {
                 }))
                 .then(literal("all").executes(context -> {
                     Modules.get().getAll().forEach(module -> module.settings.forEach(group -> group.forEach(Setting::reset)));
-                    info("Reset all module's settings");
+                    info("Reset all module settings.");
                     return SINGLE_SUCCESS;
                 }))
         ).then(literal("gui").executes(context -> {
@@ -50,12 +52,12 @@ public class ResetCommand extends Command {
                 }))
                 .then(literal("all").executes(context -> {
                     Modules.get().getAll().forEach(module -> module.keybind.set(true, -1));
-                    info("Reset all module's binds");
+                    info("Reset all binds.");
                     return SINGLE_SUCCESS;
                 }))
         ).then(literal("hud").executes(context -> {
-            Modules.get().get(HUD.class).reset.run();
-            Modules.get().get(HUD.class).info("Reset HUD elements.");
+            Systems.get(HUD.class).reset.run();
+            ChatUtils.info("HUD", "Reset all elements.");
             return SINGLE_SUCCESS;
         }));
     }
