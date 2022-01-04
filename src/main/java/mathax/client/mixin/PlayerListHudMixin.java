@@ -1,13 +1,15 @@
 package mathax.client.mixin;
 
 import mathax.client.systems.modules.Modules;
-import mathax.client.utils.Utils;
 import mathax.client.systems.modules.misc.BetterTab;
+import mathax.client.utils.Utils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.PlayerListHud;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,10 +18,11 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static mathax.client.MatHax.mc;
-
 @Mixin(PlayerListHud.class)
 public class PlayerListHudMixin {
+    @Shadow
+    @Final
+    private MinecraftClient client;
 
     @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Ljava/lang/Math;min(II)I", ordinal = 0), index = 1)
     private int modifyCount(int count) {
@@ -39,7 +42,7 @@ public class PlayerListHudMixin {
     private int modifyWidth(int width) {
         BetterTab module = Modules.get().get(BetterTab.class);
 
-        return module.isActive() && module.accurateLatency.get() ? width + 32 : width;
+        return module.isActive() && module.accurateLatency.get() ? width + 30 : width;
     }
 
     @Shadow
@@ -50,9 +53,9 @@ public class PlayerListHudMixin {
         BetterTab betterTab = Modules.get().get(BetterTab.class);
 
         if (betterTab.isActive() && betterTab.accurateLatency.get()) {
-            TextRenderer textRenderer = mc.textRenderer;
+            TextRenderer textRenderer = client.textRenderer;
 
-            int latency = Utils.clamp(entry.getLatency(), 0, 99999);
+            int latency = Utils.clamp(entry.getLatency(), 0, 9999);
             int color = latency < 150 ? 0x00E970 : latency < 300 ? 0xE7D020 : 0xD74238;
             String text = latency + "ms";
             textRenderer.drawWithShadow(matrices, text, (float) x + width - textRenderer.getWidth(text), (float) y, color);
