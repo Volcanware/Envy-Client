@@ -5,6 +5,7 @@ import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.utils.entity.TargetUtils;
 import mathax.client.utils.player.FindItemResult;
 import mathax.client.utils.player.InvUtils;
 import mathax.client.utils.player.Rotations;
@@ -64,6 +65,23 @@ public class AutoEXP extends Module {
         .build()
     );
 
+    private final Setting<Boolean> playerNearStop = sgGeneral.add(new BoolSetting.Builder()
+        .name("player-near-stop")
+        .description("Stops repairing when a player is near you.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> playerNearStopRange = sgGeneral.add(new DoubleSetting.Builder()
+        .name("range")
+        .description("Determines the range other players have to be in to stop repairing.")
+        .defaultValue(3)
+        .min(0)
+        .sliderRange(0, 5)
+        .visible(playerNearStop::get)
+        .build()
+    );
+
     public AutoEXP() {
         super(Categories.Combat, Items.EXPERIENCE_BOTTLE, "auto-exp", "Automatically repairs your armor and tools in pvp.");
     }
@@ -75,6 +93,8 @@ public class AutoEXP extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
+        if (playerNearStop.get() && TargetUtils.isPlayerNear(playerNearStopRange.get())) return;
+
         if (repairingI == -1) {
             if (mode.get() != Mode.Hands) {
                 for (int i = 0; i < mc.player.getInventory().armor.size(); i++) {

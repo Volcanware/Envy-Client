@@ -41,6 +41,8 @@ public class AutoMountBypassDupe extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Boolean> shulkersOnly = sgGeneral.add(new BoolSetting.Builder()
         .name("shulker-only")
         .description("Only moves shulker boxes into the inventory.")

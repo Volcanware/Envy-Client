@@ -31,6 +31,8 @@ public class Burrow extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Block> block = sgGeneral.add(new EnumSetting.Builder<Block>()
         .name("block-to-use")
         .description("The block to use for Burrow.")

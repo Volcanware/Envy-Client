@@ -33,6 +33,8 @@ import org.lwjgl.glfw.GLFW;
 public class ContainerCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Integer> amount = sgGeneral.add(new IntSetting.Builder()
         .name("amount")
         .description("How many packets to send to the server per container block per tick.")

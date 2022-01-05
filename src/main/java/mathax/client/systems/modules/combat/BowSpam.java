@@ -18,6 +18,8 @@ public class BowSpam extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Integer> charge = sgGeneral.add(new IntSetting.Builder()
         .name("charge")
         .description("How long to charge the bow before releasing in ticks.")

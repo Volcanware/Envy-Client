@@ -141,6 +141,7 @@ public class AutoEZ extends Module {
                 if (player == mc.player) return;
                 if (mc.player.isCreative() || mc.player.isSpectator()) return;
                 if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
+                if (player.getName().getString().equals(mc.player.getName().getString())) return; // TODO: People say it sometimes says their own nickname idfk why.
 
                 String message = getMessageStyle();
                 if (msg.contains(player.getName().getString())) {
@@ -211,6 +212,7 @@ public class AutoEZ extends Module {
         if (mc.player.distanceTo(player) > 8) return;
         if (mc.player.isCreative() || mc.player.isSpectator()) return;
         if (totemIgnoreFriends.get() && Friends.get().isFriend(player)) return;
+        if (player.getName().getString().equals(mc.player.getName().getString())) return; // TODO: People say it sometimes says their own nickname idfk why.
 
         if (canSendPop) {
             mc.player.sendChatMessage(Placeholders.apply(getTotemMessageStyle()).replace("%player%", player.getName().getString()));

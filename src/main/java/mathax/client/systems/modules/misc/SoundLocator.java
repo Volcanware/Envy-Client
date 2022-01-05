@@ -19,8 +19,9 @@ import net.minecraft.util.math.Vec3d;
 import java.util.List;
 
 public class SoundLocator extends Module {
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    // General
 
     private final Setting<List<SoundEvent>> sounds = sgGeneral.add(new SoundEventListSetting.Builder()
         .name("sounds")

@@ -18,6 +18,8 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 public class AACCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> crashMode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Which crash mode to use.")

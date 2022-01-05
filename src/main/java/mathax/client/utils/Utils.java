@@ -329,6 +329,8 @@ public class Utils {
     public static String nameToTitle(String name) {
         name = Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
         String title = name.replace("Mathax", "MatHax");
+        title = title.replace("Exp Thrower", "EXP Thrower");
+        title = title.replace("Auto Exp", "Auto EXP");
         title = title.replace("Aac", "AAC");
         title = title.replace("Uuid", "UUID");
         title = title.replace("Keybind", "KeyBind");
@@ -336,7 +338,6 @@ public class Utils {
         title = title.replace("Tps", "TPS");
         title = title.replace("Tp", "TP");
         title = title.replace("Xp ", "XP ");
-        title = title.replace("Exp ", "EXP ");
         title = title.replace("Gui", "GUI");
         title = title.replace("Hud", "HUD");
         title = title.replace("Fov", "FOV");

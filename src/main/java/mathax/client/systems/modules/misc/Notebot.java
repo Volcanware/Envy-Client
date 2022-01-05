@@ -70,14 +70,16 @@ public class Notebot extends Module {
     private int ticks = 0;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("Render",false);
+    private final SettingGroup sgRender = settings.createGroup("Render", false);
 
-    private final Setting<Integer> tickDelay = sgGeneral.add(new IntSetting.Builder()
-        .name("tick-delay")
-        .description("The delay when loading a song.")
+    // General
+
+    private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
+        .name("delay")
+        .description("The delay when loading a song in ticks.")
         .defaultValue(2)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .build()
     );
 
@@ -493,7 +495,7 @@ public class Notebot extends Module {
     }
 
     private void onTickSetup() {
-        if (ticks < tickDelay.get()) return;
+        if (ticks < delay.get()) return;
 
         ticks = 0;
 
@@ -552,7 +554,7 @@ public class Notebot extends Module {
 
 
     private void onTickTune() {
-        if (ticks<tickDelay.get()) return;
+        if (ticks < delay.get()) return;
         ticks = 0;
         BlockPos pos = blockPositions.get(uniqueNotes.get(currentNote));
         if (pos == null) return;

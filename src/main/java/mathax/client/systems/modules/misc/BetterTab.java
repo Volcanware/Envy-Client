@@ -19,6 +19,8 @@ import net.minecraft.util.Formatting;
 public class BetterTab extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     public final Setting<Integer> tabSize = sgGeneral.add(new IntSetting.Builder()
         .name("tablist-size")
         .description("Bypasses the 80 player limit on the tablist.")

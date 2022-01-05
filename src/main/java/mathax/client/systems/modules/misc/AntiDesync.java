@@ -26,7 +26,11 @@ public class AntiDesync extends Module {
     private final Setting<List<Module>> modules = sgGeneral.add(new ModuleListSetting.Builder()
         .name("modules")
         .description("Determines which modules to ignore.")
-        .defaultValue(PacketFly.class, Phase.class, Step.class)
+        .defaultValue(
+            PacketFly.class,
+            Phase.class,
+            Step.class
+        )
         .build()
     );
 

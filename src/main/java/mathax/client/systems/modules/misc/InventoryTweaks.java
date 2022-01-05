@@ -97,6 +97,7 @@ public class InventoryTweaks extends Module {
         .visible(sortingEnabled::get)
         .defaultValue(1)
         .min(0)
+        .sliderRange(0, 3)
         .build()
     );
 
@@ -137,7 +138,8 @@ public class InventoryTweaks extends Module {
         .name("delay")
         .description("The minimum delay between stealing the next stack in milliseconds.")
         .defaultValue(20)
-        .sliderMax(1000)
+        .min(0)
+        .sliderRange(0, 1000)
         .build()
     );
 
@@ -145,7 +147,7 @@ public class InventoryTweaks extends Module {
         .name("random")
         .description("Randomly adds a delay of up to the specified time in milliseconds.")
         .min(0)
-        .sliderMax(1000)
+        .sliderRange(0, 1000)
         .defaultValue(50)
         .build()
     );
@@ -163,12 +165,8 @@ public class InventoryTweaks extends Module {
     public void onDeactivate() {
         sorter = null;
 
-        if (invOpened) {
-            mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.playerScreenHandler.syncId));
-        }
+        if (invOpened) mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.playerScreenHandler.syncId));
     }
-
-    // Sorting
 
     @EventHandler
     private void onKey(KeyEvent event) {
@@ -199,17 +197,12 @@ public class InventoryTweaks extends Module {
         if (sorter != null && sorter.tick(sortingDelay.get())) sorter = null;
     }
 
-    // Auto Drop
-
     @EventHandler
     private void onTickPost(TickEvent.Post event) {
-        // Auto Drop
         if (mc.currentScreen instanceof HandledScreen<?> || autoDropItems.get().isEmpty()) return;
 
         for (int i = autoDropExcludeHotbar.get() ? 9 : 0; i < mc.player.getInventory().size(); i++) {
-            if (autoDropItems.get().contains(mc.player.getInventory().getStack(i).getItem())) {
-                InvUtils.drop().slot(i);
-            }
+            if (autoDropItems.get().contains(mc.player.getInventory().getStack(i).getItem())) InvUtils.drop().slot(i);
         }
     }
 
@@ -217,8 +210,6 @@ public class InventoryTweaks extends Module {
     private void onDropItems(DropItemsEvent event) {
         if (antiDropItems.get().contains(event.itemStack.getItem())) event.cancel();
     }
-
-    // XCarry
 
     @EventHandler
     private void onSendPacket(PacketEvent.Send event) {
@@ -229,8 +220,6 @@ public class InventoryTweaks extends Module {
             event.cancel();
         }
     }
-
-    // Auto Steal
 
     private void checkAutoStealSetttings() {
         if (autoSteal.get() && autoDump.get()) {
@@ -260,7 +249,6 @@ public class InventoryTweaks extends Module {
                 }
             }
 
-            // Exit if user closes screen
             if (mc.currentScreen == null) break;
 
             InvUtils.quickMove().slotId(i);

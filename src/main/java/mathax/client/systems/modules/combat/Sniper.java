@@ -26,10 +26,8 @@ public class Sniper extends Module {
         .name("hide-base")
         .description("Base for the exponent number for hiding rubberband.")
         .defaultValue(10)
-        .min(1.001)
-        .max(2147483647)
-        .sliderMin(1.001)
-        .sliderMax(2147483647)
+        .range(1.001, 2147483647)
+        .sliderRange(1.001, 2147483647)
         .build()
     );
 

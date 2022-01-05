@@ -17,6 +17,8 @@ import java.util.Set;
 public class PacketCanceller extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Set<Class<? extends Packet<?>>>> s2cPackets = sgGeneral.add(new PacketListSetting.Builder()
         .name("S2C-packets")
         .description("Server-to-client packets to cancel.")

@@ -25,8 +25,7 @@ public class Twerk extends Module {
         .description("The speed of twerking.")
         .defaultValue(1)
         .min(1)
-        .sliderMin(1)
-        .sliderMax(100)
+        .sliderRange(1, 100)
         .build()
     );
 

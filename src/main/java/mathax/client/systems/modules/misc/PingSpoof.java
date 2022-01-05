@@ -25,8 +25,7 @@ public class PingSpoof extends Module {
         .name("ping")
         .description("The Ping to set.")
         .defaultValue(200)
-        .sliderMin(0)
-        .sliderMax(1000)
+        .sliderRange(0, 1000)
         .build()
     );
 

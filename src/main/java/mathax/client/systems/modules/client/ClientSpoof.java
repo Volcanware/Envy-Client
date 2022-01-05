@@ -13,6 +13,8 @@ public class ClientSpoof extends Module {
     private final SettingGroup sgChatFeedback = settings.createGroup("Chat Feedback");
     private final SettingGroup sgWindow = settings.createGroup("Window");
 
+    // Version
+
     public final Setting<Boolean> version = sgVersion.add(new BoolSetting.Builder()
         .name("enabled")
         .description("Changes the client version.")

@@ -15,6 +15,8 @@ import java.util.List;
 public class SoundBlocker extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<List<SoundEvent>> sounds = sgGeneral.add(new SoundEventListSetting.Builder()
         .name("sounds")
         .description("Sounds to block.")

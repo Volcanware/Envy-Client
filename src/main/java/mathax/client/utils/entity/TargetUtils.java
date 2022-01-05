@@ -22,9 +22,7 @@ public class TargetUtils {
     public static Entity get(Predicate<Entity> isGood, SortPriority sortPriority) {
         ENTITIES.clear();
         getList(ENTITIES, isGood, sortPriority, 1);
-        if (!ENTITIES.isEmpty()) {
-            return ENTITIES.get(0);
-        }
+        if (!ENTITIES.isEmpty()) return ENTITIES.get(0);
 
         return null;
     }
@@ -42,6 +40,17 @@ public class TargetUtils {
 
         targetList.sort((e1, e2) -> sort(e1, e2, sortPriority));
         targetList.removeIf(entity -> targetList.indexOf(entity) > maxCount -1);
+    }
+
+    public static boolean isPlayerNear(double range) {
+        if (!Utils.canUpdate()) return false;
+        return get(entity -> {
+            if (!(entity instanceof PlayerEntity) || entity == mc.player) return false;
+            if (((PlayerEntity) entity).isDead() || ((PlayerEntity) entity).getHealth() <= 0) return false;
+            if (mc.player.distanceTo(entity) > range) return false;
+            if (!Friends.get().shouldAttack((PlayerEntity) entity)) return false;
+            return EntityUtils.getGameMode((PlayerEntity) entity) == GameMode.SURVIVAL || entity instanceof FakePlayerEntity;
+        }, SortPriority.Lowest_Distance) != null;
     }
 
     public static PlayerEntity getPlayerTarget(double range, SortPriority priority) {

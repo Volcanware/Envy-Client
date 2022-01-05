@@ -32,6 +32,8 @@ public class BowAimbot extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
         .name("range")
         .description("The maximum range the entity can be to aim at it.")

@@ -25,6 +25,8 @@ import java.util.Optional;
 public class BookCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Which type of packet to send.")

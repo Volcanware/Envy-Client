@@ -25,6 +25,8 @@ public class BoatCrash extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Integer> amount = sgGeneral.add(new IntSetting.Builder()
         .name("amount")
         .description("How many packets to send to the server per tick.")

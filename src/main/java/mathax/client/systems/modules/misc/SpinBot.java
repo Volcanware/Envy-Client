@@ -27,7 +27,7 @@ public class SpinBot extends Module {
         .description("The speed at which you spin.")
         .defaultValue(25)
         .min(0)
-        .sliderMax(100)
+        .sliderRange(0, 100)
         .build()
     );
 
@@ -38,13 +38,9 @@ public class SpinBot extends Module {
 
     @EventHandler
     public void onTick(TickEvent.Post post) {
-        if (Modules.get().isActive(EXPThrower.class) || mc.player.getMainHandStack().getItem() instanceof ExperienceBottleItem || mc.player.getMainHandStack().getItem() instanceof ExperienceBottleItem || mc.player.getMainHandStack().getItem() instanceof EnderPearlItem || mc.player.getMainHandStack().getItem() instanceof EnderPearlItem || mc.player.getMainHandStack().getItem() instanceof ExperienceBottleItem || mc.player.getMainHandStack().getItem() instanceof ExperienceBottleItem || mc.player.getMainHandStack().getItem() instanceof BowItem || mc.player.getMainHandStack().getItem() instanceof BowItem || mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA) {
-            return;
-        }
+        if (Modules.get().isActive(EXPThrower.class) || mc.player.getMainHandStack().getItem() instanceof ExperienceBottleItem || mc.player.getMainHandStack().getItem() instanceof ExperienceBottleItem || mc.player.getMainHandStack().getItem() instanceof EnderPearlItem || mc.player.getMainHandStack().getItem() instanceof EnderPearlItem || mc.player.getMainHandStack().getItem() instanceof ExperienceBottleItem || mc.player.getMainHandStack().getItem() instanceof ExperienceBottleItem || mc.player.getMainHandStack().getItem() instanceof BowItem || mc.player.getMainHandStack().getItem() instanceof BowItem || mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA) return;
         count = (short)(count + speed.get());
-        if (count > 180) {
-            count = (short)-180;
-        }
+        if (count > 180) count = (short)-180;
         Rotations.rotate(count, 0.0);
     }
 }

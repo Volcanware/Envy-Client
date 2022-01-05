@@ -4,12 +4,14 @@ import io.netty.buffer.Unpooled;
 import mathax.client.MatHax;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.packets.PacketEvent;
-import mathax.client.mixin.ICustomPayloadC2SPacketAccessor;
+import mathax.client.mixin.CustomPayloadC2SPacketAccessor;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
+import net.minecraft.util.Identifier;
+import org.apache.commons.lang3.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 
@@ -23,12 +25,10 @@ public class VanillaSpoof extends Module {
     private class Listener {
         @EventHandler
         private void onPacketSend(PacketEvent.Send event) {
-            if (!isActive()) return;
-            if (event.packet instanceof CustomPayloadC2SPacket packet) {
-                ICustomPayloadC2SPacketAccessor accessor = (ICustomPayloadC2SPacketAccessor) packet;
-                if (accessor.getChannel().equals(CustomPayloadC2SPacket.BRAND)) accessor.setData(new PacketByteBuf(Unpooled.buffer()).writeString("vanilla"));
-                else if (accessor.getData().toString(StandardCharsets.UTF_8).toLowerCase().contains("fabric")) event.setCancelled(true);
-            }
+            if (!isActive() || !(event.packet instanceof CustomPayloadC2SPacket)) return;
+            CustomPayloadC2SPacketAccessor packet = (CustomPayloadC2SPacketAccessor) event.packet;
+            if (packet.getChannel().equals(CustomPayloadC2SPacket.BRAND)) packet.setData(new PacketByteBuf(Unpooled.buffer()).writeString("vanilla"));
+            else if (StringUtils.containsIgnoreCase(packet.getData().toString(StandardCharsets.UTF_8), "fabric")) event.cancel();
         }
     }
 }

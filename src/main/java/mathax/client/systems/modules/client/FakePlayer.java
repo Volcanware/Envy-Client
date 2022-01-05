@@ -13,6 +13,8 @@ import net.minecraft.item.Items;
 public class FakePlayer extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     public final Setting<String> name = sgGeneral.add(new StringSetting.Builder()
         .name("name")
         .description("The name of the fake player.")

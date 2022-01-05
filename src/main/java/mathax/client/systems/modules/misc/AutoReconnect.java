@@ -10,6 +10,8 @@ import net.minecraft.item.Items;
 public class AutoReconnect extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     public final Setting<Double> time = sgGeneral.add(new DoubleSetting.Builder()
         .name("delay")
         .description("The amount of seconds to wait before reconnecting to the server.")

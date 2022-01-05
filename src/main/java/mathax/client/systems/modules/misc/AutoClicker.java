@@ -16,6 +16,8 @@ public class AutoClicker extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("The method of clicking.")
@@ -35,7 +37,7 @@ public class AutoClicker extends Module {
         .description("The amount of delay between clicks in ticks.")
         .defaultValue(2)
         .min(0)
-        .sliderMax(60)
+        .sliderRange(0, 60)
         .build()
     );
 

@@ -22,6 +22,8 @@ public class InvalidPositionCrash extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> packetMode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Which position crash to use.")

@@ -26,6 +26,8 @@ public class MiddleClickFriend extends Module {
     private final SettingGroup sgAdd = settings.createGroup("Add");
     private final SettingGroup sgRemove = settings.createGroup("Remove");
 
+    // Add
+
     private final Setting<Boolean> friendAddMessage = sgAdd.add(new BoolSetting.Builder()
         .name("friend-add-message")
         .description("Sends a message to the player when you add them as a friend.")
@@ -40,6 +42,8 @@ public class MiddleClickFriend extends Module {
         .visible(friendAddMessage::get)
         .build()
     );
+
+    // Remove
 
     private final Setting<Boolean> friendRemoveMessage = sgRemove.add(new BoolSetting.Builder()
         .name("friend-remove-message")

@@ -25,6 +25,8 @@ import net.minecraft.util.math.Vec3d;
 public class TryUseCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Integer> packets = sgGeneral.add(new IntSetting.Builder()
         .name("packets")
         .description("How many packets to send per tick.")

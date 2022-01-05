@@ -21,6 +21,8 @@ import java.util.Objects;
 public class EntityCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
         .name("speed")
         .description("Speed in blocks per second.")

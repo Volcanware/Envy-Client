@@ -23,6 +23,8 @@ import java.util.Random;
 public class MovementCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Integer> packets = sgGeneral.add(new IntSetting.Builder()
         .name("packets")
         .description("How many packets to send per tick")

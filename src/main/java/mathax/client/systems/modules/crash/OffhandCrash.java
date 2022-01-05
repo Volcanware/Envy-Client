@@ -20,6 +20,8 @@ public class OffhandCrash extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Boolean> doCrash = sgGeneral.add(new BoolSetting.Builder()
         .name("do-crash")
         .description("Sends X number of offhand swap sound packets to the server per tick.")
