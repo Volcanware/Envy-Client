@@ -180,10 +180,10 @@ public class InstaAutoCity extends Module {
             if (chatInfo.get()) info("Attempting to city (highlight)%s(default).", target.getEntityName());
 
             targetBlockPos = target.getBlockPos();
-            int n = InvUtils.findInHotbar(Items.BARRIER).getSlot();
-            if (ironPickaxe.get() && n == -1) n = InvUtils.findInHotbar(Items.IRON_PICKAXE).getSlot();
-            if (n == -1) n = InvUtils.findInHotbar(Items.NETHERITE_PICKAXE).getSlot();
-            if (n == -1) n = InvUtils.findInHotbar(Items.DIAMOND_PICKAXE).getSlot();
+            int n = InvUtils.findInHotbar(Items.BARRIER).slot();
+            if (ironPickaxe.get() && n == -1) n = InvUtils.findInHotbar(Items.IRON_PICKAXE).slot();
+            if (n == -1) n = InvUtils.findInHotbar(Items.NETHERITE_PICKAXE).slot();
+            if (n == -1) n = InvUtils.findInHotbar(Items.DIAMOND_PICKAXE).slot();
             if (mc.player.getAbilities().creativeMode) n = mc.player.getInventory().selectedSlot;
             if (n == -1) {
                 if (chatInfo.get()) info("No pickaxe found, disabling...");
@@ -192,7 +192,7 @@ public class InstaAutoCity extends Module {
             }
 
             if (support.get()) {
-                int n2 = InvUtils.findInHotbar(Items.OBSIDIAN).getSlot();
+                int n2 = InvUtils.findInHotbar(Items.OBSIDIAN).slot();
                 BlockPos blockPos = mineTarget.down(1);
                 if (!BlockUtils.canPlace(blockPos) && mc.world.getBlockState(blockPos).getBlock() != Blocks.OBSIDIAN && mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK && chatInfo.get()) info("Couldn't place support block, mining anyway.");
                 else if (n2 == -1) if (chatInfo.get()) info("No obsidian found for support, mining anyway.");

@@ -117,7 +117,7 @@ public class Offhand extends Module {
                     sentMessage = true;
                 }
             } else if ((isClicking || !rightClick.get()) && !autoTotem.isLocked() && !item.isOffhand()) {
-                InvUtils.move().from(item.getSlot()).toOffhand();
+                InvUtils.move().from(item.slot()).toOffhand();
                 sentMessage = false;
             }
         }
@@ -125,10 +125,10 @@ public class Offhand extends Module {
         else if (!isClicking && rightClick.get()) {
             if (autoTotem.isActive()) {
                 FindItemResult totem = InvUtils.find(itemStack -> itemStack.getItem() == Items.TOTEM_OF_UNDYING, hotbar.get() ? 0 : 9, 35);
-                if (totem.found() && !totem.isOffhand()) InvUtils.move().from(totem.getSlot()).toOffhand();
+                if (totem.found() && !totem.isOffhand()) InvUtils.move().from(totem.slot()).toOffhand();
             } else {
                 FindItemResult empty = InvUtils.find(ItemStack::isEmpty, hotbar.get() ? 0 : 9, 35);
-                if (empty.found()) InvUtils.move().fromOffhand().to(empty.getSlot());
+                if (empty.found()) InvUtils.move().fromOffhand().to(empty.slot());
             }
         }
     }

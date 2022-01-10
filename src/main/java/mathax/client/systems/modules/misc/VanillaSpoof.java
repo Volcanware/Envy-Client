@@ -10,7 +10,6 @@ import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
-import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.StringUtils;
 
 import java.nio.charset.StandardCharsets;

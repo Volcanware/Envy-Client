@@ -852,7 +852,7 @@ public class CrystalAura extends Module {
 
             if (weakness != null && (strength == null || strength.getAmplifier() <= weakness.getAmplifier())) {
                 if (!isValidWeaknessItem(mc.player.getMainHandStack())) {
-                    if (!InvUtils.swap(InvUtils.findInHotbar(this::isValidWeaknessItem).getSlot(), false)) return;
+                    if (!InvUtils.swap(InvUtils.findInHotbar(this::isValidWeaknessItem).slot(), false)) return;
 
                     switchTimer = 1;
                     return;
@@ -1052,7 +1052,7 @@ public class CrystalAura extends Module {
 
         int prevSlot = mc.player.getInventory().selectedSlot;
 
-        if (autoSwitch.get() != AutoSwitchMode.None && !item.isOffhand()) InvUtils.swap(item.getSlot(), false);
+        if (autoSwitch.get() != AutoSwitchMode.None && !item.isOffhand()) InvUtils.swap(item.slot(), false);
 
         Hand hand = item.getHand();
         if (hand == null) return;

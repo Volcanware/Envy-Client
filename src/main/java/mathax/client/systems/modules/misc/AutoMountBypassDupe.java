@@ -88,9 +88,8 @@ public class AutoMountBypassDupe extends Module {
             return;
         }
 
-        if (timer <= 0) {
-            timer = delay.get();
-        } else {
+        if (timer <= 0) timer = delay.get();
+        else {
             timer--;
             return;
         }
@@ -98,10 +97,9 @@ public class AutoMountBypassDupe extends Module {
         int slots = getInvSize(mc.player.getVehicle());
 
         for (Entity e : mc.world.getEntities()) {
-            if (e.distanceTo(mc.player) < 5 && e instanceof AbstractDonkeyEntity && ((AbstractDonkeyEntity) e).isTame()) {
-                entity = (AbstractDonkeyEntity) e;
-            }
+            if (e.distanceTo(mc.player) < 5 && e instanceof AbstractDonkeyEntity && ((AbstractDonkeyEntity) e).isTame()) entity = (AbstractDonkeyEntity) e;
         }
+        
         if (entity == null) return;
 
         if (sneak) {
@@ -115,7 +113,7 @@ public class AutoMountBypassDupe extends Module {
             if (entity.hasChest() || mc.player.getMainHandStack().getItem() == Items.CHEST) {
                 mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.interact(entity, mc.player.isSneaking(), Hand.MAIN_HAND));
             } else {
-                int slot = InvUtils.findInHotbar(Items.CHEST).getSlot();
+                int slot = InvUtils.findInHotbar(Items.CHEST).slot();
 
                 if (!InvUtils.swap(slot, true)) {
                     error("Cannot find chest in your hotbar, disabling...");
@@ -125,11 +123,8 @@ public class AutoMountBypassDupe extends Module {
         } else if (slots == 0) {
             if (isDupeTime()) {
                 if (!slotsToThrow.isEmpty()) {
-                    if (faceDown.get()) {
-                        Rotations.rotate(mc.player.getYaw(), 90, 99, this::drop);
-                    } else {
-                        drop();
-                    }
+                    if (faceDown.get()) Rotations.rotate(mc.player.getYaw(), 90, 99, this::drop);
+                    else drop();
                 } else {
                     for (int i = 2; i < getDupeSize() + 1; i++) {
                         slotsToThrow.add(i);
@@ -142,9 +137,8 @@ public class AutoMountBypassDupe extends Module {
                 mc.player.setSneaking(true);
                 sneak = true;
             }
-        } else if (!(mc.currentScreen instanceof HorseScreen)) {
-            mc.player.openRidingInventory();
-        } else if (slots > 0) {
+        } else if (!(mc.currentScreen instanceof HorseScreen)) mc.player.openRidingInventory();
+        else if (slots > 0) {
             if (slotsToMove.isEmpty()) {
                 boolean empty = true;
                 for (int i = 2; i <= slots; i++) {
@@ -153,6 +147,7 @@ public class AutoMountBypassDupe extends Module {
                         break;
                     }
                 }
+                
                 if (empty) {
                     for (int i = slots + 2; i < mc.player.currentScreenHandler.getStacks().size(); i++) {
                         if (!(mc.player.currentScreenHandler.getStacks().get(i).isEmpty())) {
@@ -176,6 +171,7 @@ public class AutoMountBypassDupe extends Module {
                 for (int i : slotsToMove) {
                     InvUtils.quickMove().from(i).to(0);
                 }
+                
                 slotsToMove.clear();
             }
         }
@@ -186,23 +182,17 @@ public class AutoMountBypassDupe extends Module {
 
         if (!((AbstractDonkeyEntity) e).hasChest()) return 0;
 
-        if (e instanceof LlamaEntity) {
-            return 3 * ((LlamaEntity) e).getStrength();
-        }
+        if (e instanceof LlamaEntity) return 3 * ((LlamaEntity) e).getStrength();
 
         return 15;
     }
 
     private boolean isDupeTime() {
-        if (mc.player.getVehicle() != entity || entity.hasChest() || mc.player.currentScreenHandler.getStacks().size() == 46) {
-            return false;
-        }
+        if (mc.player.getVehicle() != entity || entity.hasChest() || mc.player.currentScreenHandler.getStacks().size() == 46) return false;
 
         if (mc.player.currentScreenHandler.getStacks().size() > 38) {
             for (int i = 2; i < getDupeSize() + 1; i++) {
-                if (mc.player.currentScreenHandler.getSlot(i).hasStack()) {
-                    return true;
-                }
+                if (mc.player.currentScreenHandler.getSlot(i).hasStack()) return true;
             }
         }
 
@@ -213,13 +203,12 @@ public class AutoMountBypassDupe extends Module {
         for (int i : slotsToThrow) {
             InvUtils.drop().slot(i);
         }
+        
         slotsToThrow.clear();
     }
 
     private int getDupeSize() {
-        if (mc.player.getVehicle() != entity || entity.hasChest() || mc.player.currentScreenHandler.getStacks().size() == 46) {
-            return 0;
-        }
+        if (mc.player.getVehicle() != entity || entity.hasChest() || mc.player.currentScreenHandler.getStacks().size() == 46) return 0;
 
         return mc.player.currentScreenHandler.getStacks().size() - 38;
     }

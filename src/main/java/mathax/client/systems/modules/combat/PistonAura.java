@@ -329,7 +329,7 @@ public class PistonAura extends Module {
             return;
         }
 
-        InvUtils.updateSlot(item.getSlot());
+        InvUtils.updateSlot(item.slot());
         mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), Direction.DOWN, pos, true));
     }
 }

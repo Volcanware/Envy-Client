@@ -315,7 +315,7 @@ public class AnchorAura extends Module {
             if (findBreakPos(target.getBlockPos()) == null && findPlacePos(target.getBlockPos()) == null && BlockUtils.getBlock(target.getBlockPos().up(2)) == Blocks.GLOWSTONE) {
                 FindItemResult pick = InvUtils.findPick();
                 if (pick.found()) {
-                    InvUtils.updateSlot(pick.getSlot());
+                    InvUtils.updateSlot(pick.slot());
                     PlayerUtils.doPacketMine(target.getBlockPos().up(2));
                     sentAntiStuck = true;
                     return;
@@ -329,7 +329,7 @@ public class AnchorAura extends Module {
             if (findBreakPos(target.getBlockPos()) == null && findPlacePos(target.getBlockPos()) == null && BlockUtils.isTrapBlock(target.getBlockPos().up(2))) {
                 FindItemResult pick = InvUtils.findPick();
                 if (pick.found()) {
-                    InvUtils.updateSlot(pick.getSlot());
+                    InvUtils.updateSlot(pick.slot());
                     info("Breaking (highlight)%s(default)'s self-trap.", target.getEntityName());
                     PlayerUtils.doPacketMine(target.getBlockPos().up(2));
                     sentTrapMine = true;
@@ -346,7 +346,7 @@ public class AnchorAura extends Module {
         if (breakBurrow.get() && !sentBurrowMine && PlayerUtils.isBurrowed(target, true)) {
             FindItemResult pick = InvUtils.findPick();
             if (pick.found()) {
-                InvUtils.updateSlot(pick.getSlot());
+                InvUtils.updateSlot(pick.slot());
                 info("Breaking (highlight)%s(default)'s burrow.", target.getEntityName());
                 PlayerUtils.doPacketMine(target.getBlockPos());
                 sentBurrowMine = true;
@@ -467,13 +467,13 @@ public class AnchorAura extends Module {
 
         if (glowStone.isOffhand()) mc.interactionManager.interactBlock(mc.player, mc.world, Hand.OFF_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
         else {
-            InvUtils.swap(glowStone.getSlot(), true);
+            InvUtils.swap(glowStone.slot(), true);
             mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
         }
 
         if (anchor.isOffhand()) mc.interactionManager.interactBlock(mc.player, mc.world, Hand.OFF_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
         else {
-            InvUtils.swap(anchor.getSlot(), true);
+            InvUtils.swap(anchor.slot(), true);
             mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
         }
 

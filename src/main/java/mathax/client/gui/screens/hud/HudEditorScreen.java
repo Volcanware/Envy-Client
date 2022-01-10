@@ -1,6 +1,5 @@
 package mathax.client.gui.screens.hud;
 
-import mathax.client.events.render.Render2DEvent;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.WidgetScreen;
 import mathax.client.renderer.Renderer2D;
@@ -10,7 +9,6 @@ import mathax.client.systems.hud.HudElement;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.NbtUtils;
 import mathax.client.utils.render.color.Color;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.NbtCompound;
 import org.lwjgl.glfw.GLFW;

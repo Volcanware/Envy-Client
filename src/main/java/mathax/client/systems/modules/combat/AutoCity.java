@@ -151,7 +151,7 @@ public class AutoCity extends Module {
 
         if (support.get()) BlockUtils.place(mineTarget.down(1), InvUtils.findInHotbar(Items.OBSIDIAN), rotate.get(), 0, true);
 
-        InvUtils.swap(pickaxe.getSlot(), false);
+        InvUtils.swap(pickaxe.slot(), false);
 
         if (rotate.get()) Rotations.rotate(Rotations.getYaw(mineTarget), Rotations.getPitch(mineTarget), () -> mine(mineTarget));
         else mine(mineTarget);

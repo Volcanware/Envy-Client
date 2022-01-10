@@ -40,6 +40,6 @@ public class XPBottleHud extends HudElement {
         double y = box.getY();
 
         if (isInEditor()) RenderUtils.drawItem(Items.EXPERIENCE_BOTTLE.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        else if (InvUtils.find(Items.EXPERIENCE_BOTTLE).getCount() > 0) RenderUtils.drawItem(new ItemStack(Items.EXPERIENCE_BOTTLE, InvUtils.find(Items.EXPERIENCE_BOTTLE).getCount()), (int) x, (int) y, scale.get(), true);
+        else if (InvUtils.find(Items.EXPERIENCE_BOTTLE).count() > 0) RenderUtils.drawItem(new ItemStack(Items.EXPERIENCE_BOTTLE, InvUtils.find(Items.EXPERIENCE_BOTTLE).count()), (int) x, (int) y, scale.get(), true);
     }
 }

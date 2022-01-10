@@ -288,7 +288,7 @@ public class KillAura extends Module {
                 };
             });
 
-            InvUtils.swap(weaponResult.getSlot(), false);
+            InvUtils.swap(weaponResult.slot(), false);
         }
 
         if (!itemInHand()) return;

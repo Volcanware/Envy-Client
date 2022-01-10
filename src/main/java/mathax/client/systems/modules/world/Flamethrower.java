@@ -147,7 +147,7 @@ public class Flamethrower extends Module {
         } else findNewFlintAndSteel = true;
 
         boolean foundFlintAndSteel = !findNewFlintAndSteel;
-        if (findNewFlintAndSteel) foundFlintAndSteel = InvUtils.swap(InvUtils.findInHotbar(itemStack -> (!antiBreak.get() || (antiBreak.get() && itemStack.getDamage() < itemStack.getMaxDamage() - 1)) && itemStack.getItem() == Items.FLINT_AND_STEEL).getSlot(), true);
+        if (findNewFlintAndSteel) foundFlintAndSteel = InvUtils.swap(InvUtils.findInHotbar(itemStack -> (!antiBreak.get() || (antiBreak.get() && itemStack.getDamage() < itemStack.getMaxDamage() - 1)) && itemStack.getItem() == Items.FLINT_AND_STEEL).slot(), true);
         return foundFlintAndSteel;
     }
 }

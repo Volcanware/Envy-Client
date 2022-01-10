@@ -334,13 +334,13 @@ public class BedAura extends Module {
             warning("Your health is too low, disabling...");
             if (safetyGapSwap.get()) {
                 FindItemResult gap = InvUtils.findEgap();
-                if (gap.found()) mc.player.getInventory().selectedSlot = gap.getSlot();
+                if (gap.found()) mc.player.getInventory().selectedSlot = gap.slot();
             }
         }
 
         if (!safetyToggled && restoreOnDisable.get() && ogItem != null) {
             FindItemResult ogItemInv = InvUtils.find(ogItem);
-            if (ogItemInv.found()) InvUtils.move().from(ogItemInv.getSlot()).toHotbar(autoMoveSlot.get() - 1);
+            if (ogItemInv.found()) InvUtils.move().from(ogItemInv.slot()).toHotbar(autoMoveSlot.get() - 1);
         }
     }
 
@@ -383,7 +383,7 @@ public class BedAura extends Module {
 
         if (autoMove.get()) {
             FindItemResult bed = InvUtils.find(itemStack -> itemStack.getItem() instanceof BedItem);
-            if (bed.found() && bed.getSlot() != autoMoveSlot.get() - 1) InvUtils.move().from(bed.getSlot()).toHotbar(autoMoveSlot.get() - 1);
+            if (bed.found() && bed.slot() != autoMoveSlot.get() - 1) InvUtils.move().from(bed.slot()).toHotbar(autoMoveSlot.get() - 1);
             if (!bed.found() && disableOnNoBeds.get()) {
                 warning("You've ran out of beds, disabling...");
                 toggle();
@@ -404,7 +404,7 @@ public class BedAura extends Module {
         if (breakSelfTrap.get() && shouldTrapMine()) {
             FindItemResult pick = InvUtils.findPick();
             if (pick.found()) {
-                InvUtils.updateSlot(pick.getSlot());
+                InvUtils.updateSlot(pick.slot());
                 stb = PlayerUtils.getSelfTrapBlock(target, preventEscape.get());
                 PlayerUtils.doPacketMine(stb);
                 sentTrapMine = true;
@@ -415,7 +415,7 @@ public class BedAura extends Module {
         if (placePos == null && PlayerUtils.isBurrowed(target, false) && breakBurrow.get() && !sentBurrowMine) {
             FindItemResult pick = InvUtils.findPick();
             if (pick.found()) {
-                InvUtils.updateSlot(pick.getSlot());
+                InvUtils.updateSlot(pick.slot());
                 PlayerUtils.doPacketMine(target.getBlockPos());
                 sentBurrowMine = true;
                 return;
@@ -425,10 +425,10 @@ public class BedAura extends Module {
         if (placePos == null && PlayerUtils.isWebbed(target) && breakWeb.get()) {
             FindItemResult sword = InvUtils.findSword();
             if (sword.found()) {
-                InvUtils.updateSlot(sword.getSlot());
+                InvUtils.updateSlot(sword.slot());
                 if (webTimer <= 0) webTimer = 100;
                 else webTimer--;
-                PlayerUtils.mineWeb(target, sword.getSlot());
+                PlayerUtils.mineWeb(target, sword.slot());
                 return;
             }
         }

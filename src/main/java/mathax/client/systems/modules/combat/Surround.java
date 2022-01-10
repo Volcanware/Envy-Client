@@ -261,7 +261,7 @@ public class Surround extends Module {
                 }
             }
 
-            int blockIndex = getInvBlock().getSlot();
+            int blockIndex = getInvBlock().slot();
             if (blockIndex == -1) return;
             int prevSlot = mc.player.getInventory().selectedSlot;
 

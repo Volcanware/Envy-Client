@@ -237,7 +237,7 @@ public class NoFall extends Module {
         Rotations.rotate(mc.player.getYaw(), 90, 10, true, () -> {
             if (bucket.isOffhand()) mc.interactionManager.interactItem(mc.player, mc.world, Hand.OFF_HAND);
             else {
-                InvUtils.swap(bucket.getSlot(), true);
+                InvUtils.swap(bucket.slot(), true);
                 mc.interactionManager.interactItem(mc.player, mc.world, Hand.MAIN_HAND);
                 InvUtils.swapBack();
             }

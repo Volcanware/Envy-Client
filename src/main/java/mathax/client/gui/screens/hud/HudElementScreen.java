@@ -1,6 +1,5 @@
 package mathax.client.gui.screens.hud;
 
-import mathax.client.events.render.Render2DEvent;
 import mathax.client.gui.renderer.GuiRenderer;
 import mathax.client.gui.widgets.containers.WContainer;
 import mathax.client.gui.widgets.containers.WHorizontalList;

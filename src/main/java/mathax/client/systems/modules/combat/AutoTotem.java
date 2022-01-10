@@ -168,7 +168,7 @@ public class AutoTotem extends Module {
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onTick(TickEvent.Pre event) {
         FindItemResult result = InvUtils.find(Items.TOTEM_OF_UNDYING);
-        totems = result.getCount();
+        totems = result.count();
 
         boolean low = PlayerUtils.getTotalHealth() - PlayerUtils.possibleHealthReductions(explosion.get(), fall.get()) <= health.get();
         boolean elytras = elytra.get() && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA && mc.player.isFallFlying();
@@ -179,7 +179,7 @@ public class AutoTotem extends Module {
             else if (ticks >= delay.get()) {
                 locked = mode.get() == Mode.Strict || (mode.get() == Mode.Smart && (low || elytras));
 
-                if (locked && mc.player.getOffHandStack().getItem() != Items.TOTEM_OF_UNDYING) InvUtils.move().from(result.getSlot()).toOffhand();
+                if (locked && mc.player.getOffHandStack().getItem() != Items.TOTEM_OF_UNDYING) InvUtils.move().from(result.slot()).toOffhand();
 
                 ticks = 0;
                 return;

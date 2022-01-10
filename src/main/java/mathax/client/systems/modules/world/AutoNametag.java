@@ -82,7 +82,7 @@ public class AutoNametag extends Module {
         target = TargetUtils.get(entity -> {
             if (PlayerUtils.distanceTo(entity) > range.get()) return false;
             if (!entities.get().getBoolean(entity.getType())) return false;
-            if (entity.hasCustomName()) return renametag.get() && entity.getCustomName() != mc.player.getInventory().getStack(findNametag.getSlot()).getName();
+            if (entity.hasCustomName()) return renametag.get() && entity.getCustomName() != mc.player.getInventory().getStack(findNametag.slot()).getName();
             return false;
         }, priority.get());
 
@@ -90,7 +90,7 @@ public class AutoNametag extends Module {
 
 
         // Swapping slots
-        InvUtils.swap(findNametag.getSlot(), true);
+        InvUtils.swap(findNametag.slot(), true);
 
         offHand = findNametag.isOffhand();
 

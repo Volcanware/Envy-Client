@@ -115,7 +115,7 @@ public class AutoLog extends Module {
             return;
         }
 
-        if (totems.get() && InvUtils.find(Items.TOTEM_OF_UNDYING).getCount() <= totemCount.get()){
+        if (totems.get() && InvUtils.find(Items.TOTEM_OF_UNDYING).count() <= totemCount.get()){
             mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(new LiteralText("[AutoLog] Totems was lower than " + totemCount.get() + ".")));
             toggle();
         }

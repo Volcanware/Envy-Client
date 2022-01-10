@@ -396,7 +396,7 @@ public class TNTAura extends Module {
     }
 
     private void igniteTNT(BlockPos pos, FindItemResult item) {
-        InvUtils.swap(item.getSlot(), true);
+        InvUtils.swap(item.slot(), true);
         mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), Direction.UP, pos, true));
         InvUtils.swapBack();
     }
@@ -416,14 +416,14 @@ public class TNTAura extends Module {
 
     public void mine(BlockPos blockPos, FindItemResult item) {
         if (breakMode.get() == Mode.Normal) {
-            InvUtils.swap(item.getSlot(), false);
+            InvUtils.swap(item.slot(), false);
             mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, Direction.UP));
             mc.player.swingHand(Hand.MAIN_HAND);
             mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, blockPos, Direction.UP));
         }
 
         if (breakMode.get() == Mode.Instant) {
-            InvUtils.swap(item.getSlot(), false);
+            InvUtils.swap(item.slot(), false);
 
             if (!startBreak) {
                 mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, Direction.UP));

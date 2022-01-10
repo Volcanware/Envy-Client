@@ -108,7 +108,7 @@ public class EChestFarmer extends Module {
     @Override
     public void onActivate() {
         target = null;
-        startCount = InvUtils.find(Items.OBSIDIAN).getCount();
+        startCount = InvUtils.find(Items.OBSIDIAN).count();
         prevSlot = mc.player.getInventory().selectedSlot;
     }
 
@@ -139,7 +139,7 @@ public class EChestFarmer extends Module {
         }
 
         // Toggle if obby amount reached
-        if (selfToggle.get() && InvUtils.find(Items.OBSIDIAN).getCount() - (ignoreExisting.get() ? startCount : 0) >= amount.get()) {
+        if (selfToggle.get() && InvUtils.find(Items.OBSIDIAN).count() - (ignoreExisting.get() ? startCount : 0) >= amount.get()) {
             InvUtils.swapBack();
             error("Obsidian amount reached, disabling...");
             toggle();

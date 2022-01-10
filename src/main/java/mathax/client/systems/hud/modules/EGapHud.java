@@ -40,6 +40,6 @@ public class EGapHud extends HudElement {
         double y = box.getY();
 
         if (isInEditor()) RenderUtils.drawItem(Items.ENCHANTED_GOLDEN_APPLE.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        else if (InvUtils.find(Items.ENCHANTED_GOLDEN_APPLE).getCount() > 0) RenderUtils.drawItem(new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, InvUtils.find(Items.ENCHANTED_GOLDEN_APPLE).getCount()), (int) x, (int) y, scale.get(), true);
+        else if (InvUtils.find(Items.ENCHANTED_GOLDEN_APPLE).count() > 0) RenderUtils.drawItem(new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, InvUtils.find(Items.ENCHANTED_GOLDEN_APPLE).count()), (int) x, (int) y, scale.get(), true);
     }
 }
