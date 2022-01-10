@@ -13,6 +13,13 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.shape.VoxelShape;
 
+/*/------------------------------------------------------------------------------------------------------------------------------------------------/*/
+/*/ Used from Meteor Client and modified by Matejko06 using Step+ made by cally72jhb                                                               /*/
+/*/                                                                                                                                                /*/
+/*/ https://github.com/MeteorDevelopment/meteor-client/blob/master/src/main/java/meteordevelopment/meteorclient/systems/modules/movement/Step.java /*/
+/*/ https://github.com/cally72jhb/vector-addon/blob/main/src/main/java/cally72jhb/addon/system/modules/movement/StepPlus.java                      /*/
+/*/------------------------------------------------------------------------------------------------------------------------------------------------/*/
+
 public class Step extends Module {
     private float prevStepHeight;
 
@@ -75,10 +82,12 @@ public class Step extends Module {
     @EventHandler
     private void onPlayerMove(PlayerMoveEvent event) {
         if ((activeWhen.get() == ActiveWhen.Sneaking && !mc.player.isSneaking()) || (activeWhen.get() == ActiveWhen.Not_Sneaking && mc.player.isSneaking()) || (!mc.player.isOnGround() && onlyOnGround.get())) return;
-        if (mode.get() == Mode.NCP_Plus) mc.player.stepHeight = height.get().floatValue();
-        if (mode.get() == Mode.Normal) {
-            mc.player.stepHeight = height.get().floatValue();
-            return;
+        switch (mode.get()) {
+            case Normal -> {
+                mc.player.stepHeight = height.get().floatValue();
+                return;
+            }
+            case NCP_Plus -> mc.player.stepHeight = height.get().floatValue();
         }
 
         if (!timer.get()) Modules.get().get(Timer.class).setOverride(Timer.OFF);

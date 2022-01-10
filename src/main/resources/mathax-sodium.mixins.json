@@ -2,6 +2,7 @@
   "required": false,
   "package": "mathax.client.mixin.sodium",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "mathax.client.MixinPlugin",
   "client": [
     "SodiumBlockOcclusionCacheMixin",
     "SodiumBlockRendererMixin",

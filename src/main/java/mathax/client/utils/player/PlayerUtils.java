@@ -425,7 +425,7 @@ public class PlayerUtils {
 
             BlockState state = mc.world.getBlockState(blockPos.offset(direction));
 
-            if (state.getBlock() != Blocks.BEDROCK && state.getBlock() != Blocks.OBSIDIAN) {
+            if (state.getBlock().getBlastResistance() < 600) {
                 if (!doubles || direction == Direction.DOWN) return false;
 
                 air++;
@@ -435,7 +435,7 @@ public class PlayerUtils {
 
                     BlockState blockState1 = mc.world.getBlockState(blockPos.offset(direction).offset(dir));
 
-                    if (blockState1.getBlock() != Blocks.BEDROCK && blockState1.getBlock() != Blocks.OBSIDIAN) return false;
+                    if (blockState1.getBlock().getBlastResistance() < 600) return false;
                 }
             }
         }

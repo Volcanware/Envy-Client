@@ -26,13 +26,16 @@ public class Asm {
     private final Map<String, AsmTransformer> transformers = new HashMap<>();
     private final boolean export;
 
-    public Asm() {
-        INSTANCE = this;
+    public Asm(boolean export) {
+        this.export = export;
+    }
 
-        add(new GameRendererTransformer());
-        add(new CanvasWorldRendererTransformer());
+    public static void init() {
+        if (INSTANCE != null) return;
 
-        export = System.getProperty("mathax.asm.export") != null;
+        INSTANCE = new Asm(System.getProperty("mathax.asm.export") != null);
+        INSTANCE.add(new GameRendererTransformer());
+        INSTANCE.add(new CanvasWorldRendererTransformer());
     }
 
     private void add(AsmTransformer transformer) {

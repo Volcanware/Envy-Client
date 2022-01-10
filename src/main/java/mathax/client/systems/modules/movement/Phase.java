@@ -19,6 +19,8 @@ public class Phase extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    // General
+
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("The phase mode used.")
@@ -81,22 +83,22 @@ public class Phase extends Module {
         double blocks = clipDistance.get();
         if (!mc.player.isOnGround()) return;
 
-        if(mc.options.keyForward.isPressed()){
+        if (mc.options.keyForward.isPressed()){
             Vec3d forward = Vec3d.fromPolar(0, mc.player.getYaw());
             mc.player.updatePosition(mc.player.getX() + forward.x * blocks, mc.player.getY(), mc.player.getZ() + forward.z * blocks);
         }
 
-        if(mc.options.keyBack.isPressed()){
+        if (mc.options.keyBack.isPressed()){
             Vec3d forward = Vec3d.fromPolar(0, mc.player.getYaw() - 180);
             mc.player.updatePosition(mc.player.getX() + forward.x * blocks, mc.player.getY(), mc.player.getZ() + forward.z * blocks);
         }
 
-        if(mc.options.keyLeft.isPressed()){
+        if (mc.options.keyLeft.isPressed()){
             Vec3d forward = Vec3d.fromPolar(0, mc.player.getYaw() - 90);
             mc.player.updatePosition(mc.player.getX() + forward.x * blocks, mc.player.getY(), mc.player.getZ() + forward.z * blocks);
         }
 
-        if(mc.options.keyRight.isPressed()) {
+        if (mc.options.keyRight.isPressed()) {
             Vec3d forward = Vec3d.fromPolar(0, mc.player.getYaw() - 270);
             mc.player.updatePosition(mc.player.getX() + forward.x * blocks, mc.player.getY(), mc.player.getZ() + forward.z * blocks);
         }
@@ -119,41 +121,14 @@ public class Phase extends Module {
         Vec3d yawRight = Vec3d.fromPolar(0.0f, mc.player.getYaw() - 270f);
 
         if (mode.get() == Mode.Normal) {
+            if (mc.options.keyForward.isPressed()) mc.player.setPos(mc.player.getX() + yawForward.x * distance.get(), mc.player.getY(), mc.player.getZ() + yawForward.z * distance.get());
 
-            if (mc.options.keyForward.isPressed()) {
-                mc.player.setPos(
-                    mc.player.getX() + yawForward.x * distance.get(),
-                    mc.player.getY(),
-                    mc.player.getZ() + yawForward.z * distance.get()
-                );
-            }
+            if (mc.options.keyBack.isPressed()) mc.player.setPos(mc.player.getX() + yawBack.x * distance.get(), mc.player.getY(), mc.player.getZ() + yawBack.z * distance.get());
 
-            if (mc.options.keyBack.isPressed()) {
-                mc.player.setPos(
-                    mc.player.getX() + yawBack.x * distance.get(),
-                    mc.player.getY(),
-                    mc.player.getZ() + yawBack.z * distance.get()
-                );
-            }
+            if (mc.options.keyLeft.isPressed()) mc.player.setPos(mc.player.getX() + yawLeft.x * distance.get(), mc.player.getY(), mc.player.getZ() + yawLeft.z * distance.get());
 
-            if (mc.options.keyLeft.isPressed()) {
-                mc.player.setPos(
-                    mc.player.getX() + yawLeft.x * distance.get(),
-                    mc.player.getY(),
-                    mc.player.getZ() + yawLeft.z * distance.get()
-                );
-            }
-
-            if (mc.options.keyRight.isPressed()) {
-                mc.player.setPos(
-                    mc.player.getX() + yawRight.x * distance.get(),
-                    mc.player.getY(),
-                    mc.player.getZ() + yawRight.z * distance.get()
-                );
-            }
-        }
-
-        else if (mode.get() == Mode.NRNB) {
+            if (mc.options.keyRight.isPressed()) mc.player.setPos(mc.player.getX() + yawRight.x * distance.get(), mc.player.getY(), mc.player.getZ() + yawRight.z * distance.get());
+        } else if (mode.get() == Mode.NRNB) {
             if (mc.options.keyForward.isPressed()) {
                 prevX += yawForward.x * distance.get();
                 prevZ += yawForward.z * distance.get();

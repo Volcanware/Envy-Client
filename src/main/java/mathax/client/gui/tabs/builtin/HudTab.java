@@ -49,7 +49,7 @@ public class HudTab extends Tab {
             add(theme.horizontalSeparator()).expandX();
 
             WButton openEditor = add(theme.button("Edit")).expandX().widget();
-            openEditor.action = () -> mc.setScreen(new HudEditorScreen(theme, this));
+            openEditor.action = () -> mc.setScreen(new HudEditorScreen(theme));
 
             WButton resetHud = add(theme.button("Reset")).expandX().widget();
             resetHud.action = hud.reset;

@@ -47,28 +47,26 @@ public class CapesModule extends Module {
         super(Categories.Client, Items.CAKE, "capes", "Shows very cool capes on users which have them.");
     }
 
-    @EventHandler
-    private void onTick(TickEvent.Pre event) {
-        if (!autoReload.get()) {
-            timer = 0;
-            return;
-        }
-
-        if (timer > 12000) {
-            timer = 0;
-            Capes.init();
-        }
-
-        timer++;
-    }
-
     @Override
     public void onActivate() {
+        timer = 0;
         Capes.init();
     }
 
     @Override
     public void onDeactivate() {
         Capes.disable();
+    }
+
+    @EventHandler
+    private void onTick(TickEvent.Pre event) {
+        if (!autoReload.get()) return;
+
+        if (timer >= 12000) {
+            timer = 0;
+            Capes.init();
+        }
+
+        timer++;
     }
 }

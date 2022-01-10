@@ -13,6 +13,12 @@ import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.world.Timer;
 import net.minecraft.item.Items;
 
+/*/------------------------------------------------------------------------------------------------------------------------------/*/
+/*/ Made by cally72jhb                                                                                                           /*/
+/*/                                                                                                                              /*/
+/*/ https://github.com/cally72jhb/vector-addon/blob/main/src/main/java/cally72jhb/addon/system/modules/movement/ReverseStep.java /*/
+/*/------------------------------------------------------------------------------------------------------------------------------/*/
+
 public class ReverseStep extends Module {
     private boolean valid = false;
 

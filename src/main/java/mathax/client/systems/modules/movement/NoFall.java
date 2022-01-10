@@ -36,6 +36,13 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Predicate;
 
+/*/--------------------------------------------------------------------------------------------------------------------------------------------------/*/
+/*/ Used from Meteor Client and modified by Matejko06 using No Fall+ made by cally72jhb                                                              /*/
+/*/                                                                                                                                                  /*/
+/*/ https://github.com/MeteorDevelopment/meteor-client/blob/master/src/main/java/meteordevelopment/meteorclient/systems/modules/movement/NoFall.java /*/
+/*/ https://github.com/cally72jhb/vector-addon/blob/main/src/main/java/cally72jhb/addon/system/modules/movement/NoFallPlus.java                      /*/
+/*/--------------------------------------------------------------------------------------------------------------------------------------------------/*/
+
 public class NoFall extends Module {
     private final ArrayList<PlayerMoveC2SPacket> packets = new ArrayList<>();
 
@@ -246,34 +253,52 @@ public class NoFall extends Module {
     }
 
     public enum Mode {
-        Vanilla,
-        Packet,
-        Packet_Plus,
-        Bucket,
-        Air_Place,
-        TP;
+        Vanilla("Vanilla"),
+        Packet("Packet"),
+        Packet_Plus("Packet+"),
+        Bucket("Bucket"),
+        Air_Place("Air Place"),
+        TP("TP");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
 
         @Override
         public String toString() {
-            if (this == Packet_Plus) return "Packet+";
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 
     public enum PacketMode {
-        Preserve,
-        Down,
-        Bypass,
-        Obscure
+        Preserve("Preserve"),
+        Down("Down"),
+        Bypass("Bypass"),
+        Obscure("Obscure");
+
+        private final String title;
+
+        PacketMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     public enum PlaceMode {
-        Before_Damage(height -> height > 2),
-        Before_Death(height -> height > Math.max(PlayerUtils.getTotalHealth(), 2));
+        Before_Damage("Before Damage", height -> height > 2),
+        Before_Death("Before Death", height -> height > Math.max(PlayerUtils.getTotalHealth(), 2));
 
+        private final String title;
         private final Predicate<Float> fallHeight;
 
-        PlaceMode(Predicate<Float> fallHeight) {
+        PlaceMode(String title, Predicate<Float> fallHeight) {
+            this.title = title;
             this.fallHeight = fallHeight;
         }
 
@@ -283,7 +308,7 @@ public class NoFall extends Module {
 
         @Override
         public String toString() {
-            return super.toString().replace("_", " ");
+            return title;
         }
     }
 }

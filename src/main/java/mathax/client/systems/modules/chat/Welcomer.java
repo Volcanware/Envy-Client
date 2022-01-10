@@ -19,6 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/*/-------------------------------------------------------------------------------------------------------------------------/*/
+/*/ Made by cally72jhb and modified by Matejko06                                                                            /*/
+/*/ https://github.com/cally72jhb/vector-addon/blob/main/src/main/java/cally72jhb/addon/system/modules/player/Welcomer.java /*/
+/*/-------------------------------------------------------------------------------------------------------------------------/*/
+
 public class Welcomer extends Module {
     private List<PlayerListS2CPacket.Entry> prevEntries;
     private List<PlayerListS2CPacket.Entry> entries;

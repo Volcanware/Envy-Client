@@ -4,22 +4,7 @@ import net.minecraft.util.Hand;
 
 import static mathax.client.MatHax.mc;
 
-public class FindItemResult {
-    private final int slot, count;
-
-    public FindItemResult(int slot, int count) {
-        this.slot = slot;
-        this.count = count;
-    }
-
-    public int getSlot() {
-        return slot;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
+public record FindItemResult(int slot, int count) {
     public boolean found() {
         return slot != -1;
     }

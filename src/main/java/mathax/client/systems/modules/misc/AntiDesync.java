@@ -18,6 +18,11 @@ import net.minecraft.network.packet.c2s.play.TeleportConfirmC2SPacket;
 import java.util.ArrayList;
 import java.util.List;
 
+/*/---------------------------------------------------------------------------------------------------------------------------/*/
+/*/ Made by cally72jhb                                                                                                        /*/
+/*/ https://github.com/cally72jhb/vector-addon/blob/main/src/main/java/cally72jhb/addon/system/modules/player/AntiDesync.java /*/
+/*/---------------------------------------------------------------------------------------------------------------------------/*/
+
 public class AntiDesync extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 

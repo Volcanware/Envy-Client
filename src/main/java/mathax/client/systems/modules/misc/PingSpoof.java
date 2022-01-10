@@ -12,6 +12,11 @@ import mathax.client.utils.misc.Timer;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.KeepAliveC2SPacket;
 
+/*/--------------------------------------------------------------------------------------------------------------------------/*/
+/*/ Made by cally72jhb                                                                                                       /*/
+/*/ https://github.com/cally72jhb/vector-addon/blob/main/src/main/java/cally72jhb/addon/system/modules/player/PingSpoof.java /*/
+/*/--------------------------------------------------------------------------------------------------------------------------/*/
+
 public class PingSpoof extends Module {
     private final Timer timer = new Timer();
 

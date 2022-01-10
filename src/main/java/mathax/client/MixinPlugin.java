@@ -16,11 +16,20 @@ import sun.misc.Unsafe;
 import java.lang.reflect.Field;
 
 public class MixinPlugin implements IMixinConfigPlugin {
-    private boolean isResourceLoaderPresent = false;
-    private boolean isOriginsPresent = false;
+    private static final String mixinPackage = "mathax.client.mixin";
+
+    private static boolean loaded;
+
+    private static boolean isResourceLoaderPresent;
+    private static boolean isOriginsPresent;
+    private static boolean isIndigoPresent;
+    private static boolean isSodiumPresent;
+    private static boolean isCanvasPresent;
 
     @Override
     public void onLoad(String mixinPackage) {
+        if (loaded) return;
+
         try {
             // Get class loader
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -42,7 +51,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
             Unsafe unsafe = (Unsafe) unsafeField.get(null);
 
             // Create Asm
-            new Asm();
+            Asm.init();
 
             // Change delegate
             Asm.Transformer mixinTransformer = (Asm.Transformer) unsafe.allocateInstance(Asm.Transformer.class);
@@ -54,9 +63,15 @@ public class MixinPlugin implements IMixinConfigPlugin {
         }
 
         for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
-            if (mod.getMetadata().getId().startsWith("fabric-resource-loader")) isResourceLoaderPresent = true;
-            else if (mod.getMetadata().getId().equals("origins")) isOriginsPresent = true;
+            isResourceLoaderPresent = isResourceLoaderPresent || mod.getMetadata().getId().startsWith("fabric-resource-loader");
+            isIndigoPresent = isIndigoPresent || mod.getMetadata().getId().startsWith("fabric-renderer-indigo");
         }
+
+        isOriginsPresent = FabricLoader.getInstance().isModLoaded("origins");
+        isSodiumPresent = FabricLoader.getInstance().isModLoaded("sodium");
+        isCanvasPresent = FabricLoader.getInstance().isModLoaded("canvas");
+
+        loaded = true;
     }
 
     @Override
@@ -66,8 +81,12 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (mixinClassName.endsWith("NamespaceResourceManagerMixin") || mixinClassName.endsWith("ReloadableResourceManagerImplMixin")) return !isResourceLoaderPresent;
+        if (!mixinClassName.startsWith(mixinPackage)) throw new RuntimeException("Mixin " + mixinClassName + " is not in the mixin package");
+        else if (mixinClassName.endsWith("NamespaceResourceManagerMixin") || mixinClassName.endsWith("ReloadableResourceManagerImplMixin")) return !isResourceLoaderPresent;
         else if (mixinClassName.endsWith("PlayerEntityRendererMixin")) return !isOriginsPresent;
+        else if (mixinClassName.startsWith(mixinPackage + ".sodium")) return isSodiumPresent;
+        else if (mixinClassName.startsWith(mixinPackage + ".indigo")) return isIndigoPresent;
+        else if (mixinClassName.startsWith(mixinPackage + ".canvas")) return isCanvasPresent;
 
         return true;
     }
