@@ -36,8 +36,10 @@ import static mathax.client.MatHax.mc;
 
 public class DamageUtils {
     private static final Vec3d vec3d = new Vec3d(0, 0, 0);
-    private static Explosion explosion;
+
     private static RaycastContext raycastContext;
+
+    private static Explosion explosion;
 
     public static void init() {
         MatHax.EVENT_BUS.subscribe(DamageUtils.class);
@@ -48,8 +50,6 @@ public class DamageUtils {
         explosion = new Explosion(mc.world, null, 0, 0, 0, 6, false, Explosion.DestructionType.DESTROY);
         raycastContext = new RaycastContext(null, null, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.ANY, mc.player);
     }
-
-    // Crystal damage
 
     public static double crystalDamage(PlayerEntity player, Vec3d crystal) {
         return crystalDamage(player, crystal, false, null, false);
@@ -109,17 +109,14 @@ public class DamageUtils {
         return damage < 0 ? 0 : damage;
     }
 
-    // Sword damage
-
     public static double getSwordDamage(PlayerEntity entity, boolean charged) {
-        // Get sword damage
         double damage = 0;
         if (charged) {
             if (entity.getActiveItem().getItem() == Items.DIAMOND_SWORD) damage += 7;
             else if (entity.getActiveItem().getItem() == Items.GOLDEN_SWORD) damage += 4;
             else if (entity.getActiveItem().getItem() == Items.IRON_SWORD) damage += 6;
             else if (entity.getActiveItem().getItem() == Items.STONE_SWORD) damage += 5;
-            else if (entity.getActiveItem().getItem() == Items.WOODEN_SWORD)damage += 4;
+            else if (entity.getActiveItem().getItem() == Items.WOODEN_SWORD) damage += 4;
             damage *= 1.5;
         }
 
@@ -135,19 +132,14 @@ public class DamageUtils {
             damage += 3 * strength;
         }
 
-        // Reduce by resistance
         damage = resistanceReduction(entity, damage);
 
-        // Reduce by armour
         damage = DamageUtil.getDamageLeft((float) damage, (float) entity.getArmor(), (float) entity.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
 
-        // Reduce by enchants
         damage = normalProtReduction(entity, damage);
 
         return damage < 0 ? 0 : damage;
     }
-
-    // Bed damage
 
     public static double bedDamage(LivingEntity player, Vec3d bed) {
         if (player instanceof PlayerEntity && ((PlayerEntity) player).getAbilities().creativeMode) return 0;
@@ -159,24 +151,17 @@ public class DamageUtils {
         double impact = (1.0 - (modDistance / 10.0)) * exposure;
         double damage = (impact * impact + impact) / 2 * 7 * (5 * 2) + 1;
 
-        // Multiply damage by difficulty
         damage = getDamageForDifficulty(damage);
 
-        // Reduce by resistance
         damage = resistanceReduction(player, damage);
 
-        // Reduce by armour
         damage = DamageUtil.getDamageLeft((float) damage, (float) player.getArmor(), (float) player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
 
-        // Reduce by enchants
         ((IExplosion) explosion).set(bed, 5, true);
         damage = blastProtReduction(player, damage, explosion);
 
-        if (damage < 0) damage = 0;
-        return damage;
+        return damage < 0 ? 0 : damage;
     }
-
-    // Anchor damage
 
     public static double anchorDamage(LivingEntity player, Vec3d anchor) {
         mc.world.removeBlock(new BlockPos(anchor), false);
@@ -184,8 +169,6 @@ public class DamageUtils {
         mc.world.setBlockState(new BlockPos(anchor), Blocks.RESPAWN_ANCHOR.getDefaultState());
         return damage;
     }
-
-    // Utils
 
     public static double getDamageForDifficulty(double damage) {
         return switch (mc.world.getDifficulty()) {

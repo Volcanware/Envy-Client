@@ -29,6 +29,13 @@ public class Spam extends Module {
         .build()
     );
 
+    private final Setting<Boolean> ignoreSelf = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-self")
+        .description("Skips messages when you're in %player%.")
+        .defaultValue(true)
+        .build()
+    );
+
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
         .name("delay")
         .description("The delay between specified messages in ticks.")
@@ -87,6 +94,9 @@ public class Spam extends Module {
 
             String text = messages.get().get(i);
             if (randomText.get()) text += " " + RandomStringUtils.randomAlphabetic(randomTextLength.get()).toLowerCase();
+
+            String player = Utils.getRandomPlayer();
+            if (ignoreSelf.get() && player.equals(mc.player.getGameProfile().getName())) return;
 
             mc.player.sendChatMessage(text.replace("%player%", Utils.getRandomPlayer()));
 

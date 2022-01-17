@@ -8,7 +8,7 @@ import mathax.client.systems.modules.Module;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.entity.SortPriority;
 import mathax.client.utils.entity.TargetUtils;
-import mathax.client.utils.player.DamageCalcUtils;
+import mathax.client.utils.player.DamageUtils;
 import mathax.client.utils.player.FindItemResult;
 import mathax.client.utils.player.InvUtils;
 import mathax.client.utils.player.Rotations;
@@ -67,7 +67,7 @@ public class PistonAura extends Module {
         else if (mc.player.distanceTo(target) >= 4) secondPlace();
         for (Entity entity : mc.world.getEntities()) {
             if (entity instanceof EndCrystalEntity crystalEntity) {
-                if (DamageCalcUtils.crystalDamage(target, crystalEntity.getPos()) >= 8) mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(crystalEntity, mc.player.isSneaking()));
+                if (DamageUtils.crystalDamage(target, crystalEntity.getPos()) >= 8) mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(crystalEntity, mc.player.isSneaking()));
             }
         }
     }
@@ -324,7 +324,7 @@ public class PistonAura extends Module {
 
     private void placeBlock(BlockPos pos, FindItemResult item) {
         if (!item.isHotbar()) {
-            warning("No " + item + " found in hotbar, disabling...");
+            warning("No %s found in hotbar, disabling...", item);
             toggle();
             return;
         }

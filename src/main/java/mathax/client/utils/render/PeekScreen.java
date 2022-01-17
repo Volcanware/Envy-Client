@@ -18,11 +18,13 @@ import static mathax.client.MatHax.mc;
 
 public class PeekScreen extends ShulkerBoxScreen {
     private final Identifier TEXTURE = new Identifier("textures/gui/container/shulker_box.png");
+
     private final ItemStack[] contents;
     private final ItemStack storageBlock;
 
     public PeekScreen(ItemStack storageBlock, ItemStack[] contents) {
         super(new ShulkerBoxScreenHandler(0, mc.player.getInventory(), new SimpleInventory(contents)), mc.player.getInventory(), storageBlock.getName());
+
         this.contents = contents;
         this.storageBlock = storageBlock;
     }
@@ -31,9 +33,8 @@ public class PeekScreen extends ShulkerBoxScreen {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         BetterTooltips toolips = Modules.get().get(BetterTooltips.class);
 
-        if (button == GLFW.GLFW_MOUSE_BUTTON_MIDDLE && focusedSlot != null && !focusedSlot.getStack().isEmpty() && mc.player.currentScreenHandler.getCursorStack().isEmpty() && toolips.middleClickOpen()) {
-            return Utils.openContainer(focusedSlot.getStack(), contents, false);
-        }
+        if (button == GLFW.GLFW_MOUSE_BUTTON_MIDDLE && focusedSlot != null && !focusedSlot.getStack().isEmpty() && mc.player.currentScreenHandler.getCursorStack().isEmpty() && toolips.middleClickOpen()) return Utils.openContainer(focusedSlot.getStack(), contents, false);
+
         return false;
     }
 
@@ -48,6 +49,7 @@ public class PeekScreen extends ShulkerBoxScreen {
             this.onClose();
             return true;
         }
+
         return false;
     }
 
@@ -57,6 +59,7 @@ public class PeekScreen extends ShulkerBoxScreen {
             this.onClose();
             return true;
         }
+
         return false;
     }
 

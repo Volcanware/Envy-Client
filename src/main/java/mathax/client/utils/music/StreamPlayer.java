@@ -10,8 +10,9 @@ import javax.sound.sampled.*;
 import java.io.IOException;
 
 public class StreamPlayer implements Runnable {
-    public boolean playing;
     public boolean stop = false;
+    public boolean playing;
+
     SourceDataLine line;
 
     @Override

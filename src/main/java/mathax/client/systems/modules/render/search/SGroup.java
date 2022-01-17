@@ -45,9 +45,7 @@ public class SGroup {
         sumZ -= block.z;
 
         if (blocks.isEmpty()) search.removeGroup(block.group);
-        else if (splitGroup) {
-            trySplit(block);
-        }
+        else if (splitGroup) trySplit(block);
     }
 
     public void remove(SBlock block) {
@@ -63,6 +61,7 @@ public class SGroup {
                 if (neighbour != null) neighbours.add(neighbour);
             }
         }
+
         if (neighbours.size() <= 1) return;
 
         Set<SBlock> remainingBlocks = new ObjectOpenHashSet<>(blocks);
@@ -136,8 +135,6 @@ public class SGroup {
     public void render(Render3DEvent event) {
         SBlockData blockData = search.getBlockData(block);
 
-        if (blockData.tracer) {
-            event.renderer.line(RenderUtils.center.x, RenderUtils.center.y, RenderUtils.center.z, sumX / blocks.size() + 0.5, sumY / blocks.size() + 0.5, sumZ / blocks.size() + 0.5, blockData.tracerColor);
-        }
+        if (blockData.tracer) event.renderer.line(RenderUtils.center.x, RenderUtils.center.y, RenderUtils.center.z, sumX / blocks.size() + 0.5, sumY / blocks.size() + 0.5, sumZ / blocks.size() + 0.5, blockData.tracerColor);
     }
 }

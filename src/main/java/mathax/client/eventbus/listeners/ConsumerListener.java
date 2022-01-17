@@ -4,9 +4,6 @@ import mathax.client.eventbus.EventPriority;
 
 import java.util.function.Consumer;
 
-/**
- * Listener that takes in a {@link java.util.function.Consumer}.
- */
 public class ConsumerListener<T> implements IListener {
     private final Class<?> target;
     private final int priority;

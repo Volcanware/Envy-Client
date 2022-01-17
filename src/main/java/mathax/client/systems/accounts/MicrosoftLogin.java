@@ -51,48 +51,30 @@ public class MicrosoftLogin {
     }
 
     public static LoginData login(String refreshToken) {
-        // Refresh access token
-        AuthTokenResponse res = HTTP.post("https://login.live.com/oauth20_token.srf")
-            .bodyForm("client_id=" + CLIENT_ID + "&refresh_token=" + refreshToken + "&grant_type=refresh_token&redirect_uri=http://127.0.0.1:" + PORT)
-            .sendJson(AuthTokenResponse.class);
+        AuthTokenResponse res = HTTP.post("https://login.live.com/oauth20_token.srf").bodyForm("client_id=" + CLIENT_ID + "&refresh_token=" + refreshToken + "&grant_type=refresh_token&redirect_uri=http://127.0.0.1:" + PORT).sendJson(AuthTokenResponse.class);
 
         if (res == null) return new LoginData();
 
         String accessToken = res.access_token;
         refreshToken = res.refresh_token;
 
-        // XBL
-        XblXstsResponse xblRes = HTTP.post("https://user.auth.xboxlive.com/user/authenticate")
-            .bodyJson("{\"Properties\":{\"AuthMethod\":\"RPS\",\"SiteName\":\"user.auth.xboxlive.com\",\"RpsTicket\":\"d=" + accessToken + "\"},\"RelyingParty\":\"http://auth.xboxlive.com\",\"TokenType\":\"JWT\"}")
-            .sendJson(XblXstsResponse.class);
+        XblXstsResponse xblRes = HTTP.post("https://user.auth.xboxlive.com/user/authenticate").bodyJson("{\"Properties\":{\"AuthMethod\":\"RPS\",\"SiteName\":\"user.auth.xboxlive.com\",\"RpsTicket\":\"d=" + accessToken + "\"},\"RelyingParty\":\"http://auth.xboxlive.com\",\"TokenType\":\"JWT\"}").sendJson(XblXstsResponse.class);
 
         if (xblRes == null) return new LoginData();
 
-        // XSTS
-        XblXstsResponse xstsRes = HTTP.post("https://xsts.auth.xboxlive.com/xsts/authorize")
-            .bodyJson("{\"Properties\":{\"SandboxId\":\"RETAIL\",\"UserTokens\":[\"" + xblRes.Token + "\"]},\"RelyingParty\":\"rp://api.minecraftservices.com/\",\"TokenType\":\"JWT\"}")
-            .sendJson(XblXstsResponse.class);
+        XblXstsResponse xstsRes = HTTP.post("https://xsts.auth.xboxlive.com/xsts/authorize").bodyJson("{\"Properties\":{\"SandboxId\":\"RETAIL\",\"UserTokens\":[\"" + xblRes.Token + "\"]},\"RelyingParty\":\"rp://api.minecraftservices.com/\",\"TokenType\":\"JWT\"}").sendJson(XblXstsResponse.class);
 
         if (xstsRes == null) return new LoginData();
 
-        // Minecraft
-        McResponse mcRes = HTTP.post("https://api.minecraftservices.com/authentication/login_with_xbox")
-            .bodyJson("{\"identityToken\":\"XBL3.0 x=" + xblRes.DisplayClaims.xui[0].uhs + ";" + xstsRes.Token + "\"}")
-            .sendJson(McResponse.class);
+        McResponse mcRes = HTTP.post("https://api.minecraftservices.com/authentication/login_with_xbox").bodyJson("{\"identityToken\":\"XBL3.0 x=" + xblRes.DisplayClaims.xui[0].uhs + ";" + xstsRes.Token + "\"}").sendJson(McResponse.class);
 
         if (mcRes == null) return new LoginData();
 
-        // Check game ownership
-        GameOwnershipResponse gameOwnershipRes = HTTP.get("https://api.minecraftservices.com/entitlements/mcstore")
-            .bearer(mcRes.access_token)
-            .sendJson(GameOwnershipResponse.class);
+        GameOwnershipResponse gameOwnershipRes = HTTP.get("https://api.minecraftservices.com/entitlements/mcstore").bearer(mcRes.access_token).sendJson(GameOwnershipResponse.class);
 
         if (gameOwnershipRes == null || !gameOwnershipRes.hasGameOwnership()) return new LoginData();
 
-        // Profile
-        ProfileResponse profileRes = HTTP.get("https://api.minecraftservices.com/minecraft/profile")
-            .bearer(mcRes.access_token)
-            .sendJson(ProfileResponse.class);
+        ProfileResponse profileRes = HTTP.get("https://api.minecraftservices.com/minecraft/profile").bearer(mcRes.access_token).sendJson(ProfileResponse.class);
 
         if (profileRes == null) return new LoginData();
 
@@ -106,7 +88,7 @@ public class MicrosoftLogin {
             server = HttpServer.create(new InetSocketAddress("127.0.0.1", PORT), 0);
 
             server.createContext("/", new Handler());
-            server.setExecutor(MatHaxExecutor.executor);
+            server.setExecutor(MatHaxExecutor.EXECUTOR);
             server.start();
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,7 +108,6 @@ public class MicrosoftLogin {
         @Override
         public void handle(HttpExchange req) throws IOException {
             if (req.getRequestMethod().equals("GET")) {
-                // Login
                 List<NameValuePair> query = URLEncodedUtils.parse(req.getRequestURI(), StandardCharsets.UTF_8.name());
 
                 boolean ok = false;
@@ -148,9 +129,7 @@ public class MicrosoftLogin {
         }
 
         private void handleCode(String code) {
-            AuthTokenResponse res = HTTP.post("https://login.live.com/oauth20_token.srf")
-                .bodyForm("client_id=" + CLIENT_ID + "&code=" + code + "&grant_type=authorization_code&redirect_uri=http://127.0.0.1:" + PORT)
-                .sendJson(AuthTokenResponse.class);
+            AuthTokenResponse res = HTTP.post("https://login.live.com/oauth20_token.srf").bodyForm("client_id=" + CLIENT_ID + "&code=" + code + "&grant_type=authorization_code&redirect_uri=http://127.0.0.1:" + PORT).sendJson(AuthTokenResponse.class);
 
             if (res == null) callback.accept(null);
             else callback.accept(res.refresh_token);

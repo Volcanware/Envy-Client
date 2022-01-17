@@ -24,20 +24,13 @@ public class Placeholders {
     }
 
     private static String getReplacement(String placeholder) {
-        switch (placeholder) {
-            case "%version%":
-                return Version.getStylized();
-            case "%mc_version%":
-                return Version.getMinecraft();
-            case "%player%":
-            case "%username%":
-                return mc.getSession().getUsername();
-            case "%server%":
-                return Utils.getWorldName();
-            case "%health%":
-                return String.valueOf(Utils.getPlayerHealth());
-            default:
-                return "";
-        }
+        return switch (placeholder) {
+            case "%version%" -> Version.getStylized();
+            case "%mc_version%" -> Version.getMinecraft();
+            case "%player%", "%username%" -> mc.getSession().getUsername();
+            case "%server%" -> Utils.getWorldName();
+            case "%health%" -> String.valueOf(Utils.getPlayerHealth());
+            default -> "";
+        };
     }
 }

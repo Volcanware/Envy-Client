@@ -35,9 +35,7 @@ public class Proxies extends System<Proxies> implements Iterable<Proxy> {
     }
 
     public void remove(Proxy proxy) {
-        if (proxies.remove(proxy)) {
-            save();
-        }
+        if (proxies.remove(proxy)) save();
     }
 
     public Proxy getEnabled() {

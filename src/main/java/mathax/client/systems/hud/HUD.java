@@ -27,7 +27,7 @@ public class HUD extends System<HUD> {
     private final HudRenderer RENDERER = new HudRenderer();
 
     public final List<HudElement> elements = new ArrayList<>();
-    private final HudElementLayer mainInfo, moduleInfo, breakingLooking, coords, lag, modules, invPot, binds, radar, itemsArmor, crosshair, crosshair2;
+    private final HudElementLayer mainInfo, moduleInfo, breakingLooking, coords, lagChat, modules, invPot, binds, radar, itemsArmor, crosshair, crosshair2;
 
     public boolean active = true;
 
@@ -108,10 +108,10 @@ public class HUD extends System<HUD> {
         coords.add(new RotationHud(this));
 
         // LAG
-        lag = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Top, 0, 2);
+        lagChat = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Top, 0, 2);
         // Modules
-        lag.add(new LagNotifierHud(this));
-        lag.add(new BigRatHud(this));
+        lagChat.add(new LagNotifierHud(this));
+        lagChat.add(new BigRatHud(this));
 
         // MODULES
         modules = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Bottom, 2, 2);
@@ -167,7 +167,7 @@ public class HUD extends System<HUD> {
         moduleInfo.align();
         breakingLooking.align();
         coords.align();
-        lag.align();
+        lagChat.align();
         modules.align();
         invPot.align();
         binds.align();

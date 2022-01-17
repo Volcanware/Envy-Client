@@ -3,7 +3,6 @@ package mathax.client.utils.misc;
 import baritone.api.BaritoneAPI;
 import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.Modules;
-import mathax.client.utils.render.color.RainbowColor;
 import mathax.client.MatHax;
 import mathax.client.mixin.ChatHudAccessor;
 import mathax.client.systems.modules.client.ClientSpoof;
@@ -15,8 +14,6 @@ import org.jetbrains.annotations.Nullable;
 import static mathax.client.MatHax.mc;
 
 public class ChatUtils {
-    private static final RainbowColor RAINBOW = new RainbowColor();
-
     // Default
     public static void info(String message, Object... args) {
         sendMsg(Formatting.GRAY, message, args);

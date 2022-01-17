@@ -11,23 +11,23 @@ public class Timer {
         nanoTime = System.nanoTime();
     }
 
-    public void setTicks(final long ticks) {
+    public void setTicks(long ticks) {
         nanoTime = System.nanoTime() - convertTicksToNano(ticks);
     }
 
-    public void setNano(final long time) {
+    public void setNano(long time) {
         nanoTime = System.nanoTime() - time;
     }
 
-    public void setMicro(final long time) {
+    public void setMicro(long time) {
         nanoTime = System.nanoTime() - convertMicroToNano(time);
     }
 
-    public void setMillis(final long time) {
+    public void setMillis(long time) {
         nanoTime = System.nanoTime() - convertMillisToNano(time);
     }
 
-    public void setSec(final long time) {
+    public void setSec(long time) {
         nanoTime = System.nanoTime() - convertSecToNano(time);
     }
 
@@ -51,87 +51,87 @@ public class Timer {
         return convertNanoToSec(nanoTime);
     }
 
-    public boolean passedTicks(final long ticks) {
+    public boolean passedTicks(long ticks) {
         return passedNano(convertTicksToNano(ticks));
     }
 
-    public boolean passedNano(final long time) {
+    public boolean passedNano(long time) {
         return System.nanoTime() - nanoTime >= time;
     }
 
-    public boolean passedMicro(final long time) {
+    public boolean passedMicro(long time) {
         return passedNano(convertMicroToNano(time));
     }
 
-    public boolean passedMillis(final long time) {
+    public boolean passedMillis(long time) {
         return passedNano(convertMillisToNano(time));
     }
 
-    public boolean passedSec(final long time) {
+    public boolean passedSec(long time) {
         return passedNano(convertSecToNano(time));
     }
 
-    public long convertMillisToTicks(final long time) {
+    public long convertMillisToTicks(long time) {
         return time / 50L;
     }
 
-    public long convertTicksToMillis(final long ticks) {
+    public long convertTicksToMillis(long ticks) {
         return ticks * 50L;
     }
 
-    public long convertNanoToTicks(final long time) {
+    public long convertNanoToTicks(long time) {
         return convertMillisToTicks(convertNanoToMillis(time));
     }
 
-    public long convertTicksToNano(final long ticks) {
+    public long convertTicksToNano(long ticks) {
         return convertMillisToNano(convertTicksToMillis(ticks));
     }
 
-    public long convertSecToMillis(final long time) {
+    public long convertSecToMillis(long time) {
         return time * 1000L;
     }
 
-    public long convertSecToMicro(final long time) {
+    public long convertSecToMicro(long time) {
         return convertMillisToMicro(convertSecToMillis(time));
     }
 
-    public long convertSecToNano(final long time) {
+    public long convertSecToNano(long time) {
         return convertMicroToNano(convertMillisToMicro(convertSecToMillis(time)));
     }
 
-    public long convertMillisToMicro(final long time) {
+    public long convertMillisToMicro(long time) {
         return time * 1000L;
     }
 
-    public long convertMillisToNano(final long time) {
+    public long convertMillisToNano(long time) {
         return convertMicroToNano(convertMillisToMicro(time));
     }
 
-    public long convertMicroToNano(final long time) {
+    public long convertMicroToNano(long time) {
         return time * 1000L;
     }
 
-    public long convertNanoToMicro(final long time) {
+    public long convertNanoToMicro(long time) {
         return time / 1000L;
     }
 
-    public long convertNanoToMillis(final long time) {
+    public long convertNanoToMillis(long time) {
         return convertMicroToMillis(convertNanoToMicro(time));
     }
 
-    public long convertNanoToSec(final long time) {
+    public long convertNanoToSec(long time) {
         return convertMillisToSec(convertMicroToMillis(convertNanoToMicro(time)));
     }
 
-    public long convertMicroToMillis(final long time) {
+    public long convertMicroToMillis(long time) {
         return time / 1000L;
     }
 
-    public long convertMicroToSec(final long time) {
+    public long convertMicroToSec(long time) {
         return convertMillisToSec(convertMicroToMillis(time));
     }
 
-    public long convertMillisToSec(final long time) {
+    public long convertMillisToSec(long time) {
         return time / 1000L;
     }
 }

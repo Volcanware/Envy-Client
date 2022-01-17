@@ -119,8 +119,6 @@ public class Marker extends Module {
 
     @Override
     public Module fromTag(NbtCompound tag) {
-        super.fromTag(tag);
-
         markers.clear();
         NbtList list = tag.getList("markers", 10);
 

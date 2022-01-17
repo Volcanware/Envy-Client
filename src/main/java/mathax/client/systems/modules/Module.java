@@ -197,13 +197,11 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
 
     @Override
     public Module fromTag(NbtCompound tag) {
-        // General
         if (tag.contains("key")) keybind.set(true, tag.getInt("key"));
         else keybind.fromTag(tag.getCompound("keybind"));
 
         toggleOnBindRelease = tag.getBoolean("toggleOnKeyRelease");
 
-        // Settings
         NbtElement settingsTag = tag.get("settings");
         if (settingsTag instanceof NbtCompound) settings.fromTag((NbtCompound) settingsTag);
 

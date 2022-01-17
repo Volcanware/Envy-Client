@@ -4,13 +4,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MatHaxExecutor {
-    public static ExecutorService executor;
+    public static ExecutorService EXECUTOR;
 
     public static void init() {
-        executor = Executors.newSingleThreadExecutor();
+        EXECUTOR = Executors.newSingleThreadExecutor();
     }
 
     public static void execute(Runnable task) {
-        executor.execute(task);
+        EXECUTOR.execute(task);
     }
 }

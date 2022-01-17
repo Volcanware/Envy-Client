@@ -2,16 +2,18 @@ package mathax.client.systems.modules.render.search;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import mathax.client.MatHax;
 import mathax.client.events.render.Render3DEvent;
 import mathax.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.chunk.Chunk;
 
 import java.util.List;
+
+import static mathax.client.MatHax.mc;
 
 public class SChunk {
     private static final BlockPos.Mutable blockPos = new BlockPos.Mutable();
@@ -42,17 +44,23 @@ public class SChunk {
     }
 
     public void remove(BlockPos blockPos) {
-        SBlock block = blocks.remove(SBlock.getKey(blockPos));
-        if (block != null) block.group.remove(block);
+        if (blocks != null) {
+            SBlock block = blocks.remove(SBlock.getKey(blockPos));
+            if (block != null) block.group.remove(block);
+        }
     }
 
     public void update() {
-        for (SBlock block : blocks.values()) block.update();
+        if (blocks != null) {
+            for (SBlock block : blocks.values()) block.update();
+        }
     }
 
     public void update(int x, int y, int z) {
-        SBlock block = blocks.get(SBlock.getKey(x, y, z));
-        if (block != null) block.update();
+        if (blocks != null) {
+            SBlock block = blocks.get(SBlock.getKey(x, y, z));
+            if (block != null) block.update();
+        }
     }
 
     public int size() {
@@ -61,12 +69,14 @@ public class SChunk {
 
     public boolean shouldBeDeleted() {
         int viewDist = Utils.getRenderDistance() + 1;
-        // TODO: Optimize getChunkPos()
-        return x > MatHax.mc.player.getChunkPos().x + viewDist || x < MatHax.mc.player.getChunkPos().x - viewDist || z > MatHax.mc.player.getChunkPos().z + viewDist || z < MatHax.mc.player.getChunkPos().z - viewDist;
+        int chunkX = ChunkSectionPos.getSectionCoord(mc.player.getBlockPos().getX());
+        int chunkZ = ChunkSectionPos.getSectionCoord(mc.player.getBlockPos().getZ());
+
+        return x > chunkX + viewDist || x < chunkX - viewDist || z > chunkZ + viewDist || z < chunkZ - viewDist;
     }
 
     public void render(Render3DEvent event) {
-        for (SBlock block : blocks.values()) block.render(event);
+        if (blocks != null) for (SBlock block : blocks.values()) block.render(event);
     }
 
 
@@ -78,11 +88,11 @@ public class SChunk {
             for (int z = chunk.getPos().getStartZ(); z <= chunk.getPos().getEndZ(); z++) {
                 int height = chunk.getHeightmap(Heightmap.Type.WORLD_SURFACE).get(x - chunk.getPos().getStartX(), z - chunk.getPos().getStartZ());
 
-                for (int y = 0; y < height; y++) {
+                for (int y = mc.world.getBottomY(); y < height; y++) {
                     blockPos.set(x, y, z);
-                    BlockState bs = chunk.getBlockState(blockPos);
+                    BlockState blockState = chunk.getBlockState(blockPos);
 
-                    if (blocks.contains(bs.getBlock())) schunk.add(blockPos, false);
+                    if (blocks.contains(blockState.getBlock())) schunk.add(blockPos, false);
                 }
             }
         }

@@ -163,7 +163,10 @@ public class MatHax implements ClientModInitializer {
 
         // Pre-load
         Systems.addPreLoadTask(() -> {
-            if (!Modules.get().getFile().exists()) {
+            if (!FOLDER.exists()) {
+                FOLDER.getParentFile().mkdirs();
+                FOLDER.mkdir();
+
                 // ACTIVATE
                 Modules.get().get(CapesModule.class).forceToggle(true); // CAPES
                 Modules.get().get(DiscordRPC.class).forceToggle(true); // DISCORD RPC

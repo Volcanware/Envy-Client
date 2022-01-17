@@ -25,13 +25,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class Search extends Module {
-    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
-
     private final Long2ObjectMap<SChunk> chunks = new Long2ObjectOpenHashMap<>();
+
     private final List<SGroup> groups = new UnorderedArrayList<>();
+
+    private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
 
     private Dimension lastDimension;
 
@@ -78,7 +81,7 @@ public class Search extends Module {
     );
 
     public Search() {
-        super(Categories.Render, Items.COMMAND_BLOCK, "search", "Searches for specified blocks.");
+        super(Categories.Render, Items.DIAMOND_BLOCK, "search", "Searches for specified blocks.");
 
         RainbowColors.register(this::onTickRainbow);
     }
@@ -243,8 +246,7 @@ public class Search extends Module {
                     });
 
                     it.remove();
-                }
-                else chunk.render(event);
+                } else chunk.render(event);
             }
 
             if (tracers.get()) {

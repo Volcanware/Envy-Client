@@ -85,7 +85,7 @@ public class GiveUtils {
             if (preview) Items.LINGERING_POTION.getDefaultStack();
             ItemStack stack = Items.LINGERING_POTION.getDefaultStack();
             NbtList effects = new NbtList();
-            for(int i = 1; i <= 31; i++) {
+            for (int i = 1; i <= 31; i++) {
                 NbtCompound effect = new NbtCompound();
                 effect.putByte("Amplifier", (byte)127);
                 effect.putInt("Duration", Integer.MAX_VALUE);
@@ -123,7 +123,7 @@ public class GiveUtils {
             ItemStack stack = Items.CHEST.getDefaultStack();
             NbtCompound nbtCompound = new NbtCompound();
             NbtList nbtList = new NbtList();
-            for(int i = 0; i < 40000; i++) nbtList.add(new NbtList());
+            for (int i = 0; i < 40000; i++) nbtList.add(new NbtList());
             nbtCompound.put("nothingsuspicioushere", nbtList);
             stack.setNbt(nbtCompound);
             stack.setCustomName(new LiteralText("Copy Me"));
@@ -137,11 +137,11 @@ public class GiveUtils {
             NbtCompound baseCompound = new NbtCompound();
             NbtCompound tagCompound = new NbtCompound();
             NbtList explosionList = new NbtList();
-            for(int i = 0; i < 5000; i++) {
+            for (int i = 0; i < 5000; i++) {
                 NbtCompound explosionCompound = new NbtCompound();
                 explosionCompound.putByte("Type", (byte) random.nextInt(5));
 
-                int colors[] = {
+                int[] colors = {
                     1973019,
                     11743532,
                     3887386,

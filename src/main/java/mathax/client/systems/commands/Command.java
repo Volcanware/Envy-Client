@@ -33,7 +33,6 @@ public abstract class Command {
         mc = MinecraftClient.getInstance();
     }
 
-    // Helper methods to painlessly infer the CommandSource generic type argument
     protected static <T> RequiredArgumentBuilder<CommandSource, T> argument(final String name, final ArgumentType<T> type) {
         return RequiredArgumentBuilder.argument(name, type);
     }
@@ -77,8 +76,7 @@ public abstract class Command {
 
     public String toString(String... args) {
         StringBuilder base = new StringBuilder(toString());
-        for (String arg : args)
-            base.append(' ').append(arg);
+        for (String arg : args) base.append(' ').append(arg);
 
         return base.toString();
     }

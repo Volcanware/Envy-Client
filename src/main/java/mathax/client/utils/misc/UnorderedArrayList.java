@@ -49,6 +49,7 @@ public class UnorderedArrayList<T> extends AbstractList<T> {
         for (int i = 0; i < size; i++) {
             if (Objects.equals(items[i], o)) return i;
         }
+
         return -1;
     }
 
@@ -58,6 +59,7 @@ public class UnorderedArrayList<T> extends AbstractList<T> {
         for (int i = size - 1; i >= 0; i--) {
             if (Objects.equals(elements[i], o)) return i;
         }
+
         return -1;
     }
 
@@ -119,26 +121,19 @@ public class UnorderedArrayList<T> extends AbstractList<T> {
     }
 
     private int newCapacity(int minCapacity) {
-        // overflow-conscious code
         int oldCapacity = items.length;
         int newCapacity = oldCapacity + (oldCapacity >> 1);
         if (newCapacity - minCapacity <= 0) {
-            if (items == DEFAULTCAPACITY_EMPTY_ELEMENTDATA)
-                return Math.max(DEFAULT_CAPACITY, minCapacity);
-            if (minCapacity < 0) // overflow
-                throw new OutOfMemoryError();
+            if (items == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) return Math.max(DEFAULT_CAPACITY, minCapacity);
+            if (minCapacity < 0) throw new OutOfMemoryError();
             return minCapacity;
         }
-        return (newCapacity - MAX_ARRAY_SIZE <= 0)
-            ? newCapacity
-            : hugeCapacity(minCapacity);
+
+        return (newCapacity - MAX_ARRAY_SIZE <= 0) ? newCapacity : hugeCapacity(minCapacity);
     }
 
     private static int hugeCapacity(int minCapacity) {
-        if (minCapacity < 0) // overflow
-            throw new OutOfMemoryError();
-        return (minCapacity > MAX_ARRAY_SIZE)
-            ? Integer.MAX_VALUE
-            : MAX_ARRAY_SIZE;
+        if (minCapacity < 0) throw new OutOfMemoryError();
+        return (minCapacity > MAX_ARRAY_SIZE) ? Integer.MAX_VALUE : MAX_ARRAY_SIZE;
     }
 }

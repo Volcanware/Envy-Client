@@ -211,9 +211,8 @@ public abstract class WidgetScreen extends Screen {
 
         boolean control = MinecraftClient.IS_SYSTEM_MAC ? modifiers == GLFW_MOD_SUPER : modifiers == GLFW_MOD_CONTROL;
 
-        if (control && keyCode == GLFW_KEY_C && toClipboard()) {
-            return true;
-        } else if (control && keyCode == GLFW_KEY_V && fromClipboard()) {
+        if (control && keyCode == GLFW_KEY_C && toClipboard()) return true;
+        else if (control && keyCode == GLFW_KEY_V && fromClipboard()) {
             reload();
             return true;
         }
@@ -320,9 +319,7 @@ public abstract class WidgetScreen extends Screen {
             MatHax.EVENT_BUS.unsubscribe(this);
             GuiKeyEvents.canUseKeys = true;
 
-            if (onClosed != null) {
-                for (Runnable action : onClosed) action.run();
-            }
+            if (onClosed != null) for (Runnable action : onClosed) action.run();
 
             if (onClose) {
                 taskAfterRender = () -> {
@@ -336,9 +333,7 @@ public abstract class WidgetScreen extends Screen {
     private void loopWidgets(WWidget widget, Consumer<WWidget> action) {
         action.accept(widget);
 
-        if (widget instanceof WContainer) {
-            for (Cell<?> cell : ((WContainer) widget).cells) loopWidgets(cell.widget(), action);
-        }
+        if (widget instanceof WContainer) for (Cell<?> cell : ((WContainer) widget).cells) loopWidgets(cell.widget(), action);
     }
 
     protected void onClosed() {}

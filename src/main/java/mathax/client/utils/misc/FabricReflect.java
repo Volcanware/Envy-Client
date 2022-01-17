@@ -6,13 +6,10 @@ import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 
 public class FabricReflect {
-
-    @SuppressWarnings("deprecation")
     public static Field getField(final Class<?> cls, String obfName, String deobfName) {
-        if (cls == null)
-            return null;
+        if (cls == null) return null;
 
-        Field field = null;
+        Field field;
         for (Class<?> cls1 = cls; cls1 != null; cls1 = cls1.getSuperclass()) {
             try {
                 field = cls1.getDeclaredField(obfName);
@@ -24,9 +21,7 @@ public class FabricReflect {
                 }
             }
 
-            if (!field.isAccessible()) {
-                field.setAccessible(true);
-            }
+            if (!field.isAccessible()) field.setAccessible(true);
 
             return field;
         }
@@ -48,13 +43,11 @@ public class FabricReflect {
         throw new RuntimeException("Error reflecting field: " + deobfName + "/" + obfName + " @" + cls.getSimpleName());
     }
 
-    @SuppressWarnings("deprecation")
     public static Object getFieldValue(final Object target, String obfName, String deobfName) {
-        if (target == null)
-            return null;
+        if (target == null) return null;
 
         Class<?> cls = target.getClass();
-        Field field = null;
+        Field field;
         for (Class<?> cls1 = cls; cls1 != null; cls1 = cls1.getSuperclass()) {
             try {
                 field = cls1.getDeclaredField(obfName);
@@ -66,9 +59,7 @@ public class FabricReflect {
                 }
             }
 
-            if (!field.isAccessible()) {
-                field.setAccessible(true);
-            }
+            if (!field.isAccessible()) field.setAccessible(true);
 
             try {
                 return field.get(target);
@@ -98,29 +89,23 @@ public class FabricReflect {
         throw new RuntimeException("Error getting reflected field value: " + deobfName + "/" + obfName + " @" + target.getClass().getSimpleName());
     }
 
-    @SuppressWarnings("deprecation")
     public static void writeField(final Object target, final Object value, String obfName, String deobfName) {
-        if (target == null)
-            return;
+        if (target == null) return;
 
         final Class<?> cls = target.getClass();
         final Field field = getField(cls, obfName, deobfName);
 
-        if (!field.isAccessible()) {
-            field.setAccessible(true);
-        }
+        if (!field.isAccessible()) field.setAccessible(true);
 
         try {
             field.set(target, value);
         } catch (Exception e) {
             throw new RuntimeException("Error writing reflected field: " + deobfName + "/" + obfName + " @" + target.getClass().getSimpleName());
         }
-
     }
 
     public static Object invokeMethod(Object target, String obfName, String deobfName, Object... args) {
-        /* i just gave up here */
-        Object o = null;
+        Object o;
         try {
             o = MethodUtils.invokeMethod(target, true, obfName, args);
         } catch (Exception e) {

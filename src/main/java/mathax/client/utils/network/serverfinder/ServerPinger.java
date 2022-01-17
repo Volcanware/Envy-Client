@@ -7,22 +7,30 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServerPinger implements IServerFinderDoneListener, IServerFinderDisconnectListener {
     private static final AtomicInteger threadNumber = new AtomicInteger(0);
-    private MServerInfo server;
-    private boolean done = false;
-    private boolean failed = false;
-    private Thread thread;
-    private int pingPort;
-    private ServerListPinger pinger;
-    private boolean notifiedDoneListeners = false;
-    private boolean scanPorts;
-    private int searchNumber;
-    private int currentIncrement = 1;
-    private boolean startingIncrement = true;
+
     private ArrayList<IServerFinderDoneListener> doneListeners = new ArrayList<>();
-    private int portPingers = 0;
-    private int successfulPortPingers = 0;
-    private String pingIP;
+
     private final Object portPingerLock = new Object();
+
+    private ServerListPinger pinger;
+
+    private MServerInfo server;
+
+    private Thread thread;
+
+    private String pingIP;
+
+    private boolean notifiedDoneListeners = false;
+    private boolean startingIncrement = true;
+    private boolean failed = false;
+    private boolean done = false;
+    private boolean scanPorts;
+
+    private int successfulPortPingers = 0;
+    private int currentIncrement = 1;
+    private int portPingers = 0;
+    private int searchNumber;
+    private int pingPort;
 
     public ServerPinger(boolean scanPorts, int searchNumber) {
         pinger = new ServerListPinger();
@@ -85,12 +93,14 @@ public class ServerPinger implements IServerFinderDoneListener, IServerFinderDis
 
         for (int i = startingIncrement ? 1 : currentIncrement; i < currentIncrement * 2; i++) {
             if (isOldSearch()) return;
+
             ServerPinger pp1 = new ServerPinger(false, searchNumber);
             ServerPinger pp2 = new ServerPinger(false, searchNumber);
             for (IServerFinderDoneListener doneListener : doneListeners) {
                 pp1.addServerFinderDoneListener(doneListener);
                 pp2.addServerFinderDoneListener(doneListener);
             }
+
             pp1.addServerFinderDoneListener(this);
             pp2.addServerFinderDoneListener(this);
             if (ServerFinderScreen.instance != null && !isOldSearch()) ServerFinderScreen.instance.incrementTargetChecked(2);

@@ -9,6 +9,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import mathax.client.MatHax;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.NetworkState;
@@ -35,10 +36,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class ServerListPinger {
-    private static final Splitter ZERO_SPLITTER = Splitter.on('\u0000').limit(6);
-    private static final Logger LOGGER = LogManager.getLogger();
     private final List<ClientConnection> clientConnections = Collections.synchronizedList(Lists.newArrayList());
+
     private final ArrayList<IServerFinderDisconnectListener> disconnectListeners = new ArrayList<>();
+
+    private static final Splitter ZERO_SPLITTER = Splitter.on('\u0000').limit(6);
+
     private boolean notifiedDisconnectListeners = false;
     private boolean failedToConnect = true;
 
@@ -52,12 +55,8 @@ public class ServerListPinger {
                 notifiedDisconnectListeners = true;
                 for (IServerFinderDisconnectListener l : disconnectListeners) {
                     if (l != null) {
-                        if (failedToConnect) {
-                            l.onServerFailed();
-                        }
-                        else {
-                            l.onServerDisconnect();
-                        }
+                        if (failedToConnect) l.onServerFailed();
+                        else l.onServerDisconnect();
                     }
                 }
             }
@@ -85,16 +84,12 @@ public class ServerListPinger {
             private long startTime;
 
             public void onResponse(QueryResponseS2CPacket packet) {
-                if (this.received) {
-                    clientConnection.disconnect(new TranslatableText("multiplayer.status.unrequested"));
-                } else {
+                if (this.received) clientConnection.disconnect(new TranslatableText("multiplayer.status.unrequested"));
+                else {
                     this.received = true;
                     ServerMetadata serverMetadata = packet.getServerMetadata();
-                    if (serverMetadata.getDescription() != null) {
-                        entry.label = serverMetadata.getDescription().asString();
-                    } else {
-                        entry.label = "";
-                    }
+                    if (serverMetadata.getDescription() != null) entry.label = serverMetadata.getDescription().asString();
+                    else entry.label = "";
 
                     if (serverMetadata.getVersion() != null) {
                         entry.version = serverMetadata.getVersion().getGameVersion();
@@ -116,24 +111,17 @@ public class ServerListPinger {
                                 list.add(new LiteralText(gameProfile.getName()));
                             }
 
-                            if (serverMetadata.getPlayers().getSample().length < serverMetadata.getPlayers().getOnlinePlayerCount()) {
-                                list.add(new TranslatableText("multiplayer.status.and_more", serverMetadata.getPlayers().getOnlinePlayerCount() - serverMetadata.getPlayers().getSample().length));
-                            }
+                            if (serverMetadata.getPlayers().getSample().length < serverMetadata.getPlayers().getOnlinePlayerCount()) list.add(new TranslatableText("multiplayer.status.and_more", serverMetadata.getPlayers().getOnlinePlayerCount() - serverMetadata.getPlayers().getSample().length));
 
                             entry.playerListSummary = list;
                         }
-                    } else {
-                        entry.playerCountLabel = "multiplayer.status.unknown";
-                    }
+                    } else entry.playerCountLabel = "multiplayer.status.unknown";
 
                     String string = null;
                     if (serverMetadata.getFavicon() != null) {
                         String string2 = serverMetadata.getFavicon();
-                        if (string2.startsWith("data:image/png;base64,")) {
-                            string = string2.substring("data:image/png;base64,".length());
-                        } else {
-                            ServerListPinger.LOGGER.error("Invalid server icon (unknown format)");
-                        }
+                        if (string2.startsWith("data:image/png;base64,")) string = string2.substring("data:image/png;base64,".length());
+                        else MatHax.LOG.error(MatHax.logPrefix + "Invalid server icon (unknown format)");
                     }
 
                     if (!Objects.equals(string, entry.getIcon())) {
@@ -157,13 +145,14 @@ public class ServerListPinger {
 
             public void onDisconnected(Text reason) {
                 if (!this.sentQuery) {
-                    ServerListPinger.LOGGER.error("Can't ping {}: {}", entry.address, reason.getString());
+                    MatHax.LOG.error(MatHax.logPrefix + "Can't ping {}: {}", entry.address, reason.getString());
                     entry.label = "multiplayer.status.cannot_connect";
                     entry.playerCountLabel = "";
                     entry.playerCount = 0;
                     entry.playercountMax = 0;
                     ServerListPinger.this.ping(entry);
                 }
+
                 notifyDisconnectListeners();
             }
 
@@ -176,7 +165,7 @@ public class ServerListPinger {
             clientConnection.send(new HandshakeC2SPacket(serverAddress.getAddress(), serverAddress.getPort(), NetworkState.STATUS));
             clientConnection.send(new QueryRequestC2SPacket());
         } catch (Throwable throwable) {
-            LOGGER.error("[MatHax] Couldn't send handshake", throwable);
+            MatHax.LOG.error(MatHax.logPrefix + "[MatHax] Couldn't send handshake", throwable);
         }
     }
 
@@ -266,9 +255,8 @@ public class ServerListPinger {
 
             while(iterator.hasNext()) {
                 ClientConnection clientConnection = iterator.next();
-                if (clientConnection.isOpen()) {
-                    clientConnection.tick();
-                } else {
+                if (clientConnection.isOpen()) clientConnection.tick();
+                else {
                     iterator.remove();
                     clientConnection.handleDisconnection();
                 }

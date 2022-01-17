@@ -32,7 +32,7 @@ import static mathax.client.MatHax.mc;
 public class BlockUtils {
     private static final Vec3d hitPos = new Vec3d(0, 0, 0);
 
-    private static final BlockPos.Mutable exposedPos = new BlockPos.Mutable();
+    private static final ThreadLocal<BlockPos.Mutable> EXPOSED_POS = ThreadLocal.withInitial(BlockPos.Mutable::new);
 
     private static boolean breakingThisTick;
     public static boolean breaking;
@@ -385,15 +385,11 @@ public class BlockUtils {
 
     public static boolean isExposed(BlockPos blockPos) {
         for (Direction direction : Direction.values()) {
-            exposedPos.set(blockPos, direction.getVector());
-            BlockState state = mc.world.getBlockState(exposedPos);
-            if (!state.isOpaque()) return true;
+            if (!mc.world.getBlockState(EXPOSED_POS.get().set(blockPos, direction)).isOpaque()) return true;
         }
 
         return false;
     }
-
-    // Util
 
     public static double distanceBetween(BlockPos pos1, BlockPos pos2) {
         double d = pos1.getX() - pos2.getX();

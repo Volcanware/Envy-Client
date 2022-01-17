@@ -29,13 +29,11 @@ public class BoundingBox implements ISerializable<BoundingBox> {
         double xPos = getX();
         double yPos = getY();
 
-        // X
         switch (x) {
             case Left -> {
                 double c = Utils.getWindowWidth() / 3.0;
 
                 if (xPos >= c - width / 2.0) {
-                    // Module is closer to center than left
                     x = AlignmentX.Center;
                     xOffset = (-c / 2.0 + xPos - c + width / 2.0);
                 }
@@ -45,11 +43,9 @@ public class BoundingBox implements ISerializable<BoundingBox> {
                 double cRight = Utils.getWindowWidth() / 3.0 * 2;
 
                 if (xPos > cRight - width / 2.0) {
-                    // Module is closer to right than center
                     x = AlignmentX.Right;
                     xOffset = (-(c - width) + (c - (Utils.getWindowWidth() - xPos)));
                 } else if (xPos < c - width / 2.0) {
-                    // Module is closer to left than center
                     x = AlignmentX.Left;
                     xOffset = (xPos);
                 }
@@ -59,7 +55,6 @@ public class BoundingBox implements ISerializable<BoundingBox> {
                 double cLeft = Utils.getWindowWidth() / 3.0 * 2;
 
                 if (xPos <= cLeft - width / 2.0) {
-                    // Module is closer to center than right
                     x = AlignmentX.Center;
                     xOffset = (-c / 2.0 + xPos - c + width / 2.0);
                 }
@@ -69,13 +64,11 @@ public class BoundingBox implements ISerializable<BoundingBox> {
         if (x == AlignmentX.Left && xOffset < 0) xOffset = 0;
         else if (x == AlignmentX.Right && xOffset > 0) xOffset = 0;
 
-        // Y
         switch (y) {
             case Top -> {
                 double c = Utils.getWindowHeight() / 3.0;
 
                 if (yPos >= c - height / 2.0) {
-                    // Module is closer to center than top
                     y = AlignmentY.Center;
                     yOffset = (-c / 2.0 + yPos - c + height / 2.0);
                 }
@@ -85,11 +78,9 @@ public class BoundingBox implements ISerializable<BoundingBox> {
                 double cBottom = Utils.getWindowHeight() / 3.0 * 2;
 
                 if (yPos > cBottom - height / 2.0) {
-                    // Module is closer to bottom than center
                     y = AlignmentY.Bottom;
                     yOffset = (-(c - height) + (c - (Utils.getWindowHeight() - yPos)));
                 } else if (yPos < c - height / 2.0) {
-                    // Module is closer to top than center
                     y = AlignmentY.Top;
                     yOffset = (yPos);
                 }
@@ -99,7 +90,6 @@ public class BoundingBox implements ISerializable<BoundingBox> {
                 double cLeft = Utils.getWindowHeight() / 3.0 * 2;
 
                 if (yPos <= cLeft - height / 2.0) {
-                    // Module is closer to center than bottom
                     y = AlignmentY.Center;
                     yOffset = (-c / 2.0 + yPos - c + height / 2.0);
                 }
@@ -163,7 +153,6 @@ public class BoundingBox implements ISerializable<BoundingBox> {
         x = AlignmentX.valueOf(tag.getString("x"));
         y = AlignmentY.valueOf(tag.getString("y"));
 
-        // It's done this way because before 0.4.2 they were stored as ints
         xOffset = ((AbstractNbtNumber) tag.get("xOffset")).doubleValue();
         yOffset = ((AbstractNbtNumber) tag.get("yOffset")).doubleValue();
 

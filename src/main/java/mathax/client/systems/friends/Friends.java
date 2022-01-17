@@ -92,7 +92,8 @@ public class Friends extends System<Friends> implements Iterable<Friend> {
     }
 
     @Override
-    public @NotNull Iterator<Friend> iterator() {
+    @NotNull
+    public Iterator<Friend> iterator() {
         return friends.iterator();
     }
 

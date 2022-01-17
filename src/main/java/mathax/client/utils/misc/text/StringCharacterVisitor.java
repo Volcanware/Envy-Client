@@ -4,7 +4,6 @@ import net.minecraft.text.CharacterVisitor;
 import net.minecraft.text.Style;
 
 public class StringCharacterVisitor implements CharacterVisitor {
-
     public StringBuilder result = new StringBuilder();
 
     @Override

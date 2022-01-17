@@ -43,6 +43,7 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
     public final Map<String, AbstractTexture> icons = new HashMap<>();
 
     public List<Waypoint> waypoints = new ArrayList<>();
+
     private final Vec3 pos = new Vec3();
 
     public Waypoints() {
@@ -143,11 +144,9 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
             double y = getCoords(waypoint).y;
             double z = getCoords(waypoint).z;
 
-            // Compute scale
             double dist = PlayerUtils.distanceToCamera(x, y, z);
             if (dist > waypoint.maxVisibleDistance) continue;
-            double scale = /*0.01 * */waypoint.scale;
-            //if (dist > 8) scale *= dist / 8;
+            double scale = waypoint.scale;
 
             double a = 1;
             if (dist < 10) {
@@ -180,7 +179,6 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
 
             scale = Utils.clamp(scale, waypoint.minScale, Integer.MAX_VALUE);
 
-            // Setup the rotation
             pos.set(x, y, z);
             if (!NametagUtils.to2D(pos, scale)) continue;
 
@@ -193,7 +191,6 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
 
             String distText = Math.round(dist) + " blocks";
 
-            // Render background
             text.beginBig();
             double w = text.getWidth(waypoint.name) / 2.0;
             double w2 = text.getWidth(distText) / 2.0;
@@ -205,7 +202,6 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
 
             waypoint.renderIcon(-16, h + 1, a, 32);
 
-            // Render name text
             text.render(waypoint.name, -w, -h + 1, TEXT);
             text.render(distText, -w2, 0, TEXT);
 

@@ -68,9 +68,7 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
 
     public Enemy get(String name) {
         for (Enemy Enemy : enemies) {
-            if (Enemy.name.equals(name)) {
-                return Enemy;
-            }
+            if (Enemy.name.equals(name)) return Enemy;
         }
 
         return null;
@@ -89,7 +87,8 @@ public class Enemies extends System<Enemies> implements Iterable<Enemy> {
     }
 
     @Override
-    public @NotNull Iterator<Enemy> iterator() {
+    @NotNull
+    public Iterator<Enemy> iterator() {
         return enemies.iterator();
     }
 

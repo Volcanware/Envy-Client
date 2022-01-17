@@ -36,12 +36,10 @@ public class ProxiesScreen extends WindowScreen {
 
     @Override
     protected void init() {
-        super.init();
+        if (!doReload) return;
 
-        if (doReload) {
-            reload();
-            doReload = false;
-        }
+        reload();
+        doReload = false;
     }
 
     @Override

@@ -25,6 +25,7 @@ public class CrashReportMixin {
             for (Category category : Modules.loopCategories()) {
                 List<Module> modules = Modules.get().getGroup(category);
                 boolean active = false;
+
                 for (Module module : modules) {
                     if (module != null && module.isActive()) {
                         active = true;
@@ -37,7 +38,7 @@ public class CrashReportMixin {
                     sb.append("[").append(category).append("]:").append("\n");
 
                     for (Module module : modules) {
-                        if (module != null && module.isActive()) sb.append(module.title).append(" (").append(module.name).append(")\n");
+                        sb.append(module.name).append("\n");
                     }
                 }
             }

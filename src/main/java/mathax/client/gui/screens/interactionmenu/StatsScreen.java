@@ -30,7 +30,6 @@ public class StatsScreen extends WindowScreen {
     @Override
     protected void onClosed() {
         MatHax.EVENT_BUS.unsubscribe(this);
-        super.onClosed();
     }
 
     private void updateData() {

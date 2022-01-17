@@ -21,11 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Profile implements ISerializable<Profile> {
+    public List<String> loadOnJoinIps = new ArrayList<>();
 
     public String name = "";
-    public boolean onLaunch = false;
-    public List<String> loadOnJoinIps = new ArrayList<>();
+
     public boolean accounts = false, config = true, friends = false, enemies = false, macros = true, modules = true, waypoints = false;
+
+    public boolean onLaunch = false;
 
     public void load(System<?> system) {
         File folder = new File(Profiles.FOLDER, name);
@@ -78,7 +80,6 @@ public class Profile implements ISerializable<Profile> {
         NbtCompound tag = new NbtCompound();
 
         tag.putString("name", name);
-        tag.putBoolean("onLaunch", onLaunch);
 
         tag.putBoolean("accounts", accounts);
         tag.putBoolean("config", config);
@@ -86,6 +87,8 @@ public class Profile implements ISerializable<Profile> {
         tag.putBoolean("macros", macros);
         tag.putBoolean("modules", modules);
         tag.putBoolean("waypoints", waypoints);
+
+        tag.putBoolean("onLaunch", onLaunch);
 
         loadOnJoinIps.removeIf(String::isEmpty);
 
@@ -99,7 +102,6 @@ public class Profile implements ISerializable<Profile> {
     @Override
     public Profile fromTag(NbtCompound tag) {
         name = tag.getString("name");
-        onLaunch = tag.contains("onLaunch") && tag.getBoolean("onLaunch");
 
         accounts = tag.contains("accounts") && tag.getBoolean("accounts");
         config = tag.contains("config") && tag.getBoolean("config");
@@ -107,6 +109,8 @@ public class Profile implements ISerializable<Profile> {
         macros = tag.contains("macros") && tag.getBoolean("macros");
         modules = tag.contains("modules") && tag.getBoolean("modules");
         waypoints = tag.contains("waypoints") && tag.getBoolean("waypoints");
+
+        onLaunch = tag.contains("onLaunch") && tag.getBoolean("onLaunch");
 
         loadOnJoinIps.clear();
 

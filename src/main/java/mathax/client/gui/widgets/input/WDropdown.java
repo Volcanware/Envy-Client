@@ -113,8 +113,6 @@ public abstract class WDropdown<T> extends WPressable {
         return render;
     }
 
-    // Events
-
     @Override
     public boolean onMouseClicked(double mouseX, double mouseY, int button, boolean used) {
         if (!mouseOver && !root.mouseOver) expanded = false;
@@ -168,8 +166,6 @@ public abstract class WDropdown<T> extends WPressable {
 
         return expanded && root.charTyped(c);
     }
-
-    // Widgets
 
     protected abstract static class WDropdownRoot extends WVerticalList implements WRoot {
         @Override

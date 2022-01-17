@@ -19,8 +19,6 @@ public class MicrosoftAccount extends Account<MicrosoftAccount> {
 
     @Override
     public boolean login() {
-        super.login();
-
         String token = auth();
         if (token == null) return false;
 

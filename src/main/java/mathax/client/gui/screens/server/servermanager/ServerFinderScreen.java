@@ -255,7 +255,6 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
     @Override
     public void onClose() {
         state = ServerFinderState.Cancelled;
-        super.onClose();
     }
 
     public enum ServerFinderState {

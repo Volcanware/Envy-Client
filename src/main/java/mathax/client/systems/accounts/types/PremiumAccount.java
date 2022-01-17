@@ -41,8 +41,6 @@ public class PremiumAccount extends Account<PremiumAccount> {
 
     @Override
     public boolean login() {
-        super.login();
-
         YggdrasilUserAuthentication auth = getAuth();
 
         try {
@@ -55,9 +53,9 @@ public class PremiumAccount extends Account<PremiumAccount> {
             MatHax.LOG.error(MatHax.logPrefix + "Failed to contact the authentication server.");
             return false;
         } catch (AuthenticationException e) {
-            if (e.getMessage().contains("Invalid username or password") || e.getMessage().contains("account migrated"))
-                MatHax.LOG.error(MatHax.logPrefix + "Wrong password.");
+            if (e.getMessage().contains("Invalid username or password") || e.getMessage().contains("account migrated")) MatHax.LOG.error(MatHax.logPrefix + "Wrong password.");
             else MatHax.LOG.error(MatHax.logPrefix + "Failed to contact the authentication server.");
+
             return false;
         }
     }

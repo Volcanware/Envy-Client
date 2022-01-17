@@ -22,10 +22,10 @@ import static mathax.client.MatHax.mc;
 public class AccountCache implements ISerializable<AccountCache> {
     private static Texture STEVE_HEAD;
 
+    private Texture headTexture;
+
     public String username = "";
     public String uuid = "";
-
-    private Texture headTexture;
 
     public Texture getHeadTexture() {
         return headTexture != null ? headTexture : STEVE_HEAD;
@@ -63,12 +63,12 @@ public class AccountCache implements ISerializable<AccountCache> {
                             head[i] = (byte) pixel[j];
                             i++;
                         }
-                    }
-                    else i += 3;
+                    } else i += 3;
                 }
             }
 
             headTexture = new Texture(8, 8, head, Texture.Format.RGB, Texture.Filter.Nearest, Texture.Filter.Nearest);
+
             return true;
         } catch (IOException e) {
             MatHax.LOG.error(MatHax.logPrefix + "Failed to read skin url (" + url + ").");

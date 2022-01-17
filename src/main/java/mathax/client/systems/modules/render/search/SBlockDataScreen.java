@@ -1,5 +1,6 @@
 package mathax.client.systems.modules.render.search;
 
+import mathax.client.MatHax;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.WindowScreen;
 import mathax.client.renderer.ShapeMode;
@@ -41,7 +42,7 @@ public class SBlockDataScreen extends WindowScreen {
         sgGeneral.add(new ColorSetting.Builder()
             .name("line-color")
             .description("Color of lines.")
-            .defaultValue(new SettingColor(0, 255, 200))
+            .defaultValue(new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b))
             .onModuleActivated(settingColorSetting -> settingColorSetting.set(blockData.lineColor))
             .onChanged(settingColor -> {
                 blockData.lineColor.set(settingColor);
@@ -53,7 +54,7 @@ public class SBlockDataScreen extends WindowScreen {
         sgGeneral.add(new ColorSetting.Builder()
             .name("side-color")
             .description("Color of sides.")
-            .defaultValue(new SettingColor(0, 255, 200, 25))
+            .defaultValue(new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b, 75))
             .onModuleActivated(settingColorSetting -> settingColorSetting.set(blockData.sideColor))
             .onChanged(settingColor -> {
                 blockData.sideColor.set(settingColor);
@@ -77,7 +78,7 @@ public class SBlockDataScreen extends WindowScreen {
         sgTracer.add(new ColorSetting.Builder()
             .name("tracer-color")
             .description("Color of tracer line.")
-            .defaultValue(new SettingColor(0, 255, 200, 125))
+            .defaultValue(new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b))
             .onModuleActivated(settingColorSetting -> settingColorSetting.set(blockData.tracerColor))
             .onChanged(settingColor -> {
                 blockData.tracerColor = settingColor;

@@ -16,7 +16,7 @@ public class Color implements ICopyable<Color>, ISerializable<Color> {
         this.r = r;
         this.g = g;
         this.b = b;
-        a = 255;
+        this.a = 255;
 
         validate();
     }
@@ -40,10 +40,10 @@ public class Color implements ICopyable<Color>, ISerializable<Color> {
     }
 
     public Color(int packed) {
-        r = toRGBAR(packed);
-        g = toRGBAG(packed);
-        b = toRGBAB(packed);
-        a = toRGBAA(packed);
+        this.r = toRGBAR(packed);
+        this.g = toRGBAG(packed);
+        this.b = toRGBAB(packed);
+        this.a = toRGBAA(packed);
     }
 
     public Color(Color color) {
@@ -132,6 +132,7 @@ public class Color implements ICopyable<Color>, ISerializable<Color> {
                 b = q;
             }
         }
+
         return new Color((int) (r * 255), (int) (g * 255), (int) (b * 255), 255);
     }
 
@@ -229,6 +230,7 @@ public class Color implements ICopyable<Color>, ISerializable<Color> {
         a = tag.getInt("a");
 
         validate();
+
         return this;
     }
 

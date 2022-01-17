@@ -179,7 +179,6 @@ public class ColorSettingScreen extends WindowScreen {
 
     @Override
     public void tick() {
-        super.tick();
         if (setting.get().rainbow) setFromSetting();
     }
 
@@ -330,8 +329,6 @@ public class ColorSettingScreen extends WindowScreen {
 
                 calculateHandlePosOnLayout = false;
             }
-
-            super.onCalculateWidgetPositions();
         }
 
         @Override
@@ -474,8 +471,6 @@ public class ColorSettingScreen extends WindowScreen {
 
                 calculateHandleXOnLayout = false;
             }
-
-            super.onCalculateWidgetPositions();
         }
 
         void calculateColor() {

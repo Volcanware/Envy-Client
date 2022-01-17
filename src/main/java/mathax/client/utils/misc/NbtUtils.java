@@ -28,6 +28,7 @@ public class NbtUtils {
             T value = toItem.toValue(itemTag);
             if (value != null) list.add(value);
         }
+
         return list;
     }
 

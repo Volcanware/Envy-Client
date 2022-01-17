@@ -4,20 +4,23 @@ import java.io.File;
 import java.util.HashMap;
 
 public class Song {
+    private final HashMap<Integer, Layer> layerHashMap;
 
-    private HashMap<Integer, Layer> layerHashMap = new HashMap<Integer, Layer>();
     private final short songHeight;
     private final short length;
-    private final String title;
+
     private final File path;
+
+    private final String title;
     private final String author;
     private final String description;
+
     private final float speed;
     private final float delay;
 
     public Song(Song other) {
         this.speed = other.getSpeed();
-        delay = 20 / speed;
+        this.delay = 20 / speed;
         this.layerHashMap = other.getLayerHashMap();
         this.songHeight = other.getSongHeight();
         this.length = other.getLength();
@@ -27,11 +30,9 @@ public class Song {
         this.path = other.getPath();
     }
 
-    public Song(float speed, HashMap<Integer, Layer> layerHashMap,
-                short songHeight, final short length, String title, String author,
-                String description, File path) {
+    public Song(float speed, HashMap<Integer, Layer> layerHashMap, short songHeight, final short length, String title, String author, String description, File path) {
         this.speed = speed;
-        delay = 20 / speed;
+        this.delay = 20 / speed;
         this.layerHashMap = layerHashMap;
         this.songHeight = songHeight;
         this.length = length;

@@ -91,9 +91,7 @@ public abstract class WView extends WVerticalList {
             double x = handleX();
             double y = handleY();
 
-            if (mouseX >= x && mouseX <= x + handleWidth() && mouseY >= y && mouseY <= y + handleHeight()) {
-                handleMouseOver = true;
-            }
+            if (mouseX >= x && mouseX <= x + handleWidth() && mouseY >= y && mouseY <= y + handleHeight()) handleMouseOver = true;
         }
 
         if (handlePressed) {

@@ -1,6 +1,5 @@
 package mathax.client.systems.modules.render.search;
 
-import mathax.client.MatHax;
 import mathax.client.events.render.Render3DEvent;
 import mathax.client.renderer.ShapeMode;
 import mathax.client.systems.modules.Modules;
@@ -9,6 +8,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
+
+import static mathax.client.MatHax.mc;
 
 public class SBlock {
     private static final BlockPos.Mutable blockPos = new BlockPos.Mutable();
@@ -61,7 +62,6 @@ public class SBlock {
             case BO -> search.getBlock(x, y - 1, z);
             default -> null;
         };
-
     }
 
     private void assignGroup() {
@@ -83,7 +83,7 @@ public class SBlock {
     }
 
     public void update() {
-        state = MatHax.mc.world.getBlockState(blockPos.set(x, y, z));
+        state = mc.world.getBlockState(blockPos.set(x, y, z));
         neighbours = 0;
 
         if (isNeighbour(Direction.SOUTH)) neighbours |= FO;
@@ -111,12 +111,12 @@ public class SBlock {
 
     private boolean isNeighbour(Direction dir) {
         blockPos.set(x + dir.getOffsetX(), y + dir.getOffsetY(), z + dir.getOffsetZ());
-        BlockState neighbourState = MatHax.mc.world.getBlockState(blockPos);
+        BlockState neighbourState = mc.world.getBlockState(blockPos);
 
         if (neighbourState.getBlock() != state.getBlock()) return false;
 
-        VoxelShape shape = state.getOutlineShape(MatHax.mc.world, blockPos);
-        VoxelShape neighbourShape = neighbourState.getOutlineShape(MatHax.mc.world, blockPos);
+        VoxelShape shape = state.getOutlineShape(mc.world, blockPos);
+        VoxelShape neighbourShape = neighbourState.getOutlineShape(mc.world, blockPos);
 
         switch (dir) {
             case SOUTH:
@@ -149,7 +149,7 @@ public class SBlock {
 
     private boolean isNeighbourDiagonal(double x, double y, double z) {
         blockPos.set(this.x + x, this.y + y, this.z + z);
-        return state.getBlock() == MatHax.mc.world.getBlockState(blockPos).getBlock();
+        return state.getBlock() == mc.world.getBlockState(blockPos).getBlock();
     }
 
     public void render(Render3DEvent event) {
@@ -160,7 +160,7 @@ public class SBlock {
         double y2 = y + 1;
         double z2 = z + 1;
 
-        VoxelShape shape = state.getOutlineShape(MatHax.mc.world, blockPos);
+        VoxelShape shape = state.getOutlineShape(mc.world, blockPos);
 
         if (!shape.isEmpty()) {
             x1 = x + shape.getMin(Direction.Axis.X);
@@ -183,37 +183,28 @@ public class SBlock {
             if (shapeMode.lines()) {
                 // Vertical, BA_LE
                 if (((neighbours & LE) != LE && (neighbours & BA) != BA) || ((neighbours & LE) == LE && (neighbours & BA) == BA && (neighbours & BA_LE) != BA_LE)) event.renderer.line(x1, y1, z1, x1, y2, z1, lineColor);
-
                 // Vertical, FO_LE
                 if (((neighbours & LE) != LE && (neighbours & FO) != FO) || ((neighbours & LE) == LE && (neighbours & FO) == FO && (neighbours & FO_LE) != FO_LE)) event.renderer.line(x1, y1, z2, x1, y2, z2, lineColor);
-
                 // Vertical, BA_RI
                 if (((neighbours & RI) != RI && (neighbours & BA) != BA) || ((neighbours & RI) == RI && (neighbours & BA) == BA && (neighbours & BA_RI) != BA_RI)) event.renderer.line(x2, y1, z1, x2, y2, z1, lineColor);
-
                 // Vertical, FO_RI
                 if (((neighbours & RI) != RI && (neighbours & FO) != FO) || ((neighbours & RI) == RI && (neighbours & FO) == FO && (neighbours & FO_RI) != FO_RI)) event.renderer.line(x2, y1, z2, x2, y2, z2, lineColor);
 
                 // Horizontal bottom, BA_LE - BA_RI
                 if (((neighbours & BA) != BA && (neighbours & BO) != BO) || ((neighbours & BA) != BA && (neighbours & BO_BA) == BO_BA)) event.renderer.line(x1, y1, z1, x2, y1, z1, lineColor);
-
                 // Horizontal bottom, FO_LE - FO_RI
                 if (((neighbours & FO) != FO && (neighbours & BO) != BO) || ((neighbours & FO) != FO && (neighbours & BO_FO) == BO_FO)) event.renderer.line(x1, y1, z2, x2, y1, z2, lineColor);
-
                 // Horizontal top, BA_LE - BA_RI
                 if (((neighbours & BA) != BA && (neighbours & TO) != TO) || ((neighbours & BA) != BA && (neighbours & TO_BA) == TO_BA)) event.renderer.line(x1, y2, z1, x2, y2, z1, lineColor);
-
                 // Horizontal top, FO_LE - FO_RI
                 if (((neighbours & FO) != FO && (neighbours & TO) != TO) || ((neighbours & FO) != FO && (neighbours & TO_FO) == TO_FO)) event.renderer.line(x1, y2, z2, x2, y2, z2, lineColor);
 
                 // Horizontal bottom, BA_LE - FO_LE
                 if (((neighbours & LE) != LE && (neighbours & BO) != BO) || ((neighbours & LE) != LE && (neighbours & BO_LE) == BO_LE)) event.renderer.line(x1, y1, z1, x1, y1, z2, lineColor);
-
                 // Horizontal bottom, BA_RI - FO_RI
                 if (((neighbours & RI) != RI && (neighbours & BO) != BO) || ((neighbours & RI) != RI && (neighbours & BO_RI) == BO_RI)) event.renderer.line(x2, y1, z1, x2, y1, z2, lineColor);
-
                 // Horizontal top, BA_LE - FO_LE
                 if (((neighbours & LE) != LE && (neighbours & TO) != TO) || ((neighbours & LE) != LE && (neighbours & TO_LE) == TO_LE)) event.renderer.line(x1, y2, z1, x1, y2, z2, lineColor);
-
                 // Horizontal top, BA_RI - FO_RI
                 if (((neighbours & RI) != RI && (neighbours & TO) != TO) || ((neighbours & RI) != RI && (neighbours & TO_RI) == TO_RI)) event.renderer.line(x2, y2, z1, x2, y2, z2, lineColor);
             }
@@ -222,26 +213,19 @@ public class SBlock {
             if (shapeMode.sides()) {
                 // Bottom
                 if ((neighbours & BO) != BO) event.renderer.quadHorizontal(x1, y1, z1, x2, z2, sideColor);
-
                 // Top
                 if ((neighbours & TO) != TO) event.renderer.quadHorizontal(x1, y2, z1, x2, z2, sideColor);
-
                 // Front
                 if ((neighbours & FO) != FO) event.renderer.quadVertical(x1, y1, z2, x2, y2, z2, sideColor);
-
                 // Back
                 if ((neighbours & BA) != BA) event.renderer.quadVertical(x1, y1, z1, x2, y2, z1, sideColor);
-
                 // Right
                 if ((neighbours & RI) != RI) event.renderer.quadVertical(x2, y1, z1, x2, y2, z2, sideColor);
-
                 // Left
                 if ((neighbours & LE) != LE) event.renderer.quadVertical(x1, y1, z1, x1, y2, z2, sideColor);
-
             }
         }
     }
-
 
     public static long getKey(int x, int y, int z) {
         return ((long) y << 16) | ((long) (z & 15) << 8) | ((long) (x & 15));

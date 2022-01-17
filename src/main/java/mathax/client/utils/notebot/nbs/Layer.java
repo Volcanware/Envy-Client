@@ -3,9 +3,10 @@ package mathax.client.utils.notebot.nbs;
 import java.util.HashMap;
 
 public class Layer {
-
     private HashMap<Integer, Note> hashMap = new HashMap<Integer, Note>();
+
     private byte volume = 100;
+
     private String name = "";
 
     public HashMap<Integer, Note> getHashMap() {

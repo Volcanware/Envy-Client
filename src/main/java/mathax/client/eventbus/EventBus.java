@@ -11,9 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 
-/**
- * Default implementation of {@link IEventBus}.
- */
 public class EventBus implements IEventBus {
     private static class LambdaFactoryInfo {
         public final String packagePrefix;

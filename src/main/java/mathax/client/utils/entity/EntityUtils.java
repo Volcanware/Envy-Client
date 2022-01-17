@@ -70,9 +70,7 @@ public class EntityUtils {
             if (state.getMaterial().blocksMovement()) break;
 
             Fluid fluid = state.getFluidState().getFluid();
-            if (fluid == Fluids.WATER || fluid == Fluids.FLOWING_WATER) {
-                return true;
-            }
+            if (fluid == Fluids.WATER || fluid == Fluids.FLOWING_WATER) return true;
 
             blockPos.move(0, -1, 0);
         }
@@ -113,9 +111,7 @@ public class EntityUtils {
 
             BlockPos pos = player.getBlockPos().offset(direction);
 
-            if (mc.world.getBlockState(pos).getBlock() == Blocks.OBSIDIAN) {
-                positions.add(pos);
-            }
+            if (mc.world.getBlockState(pos).getBlock() == Blocks.OBSIDIAN) positions.add(pos);
         }
 
         return positions;

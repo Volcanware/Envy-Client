@@ -75,8 +75,6 @@ public class ConfigTab extends Tab {
 
         @Override
         public void tick() {
-            super.tick();
-
             settings.tick(window, theme);
         }
 

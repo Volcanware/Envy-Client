@@ -33,9 +33,8 @@ public class FakePlayerEntity extends OtherClientPlayerEntity {
         capeY = getY();
         capeZ = getZ();
 
-        if (health <= 20) {
-            setHealth(health);
-        } else {
+        if (health <= 20) setHealth(health);
+        else {
             setHealth(health);
             setAbsorptionAmount(health - 20);
         }
@@ -56,9 +55,7 @@ public class FakePlayerEntity extends OtherClientPlayerEntity {
     @Nullable
     @Override
     protected PlayerListEntry getPlayerListEntry() {
-        if (cachedScoreboardEntry == null) {
-            cachedScoreboardEntry = mc.getNetworkHandler().getPlayerListEntry(mc.player.getUuid());
-        }
+        if (cachedScoreboardEntry == null) cachedScoreboardEntry = mc.getNetworkHandler().getPlayerListEntry(mc.player.getUuid());
 
         return cachedScoreboardEntry;
     }

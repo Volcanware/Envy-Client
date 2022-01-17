@@ -16,8 +16,14 @@ import java.util.ArrayList;
 import static mathax.client.MatHax.mc;
 
 public class CityUtils {
-    private static final BlockPos[] surround;
-    static final boolean assertionsDisabled;
+    private static final BlockPos[] surround = new BlockPos[]{
+        new BlockPos(0, 0, -1),
+        new BlockPos(1, 0, 0),
+        new BlockPos(0, 0, 1),
+        new BlockPos(-1, 0, 0)
+    };
+
+    static final boolean assertionsDisabled = !CityUtils.class.desiredAssertionStatus();
 
     private static ArrayList<BlockPos> getTargetSurround(PlayerEntity playerEntity) {
         ArrayList<BlockPos> arrayList = new ArrayList<BlockPos>();
@@ -27,7 +33,7 @@ public class CityUtils {
             if (playerEntity == null || (blockPos = CityUtils.getSurround(playerEntity, surround[i])) == null) continue;
             if (!assertionsDisabled && mc.world == null) throw new AssertionError();
             if (mc.world.getBlockState(blockPos) == null) continue;
-            if (!((AbstractBlockAccessor)mc.world.getBlockState(blockPos).getBlock()).isCollidable()) bl = true;
+            if (!((AbstractBlockAccessor) mc.world.getBlockState(blockPos).getBlock()).isCollidable()) bl = true;
             if (mc.world.getBlockState(blockPos).getBlock() != Blocks.OBSIDIAN) continue;
             arrayList.add(blockPos);
             if (null == null) continue;
@@ -90,10 +96,5 @@ public class CityUtils {
         }
 
         return object;
-    }
-
-    static {
-        assertionsDisabled = !CityUtils.class.desiredAssertionStatus();
-        surround = new BlockPos[]{new BlockPos(0, 0, -1), new BlockPos(1, 0, 0), new BlockPos(0, 0, 1), new BlockPos(-1, 0, 0)};
     }
 }

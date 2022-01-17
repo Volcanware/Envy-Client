@@ -43,11 +43,9 @@ public class Macro implements ISerializable<Macro> {
     public NbtCompound toTag() {
         NbtCompound tag = new NbtCompound();
 
-        // General
         tag.putString("name", name);
         tag.put("keybind", keybind.toTag());
 
-        // Messages
         NbtList messagesTag = new NbtList();
         for (String message : messages) messagesTag.add(NbtString.of(message));
         tag.put("messages", messagesTag);

@@ -28,7 +28,6 @@ public class Capes {
         disable();
 
         MatHaxExecutor.execute(() -> {
-            // Cape owners
             Stream<String> lines = HTTP.get(MatHax.API_URL + "Cape/capeowners").sendLines();
             if (lines != null) lines.forEach(s -> {
                 String[] split = s.split(" ");
@@ -39,14 +38,11 @@ public class Capes {
                 }
             });
 
-            // Capes
             lines = HTTP.get(MatHax.API_URL + "Cape/capes").sendLines();
             if (lines != null) lines.forEach(s -> {
                 String[] split = s.split(" ");
 
-                if (split.length >= 2) {
-                    if (!URLS.containsKey(split[0])) URLS.put(split[0], split[1]);
-                }
+                if (split.length >= 2 && !URLS.containsKey(split[0])) URLS.put(split[0], split[1]);
             });
         });
 
@@ -105,8 +101,8 @@ public class Capes {
 
         private final String name;
 
-        private boolean downloaded;
         private boolean downloading;
+        private boolean downloaded;
 
         private NativeImage img;
 
@@ -163,9 +159,8 @@ public class Capes {
         }
 
         public boolean tick() {
-            if (retryTimer > 0) {
-                retryTimer--;
-            } else {
+            if (retryTimer > 0) retryTimer--;
+            else {
                 download();
                 return true;
             }

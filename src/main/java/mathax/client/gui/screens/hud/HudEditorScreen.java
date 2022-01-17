@@ -9,6 +9,7 @@ import mathax.client.systems.hud.HudElement;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.NbtUtils;
 import mathax.client.utils.render.color.Color;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.NbtCompound;
 import org.lwjgl.glfw.GLFW;
@@ -133,7 +134,9 @@ public class HudEditorScreen extends WidgetScreen {
                 double mW = module.box.width;
                 double mH = module.box.height;
 
-                if (isInSelection(mouseX, mouseY, mX, mY) || isInSelection(mouseX, mouseY, mX + mW, mY) || (isInSelection(mouseX, mouseY, mX, mY + mH) || isInSelection(mouseX, mouseY, mX + mW, mY + mH))) selectedElements.add(module);
+                if (isInSelection(mouseX, mouseY, mX, mY) || isInSelection(mouseX, mouseY, mX + mW, mY) || (isInSelection(mouseX, mouseY, mX, mY + mH) || isInSelection(mouseX, mouseY, mX + mW, mY + mH))) {
+                    selectedElements.add(module);
+                }
             }
         } else if (dragging) {
             for (HudElement element : selectedElements) {

@@ -37,8 +37,6 @@ public class MarkerScreen extends WindowScreen {
 
     @Override
     public void tick() {
-        super.tick();
-
         marker.settings.tick(settingsContainer, theme);
     }
 

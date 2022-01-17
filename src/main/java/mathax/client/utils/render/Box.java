@@ -22,10 +22,7 @@ public class Box {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Box box = (Box) o;
-        return Double.compare(box.x, x) == 0 &&
-                Double.compare(box.y, y) == 0 &&
-                Double.compare(box.width, width) == 0 &&
-                Double.compare(box.height, height) == 0;
+        return Double.compare(box.x, x) == 0 && Double.compare(box.y, y) == 0 && Double.compare(box.width, width) == 0 && Double.compare(box.height, height) == 0;
     }
 
     @Override

@@ -1,8 +1,5 @@
 package mathax.client.eventbus;
 
-/**
- * Default event priorities.
- */
 public class EventPriority {
     public static final int HIGHEST = 200;
     public static final int HIGH = 100;

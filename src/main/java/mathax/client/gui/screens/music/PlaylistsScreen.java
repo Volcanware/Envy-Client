@@ -31,7 +31,6 @@ public class PlaylistsScreen extends WindowScreen {
 
     @Override
     public void initWidgets() {
-        super.init();
         childWidgets = new ArrayList<>();
 
         pagination = new WPaginationProvider(j -> construct());

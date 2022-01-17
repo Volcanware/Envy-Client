@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 public class HTTP {
     private static final HttpClient CLIENT = HttpClient.newHttpClient();
+
     private static final Gson GSON = new Gson();
 
     private enum Method {

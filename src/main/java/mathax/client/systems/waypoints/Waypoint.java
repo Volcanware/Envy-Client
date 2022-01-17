@@ -12,20 +12,21 @@ import net.minecraft.nbt.NbtCompound;
 import java.util.Map;
 
 public class Waypoint implements ISerializable<Waypoint> {
-    public String name = "popbob's base";
-    public String icon = "Square";
     public SettingColor color = new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b);
 
-    public int x, y, z;
+    public Dimension actualDimension;
 
-    public boolean visible = true;
-    public int maxVisibleDistance = 1000;
-    public double scale = 1;
-    public double minScale = 0.75;
+    public String name = "popbob's base";
+    public String icon = "Square";
 
     public boolean overworld, nether, end;
+    public boolean visible = true;
 
-    public Dimension actualDimension;
+    public int x, y, z;
+    public int maxVisibleDistance = 1000;
+
+    public double scale = 1;
+    public double minScale = 0.75;
 
     public void validateIcon() {
         Map<String, AbstractTexture> icons = Waypoints.get().icons;
@@ -70,10 +71,10 @@ public class Waypoint implements ISerializable<Waypoint> {
     private String getIcon(int i) {
         i = correctIconIndex(i);
 
-        int _i = 0;
+        int i2 = 0;
         for (String icon : Waypoints.get().icons.keySet()) {
-            if (_i == i) return icon;
-            _i++;
+            if (i2 == i) return icon;
+            i2++;
         }
 
         return "Square";
@@ -91,48 +92,50 @@ public class Waypoint implements ISerializable<Waypoint> {
     public NbtCompound toTag() {
         NbtCompound tag = new NbtCompound();
 
+        tag.put("color", color.toTag());
+
+        tag.putString("dimension", actualDimension.name());
+
         tag.putString("name", name);
         tag.putString("icon", icon);
-        tag.put("color", color.toTag());
+
+        tag.putBoolean("visible", visible);
+        tag.putBoolean("overworld", overworld);
+        tag.putBoolean("nether", nether);
+        tag.putBoolean("end", end);
 
         tag.putInt("x", x);
         tag.putInt("y", y);
         tag.putInt("z", z);
-
-        tag.putBoolean("visible", visible);
         tag.putInt("maxVisibleDistance", maxVisibleDistance);
+
         tag.putDouble("scale", scale);
         tag.putDouble("minScale", minScale);
-
-        tag.putString("dimension", actualDimension.name());
-
-        tag.putBoolean("overworld", overworld);
-        tag.putBoolean("nether", nether);
-        tag.putBoolean("end", end);
 
         return tag;
     }
 
     @Override
     public Waypoint fromTag(NbtCompound tag) {
+        color.fromTag(tag.getCompound("color"));
+
+        actualDimension = Dimension.valueOf(tag.getString("dimension"));
+
         name = tag.getString("name");
         icon = tag.getString("icon");
-        color.fromTag(tag.getCompound("color"));
+
+        visible = tag.getBoolean("visible");
+        overworld = tag.getBoolean("overworld");
+        nether = tag.getBoolean("nether");
+        end = tag.getBoolean("end");
 
         x = tag.getInt("x");
         y = tag.getInt("y");
         z = tag.getInt("z");
-
-        visible = tag.getBoolean("visible");
         maxVisibleDistance = tag.getInt("maxVisibleDistance");
+
         scale = tag.getDouble("scale");
         minScale = tag.getDouble("minScale");
-
-        actualDimension = Dimension.valueOf(tag.getString("dimension"));
-
-        overworld = tag.getBoolean("overworld");
-        nether = tag.getBoolean("nether");
-        end = tag.getBoolean("end");
 
         if (!Waypoints.get().icons.containsKey(icon)) icon = "Square";
 

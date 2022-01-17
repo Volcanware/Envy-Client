@@ -273,6 +273,7 @@ public class PlayerUtils {
             velZ += forward.z / 20 * bps;
             a = true;
         }
+
         if (mc.player.input.pressingBack) {
             velX -= forward.x / 20 * bps;
             velZ -= forward.z / 20 * bps;
@@ -285,6 +286,7 @@ public class PlayerUtils {
             velZ += right.z / 20 * bps;
             b = true;
         }
+
         if (mc.player.input.pressingLeft) {
             velX -= right.x / 20 * bps;
             velZ -= right.z / 20 * bps;

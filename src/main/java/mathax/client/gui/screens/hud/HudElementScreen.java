@@ -40,7 +40,7 @@ public class HudElementScreen extends WindowScreen {
         // Bottom
         WHorizontalList bottomList = add(theme.horizontalList()).expandX().widget();
 
-        // Active
+        //   Active
         bottomList.add(theme.label("Active:"));
         WCheckbox active = bottomList.add(theme.checkbox(element.active)).widget();
         active.action = () -> {

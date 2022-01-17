@@ -1,7 +1,6 @@
 package mathax.client.utils.notebot.nbs;
 
 public class Note {
-
     private byte instrument;
     private byte key;
 

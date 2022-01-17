@@ -12,29 +12,24 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.function.Consumer;
 
-/**
- * Default implementation of a {@link IListener} that creates a lambda at runtime to call the target method.
- */
 public class LambdaListener implements IListener {
     public interface Factory {
         MethodHandles.Lookup create(Method lookupInMethod, Class<?> klass) throws InvocationTargetException, IllegalAccessException;
     }
 
-    private static boolean isJava1dot8;
     private static Constructor<MethodHandles.Lookup> lookupConstructor;
+
     private static Method privateLookupInMethod;
 
-    private final Class<?> target;
-    private final boolean isStatic;
-    private final int priority;
     private Consumer<Object> executor;
 
-    /**
-     * Creates a new lambda listener, can be used for both static and non-static methods.
-     * @param klass Class of the object
-     * @param object Object, null if static
-     * @param method Method to create lambda for
-     */
+    private final Class<?> target;
+
+    private static boolean isJava1dot8;
+    private final boolean isStatic;
+
+    private final int priority;
+
     public LambdaListener(Factory factory, Class<?> klass, Object object, Method method) {
         this.target = method.getParameters()[0].getType();
         this.isStatic = Modifier.isStatic(method.getModifiers());

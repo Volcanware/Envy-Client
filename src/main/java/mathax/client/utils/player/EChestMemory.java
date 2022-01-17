@@ -13,6 +13,7 @@ import net.minecraft.util.collection.DefaultedList;
 import static mathax.client.MatHax.mc;
 public class EChestMemory {
     public static final DefaultedList<ItemStack> ITEMS = DefaultedList.ofSize(27, ItemStack.EMPTY);
+
     private static int echestOpenedState;
 
     public static void init() {

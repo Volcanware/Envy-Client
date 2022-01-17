@@ -101,8 +101,6 @@ public class ModuleScreen extends WindowScreen {
 
     @Override
     public void tick() {
-        super.tick();
-
         module.settings.tick(settingsContainer, theme);
     }
 

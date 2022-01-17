@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 
 //https://github.com/xxmicloxx/NoteBlockAPI/blob/master/src/main/java/com/xxmicloxx/NoteBlockAPI/NBSDecoder.java
@@ -19,14 +20,15 @@ public class NBSDecoder {
     public static Song parse(File decodeFile) {
         try {
             return parse(new FileInputStream(decodeFile), decodeFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException exception) {
+            exception.printStackTrace();
         }
+
         return null;
     }
 
     public static Song parse(InputStream inputStream) {
-        return parse(inputStream, null); // Source is unknown -> no file
+        return parse(inputStream, null);
     }
 
     private static Song parse(InputStream inputStream, File decodeFile) {
@@ -35,16 +37,15 @@ public class NBSDecoder {
             short length = readShort(dis);
             if (length != 0) return parseClassic(dis, decodeFile, length);
             else return parseOpenNBS(dis, decodeFile);
-        } catch (FileNotFoundException e) {
-            LOG.error(MatHax.logPrefix + e.getStackTrace());
-        } catch (IOException e) {
-            LOG.error(MatHax.logPrefix + e.getStackTrace());
+        } catch (IOException exception) {
+            LOG.error(MatHax.logPrefix + Arrays.toString(exception.getStackTrace()));
         }
+
         return null;
     }
 
     private static Song parseClassic(DataInputStream dis, File decodeFile, short length) throws IOException {
-        HashMap<Integer, Layer> layerHashMap = new HashMap<Integer, Layer>();
+        HashMap<Integer, Layer> layerHashMap = new HashMap<>();
         short songHeight = readShort(dis);
         String title = readString(dis);
         String author = readString(dis);
@@ -64,22 +65,19 @@ public class NBSDecoder {
         while (true) {
             short jumpTicks = readShort(dis); // jumps till next tick
             //System.out.println("Jumps to next tick: " + jumpTicks);
-            if (jumpTicks == 0) {
-                break;
-            }
+            if (jumpTicks == 0) break;
             tick += jumpTicks;
             //System.out.println("Tick: " + tick);
             short layer = -1;
             while (true) {
                 short jumpLayers = readShort(dis); // jumps till next layer
-                if (jumpLayers == 0) {
-                    break;
-                }
+                if (jumpLayers == 0) break;
                 layer += jumpLayers;
                 //System.out.println("Layer: " + layer);
                 setNote(layer, tick, dis.readByte() /* instrument */, dis.readByte() /* note */, layerHashMap);
             }
         }
+
         for (int i = 0; i < songHeight; i++) {
             Layer l = layerHashMap.get(i);
             if (l != null) {
@@ -87,11 +85,12 @@ public class NBSDecoder {
                 l.setVolume(dis.readByte());
             }
         }
+
         return new Song(speed, layerHashMap, songHeight, length, title, author, description, decodeFile);
     }
 
     private static Song parseOpenNBS(DataInputStream dis, File decodeFile) throws IOException {
-        HashMap<Integer, Layer> layerHashMap = new HashMap<Integer, Layer>();
+        HashMap<Integer, Layer> layerHashMap = new HashMap<>();
         byte version = dis.readByte();
         if (version != 5) return null;
         dis.readByte(); //vanillaInstrumentCount
@@ -118,17 +117,13 @@ public class NBSDecoder {
         while (true) {
             short jumpTicks = readShort(dis); // jumps till next tick
             //System.out.println("Jumps to next tick: " + jumpTicks);
-            if (jumpTicks == 0) {
-                break;
-            }
+            if (jumpTicks == 0) break;
             tick += jumpTicks;
             //System.out.println("Tick: " + tick);
             short layer = -1;
             while (true) {
                 short jumpLayers = readShort(dis); // jumps till next layer
-                if (jumpLayers == 0) {
-                    break;
-                }
+                if (jumpLayers == 0) break;
                 layer += jumpLayers;
                 //System.out.println("Layer: " + layer);
                 setNote(layer, tick, dis.readByte() /* instrument */, dis.readByte() /* note */, layerHashMap);
@@ -137,6 +132,7 @@ public class NBSDecoder {
                 readShort(dis); //pitch
             }
         }
+
         for (int i = 0; i < songHeight; i++) {
             Layer l = layerHashMap.get(i);
             if (l != null) {
@@ -146,6 +142,7 @@ public class NBSDecoder {
                 dis.readByte(); //stereo
             }
         }
+
         return new Song(speed, layerHashMap, songHeight, length, title, author, description, decodeFile);
     }
 
@@ -155,6 +152,7 @@ public class NBSDecoder {
             l = new Layer();
             layerHashMap.put(layer, l);
         }
+
         l.setNote(ticks, new Note(instrument, key));
     }
 
@@ -177,11 +175,10 @@ public class NBSDecoder {
         StringBuilder sb = new StringBuilder(length);
         for (; length > 0; --length) {
             char c = (char) dis.readByte();
-            if (c == (char) 0x0D) {
-                c = ' ';
-            }
+            if (c == (char) 0x0D) c = ' ';
             sb.append(c);
         }
+
         return sb.toString();
     }
 }

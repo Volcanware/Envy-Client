@@ -79,25 +79,19 @@ public abstract class WWindow extends WVerticalList {
             if (config.x != -1) {
                 x = config.x;
 
-                if (x + width > Utils.getWindowWidth()) {
-                    x = Utils.getWindowWidth() - width;
-                }
+                if (x + width > Utils.getWindowWidth()) x = Utils.getWindowWidth() - width;
             }
 
             if (config.y != -1) {
                 y = config.y;
 
-                if (y + height > Utils.getWindowHeight()) {
-                    y = Utils.getWindowHeight() - height;
-                }
+                if (y + height > Utils.getWindowHeight()) y = Utils.getWindowHeight() - height;
             }
         }
 
         super.onCalculateWidgetPositions();
 
-        if (moved) {
-            move(movedX - x, movedY - y);
-        }
+        if (moved) move(movedX - x, movedY - y);
     }
 
     @Override
@@ -114,9 +108,7 @@ public abstract class WWindow extends WVerticalList {
 
     @Override
     protected void renderWidget(WWidget widget, GuiRenderer renderer, double mouseX, double mouseY, double delta) {
-        if (expanded || animProgress > 0 || widget instanceof WHeader) {
-            widget.render(renderer, mouseX, mouseY, delta);
-        }
+        if (expanded || animProgress > 0 || widget instanceof WHeader) widget.render(renderer, mouseX, mouseY, delta);
 
         propagateEventsExpanded = expanded;
     }

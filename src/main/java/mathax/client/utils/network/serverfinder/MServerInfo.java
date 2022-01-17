@@ -10,21 +10,26 @@ import java.util.Collections;
 import java.util.List;
 
 public class MServerInfo {
-    public String name;
-    public String address;
-    public String playerCountLabel;
-    public int playerCount;
-    public int playercountMax;
-    public String label;
-    public long ping;
-    public int protocolVersion = SharedConstants.getGameVersion().getProtocolVersion();
-    public String version = null;
-    public boolean online;
     public List<Text> playerListSummary = Collections.emptyList();
+
     private ResourcePackState resourcePackState;
+
+    public int protocolVersion = SharedConstants.getGameVersion().getProtocolVersion();
+    public int playercountMax;
+    public int playerCount;
+
+    public String name;
+    public String label;
+    public String address;
+    public String version = null;
+    public String playerCountLabel;
+
     @Nullable
     private String icon;
+
     private boolean local;
+
+    public long ping;
 
     public MServerInfo(String name, String address, boolean local) {
         this.resourcePackState = ResourcePackState.PROMPT;
@@ -37,15 +42,10 @@ public class MServerInfo {
         NbtCompound compoundTag = new NbtCompound();
         compoundTag.putString("name", this.name);
         compoundTag.putString("ip", this.address);
-        if (this.icon != null) {
-            compoundTag.putString("icon", this.icon);
-        }
+        if (this.icon != null) compoundTag.putString("icon", this.icon);
 
-        if (this.resourcePackState == ResourcePackState.ENABLED) {
-            compoundTag.putBoolean("acceptTextures", true);
-        } else if (this.resourcePackState == ResourcePackState.DISABLED) {
-            compoundTag.putBoolean("acceptTextures", false);
-        }
+        if (this.resourcePackState == ResourcePackState.ENABLED) compoundTag.putBoolean("acceptTextures", true);
+        else if (this.resourcePackState == ResourcePackState.DISABLED) compoundTag.putBoolean("acceptTextures", false);
 
         return compoundTag;
     }
@@ -60,19 +60,12 @@ public class MServerInfo {
 
     public static MServerInfo deserialize(NbtCompound tag) {
         MServerInfo serverInfo = new MServerInfo(tag.getString("name"), tag.getString("ip"), false);
-        if (tag.contains("icon", 8)) {
-            serverInfo.setIcon(tag.getString("icon"));
-        }
+        if (tag.contains("icon", 8)) serverInfo.setIcon(tag.getString("icon"));
 
         if (tag.contains("acceptTextures", 1)) {
-            if (tag.getBoolean("acceptTextures")) {
-                serverInfo.setResourcePackState(ResourcePackState.ENABLED);
-            } else {
-                serverInfo.setResourcePackState(ResourcePackState.DISABLED);
-            }
-        } else {
-            serverInfo.setResourcePackState(ResourcePackState.PROMPT);
-        }
+            if (tag.getBoolean("acceptTextures")) serverInfo.setResourcePackState(ResourcePackState.ENABLED);
+            else serverInfo.setResourcePackState(ResourcePackState.DISABLED);
+        } else serverInfo.setResourcePackState(ResourcePackState.PROMPT);
 
         return serverInfo;
     }

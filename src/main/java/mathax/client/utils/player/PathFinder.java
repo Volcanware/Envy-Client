@@ -24,11 +24,10 @@ public class PathFinder {
 
     public PathBlock getNextPathBlock() {
         PathBlock nextBlock = new PathBlock(new BlockPos(getNextStraightPos()));
-        if (isSolidFloor(nextBlock.blockPos) && isAirAbove(nextBlock.blockPos)) {
-            return nextBlock;
-        } else if (!isSolidFloor(nextBlock.blockPos) && isAirAbove(nextBlock.blockPos)) {
+        if (isSolidFloor(nextBlock.blockPos) && isAirAbove(nextBlock.blockPos)) return nextBlock;
+        else if (!isSolidFloor(nextBlock.blockPos) && isAirAbove(nextBlock.blockPos)) {
             int drop = getDrop(nextBlock.blockPos);
-            if (getDrop(nextBlock.blockPos) < 3) nextBlock = new PathBlock(new BlockPos(nextBlock.blockPos.getX(), nextBlock.blockPos.getY() - drop, nextBlock.blockPos.getZ()));
+            if (drop < 3) nextBlock = new PathBlock(new BlockPos(nextBlock.blockPos.getX(), nextBlock.blockPos.getY() - drop, nextBlock.blockPos.getZ()));
         }
 
         return nextBlock;

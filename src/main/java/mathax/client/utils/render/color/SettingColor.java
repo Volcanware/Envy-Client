@@ -46,7 +46,6 @@ public class SettingColor extends Color {
 
     @Override
     public SettingColor set(Color value) {
-        super.set(value);
         if (value instanceof SettingColor) rainbow = ((SettingColor) value).rainbow;
 
         return this;

@@ -30,6 +30,7 @@ public class RainbowColor extends Color {
             g = toRGBAG(c);
             b = toRGBAB(c);
         }
+
         return this;
     }
 

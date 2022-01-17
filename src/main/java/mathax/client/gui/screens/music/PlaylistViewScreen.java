@@ -32,7 +32,6 @@ public class PlaylistViewScreen extends WindowScreen {
 
     @Override
     public void initWidgets() {
-        super.init();
         childWidgets = new ArrayList<>();
         WPaginationProvider pagination = new WPaginationProvider(j -> construct());
         childWidgets.add(new WPlaylistPage(pagination, results::getTracks, i -> Music.trackScheduler.queue(results.getTracks().get(i)), null));

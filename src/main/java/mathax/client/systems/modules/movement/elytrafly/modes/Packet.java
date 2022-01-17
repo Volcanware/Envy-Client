@@ -24,8 +24,6 @@ public class Packet extends ElytraFlightMode {
 
     @Override
     public void onTick() {
-        super.onTick();
-
         if (MatHax.mc.player.getInventory().getArmorStack(2).getItem() != Items.ELYTRA || MatHax.mc.player.fallDistance <= 0.2 || MatHax.mc.options.keySneak.isPressed()) return;
 
         if (MatHax.mc.options.keyForward.isPressed()) {

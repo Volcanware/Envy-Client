@@ -145,8 +145,6 @@ public class Config extends System<Config> {
         return Systems.get(Config.class);
     }
 
-    // Serialisation
-
     @Override
     public NbtCompound toTag() {
         NbtCompound tag = new NbtCompound();

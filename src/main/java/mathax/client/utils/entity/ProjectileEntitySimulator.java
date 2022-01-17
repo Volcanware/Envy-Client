@@ -40,19 +40,12 @@ public class ProjectileEntitySimulator {
             if (!CrossbowItem.isCharged(itemStack)) return false;
 
             set(user, 0, CrossbowItemAccessor.getSpeed(itemStack), simulated, 0.05000000074505806, 0.6, accurate, tickDelta);
-        } else if (item instanceof FishingRodItem) {
-            setFishingBobber(user, tickDelta);
-        } else if (item instanceof TridentItem) {
-            set(user, 0, 2.5, simulated, 0.05000000074505806, 0.99, accurate, tickDelta);
-        } else if (item instanceof SnowballItem || item instanceof EggItem || item instanceof EnderPearlItem) {
-            set(user, 0, 1.5, simulated, 0.03, 0.8, accurate, tickDelta);
-        } else if (item instanceof ExperienceBottleItem) {
-            set(user, -20, 0.7, simulated, 0.07, 0.8, accurate, tickDelta);
-        } else if (item instanceof ThrowablePotionItem) {
-            set(user, -20, 0.5, simulated, 0.05, 0.8, accurate, tickDelta);
-        } else {
-            return false;
-        }
+        } else if (item instanceof FishingRodItem) setFishingBobber(user, tickDelta);
+        else if (item instanceof TridentItem) set(user, 0, 2.5, simulated, 0.05000000074505806, 0.99, accurate, tickDelta);
+        else if (item instanceof SnowballItem || item instanceof EggItem || item instanceof EnderPearlItem) set(user, 0, 1.5, simulated, 0.03, 0.8, accurate, tickDelta);
+        else if (item instanceof ExperienceBottleItem) set(user, -20, 0.7, simulated, 0.07, 0.8, accurate, tickDelta);
+        else if (item instanceof ThrowablePotionItem) set(user, -20, 0.5, simulated, 0.05, 0.8, accurate, tickDelta);
+        else return false;
 
         return true;
     }
@@ -151,14 +144,10 @@ public class ProjectileEntitySimulator {
         Vec3d vec3d3 = prevPos3d;
 
         HitResult hitResult = mc.world.raycast(new RaycastContext(vec3d3, pos3d, RaycastContext.ShapeType.COLLIDER, waterDrag == 0 ? RaycastContext.FluidHandling.ANY : RaycastContext.FluidHandling.NONE, mc.player));
-        if (hitResult.getType() != HitResult.Type.MISS) {
-            vec3d3 = hitResult.getPos();
-        }
+        if (hitResult.getType() != HitResult.Type.MISS) vec3d3 = hitResult.getPos();
 
         HitResult hitResult2 = ProjectileUtil.getEntityCollision(mc.world, mc.player, vec3d3, pos3d, new Box(pos.x, pos.y, pos.z, pos.x, pos.y, pos.z).stretch(mc.player.getVelocity()).expand(1.0D), entity -> !entity.isSpectator() && entity.isAlive() && entity.collides());
-        if (hitResult2 != null) {
-            hitResult = hitResult2;
-        }
+        if (hitResult2 != null) hitResult = hitResult2;
 
         return hitResult;
     }
