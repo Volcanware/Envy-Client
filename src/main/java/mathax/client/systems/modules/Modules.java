@@ -94,6 +94,8 @@ public class Modules extends System<Modules> {
                 for (Setting<?> setting : group) setting.reset();
             }
         }
+
+        super.load(folder);
     }
 
     public void sortModules() {

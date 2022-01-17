@@ -20,6 +20,8 @@ public abstract class GenericContainerScreenMixin extends HandledScreen<GenericC
 
     @Override
     protected void init() {
+        super.init();
+
         InventoryTweaks invTweaks = Modules.get().get(InventoryTweaks.class);
 
         if (invTweaks.isActive() && invTweaks.showButtons()) {
