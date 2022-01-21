@@ -44,6 +44,7 @@ import net.minecraft.item.Items;
 import java.io.File;
 
 public class DiscordRPC extends Module {
+    private static final net.arikia.dev.drpc.DiscordRPC discord = new net.arikia.dev.drpc.DiscordRPC();
     private static final DiscordEventHandlers handlers = new DiscordEventHandlers();
     private static final DiscordRichPresence rpc = new DiscordRichPresence();
 
@@ -94,7 +95,7 @@ public class DiscordRPC extends Module {
     public void onActivate() {
         MatHax.LOG.info(MatHax.logPrefix + "Enabling Discord Rich Presence...");
 
-        net.arikia.dev.drpc.DiscordRPC.discordInitialize(APP_ID, handlers, true, STEAM_ID);
+        discord.discordInitialize(APP_ID, handlers, true, STEAM_ID);
         rpc.startTimestamp = System.currentTimeMillis() / 1000;
         rpc.details = Version.getStylized() + " | " + getUsername() + getHealth();
         rpc.state = getActivity();
@@ -106,13 +107,13 @@ public class DiscordRPC extends Module {
         rpc.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
         rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
         rpc.partyMax = 1;
-        net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
+        discord.discordUpdatePresence(rpc);
 
         MatHax.LOG.info(MatHax.logPrefix + "Discord Rich Presence enabled!");
 
         new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
-                net.arikia.dev.drpc.DiscordRPC.discordRunCallbacks();
+                discord.discordRunCallbacks();
                 try {
                     rpc.details = Version.getStylized() + " | " + getUsername() + getHealth();
                     rpc.state = getActivity();
@@ -122,7 +123,7 @@ public class DiscordRPC extends Module {
                     rpc.smallImageText = getActivity();
                     rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
                     rpc.partyMax = 1;
-                    net.arikia.dev.drpc.DiscordRPC.discordUpdatePresence(rpc);
+                    discord.discordUpdatePresence(rpc);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -138,9 +139,13 @@ public class DiscordRPC extends Module {
 
     @Override
     public void onDeactivate() {
+        disable();
+    }
+
+    public static void disable() {
         MatHax.LOG.info(MatHax.logPrefix + "Disabling Discord Rich Presence...");
-        net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
-        net.arikia.dev.drpc.DiscordRPC.discordShutdown();
+        discord.discordClearPresence();
+        discord.discordShutdown();
         MatHax.LOG.info(MatHax.logPrefix + "Discord Rich Presence disabled!");
     }
 

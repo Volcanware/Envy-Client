@@ -248,8 +248,7 @@ public class MatHax implements ClientModInitializer {
 
         // Shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            net.arikia.dev.drpc.DiscordRPC.discordClearPresence();
-            net.arikia.dev.drpc.DiscordRPC.discordShutdown();
+            DiscordRPC.disable();
             Systems.save();
             GuiThemes.save();
         }));

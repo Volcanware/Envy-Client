@@ -11,7 +11,6 @@ import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.chat.*;
 import mathax.client.systems.modules.client.*;
 import mathax.client.systems.modules.combat.*;
-import mathax.client.systems.modules.crash.*;
 import mathax.client.systems.modules.misc.*;
 import mathax.client.systems.modules.movement.*;
 import mathax.client.systems.modules.player.*;
@@ -82,7 +81,6 @@ public class Modules extends System<Modules> {
         initRender();
         initWorld();
         initChat();
-        initCrash();
         initMisc();
         initClient();
     }
@@ -552,20 +550,6 @@ public class Modules extends System<Modules> {
         add(new SpawnProofer());
         add(new Timer());
         add(new VeinMiner());
-    }
-
-    private void initCrash() {
-        add(new AACCrash());
-        add(new BoatCrash());
-        add(new BookCrash());
-        add(new ContainerCrash());
-        add(new EntityCrash());
-        add(new InvalidPositionCrash());
-        add(new LoginCrash());
-        add(new MovementCrash());
-        add(new OffhandCrash());
-        add(new SignCrash());
-        add(new TryUseCrash());
     }
 
     private void initChat() {

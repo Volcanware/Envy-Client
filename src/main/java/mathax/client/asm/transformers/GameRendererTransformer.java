@@ -9,6 +9,7 @@ import org.objectweb.asm.tree.*;
 
 public class GameRendererTransformer extends AsmTransformer {
     private final MethodInfo getFovMethod;
+
     private final FieldInfo fovField;
 
     public GameRendererTransformer() {
@@ -20,7 +21,6 @@ public class GameRendererTransformer extends AsmTransformer {
 
     @Override
     public void transform(ClassNode klass) {
-        // Modify GameRenderer.getFov()
         MethodNode method = getMethod(klass, getFovMethod);
         if (method == null) throw new RuntimeException("[MatHax] Could not find method GameRenderer.getFov()!");
 
@@ -34,7 +34,7 @@ public class GameRendererTransformer extends AsmTransformer {
                 method.instructions.insert(insn, insns);
                 method.instructions.remove(insn);
                 injectionCount++;
-            } else if (insn instanceof FieldInsnNode in && fovField.equals(in)) {
+            } else if ((insn instanceof FieldInsnNode in1 && fovField.equals(in1)) || (insn instanceof MethodInsnNode in2 && in2.owner.equals(klass.name) && in2.name.startsWith("redirect") && in2.name.endsWith("getFov"))) {
                 InsnList insns = new InsnList();
 
                 insns.add(new VarInsnNode(Opcodes.DSTORE, method.maxLocals));
