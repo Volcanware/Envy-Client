@@ -2,11 +2,14 @@ package mathax.client;
 
 import mathax.client.eventbus.EventBus;
 import mathax.client.eventbus.EventHandler;
+import mathax.client.eventbus.EventPriority;
 import mathax.client.eventbus.IEventBus;
+import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.mathax.KeyEvent;
 import mathax.client.events.mathax.MouseButtonEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.gui.GuiThemes;
+import mathax.client.gui.WidgetScreen;
 import mathax.client.gui.renderer.GuiRenderer;
 import mathax.client.gui.tabs.Tabs;
 import mathax.client.music.Music;
@@ -285,5 +288,21 @@ public class MatHax implements ClientModInitializer {
 
     private void openClickGUI() {
         if (Utils.canOpenClickGUI()) Tabs.get().get(0).openScreen(GuiThemes.get());
+    }
+
+    private boolean wasWidgetScreen, wasHudHiddenRoot;
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onOpenScreen(OpenScreenEvent event) {
+        boolean hideHud = GuiThemes.get().hideHUD();
+
+        if (hideHud) {
+            if (!wasWidgetScreen) wasHudHiddenRoot = mc.options.hudHidden;
+
+            if (event.screen instanceof WidgetScreen) mc.options.hudHidden = true;
+            else if (!wasHudHiddenRoot) mc.options.hudHidden = false;
+        }
+
+        wasWidgetScreen = event.screen instanceof WidgetScreen;
     }
 }

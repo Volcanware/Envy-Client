@@ -28,7 +28,7 @@ public class WaypointArgumentType implements ArgumentType<String> {
 
     @Override
     public String parse(StringReader reader) throws CommandSyntaxException {
-        final String argument = reader.getRemaining();
+        String argument = reader.getRemaining();
         reader.setCursor(reader.getTotalLength());
 
         if (Waypoints.get().get(argument) == null) throw NO_SUCH_WAYPOINT.create(argument);
