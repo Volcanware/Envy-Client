@@ -7,7 +7,9 @@ import mathax.client.gui.screens.hud.HudEditorScreen;
 import mathax.client.gui.screens.hud.HudElementScreen;
 import mathax.client.settings.*;
 import mathax.client.systems.System;
+import mathax.client.systems.Systems;
 import mathax.client.systems.hud.modules.*;
+import mathax.client.utils.misc.KeyBind;
 import mathax.client.utils.misc.NbtUtils;
 import mathax.client.utils.render.AlignmentX;
 import mathax.client.utils.render.AlignmentY;
@@ -56,6 +58,14 @@ public class HUD extends System<HUD> {
         .name("secondary-color")
         .description("Secondary color of text.")
         .defaultValue(new SettingColor(175, 175, 175))
+        .build()
+    );
+
+    private final Setting<KeyBind> toggleKeybind = sgGeneral.add(new KeyBindSetting.Builder()
+        .name("toggle-keybind")
+        .description("Keybind used to toggle HUD.")
+        .defaultValue(KeyBind.none())
+        .action(() -> active = !active)
         .build()
     );
 
@@ -160,6 +170,10 @@ public class HUD extends System<HUD> {
         align();
     }
 
+    public static HUD get() {
+        return Systems.get(HUD.class);
+    }
+
     private void align() {
         RENDERER.begin(scale.get(), 0, true);
 
@@ -217,6 +231,8 @@ public class HUD extends System<HUD> {
 
     @Override
     public HUD fromTag(NbtCompound tag) {
+        settings.reset();
+
         if (tag.contains("active")) active = tag.getBoolean("active");
         if (tag.contains("settings")) settings.fromTag(tag.getCompound("settings"));
         if (tag.contains("elements")) {

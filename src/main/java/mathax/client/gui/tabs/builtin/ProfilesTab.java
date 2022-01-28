@@ -182,6 +182,12 @@ public class ProfilesTab extends Tab {
             table.add(theme.horizontalSeparator()).expandX();
             table.row();
 
+            // HUD
+            table.add(theme.label("HUD:"));
+            WCheckbox hudBool = table.add(theme.checkbox(ogProfile.hud)).widget();
+            hudBool.action = () -> newProfile.hud = hudBool.checked;
+            table.row();
+
             // Save
             WButton save = table.add(theme.button("Save")).expandX().widget();
             save.action = () -> {

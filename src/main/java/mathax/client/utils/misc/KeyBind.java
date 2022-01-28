@@ -4,6 +4,8 @@ import mathax.client.utils.misc.input.Input;
 import mathax.client.utils.Utils;
 import net.minecraft.nbt.NbtCompound;
 
+import java.util.Objects;
+
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
@@ -81,7 +83,18 @@ public class KeyBind implements ISerializable<KeyBind>, ICopyable<KeyBind> {
         return isKey ? Utils.getKeyName(value) : Utils.getButtonName(value);
     }
 
-    // Serialization
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        KeyBind keybind = (KeyBind) object;
+        return isKey == keybind.isKey && value == keybind.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isKey, value);
+    }
 
     @Override
     public NbtCompound toTag() {

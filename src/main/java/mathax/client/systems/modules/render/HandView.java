@@ -1,9 +1,6 @@
 package mathax.client.systems.modules.render;
 
-import mathax.client.settings.DoubleSetting;
-import mathax.client.settings.EnumSetting;
-import mathax.client.settings.Setting;
-import mathax.client.settings.SettingGroup;
+import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.client.util.math.MatrixStack;
@@ -118,6 +115,15 @@ public class HandView extends Module {
         .defaultValue(0)
         .range(0, 1)
         .sliderRange(0, 1)
+        .build()
+    );
+
+    public final Setting<Integer> swingSpeed = sgSwing.add(new IntSetting.Builder()
+        .name("swing-speed")
+        .description("The swing speed of your hands. (higher = slower swing)")
+        .defaultValue(6)
+        .range(0, 20)
+        .sliderRange(0, 20)
         .build()
     );
 

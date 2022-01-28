@@ -7,7 +7,6 @@ import mathax.client.events.entity.player.TeleportParticleEvent;
 import mathax.client.systems.modules.Modules;
 import mathax.client.utils.Utils;
 import mathax.client.systems.modules.movement.AntiLevitation;
-import mathax.client.systems.modules.crash.OffhandCrash;
 import mathax.client.systems.modules.movement.Moses;
 import mathax.client.systems.modules.render.HandView;
 import mathax.client.systems.modules.render.NoRender;
@@ -22,10 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -68,11 +64,6 @@ public abstract class LivingEntityMixin extends Entity {
         if (noRender.noEatParticles() && stack.isFood()) info.cancel();
     }
 
-    @Inject(method = "onEquipStack", at = @At("HEAD"), cancellable = true)
-    private void onEquipStack(ItemStack stack, CallbackInfo info) {
-        if ((Object) this == mc.player && Modules.get().get(OffhandCrash.class).isAntiCrash()) info.cancel();
-    }
-
     @Inject(method = "handleStatus", at = @At("HEAD"), cancellable = true)
     private void onHandleStatus(byte status, CallbackInfo info) {
         if ((Object) this == mc.player && status == 46 && Utils.canUpdate()) MatHax.EVENT_BUS.post(TeleportParticleEvent.get(this.getX(), this.getY(), this.getZ()));
@@ -87,6 +78,11 @@ public abstract class LivingEntityMixin extends Entity {
         }
 
         return hand;
+    }
+
+    @ModifyConstant(method = "getHandSwingDuration", constant = @Constant(intValue = 6))
+    private int getHandSwingDuration(int constant) {
+        return Modules.get().get(HandView.class).isActive() && mc.options.getPerspective().isFirstPerson() ? Modules.get().get(HandView.class).swingSpeed.get() : constant;
     }
 
     @Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isTouchingWater()Z"))

@@ -1,6 +1,7 @@
 package mathax.client.systems.profiles;
 
 import mathax.client.systems.enemies.Enemies;
+import mathax.client.systems.hud.HUD;
 import mathax.client.systems.waypoints.Waypoints;
 import mathax.client.systems.System;
 import mathax.client.systems.accounts.Accounts;
@@ -25,7 +26,7 @@ public class Profile implements ISerializable<Profile> {
 
     public String name = "";
 
-    public boolean accounts = false, config = true, friends = false, enemies = false, macros = true, modules = true, waypoints = false;
+    public boolean accounts = false, config = true, friends = false, enemies = false, macros = true, modules = true, waypoints = false, hud = false;
 
     public boolean onLaunch = false;
 
@@ -44,6 +45,7 @@ public class Profile implements ISerializable<Profile> {
         if (macros) Macros.get().load(folder);
         if (modules) Modules.get().load(folder);
         if (waypoints) Waypoints.get().load(folder);
+        if (hud) HUD.get().load(folder);
     }
 
     public void save(System<?> system) {
@@ -60,6 +62,7 @@ public class Profile implements ISerializable<Profile> {
         if (macros) Macros.get().save(folder);
         if (modules) Modules.get().save(folder);
         if (waypoints) Waypoints.get().save(folder);
+        if (hud) HUD.get().save(folder);
     }
 
     public void delete(System<?> system) {
@@ -87,6 +90,7 @@ public class Profile implements ISerializable<Profile> {
         tag.putBoolean("macros", macros);
         tag.putBoolean("modules", modules);
         tag.putBoolean("waypoints", waypoints);
+        tag.putBoolean("hud", hud);
 
         tag.putBoolean("onLaunch", onLaunch);
 
@@ -109,6 +113,7 @@ public class Profile implements ISerializable<Profile> {
         macros = tag.contains("macros") && tag.getBoolean("macros");
         modules = tag.contains("modules") && tag.getBoolean("modules");
         waypoints = tag.contains("waypoints") && tag.getBoolean("waypoints");
+        hud = tag.contains("hud") && tag.getBoolean("hud");
 
         onLaunch = tag.contains("onLaunch") && tag.getBoolean("onLaunch");
 
@@ -134,6 +139,8 @@ public class Profile implements ISerializable<Profile> {
         this.macros = profile.macros;
         this.modules = profile.modules;
         this.waypoints = profile.waypoints;
+        this.hud = profile.hud;
+
         return this;
     }
 
