@@ -82,7 +82,7 @@ public class WelcomeHud extends TripleTextHudElement {
 
     private String getTime() {
         final String hourDate = new SimpleDateFormat("k").format(new Date());
-        final int hour = Integer.valueOf(hourDate);
+        final int hour = Integer.parseInt(hourDate);
         if (hour < 6) return "Good Night";
         if (hour < 12) return "Good Morning";
         if (hour < 17) return "Good Afternoon";
@@ -92,7 +92,7 @@ public class WelcomeHud extends TripleTextHudElement {
 
     private String getRetardedTime() {
         final String hourDate = new SimpleDateFormat("k").format(new Date());
-        final int hour = Integer.valueOf(hourDate);
+        final int hour = Integer.parseInt(hourDate);
         if (hour < 3) return "Why are you killing newfags at this hour retard";
         if (hour < 6) return "You really need get some sleep retard";
         if (hour < 9) return "Ur awake already? such a retard";
