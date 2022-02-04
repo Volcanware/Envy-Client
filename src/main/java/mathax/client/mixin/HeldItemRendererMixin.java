@@ -1,6 +1,8 @@
 package mathax.client.mixin;
 
 import com.google.common.base.MoreObjects;
+import mathax.client.MatHax;
+import mathax.client.events.render.HeldItemRendererEvent;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.render.HandView;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -34,6 +36,6 @@ public abstract class HeldItemRendererMixin {
 
     @Inject(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformation$Mode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"))
     private void renderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
-        if (!item.isEmpty()) Modules.get().get(HandView.class).transform(matrices);
+        MatHax.EVENT_BUS.post(HeldItemRendererEvent.get(hand, matrices));
     }
 }

@@ -11,6 +11,7 @@ import mathax.client.events.game.SendMessageEvent;
 import mathax.client.systems.commands.Commands;
 import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.misc.Twerk;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.ChatUtils;
 import mathax.client.systems.modules.movement.NoSlow;
@@ -140,6 +141,6 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     // Sneak
     @Redirect(method = "sendMovementPackets", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isSneaking()Z"))
     private boolean isSneaking(ClientPlayerEntity clientPlayerEntity) {
-        return Modules.get().get(Sneak.class).doPacket() || Modules.get().get(NoSlow.class).airStrict() || clientPlayerEntity.isSneaking();
+        return (Modules.get().get(Sneak.class).doPacket() || Modules.get().get(NoSlow.class).airStrict() || clientPlayerEntity.isSneaking()) || (Modules.get().get(Twerk.class).doPacket() || Modules.get().get(NoSlow.class).airStrict() || clientPlayerEntity.isSneaking());
     }
 }

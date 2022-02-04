@@ -233,11 +233,6 @@ public class Scaffold extends Module {
         return !(block instanceof FallingBlock) || !FallingBlock.canFallThrough(mc.world.getBlockState(pos));
     }
 
-    public enum ListMode {
-        Whitelist,
-        Blacklist
-    }
-
     @EventHandler
     private void onRender3D(Render3DEvent event) {
         if (!render.get()) return;
@@ -271,6 +266,22 @@ public class Scaffold extends Module {
 
             sides.a = preSideA;
             lines.a = preLineA;
+        }
+    }
+
+    public enum ListMode {
+        Whitelist("Whitelist"),
+        Blacklist("Blacklist");
+
+        private final String title;
+
+        ListMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 }

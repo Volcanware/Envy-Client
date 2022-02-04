@@ -7,16 +7,13 @@ import mathax.client.events.render.RenderAfterWorldEvent;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.renderer.Renderer3D;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.render.*;
 import mathax.client.utils.Utils;
 import mathax.client.utils.render.NametagUtils;
 import mathax.client.utils.render.RenderUtils;
 import mathax.client.systems.modules.player.LiquidInteract;
 import mathax.client.systems.modules.player.NoMiningTrace;
 import mathax.client.systems.modules.player.Reach;
-import mathax.client.systems.modules.render.Freecam;
-import mathax.client.systems.modules.render.NoBob;
-import mathax.client.systems.modules.render.NoRender;
-import mathax.client.systems.modules.render.Rendering;
 import mathax.client.systems.modules.world.HighwayBuilder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.ShaderEffect;
@@ -55,11 +52,6 @@ public abstract class GameRendererMixin {
 
     @Unique
     private Renderer3D renderer;
-
-    @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
-    private void injectBobView(MatrixStack matrixStack, float f, CallbackInfo info) {
-        if (Modules.get().isActive(NoBob.class)) info.cancel();
-    }
 
     @Inject(method = "renderWorld", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", args = "ldc=hand"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void onRenderWorld(float tickDelta, long limitTime, MatrixStack matrices, CallbackInfo info, boolean bl, Camera camera, MatrixStack matrixStack, double d, float f, Matrix4f matrix4f) {
@@ -197,8 +189,14 @@ public abstract class GameRendererMixin {
         }
     }
 
+    @Inject(method = "renderHand", at = @At("INVOKE"), cancellable = true)
     private void renderHand(MatrixStack matrices, Camera camera, float tickDelta, CallbackInfo info) {
-        if (!Modules.get().get(Freecam.class).renderHands()) info.cancel();
+        if (!Modules.get().get(Freecam.class).renderHands() || !Modules.get().get(Zoom.class).renderHands()) info.cancel();
+    }
+
+    @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
+    private void injectBobView(MatrixStack matrixStack, float f, CallbackInfo info) {
+        if (Modules.get().isActive(NoBob.class)) info.cancel();
     }
 
     @ModifyConstant(method = "updateTargetedEntity", constant = @Constant(doubleValue = 3))

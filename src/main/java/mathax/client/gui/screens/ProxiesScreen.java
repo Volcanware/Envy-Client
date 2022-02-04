@@ -24,6 +24,7 @@ import static mathax.client.MatHax.mc;
 
 public class ProxiesScreen extends WindowScreen {
     private final List<WCheckbox> checkboxes = new ArrayList<>();
+
     private boolean doReload;
 
     public ProxiesScreen(GuiTheme theme) {
@@ -36,10 +37,12 @@ public class ProxiesScreen extends WindowScreen {
 
     @Override
     protected void init() {
-        if (!doReload) return;
+        super.init();
 
-        reload();
-        doReload = false;
+        if (doReload) {
+            reload();
+            doReload = false;
+        }
     }
 
     @Override
@@ -124,25 +127,25 @@ public class ProxiesScreen extends WindowScreen {
             // General
             WTable general = add(theme.table()).expandX().widget();
 
-            // Name
+            //   Name
             general.add(theme.label("Proxy Name:"));
             WTextBox name = general.add(theme.textBox(proxy.name)).expandX().widget();
             name.action = () -> proxy.name = name.get();
             general.row();
 
-            // Type
+            //   Type
             general.add(theme.label("Type:"));
             WDropdown<ProxyType> type = general.add(theme.dropdown(proxy.type)).widget();
             type.action = () -> proxy.type = type.get();
             general.row();
 
-            // IP
+            //   IP
             general.add(theme.label("IP:"));
             WTextBox ip = general.add(theme.textBox(proxy.address)).minWidth(400).expandX().widget();
             ip.action = () -> proxy.address = ip.get();
             general.row();
 
-            // Port
+            //   Port
             general.add(theme.label("Port:"));
             WIntEdit port = general.add(theme.intEdit(proxy.port, 0, 65535, true)).expandX().widget();
             port.action = () -> proxy.port = port.get();
@@ -151,18 +154,18 @@ public class ProxiesScreen extends WindowScreen {
             add(theme.horizontalSeparator("Optional")).expandX().widget();
             WTable optional = add(theme.table()).expandX().widget();
 
-            // Username
+            //   Username
             optional.add(theme.label("Username:"));
             WTextBox username = optional.add(theme.textBox(proxy.username)).expandX().widget();
             username.action = () -> proxy.username = username.get();
             optional.row();
 
-            // Password
+            //   Password
             optional.add(theme.label("Password:"));
             WTextBox password = optional.add(theme.textBox(proxy.password)).expandX().widget();
             password.action = () -> proxy.password = password.get();
 
-            // Add/Save
+            // Add / Save
             add(theme.horizontalSeparator()).expandX();
 
             WButton addSave = add(theme.button(isNew ? "Add" : "Save")).expandX().widget();

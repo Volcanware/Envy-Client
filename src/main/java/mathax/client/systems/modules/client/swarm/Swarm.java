@@ -98,6 +98,7 @@ public class Swarm extends Module {
                 host.disconnect();
                 host = null;
             }
+
             if (worker != null) {
                 worker.disconnect();
                 worker = null;
@@ -118,6 +119,7 @@ public class Swarm extends Module {
     @Override
     public void toggle() {
         close();
+        super.toggle();
     }
 
     public boolean isHost() {

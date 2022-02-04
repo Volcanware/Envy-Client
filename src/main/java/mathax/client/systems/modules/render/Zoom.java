@@ -58,6 +58,13 @@ public class Zoom extends Module {
         .build()
     );
 
+    private final Setting<Boolean> renderHands = sgGeneral.add(new BoolSetting.Builder()
+        .name("show-hands")
+        .description("Whether or not to render your hands.")
+        .defaultValue(false)
+        .build()
+    );
+
     public Zoom() {
         super(Categories.Render, Items.SPYGLASS, "zoom", "Zooms your view.");
         autoSubscribe = false;
@@ -88,9 +95,7 @@ public class Zoom extends Module {
     private void onTick(TickEvent.Post event) {
         mc.options.smoothCameraEnabled = cinematic.get();
 
-        if (!cinematic.get()) {
-            mc.options.mouseSensitivity = preMouseSensitivity / Math.max(value() * 0.5, 1);
-        }
+        if (!cinematic.get()) mc.options.mouseSensitivity = preMouseSensitivity / Math.max(value() * 0.5, 1);
 
         if (time == 0) {
             MatHax.EVENT_BUS.unsubscribe(this);
@@ -134,5 +139,9 @@ public class Zoom extends Module {
     private double value() {
         double delta = time < 0.5 ? 4 * time * time * time : 1 - Math.pow(-2 * time + 2, 3) / 2; // Ease in out cubic
         return MathHelper.lerp(delta, 1, value);
+    }
+
+    public boolean renderHands() {
+        return !isActive() || renderHands.get();
     }
 }

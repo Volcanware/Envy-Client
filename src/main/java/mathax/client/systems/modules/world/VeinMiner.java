@@ -10,6 +10,7 @@ import mathax.client.renderer.ShapeMode;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.systems.modules.movement.Scaffold;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.Pool;
 import mathax.client.utils.player.Rotations;
@@ -49,14 +50,16 @@ public class VeinMiner extends Module {
         new Vec3i(1, 1, -1), new Vec3i(0, 1, -1), new Vec3i(-1, 1, -1)
     );
 
+    private int tick = 0;
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
     // General
 
-    private final Setting<List<Block>> blacklist = sgGeneral.add(new BlockListSetting.Builder()
-        .name("blacklist")
-        .description("Which blocks to ignore.")
+    private final Setting<List<Block>> selectedBlocks = sgGeneral.add(new BlockListSetting.Builder()
+        .name("blocks")
+        .description("Which blocks to select.")
         .defaultValue(
             Blocks.STONE,
             Blocks.DIRT,
@@ -65,12 +68,28 @@ public class VeinMiner extends Module {
         .build()
     );
 
+    private final Setting<ListMode> mode = sgGeneral.add(new EnumSetting.Builder<ListMode>()
+        .name("mode")
+        .description("Selection mode.")
+        .defaultValue(ListMode.Whitelist)
+        .build()
+    );
+
     private final Setting<Integer> depth = sgGeneral.add(new IntSetting.Builder()
         .name("depth")
-        .description("Amount of iterations used to scan for similar blocks")
+        .description("Amount of iterations used to scan for similar blocks.")
         .defaultValue(3)
         .min(1)
         .sliderRange(1, 15)
+        .build()
+    );
+
+    private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
+        .name("delay")
+        .description("Delay between mining blocks.")
+        .defaultValue(0)
+        .min(0)
+        .sliderRange(0, 20)
         .build()
     );
 
@@ -140,7 +159,10 @@ public class VeinMiner extends Module {
     @EventHandler
     private void onStartBreakingBlock(StartBreakingBlockEvent event) {
         BlockState state = mc.world.getBlockState(event.blockPos);
-        if (state.getHardness(mc.world, event.blockPos) < 0 || blacklist.get().contains(state.getBlock())) return;
+
+        if (state.getHardness(mc.world, event.blockPos) < 0) return;
+        if (mode.get() == ListMode.Whitelist && !selectedBlocks.get().contains(state.getBlock())) return;
+        if (mode.get() == ListMode.Blacklist && selectedBlocks.get().contains(state.getBlock())) return;
 
         foundBlockPositions.clear();
 
@@ -156,7 +178,15 @@ public class VeinMiner extends Module {
     private void onTick(TickEvent.Pre event) {
         blocks.removeIf(MyBlock::shouldRemove);
 
-        if (!blocks.isEmpty()) blocks.get(0).mine();
+        if (!blocks.isEmpty()) {
+            if (tick < delay.get() && !blocks.get(0).mining) {
+                tick++;
+                return;
+            }
+
+            tick = 0;
+            blocks.get(0).mine();
+        }
     }
 
     @EventHandler
@@ -237,6 +267,27 @@ public class VeinMiner extends Module {
                 blocks.add(block);
                 mineNearbyBlocks(item, neighbour, dir, depth-1);
             }
+        }
+    }
+
+    @Override
+    public String getInfoString() {
+        return mode.get().toString() + " (" + selectedBlocks.get().size() + ")";
+    }
+
+    public enum ListMode {
+        Whitelist("Whitelist"),
+        Blacklist("Blacklist");
+
+        private final String title;
+
+        ListMode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 }

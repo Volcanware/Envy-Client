@@ -38,7 +38,6 @@ public class EntityTypeListSettingScreen extends WindowScreen {
         super(theme, "Select entities");
         this.setting = setting;
 
-        // Filter
         filter = super.add(theme.textBox("")).minWidth(400).expandX().widget();
         filter.setFocused(true);
         filter.action = () -> {
@@ -67,7 +66,7 @@ public class EntityTypeListSettingScreen extends WindowScreen {
             if (!setting.onlyAttackable || EntityUtils.isAttackable(entityType)) {
                 switch (entityType.getSpawnGroup()) {
                     case CREATURE -> hasAnimal++;
-                    case WATER_AMBIENT, WATER_CREATURE, UNDERGROUND_WATER_CREATURE -> hasWaterAnimal++;
+                    case WATER_AMBIENT, WATER_CREATURE, UNDERGROUND_WATER_CREATURE, AXOLOTLS -> hasWaterAnimal++;
                     case MONSTER -> hasMonster++;
                     case AMBIENT -> hasAmbient++;
                     case MISC -> hasMisc++;
@@ -134,7 +133,7 @@ public class EntityTypeListSettingScreen extends WindowScreen {
                         animalsE.add(entityType);
                         addEntityType(animalsT, animalsC, entityType);
                     }
-                    case WATER_AMBIENT, WATER_CREATURE, UNDERGROUND_WATER_CREATURE -> {
+                    case WATER_AMBIENT, WATER_CREATURE, UNDERGROUND_WATER_CREATURE, AXOLOTLS -> {
                         waterAnimalsE.add(entityType);
                         addEntityType(waterAnimalsT, waterAnimalsC, entityType);
                     }
@@ -154,10 +153,8 @@ public class EntityTypeListSettingScreen extends WindowScreen {
             }
         };
 
-        // Sort all entities
-        if (filterText.isEmpty()) {
-            Registry.ENTITY_TYPE.forEach(entityTypeForEach);
-        } else {
+        if (filterText.isEmpty()) Registry.ENTITY_TYPE.forEach(entityTypeForEach);
+        else {
             List<Pair<EntityType<?>, Integer>> entities = new ArrayList<>();
             Registry.ENTITY_TYPE.forEach(entity -> {
                 int words = Utils.search(Names.get(entity), filterText);
@@ -199,11 +196,7 @@ public class EntityTypeListSettingScreen extends WindowScreen {
             if (checked) {
                 setting.get().put(entityType, true);
                 changed = true;
-            } else {
-                if (setting.get().removeBoolean(entityType)) {
-                    changed = true;
-                }
-            }
+            } else if (setting.get().removeBoolean(entityType)) changed = true;
         }
 
         if (changed) {
@@ -225,7 +218,7 @@ public class EntityTypeListSettingScreen extends WindowScreen {
                         if (hasAnimal == 0) tableCheckbox.checked = true;
                         hasAnimal++;
                     }
-                    case WATER_AMBIENT, WATER_CREATURE, UNDERGROUND_WATER_CREATURE -> {
+                    case WATER_AMBIENT, WATER_CREATURE, UNDERGROUND_WATER_CREATURE, AXOLOTLS -> {
                         if (hasWaterAnimal == 0) tableCheckbox.checked = true;
                         hasWaterAnimal++;
                     }
@@ -242,29 +235,27 @@ public class EntityTypeListSettingScreen extends WindowScreen {
                         hasMisc++;
                     }
                 }
-            } else {
-                if (setting.get().removeBoolean(entityType)) {
-                    switch (entityType.getSpawnGroup()) {
-                        case CREATURE -> {
-                            hasAnimal--;
-                            if (hasAnimal == 0) tableCheckbox.checked = false;
-                        }
-                        case WATER_AMBIENT, WATER_CREATURE, UNDERGROUND_WATER_CREATURE -> {
-                            hasWaterAnimal--;
-                            if (hasWaterAnimal == 0) tableCheckbox.checked = false;
-                        }
-                        case MONSTER -> {
-                            hasMonster--;
-                            if (hasMonster == 0) tableCheckbox.checked = false;
-                        }
-                        case AMBIENT -> {
-                            hasAmbient--;
-                            if (hasAmbient == 0) tableCheckbox.checked = false;
-                        }
-                        case MISC -> {
-                            hasMisc--;
-                            if (hasMisc == 0) tableCheckbox.checked = false;
-                        }
+            } else if (setting.get().removeBoolean(entityType)) {
+                switch (entityType.getSpawnGroup()) {
+                    case CREATURE -> {
+                        hasAnimal--;
+                        if (hasAnimal == 0) tableCheckbox.checked = false;
+                    }
+                    case WATER_AMBIENT, WATER_CREATURE, UNDERGROUND_WATER_CREATURE, AXOLOTLS -> {
+                        hasWaterAnimal--;
+                        if (hasWaterAnimal == 0) tableCheckbox.checked = false;
+                    }
+                    case MONSTER -> {
+                        hasMonster--;
+                        if (hasMonster == 0) tableCheckbox.checked = false;
+                    }
+                    case AMBIENT -> {
+                        hasAmbient--;
+                        if (hasAmbient == 0) tableCheckbox.checked = false;
+                    }
+                    case MISC -> {
+                           hasMisc--;
+                           if (hasMisc == 0) tableCheckbox.checked = false;
                     }
                 }
             }

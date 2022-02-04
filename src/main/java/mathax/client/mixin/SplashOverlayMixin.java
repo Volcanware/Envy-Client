@@ -1,30 +1,12 @@
 package mathax.client.mixin;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.resource.ResourceReload;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.math.MathHelper;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Optional;
-import java.util.function.Consumer;
+// TODO: Fix.
 
 @Mixin(SplashOverlay.class)
-public abstract class SplashOverlayMixin {
+public abstract class SplashOverlayMixin {/*
     @Mutable
     @Shadow
     @Final
@@ -149,5 +131,5 @@ public abstract class SplashOverlayMixin {
 
     private static int withAlpha(int color, int alpha) {
         return color | alpha << 24;
-    }
+    }*/
 }

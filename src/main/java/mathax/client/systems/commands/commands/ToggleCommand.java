@@ -3,6 +3,7 @@ package mathax.client.systems.commands.commands;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mathax.client.systems.commands.Command;
 import mathax.client.systems.commands.arguments.ModuleArgumentType;
+import mathax.client.systems.hud.HUD;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import net.minecraft.command.CommandSource;
@@ -25,12 +26,14 @@ public class ToggleCommand extends Command {
                         new ArrayList<>(Modules.get().getAll()).forEach(module -> {
                             if (!module.isActive() && !module.name.equals("panic")) module.toggle();
                         });
+                        HUD.get().active = true;
                         return SINGLE_SUCCESS;
                     })
                 )
                 .then(literal("off")
                     .executes(context -> {
                         new ArrayList<>(Modules.get().getActive()).forEach(Module::toggle);
+                        HUD.get().active = false;
                         return SINGLE_SUCCESS;
                     })
                 )
