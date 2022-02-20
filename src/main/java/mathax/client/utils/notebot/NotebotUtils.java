@@ -13,6 +13,7 @@ import static mathax.client.MatHax.mc;
 
 public class NotebotUtils {
     public static boolean isValidInstrument(BlockPos pos, InstrumentType instrument) {
+        BlockState block = mc.world.getBlockState(pos.down());
         switch (instrument) {
             case Any:
                 return true;
@@ -26,7 +27,6 @@ public class NotebotUtils {
                     else if (instr == Instrument.SNARE) return false;
                     else return instr != Instrument.COW_BELL;
                 } else {
-                    BlockState block = mc.world.getBlockState(pos.down());
                     if (block.getMaterial() == Material.AGGREGATE) return false;
                     else if (block.getMaterial() == Material.GLASS) return false;
                     else if (block.getMaterial() == Material.STONE) return false;
@@ -38,7 +38,6 @@ public class NotebotUtils {
                 BlockState state = mc.world.getBlockState(pos);
                 if (state.getBlock() == Blocks.NOTE_BLOCK) return (state.get(NoteBlock.INSTRUMENT) == Instrument.HARP);
                 else {
-                    BlockState block = mc.world.getBlockState(pos.down());
                     if (block.getMaterial() == Material.WOOD) return false;
                     else if (block.getMaterial() == Material.AGGREGATE) return false;
                     else if (block.getMaterial() == Material.GLASS) return false;
@@ -57,57 +56,44 @@ public class NotebotUtils {
                 }
             }
             case Banjo: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.HAY_BLOCK);
             }
             case Bass: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getMaterial() == Material.WOOD);
             }
             case Bells: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.GOLD_BLOCK);
             }
             case Bit: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.EMERALD_BLOCK);
             }
             case Chimes: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.PACKED_ICE);
             }
             case Cow_Bell: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.SOUL_SAND);
             }
             case Didgeridoo: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.PUMPKIN);
             }
             case Flute: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.CLAY);
             }
             case Guitar: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getMaterial() == Material.WOOL);
             }
             case Iron_Xylophone: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.IRON_BLOCK);
             }
             case Pling: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.GLOWSTONE);
             }
             case Xylophone: {
-                BlockState block = mc.world.getBlockState(pos.down());
                 return (block.getBlock() == Blocks.BONE_BLOCK);
             }
             default:
                 return false;
         }
-
     }
 
     public static boolean isValidInstrumentNbsFile(byte type, InstrumentType instrument) {

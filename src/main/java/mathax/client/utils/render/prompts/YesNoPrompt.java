@@ -9,7 +9,6 @@ import mathax.client.gui.WindowScreen;
 import mathax.client.gui.widgets.pressable.WButton;
 import mathax.client.systems.config.Config;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,46 +93,25 @@ public class YesNoPrompt {
             for (String line : messages) add(theme.label(line)).expandX();
             add(theme.horizontalSeparator()).expandX();
 
-            if (id.contains("-cant-disable")) {
-                WHorizontalList list = add(theme.horizontalList()).expandX().widget();
+            WHorizontalList checkboxContainer = add(theme.horizontalList()).expandX().widget();
+            WCheckbox dontShowAgainCheckbox = checkboxContainer.add(theme.checkbox(false)).widget();
+            checkboxContainer.add(theme.label("Don't show this again.")).expandX();
 
-                WButton yesButton = list.add(theme.button("Yes")).expandX().widget();
-                yesButton.action = () -> {
-                    onYes.run();
-                    onClose();
-                };
+            WHorizontalList list = add(theme.horizontalList()).expandX().widget();
 
-                WButton noButton = list.add(theme.button("No")).expandX().widget();
-                noButton.action = () -> {
-                    onNo.run();
-                    onClose();
-                };
-            } else {
-                WHorizontalList checkboxContainer = add(theme.horizontalList()).expandX().widget();
-                WCheckbox dontShowAgainCheckbox = checkboxContainer.add(theme.checkbox(false)).widget();
-                checkboxContainer.add(theme.label("Don't show this again.")).expandX();
+            WButton yesButton = list.add(theme.button("Yes")).expandX().widget();
+            yesButton.action = () -> {
+                if (dontShowAgainCheckbox.checked) Config.get().dontShowAgainPrompts.add(id);
+                onYes.run();
+                onClose();
+            };
 
-                WHorizontalList list = add(theme.horizontalList()).expandX().widget();
-
-                WButton yesButton = list.add(theme.button("Yes")).expandX().widget();
-                yesButton.action = () -> {
-                    if (dontShowAgainCheckbox.checked) Config.get().dontShowAgainPrompts.add(id);
-                    onYes.run();
-                    onClose();
-                };
-
-                WButton noButton = list.add(theme.button("No")).expandX().widget();
-                noButton.action = () -> {
-                    if (dontShowAgainCheckbox.checked) Config.get().dontShowAgainPrompts.add(id);
-                    onNo.run();
-                    onClose();
-                };
-            }
-        }
-
-        @Override
-        public void renderBackground(MatrixStack matrices) {
-            if (parent == null) renderBackground(matrices, 0);
+            WButton noButton = list.add(theme.button("No")).expandX().widget();
+            noButton.action = () -> {
+                if (dontShowAgainCheckbox.checked) Config.get().dontShowAgainPrompts.add(id);
+                onNo.run();
+                onClose();
+            };
         }
     }
 }

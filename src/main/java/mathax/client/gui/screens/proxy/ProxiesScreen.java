@@ -1,4 +1,4 @@
-package mathax.client.gui.screens;
+package mathax.client.gui.screens.proxy;
 
 import mathax.client.gui.renderer.GuiRenderer;
 import mathax.client.gui.widgets.WLabel;
@@ -16,7 +16,13 @@ import mathax.client.systems.proxies.ProxyType;
 import mathax.client.utils.misc.NbtUtils;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.WindowScreen;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.PointerBuffer;
+import org.lwjgl.system.MemoryUtil;
+import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
+import java.io.File;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +31,7 @@ import static mathax.client.MatHax.mc;
 public class ProxiesScreen extends WindowScreen {
     private final List<WCheckbox> checkboxes = new ArrayList<>();
 
-    private boolean doReload;
+    public boolean doReload;
 
     public ProxiesScreen(GuiTheme theme) {
         super(theme, "Proxies");
@@ -50,10 +56,7 @@ public class ProxiesScreen extends WindowScreen {
         // Proxies
         WTable table = add(theme.table()).expandX().widget();
 
-        int i = 0;
         for (Proxy proxy : Proxies.get()) {
-            int index = i;
-
             // Enabled
             WCheckbox enabled = table.add(theme.checkbox(proxy.enabled)).widget();
             checkboxes.add(enabled);
@@ -62,7 +65,7 @@ public class ProxiesScreen extends WindowScreen {
                 Proxies.get().setEnabled(proxy, checked);
 
                 for (WCheckbox checkbox : checkboxes) checkbox.checked = false;
-                checkboxes.get(index).checked = checked;
+                enabled.checked = checked;
             };
 
             // Name
@@ -93,12 +96,30 @@ public class ProxiesScreen extends WindowScreen {
             };
 
             table.row();
-            i++;
         }
 
+        WHorizontalList l = add(theme.horizontalList()).expandX().widget();
+
         // New
-        WButton newBtn = add(theme.button("New")).expandX().widget();
+        WButton newBtn = l.add(theme.button("New")).expandX().widget();
         newBtn.action = () -> openEditProxyScreen(null);
+
+        // Import
+        PointerBuffer filters = BufferUtils.createPointerBuffer(1);
+
+        ByteBuffer txtFilter = MemoryUtil.memASCII("*.txt");
+
+        filters.put(txtFilter);
+        filters.rewind();
+
+        WButton importBtn = l.add(theme.button("Import")).expandX().widget();
+        importBtn.action = () -> {
+            String selectedFile = TinyFileDialogs.tinyfd_openFileDialog("Import Proxies", null, filters, null, false);
+            if (selectedFile != null) {
+                File file = new File(selectedFile);
+                mc.setScreen(new ProxiesImportScreen(theme, file));
+            }
+        };
     }
 
     @Override

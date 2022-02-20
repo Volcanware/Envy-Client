@@ -31,11 +31,8 @@ public class ResourcePackSpoof extends Module {
         @EventHandler
         private void onPacketRecieve(PacketEvent.Receive event) {
             if (!isActive()) return;
-
-            if (!(event.packet instanceof ResourcePackSendS2CPacket)) return;
-
+            if (!(event.packet instanceof ResourcePackSendS2CPacket packet)) return;
             event.cancel();
-            ResourcePackSendS2CPacket packet = (ResourcePackSendS2CPacket) event.packet;
             BaseText msg = new LiteralText("This server has ");
             msg.append(packet.isRequired() ? "a required " : "an optional ");
             BaseText link = new LiteralText("resource pack");

@@ -48,6 +48,7 @@ public class AutoJump extends Module {
             case Sprinting -> mc.player.isSprinting() && (mc.player.forwardSpeed != 0 || mc.player.sidewaysSpeed != 0);
             case Walking -> mc.player.forwardSpeed != 0 || mc.player.sidewaysSpeed != 0;
             case Always -> true;
+            default -> false;
         };
     }
 

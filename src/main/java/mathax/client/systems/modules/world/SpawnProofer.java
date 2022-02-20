@@ -81,12 +81,8 @@ public class SpawnProofer extends Module {
 
     @EventHandler
     private void onTickPre(TickEvent.Pre event) {
-        // Delay
-        if (delay.get() != 0 && ticksWaited < delay.get() - 1) {
-            return;
-        }
+        if (delay.get() != 0 && ticksWaited < delay.get() - 1) return;
 
-        // Find slot
         FindItemResult block = InvUtils.findInHotbar(itemStack -> blocks.get().contains(Block.getBlockFromItem(itemStack.getItem())));
         if (!block.found()) {
             error("Found none of the chosen blocks in your hotbar, disabling...");
@@ -94,23 +90,17 @@ public class SpawnProofer extends Module {
             return;
         }
 
-        // Find spawn locations
         for (BlockPos.Mutable blockPos : spawns) spawnPool.free(blockPos);
         spawns.clear();
         BlockIterator.register(range.get(), range.get(), (blockPos, blockState) -> {
             BlockUtils.MobSpawn spawn = BlockUtils.isValidMobSpawn(blockPos, newMobSpawnLightLevel.get());
 
-            if ((spawn == BlockUtils.MobSpawn.Always && (mode.get() == Mode.Always || mode.get() == Mode.Both)) ||
-                    spawn == BlockUtils.MobSpawn.Potential && (mode.get() == Mode.Potential || mode.get() == Mode.Both)) {
-
-                spawns.add(spawnPool.get().set(blockPos));
-            }
+            if ((spawn == BlockUtils.MobSpawn.Always && (mode.get() == Mode.Always || mode.get() == Mode.Both)) || spawn == BlockUtils.MobSpawn.Potential && (mode.get() == Mode.Potential || mode.get() == Mode.Both)) spawns.add(spawnPool.get().set(blockPos));
         });
     }
 
     @EventHandler
     private void onTickPost(TickEvent.Post event) {
-        // Delay
         if (delay.get() != 0 && ticksWaited < delay.get() - 1) {
             ticksWaited++;
             return;
@@ -118,17 +108,12 @@ public class SpawnProofer extends Module {
 
         if (spawns.isEmpty()) return;
 
-        // Find slot
         FindItemResult block = InvUtils.findInHotbar(itemStack -> blocks.get().contains(Block.getBlockFromItem(itemStack.getItem())));
 
-        // Place blocks
         if (delay.get() == 0) for (BlockPos blockPos : spawns) BlockUtils.place(blockPos, block, rotate.get(), -50, false);
         else {
-
-            // Check if light source
             if (isLightSource(Block.getBlockFromItem(mc.player.getInventory().getStack(block.slot()).getItem()))) {
 
-                // Find lowest light level
                 int lowestLightLevel = 16;
                 BlockPos.Mutable selectedBlockPos = spawns.get(0);
                 for (BlockPos blockPos : spawns) {
@@ -152,11 +137,7 @@ public class SpawnProofer extends Module {
     }
 
     private boolean isNonOpaqueBlock(Block block) {
-        return block instanceof AbstractButtonBlock ||
-            block instanceof SlabBlock ||
-            block instanceof AbstractPressurePlateBlock ||
-            block instanceof TransparentBlock ||
-            block instanceof TripwireBlock;
+        return block instanceof AbstractButtonBlock || block instanceof SlabBlock || block instanceof AbstractPressurePlateBlock || block instanceof TransparentBlock || block instanceof TripwireBlock;
     }
 
     private boolean isLightSource(Block block) {

@@ -16,6 +16,7 @@ public abstract class WWindow extends WVerticalList {
     public Consumer<WContainer> beforeHeaderInit;
     public String id;
 
+    public final WWidget icon;
     protected final String title;
 
     protected WHeader header;
@@ -32,13 +33,14 @@ public abstract class WWindow extends WVerticalList {
 
     private boolean propagateEventsExpanded;
 
-    public WWindow(String title) {
+    public WWindow(WWidget icon, String title) {
+        this.icon = icon;
         this.title = title;
     }
 
     @Override
     public void init() {
-        header = header();
+        header = header(icon);
         header.theme = theme;
         super.add(header).expandWidgetX().widget();
 
@@ -50,7 +52,7 @@ public abstract class WWindow extends WVerticalList {
         }
     }
 
-    protected abstract WHeader header();
+    protected abstract WHeader header(WWidget icon);
 
     @Override
     public <T extends WWidget> Cell<T> add(T widget) {
@@ -119,15 +121,23 @@ public abstract class WWindow extends WVerticalList {
     }
 
     protected abstract class WHeader extends WContainer {
+        private final WWidget icon;
         private WTriangle triangle;
         private WHorizontalList list;
 
+        public WHeader(WWidget icon) {
+            this.icon = icon;
+        }
+
         @Override
         public void init() {
-            if (beforeHeaderInit != null) {
-                list = add(theme.horizontalList()).expandX().widget();
-                list.spacing = 0;
+            if (icon != null) {
+                createList();
+                add(icon).centerY();
+            }
 
+            if (beforeHeaderInit != null) {
+                createList();
                 beforeHeaderInit.accept(this);
             }
 
@@ -135,6 +145,11 @@ public abstract class WWindow extends WVerticalList {
 
             triangle = add(theme.triangle()).pad(4).right().centerY().widget();
             triangle.action = () -> setExpanded(!expanded);
+        }
+
+        private void createList() {
+            list = add(theme.horizontalList()).expandX().widget();
+            list.spacing = 0;
         }
 
         @Override

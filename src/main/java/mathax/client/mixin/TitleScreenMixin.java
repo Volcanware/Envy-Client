@@ -7,6 +7,7 @@ import mathax.client.systems.proxies.Proxies;
 import mathax.client.systems.proxies.Proxy;
 import mathax.client.utils.Utils;
 import mathax.client.utils.Version;
+import mathax.client.utils.network.MatHaxExecutor;
 import mathax.client.utils.render.color.Color;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -27,7 +28,14 @@ public class TitleScreenMixin extends Screen {
         super(title);
     }
 
-    // TODO: Add buttons for Accounts, Proxies & Update Check.
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/TitleScreen;drawStringWithShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V", ordinal = 0))
+    private void checkForUpdate(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
+        if (Version.UpdateChecker.checkForLatestTitle) {
+            Version.UpdateChecker.checkForLatestTitle = false;
+
+            Version.UpdateChecker.checkForUpdate();
+        }
+    }
 
     @Inject(method = "render", at = @At("TAIL"))
     private void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
@@ -38,33 +46,30 @@ public class TitleScreenMixin extends Screen {
         int spaceLength = textRenderer.getWidth(space);
 
         String loggedInAs = "Logged in as";
+        int loggedInAsLength = textRenderer.getWidth(loggedInAs);
         String loggedName = Modules.get().get(NameProtect.class).getName(client.getSession().getUsername());
+        int loggedNameLength = textRenderer.getWidth(loggedName);
         String loggedOpenDeveloper = "[";
+        int loggedOpenDeveloperLength = textRenderer.getWidth(loggedOpenDeveloper);
         String loggedDeveloper = "Developer";
+        int loggedDeveloperLength = textRenderer.getWidth(loggedDeveloper);
         String loggedCloseDeveloper = "]";
 
-        int loggedInAsLength = textRenderer.getWidth(loggedInAs);
-        int loggedNameLength = textRenderer.getWidth(loggedName);
-        int loggedOpenDeveloperLength = textRenderer.getWidth(loggedOpenDeveloper);
-        int loggedDeveloperLength = textRenderer.getWidth(loggedDeveloper);
 
         Proxy proxy = Proxies.get().getEnabled();
         String proxyUsing = proxy != null ? "Using proxy" + " " : "Not using a proxy";
+        int proxyUsingLength = textRenderer.getWidth(proxyUsing);
         String proxyDetails = proxy != null ? "(" + proxy.name + ") " + proxy.address + ":" + proxy.port : null;
 
-        int proxiesLeftWidth = textRenderer.getWidth(proxyUsing);
-
         String watermarkName = "MatHax";
-        String watermarkVersion = Version.getStylized();
-
         int watermarkNameLength = textRenderer.getWidth(watermarkName);
+        String watermarkVersion = Version.getStylized();
         int watermarkVersionLength = textRenderer.getWidth(watermarkVersion);
         int watermarkFullLength = watermarkNameLength + spaceLength + watermarkVersionLength;
 
         String authorBy = "By";
-        String authorName = "Matejko06";
-
         int authorByLength = textRenderer.getWidth(authorBy);
+        String authorName = "Matejko06";
         int authorNameLength = textRenderer.getWidth(authorName);
         int authorFullLength = authorByLength + spaceLength + authorNameLength;
 
@@ -94,6 +99,6 @@ public class TitleScreenMixin extends Screen {
         drawStringWithShadow(matrices, textRenderer, authorName, width - authorFullLength + authorPreviousWidth - 2, (int) y2, WHITE);
 
         drawStringWithShadow(matrices, textRenderer, proxyUsing, 2, (int) y2, GRAY);
-        if (proxyDetails != null) drawStringWithShadow(matrices, textRenderer, proxyDetails, 2 + proxiesLeftWidth, (int) y2, WHITE);
+        if (proxyDetails != null) drawStringWithShadow(matrices, textRenderer, proxyDetails, 2 + proxyUsingLength, (int) y2, WHITE);
     }
 }

@@ -44,21 +44,21 @@ public abstract class AbstractQuadRendererMixin {
     protected abstract int overlay();
 
     @Inject(method = "bufferQuad(Lnet/fabricmc/fabric/impl/client/indigo/renderer/mesh/MutableQuadViewImpl;Lnet/minecraft/class_1921;)V", at = @At("HEAD"), cancellable = true, remap = false)
-    private void onBufferQuad(MutableQuadViewImpl quad, RenderLayer renderLayer, CallbackInfo ci) {
+    private void onBufferQuad(MutableQuadViewImpl quad, RenderLayer renderLayer, CallbackInfo info) {
         WallHack wallHack = Modules.get().get(WallHack.class);
         Xray xray = Modules.get().get(Xray.class);
 
-        if(wallHack.isActive() && wallHack.blocks.get().contains(blockInfo.blockState.getBlock())) {
+        if (wallHack.isActive() && wallHack.blocks.get().contains(blockInfo.blockState.getBlock())) {
             int alpha;
 
             if (xray.isActive()) alpha = xray.opacity.get();
             else alpha = wallHack.opacity.get();
 
             whBufferQuad(bufferFunc.apply(renderLayer), quad, matrix(), overlay(), normalMatrix(), normalVec, alpha);
-            ci.cancel();
+            info.cancel();
         } else if(xray.isActive() && !wallHack.isActive() && xray.isBlocked(blockInfo.blockState.getBlock(), blockInfo.blockPos)) {
             whBufferQuad(bufferFunc.apply(renderLayer), quad, matrix(), overlay(), normalMatrix(), normalVec, xray.opacity.get());
-            ci.cancel();
+            info.cancel();
         }
     }
 

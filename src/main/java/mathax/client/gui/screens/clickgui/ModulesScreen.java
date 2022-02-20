@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 public class ModulesScreen extends TabScreen {
+    private WCategoryController controller;
 
     public ModulesScreen(GuiTheme theme) {
         super(theme, Tabs.get().get(0));
@@ -28,12 +29,18 @@ public class ModulesScreen extends TabScreen {
 
     @Override
     public void initWidgets() {
-        add(new WCategoryController());
+        controller = add(new WCategoryController()).widget();
 
         // Help
         WVerticalList help = add(theme.verticalList()).pad(4).bottom().widget();
         help.add(theme.label("Left click - Toggle module"));
         help.add(theme.label("Right click - Open module settings"));
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        controller.refresh();
     }
 
     // Category
@@ -52,7 +59,7 @@ public class ModulesScreen extends TabScreen {
         w.view.spacing = 0;
 
         for (Module module : Modules.get().getGroup(category)) {
-            w.add(theme.module(module)).expandX().widget().tooltip = module.description;
+            w.add(theme.module(module)).expandX();
         }
 
         return w;
@@ -120,6 +127,41 @@ public class ModulesScreen extends TabScreen {
         return w;
     }
 
+    // Favorites
+
+    protected Cell<WWindow> createFavorites(WContainer c) {
+        boolean hasFavorites = Modules.get().getAll().stream().anyMatch(module -> module.favorite);
+        if (!hasFavorites) return null;
+
+        WWindow w = theme.window("Favorites");
+        w.id = "favorites";
+        w.padding = 0;
+        w.spacing = 0;
+
+        if (theme.categoryIcons()) w.beforeHeaderInit = wContainer -> wContainer.add(theme.item(Items.NETHER_STAR.getDefaultStack())).pad(2);
+
+        Cell<WWindow> cell = c.add(w);
+        w.view.scrollOnlyWhenMouseOver = true;
+        w.view.hasScrollBar = false;
+        w.view.spacing = 0;
+
+        createFavoritesW(w);
+        return cell;
+    }
+
+    protected boolean createFavoritesW(WWindow w) {
+        boolean hasFavorites = false;
+
+        for (Module module : Modules.get().getAll()) {
+            if (module.favorite) {
+                w.add(theme.module(module)).expandX();
+                hasFavorites = true;
+            }
+        }
+
+        return hasFavorites;
+    }
+
     @Override
     public boolean toClipboard() {
         return NbtUtils.toClipboard(Modules.get());
@@ -137,14 +179,34 @@ public class ModulesScreen extends TabScreen {
 
     protected class WCategoryController extends WContainer {
         public final List<WWindow> windows = new ArrayList<>();
+        private Cell<WWindow> favorites;
 
         @Override
         public void init() {
             for (Category category : Modules.loopCategories()) {
                 windows.add(createCategory(this, category));
+
             }
 
             windows.add(createSearch(this));
+
+            refresh();
+        }
+
+        protected void refresh() {
+            if (favorites == null) {
+                favorites = createFavorites(this);
+                if (favorites != null) windows.add(favorites.widget());
+            }
+            else {
+                favorites.widget().clear();
+
+                if (!createFavoritesW(favorites.widget())) {
+                    remove(favorites);
+                    windows.remove(favorites.widget());
+                    favorites = null;
+                }
+            }
         }
 
         @Override

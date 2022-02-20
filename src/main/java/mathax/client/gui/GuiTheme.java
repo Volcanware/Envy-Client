@@ -1,7 +1,7 @@
 package mathax.client.gui;
 
 import mathax.client.gui.renderer.packer.GuiTexture;
-import mathax.client.gui.screens.ProxiesScreen;
+import mathax.client.gui.screens.proxy.ProxiesScreen;
 import mathax.client.gui.screens.accounts.AccountsScreen;
 import mathax.client.gui.screens.clickgui.ModuleScreen;
 import mathax.client.gui.screens.clickgui.ModulesScreen;
@@ -53,7 +53,11 @@ public abstract class GuiTheme implements ISerializable<GuiTheme> {
 
     // Widgets
 
-    public abstract WWindow window(String title);
+    public abstract WWindow window(WWidget icon, String title);
+
+    public WWindow window(String title) {
+        return window(null, title);
+    }
 
     public abstract WLabel label(String text, boolean title, double maxWidth);
     public WLabel label(String text, boolean title) {
@@ -136,6 +140,8 @@ public abstract class GuiTheme implements ISerializable<GuiTheme> {
     public abstract WQuad quad(Color color);
 
     public abstract WTopBar topBar();
+
+    public abstract WFavorite favorite(boolean checked);
 
     public WItem item(ItemStack itemStack) {
         return w(new WItem(itemStack));

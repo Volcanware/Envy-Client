@@ -1,5 +1,6 @@
 package mathax.client.systems.modules.combat;
 
+import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
 import mathax.client.mixin.ProjectileInGroundAccessor;
@@ -7,6 +8,7 @@ import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Items;
@@ -47,6 +49,12 @@ public class ArrowDodge extends Module {
         .build()
     );
 
+    private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
+        .name("ignore-projectiles")
+        .description("Won't dodge these projectiles.")
+        .build()
+    );
+
     // Movement
 
     private final Setting<MoveType> moveType = sgMovement.add(new EnumSetting.Builder<MoveType>()
@@ -83,17 +91,16 @@ public class ArrowDodge extends Module {
 
         double speed = moveSpeed.get();
 
-        for (Entity e : mc.world.getEntities()) {
-            if (!(e instanceof ProjectileEntity)) continue;
-            if (e instanceof PersistentProjectileEntity && ((ProjectileInGroundAccessor) e).getInGround()) continue;
+        for (Entity entity : mc.world.getEntities()) {
+            if (!(entity instanceof ProjectileEntity)) continue;
+            if (entity instanceof PersistentProjectileEntity && ((ProjectileInGroundAccessor) entity).getInGround()) continue;
+            if (entities.get().getBoolean(entity.getType())) continue;
 
             List<Box> futureArrowHitboxes = new ArrayList<>();
 
             for (int i = 0; i < arrowLookahead.get(); i++) {
-                Vec3d nextPos = e.getPos().add(e.getVelocity().multiply(i / 5.0f));
-                futureArrowHitboxes.add(new Box(
-                    nextPos.subtract(e.getBoundingBox().getXLength() / 2, 0, e.getBoundingBox().getZLength() / 2),
-                    nextPos.add(e.getBoundingBox().getXLength() / 2, e.getBoundingBox().getYLength(), e.getBoundingBox().getZLength() / 2)));
+                Vec3d nextPos = entity.getPos().add(entity.getVelocity().multiply(i / 5.0f));
+                futureArrowHitboxes.add(new Box(nextPos.subtract(entity.getBoundingBox().getXLength() / 2, 0, entity.getBoundingBox().getZLength() / 2), nextPos.add(entity.getBoundingBox().getXLength() / 2, entity.getBoundingBox().getYLength(), entity.getBoundingBox().getZLength() / 2)));
             }
 
             for (Box arrowHitbox : futureArrowHitboxes) {
@@ -113,13 +120,9 @@ public class ArrowDodge extends Module {
                 }
 
                 if (!didMove) {
-                    double yaw = Math.toRadians(e.getYaw());
-                    double pitch = Math.toRadians(e.getPitch());
-                    move(
-                        Math.sin(yaw) * Math.cos(pitch) * speed,
-                        Math.sin(pitch) * speed,
-                        -Math.cos(yaw) * Math.cos(pitch) * speed
-                    );
+                    double yaw = Math.toRadians(entity.getYaw());
+                    double pitch = Math.toRadians(entity.getPitch());
+                    move(Math.sin(yaw) * Math.cos(pitch) * speed, Math.sin(pitch) * speed, -Math.cos(yaw) * Math.cos(pitch) * speed);
                 }
             }
         }

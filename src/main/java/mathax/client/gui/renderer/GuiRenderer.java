@@ -31,6 +31,7 @@ public class GuiRenderer {
     public static GuiTexture TRIANGLE;
     public static GuiTexture EDIT;
     public static GuiTexture RESET;
+    public static GuiTexture FAVORITE_NO, FAVORITE_YES;
 
     public GuiTheme theme;
 
@@ -60,6 +61,8 @@ public class GuiRenderer {
         TRIANGLE = addTexture(new Identifier("mathax", "textures/icons/gui/triangle.png"));
         EDIT = addTexture(new Identifier("mathax", "textures/icons/gui/edit.png"));
         RESET = addTexture(new Identifier("mathax", "textures/icons/gui/reset.png"));
+        FAVORITE_NO = addTexture(new Identifier("mathax", "textures/icons/gui/favorite_no.png"));
+        FAVORITE_YES = addTexture(new Identifier("mathax", "textures/icons/gui/favorite_yes.png"));
 
         TEXTURE = TEXTURE_PACKER.pack();
     }

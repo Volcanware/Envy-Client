@@ -23,6 +23,7 @@ public class WMatHaxModule extends WPressable implements MatHaxWidget {
 
     public WMatHaxModule(Module module) {
         this.module = module;
+        this.tooltip = module.description;
 
         if (module.isActive()) {
             animationProgress1 = 1;

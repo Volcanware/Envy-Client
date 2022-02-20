@@ -61,10 +61,12 @@ public class ServerCommand extends Command {
 
         builder.then(literal("tps").executes(ctx -> {
             float tps = TickRate.INSTANCE.getTickRate();
+
             Formatting color;
             if (tps > 16.0f) color = Formatting.GREEN;
             else if (tps > 12.0f) color = Formatting.YELLOW;
             else color = Formatting.RED;
+
             info("Current TPS: %s%.2f(default).", color, tps);
             return SINGLE_SUCCESS;
         }));
@@ -129,13 +131,11 @@ public class ServerCommand extends Command {
                     new LiteralText("Copy to clipboard")
                 ))
             );
+
             ipText.append(ipv4Text);
         }
 
-        info(
-            new LiteralText(String.format("%sIP: ", Formatting.GRAY))
-                .append(ipText)
-        );
+        info(new LiteralText(String.format("%sIP: ", Formatting.GRAY)).append(ipText));
 
         info("Port: %d", ServerAddress.parse(server.address).getPort());
 
@@ -147,15 +147,11 @@ public class ServerCommand extends Command {
 
         info("Protocol version: %d", server.protocolVersion);
 
-        info("Difficulty: %s", mc.world.getDifficulty().getTranslatableName().getString());
+        info("Difficulty: %s (Local: %.2f)", mc.world.getDifficulty().getTranslatableName().getString(), mc.world.getLocalDifficulty(mc.player.getBlockPos()).getLocalDifficulty());
 
-        ClientCommandSource cmdSource = mc.getNetworkHandler().getCommandSource();
-        int permission_level = 5;
-        while (permission_level > 0) {
-            if (cmdSource.hasPermissionLevel(permission_level)) break;
-            permission_level--;
-        }
-        info("Permission level: %d", permission_level);
+        info("Day: %d", mc.world.getTimeOfDay() / 24000L);
+
+        info("Permission level: %s", formatPerms());
     }
 
     @EventHandler
@@ -172,8 +168,7 @@ public class ServerCommand extends Command {
     @EventHandler
     private void onReadPacket(PacketEvent.Receive event) {
         try {
-            if (event.packet instanceof CommandSuggestionsS2CPacket) {
-                CommandSuggestionsS2CPacket packet = (CommandSuggestionsS2CPacket) event.packet;
+            if (event.packet instanceof CommandSuggestionsS2CPacket packet) {
                 List<String> plugins = new ArrayList<>();
                 Suggestions matches = packet.getSuggestions();
 
@@ -187,9 +182,7 @@ public class ServerCommand extends Command {
                     if (command.length > 1) {
                         String pluginName = command[0].replace("/", "");
 
-                        if (!plugins.contains(pluginName)) {
-                            plugins.add(pluginName);
-                        }
+                        if (!plugins.contains(pluginName)) plugins.add(pluginName);
                     }
                 }
 
@@ -198,11 +191,8 @@ public class ServerCommand extends Command {
                     plugins.set(i, formatName(plugins.get(i)));
                 }
 
-                if (!plugins.isEmpty()) {
-                    info("Plugins (%d): %s ", plugins.size(), Strings.join(plugins.toArray(new String[0]), ", "));
-                } else {
-                    error("No plugins found.");
-                }
+                if (!plugins.isEmpty()) info("Plugins (%d): %s ", plugins.size(), Strings.join(plugins.toArray(new String[0]), ", "));
+                else error("No plugins found.");
 
                 ticks = 0;
                 MatHax.EVENT_BUS.unsubscribe(this);
@@ -216,12 +206,23 @@ public class ServerCommand extends Command {
     }
 
     private String formatName(String name) {
-        if (ANTICHEAT_LIST.contains(name)) {
-            return String.format("%s%s(default)", Formatting.RED, name);
-        } else if (name.contains("exploit") || name.contains("cheat") || name.contains("illegal")) {
-            return String.format("%s%s(default)", Formatting.RED, name);
-        }
+        if (ANTICHEAT_LIST.contains(name)) return String.format("%s%s(default)", Formatting.RED, name);
+        else if (name.contains("exploit") || name.contains("cheat") || name.contains("illegal")) return String.format("%s%s(default)", Formatting.RED, name);
 
         return String.format("(highlight)%s(default)", name);
+    }
+
+    public String formatPerms() {
+        int p = 5;
+        while (!mc.player.hasPermissionLevel(p) && p > 0) p--;
+
+        return switch (p) {
+            case 0 -> "0 (No Perms)";
+            case 1 -> "1 (No Perms)";
+            case 2 -> "2 (Player Command Access)";
+            case 3 -> "3 (Server Command Access)";
+            case 4 -> "4 (Operator)";
+            default -> p + " (Unknown)";
+        };
     }
 }

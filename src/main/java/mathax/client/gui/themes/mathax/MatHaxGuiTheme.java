@@ -93,6 +93,7 @@ public class MatHaxGuiTheme extends GuiTheme {
     public final Setting<SettingColor> checkboxColor = color("checkbox", "Color of checkbox.", new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b));
     public final Setting<SettingColor> plusColor = color("plus", "Color of plus button.", new SettingColor(255, 255, 255));
     public final Setting<SettingColor> minusColor = color("minus", "Color of minus button.", new SettingColor(255, 255, 255));
+    public final Setting<SettingColor> favoriteColor = color("favorite", "Color of checked favorite button.", new SettingColor(255, 255, 0));
 
     // Text
 
@@ -174,8 +175,8 @@ public class MatHaxGuiTheme extends GuiTheme {
     // Widgets
 
     @Override
-    public WWindow window(String title) {
-        return w(new WMatHaxWindow(title));
+    public WWindow window(WWidget icon, String title) {
+        return w(new WMatHaxWindow(icon, title));
     }
 
     @Override
@@ -267,6 +268,11 @@ public class MatHaxGuiTheme extends GuiTheme {
     @Override
     public WTopBar topBar() {
         return w(new WMatHaxTopBar());
+    }
+
+    @Override
+    public WFavorite favorite(boolean checked) {
+        return w(new WMatHaxFavorite(checked));
     }
 
     // Colors

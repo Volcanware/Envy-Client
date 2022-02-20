@@ -34,6 +34,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     private boolean active;
     private boolean toggleMessage = true;
     private boolean toggleToast = false;
+    public boolean favorite = false;
     private boolean visible = true;
 
     public boolean serialize = true;
@@ -189,6 +190,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
 
         tag.putBoolean("toggleMessage", toggleMessage);
         tag.putBoolean("toggleToast", toggleToast);
+        tag.putBoolean("favorite", favorite);
         tag.putBoolean("active", active);
         tag.putBoolean("visible", visible);
 
@@ -205,11 +207,12 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
         NbtElement settingsTag = tag.get("settings");
         if (settingsTag instanceof NbtCompound) settings.fromTag((NbtCompound) settingsTag);
 
-        setToggleMessage(tag.getBoolean("toggleMessage"));
-        setToggleToast(tag.getBoolean("toggleToast"));
+        toggleMessage = tag.getBoolean("toggleMessage");
+        toggleToast = tag.getBoolean("toggleToast");
+        favorite = tag.getBoolean("favorite");
         boolean active = tag.getBoolean("active");
         if (active != isActive()) toggle();
-        setVisible(tag.getBoolean("visible"));
+        visible = tag.getBoolean("visible");
 
         return this;
     }

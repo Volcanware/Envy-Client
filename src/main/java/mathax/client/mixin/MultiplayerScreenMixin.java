@@ -50,7 +50,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
         addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, new LiteralText("Accounts"), button -> client.setScreen(GuiThemes.get().accountsScreen())));
         addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> client.setScreen(GuiThemes.get().proxiesScreen())));
         addDrawableChild(new ButtonWidget(width - 231, 2, 75, 20, new LiteralText("Servers"), button -> client.setScreen(new ServerManagerScreen(GuiThemes.get(), (MultiplayerScreen) client.currentScreen))));
-        //addDrawableChild(new ButtonWidget(width - 308, 2, 75, 20, new LiteralText("Protocol"), button -> client.setScreen(new ProtocolScreen(GuiThemes.get(), client.currentScreen))));
+
         if (LastServerInfo.getLastServer() != null) addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> LastServerInfo.reconnect(client.currentScreen)));
     }
 
@@ -63,14 +63,14 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
         int spaceLength = textRenderer.getWidth(space);
 
         String loggedInAs = "Logged in as";
-        String loggedName = Modules.get().get(NameProtect.class).getName(client.getSession().getUsername());
-        String loggedOpenDeveloper = "[";
-        String loggedDeveloper = "Developer";
-        String loggedCloseDeveloper = "]";
         int loggedInAsLength = textRenderer.getWidth(loggedInAs);
+        String loggedName = Modules.get().get(NameProtect.class).getName(client.getSession().getUsername());
         int loggedNameLength = textRenderer.getWidth(loggedName);
+        String loggedOpenDeveloper = "[";
         int loggedOpenDeveloperLength = textRenderer.getWidth(loggedOpenDeveloper);
+        String loggedDeveloper = "Developer";
         int loggedDeveloperLength = textRenderer.getWidth(loggedDeveloper);
+        String loggedCloseDeveloper = "]";
 
         // Logged in as
 
@@ -90,11 +90,11 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
 
         Proxy proxy = Proxies.get().getEnabled();
 
-        String proxiesleft = proxy != null ? "Using proxy" + " " : "Not using a proxy";
-        String proxiesRight = proxy != null ? "(" + proxy.name + ") " + proxy.address + ":" + proxy.port : null;
+        String proxyLeft = proxy != null ? "Using proxy" + " " : "Not using a proxy";
+        String proxyRight = proxy != null ? (proxy.name != null && !proxy.name.isEmpty() ? "(" + proxy.name + ") " : "") + proxy.address + ":" + proxy.port : null;
 
-        drawStringWithShadow(matrices, textRenderer, proxiesleft, (int)x, (int) y, GRAY);
-        if (proxiesRight != null) drawStringWithShadow(matrices, textRenderer, proxiesRight, (int)x + textRenderer.getWidth(proxiesleft), (int) y, WHITE);
+        drawStringWithShadow(matrices, textRenderer, proxyLeft, (int)x, (int) y, GRAY);
+        if (proxyRight != null) drawStringWithShadow(matrices, textRenderer, proxyRight, (int)x + textRenderer.getWidth(proxyLeft), (int) y, WHITE);
     }
 
     @Override

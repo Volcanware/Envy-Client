@@ -27,8 +27,10 @@ public class Profile implements ISerializable<Profile> {
     public String name = "";
 
     public boolean accounts = false, config = true, friends = false, enemies = false, macros = true, modules = true, waypoints = false, hud = false;
-
+    public boolean saveOnLeave = false, saveOnInterval = false;
     public boolean onLaunch = false;
+
+    public int saveInterval = 60, timer;
 
     public void load(System<?> system) {
         File folder = new File(Profiles.FOLDER, name);
@@ -93,6 +95,10 @@ public class Profile implements ISerializable<Profile> {
         tag.putBoolean("hud", hud);
 
         tag.putBoolean("onLaunch", onLaunch);
+        tag.putBoolean("saveOnLeave", saveOnLeave);
+        tag.putBoolean("saveOnInterval", saveOnInterval);
+
+        tag.putInt("saveInterval", saveInterval);
 
         loadOnJoinIps.removeIf(String::isEmpty);
 
@@ -116,6 +122,10 @@ public class Profile implements ISerializable<Profile> {
         hud = tag.contains("hud") && tag.getBoolean("hud");
 
         onLaunch = tag.contains("onLaunch") && tag.getBoolean("onLaunch");
+        saveOnLeave = tag.contains("saveOnLeave") && tag.getBoolean("saveOnLeave");
+        saveOnInterval = tag.contains("saveOnInterval") && tag.getBoolean("saveOnInterval");
+
+        saveInterval = tag.contains("saveInterval") ? tag.getInt("saveInterval") : 60;
 
         loadOnJoinIps.clear();
 
@@ -130,9 +140,6 @@ public class Profile implements ISerializable<Profile> {
     public Profile set(Profile profile) {
         this.name = profile.name;
 
-        this.onLaunch = profile.onLaunch;
-        this.loadOnJoinIps = profile.loadOnJoinIps;
-
         this.accounts = profile.accounts;
         this.config = profile.config;
         this.friends = profile.friends;
@@ -140,6 +147,13 @@ public class Profile implements ISerializable<Profile> {
         this.modules = profile.modules;
         this.waypoints = profile.waypoints;
         this.hud = profile.hud;
+
+        this.onLaunch = profile.onLaunch;
+        this.saveOnLeave = profile.saveOnLeave;
+        this.saveOnInterval = profile.saveOnInterval;
+        this.saveInterval = profile.saveInterval;
+
+        this.loadOnJoinIps = profile.loadOnJoinIps;
 
         return this;
     }

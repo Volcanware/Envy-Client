@@ -2,6 +2,8 @@ package mathax.client.systems.profiles;
 
 import mathax.client.MatHax;
 import mathax.client.events.game.GameJoinedEvent;
+import mathax.client.events.game.GameLeftEvent;
+import mathax.client.events.world.TickEvent;
 import mathax.client.systems.System;
 import mathax.client.systems.Systems;
 import mathax.client.utils.Utils;
@@ -72,6 +74,27 @@ public class Profiles extends System<Profiles> implements Iterable<Profile> {
     private void onGameJoined(GameJoinedEvent event) {
         for (Profile profile : this) {
             if (profile.loadOnJoinIps.contains(Utils.getWorldName())) profile.load();
+        }
+    }
+
+    @EventHandler
+    private void onGameLeft(GameLeftEvent event) {
+        for (Profile profile : this) {
+            if (profile.saveOnLeave && profile.loadOnJoinIps.contains(Utils.getWorldName())) profile.save();
+        }
+    }
+
+    @EventHandler
+    private void onTick(TickEvent.Post event) {
+        for (Profile profile : this) {
+            if (profile.saveOnInterval && profile.loadOnJoinIps.contains(Utils.getWorldName())) {
+                profile.timer--;
+
+                if (profile.timer <= 0) {
+                    profile.timer = profile.saveInterval * 20;
+                    profile.save();
+                }
+            }
         }
     }
 

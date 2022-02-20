@@ -2,7 +2,7 @@ package mathax.client.systems.modules.client;
 
 import mathax.client.MatHax;
 import mathax.client.gui.screens.hud.HudElementScreen;
-import mathax.client.gui.screens.ProxiesScreen;
+import mathax.client.gui.screens.proxy.ProxiesScreen;
 import mathax.client.gui.screens.accounts.AccountsScreen;
 import mathax.client.gui.screens.accounts.AddAlteningAccountScreen;
 import mathax.client.gui.screens.accounts.AddCrackedAccountScreen;
@@ -11,7 +11,6 @@ import mathax.client.gui.screens.clickgui.ModuleScreen;
 import mathax.client.gui.screens.clickgui.ModulesScreen;
 import mathax.client.gui.screens.music.PlaylistViewScreen;
 import mathax.client.gui.screens.music.PlaylistsScreen;
-import mathax.client.gui.screens.server.ProtocolScreen;
 import mathax.client.gui.screens.server.servermanager.*;
 import mathax.client.gui.screens.settings.*;
 import mathax.client.gui.tabs.builtin.*;
@@ -163,7 +162,6 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof DirectConnectScreen) return "Using direct connect";
         else if (mc.currentScreen instanceof ServerFinderScreen) return "Using server finder";
         else if (mc.currentScreen instanceof ServerCleanUpScreen) return "Using server cleanup";
-        else if (mc.currentScreen instanceof ProtocolScreen) return "Changing protocol";
         else if (mc.currentScreen instanceof AddServerScreen addServerScreen) {
             if (addServerScreen.getTitle().getString().contains("Edit")) return "Editing a server";
             else return "Adding a server";

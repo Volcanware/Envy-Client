@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 
 import static mathax.client.MatHax.mc;
 
@@ -115,8 +116,12 @@ public class SBlock {
 
         if (neighbourState.getBlock() != state.getBlock()) return false;
 
+        VoxelShape cube = VoxelShapes.fullCube();
         VoxelShape shape = state.getOutlineShape(mc.world, blockPos);
         VoxelShape neighbourShape = neighbourState.getOutlineShape(mc.world, blockPos);
+
+        if (shape.isEmpty()) shape = cube;
+        if (neighbourShape.isEmpty()) neighbourShape = cube;
 
         switch (dir) {
             case SOUTH:

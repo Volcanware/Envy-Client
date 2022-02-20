@@ -10,6 +10,7 @@ import mathax.client.gui.WindowScreen;
 import mathax.client.gui.utils.Cell;
 import mathax.client.gui.widgets.WKeyBind;
 import mathax.client.gui.widgets.WWidget;
+import mathax.client.gui.widgets.pressable.WFavorite;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.utils.Utils;
@@ -24,7 +25,8 @@ public class ModuleScreen extends WindowScreen {
     private WKeyBind keybind;
 
     public ModuleScreen(GuiTheme theme, Module module) {
-        super(theme, module.title);
+        super(theme, theme.favorite(module.favorite), module.title);
+        ((WFavorite) window.icon).action = () -> module.favorite = ((WFavorite) window.icon).checked;
 
         this.module = module;
     }

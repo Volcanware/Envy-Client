@@ -78,6 +78,13 @@ public class AutoEat extends Module {
         .build()
     );
 
+    private final Setting<Boolean> avoidOvereating = sgHunger.add(new BoolSetting.Builder()
+        .name("avoid-overeating")
+        .description("Avoid eating foods that would bring your hunger over full.")
+        .defaultValue(false)
+        .build()
+    );
+
     public AutoEat() {
         super(Categories.Player, Items.APPLE, "auto-eat", "Automatically eats food.");
     }
@@ -159,9 +166,7 @@ public class AutoEat extends Module {
             for (Class<? extends Module> klass : AURAS) {
                 Module module = Modules.get().get(klass);
 
-                if (wasAura.contains(klass) && !module.isActive()) {
-                    module.toggle();
-                }
+                if (wasAura.contains(klass) && !module.isActive()) module.toggle();
             }
         }
 
@@ -184,14 +189,16 @@ public class AutoEat extends Module {
     private int findSlot() {
         int slot = -1;
         int bestHunger = -1;
+        int foodLevel = mc.player.getHungerManager().getFoodLevel();
 
         for (int i = 0; i < 9; i++) {
             Item item = mc.player.getInventory().getStack(i).getItem();
             if (!item.isFood()) continue;
+            if (blacklist.get().contains(item)) continue;
+            if (avoidOvereating.get() && item.getFoodComponent().getHunger() + foodLevel > 20) continue;
 
             int hunger = item.getFoodComponent().getHunger();
             if (hunger > bestHunger) {
-                if (blacklist.get().contains(item)) continue;
 
                 slot = i;
                 bestHunger = hunger;
