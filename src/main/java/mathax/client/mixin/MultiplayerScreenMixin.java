@@ -10,7 +10,7 @@ import mathax.client.utils.misc.LastServerInfo;
 import mathax.client.utils.render.color.Color;
 import mathax.client.MatHax;
 import mathax.client.gui.GuiThemes;
-import mathax.client.gui.screens.server.servermanager.ServerManagerScreen;
+import mathax.client.gui.screens.servermanager.ServerManagerScreen;
 import mathax.client.systems.modules.misc.NameProtect;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
@@ -90,7 +90,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
 
         Proxy proxy = Proxies.get().getEnabled();
 
-        String proxyLeft = proxy != null ? "Using proxy" + " " : "Not using a proxy";
+        String proxyLeft = proxy != null ? "Using proxies" + " " : "Not using a proxies";
         String proxyRight = proxy != null ? (proxy.name != null && !proxy.name.isEmpty() ? "(" + proxy.name + ") " : "") + proxy.address + ":" + proxy.port : null;
 
         drawStringWithShadow(matrices, textRenderer, proxyLeft, (int)x, (int) y, GRAY);

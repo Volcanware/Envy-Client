@@ -1,4 +1,4 @@
-package mathax.client.gui.screens.server.servermanager;
+package mathax.client.gui.screens.servermanager;
 
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.WindowScreen;

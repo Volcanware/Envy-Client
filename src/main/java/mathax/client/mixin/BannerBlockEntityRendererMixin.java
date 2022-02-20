@@ -32,12 +32,12 @@ public class BannerBlockEntityRendererMixin {
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void render(BannerBlockEntity bannerBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, CallbackInfo info) {
-        if (bannerBlockEntity.getWorld() != null) { //Don't modify banners in item form
+        if (bannerBlockEntity.getWorld() != null) {
             NoRender.BannerRenderMode renderMode = Modules.get().get(NoRender.class).getBannerRenderMode();
             if (renderMode == NoRender.BannerRenderMode.None) info.cancel();
             else if (renderMode == NoRender.BannerRenderMode.Pillar) {
                 BlockState blockState = bannerBlockEntity.getCachedState();
-                if (blockState.getBlock() instanceof BannerBlock) { //Floor banner
+                if (blockState.getBlock() instanceof BannerBlock) {
                     this.pillar.visible = true;
                     this.crossbar.visible = false;
                     renderPillar(bannerBlockEntity, matrixStack, vertexConsumerProvider, i, j);

@@ -1,4 +1,4 @@
-package mathax.client.gui.screens.proxy;
+package mathax.client.gui.screens.proxies;
 
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.WindowScreen;

@@ -199,7 +199,6 @@ public class AutoEat extends Module {
 
             int hunger = item.getFoodComponent().getHunger();
             if (hunger > bestHunger) {
-
                 slot = i;
                 bestHunger = hunger;
             }

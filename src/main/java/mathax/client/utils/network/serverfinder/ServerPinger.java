@@ -1,6 +1,6 @@
 package mathax.client.utils.network.serverfinder;
 
-import mathax.client.gui.screens.server.servermanager.ServerFinderScreen;
+import mathax.client.gui.screens.servermanager.ServerFinderScreen;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;

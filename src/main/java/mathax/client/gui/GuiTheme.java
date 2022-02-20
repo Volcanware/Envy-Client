@@ -1,7 +1,7 @@
 package mathax.client.gui;
 
 import mathax.client.gui.renderer.packer.GuiTexture;
-import mathax.client.gui.screens.proxy.ProxiesScreen;
+import mathax.client.gui.screens.proxies.ProxiesScreen;
 import mathax.client.gui.screens.accounts.AccountsScreen;
 import mathax.client.gui.screens.clickgui.ModuleScreen;
 import mathax.client.gui.screens.clickgui.ModulesScreen;

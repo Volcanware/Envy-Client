@@ -7,7 +7,6 @@ import mathax.client.systems.proxies.Proxies;
 import mathax.client.systems.proxies.Proxy;
 import mathax.client.utils.Utils;
 import mathax.client.utils.Version;
-import mathax.client.utils.network.MatHaxExecutor;
 import mathax.client.utils.render.color.Color;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.util.math.MatrixStack;

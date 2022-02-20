@@ -185,7 +185,6 @@ public class ModulesScreen extends TabScreen {
         public void init() {
             for (Category category : Modules.loopCategories()) {
                 windows.add(createCategory(this, category));
-
             }
 
             windows.add(createSearch(this));
@@ -197,8 +196,7 @@ public class ModulesScreen extends TabScreen {
             if (favorites == null) {
                 favorites = createFavorites(this);
                 if (favorites != null) windows.add(favorites.widget());
-            }
-            else {
+            } else {
                 favorites.widget().clear();
 
                 if (!createFavoritesW(favorites.widget())) {
