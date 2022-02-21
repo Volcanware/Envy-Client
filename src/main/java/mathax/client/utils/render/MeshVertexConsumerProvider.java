@@ -4,9 +4,8 @@ import mathax.client.renderer.Mesh;
 import mathax.client.utils.render.color.Color;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
 
-public class MeshVertexConsumerProvider implements VertexConsumerProvider {
+public class MeshVertexConsumerProvider implements IVertexConsumerProvider {
     private final MeshVertexConsumer vertexConsumer;
 
     public MeshVertexConsumerProvider(Mesh mesh) {
@@ -22,6 +21,7 @@ public class MeshVertexConsumerProvider implements VertexConsumerProvider {
         vertexConsumer.fixedColor(color.r, color.g, color.b, color.a);
     }
 
+    @Override
     public void setOffset(double offsetX, double offsetY, double offsetZ) {
         vertexConsumer.setOffset(offsetX, offsetY, offsetZ);
     }

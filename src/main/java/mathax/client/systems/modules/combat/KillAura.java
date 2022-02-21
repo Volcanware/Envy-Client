@@ -21,6 +21,7 @@ import mathax.client.utils.player.Rotations;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Tameable;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PiglinEntity;
@@ -313,8 +314,9 @@ public class KillAura extends Module {
         if (!nametagged.get() && entity.hasCustomName() && !(entity instanceof PlayerEntity)) return false;
         if (!PlayerUtils.canSeeEntity(entity) && PlayerUtils.distanceTo(entity) > wallsRange.get()) return false;
         if (ignorePassive.get()) {
-            if (entity instanceof EndermanEntity && !((EndermanEntity) entity).isAngry()) return false;
-            if (entity instanceof PiglinEntity || entity instanceof ZombifiedPiglinEntity && !((MobEntity) entity).isAttacking()) return false;
+            if (entity instanceof EndermanEntity enderman && !enderman.isAngry()) return false;
+            if (entity instanceof Tameable tameable && tameable.getOwnerUuid() != null && tameable.getOwnerUuid().equals(mc.player.getUuid())) return false;
+            if (entity instanceof MobEntity mob && !mob.isAttacking()) return false;
         }
         if (entity instanceof PlayerEntity) {
             if (((PlayerEntity) entity).isCreative()) return false;
