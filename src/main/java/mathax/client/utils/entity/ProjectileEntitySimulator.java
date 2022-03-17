@@ -1,12 +1,14 @@
 package mathax.client.utils.entity;
 
+import mathax.client.mixin.ProjectileInGroundAccessor;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.mixin.CrossbowItemAccessor;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.MissHitResult;
 import mathax.client.utils.misc.Vec3;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.entity.projectile.*;
+import net.minecraft.entity.projectile.thrown.*;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
@@ -79,6 +81,35 @@ public class ProjectileEntitySimulator {
         if (accurate) {
             Vec3d vel = user.getVelocity();
             velocity.add(vel.x, user.isOnGround() ? 0.0D : vel.y, vel.z);
+        }
+
+        this.gravity = gravity;
+        this.airDrag = 0.99;
+        this.waterDrag = waterDrag;
+    }
+
+    public boolean set(Entity entity, boolean accurate, double tickDelta) {
+        if (entity instanceof PersistentProjectileEntity && ((ProjectileInGroundAccessor) entity).getInGround()) return false;
+
+        if (entity instanceof ArrowEntity arrow) set(entity, arrow.getVelocity().length(), 0.05000000074505806, 0.6, accurate, tickDelta);
+        else if (entity instanceof EnderPearlEntity || entity instanceof SnowballEntity || entity instanceof EggEntity) set(entity, 1.5, 0.03, 0.8, accurate, tickDelta);
+        else if (entity instanceof TridentEntity) set(entity, 2.5, 0.05000000074505806, 0.99, accurate, tickDelta);
+        else if (entity instanceof ExperienceBottleEntity) set(entity, 0.7,  0.07, 0.8, accurate, tickDelta);
+        else if (entity instanceof ThrownEntity) set(entity, 0.5, 0.05, 0.8, accurate, tickDelta);
+        else if (entity instanceof WitherSkullEntity || entity instanceof FireballEntity || entity instanceof DragonFireballEntity) set(entity, 0.95, 0.1, 0.8, accurate, tickDelta);
+        else return false;
+
+        return true;
+    }
+
+    public void set(Entity entity, double speed, double gravity, double waterDrag, boolean accurate, double tickDelta) {
+        pos.set(entity, tickDelta);
+
+        velocity.set(entity.getVelocity()).normalize().multiply(speed);
+
+        if (accurate) {
+            Vec3d vel = entity.getVelocity();
+            velocity.add(vel.x, entity.isOnGround() ? 0.0D : vel.y, vel.z);
         }
 
         this.gravity = gravity;

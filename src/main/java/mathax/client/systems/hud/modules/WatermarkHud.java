@@ -148,8 +148,8 @@ public class WatermarkHud extends TripleTextHudElement {
             Version.UpdateChecker.checkForLatest = false;
 
             switch (Version.UpdateChecker.checkLatest()) {
-                case Cant_Check -> versionString = " [Could not get Latest Version]";
-                case Newer_Found -> versionString = " [Outdated | Latest Version: v" + Version.UpdateChecker.getLatest() + "]";
+                case Cant_Check -> versionString = " [Could not get latest version]";
+                case Newer_Found -> versionString = " [Outdated | Latest version: v" + Version.UpdateChecker.getLatest() + "]";
                 default -> versionString = "";
             }
         }

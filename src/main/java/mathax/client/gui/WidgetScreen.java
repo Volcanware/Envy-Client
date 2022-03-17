@@ -283,7 +283,7 @@ public abstract class WidgetScreen extends Screen {
     }
 
     @Override
-    public void onClose() {
+    public void close() {
         if (!locked) {
             boolean preOnClose = onClose;
             onClose = true;

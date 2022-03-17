@@ -2,6 +2,7 @@ package mathax.client.mixin;
 
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.world.Ambience;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.block.FluidRenderer;
 import net.minecraft.fluid.FluidState;
@@ -19,11 +20,11 @@ public class FluidRendererMixin {
      * @author Walaryne
      */
     @ModifyVariable(method = "render", at = @At(value = "STORE", ordinal = 0), index = 8)
-    private int modifyColorIfLava(int color, BlockRenderView world, BlockPos pos, VertexConsumer vertexConsumer, FluidState state) {
+    private int modifyColorIfLava(int color, BlockRenderView world, BlockPos pos, VertexConsumer vertexConsumer, BlockState blockState, FluidState fluidState) {
         Ambience ambience = Modules.get().get(Ambience.class);
 
         if (ambience.isActive() && ambience.customLavaColor.get()) {
-            if (state.isIn(FluidTags.LAVA)) return ambience.lavaColor.get().getPacked();
+            if (fluidState.isIn(FluidTags.LAVA)) return ambience.lavaColor.get().getPacked();
         }
 
         return color;

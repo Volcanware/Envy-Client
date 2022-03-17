@@ -245,8 +245,8 @@ public class BetterChat extends Module {
                 try {
                     p = Pattern.compile(regexFilters.get().get(i));
                 } catch (PatternSyntaxException e) {
-                    error("Removing Invalid regex: %s", regexFilters.get().get(i));
-                    regexFilters.get().remove(i);
+                    String removed = regexFilters.get().remove(i);
+                    error("Removing Invalid regex: %s", removed);
                     continue;
                 }
 

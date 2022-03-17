@@ -24,13 +24,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Tameable;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PiglinEntity;
-import net.minecraft.entity.mob.ZombifiedPiglinEntity;
+import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
 
 import java.util.ArrayList;
@@ -86,9 +86,23 @@ public class KillAura extends Module {
 
     private final Setting<Boolean> randomTeleport = sgGeneral.add(new BoolSetting.Builder()
         .name("random-teleport")
-        .description("Randomly teleport around the target")
+        .description("Randomly teleport around the target.")
         .defaultValue(false)
         .visible(() -> !onlyWhenLook.get())
+        .build()
+    );
+
+    private final Setting<Boolean> ignoreShield = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-shield")
+        .description("Attacks only if the blow is not blocked by a shield.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> noRightClick = sgGeneral.add(new BoolSetting.Builder()
+        .name("no-right-click")
+        .description("Does not attack if the right mouse button is pressed (Using a shield, you eat food or drink a potion).")
+        .defaultValue(true)
         .build()
     );
 
@@ -264,7 +278,7 @@ public class KillAura extends Module {
         Entity primary = targets.get(0);
         if (rotation.get() == RotationMode.Always) rotate(primary, null);
 
-        if (onlyOnClick.get() && !mc.options.keyAttack.isPressed()) return;
+        if (onlyOnClick.get() && !mc.options.attackKey.isPressed()) return;
         if (onlyWhenLook.get()) {
             primary = mc.targetedEntity;
 
@@ -311,18 +325,34 @@ public class KillAura extends Module {
         if ((entity instanceof LivingEntity && ((LivingEntity) entity).isDead()) || !entity.isAlive()) return false;
         if (PlayerUtils.distanceTo(entity) > targetRange.get()) return false;
         if (!entities.get().getBoolean(entity.getType())) return false;
+        if (noRightClick.get() && mc.options.useKey.isPressed()) return false;
         if (!nametagged.get() && entity.hasCustomName() && !(entity instanceof PlayerEntity)) return false;
         if (!PlayerUtils.canSeeEntity(entity) && PlayerUtils.distanceTo(entity) > wallsRange.get()) return false;
         if (ignorePassive.get()) {
             if (entity instanceof EndermanEntity enderman && !enderman.isAngry()) return false;
             if (entity instanceof Tameable tameable && tameable.getOwnerUuid() != null && tameable.getOwnerUuid().equals(mc.player.getUuid())) return false;
-            if (entity instanceof MobEntity mob && !mob.isAttacking()) return false;
+            if (entity instanceof MobEntity mob && !mob.isAttacking() && !(entity instanceof PhantomEntity)) return false;
         }
         if (entity instanceof PlayerEntity) {
             if (((PlayerEntity) entity).isCreative()) return false;
             if (!Friends.get().shouldAttack((PlayerEntity) entity)) return false;
+            if (ignoreShield.get() && shieldCheck((PlayerEntity)entity)) return false;
         }
         return !(entity instanceof AnimalEntity) || babies.get() || !((AnimalEntity) entity).isBaby();
+    }
+
+    public boolean shieldCheck (PlayerEntity player) {
+        if (player.isBlocking()) {
+            Vec3d persistentProjectileEntity = mc.player.getPos();
+            if (persistentProjectileEntity != null) {
+                Vec3d vec3d = player.getRotationVec(1.0F);
+                Vec3d vec3d2 = persistentProjectileEntity.relativize(player.getPos()).normalize();
+                vec3d2 = new Vec3d(vec3d2.x, 0.0D, vec3d2.z);
+                return vec3d2.dotProduct(vec3d) < 0.0D;
+            }
+        }
+
+        return false;
     }
 
     private boolean delayCheck() {

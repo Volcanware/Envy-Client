@@ -220,13 +220,10 @@ public class ProfilesTab extends Tab {
 
                 oldProfile.set(newProfile);
 
-                if (isNew) {
-                    Profiles.get().add(oldProfile);
-                } else {
-                    Profiles.get().save();
-                }
+                if (isNew) Profiles.get().add(oldProfile);
+                else Profiles.get().save();
 
-                onClose();
+                close();
             };
 
             enterAction = save.action;

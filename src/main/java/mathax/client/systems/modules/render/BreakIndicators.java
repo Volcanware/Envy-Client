@@ -73,9 +73,24 @@ public class BreakIndicators extends Module {
         float ownBreakingStage = ((ClientPlayerInteractionManagerAccessor) mc.interactionManager).getBreakingProgress();
         BlockPos ownBreakingPos = ((ClientPlayerInteractionManagerAccessor) mc.interactionManager).getCurrentBreakingBlockPos();
 
+        if (ownBreakingPos != null && mc.interactionManager.isBreakingBlock()) {
+            BlockState state = mc.world.getBlockState(ownBreakingPos);
+            VoxelShape shape = state.getOutlineShape(mc.world, ownBreakingPos);
+            if (shape.isEmpty() || shape == null) return;
+
+            Box orig = shape.getBoundingBox();
+            Box box = orig;
+
+            double shrinkFactor = 1d - ownBreakingStage;
+            double progress = 1d - shrinkFactor;
+
+            renderBlock(event, box, orig, ownBreakingPos, shrinkFactor, progress);
+        }
+
         blocks.values().forEach(info -> {
             BlockPos pos = info.getPos();
             int stage = info.getStage();
+            if (pos.equals(ownBreakingPos)) return;
 
             BlockState state = mc.world.getBlockState(pos);
             VoxelShape shape = state.getOutlineShape(mc.world, pos);
@@ -85,7 +100,6 @@ public class BreakIndicators extends Module {
             Box box = orig;
 
             double shrinkFactor = (9 - (stage + 1)) / 9d;
-            if (ownBreakingPos != null && ownBreakingStage > 0 && ownBreakingPos.equals(pos)) shrinkFactor = 1d - ownBreakingStage;
 
             double progress = 1d - shrinkFactor;
 

@@ -214,14 +214,14 @@ public class InteractionScreen extends Screen {
     }
 
     public void tick() {
-        if (Modules.get().get(InteractionMenu.class).keybind.get().isPressed()) onClose();
+        if (Modules.get().get(InteractionMenu.class).keybind.get().isPressed()) close();
     }
 
     private void closeScreen() {
         client.setScreen((Screen) null);
     }
 
-    public void onClose() {
+    public void close() {
         cursorMode(GLFW.GLFW_CURSOR_NORMAL);
 
         if (focusedString != null) functions.get(focusedString).accept(this.entity);
@@ -344,7 +344,7 @@ public class InteractionScreen extends Screen {
     private class StaticListener {
         @EventHandler
         private void onKey(KeyEvent event) {
-            if (client.options.keySneak.matchesKey(event.key, 0) || client.options.keySneak.matchesMouse(event.key)) {
+            if (client.options.sneakKey.matchesKey(event.key, 0) || client.options.sneakKey.matchesMouse(event.key)) {
                 client.setCameraEntity(client.player);
                 event.cancel();
                 MatHax.EVENT_BUS.unsubscribe(this);

@@ -71,7 +71,7 @@ public class ElytraFlightMode {
     public void autoTakeoff() {
         if (incrementJumpTimer) jumpTimer++;
 
-        boolean jumpPressed = MatHax.mc.options.keyJump.isPressed();
+        boolean jumpPressed = MatHax.mc.options.jumpKey.isPressed();
 
         if (elytraFly.autoTakeOff.get() && jumpPressed) {
             if (!lastJumpPressed && !MatHax.mc.player.isFallFlying()) {
@@ -96,7 +96,7 @@ public class ElytraFlightMode {
         if (!MatHax.mc.player.isFallFlying()) return;
 
         if (elytraFly.autoPilot.get() && MatHax.mc.player.getY() > elytraFly.autoPilotMinimumHeight.get()) {
-            MatHax.mc.options.keyForward.setPressed(true);
+            MatHax.mc.options.forwardKey.setPressed(true);
             lastForwardPressed = true;
         }
 
@@ -128,21 +128,21 @@ public class ElytraFlightMode {
         boolean a = false;
         boolean b = false;
 
-        if (MatHax.mc.options.keyForward.isPressed()) {
+        if (MatHax.mc.options.forwardKey.isPressed()) {
             velX += forward.x * elytraFly.horizontalSpeed.get() * 10;
             velZ += forward.z * elytraFly.horizontalSpeed.get() * 10;
             a = true;
-        } else if (MatHax.mc.options.keyBack.isPressed()) {
+        } else if (MatHax.mc.options.backKey.isPressed()) {
             velX -= forward.x * elytraFly.horizontalSpeed.get() * 10;
             velZ -= forward.z * elytraFly.horizontalSpeed.get() * 10;
             a = true;
         }
 
-        if (MatHax.mc.options.keyRight.isPressed()) {
+        if (MatHax.mc.options.rightKey.isPressed()) {
             velX += right.x * elytraFly.horizontalSpeed.get() * 10;
             velZ += right.z * elytraFly.horizontalSpeed.get() * 10;
             b = true;
-        } else if (MatHax.mc.options.keyLeft.isPressed()) {
+        } else if (MatHax.mc.options.leftKey.isPressed()) {
             velX -= right.x * elytraFly.horizontalSpeed.get() * 10;
             velZ -= right.z * elytraFly.horizontalSpeed.get() * 10;
             b = true;
@@ -156,8 +156,8 @@ public class ElytraFlightMode {
     }
 
     public void handleVerticalSpeed(PlayerMoveEvent event) {
-        if (MatHax.mc.options.keyJump.isPressed()) velY += 0.5 * elytraFly.verticalSpeed.get();
-        else if (MatHax.mc.options.keySneak.isPressed()) velY -= 0.5 * elytraFly.verticalSpeed.get();
+        if (MatHax.mc.options.jumpKey.isPressed()) velY += 0.5 * elytraFly.verticalSpeed.get();
+        else if (MatHax.mc.options.sneakKey.isPressed()) velY -= 0.5 * elytraFly.verticalSpeed.get();
     }
 
     public void handleFallMultiplier() {

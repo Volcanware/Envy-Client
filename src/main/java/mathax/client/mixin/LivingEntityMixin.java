@@ -17,6 +17,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -39,9 +40,9 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "canWalkOnFluid", at = @At("HEAD"), cancellable = true)
-    private void onCanWalkOnFluid(Fluid fluid, CallbackInfoReturnable<Boolean> info) {
+    private void onCanWalkOnFluid(FluidState fluidState, CallbackInfoReturnable<Boolean> info) {
         if ((Object) this != mc.player) return;
-        CanWalkOnFluidEvent event = MatHax.EVENT_BUS.post(CanWalkOnFluidEvent.get(fluid));
+        CanWalkOnFluidEvent event = MatHax.EVENT_BUS.post(CanWalkOnFluidEvent.get(fluidState));
 
         info.setReturnValue(event.walkOnFluid);
     }

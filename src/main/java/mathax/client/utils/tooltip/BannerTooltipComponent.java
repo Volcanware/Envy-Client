@@ -65,7 +65,7 @@ public class BannerTooltipComponent implements MatHaxTooltipData, TooltipCompone
             true,
             BannerBlockEntity.getPatternsFromNbt(
                 ((BannerItem) this.banner.getItem()).getColor(),
-                BannerBlockEntity.getPatternListTag(this.banner)
+                BannerBlockEntity.getPatternListNbt(this.banner)
             )
         );
         matrices.pop();

@@ -81,6 +81,8 @@ public class HUD extends System<HUD> {
     public HUD() {
         super("HUD");
 
+        settings.registerColorSettings(null);
+
         // MAIN INFO
         mainInfo = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 2, 2);
         // Modules

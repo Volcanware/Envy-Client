@@ -27,8 +27,6 @@ public class StatusEffectAmplifierMapSettingScreen extends WindowScreen {
         super(theme, "Modify Amplifiers");
 
         this.setting = setting;
-
-        initWidgets();
     }
 
     @Override

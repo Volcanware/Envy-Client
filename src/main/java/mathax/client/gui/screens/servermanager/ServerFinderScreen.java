@@ -253,7 +253,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
     }
 
     @Override
-    public void onClose() {
+    public void close() {
         state = ServerFinderState.Cancelled;
     }
 

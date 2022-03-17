@@ -143,7 +143,6 @@ public class StashFinder extends Module {
 
     @EventHandler
     private void onChunkData(ChunkDataEvent event) {
-        // Check the distance.
         double chunkXAbs = Math.abs(event.chunk.getPos().x * 16);
         double chunkZAbs = Math.abs(event.chunk.getPos().z * 16);
         if (Math.sqrt(chunkXAbs * chunkXAbs + chunkZAbs * chunkZAbs) < minimumDistance.get()) return;
@@ -183,12 +182,13 @@ public class StashFinder extends Module {
                 }
             }
         }
+
+        ChunkDataEvent.returnChunkDataEvent(event);
     }
 
     private void load() {
         boolean loaded = false;
 
-        // Try to load json
         File file = getJsonFile();
         if (file.exists()) {
             try {
@@ -204,7 +204,6 @@ public class StashFinder extends Module {
             }
         }
 
-        // Try to load csv
         file = getCsvFile();
         if (!loaded && file.exists()) {
             try {
@@ -329,7 +328,6 @@ public class StashFinder extends Module {
         public void initWidgets() {
             WTable t = add(theme.table()).expandX().widget();
 
-            // Total
             t.add(theme.label("Total:"));
             t.add(theme.label(chunk.getTotal() + ""));
             t.row();
@@ -337,7 +335,6 @@ public class StashFinder extends Module {
             t.add(theme.horizontalSeparator()).expandX();
             t.row();
 
-            // Separate
             t.add(theme.label("Chests:"));
             t.add(theme.label(chunk.chests + ""));
             t.row();

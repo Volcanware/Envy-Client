@@ -26,7 +26,7 @@ public class PotionSettingScreen extends WindowScreen {
             WButton select = table.add(theme.button("Select")).widget();
             select.action = () -> {
                 setting.set(potion);
-                onClose();
+                close();
             };
 
             table.row();

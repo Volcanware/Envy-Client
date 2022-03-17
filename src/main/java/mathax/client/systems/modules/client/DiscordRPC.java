@@ -29,6 +29,7 @@ import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
+import net.minecraft.client.gui.screen.narration.ScreenNarrator;
 import net.minecraft.client.gui.screen.option.*;
 import net.minecraft.client.gui.screen.pack.PackScreen;
 import net.minecraft.client.gui.screen.world.*;
@@ -167,7 +168,6 @@ public class DiscordRPC extends Module {
         else if (mc.currentScreen instanceof CreditsScreen) return "Reading credits";
         else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
         else if (mc.currentScreen instanceof AddCrackedAccountScreen) return "Adding cracked account";
-        else if (mc.currentScreen instanceof AddPremiumAccountScreen) return "Adding premium account";
         else if (mc.currentScreen instanceof AddAlteningAccountScreen) return "Adding The Altening account";
         else if (mc.currentScreen instanceof ProxiesScreen) return "Editing proxies";
         else if (mc.currentScreen instanceof ProxiesImportScreen) return "Importing proxies";
@@ -249,9 +249,6 @@ public class DiscordRPC extends Module {
         } else if (mc.currentScreen instanceof ControlsOptionsScreen) {
             if (mc.world != null && serverVisibility.get()) return "Changing keybinds (" + getWorldActivity(true, true) + ")";
             return "Changing keybinds";
-        } else if (mc.currentScreen instanceof NarratorOptionsScreen) {
-            if (mc.world != null && serverVisibility.get()) return "Changing narrator settings (" + getWorldActivity(true, true) + ")";
-            return "Changing narrator settings";
         } else if (mc.currentScreen instanceof StatsScreen) {
             if (mc.world != null && serverVisibility.get()) return "Viewing stats (" + getWorldActivity(true, true) + ")";
             else return "Viewing stats";
