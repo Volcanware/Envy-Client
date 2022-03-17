@@ -35,7 +35,7 @@ public class NBSDecoder {
             if (length != 0) return parseClassic(dis, decodeFile, length);
             else return parseOpenNBS(dis, decodeFile);
         } catch (IOException exception) {
-            MatHax.LOG.error(Arrays.toString(exception.getStackTrace()));
+            MatHax.LOG.error("", exception);
         }
 
         return null;
