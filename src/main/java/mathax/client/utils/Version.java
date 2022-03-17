@@ -91,11 +91,11 @@ public class Version {
         }
 
         public static void checkForUpdate() {
-            MatHax.LOG.info(MatHax.logPrefix + "Checking for latest version of MatHax!");
+            MatHax.LOG.info("Checking for latest version of MatHax!");
             switch (checkLatest()) {
-                case Cant_Check -> MatHax.LOG.info(MatHax.logPrefix + "Could not check for latest version!");
+                case Cant_Check -> MatHax.LOG.info("Could not check for latest version!");
                 case Newer_Found -> {
-                    MatHax.LOG.info(MatHax.logPrefix + "There is a new version of MatHax, v" + getLatest() + "! You are using " + Version.getStylized() + "! You can download the newest version on " + MatHax.URL + "Download!");
+                    MatHax.LOG.info("There is a new version of MatHax, v" + getLatest() + "! You are using " + Version.getStylized() + "! You can download the newest version on " + MatHax.URL + "Download!");
                     YesNoPrompt.create()
                         .id("new-update")
                         .title("New Update")
@@ -110,8 +110,8 @@ public class Version {
                         .onYes(() -> Util.getOperatingSystem().open(MatHax.URL + "Download"))
                         .show();
                 }
-                case Latest -> MatHax.LOG.info(MatHax.logPrefix + "You are using the latest version of MatHax, " + Version.getStylized() + "!");
-                case Running_Dev -> MatHax.LOG.info(MatHax.logPrefix + "Developer builds do not get update notifications about another developer build of the version they are a developer build of! You are running " + getStylized() + "!");
+                case Latest -> MatHax.LOG.info("You are using the latest version of MatHax, " + Version.getStylized() + "!");
+                case Running_Dev -> MatHax.LOG.info("Developer builds do not get update notifications about another developer build of the version they are a developer build of! You are running " + getStylized() + "!");
             }
         }
 

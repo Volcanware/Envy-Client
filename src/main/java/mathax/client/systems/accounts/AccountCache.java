@@ -71,7 +71,7 @@ public class AccountCache implements ISerializable<AccountCache> {
 
             return true;
         } catch (IOException e) {
-            MatHax.LOG.error(MatHax.logPrefix + "Failed to read skin url (" + url + ").");
+            MatHax.LOG.error("Failed to read skin url (" + url + ").");
             return false;
         }
     }

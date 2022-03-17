@@ -77,11 +77,11 @@ public class Systems {
 
     public static void save(File folder) {
         long start = java.lang.System.currentTimeMillis();
-        MatHax.LOG.info(MatHax.logPrefix + "Systems are saving...");
+        MatHax.LOG.info("Systems are saving...");
 
         for (System<?> system : systems.values()) system.save(folder);
 
-        MatHax.LOG.info(MatHax.logPrefix + "Systems saved in {} milliseconds.", java.lang.System.currentTimeMillis() - start);
+        MatHax.LOG.info("Systems saved in {} milliseconds.", java.lang.System.currentTimeMillis() - start);
     }
 
     public static void save() {
@@ -92,13 +92,13 @@ public class Systems {
 
     public static void load(File folder) {
         long start = java.lang.System.currentTimeMillis();
-        MatHax.LOG.info(MatHax.logPrefix + "Systems are loading...");
+        MatHax.LOG.info("Systems are loading...");
 
         for (Runnable task : preLoadTasks) task.run();
 
         for (System<?> system : systems.values()) system.load(folder);
 
-        MatHax.LOG.info(MatHax.logPrefix + "Systems loaded in {} milliseconds.", java.lang.System.currentTimeMillis() - start);
+        MatHax.LOG.info("Systems loaded in {} milliseconds.", java.lang.System.currentTimeMillis() - start);
     }
 
     public static void load() {

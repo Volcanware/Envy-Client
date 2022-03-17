@@ -56,7 +56,7 @@ public class NbtUtils {
             mc.keyboard.setClipboard(Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray()));
             return true;
         } catch (Exception e) {
-            MatHax.LOG.error(MatHax.logPrefix + String.format("Error copying %s NBT to clipboard!", name));
+            MatHax.LOG.error(String.format("Error copying %s NBT to clipboard!", name));
 
             OkPrompt.create()
                 .title(String.format("Error copying %s NBT to clipboard!", name))
@@ -91,7 +91,7 @@ public class NbtUtils {
 
             return pasted;
         } catch (Exception e) {
-            MatHax.LOG.error(MatHax.logPrefix + "Invalid NBT data pasted!");
+            MatHax.LOG.error("Invalid NBT data pasted!");
 
             OkPrompt.create()
                 .title("Error pasting NBT data!")

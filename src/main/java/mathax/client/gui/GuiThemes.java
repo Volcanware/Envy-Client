@@ -44,7 +44,7 @@ public class GuiThemes {
             if (it.next().name.equals(theme.name)) {
                 it.remove();
 
-                MatHax.LOG.error(MatHax.logPrefix + "Theme with the name '{}' has already been added.", theme.name);
+                MatHax.LOG.error("Theme with the name '{}' has already been added.", theme.name);
                 break;
             }
         }

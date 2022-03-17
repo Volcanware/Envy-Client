@@ -53,9 +53,9 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.util.Formatting;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
@@ -86,8 +86,7 @@ public class MatHax implements ClientModInitializer {
     public final Color MATHAX_BACKGROUND_COLOR = new Color(30, 30, 45, 255);
     public final int MATHAX_BACKGROUND_COLOR_INT = Color.fromRGBA(30, 30, 45, 255);
 
-    public static final Logger LOG = LogManager.getLogger();
-    public static String logPrefix = "[MatHax] ";
+    public static final Logger LOG = LoggerFactory.getLogger("MatHax");
 
     public static final String URL = "https://mathaxclient.xyz/";
     public static final String API_URL = "https://api.mathaxclient.xyz/";
@@ -152,7 +151,7 @@ public class MatHax implements ClientModInitializer {
         }
 
         // Log
-        LOG.info(logPrefix + "Initializing MatHax " + Version.getStylized() + " for Minecraft " + Version.getMinecraft() + "...");
+        LOG.info("Initializing MatHax " + Version.getStylized() + " for Minecraft " + Version.getMinecraft() + "...");
 
         // Global Minecraft client accessor
         mc = MinecraftClient.getInstance();
@@ -264,7 +263,7 @@ public class MatHax implements ClientModInitializer {
         else WindowUtils.MatHax.setTitle();
 
         // Log
-        LOG.info(logPrefix + "MatHax " + Version.getStylized() + " initialized for Minecraft " + Version.getMinecraft() + "!");
+        LOG.info("MatHax " + Version.getStylized() + " initialized for Minecraft " + Version.getMinecraft() + "!");
     }
 
     @EventHandler

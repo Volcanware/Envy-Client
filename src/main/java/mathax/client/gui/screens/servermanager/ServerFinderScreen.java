@@ -151,7 +151,7 @@ public class ServerFinderScreen extends WindowScreen implements IServerFinderDon
             e.printStackTrace();
         }
 
-        MatHax.LOG.info(MatHax.logPrefix + "Saved " + newIPs + " new IP" + (newIPs == 1 ? "" : "s"));
+        MatHax.LOG.info("Saved " + newIPs + " new IP" + (newIPs == 1 ? "" : "s"));
     }
 
     private void searchOrCancel() {
