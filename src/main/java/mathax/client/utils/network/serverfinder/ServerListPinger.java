@@ -163,7 +163,7 @@ public class ServerListPinger {
             clientConnection.send(new HandshakeC2SPacket(serverAddress.getAddress(), serverAddress.getPort(), NetworkState.STATUS));
             clientConnection.send(new QueryRequestC2SPacket());
         } catch (Throwable throwable) {
-            MatHax.LOG.error("[MatHax] Couldn't send handshake", throwable);
+            MatHax.LOG.error("Couldn't send handshake", throwable);
         }
     }
 
