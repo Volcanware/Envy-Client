@@ -153,11 +153,10 @@ public class DiscordRPC extends Module {
             if (mc.world != null && serverVisibility.get()) return "Loading something (" + getWorldActivity(true, true) + ")";
             else return "Loading something...";
         } else if (mc.currentScreen instanceof TitleScreen) return "In main menu";
-        else if (mc.currentScreen instanceof MultiplayerScreen || mc.currentScreen instanceof ServerManagerScreen) return "In server selection";
+        else if (mc.currentScreen instanceof MultiplayerScreen) return "In server selection";
         else if (mc.currentScreen instanceof RealmsScreen) return "Browsing Realms";
         else if (mc.currentScreen instanceof DirectConnectScreen) return "Using direct connect";
-        else if (mc.currentScreen instanceof ServerFinderScreen) return "Using server finder";
-        else if (mc.currentScreen instanceof ServerCleanUpScreen) return "Using server cleanup";
+        else if (mc.currentScreen instanceof ServerCleanUpScreen) return "Using server list cleanup";
         else if (mc.currentScreen instanceof AddServerScreen addServerScreen) {
             if (addServerScreen.getTitle().getString().contains("Edit")) return "Editing a server";
             else return "Adding a server";

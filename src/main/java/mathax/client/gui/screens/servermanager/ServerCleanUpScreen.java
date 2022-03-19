@@ -13,65 +13,57 @@ import net.minecraft.client.gui.screen.multiplayer.MultiplayerServerListWidget;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.util.Formatting;
 
-public class ServerCleanUpScreen extends WindowScreen {
-    private final MultiplayerScreen multiplayerScreen;
-    private final WCheckbox removeAll;
-    private final WCheckbox removeFailed;
-    private final WCheckbox removeOutdated;
-    private final WCheckbox removeUnknown;
-    private final WCheckbox removeFound;
-    private final WCheckbox rename;
+/*/--------------------------------------------/*/
+/*/ Server Clean Up by JFronny                 /*/
+/*/ https://github.com/JFronny/MeteorAdditions /*/
+/*/--------------------------------------------/*/
 
-    public ServerCleanUpScreen(GuiTheme theme, MultiplayerScreen multiplayerScreen, Screen parent) {
+public class ServerCleanUpScreen extends WindowScreen {
+    private final WCheckbox removeAll = theme.checkbox(false);
+    private final WCheckbox removeFailed = theme.checkbox(false);
+    private final WCheckbox removeOutdated = theme.checkbox(false);
+    private final WCheckbox removeUnknown = theme.checkbox(false);
+
+    public ServerCleanUpScreen(GuiTheme theme, Screen parent) {
         super(theme, "Clean Up");
-        this.multiplayerScreen = multiplayerScreen;
+
         this.parent = parent;
-        this.removeUnknown = theme.checkbox(true);
-        this.removeOutdated = theme.checkbox(false);
-        this.removeFailed = theme.checkbox(true);
-        this.removeFound = theme.checkbox(false);
-        this.removeAll = theme.checkbox(false);
-        this.rename = theme.checkbox(false);
     }
 
     @Override
     public void initWidgets() {
         WTable table = add(new WTable()).widget();
+
         table.add(theme.label("Servers to remove:"));
+
         table.row();
-        table.add(theme.label("Unknown Hosts")).widget().tooltip = "";
+        table.add(theme.label("Unknown hosts"));
         table.add(removeUnknown).widget();
+
         table.row();
-        table.add(theme.label("Outdated Servers"));
+        table.add(theme.label("Outdated"));
         table.add(removeOutdated).widget();
+
         table.row();
-        table.add(theme.label("Failed Ping"));
+        table.add(theme.label("Failed ping"));
         table.add(removeFailed).widget();
-        table.row();
-        table.add(theme.label("\"Server Finder\" Servers"));
-        table.add(removeFound).widget();
+
         table.row();
         table.add(theme.label("Everything")).widget().color = new Color(255, 0, 0);
         table.add(removeAll).widget();
+
         table.row();
-        table.add(theme.label("Rename all Servers"));
-        table.add(rename).widget();
-        table.row();
-        table.add(theme.button("Execute")).expandX().widget().action = this::cleanUp;
+        table.add(theme.button("Execute")).expandX().widget().action = this::execute;
     }
 
-    private void cleanUp() {
+    private void execute() {
+        MultiplayerScreen multiplayerScreen = (MultiplayerScreen) parent;
+
         for (int i = multiplayerScreen.getServerList().size() - 1; i >= 0; i--) {
             ServerInfo server = multiplayerScreen.getServerList().get(i);
 
             if (removeAll.checked || shouldRemove(server)) multiplayerScreen.getServerList().remove(server);
         }
-
-        if (rename.checked)
-            for (int i = 0; i < multiplayerScreen.getServerList().size(); i++) {
-                ServerInfo server = multiplayerScreen.getServerList().get(i);
-                server.name = "Server Finder " + (i + 1);
-            }
 
         saveServerList();
         client.setScreen(parent);
@@ -81,8 +73,7 @@ public class ServerCleanUpScreen extends WindowScreen {
         if (server == null) return false;
         if (removeUnknown.checked && isUnknownHost(server)) return true;
         if (removeOutdated.checked && !isSameProtocol(server)) return true;
-        if (removeFailed.checked && isFailedPing(server)) return true;
-        return removeFound.checked && isFoundServer(server);
+        return removeFailed.checked && isFailedPing(server);
     }
 
     private boolean isUnknownHost(ServerInfo server) {
@@ -99,11 +90,9 @@ public class ServerCleanUpScreen extends WindowScreen {
         return server.ping != -2L && server.ping < 0L;
     }
 
-    private boolean isFoundServer(ServerInfo server) {
-        return server.name != null && server.name.startsWith("Server Finder ");
-    }
-
     private void saveServerList() {
+        MultiplayerScreen multiplayerScreen = (MultiplayerScreen) parent;
+
         multiplayerScreen.getServerList().saveFile();
 
         MultiplayerServerListWidget serverListSelector = ((IMultiplayerScreen)multiplayerScreen).getServerListWidget();
