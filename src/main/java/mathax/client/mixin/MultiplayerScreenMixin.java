@@ -49,7 +49,7 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
 
         addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, new LiteralText("Accounts"), button -> client.setScreen(GuiThemes.get().accountsScreen())));
         addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> client.setScreen(GuiThemes.get().proxiesScreen())));
-        addDrawableChild(new ButtonWidget(width - 231, 2, 75, 20, new LiteralText("Servers"), button -> client.setScreen(new ServerCleanUpScreen(GuiThemes.get(), this))));
+        addDrawableChild(new ButtonWidget(width - 231, 2, 75, 20, new LiteralText("Clean Up"), button -> client.setScreen(new ServerCleanUpScreen(GuiThemes.get(), this))));
 
         if (LastServerInfo.getLastServer() != null) addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> LastServerInfo.reconnect(client.currentScreen)));
     }
