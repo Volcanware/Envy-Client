@@ -391,15 +391,12 @@ public class Nametags extends Module {
 
         // Gamemode
         GameMode gm = EntityUtils.getGameMode(player);
-        String gmText = "NULL";
-        if (gm != null) {
-            gmText = switch (gm) {
-                case SPECTATOR -> "SP";
-                case SURVIVAL -> "S";
-                case CREATIVE -> "C";
-                case ADVENTURE -> "A";
-            };
-        }
+        String gmText = gm != null ? switch (gm) {
+            case SPECTATOR -> "Sp";
+            case SURVIVAL -> "S";
+            case CREATIVE -> "C";
+            case ADVENTURE -> "A";
+        } : "BOT";
 
         gmText = "[" + gmText + "] ";
 

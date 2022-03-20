@@ -2,8 +2,6 @@ package mathax.client.systems.modules.misc;
 
 import mathax.client.settings.*;
 import mathax.client.systems.enemies.Enemies;
-import mathax.client.systems.enemies.Enemy;
-import mathax.client.systems.friends.Friend;
 import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
@@ -11,10 +9,12 @@ import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.SettingColor;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.item.Items;
+import net.minecraft.text.BaseText;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
+import net.minecraft.world.GameMode;
 
 public class BetterTab extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -66,6 +66,13 @@ public class BetterTab extends Module {
         .build()
     );
 
+    private final Setting<Boolean> gamemode = sgGeneral.add(new BoolSetting.Builder()
+        .name("gamemode")
+        .description("Displays gamemode next to the nick.")
+        .defaultValue(false)
+        .build()
+    );
+
     public BetterTab() {
         super(Categories.Misc, Items.PAPER, "better-tab", "Various improvements to the tab list.");
     }
@@ -75,22 +82,11 @@ public class BetterTab extends Module {
         Color color = null;
 
         name = playerListEntry.getDisplayName();
-        if (name == null) {
-            /*if (mc.getSession().getUsername().equals("Matejko06"))
-                name = new LiteralText("  " + playerListEntry.getProfile().getName());
-            else*/
-                name = new LiteralText(playerListEntry.getProfile().getName());
-        }
+        if (name == null) name = new LiteralText(playerListEntry.getProfile().getName());
 
-        if (playerListEntry.getProfile().getId().toString().equals(mc.player.getGameProfile().getId().toString()) && self.get()) {
-            color = selfColor.get();
-        } else if (friends.get() && Friends.get().get(playerListEntry.getProfile().getName()) != null) {
-            Friend friend = Friends.get().get(playerListEntry.getProfile().getName());
-            if (friend != null) color = Friends.get().color;
-        } else if (enemies.get() && Enemies.get().get(playerListEntry.getProfile().getName()) != null) {
-            Enemy enemy = Enemies.get().get(playerListEntry.getProfile().getName());
-            if (enemy != null) color = Enemies.get().color;
-        }
+        if (playerListEntry.getProfile().getId().toString().equals(mc.player.getGameProfile().getId().toString()) && self.get()) color = selfColor.get();
+        else if (friends.get() && Friends.get().get(playerListEntry.getProfile().getName()) != null) color = Friends.get().color;
+        else if (enemies.get() && Enemies.get().get(playerListEntry.getProfile().getName()) != null) color = Enemies.get().color;
 
         if (color != null) {
             String nameString = name.getString();
@@ -100,6 +96,20 @@ public class BetterTab extends Module {
             }
 
             name = new LiteralText(nameString).setStyle(name.getStyle().withColor(new TextColor(color.getPacked())));
+        }
+
+        if (gamemode.get()) {
+            GameMode gm = playerListEntry.getGameMode();
+            String gmText = gm != null ? switch (gm) {
+                case SPECTATOR -> "Sp";
+                case SURVIVAL -> "S";
+                case CREATIVE -> "C";
+                case ADVENTURE -> "A";
+            } : "BOT";
+            BaseText text = new LiteralText("");
+            text.append(name);
+            text.append(" [" + gmText + "]");
+            name = text;
         }
 
         return name;
