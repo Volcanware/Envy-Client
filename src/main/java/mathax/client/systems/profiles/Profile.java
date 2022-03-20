@@ -26,7 +26,7 @@ public class Profile implements ISerializable<Profile> {
 
     public String name = "";
 
-    public boolean accounts = false, config = true, friends = false, enemies = false, macros = true, modules = true, waypoints = false, hud = false;
+    public boolean accounts = false, config = true, friends = false, enemies = false, macros = true, modules = true, waypoints = false, hud = true;
     public boolean saveOnLeave = false, saveOnInterval = false;
     public boolean onLaunch = false;
 

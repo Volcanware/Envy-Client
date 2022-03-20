@@ -509,6 +509,7 @@ public class Modules extends System<Modules> {
         //add(new PenisESP());
         add(new PopChams());
         add(new Rendering());
+        add(new RideStats());
         add(new SkeletonESP());
         //add(new SmoothChunks());
         add(new Search());
@@ -566,6 +567,7 @@ public class Modules extends System<Modules> {
         add(new BetterChat());
         add(new BurrowNotifier());
         add(new ChatEncryption());
+        add(new GroupChat());
         //add(new ChatBot());
         add(new MessageAura());
         add(new Spam());
