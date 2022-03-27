@@ -23,7 +23,7 @@ public class CreativeFly extends Module {
 	private final Setting<Boolean> instafly = sgGeneral.add(new BoolSetting.Builder()
 	        .name("fly on enable")
 	        .description("makes you automatically start flying after enabling this module")
-	        .defaultValue(true)
+	        .defaultValue(false)
 	        .build()
 	    );
 	
