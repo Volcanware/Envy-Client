@@ -34,7 +34,7 @@ public class Glide extends Module {
 	        .description("How fast to fall?")
 	        .defaultValue(0.01)
 	        .min(0.0000001)
-	        .sliderRange(0.0000001, 2.0)
+	        .sliderRange(0.0000001, 0.6)
 	        .build()
 	    );
 	
