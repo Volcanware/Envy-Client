@@ -416,6 +416,7 @@ public class Modules extends System<Modules> {
         add(new EXPThrower());
         add(new FastUse());
         add(new GhostHand());
+        add(new GhostMode()); //added by Piotrek4 (https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/anticope/rejects/modules/GhostMode.java)
         add(new LiquidInteract());
         add(new NoBreakDelay());
         add(new NoInteract());
