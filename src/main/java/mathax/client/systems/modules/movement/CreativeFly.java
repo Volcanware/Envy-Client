@@ -35,17 +35,14 @@ public class CreativeFly extends Module {
 	    );
 	
     public CreativeFly() {
-        super(Categories.Movement, Items.CHAINMAIL_BOOTS, "creative fly", "makes you can fly like in creative mode");
+    	super(Categories.Movement, Items.CHAINMAIL_BOOTS, "creative-fly", "Allows you to fly like in creative mode.");
     }
     
     @Override
     public void onActivate() {
     	mc.player.getAbilities().allowFlying = true;
     	
-    	if(instafly.get() == true)
-    	{
-    		mc.player.getAbilities().flying = true;
-    	}
+    	if (instafly.get() == true) mc.player.getAbilities().flying = true;
     }
 
     @Override

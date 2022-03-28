@@ -12,6 +12,11 @@ import mathax.client.systems.modules.Module;
 import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.item.Items;
 
+/*/--------------------------------------------------------------------------------------------------------------/*/
+/*/ This code was epicly skidded from this meteor addon:                                                         /*/
+/*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/anticope/rejects/modules/GhostMode.java /*/
+/*/--------------------------------------------------------------------------------------------------------------/*/
+
 public class GhostMode extends Module {
 	
 	int x = 0;
@@ -27,7 +32,7 @@ public class GhostMode extends Module {
 		    );
 	 
     public GhostMode() {
-        super(Categories.Player, Items.SKELETON_SKULL, "ghost mode", "You will be able to move after death");
+    	super(Categories.Player, Items.SKELETON_SKULL, "ghost", "Allows you to move after death.");
     }
     
     private boolean active = false;
@@ -47,18 +52,16 @@ public class GhostMode extends Module {
         active = false;
     }
     
-    public void onActivate() {
-        
-    }
-    
     public void onDeactivate() {
     	super.onDeactivate();
         active = false;
-        warning("You are no longer in a ghost mode!");
+        warning("You are no longer in ghost mode.");
+        /*
         if (mc.player != null && mc.player.networkHandler != null) {
             mc.player.requestRespawn();
             info("Respawn request has been sent to the server.");
         }
+        */
     }
     
     @EventHandler
@@ -67,7 +70,7 @@ public class GhostMode extends Module {
             event.cancel();
             if (!active) {
                 active = true;
-                info("You are now in a ghost mode. ");
+                info("You are now in ghost mode.");
             }
         }
     }

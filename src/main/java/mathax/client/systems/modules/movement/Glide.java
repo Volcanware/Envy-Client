@@ -56,16 +56,13 @@ public class Glide extends Module {
 	    );
 	
     public Glide() {
-        super(Categories.Movement, Items.FEATHER, "glide", "makes you glide slowly when falling");
+    	super(Categories.Movement, Items.FEATHER, "glide", "Makes you glide slowly while falling.");
     }
 
     @EventHandler
     private void onTick(final TickEvent.Post event) {
     	
-    	if(defstrafe.get() == false)
-        {
-        	mc.player.airStrafingSpeed = strafespeed.get().floatValue();
-        }
+    	if (defstrafe.get() == false) mc.player.airStrafingSpeed = strafespeed.get().floatValue();
     	
         if(mode.get() == Mode.Vertical)
         {
