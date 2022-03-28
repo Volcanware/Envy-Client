@@ -17,7 +17,7 @@ import net.minecraft.item.Items;
 /*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/anticope/rejects/modules/GhostMode.java /*/
 /*/--------------------------------------------------------------------------------------------------------------/*/
 
-public class GhostMode extends Module {
+public class Ghost extends Module {
     private boolean active = false;
 
 	private int x = 0;
@@ -34,7 +34,7 @@ public class GhostMode extends Module {
     	.build()
     );
 	 
-    public GhostMode() {
+    public Ghost() {
     	super(Categories.Player, Items.SKELETON_SKULL, "ghost", "Allows you to move after death.");
     }
 
