@@ -55,7 +55,7 @@ public class AutoMLG extends Module {
 	private final Setting<Double> minfall = sgGeneral.add(new DoubleSetting.Builder()
 	    	.name("min-fall")
 	    	.description("At which minimum height the bot should perform the mlgbucket?")
-	    	.defaultValue(1.0)
+	    	.defaultValue(4.0)
 	    	.min(1)
 	    	.sliderRange(1, 20.0)
 	    	.build()
@@ -87,7 +87,7 @@ public class AutoMLG extends Module {
 	private final Setting<Boolean> snowInWarm = sgGeneral.add(new BoolSetting.Builder()
 	        .name("use-powder-snow-in-nether")
 	        .description("Uses powdersnow bucket instead of water bucket in nether biome.") //even if priority is set to water bucket
-	        .defaultValue(false)
+	        .defaultValue(true)
 	        .build()
 	    );
 	
