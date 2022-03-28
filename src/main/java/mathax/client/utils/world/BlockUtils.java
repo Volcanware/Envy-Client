@@ -47,6 +47,11 @@ public class BlockUtils {
         if (p == null) return null;
         return mc.world.getBlockState(p).getBlock();
     }
+    
+    public static BlockState getState(BlockPos pos)
+	{
+		return mc.world.getBlockState(pos);
+	}
 
     public static BlockState getBlockState(BlockPos pos) {
         if (pos == null) return null;
