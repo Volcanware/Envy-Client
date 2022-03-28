@@ -160,8 +160,6 @@ public class AutoMLG extends Module {
 	                        && causeFallDamage(BlockUtils.getState(result.getBlockPos().up()))
 	                ) {
 	                    for (ItemStack bucket : (snowprio.get() ? Lists.reverse(BUCKETS) : BUCKETS)) {
-	                        if (mc.world.getDimension().isUltrawarm() && bucket.getItem().equals(Items.WATER_BUCKET))
-	                            continue;
 	                        int location = switchToStack(bucket);
 	                        if (location == 0) continue;
 	                        isOffHand = location < 0;
