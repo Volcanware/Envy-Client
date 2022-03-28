@@ -416,7 +416,7 @@ public class Modules extends System<Modules> {
         add(new EXPThrower());
         add(new FastUse());
         add(new GhostHand());
-        add(new GhostMode()); //added by Piotrek4
+        add(new Ghost());
         add(new LiquidInteract());
         add(new NoBreakDelay());
         add(new NoInteract());
@@ -444,14 +444,13 @@ public class Modules extends System<Modules> {
         add(new BoatPhase());
         add(new ChorusExploit());
         add(new ClickTP());
-        add(new CreativeFly()); //added by Piotrek4
         add(new ElytraBoost());
         add(new ElytraFly());
         add(new EntityControl());
         add(new EntitySpeed());
         add(new FastClimb());
         add(new Flight());
-        add(new Glide()); //added by Piotrek4
+        add(new Glide());
         add(new Gravity());
         add(new GUIMove());
         add(new HighJump());
