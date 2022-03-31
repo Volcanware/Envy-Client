@@ -106,7 +106,7 @@ public class AutoMLG extends Module {
 		    );
 	 
 	 private final Setting<Boolean> ignElytra = sgIgnore.add(new BoolSetting.Builder()
-		        .name("ignore-flight")
+		        .name("ignore-elytra-fly")
 		        .description("Tries to mlg bucket even if elytrafly module is enabled.")
 		        .defaultValue(false)
 		        .build()
@@ -147,7 +147,7 @@ public class AutoMLG extends Module {
 		
 	    if (!placedWater) {
 	        float minfallDist = minfall.get().floatValue();
-	        if (mc.player.fallDistance > minfall.get() - 2.0f && !mc.player.hasStatusEffect(StatusEffects.SLOW_FALLING) && !(mc.player.isFallFlying())) {
+	        if (mc.player.fallDistance > minfall.get() - 2.0f && !(mc.player.isFallFlying())) {
 	            Vec3d playerPos = mc.player.getPos();
 	            if (lastPos == null) lastPos = playerPos;
 	            if (playerPos.y - lastPos.y < 0.0D) {
