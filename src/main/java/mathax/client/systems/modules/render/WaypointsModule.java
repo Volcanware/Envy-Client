@@ -34,7 +34,6 @@ import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.item.Items;
 import net.minecraft.text.BaseText;
 import net.minecraft.text.LiteralText;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.text.SimpleDateFormat;
@@ -44,26 +43,99 @@ import java.util.ListIterator;
 public class WaypointsModule extends Module {
     private static final Color GRAY = new Color(200, 200, 200);
 
+    private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgDeathPosition = settings.createGroup("Death Position");
+
+    // General
+
+    public final Setting<Integer> textRenderDistance = sgGeneral.add(new IntSetting.Builder()
+        .name("text-render-distance")
+        .description("Maximum distance from the center of the screen at which text will be rendered.")
+        .defaultValue(100)
+        .min(0)
+        .sliderRange(0, 200)
+        .build()
+    );
+
+    // Death Position
 
     private final Setting<Integer> maxDeathPositions = sgDeathPosition.add(new IntSetting.Builder()
         .name("max-death-positions")
-        .description("The amount of death positions to save, 0 to disable")
+        .description("The amount of death positions to save, 0 to disable.")
         .defaultValue(1)
         .min(0)
-        .sliderMax(20)
+        .sliderRange(0, 20)
         .onChanged(this::cleanDeathWPs)
         .build()
     );
 
     private final Setting<Boolean> dpChat = sgDeathPosition.add(new BoolSetting.Builder()
         .name("chat")
-        .description("Send a chat message with your position once you die.")
+        .description("Sends a chat message with your position once you die.")
         .defaultValue(false)
         .build()
     );
 
-    // Buttons
+    public WaypointsModule() {
+        super(Categories.Render, Items.RED_STAINED_GLASS, "waypoints", "Allows you to create waypoints.");
+    }
+
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+    @EventHandler
+    private void onOpenScreen(OpenScreenEvent event) {
+        if (!(event.screen instanceof DeathScreen)) return;
+
+        if (!event.isCancelled()) addDeath(mc.player.getPos());
+    }
+
+    public void addDeath(Vec3d deathPos) {
+        String time = dateFormat.format(new Date());
+        if (dpChat.get()) {
+            BaseText text = new LiteralText("Died at ");
+            text.append(ChatUtils.formatCoords(deathPos));
+            text.append(String.format(" on %s.", time));
+            info(text);
+        }
+
+        // Create waypoint
+        if (maxDeathPositions.get() > 0) {
+            Waypoint waypoint = new Waypoint();
+            waypoint.name = "Death " + time;
+            waypoint.icon = "skull";
+            waypoint.scale = 2;
+            waypoint.minScale = 1.5;
+            waypoint.x = (int) deathPos.x;
+            waypoint.y = (int) deathPos.y + 2;
+            waypoint.z = (int) deathPos.z;
+            waypoint.maxVisibleDistance = Integer.MAX_VALUE;
+            waypoint.actualDimension = PlayerUtils.getDimension();
+
+            switch (waypoint.actualDimension) {
+                case Overworld -> waypoint.overworld = true;
+                case Nether -> waypoint.nether = true;
+                case End -> waypoint.end = true;
+            }
+
+            Waypoints.get().add(waypoint);
+        }
+
+        cleanDeathWPs(maxDeathPositions.get());
+    }
+
+    private void cleanDeathWPs(int max) {
+        int oldWpC = 0;
+
+        ListIterator<Waypoint> wps = Waypoints.get().iteratorReverse();
+        while (wps.hasPrevious()) {
+            Waypoint wp = wps.previous();
+            if (wp.name.startsWith("Death ") && "skull".equals(wp.icon)) {
+                oldWpC++;
+                if (oldWpC > max)
+                    Waypoints.get().remove(wp);
+            }
+        }
+    }
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
@@ -124,73 +196,11 @@ public class WaypointsModule extends Module {
                     if (mc.player == null || mc.world == null) return;
                     IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
                     if (baritone.getPathingBehavior().isPathing()) baritone.getPathingBehavior().cancelEverything();
-                    Vec3d vec = Waypoints.get().getCoords(waypoint);
-                    BlockPos pos = new BlockPos(vec.x, vec.y, vec.z);
-                    baritone.getCustomGoalProcess().setGoalAndPath(new GoalGetToBlock(pos));
+                    baritone.getCustomGoalProcess().setGoalAndPath(new GoalGetToBlock(waypoint.getCoords().toBlockPos()));
                 };
             }
 
             table.row();
-        }
-    }
-
-    public WaypointsModule() {
-        super(Categories.Render, Items.BEACON, "waypoints", "Allows you to create waypoints.");
-    }
-
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
-    @EventHandler
-    private void onOpenScreen(OpenScreenEvent event) {
-        if (!(event.screen instanceof DeathScreen)) return;
-
-        if (!event.isCancelled()) addDeath(mc.player.getPos());
-    }
-
-    public void addDeath(Vec3d deathPos) {
-        String time = dateFormat.format(new Date());
-        if (dpChat.get()) {
-            BaseText text = new LiteralText("Died at ");
-            text.append(ChatUtils.formatCoords(deathPos));
-            text.append(String.format(" on %s.", time));
-            info(text);
-        }
-
-        // Create waypoint
-        if (maxDeathPositions.get() > 0) {
-            Waypoint waypoint = new Waypoint();
-            waypoint.name = "Death " + time;
-            waypoint.icon = "skull";
-            waypoint.scale = 2;
-            waypoint.minScale = 1.5;
-            waypoint.x = (int) deathPos.x;
-            waypoint.y = (int) deathPos.y + 2;
-            waypoint.z = (int) deathPos.z;
-            waypoint.maxVisibleDistance = Integer.MAX_VALUE;
-            waypoint.actualDimension = PlayerUtils.getDimension();
-
-            switch (waypoint.actualDimension) {
-                case Overworld -> waypoint.overworld = true;
-                case Nether -> waypoint.nether = true;
-                case End -> waypoint.end = true;
-            }
-
-            Waypoints.get().add(waypoint);
-        }
-
-        cleanDeathWPs(maxDeathPositions.get());
-    }
-
-    private void cleanDeathWPs(int max) {
-        int oldWpC = 0;
-
-        ListIterator<Waypoint> wps = Waypoints.get().iteratorReverse();
-        while (wps.hasPrevious()) {
-            Waypoint wp = wps.previous();
-            if (wp.name.startsWith("Death ") && "skull".equals(wp.icon)) {
-                oldWpC++;
-                if (oldWpC > max) Waypoints.get().remove(wp);
-            }
         }
     }
 
@@ -253,7 +263,7 @@ public class WaypointsModule extends Module {
 
             // X
             table.add(theme.label("X:"));
-            WIntEdit x = theme.intEdit(waypoint.x, 0, Integer.MAX_VALUE, true);
+            WIntEdit x = theme.intEdit(waypoint.x, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
             x.noSlider = true;
             x.action = () -> waypoint.x = x.get();
             table.add(x).expandX();
@@ -261,11 +271,11 @@ public class WaypointsModule extends Module {
 
             // Y
             table.add(theme.label("Y:"));
-            WIntEdit y = theme.intEdit(waypoint.y, Utils.getMinHeight(), Utils.getMaxHeight(), true);
+            WIntEdit y = theme.intEdit(waypoint.y, getMinHeight(), getMaxHeight(), true);
             y.noSlider = true;
             y.actionOnRelease = () -> {
-                if (y.get() < Utils.getMinHeight()) y.set(Utils.getMinHeight());
-                else if (y.get() > Utils.getMaxHeight()) y.set(Utils.getMaxHeight());
+                if (y.get() < getMinHeight()) y.set(getMinHeight());
+                else if (y.get() > getMaxHeight()) y.set(getMaxHeight());
 
                 waypoint.y = y.get();
             };
@@ -274,7 +284,7 @@ public class WaypointsModule extends Module {
 
             // Z
             table.add(theme.label("Z:"));
-            WIntEdit z = theme.intEdit(waypoint.z, 0, Integer.MAX_VALUE, true);
+            WIntEdit z = theme.intEdit(waypoint.z, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
             z.action = () -> waypoint.z = z.get();
             table.add(z).expandX();
             table.row();
@@ -304,6 +314,7 @@ public class WaypointsModule extends Module {
             table.add(theme.label("Min Scale:"));
             WDoubleEdit minScale = table.add(theme.doubleEdit(waypoint.minScale, 0, 4, 0, 4)).expandX().widget();
             minScale.action = () -> waypoint.minScale = minScale.get();
+            table.row();
 
             table.add(theme.horizontalSeparator()).expandX();
             table.row();
@@ -348,6 +359,14 @@ public class WaypointsModule extends Module {
         protected void onClosed() {
             if (action != null) action.run();
         }
+    }
+
+    private Integer getMaxHeight() {
+        return mc.world.getDimension().getHeight() - Math.abs(getMinHeight()) - 1;
+    }
+
+    private Integer getMinHeight() {
+        return mc.world.getDimension().getMinimumY();
     }
 
     private static class WIcon extends WWidget {

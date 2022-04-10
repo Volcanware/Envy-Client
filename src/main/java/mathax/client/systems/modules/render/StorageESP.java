@@ -72,7 +72,7 @@ public class StorageESP extends Module {
         .visible(() -> shapeMode.get() != ShapeMode.Lines)
         .defaultValue(50)
         .range(0, 255)
-        .sliderMax(255)
+        .sliderRange(0, 255)
         .build()
     );
 

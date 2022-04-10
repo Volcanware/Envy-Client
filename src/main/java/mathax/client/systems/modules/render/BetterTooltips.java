@@ -1,5 +1,6 @@
 package mathax.client.systems.modules.render;
 
+import com.google.gson.JsonSyntaxException;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import mathax.client.eventbus.EventHandler;
@@ -19,7 +20,6 @@ import mathax.client.utils.tooltip.*;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectUtil;
@@ -159,7 +159,7 @@ public class BetterTooltips extends Module {
     );
 
     public BetterTooltips() {
-        super(Categories.Render, Items.BOOK, "better-tooltips", "Displays more useful tooltips for certain items.");
+        super(Categories.Render, Items.GLOW_ITEM_FRAME, "better-tooltips", "Displays more useful tooltips for certain items.");
     }
 
     @EventHandler
@@ -168,20 +168,27 @@ public class BetterTooltips extends Module {
         if (statusEffects.get()) {
             if (event.itemStack.getItem() == Items.SUSPICIOUS_STEW) {
                 NbtCompound tag = event.itemStack.getNbt();
+
                 if (tag != null) {
                     NbtList effects = tag.getList("Effects", 10);
+
                     if (effects != null) {
                         for (int i = 0; i < effects.size(); i++) {
                             NbtCompound effectTag = effects.getCompound(i);
                             byte effectId = effectTag.getByte("EffectId");
                             int effectDuration = effectTag.contains("EffectDuration") ? effectTag.getInt("EffectDuration") : 160;
-                            StatusEffectInstance effect = new StatusEffectInstance(StatusEffect.byRawId(effectId), effectDuration, 0);
-                            event.list.add(1, getStatusText(effect));
+                            StatusEffect type = StatusEffect.byRawId(effectId);
+
+                            if (type != null) {
+                                StatusEffectInstance effect = new StatusEffectInstance(type, effectDuration, 0);
+                                event.list.add(1, getStatusText(effect));
+                            }
                         }
                     }
                 }
             } else if (event.itemStack.getItem().isFood()) {
                 FoodComponent food = event.itemStack.getItem().getFoodComponent();
+
                 if (food != null) {
                     food.getStatusEffects().forEach((e) -> {
                         StatusEffectInstance effect = e.getFirst();
@@ -195,18 +202,18 @@ public class BetterTooltips extends Module {
         if (beehive.get()) {
             if (event.itemStack.getItem() == Items.BEEHIVE || event.itemStack.getItem() == Items.BEE_NEST) {
                 NbtCompound tag = event.itemStack.getNbt();
+
                 if (tag != null) {
                     NbtCompound blockStateTag = tag.getCompound("BlockStateTag");
                     if (blockStateTag != null) {
                         int level = blockStateTag.getInt("honey_level");
-                        event.list.add(1, new LiteralText(String.format("%sHoney level: %s%d%s.",
-                            Formatting.GRAY, Formatting.YELLOW, level, Formatting.GRAY)));
+                        event.list.add(1, new LiteralText(String.format("%sHoney level: %s%d%s.", Formatting.GRAY, Formatting.YELLOW, level, Formatting.GRAY)));
                     }
+
                     NbtCompound blockEntityTag = tag.getCompound("BlockEntityTag");
                     if (blockEntityTag != null) {
                         NbtList beesTag = blockEntityTag.getList("Bees", 10);
-                        event.list.add(1, new LiteralText(String.format("%sBees: %s%d%s.",
-                            Formatting.GRAY, Formatting.YELLOW, beesTag.size(), Formatting.GRAY)));
+                        event.list.add(1, new LiteralText(String.format("%sBees: %s%d%s.", Formatting.GRAY, Formatting.YELLOW, beesTag.size(), Formatting.GRAY)));
                     }
                 }
             }
@@ -249,9 +256,7 @@ public class BetterTooltips extends Module {
         }
 
         // EChest preview
-        else if (event.itemStack.getItem() == Items.ENDER_CHEST && previewEChest()) {
-            event.tooltipData = new ContainerTooltipComponent(EChestMemory.ITEMS, ECHEST_COLOR);
-        }
+        else if (event.itemStack.getItem() == Items.ENDER_CHEST && previewEChest()) event.tooltipData = new ContainerTooltipComponent(EChestMemory.ITEMS, ECHEST_COLOR);
 
         // Map preview
         else if (event.itemStack.getItem() == Items.FILLED_MAP && previewMaps()) {
@@ -260,8 +265,7 @@ public class BetterTooltips extends Module {
         }
 
         // Book preview
-        else if ((event.itemStack.getItem() == Items.WRITABLE_BOOK || event.itemStack.getItem() == Items.WRITTEN_BOOK)
-            && previewBooks()) {
+        else if ((event.itemStack.getItem() == Items.WRITABLE_BOOK || event.itemStack.getItem() == Items.WRITTEN_BOOK) && previewBooks()) {
             Text page = getFirstPage(event.itemStack);
             if (page != null) event.tooltipData = new BookTooltipComponent(page);
         }
@@ -276,8 +280,7 @@ public class BetterTooltips extends Module {
 
         // Fish peek
         else if (event.itemStack.getItem() instanceof EntityBucketItem bucketItem && previewEntities()) {
-            EntityType<?> type = ((EntityBucketItemAccessor) bucketItem).getEntityType();
-            Entity entity = type.create(mc.world);
+            Entity entity = ((EntityBucketItemAccessor) bucketItem).getEntityType().create(mc.world);
             if (entity != null) {
                 ((Bucketable) entity).copyDataFromNbt(event.itemStack.getOrCreateNbt());
                 ((EntityAccessor) entity).setInWater(true);
@@ -286,8 +289,9 @@ public class BetterTooltips extends Module {
         }
     }
 
-    public void applyCompactShulkerTooltip(ItemStack stack, List<Text> tooltip ) {
+    public void applyCompactShulkerTooltip(ItemStack stack, List<Text> tooltip) {
         NbtCompound tag = stack.getSubNbt("BlockEntityTag");
+
         if (tag != null) {
             if (tag.contains("LootTable", 8)) tooltip.add(new LiteralText("???????"));
 
@@ -321,16 +325,22 @@ public class BetterTooltips extends Module {
         else text.append(String.format(" (%s)", StatusEffectUtil.durationToString(effect, 1)));
 
         if (effect.getEffectType().isBeneficial()) return text.formatted(Formatting.BLUE);
-        else return text.formatted(Formatting.RED);
+        return text.formatted(Formatting.RED);
     }
 
     private Text getFirstPage(ItemStack stack) {
         NbtCompound tag = stack.getNbt();
         if (tag == null) return null;
-        NbtList ltag = tag.getList("pages", 8);
-        if (ltag.size() < 1) return null;
-        if (stack.getItem() == Items.WRITABLE_BOOK) return new LiteralText(ltag.getString(0));
-        else return Text.Serializer.fromLenientJson(ltag.getString(0));
+
+        NbtList pages = tag.getList("pages", 8);
+        if (pages.size() < 1) return null;
+        if (stack.getItem() == Items.WRITABLE_BOOK) return new LiteralText(pages.getString(0));
+
+        try {
+            return Text.Serializer.fromLenientJson(pages.getString(0));
+        } catch (JsonSyntaxException e) {
+            return new LiteralText("Invalid book data");
+        }
     }
 
     private ItemStack createBannerFromPattern(BannerPattern pattern) {
@@ -343,7 +353,7 @@ public class BetterTooltips extends Module {
 
     private ItemStack createBannerFromShield(ItemStack item) {
         if (!item.hasNbt() || !item.getNbt().contains("BlockEntityTag") || !item.getNbt().getCompound("BlockEntityTag").contains("Base")) return null;
-        NbtList listNbt = (new BannerPattern.Patterns()).add(BannerPattern.BASE, ShieldItem.getColor(item)).toNbt();
+        NbtList listNbt = new BannerPattern.Patterns().add(BannerPattern.BASE, ShieldItem.getColor(item)).toNbt();
         NbtCompound nbt = item.getOrCreateSubNbt("BlockEntityTag");
         ItemStack bannerItem = new ItemStack(Items.GRAY_BANNER);
         NbtCompound bannerTag = bannerItem.getOrCreateSubNbt("BlockEntityTag");

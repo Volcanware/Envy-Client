@@ -20,6 +20,7 @@ import mathax.client.utils.player.InvUtils;
 import mathax.client.utils.player.InventorySorter;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
 import net.minecraft.screen.GenericContainerScreenHandler;
@@ -116,6 +117,13 @@ public class InventoryTweaks extends Module {
         .build()
     );
 
+    private final Setting<Boolean> autoDropOnlyFullStacks = sgAutoDrop.add(new BoolSetting.Builder()
+        .name("auto-drop-only-full-stacks")
+        .description("Only drops the items if the stack is full.")
+        .defaultValue(false)
+        .build()
+    );
+
     // Auto steal
 
     private final Setting<Boolean> autoSteal = sgAutoSteal.add(new BoolSetting.Builder()
@@ -202,7 +210,9 @@ public class InventoryTweaks extends Module {
         if (mc.currentScreen instanceof HandledScreen<?> || autoDropItems.get().isEmpty()) return;
 
         for (int i = autoDropExcludeHotbar.get() ? 9 : 0; i < mc.player.getInventory().size(); i++) {
-            if (autoDropItems.get().contains(mc.player.getInventory().getStack(i).getItem())) InvUtils.drop().slot(i);
+            ItemStack itemStack = mc.player.getInventory().getStack(i);
+
+            if (autoDropItems.get().contains(itemStack.getItem()) && !autoDropOnlyFullStacks.get() || itemStack.getCount() == itemStack.getMaxCount()) InvUtils.drop().slot(i);
         }
     }
 

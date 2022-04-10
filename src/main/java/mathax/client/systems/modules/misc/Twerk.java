@@ -53,9 +53,7 @@ public class Twerk extends Module {
     private void onTick(TickEvent.Pre event) {
         timer++;
         if (timer < 10 - speed.get()) return;
-
         hasTwerked = !hasTwerked;
-
         timer = -1;
     }
 

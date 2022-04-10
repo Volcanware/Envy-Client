@@ -33,7 +33,7 @@ public abstract class WidgetScreen extends Screen {
     public Runnable taskAfterRender;
     protected Runnable enterAction;
 
-    protected Screen parent;
+    public Screen parent;
     private final WContainer root;
 
     protected final GuiTheme theme;
