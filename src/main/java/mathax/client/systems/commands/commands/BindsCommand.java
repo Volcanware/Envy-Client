@@ -25,9 +25,7 @@ public class BindsCommand extends Command {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             // Modules
-            List<Module> modules = Modules.get().getAll().stream()
-                    .filter(module -> module.keybind.isSet())
-                    .collect(Collectors.toList());
+            List<Module> modules = Modules.get().getAll().stream().filter(module -> module.keybind.isSet()).collect(Collectors.toList());
 
             info("--- Bound Modules ((highlight)%d(default)) ---", modules.size());
 
