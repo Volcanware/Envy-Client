@@ -21,6 +21,8 @@ import net.minecraft.block.FluidBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BedBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.render.Camera;
 import net.minecraft.entity.Entity;
@@ -31,6 +33,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -60,6 +63,25 @@ public class PlayerUtils {
     public static boolean isPlayerMoving(PlayerEntity p) {
         return p.forwardSpeed != 0 || p.sidewaysSpeed != 0;
     }
+    
+    public static Rotation getNeededRotations(Vec3d vec) {
+		Vec3d eyesPos = getEyesPos();
+		
+		double diffX = vec.x - eyesPos.x;
+		double diffY = vec.y - eyesPos.y;
+		double diffZ = vec.z - eyesPos.z;
+		
+		double diffXZ = Math.sqrt(diffX * diffX + diffZ * diffZ);
+		
+		float yaw = (float)Math.toDegrees(Math.atan2(diffZ, diffX)) - 90F;
+		float pitch = (float)-Math.toDegrees(Math.atan2(diffY, diffXZ));
+		
+		return new Rotation(yaw, pitch);
+	}
+    
+    public static Vec3d getEyesPos() {
+		return new Vec3d(mc.player.getX(), mc.player.getY() + mc.player.getEyeHeight(mc.player.getPose()), mc.player.getZ());
+	}
 
     public static double[] directionSpeed(float speed) {
         float forward = mc.player.input.movementForward;
@@ -126,6 +148,14 @@ public class PlayerUtils {
         mc.player.getInventory().selectedSlot = n2;
         return bl2;
     }
+    
+    public static void windowClickSwap(int slot, int swapWith) {
+		clickSlot(0, slot, swapWith, SlotActionType.SWAP, mc.player);
+	}
+    
+    public static void clickSlot(int syncId, int slotId, int clickData,
+    		SlotActionType actionType, PlayerEntity playerEntity) {
+	}
 
     public static boolean placeBlock(BlockPos blockPos, Hand hand, boolean bl, boolean bl2) {
         if (!BlockUtils.canPlace(blockPos)) return false;
