@@ -24,6 +24,10 @@ import net.minecraft.world.RaycastContext;
 import java.util.Arrays;
 import java.util.List;
 
+/*/------------------/*/
+/*/ Made by Piotrek4 /*/
+/*/------------------/*/
+
 public class AutoMLG extends Module {
     private static final List<ItemStack> BUCKETS = Arrays.asList(
         new ItemStack(Items.WATER_BUCKET),
