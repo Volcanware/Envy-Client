@@ -59,17 +59,12 @@ public class PlayerUtils {
         if (offhand) mc.player.swingHand(Hand.OFF_HAND);
         else mc.player.swingHand(Hand.MAIN_HAND);
     }
-    
-    private static MinecraftClient client;
 
     public static boolean isPlayerMoving(PlayerEntity p) {
         return p.forwardSpeed != 0 || p.sidewaysSpeed != 0;
     }
     
-    
-    
-    public static Rotation getNeededRotations(Vec3d vec)
-	{
+    public static Rotation getNeededRotations(Vec3d vec) {
 		Vec3d eyesPos = getEyesPos();
 		
 		double diffX = vec.x - eyesPos.x;
@@ -84,13 +79,8 @@ public class PlayerUtils {
 		return new Rotation(yaw, pitch);
 	}
     
-    public static Vec3d getEyesPos()
-	{
-		ClientPlayerEntity player = mc.player;
-		
-		return new Vec3d(player.getX(),
-			player.getY() + player.getEyeHeight(player.getPose()),
-			player.getZ());
+    public static Vec3d getEyesPos() {
+		return new Vec3d(mc.player.getX(), mc.player.getY() + mc.player.getEyeHeight(mc.player.getPose()), mc.player.getZ());
 	}
 
     public static double[] directionSpeed(float speed) {
@@ -159,14 +149,9 @@ public class PlayerUtils {
         return bl2;
     }
     
-    //public void windowClick_SWAP(int slot, int swapWith);
-    
-    public static void windowClick_SWAP(int slot, int swapWith)
-	{
-		clickSlot(0, slot, swapWith, SlotActionType.SWAP, client.player);
+    public static void windowClickSwap(int slot, int swapWith) {
+		clickSlot(0, slot, swapWith, SlotActionType.SWAP, mc.player);
 	}
-    
-    
     
     public static void clickSlot(int syncId, int slotId, int clickData,
     		SlotActionType actionType, PlayerEntity playerEntity) {
