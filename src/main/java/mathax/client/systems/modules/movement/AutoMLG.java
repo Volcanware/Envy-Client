@@ -1,5 +1,6 @@
 package mathax.client.systems.modules.movement;
 
+import baritone.api.utils.Rotation;
 import com.google.common.collect.Lists;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
@@ -8,7 +9,6 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.elytrafly.ElytraFly;
-import mathax.client.systems.modules.player.Rotation;
 import mathax.client.utils.player.PlayerUtils;
 import mathax.client.utils.world.BlockUtils;
 import net.minecraft.block.*;
