@@ -113,8 +113,8 @@ public class AccountCache implements ISerializable<AccountCache> {
 
                 STBImage.stbi_image_free(image);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 }
