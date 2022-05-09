@@ -68,7 +68,6 @@ public class AutoNametag extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        // Nametag in hobar
         FindItemResult findNametag = InvUtils.findInHotbar(Items.NAME_TAG);
 
         if (!findNametag.found()) {
@@ -78,7 +77,6 @@ public class AutoNametag extends Module {
         }
 
 
-        // Target
         target = TargetUtils.get(entity -> {
             if (PlayerUtils.distanceTo(entity) > range.get()) return false;
             if (!entities.get().getBoolean(entity.getType())) return false;
@@ -88,14 +86,10 @@ public class AutoNametag extends Module {
 
         if (target == null) return;
 
-
-        // Swapping slots
         InvUtils.swap(findNametag.slot(), true);
 
         offHand = findNametag.isOffhand();
 
-
-        // Interaction
         if (rotate.get()) Rotations.rotate(Rotations.getYaw(target), Rotations.getPitch(target), -100, this::interact);
         else interact();
     }
