@@ -102,13 +102,11 @@ public class BlockUtils {
             return direction;
         }
 
-        if (bl) {
-            if ((double) blockPos.getY() > vec3d.y) return Direction.DOWN;
+        if (!bl) return null;
 
-            return Direction.UP;
-        }
+        if ((double) blockPos.getY() > vec3d.y) return Direction.DOWN;
 
-        return null;
+        return Direction.UP;
     }
 
     // Placing
@@ -237,10 +235,10 @@ public class BlockUtils {
         if (direction == null) {
             direction = Direction.UP;
             blockPos1 = blockPos;
-            ((IVec3d)vec3d).set(blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
+            ((IVec3d) vec3d).set(blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
         } else {
             blockPos1 = blockPos.offset(direction.getOpposite());
-            ((IVec3d)vec3d).set(blockPos1.getX() + 0.5 + direction.getOffsetX() * 0.5, blockPos1.getY() + 0.6 + direction.getOffsetY() * 0.5, blockPos1.getZ() + 0.5 + direction.getOffsetZ() * 0.5);
+            ((IVec3d) vec3d).set(blockPos1.getX() + 0.5 + direction.getOffsetX() * 0.5, blockPos1.getY() + 0.6 + direction.getOffsetY() * 0.5, blockPos1.getZ() + 0.5 + direction.getOffsetZ() * 0.5);
         }
 
         if (bl) {
