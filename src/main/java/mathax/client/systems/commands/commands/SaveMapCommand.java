@@ -92,8 +92,8 @@ public class SaveMapCommand extends Command {
 
         try {
             ImageIO.write((scale == 128 ? image : scaledImage), "png", new File(path));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
