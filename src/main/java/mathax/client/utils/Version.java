@@ -33,7 +33,7 @@ public class Version {
     }
 
     public static void init() {
-        MatHax.EVENT_BUS.subscribe(Systems.class);
+        MatHax.EVENT_BUS.subscribe(Version.class);
     }
 
     public boolean isHigherThan(Version version) {
