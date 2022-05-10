@@ -84,7 +84,6 @@ public class EntityTooltipComponent implements MatHaxTooltipData, TooltipCompone
         immediate.draw();
         entityRenderDispatcher.setRenderShadows(true);
         matrices.pop();
-
         DiffuseLighting.enableGuiDepthLighting();
     }
 

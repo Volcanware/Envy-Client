@@ -227,10 +227,9 @@ public class BlockUtils {
 
     public static boolean placeEnhanced(BlockPos blockPos, Hand hand, int n, boolean bl, int n2, boolean bl2, boolean bl3, boolean bl4, boolean bl5) {
         BlockPos blockPos1;
-        Vec3d vec3d;
         if (n == -1 || !canPlace(blockPos, bl3)) return false;
         Direction direction = getPlaceSide(blockPos);
-        Vec3d vec3d1 = vec3d = bl ? new Vec3d(0.0, 0.0, 0.0) : hitPos;
+        Vec3d vec3d = bl ? new Vec3d(0.0, 0.0, 0.0) : hitPos;
 
         if (direction == null) {
             direction = Direction.UP;
