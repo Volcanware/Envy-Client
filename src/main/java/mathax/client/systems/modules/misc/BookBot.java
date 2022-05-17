@@ -258,13 +258,13 @@ public class BookBot extends Module {
                     // Ignore newline chars when writing lines, should already be organised
                     if (nextChar == '\r' || nextChar == '\n') break;
 
-                    // Make sure the character will fit on the line
+                    // Append it to the line 
                     double charWidth = ((TextHandlerAccessor) mc.textRenderer.getTextHandler()).getWidthRetriever().getWidth(nextChar, Style.EMPTY);
-                    if (lineWidth + charWidth > 114) break;
-
-                    // Append it to the line
                     line.appendCodePoint(nextChar);
                     lineWidth += charWidth;
+                    
+                    // Make sure the character will fit on the line
+                    if (lineWidth + charWidth > 114) break;
                 }
 
                 // Append the line to the page
