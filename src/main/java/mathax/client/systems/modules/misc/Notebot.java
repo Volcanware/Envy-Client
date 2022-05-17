@@ -158,7 +158,7 @@ public class Notebot extends Module {
         noSongsFound = true;
 
         try {
-            Files.list(MatHax.FOLDER.toPath().resolve("Notebot")).forEach(path -> {
+            Files.list(MatHax.VERSION_FOLDER.toPath().resolve("Notebot")).forEach(path -> {
                 if (isValidFile(path)) {
                     noSongsFound = false;
                     table.add(theme.label(getFileLabel(path))).expandCellX();

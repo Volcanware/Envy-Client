@@ -39,11 +39,11 @@ public class HudRenderer {
         return TextRenderer.get().getHeight();
     }
 
-    public void addPostTask(Runnable runnable) {
-        postTasks.add(runnable);
-    }
-
     public int roundAmount() {
         return GuiThemes.get().roundAmount();
+    }
+
+    public void addPostTask(Runnable runnable) {
+        postTasks.add(runnable);
     }
 }

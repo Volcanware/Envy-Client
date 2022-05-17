@@ -41,7 +41,7 @@ import java.util.PrimitiveIterator;
 import java.util.Random;
 
 public class BookBot extends Module {
-    private File file = new File(MatHax.FOLDER, "bookbot.txt");
+    private File file = new File(MatHax.VERSION_FOLDER, "bookbot.txt");
 
     private final PointerBuffer filters;
 
@@ -112,13 +112,7 @@ public class BookBot extends Module {
         WLabel fileName = list.add(theme.label((file != null && file.exists()) ? file.getName() : "No file selected.")).widget();
 
         selectFile.action = () -> {
-            String path = TinyFileDialogs.tinyfd_openFileDialog(
-                "Select File",
-                new File(MatHax.FOLDER, "bookbot.txt").getAbsolutePath(),
-                filters,
-                null,
-                false
-            );
+            String path = TinyFileDialogs.tinyfd_openFileDialog("Select File", new File(MatHax.VERSION_FOLDER, "bookbot.txt").getAbsolutePath(), filters, null, false);
 
             if (path != null) {
                 file = new File(path);
