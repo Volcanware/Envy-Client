@@ -13,6 +13,7 @@ import mathax.client.renderer.GL;
 import mathax.client.renderer.Renderer2D;
 import mathax.client.renderer.text.TextRenderer;
 import mathax.client.settings.*;
+import mathax.client.systems.config.Config;
 import mathax.client.systems.enemies.Enemies;
 import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
@@ -340,6 +341,7 @@ public class Nametags extends Module {
     @EventHandler
     private void onRender2D(Render2DEvent event) {
         int count = getRenderCount();
+        boolean shadow = Config.get().customFont.get();
 
         for (int i = count - 1; i > -1; i--) {
             Entity entity = entityList.get(i);
@@ -350,11 +352,11 @@ public class Nametags extends Module {
             EntityType<?> type = entity.getType();
 
             if (NametagUtils.to2D(pos, scale.get())) {
-                if (type == EntityType.PLAYER) renderNametagPlayer((PlayerEntity) entity);
-                else if (type == EntityType.ITEM) renderNametagItem(((ItemEntity) entity).getStack());
-                else if (type == EntityType.ITEM_FRAME) renderNametagItem(((ItemFrameEntity) entity).getHeldItemStack());
-                else if (type == EntityType.TNT) renderTntNametag((TntEntity) entity);
-                else if (entity instanceof LivingEntity) renderGenericNametag((LivingEntity) entity);
+                if (type == EntityType.PLAYER) renderNametagPlayer((PlayerEntity) entity, shadow);
+                else if (type == EntityType.ITEM) renderNametagItem(((ItemEntity) entity).getStack(), shadow);
+                else if (type == EntityType.ITEM_FRAME) renderNametagItem(((ItemFrameEntity) entity).getHeldItemStack(), shadow);
+                else if (type == EntityType.TNT) renderTntNametag((TntEntity) entity, shadow);
+                else if (entity instanceof LivingEntity) renderGenericNametag((LivingEntity) entity, shadow);
             }
         }
     }
@@ -380,7 +382,7 @@ public class Nametags extends Module {
         return height;
     }
 
-    private void renderNametagPlayer(PlayerEntity player) {
+    private void renderNametagPlayer(PlayerEntity player, boolean shadow) {
         if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
         if (ignoreEnemies.get() && Enemies.get().isEnemy(player)) return;
 
@@ -434,12 +436,12 @@ public class Nametags extends Module {
         String popText = " [" + getPops(player) + "]";
 
         // Calc widths
-        double gmWidth = text.getWidth(gmText, true);
-        double nameWidth = text.getWidth(name, true);
-        double healthWidth = text.getWidth(healthText, true);
-        double pingWidth = text.getWidth(pingText, true);
-        double distWidth = text.getWidth(distText, true);
-        double popWidth = text.getWidth(popText, true);
+        double gmWidth = text.getWidth(gmText, shadow);
+        double nameWidth = text.getWidth(name, shadow);
+        double healthWidth = text.getWidth(healthText, shadow);
+        double pingWidth = text.getWidth(pingText, shadow);
+        double distWidth = text.getWidth(distText, shadow);
+        double popWidth = text.getWidth(popText, shadow);
         double width = nameWidth + healthWidth;
 
         if (showDev) width += text.getHeight();
@@ -449,7 +451,7 @@ public class Nametags extends Module {
         if (displayTotemPops.get()) width += popWidth;
 
         double widthHalf = width / 2;
-        double heightDown = text.getHeight(true);
+        double heightDown = text.getHeight(shadow);
 
         drawBg(-widthHalf, -heightDown, width, heightDown);
 
@@ -460,13 +462,13 @@ public class Nametags extends Module {
 
         if (showDev) hX += text.getHeight();
 
-        if (displayGameMode.get()) hX = text.render(gmText, hX, hY, GOLD, true);
-        hX = text.render(name, hX, hY, nameColor, true);
+        if (displayGameMode.get()) hX = text.render(gmText, hX, hY, GOLD, shadow);
+        hX = text.render(name, hX, hY, nameColor, shadow);
 
-        hX = text.render(healthText, hX, hY, healthColor, true);
-        if (displayPing.get()) hX = text.render(pingText, hX, hY, BLUE, true);
-        if (displayDistance.get()) hX = text.render(distText, hX, hY, GREY, true);
-        if (displayTotemPops.get()) text.render(popText, hX, hY, AMBER, true);
+        hX = text.render(healthText, hX, hY, healthColor, shadow);
+        if (displayPing.get()) hX = text.render(pingText, hX, hY, BLUE, shadow);
+        if (displayDistance.get()) hX = text.render(distText, hX, hY, GREY, shadow);
+        if (displayTotemPops.get()) text.render(popText, hX, hY, AMBER, shadow);
         text.end();
 
         if (displayItems.get()) {
@@ -494,7 +496,7 @@ public class Nametags extends Module {
 
                     for (Enchantment enchantment : enchantmentsToShowScale.keySet()) {
                         String enchantName = Utils.getEnchantSimpleName(enchantment, enchantLength.get()) + " " + enchantmentsToShowScale.get(enchantment);
-                        itemWidths[i] = Math.max(itemWidths[i], (text.getWidth(enchantName, true) / 2));
+                        itemWidths[i] = Math.max(itemWidths[i], (text.getWidth(enchantName, shadow) / 2));
                     }
 
                     maxEnchantCount = Math.max(maxEnchantCount, enchantmentsToShowScale.size());
@@ -529,8 +531,8 @@ public class Nametags extends Module {
                     double enchantY = 0;
 
                     double addY = switch (enchantPos.get()) {
-                        case Above -> -((enchantmentsToShow.size() + 1) * text.getHeight(true));
-                        case On_Top -> (itemsHeight - enchantmentsToShow.size() * text.getHeight(true)) / 2;
+                        case Above -> -((enchantmentsToShow.size() + 1) * text.getHeight(shadow));
+                        case On_Top -> (itemsHeight - enchantmentsToShow.size() * text.getHeight(shadow)) / 2;
                     };
 
                     double enchantX;
@@ -542,13 +544,13 @@ public class Nametags extends Module {
                         if (enchantment.isCursed()) enchantColor = RED;
 
                         enchantX = switch (enchantPos.get()) {
-                            case Above -> x + (aW / 2) - (text.getWidth(enchantName, true) / 2);
-                            case On_Top -> x + (aW - text.getWidth(enchantName, true)) / 2;
+                            case Above -> x + (aW / 2) - (text.getWidth(enchantName, shadow) / 2);
+                            case On_Top -> x + (aW - text.getWidth(enchantName, shadow)) / 2;
                         };
 
-                        text.render(enchantName, enchantX, y + addY + enchantY, enchantColor, true);
+                        text.render(enchantName, enchantX, y + addY + enchantY, enchantColor, shadow);
 
-                        enchantY += text.getHeight(true);
+                        enchantY += text.getHeight(shadow);
                     }
 
                     text.end();
@@ -569,16 +571,16 @@ public class Nametags extends Module {
         NametagUtils.end();
     }
 
-    private void renderNametagItem(ItemStack stack) {
+    private void renderNametagItem(ItemStack stack, boolean shadow) {
         TextRenderer text = TextRenderer.get();
         NametagUtils.begin(pos);
 
         String name = stack.getName().getString();
         String count = " x" + stack.getCount();
 
-        double nameWidth = text.getWidth(name, true);
-        double countWidth = text.getWidth(count, true);
-        double heightDown = text.getHeight(true);
+        double nameWidth = text.getWidth(name, shadow);
+        double countWidth = text.getWidth(count, shadow);
+        double heightDown = text.getHeight(shadow);
 
         double width = nameWidth;
         if (itemCount.get()) width += countWidth;
@@ -590,14 +592,14 @@ public class Nametags extends Module {
         double hX = -widthHalf;
         double hY = -heightDown;
 
-        hX = text.render(name, hX, hY, names.get(), true);
-        if (itemCount.get()) text.render(count, hX, hY, GOLD, true);
+        hX = text.render(name, hX, hY, names.get(), shadow);
+        if (itemCount.get()) text.render(count, hX, hY, GOLD, shadow);
         text.end();
 
         NametagUtils.end();
     }
 
-    private void renderGenericNametag(LivingEntity entity) {
+    private void renderGenericNametag(LivingEntity entity, boolean shadow) {
         TextRenderer text = TextRenderer.get();
         NametagUtils.begin(pos);
 
@@ -617,9 +619,9 @@ public class Nametags extends Module {
         else if (healthPercentage <= 0.666) healthColor = AMBER;
         else healthColor = GREEN;
 
-        double nameWidth = text.getWidth(nameText, true);
-        double healthWidth = text.getWidth(healthText, true);
-        double heightDown = text.getHeight(true);
+        double nameWidth = text.getWidth(nameText, shadow);
+        double healthWidth = text.getWidth(healthText, shadow);
+        double heightDown = text.getHeight(shadow);
 
         double width = nameWidth + healthWidth;
         double widthHalf = width / 2;
@@ -630,21 +632,21 @@ public class Nametags extends Module {
         double hX = -widthHalf;
         double hY = -heightDown;
 
-        hX = text.render(nameText, hX, hY, names.get(), true);
-        text.render(healthText, hX, hY, healthColor, true);
+        hX = text.render(nameText, hX, hY, names.get(), shadow);
+        text.render(healthText, hX, hY, healthColor, shadow);
         text.end();
 
         NametagUtils.end();
     }
 
-    private void renderTntNametag(TntEntity entity) {
+    private void renderTntNametag(TntEntity entity, boolean shadow) {
         TextRenderer text = TextRenderer.get();
         NametagUtils.begin(pos);
 
         String fuseText = ticksToTime(entity.getFuse());
 
-        double width = text.getWidth(fuseText, true);
-        double heightDown = text.getHeight(true);
+        double width = text.getWidth(fuseText, shadow);
+        double heightDown = text.getHeight(shadow);
 
         double widthHalf = width / 2;
 
@@ -654,7 +656,7 @@ public class Nametags extends Module {
         double hX = -widthHalf;
         double hY = -heightDown;
 
-        text.render(fuseText, hX, hY, names.get(), true);
+        text.render(fuseText, hX, hY, names.get(), shadow);
         text.end();
 
         NametagUtils.end();

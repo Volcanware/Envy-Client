@@ -63,7 +63,6 @@ public class Utils {
     public static final Color WHITE = new Color(255, 255, 255);
     public static boolean rendering3D = true;
     public static boolean renderingEntityOutline = false;
-    public static int minimumLightLevel;
     public static double frameTime;
     public static Screen screenToOpen;
 

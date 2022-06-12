@@ -1,16 +1,11 @@
 package mathax.client.systems.modules.render;
 
-import mathax.client.MatHax;
-import mathax.client.eventbus.EventHandler;
-import mathax.client.events.world.TickEvent;
 import mathax.client.settings.EnumSetting;
 import mathax.client.settings.IntSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Items;
 
 public class Fullbright extends Module {
@@ -22,9 +17,6 @@ public class Fullbright extends Module {
         .name("mode")
         .description("The mode to use for Fullbright.")
         .defaultValue(Mode.Gamma)
-        .onChanged(mode -> {
-            if (mode == Mode.Luminance) mc.options.getGamma().setValue(StaticListener.prevGamma);
-        })
         .build()
     );
 
@@ -33,69 +25,35 @@ public class Fullbright extends Module {
         .description("Minimum light level when using Luminance mode.")
         .visible(() -> mode.get() == Mode.Gamma)
         .defaultValue(8)
+        .range(0, 15)
+        .sliderRange(0, 15)
         .onChanged(integer -> {
             if (mc.worldRenderer != null) mc.worldRenderer.reload();
         })
-        .range(0, 15)
-        .sliderRange(0, 15)
         .build()
     );
 
     public Fullbright() {
         super(Categories.Render, Items.BEACON, "fullbright", "Allows you to see at any light level.");
-
-        MatHax.EVENT_BUS.subscribe(StaticListener.class);
     }
 
     @Override
     public void onActivate() {
-        enable();
-
         if (mode.get() == Mode.Luminance) mc.worldRenderer.reload();
     }
 
     @Override
     public void onDeactivate() {
-        disable();
-
         if (mode.get() == Mode.Luminance) mc.worldRenderer.reload();
     }
 
-    public int getMinimumLightLevel() {
+    public int getLuminance() {
         if (!isActive() || mode.get() != Mode.Luminance) return 0;
         return minimumLightLevel.get();
     }
 
-    public static boolean isEnabled() {
-        return StaticListener.timesEnabled > 0;
-    }
-
-    public static void enable() {
-        StaticListener.timesEnabled++;
-    }
-
-    public static void disable() {
-        StaticListener.timesEnabled--;
-    }
-
-    private static class StaticListener {
-        private static final MinecraftClient mc = MinecraftClient.getInstance();
-        private static final Fullbright fullbright = Modules.get().get(Fullbright.class);
-
-        private static int timesEnabled;
-        private static int lastTimesEnabled;
-
-        private static double prevGamma = mc.options.getGamma().getValue();
-
-        @EventHandler
-        private static void onTick(TickEvent.Post event) {
-            if (timesEnabled > 0 && lastTimesEnabled == 0) prevGamma = mc.options.getGamma().getValue();
-            else if (timesEnabled == 0 && lastTimesEnabled > 0 && fullbright.mode.get() == Mode.Gamma) mc.options.getGamma().setValue(prevGamma == 16 ? 1 : prevGamma);
-
-            if (timesEnabled > 0 && fullbright.mode.get() == Mode.Gamma) mc.options.getGamma().setValue(16.0);
-
-            lastTimesEnabled = timesEnabled;
-        }
+    public boolean getGamma() {
+        return isActive() && mode.get() == Mode.Gamma;
     }
 
     public enum Mode {

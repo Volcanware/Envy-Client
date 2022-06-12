@@ -88,15 +88,11 @@ public class Xray extends Module {
             Modules.get().get(WallHack.class).toggle();
         }
 
-        Fullbright.enable();
-
         mc.worldRenderer.reload();
     }
 
     @Override
     public void onDeactivate() {
-        Fullbright.disable();
-
         mc.worldRenderer.reload();
     }
 

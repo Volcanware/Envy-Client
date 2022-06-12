@@ -2,7 +2,7 @@ package mathax.client.mixin;
 
 import mathax.client.mixininterface.IEntityRenderer;
 import mathax.client.systems.modules.Modules;
-import mathax.client.utils.Utils;
+import mathax.client.systems.modules.render.Fullbright;
 import mathax.client.systems.modules.render.Nametags;
 import mathax.client.systems.modules.render.NoRender;
 import net.minecraft.client.render.Frustum;
@@ -28,6 +28,7 @@ public abstract class EntityRendererMixin<T extends Entity> implements IEntityRe
 
     @Inject(method = "renderLabelIfPresent", at = @At("HEAD"), cancellable = true)
     private void onRenderLabel(T entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
+        if (Modules.get().get(NoRender.class).noNametags()) info.cancel();
         if (!(entity instanceof PlayerEntity)) return;
         if (Modules.get().isActive(Nametags.class)) info.cancel();
     }
@@ -40,7 +41,7 @@ public abstract class EntityRendererMixin<T extends Entity> implements IEntityRe
 
     @Inject(method = "getSkyLight", at = @At("RETURN"), cancellable = true)
     private void onGetSkyLight(CallbackInfoReturnable<Integer> info) {
-        info.setReturnValue(Math.max(Utils.minimumLightLevel, info.getReturnValueI()));
+        info.setReturnValue(Math.max(Modules.get().get(Fullbright.class).getLuminance(), info.getReturnValueI()));
     }
 
     @Override
