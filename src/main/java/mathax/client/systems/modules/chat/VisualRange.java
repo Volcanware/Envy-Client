@@ -14,8 +14,8 @@ import mathax.client.utils.misc.ChatUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class VisualRange extends Module {
@@ -72,10 +72,10 @@ public class VisualRange extends Module {
             if ((!ignoreFriends.get() || !Friends.get().isFriend(((PlayerEntity) event.entity))) && (!ignoreFakes.get() || !(event.entity instanceof FakePlayerEntity))) ChatUtils.sendMsg(event.entity.getId() + 100, Formatting.GRAY, "(highlight)%s(default) has entered your visual range!", event.entity.getEntityName());
         } else {
             String entityPos = event.entity.getPos().toString();
-            MutableText text = new LiteralText(event.entity.getType().getName().getString()).formatted(Formatting.WHITE);
-            text.append(new LiteralText(" has spawned at ").formatted(Formatting.GRAY));
+            MutableText text = Text.literal(event.entity.getType().getName().getString()).formatted(Formatting.WHITE);
+            text.append(Text.literal(" has spawned at ").formatted(Formatting.GRAY));
             text.append(entityPos);
-            text.append(new LiteralText(".").formatted(Formatting.GRAY));
+            text.append(Text.literal(".").formatted(Formatting.GRAY));
             info(text);
         }
     }
@@ -87,10 +87,10 @@ public class VisualRange extends Module {
         if (event.entity instanceof PlayerEntity player) {
             if ((!ignoreFriends.get() || !Friends.get().isFriend(player)) && (!ignoreEnemies.get() || !Enemies.get().isEnemy(player)) && (!ignoreFakes.get() || !(player instanceof FakePlayerEntity))) ChatUtils.sendMsg(player.getId() + 100, Formatting.GRAY, "(highlight)%s(default) has left your visual range!", player.getName().getString());
         } else {
-            MutableText text = new LiteralText(event.entity.getType().getName().getString()).formatted(Formatting.WHITE);
-            text.append(new LiteralText(" has despawned at ").formatted(Formatting.GRAY));
+            MutableText text = Text.literal(event.entity.getType().getName().getString()).formatted(Formatting.WHITE);
+            text.append(Text.literal(" has despawned at ").formatted(Formatting.GRAY));
             text.append(ChatUtils.formatCoords(event.entity.getPos()));
-            text.append(new LiteralText(".").formatted(Formatting.GRAY));
+            text.append(Text.literal(".").formatted(Formatting.GRAY));
             info(text);
         }
     }

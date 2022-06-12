@@ -1,6 +1,7 @@
 package mathax.client.settings;
 
 import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Lifecycle;
 import it.unimi.dsi.fastutil.objects.ObjectIterators;
 import net.minecraft.block.entity.BlockEntityType;
@@ -119,6 +120,11 @@ public class StorageBlockListSetting extends Setting<List<BlockEntityType<?>>> {
         }
 
         @Override
+        public DataResult<RegistryEntry<BlockEntityType<?>>> getOrCreateEntryDataResult(RegistryKey<BlockEntityType<?>> key) {
+            return null;
+        }
+
+        @Override
         public int size() {
             return STORAGE_BLOCKS.length;
         }
@@ -199,7 +205,7 @@ public class StorageBlockListSetting extends Setting<List<BlockEntityType<?>>> {
         }
 
         @Override
-        public Optional<RegistryEntry<BlockEntityType<?>>> getRandom(Random random) {
+        public Optional<RegistryEntry<BlockEntityType<?>>> getRandom(net.minecraft.util.math.random.Random random) {
             return Optional.empty();
         }
 
@@ -266,6 +272,12 @@ public class StorageBlockListSetting extends Setting<List<BlockEntityType<?>>> {
         @Override
         public void populateTags(Map<TagKey<BlockEntityType<?>>, List<RegistryEntry<BlockEntityType<?>>>> tagEntries) {
 
+        }
+
+
+        @Override
+        public Set<RegistryKey<BlockEntityType<?>>> getKeys() {
+            return null;
         }
     }
 }

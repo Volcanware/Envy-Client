@@ -265,12 +265,12 @@ public class BetterChat extends Module {
             if (timestampsSeconds.get()) time = timeFormatSeconds.format(new Date());
             else time = timeFormat.format(new Date());
 
-            Text timestamp = new LiteralText("<" + time + "> ").formatted(Formatting.GRAY);
+            Text timestamp = Text.literal("<" + time + "> ").formatted(Formatting.GRAY);
 
-            message = new LiteralText("").append(timestamp).append(message);
+            message = Text.literal("").append(timestamp).append(message);
         }
 
-        if (playerHeads.get()) message = new LiteralText("  ").append(message);
+        if (playerHeads.get()) message = Text.literal("  ").append(message);
 
         for (int i = 0; i < antiSpamDepth.get(); i++) {
             if (antiSpam.get()) {
@@ -293,17 +293,17 @@ public class BetterChat extends Module {
 
         ChatHudLine<OrderedText> visibleMessage = visibleMessages.get(index);
 
-        LiteralText parsed = new LiteralText("");
+        MutableText parsed = Text.literal("");
 
         visibleMessage.getText().accept((i, style, codePoint) -> {
-            parsed.append(new LiteralText(new String(Character.toChars(codePoint))).setStyle(style));
+            parsed.append(Text.literal(new String(Character.toChars(codePoint))).setStyle(style));
             return true;
         });
 
         String oldMessage = parsed.getString();
         String newMessage = text.getString();
 
-        if (oldMessage.equals(newMessage)) return parsed.append(new LiteralText(" (2)").formatted(Formatting.GRAY));
+        if (oldMessage.equals(newMessage)) return parsed.append(Text.literal(" (2)").formatted(Formatting.GRAY));
         else {
             Matcher matcher = Pattern.compile(".*(\\([0-9]+\\)$)").matcher(oldMessage);
 
@@ -316,7 +316,7 @@ public class BetterChat extends Module {
 
             if (oldMessage.substring(0, oldMessage.length() - counter.length()).equals(newMessage)) {
                 for (int i = 0; i < counter.length(); i++) parsed.getSiblings().remove(parsed.getSiblings().size() - 1);
-                return parsed.append(new LiteralText( " (" + (number + 1) + ")").formatted(Formatting.GRAY));
+                return parsed.append(Text.literal( " (" + (number + 1) + ")").formatted(Formatting.GRAY));
             }
         }
 
@@ -328,9 +328,9 @@ public class BetterChat extends Module {
         String message = event.message;
 
         if (coordsProtection.get() && containsCoordinates(message)) {
-            BaseText warningMessage = new LiteralText(Formatting.GRAY + "It looks like there are coordinates in your message! ");
+            MutableText warningMessage = Text.literal(Formatting.GRAY + "It looks like there are coordinates in your message! ");
 
-            BaseText sendButton = getSendButton(message);
+            MutableText sendButton = getSendButton(message);
             warningMessage.append(sendButton);
 
             ChatUtils.sendMsg(warningMessage);
@@ -462,16 +462,16 @@ public class BetterChat extends Module {
         return message.matches(".*(?<x>-?\\d{3,}(?:\\.\\d*)?)(?:\\s+(?<y>\\d{1,3}(?:\\.\\d*)?))?\\s+(?<z>-?\\d{3,}(?:\\.\\d*)?).*");
     }
 
-    public BaseText getSendButton(String message) {
-        BaseText sendButton = new LiteralText("[SEND ANYWAY]");
-        BaseText hintBaseText = new LiteralText("");
+    public MutableText getSendButton(String message) {
+        MutableText sendButton = Text.literal("[SEND ANYWAY]");
+        MutableText hintMutableText = Text.literal("");
 
-        BaseText hintMsg = new LiteralText("Send your message to the global chat even if there are coordinates:");
-        hintMsg.setStyle(hintBaseText.getStyle().withFormatting(Formatting.GRAY));
-        hintBaseText.append(hintMsg);
-        hintBaseText.append(new LiteralText('\n' + message));
+        MutableText hintMsg = Text.literal("Send your message to the global chat even if there are coordinates:");
+        hintMsg.setStyle(hintMutableText.getStyle().withFormatting(Formatting.GRAY));
+        hintMutableText.append(hintMsg);
+        hintMutableText.append(Text.literal('\n' + message));
 
-        sendButton.setStyle(sendButton.getStyle().withFormatting(Formatting.DARK_RED).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, Commands.get().get(SayCommand.class).toString(message))).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hintBaseText)));
+        sendButton.setStyle(sendButton.getStyle().withFormatting(Formatting.DARK_RED).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, Commands.get().get(SayCommand.class).toString(message))).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hintMutableText)));
 
         return sendButton;
     }

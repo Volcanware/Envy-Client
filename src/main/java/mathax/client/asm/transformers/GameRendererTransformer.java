@@ -34,13 +34,13 @@ public class GameRendererTransformer extends AsmTransformer {
                 method.instructions.insert(insn, insns);
                 method.instructions.remove(insn);
                 injectionCount++;
-            } else if ((insn instanceof FieldInsnNode in1 && fovField.equals(in1)) || (insn instanceof MethodInsnNode in2 && in2.owner.equals(klass.name) && in2.name.startsWith("redirect") && in2.name.endsWith("getFov"))) {
+            } else if ((insn instanceof MethodInsnNode in1 && in1.name.equals("intValue") && insn.getNext() instanceof InsnNode _in && _in.getOpcode() == Opcodes.I2D) || (insn instanceof MethodInsnNode in2 && in2.owner.equals(klass.name) && in2.name.startsWith("redirect") && in2.name.endsWith("getFov"))) {
                 InsnList insns = new InsnList();
 
                 insns.add(new VarInsnNode(Opcodes.DSTORE, method.maxLocals));
                 generateEventCall(insns, new VarInsnNode(Opcodes.DLOAD, method.maxLocals));
 
-                method.instructions.insert(insn, insns);
+                method.instructions.insert(insn.getNext(), insns);
                 injectionCount++;
             }
         }

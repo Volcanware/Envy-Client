@@ -161,7 +161,7 @@ public class PlayerUtils {
             ((IVec3d)hitPos).set(blockPos1.getX() + 0.5 + direction1.getVector().getX() * 0.5, blockPos1.getY() + 0.5 + direction1.getVector().getY() * 0.5, blockPos1.getZ() + 0.5 + direction1.getVector().getZ() * 0.5);
             boolean bl3 = mc.player.input.sneaking;
             mc.player.input.sneaking = false;
-            mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(hitPos, direction1, blockPos1, false));
+            mc.interactionManager.interactBlock(mc.player, hand, new BlockHitResult(hitPos, direction1, blockPos1, false));
             if (bl) mc.player.swingHand(hand);
             mc.player.input.sneaking = bl3;
             return true;
@@ -170,7 +170,7 @@ public class PlayerUtils {
         if (!bl2) return false;
 
         ((IVec3d)hitPos).set(blockPos);
-        mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(hitPos, Direction.UP, blockPos, false));
+        mc.interactionManager.interactBlock(mc.player, hand, new BlockHitResult(hitPos, Direction.UP, blockPos, false));
         if (bl) mc.player.swingHand(hand);
         return true;
     }
@@ -263,7 +263,7 @@ public class PlayerUtils {
 
         if (rotate) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(rotations[0], rotations[1], mc.player.isOnGround()));
         mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
-        mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(hitVec, side2, neighbor, false));
+        mc.interactionManager.interactBlock(mc.player, hand, new BlockHitResult(hitVec, side2, neighbor, false));
         if (swing) mc.player.swingHand(hand);
         mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
 

@@ -147,7 +147,7 @@ public class Utils {
     }
 
     public static int getRenderDistance() {
-        return Math.max(mc.options.viewDistance, ((ClientPlayNetworkHandlerAccessor) mc.getNetworkHandler()).getChunkLoadDistance());
+        return Math.max(mc.options.getViewDistance().getValue(), ((ClientPlayNetworkHandlerAccessor) mc.getNetworkHandler()).getChunkLoadDistance());
     }
 
     public static int getWindowWidth() {
@@ -301,7 +301,7 @@ public class Utils {
     }
 
     public static Integer getMaxHeight() {
-        return mc.world.getDimension().getHeight() - Math.abs(getMinHeight()) - 1;
+        return mc.world.getDimension().height() - Math.abs(getMinHeight()) - 1;
     }
 
     public static Integer getMinHeight() {

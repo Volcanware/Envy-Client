@@ -337,14 +337,7 @@ public class WireframeEntityRenderer {
             pos4.transform(matrix);
 
             // Render
-            if (shapeMode.sides()) {
-                renderer.triangles.quad(
-                    renderer.triangles.vec3(offsetX + pos1.getX(), offsetY + pos1.getY(), offsetZ + pos1.getZ()).color(sideColor).next(),
-                    renderer.triangles.vec3(offsetX + pos2.getX(), offsetY + pos2.getY(), offsetZ + pos2.getZ()).color(sideColor).next(),
-                    renderer.triangles.vec3(offsetX + pos3.getX(), offsetY + pos3.getY(), offsetZ + pos3.getZ()).color(sideColor).next(),
-                    renderer.triangles.vec3(offsetX + pos4.getX(), offsetY + pos4.getY(), offsetZ + pos4.getZ()).color(sideColor).next()
-                );
-            }
+            if (shapeMode.sides()) renderer.triangles.quad(renderer.triangles.vec3(offsetX + pos1.getX(), offsetY + pos1.getY(), offsetZ + pos1.getZ()).color(sideColor).next(), renderer.triangles.vec3(offsetX + pos2.getX(), offsetY + pos2.getY(), offsetZ + pos2.getZ()).color(sideColor).next(), renderer.triangles.vec3(offsetX + pos3.getX(), offsetY + pos3.getY(), offsetZ + pos3.getZ()).color(sideColor).next(), renderer.triangles.vec3(offsetX + pos4.getX(), offsetY + pos4.getY(), offsetZ + pos4.getZ()).color(sideColor).next());
 
             if (shapeMode.lines()) {
                 renderer.line(offsetX + pos1.getX(), offsetY + pos1.getY(), offsetZ + pos1.getZ(), offsetX + pos2.getX(), offsetY + pos2.getY(), offsetZ + pos2.getZ(), lineColor);

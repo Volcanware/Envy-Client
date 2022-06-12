@@ -38,17 +38,23 @@ import net.minecraft.util.math.*;
 // TODO: Fix bed position broken.
 
 public class SkeletonESP extends Module {
-    private final Color distanceColor = new Color();
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgColors = settings.createGroup("Colors");
 
     // General
 
+    private final Setting<Boolean> ignoreSelf = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-self")
+        .description("Stops rendering your skeleton.")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<Boolean> firstPerson = sgGeneral.add(new BoolSetting.Builder()
         .name("first-person")
         .description("Renders your skeleton in first person.")
         .defaultValue(false)
+        .visible(() -> !ignoreSelf.get())
         .build()
     );
 
@@ -99,12 +105,12 @@ public class SkeletonESP extends Module {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.disableDepthTest();
-        RenderSystem.depthMask(MinecraftClient.isFabulousGraphicsOrBetter());
+        RenderSystem.depthMask(MinecraftClient.isFancyGraphicsOrBetter());
         RenderSystem.enableCull();
 
         mc.world.getEntities().forEach(entity -> {
             if (!(entity instanceof PlayerEntity player)) return;
-            if (ignoreFriends.get() && Friends.get().isFriend((PlayerEntity) entity)) return;
+            if ((ignoreFriends.get() && Friends.get().isFriend((PlayerEntity) entity)) || (ignoreSelf.get() && player == mc.player)) return;
             if (!firstPerson.get() && player == mc.player && mc.options.getPerspective() == Perspective.FIRST_PERSON && !Modules.get().isActive(Freecam.class) && !Modules.get().isActive(FreeLook.class)) return;
             int rotationHoldTicks = Config.get().rotationHoldTicks.get();
 
@@ -209,8 +215,8 @@ public class SkeletonESP extends Module {
             bufferBuilder.vertex(matrix4f, 0, -0.55f, 0).color(color.r, color.g, color.b, color.a).next();
             matrixStack.pop();
 
-            bufferBuilder.end();
-            BufferRenderer.draw(bufferBuilder);
+            bufferBuilder.clear();
+            BufferRenderer.drawWithShader(bufferBuilder.end());
 
             if (swimming) matrixStack.translate(0, 0.95f, 0);
             if (swimming || flying) matrixStack.multiply(new Quaternion(new Vec3f(1, 0, 0), 90 + m, true));
@@ -225,6 +231,7 @@ public class SkeletonESP extends Module {
         RenderSystem.disableBlend();
         RenderSystem.enableDepthTest();
         RenderSystem.depthMask(true);
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
     }
 
     private void rotate(MatrixStack matrix, ModelPart modelPart) {

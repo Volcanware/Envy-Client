@@ -20,9 +20,9 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.network.packet.c2s.play.BookUpdateC2SPacket;
 import net.minecraft.text.ClickEvent;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.PointerBuffer;
@@ -200,9 +200,9 @@ public class BookBot extends Module {
 
             // Handle the file being empty
             if (file.length() == 0) {
-                MutableText message = new LiteralText("");
-                message.append(new LiteralText("The bookbot file is empty! ").formatted(Formatting.RED));
-                message.append(new LiteralText("Click here to edit it.")
+                MutableText message = Text.literal("");
+                message.append(Text.literal("The bookbot file is empty! ").formatted(Formatting.RED));
+                message.append(Text.literal("Click here to edit it.")
                     .setStyle(Style.EMPTY
                         .withFormatting(Formatting.UNDERLINE, Formatting.RED)
                         .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath()))
@@ -258,11 +258,11 @@ public class BookBot extends Module {
                     // Ignore newline chars when writing lines, should already be organised
                     if (nextChar == '\r' || nextChar == '\n') break;
 
-                    // Append it to the line 
+                    // Append it to the line
                     double charWidth = ((TextHandlerAccessor) mc.textRenderer.getTextHandler()).getWidthRetriever().getWidth(nextChar, Style.EMPTY);
                     line.appendCodePoint(nextChar);
                     lineWidth += charWidth;
-                    
+
                     // Make sure the character will fit on the line
                     if (lineWidth + charWidth > 114) break;
                 }

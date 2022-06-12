@@ -5,7 +5,6 @@ import mathax.client.MatHax;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.game.GameJoinedEvent;
 import mathax.client.events.game.GameLeftEvent;
-import mathax.client.systems.Systems;
 import mathax.client.utils.network.HTTP;
 import mathax.client.utils.render.prompts.YesNoPrompt;
 import net.fabricmc.loader.api.FabricLoader;

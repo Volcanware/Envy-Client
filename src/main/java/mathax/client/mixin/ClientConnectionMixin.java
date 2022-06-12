@@ -10,7 +10,6 @@ import mathax.client.systems.modules.world.HighwayBuilder;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.PacketListener;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -33,7 +32,7 @@ public class ClientConnectionMixin {
     @Inject(method = "disconnect", at = @At("HEAD"))
     private void disconnect(Text disconnectReason, CallbackInfo info) {
         if (Modules.get().get(HighwayBuilder.class).isActive()) {
-            MutableText text = new LiteralText(String.format("\n\n%s[%sHighway Builder%s] Statistics:", Formatting.GRAY, Formatting.BLUE, Formatting.GRAY)).append("\n");
+            MutableText text = Text.literal(String.format("\n\n%s[%sHighway Builder%s] Statistics:", Formatting.GRAY, Formatting.BLUE, Formatting.GRAY)).append("\n");
             text.append(Modules.get().get(HighwayBuilder.class).getStatsText());
 
             ((MutableText) disconnectReason).append(text);

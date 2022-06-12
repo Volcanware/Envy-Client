@@ -246,7 +246,7 @@ public class CEVBreaker extends Module {
         }
 
         if (!assertionsDisabled && mc.interactionManager == null) throw new AssertionError();
-        mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), Direction.UP, blockPos, true));
+        mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), Direction.UP, blockPos, true));
         InvUtils.swap2(oldSlot);
     }
 
@@ -276,7 +276,7 @@ public class CEVBreaker extends Module {
         int oldSlot = mc.player.getInventory().selectedSlot;
         InvUtils.swap2(slot);
         if (!assertionsDisabled && mc.interactionManager == null) throw new AssertionError();
-        mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), direction, blockPos, true));
+        mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), direction, blockPos, true));
         InvUtils.swap2(oldSlot);
     }
 

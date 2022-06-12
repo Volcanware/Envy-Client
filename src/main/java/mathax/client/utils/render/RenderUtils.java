@@ -40,7 +40,7 @@ public class RenderUtils {
     public static void updateScreenCenter() {
         Vec3d pos = new Vec3d(0, 0, 1);
 
-        if (mc.options.bobView) {
+        if (mc.options.getBobView().getValue()) {
             if (!Modules.get().isActive(NoBob.class)) {
                 MatrixStack bobViewMatrices = new MatrixStack();
 

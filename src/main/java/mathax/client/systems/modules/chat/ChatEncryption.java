@@ -14,9 +14,8 @@ import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.utils.base91.Base91;
 import net.minecraft.item.Items;
-import net.minecraft.text.BaseText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.HoverEvent;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -101,19 +100,19 @@ public class ChatEncryption extends Module {
             try {
                 String chat = decrypt(msg[1], customKey.get() ? groupKey.get() : password);
 
-                BaseText prefixOpenBorder = new LiteralText("[");
+                MutableText prefixOpenBorder = Text.literal("[");
                 prefixOpenBorder.setStyle(prefixOpenBorder.getStyle().withFormatting(Formatting.GRAY));
 
-                BaseText prefix = new LiteralText("Encrypted Chat");
+                MutableText prefix = Text.literal("Encrypted Chat");
                 prefix.setStyle(prefix.getStyle().withColor(MatHax.INSTANCE.MATHAX_COLOR.getPacked()));
 
-                BaseText prefixCloseBorder = new LiteralText("] ");
+                MutableText prefixCloseBorder = Text.literal("] ");
                 prefixCloseBorder.setStyle(prefixCloseBorder.getStyle().withFormatting(Formatting.GRAY));
 
-                BaseText chatText = new LiteralText(msg[0] + chat);
-                chatText.setStyle(chatText.getStyle().withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText(msg[1]))));
+                MutableText chatText = Text.literal(msg[0] + chat);
+                chatText.setStyle(chatText.getStyle().withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(msg[1]))));
 
-                BaseText chatMessage = new LiteralText("");
+                MutableText chatMessage = Text.literal("");
                 if (Modules.get().get(BetterChat.class).displayPlayerHeads()) chatMessage.append("  ");
                 chatMessage.append(prefixOpenBorder);
                 chatMessage.append(prefix);

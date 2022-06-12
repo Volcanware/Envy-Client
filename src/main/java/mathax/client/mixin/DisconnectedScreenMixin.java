@@ -6,7 +6,6 @@ import mathax.client.systems.modules.misc.AutoReconnect;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -44,16 +43,16 @@ public abstract class DisconnectedScreenMixin extends Screen {
             int x2 = width / 2 - 100;
             int y2 = Math.min((height / 2 + reasonHeight / 2) + 56, height - 30);
 
-            addDrawableChild(new ButtonWidget(x, y, 200, 20, new LiteralText("Reconnect"), b -> {
+            addDrawableChild(new ButtonWidget(x, y, 200, 20, Text.literal("Reconnect"), b -> {
                 LastServerInfo.reconnect(parent);
             }));
 
             autoReconnectBtn =
-                addDrawableChild(new ButtonWidget(x2, y2, 200, 20, new LiteralText(getText()), button -> {
+                addDrawableChild(new ButtonWidget(x2, y2, 200, 20, Text.literal(getText()), button -> {
                     Modules.get().get(AutoReconnect.class).toggle();
                     if (!Modules.get().isActive(AutoReconnect.class)) {
                         this.time = Modules.get().get(AutoReconnect.class).time.get() * 20;
-                        ((AbstractButtonWidgetAccessor) autoReconnectBtn).setText(new LiteralText(getText()));
+                        ((AbstractButtonWidgetAccessor) autoReconnectBtn).setText(Text.literal(getText()));
                     }
                 }));
         }
@@ -72,7 +71,7 @@ public abstract class DisconnectedScreenMixin extends Screen {
             else time--;
         }
 
-        ((AbstractButtonWidgetAccessor) autoReconnectBtn).setText(new LiteralText(getText()));
+        ((AbstractButtonWidgetAccessor) autoReconnectBtn).setText(Text.literal(getText()));
     }
 
     private String getText() {

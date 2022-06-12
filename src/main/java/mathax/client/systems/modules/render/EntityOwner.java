@@ -18,7 +18,7 @@ import mathax.client.utils.network.MatHaxExecutor;
 import mathax.client.utils.render.NametagUtils;
 import mathax.client.utils.render.color.Color;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.HorseBaseEntity;
+import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -69,8 +69,8 @@ public class EntityOwner extends Module {
         for (Entity entity : mc.world.getEntities()) {
             UUID ownerUuid;
 
-            if (entity instanceof TameableEntity) ownerUuid = ((TameableEntity) entity).getOwnerUuid();
-            else if (entity instanceof HorseBaseEntity) ownerUuid = ((HorseBaseEntity) entity).getOwnerUuid();
+            if (entity instanceof TameableEntity tameable) ownerUuid = tameable.getOwnerUuid();
+            else if (entity instanceof AbstractHorseEntity horse) ownerUuid = horse.getOwnerUuid();
             else if (entity instanceof ProjectileEntity && projectiles.get()) ownerUuid = ((ProjectileEntityAccessor) entity).getOwnerUuid();
             else continue;
 

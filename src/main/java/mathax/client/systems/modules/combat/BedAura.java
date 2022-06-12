@@ -357,7 +357,7 @@ public class BedAura extends Module {
             return;
         }
 
-        if (mc.world.getDimension().isBedWorking()) {
+        if (mc.world.getDimension().bedWorks()) {
             error("You can't blow up beds in this dimension, disabling...");
             toggle();
             return;
@@ -517,7 +517,7 @@ public class BedAura extends Module {
         if (breakHand.get() == BreakHand.Mainhand) hand = Hand.MAIN_HAND;
         else hand = Hand.OFF_HAND;
 
-        mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(mc.player.getPos(), Direction.UP, pos, false));
+        mc.interactionManager.interactBlock(mc.player, hand, new BlockHitResult(mc.player.getPos(), Direction.UP, pos, false));
         mc.player.setSneaking(wasSneaking);
     }
 

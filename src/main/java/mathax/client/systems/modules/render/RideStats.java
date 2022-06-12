@@ -14,7 +14,7 @@ import mathax.client.utils.render.color.SettingColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.passive.HorseBaseEntity;
+import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.LlamaEntity;
 import net.minecraft.item.Items;
 
@@ -137,12 +137,12 @@ public class RideStats extends Module {
                 pos.set(entity, event.tickDelta);
                 pos.add(0, entity.getEyeHeight(entity.getPose()) + 0.75, 0);
                 pos.add(0, -1 + height.get(), 0);
-                if (NametagUtils.to2D(pos, scale.get())) renderHorseNametag((HorseBaseEntity) entity, entity);
+                if (NametagUtils.to2D(pos, scale.get())) renderHorseNametag((AbstractHorseEntity) entity, entity);
             }
         }
     }
 
-    private void renderHorseNametag(HorseBaseEntity horseEntity, Entity entity) {
+    private void renderHorseNametag(AbstractHorseEntity horseEntity, Entity entity) {
         boolean llama = entity.getType() == EntityType.LLAMA;
         TextRenderer text = TextRenderer.get();
         NametagUtils.begin(pos);

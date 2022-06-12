@@ -38,7 +38,7 @@ public class TextUtils {
     private static void preOrderTraverse(Text text, Stack<ColoredText> stack, List<ColoredText> coloredTexts) {
         if (text == null) return;
 
-        String textString = text.asString();
+        String textString = text.getString();
 
         TextColor mcTextColor = text.getStyle().getColor();
 

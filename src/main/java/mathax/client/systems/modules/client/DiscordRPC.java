@@ -162,7 +162,7 @@ public class DiscordRPC extends Module {
         } else if (mc.currentScreen instanceof SelectWorldScreen) return "In world selection";
         else if (mc.currentScreen instanceof EditWorldScreen) return "Editing a world";
         else if (mc.currentScreen instanceof CreateWorldScreen || mc.currentScreen instanceof EditGameRulesScreen) return "Creating a new world";
-        else if (mc.currentScreen instanceof LevelLoadingScreen || mc.currentScreen instanceof SaveLevelScreen) return "Loading/Saving a world";
+        else if (mc.currentScreen instanceof LevelLoadingScreen) return "Loading a world";
         else if (mc.currentScreen instanceof CreditsScreen) return "Reading credits";
         else if (mc.currentScreen instanceof AccountsScreen) return "In account manager";
         else if (mc.currentScreen instanceof AddCrackedAccountScreen) return "Adding cracked account";

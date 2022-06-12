@@ -18,6 +18,7 @@ import java.util.Queue;
 public class Breadcrumbs extends Module {
     private final Pool<Section> sectionPool = new Pool<>(Section::new);
     private final Queue<Section> sections = new ArrayDeque<>();
+
     private Section section;
 
     private DimensionType lastDimension;
@@ -25,6 +26,7 @@ public class Breadcrumbs extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
+
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
         .name("color")
         .description("The color of the breadcrumbs trail.")

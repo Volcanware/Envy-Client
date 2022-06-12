@@ -22,7 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.network.packet.s2c.play.DisconnectS2CPacket;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
@@ -181,7 +181,7 @@ public class InfinityMiner extends Module {
 
     private void logOut() {
         toggle();
-        mc.player.networkHandler.sendPacket(new DisconnectS2CPacket(new LiteralText("[Infinity Miner] Inventory is full.")));
+        mc.player.networkHandler.sendPacket(new DisconnectS2CPacket(Text.literal("[Infinity Miner] Inventory is full.")));
     }
 
     private boolean isBaritoneNotMining() {

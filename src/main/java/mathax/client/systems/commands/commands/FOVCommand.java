@@ -15,7 +15,7 @@ public class FOVCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-            info("Currently using (highlight)%s(default).", (int) mc.options.fov);
+            info("Currently using (highlight)%s(default).", mc.options.getFov().getValue());
             return SINGLE_SUCCESS;
         });
 
@@ -23,7 +23,7 @@ public class FOVCommand extends Command {
             .then(argument("new-fov", IntegerArgumentType.integer(0))
                 .executes(context -> {
                     int newFov = context.getArgument("new-fov", Integer.class);
-                    mc.options.fov = newFov;
+                    mc.options.getFov().setValue(context.getArgument("new-fov", Integer.class));
                     info("Set to (highlight)%s(default).", newFov);
                     return SINGLE_SUCCESS;
                 })

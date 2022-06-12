@@ -8,7 +8,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.StringNbtReader;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.lang3.tuple.Triple;
@@ -23,8 +23,8 @@ public class GiveUtils {
 
     public static final Map<String, Function<Boolean, ItemStack>> PRESETS = new HashMap<>();
 
-    private final static SimpleCommandExceptionType NOT_IN_CREATIVE = new SimpleCommandExceptionType(new LiteralText("You must be in creative mode to use this."));
-    private final static SimpleCommandExceptionType NO_SPACE = new SimpleCommandExceptionType(new LiteralText("No space in hotbar."));
+    private final static SimpleCommandExceptionType NOT_IN_CREATIVE = new SimpleCommandExceptionType(Text.literal("You must be in creative mode to use this."));
+    private final static SimpleCommandExceptionType NO_SPACE = new SimpleCommandExceptionType(Text.literal("No space in hotbar."));
 
     private static final List<Identifier> HIDDEN_ENTITIES = Arrays.asList(
         new Identifier("giant"),
@@ -66,18 +66,18 @@ public class GiveUtils {
             try {
                 item.setNbt(StringNbtReader.parse(preset.getRight()));
             } catch (CommandSyntaxException ignored) {}
-            item.setCustomName(new LiteralText(toName(preset.getLeft())));
+            item.setCustomName(Text.literal(toName(preset.getLeft())));
             return item;
         }));
 
         PRESETS.put("force_op", (preview) -> {
             if (preview) Items.SPIDER_SPAWN_EGG.getDefaultStack();
             ItemStack item = Items.SPIDER_SPAWN_EGG.getDefaultStack();
-            String nick = mc.player.getName().asString();
+            String nick = mc.player.getName().getString();
             try {
                 item.setNbt(StringNbtReader.parse("{EntityTag:{Time:1,BlockState:{Name:\"minecraft:spawner\"},id:\"minecraft:falling_block\",TileEntityData:{SpawnCount:20,SpawnData:{id:\"minecraft:villager\",Passengers:[{Time:1,BlockState:{Name:\"minecraft:redstone_block\"},id:\"minecraft:falling_block\",Passengers:[{id:\"minecraft:fox\",Passengers:[{Time:1,BlockState:{Name:\"minecraft:activator_rail\"},id:\"minecraft:falling_block\",Passengers:[{Command:\"execute as @e run op "+nick+"\",id:\"minecraft:command_block_minecart\"}]}],NoAI:1b,Health:1.0f,ActiveEffects:[{Duration:1000,Id:20b,Amplifier:4b}]}]}],NoAI:1b,Health:1.0f,ActiveEffects:[{Duration:1000,Id:20b,Amplifier:4b}]},MaxSpawnDelay:100,SpawnRange:10,Delay:1,MinSpawnDelay:100}}}"));
             } catch (CommandSyntaxException ignored) {}
-            item.setCustomName(new LiteralText("Force OP"));
+            item.setCustomName(Text.literal("Force OP"));
             return item;
         });
 
@@ -95,7 +95,7 @@ public class GiveUtils {
             NbtCompound nbt = new NbtCompound();
             nbt.put("CustomPotionEffects", effects);
             stack.setNbt(nbt);
-            stack.setCustomName(new LiteralText("Lingering Potion of Trolling"));
+            stack.setCustomName(Text.literal("Lingering Potion of Trolling"));
             return stack;
         });
 
@@ -114,7 +114,7 @@ public class GiveUtils {
             NbtCompound nbt = new NbtCompound();
             nbt.put("Enchantments", enchants);
             stack.setNbt(nbt);
-            stack.setCustomName(new LiteralText("Bonk"));
+            stack.setCustomName(Text.literal("Bonk"));
             return stack;
         });
 
@@ -126,7 +126,7 @@ public class GiveUtils {
             for (int i = 0; i < 40000; i++) nbtList.add(new NbtList());
             nbtCompound.put("nothingsuspicioushere", nbtList);
             stack.setNbt(nbtCompound);
-            stack.setCustomName(new LiteralText("Copy Me"));
+            stack.setCustomName(Text.literal("Copy Me"));
             return stack;
         });
 
@@ -179,7 +179,7 @@ public class GiveUtils {
             entityTag.putString("id", id.toString());
             tag.put("EntityTag", entityTag);
             egg.setNbt(tag);
-            egg.setCustomName(new LiteralText(String.format("%s", toName(id.getPath()))));
+            egg.setCustomName(Text.literal(String.format("%s", toName(id.getPath()))));
             return egg;
         }));
     }

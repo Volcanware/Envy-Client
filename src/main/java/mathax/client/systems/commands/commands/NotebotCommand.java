@@ -13,7 +13,7 @@ import mathax.client.systems.modules.misc.Notebot;
 import net.minecraft.command.CommandSource;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import java.util.List;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class NotebotCommand extends Command {
-    private final static SimpleCommandExceptionType INVALID_NAME = new SimpleCommandExceptionType(new LiteralText("Invalid name."));
+    private final static SimpleCommandExceptionType INVALID_NAME = new SimpleCommandExceptionType(Text.literal("Invalid name."));
 
     int ticks = -1;
     List<List<Integer>> song = new ArrayList<>();

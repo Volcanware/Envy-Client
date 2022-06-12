@@ -66,10 +66,10 @@ public class MiddleClickExtra extends Module {
 
         switch (mode.get().type) {
             case Immediate -> {
-                mc.interactionManager.interactItem(mc.player, mc.world, Hand.MAIN_HAND);
+                mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
                 InvUtils.swapBack();
             }
-            case Longer_Single_Click -> mc.interactionManager.interactItem(mc.player, mc.world, Hand.MAIN_HAND);
+            case Longer_Single_Click -> mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
             case Longer -> {
                 mc.options.useKey.setPressed(true);
                 isUsing = true;

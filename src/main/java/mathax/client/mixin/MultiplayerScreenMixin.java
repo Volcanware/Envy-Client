@@ -18,7 +18,6 @@ import net.minecraft.client.gui.screen.multiplayer.MultiplayerServerListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -47,11 +46,11 @@ public abstract class MultiplayerScreenMixin extends Screen implements IMultipla
     private void onInit(CallbackInfo info) {
         Version.UpdateChecker.checkForLatest = true;
 
-        addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, new LiteralText("Accounts"), button -> client.setScreen(GuiThemes.get().accountsScreen())));
-        addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, new LiteralText("Proxies"), button -> client.setScreen(GuiThemes.get().proxiesScreen())));
-        addDrawableChild(new ButtonWidget(width - 231, 2, 75, 20, new LiteralText("Clean Up"), button -> client.setScreen(new ServerCleanUpScreen(GuiThemes.get(), this))));
+        addDrawableChild(new ButtonWidget(width - 77, 2, 75, 20, Text.literal("Accounts"), button -> client.setScreen(GuiThemes.get().accountsScreen())));
+        addDrawableChild(new ButtonWidget(width - 154, 2, 75, 20, Text.literal("Proxies"), button -> client.setScreen(GuiThemes.get().proxiesScreen())));
+        addDrawableChild(new ButtonWidget(width - 231, 2, 75, 20, Text.literal("Clean Up"), button -> client.setScreen(new ServerCleanUpScreen(GuiThemes.get(), this))));
 
-        if (LastServerInfo.getLastServer() != null) addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, new LiteralText("Last Server"), button -> LastServerInfo.reconnect(client.currentScreen)));
+        if (LastServerInfo.getLastServer() != null) addDrawableChild(new ButtonWidget(width / 2 - 154, 10, 100, 20, Text.literal("Last Server"), button -> LastServerInfo.reconnect(client.currentScreen)));
     }
 
     @Inject(method = "render", at = @At("TAIL"))

@@ -139,7 +139,7 @@ public class AutoEZ extends Module {
             if (killIgnoreFriends.get() && Friends.get().isFriend(player)) return;
 
             String msg = Placeholders.apply(getMessageStyle()).replace("%player%", player.getName().getString());
-            String message = ((GameMessageS2CPacket) event.packet).getMessage().getString();
+            String message = ((GameMessageS2CPacket) event.packet).content().getString();
             if (message.contains(player.getName().getString())) {
                 if (message.contains("by " + mc.getSession().getUsername()) || message.contains("whilst fighting " + mc.getSession().getUsername()) || message.contains(mc.getSession().getUsername() + " sniped") || message.contains(mc.getSession().getUsername() + " annaly fucked") || message.contains(mc.getSession().getUsername() + " destroyed") || message.contains(mc.getSession().getUsername() + " killed") || message.contains(mc.getSession().getUsername() + " fucked") || message.contains(mc.getSession().getUsername() + " separated") || message.contains(mc.getSession().getUsername() + " punched") || message.contains(mc.getSession().getUsername() + " shoved")) {
                     if (message.contains("end crystal") || message.contains("end-crystal")) {

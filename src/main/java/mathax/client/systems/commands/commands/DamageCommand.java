@@ -9,13 +9,13 @@ import mathax.client.systems.modules.movement.NoFall;
 import mathax.client.systems.modules.player.AntiHunger;
 import net.minecraft.command.CommandSource;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class DamageCommand extends Command {
-    private final static SimpleCommandExceptionType INVULNERABLE = new SimpleCommandExceptionType(new LiteralText("You are invulnerable"));
+    private final static SimpleCommandExceptionType INVULNERABLE = new SimpleCommandExceptionType(Text.literal("You are invulnerable"));
 
     public DamageCommand() {
         super("damage", "Damages self.", "dmg");

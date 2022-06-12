@@ -23,9 +23,7 @@ public class Fullbright extends Module {
         .description("The mode to use for Fullbright.")
         .defaultValue(Mode.Gamma)
         .onChanged(mode -> {
-            if (mode == Mode.Luminance) {
-                mc.options.gamma = StaticListener.prevGamma;
-            }
+            if (mode == Mode.Luminance) mc.options.getGamma().setValue(StaticListener.prevGamma);
         })
         .build()
     );
@@ -87,23 +85,14 @@ public class Fullbright extends Module {
         private static int timesEnabled;
         private static int lastTimesEnabled;
 
-        private static double prevGamma = mc.options.gamma;
+        private static double prevGamma = mc.options.getGamma().getValue();
 
         @EventHandler
         private static void onTick(TickEvent.Post event) {
-            if (timesEnabled > 0 && lastTimesEnabled == 0) {
-                prevGamma = mc.options.gamma;
-            } else if (timesEnabled == 0 && lastTimesEnabled > 0) {
-                if (fullbright.mode.get() == Mode.Gamma) {
-                    mc.options.gamma = prevGamma == 16 ? 1 : prevGamma;
-                }
-            }
+            if (timesEnabled > 0 && lastTimesEnabled == 0) prevGamma = mc.options.getGamma().getValue();
+            else if (timesEnabled == 0 && lastTimesEnabled > 0 && fullbright.mode.get() == Mode.Gamma) mc.options.getGamma().setValue(prevGamma == 16 ? 1 : prevGamma);
 
-            if (timesEnabled > 0) {
-                if (fullbright.mode.get() == Mode.Gamma) {
-                    mc.options.gamma = 16;
-                }
-            }
+            if (timesEnabled > 0 && fullbright.mode.get() == Mode.Gamma) mc.options.getGamma().setValue(16.0);
 
             lastTimesEnabled = timesEnabled;
         }

@@ -179,7 +179,7 @@ public class BlockUtils {
         boolean wasSneaking = mc.player.input.sneaking;
         mc.player.input.sneaking = false;
 
-        ActionResult result = mc.interactionManager.interactBlock(mc.player, mc.world, hand, blockHitResult);
+        ActionResult result = mc.interactionManager.interactBlock(mc.player, hand, blockHitResult);
 
         if (result.shouldSwingHand()) {
             if (swing) mc.player.swingHand(hand);
@@ -257,7 +257,7 @@ public class BlockUtils {
         if (bl2) mc.player.getInventory().selectedSlot = n;
         boolean bl4 = mc.player.input.sneaking;
         mc.player.input.sneaking = false;
-        mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(vec3d, direction, blockPos, false));
+        mc.interactionManager.interactBlock(mc.player, hand, new BlockHitResult(vec3d, direction, blockPos, false));
         if (bl) mc.player.swingHand(hand);
         else mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(hand));
         mc.player.input.sneaking = bl4;
@@ -293,7 +293,7 @@ public class BlockUtils {
         boolean wasSneaking = mc.player.input.sneaking;
         mc.player.input.sneaking = false;
 
-        ActionResult result = mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, blockHitResult);
+        ActionResult result = mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, blockHitResult);
 
         if (result.shouldSwingHand()) {
             if (swing) mc.player.swingHand(Hand.MAIN_HAND);

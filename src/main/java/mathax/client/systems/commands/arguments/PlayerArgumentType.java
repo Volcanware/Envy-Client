@@ -10,7 +10,7 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import mathax.client.MatHax;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
@@ -21,17 +21,10 @@ public class PlayerArgumentType implements ArgumentType<PlayerEntity> {
     private static Collection<String> EXAMPLES;
 
     static {
-        if (MatHax.mc.world != null) {
-            EXAMPLES = MatHax.mc.world.getPlayers()
-                .stream()
-                .limit(3)
-                .map(PlayerEntity::getEntityName)
-                .collect(Collectors.toList());
-        }
+        if (MatHax.mc.world != null) EXAMPLES = MatHax.mc.world.getPlayers().stream().limit(3).map(PlayerEntity::getEntityName).collect(Collectors.toList());
     }
 
-    private static final DynamicCommandExceptionType NO_SUCH_PLAYER = new DynamicCommandExceptionType(o ->
-            new LiteralText("Player with name " + o + " doesn't exist."));
+    private static final DynamicCommandExceptionType NO_SUCH_PLAYER = new DynamicCommandExceptionType(o -> Text.literal("Player with name " + o + " doesn't exist."));
 
     public static PlayerArgumentType player() {
         return new PlayerArgumentType();

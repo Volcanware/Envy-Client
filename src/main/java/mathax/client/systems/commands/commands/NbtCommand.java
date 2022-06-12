@@ -11,10 +11,10 @@ import net.minecraft.command.argument.NbtPathArgumentType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
-import net.minecraft.text.BaseText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
@@ -72,12 +72,12 @@ public class NbtCommand extends Command {
                 NbtCompound tag = stack.getNbt();
                 String nbt = tag == null ? "{}" : tag.asString();
 
-                BaseText copyButton = new LiteralText("NBT");
-                copyButton.setStyle(copyButton.getStyle().withFormatting(Formatting.UNDERLINE).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, this.toString("copy"))).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText("Copy the NBT data to your clipboard."))));
+                MutableText copyButton = Text.literal("NBT");
+                copyButton.setStyle(copyButton.getStyle().withFormatting(Formatting.UNDERLINE).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, this.toString("copy"))).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Copy the NBT data to your clipboard."))));
 
-                BaseText text = new LiteralText("");
+                MutableText text = Text.literal("");
                 text.append(copyButton);
-                text.append(new LiteralText(": " + nbt));
+                text.append(Text.literal(": " + nbt));
 
                 info(text);
             }
@@ -92,12 +92,12 @@ public class NbtCommand extends Command {
             else {
                 NbtCompound tag = stack.getOrCreateNbt();
                 mc.keyboard.setClipboard(tag.toString());
-                BaseText nbt = new LiteralText("NBT");
-                nbt.setStyle(nbt.getStyle().withFormatting(Formatting.UNDERLINE).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText(tag.toString()))));
+                MutableText nbt = Text.literal("NBT");
+                nbt.setStyle(nbt.getStyle().withFormatting(Formatting.UNDERLINE).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(tag.toString()))));
 
-                BaseText text = new LiteralText("");
+                MutableText text = Text.literal("");
                 text.append(nbt);
-                text.append(new LiteralText(" data copied!"));
+                text.append(Text.literal(" data copied!"));
 
                 info(text);
             }

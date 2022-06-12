@@ -13,7 +13,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
@@ -35,18 +34,18 @@ public class ToastSystem implements Toast {
     public ToastSystem(@Nullable Item item, @Nullable Integer titleColor, @NotNull String title, @Nullable Integer textColor, @Nullable String text, long duration) {
         this.icon = item != null ? item.getDefaultStack() : null;
         this.titleColor = titleColor != null ? titleColor : TITLE_COLOR;
-        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(this.titleColor)));
+        this.title = Text.literal(title).setStyle(Style.EMPTY.withColor(new TextColor(this.titleColor)));
         this.textColor = textColor != null ? textColor : TEXT_COLOR;
-        this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(this.textColor))) : null;
+        this.text = text != null ? Text.literal(text).setStyle(Style.EMPTY.withColor(new TextColor(this.textColor))) : null;
         this.duration = duration;
     }
 
     public ToastSystem(@Nullable Item item, @Nullable Integer titleColor, @NotNull String title, @Nullable Integer textColor, @Nullable String text) {
         this.icon = item != null ? item.getDefaultStack() : null;
         this.titleColor = titleColor != null ? titleColor : TITLE_COLOR;
-        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(this.titleColor)));
+        this.title = Text.literal(title).setStyle(Style.EMPTY.withColor(new TextColor(this.titleColor)));
         this.textColor = textColor != null ? textColor : TEXT_COLOR;
-        this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(this.textColor))) : null;
+        this.text = text != null ? Text.literal(text).setStyle(Style.EMPTY.withColor(new TextColor(this.textColor))) : null;
         this.duration = 6000;
     }
 
@@ -88,12 +87,12 @@ public class ToastSystem implements Toast {
     }
 
     public void setTitle(@NotNull String title) {
-        this.title = new LiteralText(title).setStyle(Style.EMPTY.withColor(new TextColor(titleColor)));
+        this.title = Text.literal(title).setStyle(Style.EMPTY.withColor(new TextColor(titleColor)));
         justUpdated = true;
     }
 
     public void setText(@Nullable String text) {
-        this.text = text != null ? new LiteralText(text).setStyle(Style.EMPTY.withColor(new TextColor(textColor))) : null;
+        this.text = text != null ? Text.literal(text).setStyle(Style.EMPTY.withColor(new TextColor(textColor))) : null;
         justUpdated = true;
     }
 

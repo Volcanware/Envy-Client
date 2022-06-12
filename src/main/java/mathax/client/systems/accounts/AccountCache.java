@@ -98,7 +98,7 @@ public class AccountCache implements ISerializable<AccountCache> {
 
     public static void loadSteveHead() {
         try {
-            ByteBuffer data = TextureUtil.readResource(mc.getResourceManager().getResource(new Identifier("mathax", "textures/steve.png")).getInputStream());
+            ByteBuffer data = TextureUtil.readResource(mc.getResourceManager().getResource(new Identifier("mathax", "textures/steve.png")).get().getInputStream());
             data.rewind();
 
             try (MemoryStack stack = MemoryStack.stackPush()) {

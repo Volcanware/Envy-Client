@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.10-SNAPSHOT'
+    id 'fabric-loom' version '0.12-SNAPSHOT'
     id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
@@ -44,6 +44,7 @@ repositories {
         url "https://jitpack.io"
     }
 
+    mavenCentral()
     jcenter()
 }
 
@@ -66,8 +67,15 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     implementation "net.fabricmc:fabric-installer:${project.fabric_installer_version}"
 
+    implementation("io.netty:netty-handler-proxy:4.1.77.Final") {
+        transitive = false
+    }
+    shadow("io.netty:netty-handler-proxy:4.1.77.Final") {
+        transitive = false
+    }
+
     // Compat fixes
-    modCompileOnly fabricApi.module("fabric-renderer-indigo", project.api_version + "+" + project.minecraft_version)
+    modCompileOnly fabricApi.module("fabric-renderer-indigo", project.api_version)
     modCompileOnly("me.jellysquid.mods:sodium-fabric:${project.sodium_version}") {
         transitive = false
     }
@@ -76,15 +84,15 @@ dependencies {
     }
 
     // Baritone integration
-    modImplementation "baritone:baritone:${project.baritone_version}"
-    include "baritone:baritone:${project.baritone_version}"
+    modImplementation "baritone:fabric:${project.baritone_version}"
+    include "baritone:fabric:${project.baritone_version}"
 
     // Litematica integration
     /*modImplementation "curse.maven:litematica-308892:${project.litematica_file_id}"
-    include "curse.maven:litematica-308892:${project.litematica_file_id}"
+    include "curse.maven:litematica-308892:${project.litematica_file_id}"*/
 
     // Malilib for Litematica
-    modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
+    /*modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
     include "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"*/
 
     // Discord RPC

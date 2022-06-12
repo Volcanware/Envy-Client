@@ -7,8 +7,8 @@ import mathax.client.systems.modules.Modules;
 import mathax.client.utils.misc.ChatUtils;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.HoverEvent;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.List;
@@ -32,14 +32,14 @@ public class BindsCommand extends Command {
             for (Module module : modules) {
                 HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, getTooltip(module));
 
-                MutableText text = new LiteralText(module.title).formatted(Formatting.WHITE);
+                MutableText text = Text.literal(module.title).formatted(Formatting.WHITE);
                 text.setStyle(text.getStyle().withHoverEvent(hoverEvent));
 
-                MutableText sep = new LiteralText(" - ");
+                MutableText sep = Text.literal(" - ");
                 sep.setStyle(sep.getStyle().withHoverEvent(hoverEvent));
                 text.append(sep.formatted(Formatting.GRAY));
 
-                MutableText key = new LiteralText(module.keybind.toString());
+                MutableText key = Text.literal(module.keybind.toString());
                 key.setStyle(key.getStyle().withHoverEvent(hoverEvent));
                 text.append(key.formatted(Formatting.GRAY));
 
@@ -51,8 +51,8 @@ public class BindsCommand extends Command {
     }
 
     private MutableText getTooltip(Module module) {
-        MutableText tooltip = new LiteralText(module.description).formatted(Formatting.BLUE, Formatting.BOLD).append("\n\n");
-        tooltip.append(new LiteralText(module.description).formatted(Formatting.WHITE));
+        MutableText tooltip = Text.literal(module.description).formatted(Formatting.BLUE, Formatting.BOLD).append("\n\n");
+        tooltip.append(Text.literal(module.description).formatted(Formatting.WHITE));
 
         return tooltip;
     }

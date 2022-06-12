@@ -144,7 +144,7 @@ public class AutoMLG extends Module {
                             isOffHand = location < 0;
                             isWaterBucket = bucket.getItem().equals(Items.WATER_BUCKET);
 
-                            if (mc.world.getDimension().isUltrawarm() && snowInWarm.get()) isWaterBucket = false;
+                            if (mc.world.getDimension().ultrawarm() && snowInWarm.get()) isWaterBucket = false;
 
                             if (posSnap.get()) {
                                 double x = MathHelper.floor(mc.player.getX()) + 0.5;
@@ -229,13 +229,13 @@ public class AutoMLG extends Module {
         PlayerMoveC2SPacket.LookAndOnGround packet = new PlayerMoveC2SPacket.LookAndOnGround(rotation.getYaw(), rotation.getPitch(), mc.player.isOnGround());
         mc.player.networkHandler.sendPacket(packet);
 
-        if (!placedWater && !isWaterBucket) mc.interactionManager.interactBlock(mc.player, mc.world, isOffHand ? Hand.OFF_HAND : Hand.MAIN_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5), Direction.UP, pos, false));
+        if (!placedWater && !isWaterBucket) mc.interactionManager.interactBlock(mc.player, isOffHand ? Hand.OFF_HAND : Hand.MAIN_HAND, new BlockHitResult(new Vec3d(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5), Direction.UP, pos, false));
         else {
             Vec3d eyesPos = new Vec3d(mc.player.getX(), mc.player.getY() + mc.player.getEyeHeight(mc.player.getPose()), mc.player.getZ());
 
             if (eyesPos.squaredDistanceTo(hitVec) > 18.0625) return false;
 
-            mc.interactionManager.interactItem(mc.player, mc.world, isOffHand ? Hand.OFF_HAND : Hand.MAIN_HAND);
+            mc.interactionManager.interactItem(mc.player, isOffHand ? Hand.OFF_HAND : Hand.MAIN_HAND);
         }
 
         return true;

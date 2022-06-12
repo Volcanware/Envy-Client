@@ -7,7 +7,7 @@ import mathax.client.events.mathax.KeyEvent;
 import mathax.client.systems.commands.Command;
 import mathax.client.systems.commands.arguments.PlayerArgumentType;
 import net.minecraft.command.CommandSource;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
@@ -27,7 +27,7 @@ public class SpectateCommand extends Command {
 
         builder.then(argument("player", PlayerArgumentType.player()).executes(context -> {
             mc.setCameraEntity(PlayerArgumentType.getPlayer(context));
-            mc.player.sendMessage(new LiteralText("Sneak to un-spectate."), true);
+            mc.player.sendMessage(Text.literal("Sneak to un-spectate."), true);
             MatHax.EVENT_BUS.subscribe(shiftListener);
             return SINGLE_SUCCESS;
         }));

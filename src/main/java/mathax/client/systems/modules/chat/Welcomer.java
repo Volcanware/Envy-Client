@@ -174,7 +174,7 @@ public class Welcomer extends Module {
                     boolean existed = true;
 
                     for (PlayerListS2CPacket.Entry prevEntry : prevEntries) {
-                        if (prevEntry != null && prevEntry.getDisplayName() != null && entry.getDisplayName().asString().equals(prevEntry.getDisplayName().asString())) existed = false;
+                        if (prevEntry != null && prevEntry.getDisplayName() != null && entry.getDisplayName().getString().equals(prevEntry.getDisplayName().getString())) existed = false;
                     }
 
                     if (sentWelcome) return;
@@ -200,7 +200,7 @@ public class Welcomer extends Module {
                     boolean existed = true;
 
                     for (PlayerListS2CPacket.Entry prevEntry : prevEntries) {
-                        if (prevEntry != null && prevEntry.getDisplayName() != null && entry.getDisplayName().asString().equals(prevEntry.getDisplayName().asString())) existed = false;
+                        if (prevEntry != null && prevEntry.getDisplayName() != null && entry.getDisplayName().getString().equals(prevEntry.getDisplayName().getString())) existed = false;
                     }
 
                     if (sentBye) return;

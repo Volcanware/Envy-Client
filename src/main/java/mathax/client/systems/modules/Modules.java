@@ -2,6 +2,7 @@ package mathax.client.systems.modules;
 
 import com.google.common.collect.Ordering;
 import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Lifecycle;
 import mathax.client.MatHax;
 import mathax.client.events.mathax.ActiveModulesChangedEvent;
@@ -44,6 +45,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryEntryList;
@@ -591,7 +593,7 @@ public class Modules extends System<Modules> {
         add(new BookBot());
         add(new CoordinateLogger());
         add(new InventoryTweaks());
-        //add(new LitematicaPrinter()); // Litematica Integration
+        //add(new LitematicaPrinter());
         add(new MiddleClickExtra());
         add(new MultiTask());
         add(new NameProtect());
@@ -694,6 +696,11 @@ public class Modules extends System<Modules> {
         }
 
         @Override
+        public Set<RegistryKey<Module>> getKeys() {
+            return null;
+        }
+
+        @Override
         public Optional<RegistryEntry<Module>> getRandom(Random random) {
             return Optional.empty();
         }
@@ -705,6 +712,11 @@ public class Modules extends System<Modules> {
 
         @Override
         public RegistryEntry<Module> getOrCreateEntry(RegistryKey<Module> key) {
+            return null;
+        }
+
+        @Override
+        public DataResult<RegistryEntry<Module>> getOrCreateEntryDataResult(RegistryKey<Module> key) {
             return null;
         }
 

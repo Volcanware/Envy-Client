@@ -108,12 +108,12 @@ public class ElytraFlightMode {
                 if (!itemResult.found()) return;
 
                 if (itemResult.isOffhand()) {
-                    MatHax.mc.interactionManager.interactItem(MatHax.mc.player, MatHax.mc.world, Hand.OFF_HAND);
+                    MatHax.mc.interactionManager.interactItem(MatHax.mc.player, Hand.OFF_HAND);
                     MatHax.mc.player.swingHand(Hand.OFF_HAND);
                 } else {
                     InvUtils.swap(itemResult.slot(), true);
 
-                    MatHax.mc.interactionManager.interactItem(MatHax.mc.player, MatHax.mc.world, Hand.MAIN_HAND);
+                    MatHax.mc.interactionManager.interactItem(MatHax.mc.player, Hand.MAIN_HAND);
                     MatHax.mc.player.swingHand(Hand.MAIN_HAND);
 
                     InvUtils.swapBack();

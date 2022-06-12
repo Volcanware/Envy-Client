@@ -72,7 +72,7 @@ public abstract class ClientWorldMixin {
         if (ambience.isActive() && ambience.customCloudColor.get()) info.setReturnValue(ambience.cloudColor.get().getVec3d());
     }
 
-    @ModifyArgs(method = "doRandomBlockDisplayTicks", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;randomBlockDisplayTick(IIIILjava/util/Random;Lnet/minecraft/block/Block;Lnet/minecraft/util/math/BlockPos$Mutable;)V"))
+    @ModifyArgs(method = "doRandomBlockDisplayTicks", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;randomBlockDisplayTick(IIIILnet/minecraft/util/math/random/Random;Lnet/minecraft/block/Block;Lnet/minecraft/util/math/BlockPos$Mutable;)V"))
     private void doRandomBlockDisplayTicks(Args args) {
         if (Modules.get().get(NoRender.class).noBarrierInvisible()) args.set(5, Blocks.BARRIER);
     }

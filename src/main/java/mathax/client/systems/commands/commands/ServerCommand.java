@@ -16,10 +16,10 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.network.packet.c2s.play.RequestCommandCompletionsC2SPacket;
 import net.minecraft.network.packet.s2c.play.CommandSuggestionsS2CPacket;
 import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.text.BaseText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.net.InetAddress;
@@ -106,24 +106,21 @@ public class ServerCommand extends Command {
             ipv4 = InetAddress.getByName(server.address).getHostAddress();
         } catch (UnknownHostException ignored) {}
 
-        BaseText ipText;
+        MutableText ipText;
 
         if (ipv4.isEmpty()) {
-            ipText = new LiteralText(Formatting.GRAY + server.address);
-            ipText.setStyle(ipText.getStyle().withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, server.address)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText("Copy to clipboard")))
-            );
+            ipText = Text.literal(Formatting.GRAY + server.address);
+            ipText.setStyle(ipText.getStyle().withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, server.address)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Copy to clipboard"))));
         } else {
-            ipText = new LiteralText(Formatting.GRAY + server.address);
-            ipText.setStyle(ipText.getStyle().withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, server.address)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText("Copy to clipboard")))
-            );
-            BaseText ipv4Text = new LiteralText(String.format("%s (%s)", Formatting.GRAY, ipv4));
-            ipv4Text.setStyle(ipText.getStyle().withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, ipv4)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText("Copy to clipboard")))
-            );
+            ipText = Text.literal(Formatting.GRAY + server.address);
+            ipText.setStyle(ipText.getStyle().withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, server.address)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Copy to clipboard"))));
+            MutableText ipv4Text = Text.literal(String.format("%s (%s)", Formatting.GRAY, ipv4));
+            ipv4Text.setStyle(ipText.getStyle().withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, ipv4)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Copy to clipboard"))));
 
             ipText.append(ipv4Text);
         }
 
-        info(new LiteralText(String.format("%sIP: ", Formatting.GRAY)).append(ipText));
+        info(Text.literal(String.format("%sIP: ", Formatting.GRAY)).append(ipText));
 
         info("Port: %d", ServerAddress.parse(server.address).getPort());
 
