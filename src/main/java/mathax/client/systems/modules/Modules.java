@@ -591,7 +591,7 @@ public class Modules extends System<Modules> {
         add(new BookBot());
         add(new CoordinateLogger());
         add(new InventoryTweaks());
-        //add(new LitematicaPrinter());
+        //add(new LitematicaPrinter()); // Litematica Integration
         add(new MiddleClickExtra());
         add(new MultiTask());
         add(new NameProtect());

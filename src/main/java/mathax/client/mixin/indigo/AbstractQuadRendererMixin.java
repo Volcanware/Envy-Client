@@ -50,7 +50,6 @@ public abstract class AbstractQuadRendererMixin {
 
         if (wallHack.isActive() && wallHack.blocks.get().contains(blockInfo.blockState.getBlock())) {
             int alpha;
-
             if (xray.isActive()) alpha = xray.opacity.get();
             else alpha = wallHack.opacity.get();
 
@@ -76,7 +75,9 @@ public abstract class AbstractQuadRendererMixin {
 
         for (int i = 0; i < 4; i++) {
             buff.vertex(matrix, quad.x(i), quad.y(i), quad.z(i));
+
             final int color = quad.spriteColor(i, 0);
+
             buff.color(color & 0xFF, (color >> 8) & 0xFF, (color >> 16) & 0xFF, alpha);
             buff.texture(quad.spriteU(i, 0), quad.spriteV(i, 0));
             buff.overlay(overlay);

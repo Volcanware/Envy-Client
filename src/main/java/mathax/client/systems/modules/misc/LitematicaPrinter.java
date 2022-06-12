@@ -27,9 +27,8 @@ import net.minecraft.util.math.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;*/
-
-public class LitematicaPrinter /*extends Module*/ {/*
+import java.util.function.Supplier;
+public class LitematicaPrinter extends Module {
     private int timer, placed = 0;
     private int usedSlot = -1;
 
@@ -212,7 +211,7 @@ public class LitematicaPrinter /*extends Module*/ {/*
             }
         } else if (result.found()) {
             if (result.isHotbar()) {
-                InvUtils.swap(result.getSlot(), silent.get());
+                InvUtils.swap(result.slot(), silent.get());
                 if (action.get()) {
                     usedSlot = mc.player.getInventory().selectedSlot;
                     InvUtils.swap(a, silent.get());
@@ -224,8 +223,8 @@ public class LitematicaPrinter /*extends Module*/ {/*
             } else if (result.isMain()){
                 FindItemResult empty = InvUtils.findEmpty();
                 if (empty.found() && empty.isHotbar()) {
-                    InvUtils.move().from(result.getSlot()).toHotbar(empty.getSlot());
-                    InvUtils.swap(empty.getSlot(), silent.get());
+                    InvUtils.move().from(result.slot()).toHotbar(empty.slot());
+                    InvUtils.swap(empty.slot(), silent.get());
                     if (action.get()) {
                         usedSlot = mc.player.getInventory().selectedSlot;
                         InvUtils.swap(a, silent.get());
@@ -235,7 +234,7 @@ public class LitematicaPrinter /*extends Module*/ {/*
                         return false;
                     }
                 } else if (usedSlot != -1) {
-                    InvUtils.move().from(result.getSlot()).toHotbar(usedSlot);
+                    InvUtils.move().from(result.slot()).toHotbar(usedSlot);
                     InvUtils.swap(usedSlot, silent.get());
                     if (action.get()) {
                         InvUtils.swap(a, silent.get());
@@ -259,5 +258,7 @@ public class LitematicaPrinter /*extends Module*/ {/*
     @EventHandler
     private void onRender3D(Render3DEvent event) {
         placedFade.forEach(block -> event.renderer.box(block.getRight(), new Color(sideColor.get().r, sideColor.get().g, sideColor.get().b, (int) (((float) block.getLeft() / (float) fadeTime.get()) * sideColor.get().a)), new Color(lineColor.get().r, lineColor.get().g, lineColor.get().b, (int) (((float) block.getLeft() / (float) fadeTime.get()) * lineColor.get().a)), shapeMode.get(), 0));
-    }*/
-}
+    }
+}*/
+
+public class LitematicaPrinter {}

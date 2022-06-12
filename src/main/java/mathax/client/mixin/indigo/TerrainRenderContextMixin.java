@@ -9,6 +9,6 @@ public class TerrainRenderContextMixin {
     private void onTesselateBlock(BlockState blockState, BlockPos blockPos, BakedModel model, MatrixStack matrixStack, CallbackInfoReturnable<Boolean> info) {
         Xray xray = Modules.get().get(Xray.class);
 
-        if (xray.isActive() && xray.isBlocked(blockState.getBlock(), blockState.blockPos)) info.cancel();
+        if (xray.isActive() && xray.isBlocked(blockState.getBlock(), blockPos)) info.cancel();
     }*/
 }
