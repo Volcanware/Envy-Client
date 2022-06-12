@@ -1,11 +1,14 @@
 package mathax.client.systems.modules.chat;
 
+import mathax.client.events.game.GameLeftEvent;
+import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Categories;
 import mathax.client.utils.Utils;
 import mathax.client.eventbus.EventHandler;
+import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.item.Items;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -45,6 +48,21 @@ public class Spam extends Module {
         .build()
     );
 
+    private final Setting<Boolean> disableOnLeave = sgGeneral.add(new BoolSetting.Builder()
+        .name("disable-on-leave")
+        .description("Disables spam when you leave a server.")
+        .defaultValue(true)
+        .build()
+    );
+
+
+    private final Setting<Boolean> disableOnDisconnect = sgGeneral.add(new BoolSetting.Builder()
+        .name("disable-on-disconnect")
+        .description("Disables spam when you are disconnected from a server.")
+        .defaultValue(true)
+        .build()
+    );
+
     private final Setting<Boolean> random = sgGeneral.add(new BoolSetting.Builder()
         .name("randomise")
         .description("Selects a random message from your spam message list.")
@@ -78,6 +96,16 @@ public class Spam extends Module {
     public void onActivate() {
         timer = delay.get();
         messageI = 0;
+    }
+
+    @EventHandler
+    private void onScreenOpen(OpenScreenEvent event) {
+        if (disableOnDisconnect.get() && event.screen instanceof DisconnectedScreen) toggle();
+    }
+
+    @EventHandler
+    private void onGameLeft(GameLeftEvent event) {
+        if (disableOnLeave.get()) toggle();
     }
 
     @EventHandler

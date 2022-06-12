@@ -22,7 +22,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Tameable;
+import net.minecraft.entity.mob.EndermanEntity;
+import net.minecraft.entity.mob.ZombifiedPiglinEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
@@ -167,6 +170,20 @@ public class KillAura extends Module {
         .defaultValue(1)
         .min(1)
         .sliderRange(1, 5)
+        .build()
+    );
+
+    private final Setting<Boolean> ignorePassive = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-passive")
+        .description("Will only attack sometimes passive mobs if they are targeting you.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> ignoreTamed = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignore-tamed")
+        .description("Will avoid attacking mobs you tamed.")
+        .defaultValue(false)
         .build()
     );
 
@@ -318,7 +335,12 @@ public class KillAura extends Module {
         if (noRightClick.get() && mc.options.useKey.isPressed()) return false;
         if (!nametagged.get() && entity.hasCustomName() && !(entity instanceof PlayerEntity)) return false;
         if (!PlayerUtils.canSeeEntity(entity) && PlayerUtils.distanceTo(entity) > wallsRange.get()) return false;
-        if (entity instanceof Tameable tameable && tameable.getOwnerUuid() != null && tameable.getOwnerUuid().equals(mc.player.getUuid())) return false;
+        if (ignoreTamed.get() && entity instanceof Tameable tameable && tameable.getOwnerUuid() != null && tameable.getOwnerUuid().equals(mc.player.getUuid())) return false;
+        if (ignorePassive.get()) {
+            if (entity instanceof EndermanEntity enderman && !enderman.isAngryAt(mc.player)) return false;
+            if (entity instanceof ZombifiedPiglinEntity piglin && !piglin.isAngryAt(mc.player)) return false;
+            if (entity instanceof WolfEntity wolf && !wolf.isAttacking()) return false;
+        }
         if (entity instanceof PlayerEntity) {
             if (((PlayerEntity) entity).isCreative()) return false;
             if (!Friends.get().shouldAttack((PlayerEntity) entity)) return false;
