@@ -82,9 +82,9 @@ public class MatHax implements ClientModInitializer {
     public static final File MUSIC_FOLDER = new File(FOLDER + "/Music");
 
     public final Color MATHAX_COLOR = new Color(230, 75, 100, 255);
-    public final int MATHAX_COLOR_INT = Color.fromRGBA(230, 75, 100, 255);
+    public final int MATHAX_COLOR_INT = Color.fromRGBA(MATHAX_COLOR.r, MATHAX_COLOR.g, MATHAX_COLOR.b, MATHAX_COLOR.a);
     public final Color MATHAX_BACKGROUND_COLOR = new Color(30, 30, 45, 255);
-    public final int MATHAX_BACKGROUND_COLOR_INT = Color.fromRGBA(30, 30, 45, 255);
+    public final int MATHAX_BACKGROUND_COLOR_INT = Color.fromRGBA(MATHAX_BACKGROUND_COLOR.r, MATHAX_BACKGROUND_COLOR.g, MATHAX_BACKGROUND_COLOR.b, MATHAX_BACKGROUND_COLOR.a);
 
     public static final Logger LOG = LoggerFactory.getLogger("MatHax");
 

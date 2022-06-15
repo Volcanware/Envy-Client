@@ -12,8 +12,21 @@ import java.util.List;
 import static mathax.client.MatHax.mc;
 
 public class Fonts {
-    private static final String[] BUILTIN_FONTS = { "Comfortaa.ttf", "Verdana.ttf", "Arial.ttf", "Roboto.ttf", "Raleway.ttf", "Lato.ttf", "Comic Sans.ttf", "Tw Cen MT.ttf", "Pixelation.ttf", "JetBrains Mono.ttf" };
+    private static final String[] BUILTIN_FONTS = {
+        "Comfortaa.ttf",
+        "Verdana.ttf",
+        "Arial.ttf",
+        "Roboto.ttf",
+        "Raleway.ttf",
+        "Lato.ttf",
+        "Comic Sans.ttf",
+        "Tw Cen MT.ttf",
+        "Pixelation.ttf",
+        "JetBrains Mono.ttf"
+    };
+
     public static final String DEFAULT_FONT = "Comfortaa";
+
     private static final File FONTS_FOLDER = new File(MatHax.FOLDER, "Fonts");
 
     public static CustomTextRenderer CUSTOM_FONT;

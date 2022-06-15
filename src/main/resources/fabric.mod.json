@@ -43,6 +43,9 @@
     "fabricloader": ">=0.12.12"
   },
   "breaks": {
-    "optifabric": "*"
+    "optifabric": "*",
+    "feather": "*",
+    "origins": "*",
+    "wurst": "*"
   }
 }
