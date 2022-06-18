@@ -72,13 +72,6 @@ public class NoFall extends Module {
         .build()
     );
 
-    private final Setting<Boolean> tryPreventingFlightDamage = sgGeneral.add(new BoolSetting.Builder()
-        .name("prevent-flight-damage")
-        .description("Tries to prevent getting damage when using Flight.")
-        .defaultValue(true)
-        .build()
-    );
-
     private final Setting<Double> fallDistance = sgGeneral.add(new DoubleSetting.Builder()
         .name("fall-distance")
         .description("After what fall distance to trigger this module.")
@@ -133,17 +126,6 @@ public class NoFall extends Module {
     @Override
     public void onDeactivate() {
         BaritoneAPI.getSettings().maxFallHeightNoWater.value = preBaritoneFallHeight;
-    }
-
-    @EventHandler
-    private void onSendPacket(PacketEvent.Send event) {
-        if (tryPreventingFlightDamage.get() || mc.player.getAbilities().creativeMode || !(event.packet instanceof PlayerMoveC2SPacket) || ((IPlayerMoveC2SPacket) event.packet).getNbt() == 1337) return;
-
-        if (!Modules.get().isActive(Flight.class)) {
-            if (mc.player.isFallFlying()) return;
-            if (mc.player.getVelocity().y > -0.5) return;
-            ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(true);
-        } else ((PlayerMoveC2SPacketAccessor) event.packet).setOnGround(true);
     }
 
     @EventHandler
