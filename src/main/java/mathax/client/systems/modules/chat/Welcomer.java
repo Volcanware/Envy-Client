@@ -57,8 +57,8 @@ public class Welcomer extends Module {
     );
 
     private final Setting<Boolean> clientSide = sgGeneral.add(new BoolSetting.Builder()
-        .name("client-side")
-        .description("Sends the messages client-side.")
+        .name("client side")
+        .description("Sends the messages client side.")
         .defaultValue(false)
         .build()
     );

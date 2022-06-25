@@ -57,7 +57,7 @@ public class FakePlayer extends Module {
     }
 
     public FakePlayer() {
-        super(Categories.Client, Items.ARMOR_STAND, "fake-player", "Spawns a client-side fake player for testing usages.");
+        super(Categories.Client, Items.ARMOR_STAND, "fake-player", "Spawns a client side fake player for testing usages.");
     }
 
     @Override

@@ -138,7 +138,7 @@ public class Surround extends Module {
 
     private final Setting<Boolean> disableOnYChange = sgGeneral.add(new BoolSetting.Builder()
         .name("y-change-disable")
-        .description("Automatically disables when your y level (step, jumping, atc).")
+        .description("Automatically disables when your y level changes (step, jumping, etc).")
         .defaultValue(true)
         .build()
     );
@@ -175,7 +175,7 @@ public class Surround extends Module {
 
     private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
         .name("swing")
-        .description("Swings your hand client-side when placing or interacting.")
+        .description("Swings your hand client side when placing or interacting.")
         .defaultValue(true)
         .build()
     );

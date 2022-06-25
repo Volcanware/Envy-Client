@@ -22,10 +22,10 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
     }
 
     @Inject(method = "shouldDrawSide", at = @At("RETURN"), cancellable = true)
-    private static void onShouldDrawSide(BlockState state, BlockView world, BlockPos pos, Direction side, BlockPos blockPos, CallbackInfoReturnable<Boolean> info) {
+    private static void onShouldDrawSide(BlockState state, BlockView world, BlockPos pos, Direction side, BlockPos blockPos, CallbackInfoReturnable<Boolean> infoReturnable) {
         Xray xray = Modules.get().get(Xray.class);
 
-        if (xray.isActive()) info.setReturnValue(xray.modifyDrawSide(state, world, pos, side, info.getReturnValueZ()));
+        if (xray.isActive()) infoReturnable.setReturnValue(xray.modifyDrawSide(state, world, pos, side, infoReturnable.getReturnValueZ()));
     }
 
     @Inject(method = "getSlipperiness", at = @At("RETURN"), cancellable = true)

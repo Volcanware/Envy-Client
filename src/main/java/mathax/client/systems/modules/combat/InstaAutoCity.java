@@ -65,7 +65,7 @@ public class InstaAutoCity extends Module {
 
     private final Setting<Boolean> chatInfo = sgGeneral.add(new BoolSetting.Builder()
         .name("chat-info")
-        .description("Sends a client-side message if you city a player.")
+        .description("Sends a client side message if you city a player.")
         .defaultValue(true)
         .build()
     );
@@ -113,7 +113,7 @@ public class InstaAutoCity extends Module {
 
     private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
         .name("swing")
-        .description("Swings your hand client-side when placing or interacting.")
+        .description("Swings your hand client side when placing or interacting.")
         .defaultValue(true)
         .build()
     );

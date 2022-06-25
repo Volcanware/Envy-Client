@@ -85,7 +85,7 @@ public class HeadScreen extends WindowScreen {
                     }
                 };
                 WButton equip = t.add(theme.button("Equip")).widget();
-                equip.tooltip = "Equip client-side.";
+                equip.tooltip = "Equip client side.";
                 equip.action = () -> mc.player.getInventory().armor.set(3, head);
                 t.row();
             }

@@ -2,6 +2,7 @@ package mathax.client.mixin;
 
 import baritone.api.BaritoneAPI;
 import com.mojang.authlib.GameProfile;
+import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import mathax.client.MatHax;
 import mathax.client.events.entity.DamageEvent;
@@ -11,6 +12,7 @@ import mathax.client.events.game.SendMessageEvent;
 import mathax.client.systems.commands.Commands;
 import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.misc.NoSignatures;
 import mathax.client.systems.modules.misc.Twerk;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.ChatUtils;
@@ -25,8 +27,12 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.command.CommandSource;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.network.encryption.PlayerPublicKey;
+import net.minecraft.network.message.ArgumentSignatureDataMap;
+import net.minecraft.network.message.ChatMessageSigner;
+import net.minecraft.network.message.MessageSignature;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -117,6 +123,18 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     @Inject(method = "damage", at = @At("HEAD"))
     private void onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
         if (Utils.canUpdate() && world.isClient && canTakeDamage()) MatHax.EVENT_BUS.post(DamageEvent.get(this, source));
+    }
+
+    // No Signatures
+
+    @Inject(method = "signChatMessage", at = @At("HEAD"), cancellable = true)
+    private void onSignChatMessage(ChatMessageSigner signer, Text message, CallbackInfoReturnable<MessageSignature> info) {
+        if (Modules.get().isActive(NoSignatures.class)) info.setReturnValue(MessageSignature.none());
+    }
+
+    @Inject(method = "signArguments", at = @At("HEAD"), cancellable = true)
+    private void onSignArguments(ChatMessageSigner signer, ParseResults<CommandSource> parseResults, @Nullable Text preview, CallbackInfoReturnable<ArgumentSignatureDataMap> info) {
+        if (Modules.get().isActive(NoSignatures.class)) info.setReturnValue(ArgumentSignatureDataMap.empty());
     }
 
     // Rotations

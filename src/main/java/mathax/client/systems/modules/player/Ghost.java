@@ -22,18 +22,18 @@ public class Ghost extends Module {
 
 	private int x = 0;
 	private int z = 0;
-	
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-	
+
     // General
 
     private final Setting<Boolean> fullFood = sgGeneral.add(new BoolSetting.Builder()
     	.name("full-food")
-    	.description("Sets the food level client-side to max so u can sprint.")
+    	.description("Sets the food level client side to max so u can sprint.")
     	.defaultValue(true)
     	.build()
     );
-	 
+
     public Ghost() {
     	super(Categories.Player, Items.SKELETON_SKULL, "ghost", "Allows you to move after death.");
     }
@@ -55,7 +55,7 @@ public class Ghost extends Module {
         if (mc.player.getHealth() < 1f) mc.player.setHealth(20f);
         if (fullFood.get() && mc.player.getHungerManager().getFoodLevel() < 20) mc.player.getHungerManager().setFoodLevel(20);
     }
-    
+
     @EventHandler
     private void onOpenScreen(OpenScreenEvent event) {
         if (event.screen instanceof DeathScreen) {
@@ -66,5 +66,5 @@ public class Ghost extends Module {
                 info("You are now in ghost mode.");
             }
         }
-    } 
+    }
 }

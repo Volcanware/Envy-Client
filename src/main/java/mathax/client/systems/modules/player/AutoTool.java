@@ -12,14 +12,13 @@ import mathax.client.systems.modules.Modules;
 import mathax.client.utils.player.InvUtils;
 import mathax.client.utils.world.BlockUtils;
 import mathax.client.systems.modules.world.InfinityMiner;
+import net.minecraft.block.BambooBlock;
+import net.minecraft.block.BambooSaplingBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.item.ToolItem;
+import net.minecraft.item.*;
 
 import java.util.function.Predicate;
 
@@ -94,9 +93,7 @@ public class AutoTool extends Module {
         if (ticks <= 0 && shouldSwitch && bestSlot != -1) {
             InvUtils.swap(bestSlot, switchBack.get());
             shouldSwitch = false;
-        } else {
-            ticks--;
-        }
+        } else ticks--;
 
         wasPressed = mc.options.attackKey.isPressed();
     }
@@ -159,6 +156,8 @@ public class AutoTool extends Module {
 
         if (enchantPreference == EnchantPreference.Fortune) score += EnchantmentHelper.getLevel(Enchantments.FORTUNE, itemStack);
         if (enchantPreference == EnchantPreference.Silk_Touch) score += EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, itemStack);
+
+        if (itemStack.getItem() instanceof SwordItem item && (state.getBlock() instanceof BambooBlock || state.getBlock() instanceof BambooSaplingBlock)) score += 9000 + (item.getMaterial().getMiningLevel() * 1000);
 
         return score;
     }

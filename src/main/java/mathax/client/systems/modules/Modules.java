@@ -597,6 +597,7 @@ public class Modules extends System<Modules> {
         add(new MiddleClickExtra());
         add(new MultiTask());
         add(new NameProtect());
+        add(new NoSignatures());
         add(new Notebot());
         add(new PacketCanceller());
         add(new PacketSpammer());
