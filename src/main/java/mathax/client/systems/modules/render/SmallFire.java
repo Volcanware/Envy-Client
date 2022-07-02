@@ -12,8 +12,10 @@ public class SmallFire extends Module{
     private final SettingGroup sgScale = settings.createGroup("Scale");
     private final SettingGroup sgPosition = settings.createGroup("Position");
 
+    // Scale
+
     private final Setting<Double> scaleX = sgScale.add(new DoubleSetting.Builder()
-        .name("Scale X")
+        .name("scale-x")
         .description("Zoom for fire on screen.")
         .defaultValue(0.0)
         .sliderRange(0.05, 1.0)
@@ -21,7 +23,7 @@ public class SmallFire extends Module{
     );
 
     private final Setting<Double> scaleY = sgScale.add(new DoubleSetting.Builder()
-        .name("Scale Y")
+        .name("scale-y")
         .description("Zoom for fire on screen.")
         .defaultValue(0.2)
         .sliderRange(0.05, 1.0)
@@ -36,8 +38,10 @@ public class SmallFire extends Module{
         .build()
     );
 
+    // Position
+
     private final Setting<Double> positionX = sgPosition.add(new DoubleSetting.Builder()
-        .name("Position X")
+        .name("position-x")
         .description("Offset for fire on screen.")
         .defaultValue(0.0)
         .sliderRange(-10.0, 10.0)
@@ -45,7 +49,7 @@ public class SmallFire extends Module{
     );
 
     private final Setting<Double> positionY = sgPosition.add(new DoubleSetting.Builder()
-        .name("Position Y")
+        .name("position-y")
         .description("Offset for fire on screen.")
         .defaultValue(-1.0)
         .sliderRange(-10.0, 10.0)
@@ -63,9 +67,11 @@ public class SmallFire extends Module{
     public SmallFire() {
         super(Categories.Render, Items.SPYGLASS, "small-fire", "Smalls fire on screen.");
     }
+    
     public Vec3f getFireScale() {
         return new Vec3f(scaleX.get().floatValue(), scaleY.get().floatValue(), scaleZ.get().floatValue());
     }
+    
     public Vec3f getFirePosition() {
         return new Vec3f(scaleX.get().floatValue(), scaleY.get().floatValue(), scaleZ.get().floatValue());
     }
