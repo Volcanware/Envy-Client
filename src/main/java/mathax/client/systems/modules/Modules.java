@@ -516,6 +516,7 @@ public class Modules extends System<Modules> {
         add(new Rendering());
         add(new RideStats());
         add(new SkeletonESP());
+        add(new SmallFire());
         //add(new SmoothChunks());
         add(new Search());
         add(new StorageESP());
