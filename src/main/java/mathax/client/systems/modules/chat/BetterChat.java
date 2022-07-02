@@ -400,13 +400,6 @@ public class BetterChat extends Module {
         return sb.toString();
     }
     
-    public String applyZV(String message) {
-        message = message.replace("в", "v");
-        message = message.replace("В", "V");
-        message = message.replace("З", "Z");
-        return message.replace("з", "z");
-    }
-    
     public String applyUwU(String message) {
         message = message.replace("ove", "uv");
         message = message.replace("the", "da");
@@ -438,6 +431,13 @@ public class BetterChat extends Module {
         message = message.replace("S", "$");
         message = message.replace("T", "7");
         return message.replace("t", "7");
+    }
+    
+    public String applyZV(String message) {
+        message = message.replace("в", "v");
+        message = message.replace("В", "V");
+        message = message.replace("З", "Z");
+        return message.replace("з", "z");
     }
 
     public String applyEmojiFix(String msg) {
