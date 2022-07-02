@@ -17,10 +17,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class InGameOverlayRendererMixin {
     @Inject(method = "renderFireOverlay", at = @At("HEAD"))
     private static void renderFireOverlay(MinecraftClient client, MatrixStack matrices, CallbackInfo ci) {
-        SmallFire module = Modules.get().get(SmallFire.class);
-        if(module.isActive()) {
-            Vec3f scale = module.getFireScale();
-            Vec3f position = module.getFirePosition();
+        SmallFire smallFire = Modules.get().get(SmallFire.class);
+        if (smallFire.isActive()) {
+            Vec3f scale = smallFire.getFireScale();
+            Vec3f position = smallFire.getFirePosition();
+
             matrices.scale(scale.getX(), scale.getY(), scale.getZ());
             matrices.translate(position.getX(), position.getY(), position.getZ());
         }
