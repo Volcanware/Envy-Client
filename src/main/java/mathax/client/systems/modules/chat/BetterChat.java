@@ -354,6 +354,7 @@ public class BetterChat extends Module {
             case Small_CAPS -> message = applySmall(message);
             case UwU -> message = applyUwU(message);
             case Leet -> message = applyLeet(message);
+            case ZV -> message = applyZV(message);
         }
 
         if (prefix.get()) message = getAffix(prefixText.get(), prefixFont.get(), prefixRandom.get()) + message;
@@ -398,7 +399,7 @@ public class BetterChat extends Module {
 
         return sb.toString();
     }
-
+    
     public String applyUwU(String message) {
         message = message.replace("ove", "uv");
         message = message.replace("the", "da");
@@ -430,6 +431,13 @@ public class BetterChat extends Module {
         message = message.replace("S", "$");
         message = message.replace("T", "7");
         return message.replace("t", "7");
+    }
+    
+    public String applyZV(String message) {
+        message = message.replace("в", "v");
+        message = message.replace("В", "V");
+        message = message.replace("З", "Z");
+        return message.replace("з", "z");
     }
 
     public String applyEmojiFix(String msg) {
@@ -497,6 +505,7 @@ public class BetterChat extends Module {
         Small_CAPS("Small CAPS"),
         UwU("UwU"),
         Leet("Leet"),
+        ZV("ZV"),
         None("None");
 
         private final String title;

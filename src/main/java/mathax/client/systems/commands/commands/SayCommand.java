@@ -42,6 +42,7 @@ public class SayCommand extends Command {
                     case Small_CAPS -> message = bc.applySmall(message);
                     case UwU -> message = bc.applyUwU(message);
                     case Leet -> message = bc.applyLeet(message);
+                    case ZV -> message = bc.applyZV(message);
                 }
 
                 if (bc.prefix.get()) message = bc.getAffix(bc.prefixText.get(), bc.prefixFont.get(), bc.prefixRandom.get()) + message;
