@@ -8,7 +8,9 @@ import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.movement.speed.modes.MineBerry;
 import mathax.client.systems.modules.movement.speed.modes.Strafe;
+import mathax.client.systems.modules.movement.speed.modes.MineBerry;
 import mathax.client.systems.modules.movement.speed.modes.Vanilla;
 import mathax.client.utils.player.PlayerUtils;
 import mathax.client.systems.modules.world.Timer;
@@ -40,6 +42,13 @@ public class Speed extends Module {
         .build()
     );
 
+    public final Setting<Double> TimerHop = sgGeneral.add(new DoubleSetting.Builder()
+        .name("Speed")
+        .description("The speed in blocks per second.")
+        .defaultValue(1.0)
+        .build()
+    );
+
     public final Setting<Double> ncpSpeed = sgGeneral.add(new DoubleSetting.Builder()
         .name("strafe-speed")
         .description("The speed.")
@@ -62,8 +71,7 @@ public class Speed extends Module {
         .name("timer")
         .description("Timer override.")
         .defaultValue(1)
-        .min(0.01)
-        .sliderRange(0.01, 10)
+        .visible(() -> speedMode.get() == SpeedModes.Vanilla || speedMode.get() == SpeedModes.Strafe)
         .build()
     );
 
@@ -71,12 +79,14 @@ public class Speed extends Module {
         .name("in-liquids")
         .description("Uses speed when in lava or water.")
         .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Vanilla || speedMode.get() == SpeedModes.Strafe)
         .build()
     );
 
     public final Setting<Boolean> whenSneaking = sgGeneral.add(new BoolSetting.Builder()
         .name("when-sneaking")
         .description("Uses speed when sneaking.")
+        .visible(() -> speedMode.get() == SpeedModes.Vanilla || speedMode.get() == SpeedModes.Strafe)
         .defaultValue(true)
         .build()
     );
@@ -107,7 +117,7 @@ public class Speed extends Module {
     }
 
     @EventHandler
-    private void onPlayerMove(PlayerMoveEvent event) {
+    private void onPlayerMove(PlayerMoveEvent event) throws InterruptedException {
         if (event.type != MovementType.SELF || mc.player.isFallFlying() || mc.player.isClimbing() || mc.player.getVehicle() != null) return;
         if (!whenSneaking.get() && mc.player.isSneaking()) return;
         if (vanillaOnGround.get() && !mc.player.isOnGround() && speedMode.get() == SpeedModes.Vanilla) return;
@@ -137,6 +147,7 @@ public class Speed extends Module {
         switch (mode) {
             case Vanilla -> currentMode = new Vanilla();
             case Strafe -> currentMode = new Strafe();
+            case MineBerry -> currentMode = new MineBerry();
         }
     }
 

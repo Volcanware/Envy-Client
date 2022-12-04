@@ -22,7 +22,9 @@ public class SpeedMode {
     }
 
     public void onTick() {}
-    public void onMove(PlayerMoveEvent event) {}
+    public boolean onMove(PlayerMoveEvent event) throws InterruptedException {
+        return false;
+    }
     public void onRubberband() {
         reset();
     }

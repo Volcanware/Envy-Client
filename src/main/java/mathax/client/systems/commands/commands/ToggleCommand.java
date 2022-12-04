@@ -32,7 +32,7 @@ public class ToggleCommand extends Command {
                 )
                 .then(literal("off")
                     .executes(context -> {
-                        new ArrayList<>(Modules.get().getActive()).forEach(Module::toggle);
+                        new ArrayList<>(Modules.get().getActive()).forEach(module -> module.toggle());
                         HUD.get().active = false;
                         return SINGLE_SUCCESS;
                     })

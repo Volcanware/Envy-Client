@@ -42,7 +42,7 @@ public class DiscordRPC extends Module {
     private static final DiscordEventHandlers handlers = new DiscordEventHandlers();
     private static final DiscordRichPresence rpc = new DiscordRichPresence();
 
-    private static final String APP_ID = "878967665501306920";
+    private static final String APP_ID = "1044852387761893440";
     private static final String STEAM_ID = "";
 
     private static int number = 1;
@@ -93,8 +93,8 @@ public class DiscordRPC extends Module {
         rpc.startTimestamp = Utils.getCurrentTimeMillis() / 1000;
         rpc.details = Version.getStylized() + " | " + getUsername() + getHealth();
         rpc.state = getActivity();
-        rpc.largeImageKey = "logo";
-        rpc.largeImageText = "MatHax " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
+        rpc.largeImageKey = "anarchyclef";
+        rpc.largeImageText = "AnarchyClef " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
         applySmallImage();
         rpc.smallImageText = getActivity();
         rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
@@ -111,8 +111,8 @@ public class DiscordRPC extends Module {
                 try {
                     rpc.details = Version.getStylized() + " | " + getUsername() + getHealth();
                     rpc.state = getActivity();
-                    rpc.largeImageKey = "logo";
-                    rpc.largeImageText = "MatHax " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
+                    rpc.largeImageKey = "anarchyclef";
+                    rpc.largeImageText = "AnarchyClef " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
                     applySmallImage();
                     rpc.smallImageText = getActivity();
                     rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;

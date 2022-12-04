@@ -18,7 +18,7 @@ public class Strafe extends SpeedMode {
     }
 
     @Override
-    public void onMove(PlayerMoveEvent event) {
+    public boolean onMove(PlayerMoveEvent event) {
         switch (stage) {
             case 0:
                 if (PlayerUtils.isMoving()) {
@@ -61,6 +61,7 @@ public class Strafe extends SpeedMode {
         }
 
         ((IVec3d) event.movement).setXZ(velX, velZ);
+        return false;
     }
 
     private Vec2 transformStrafe(double speed) {

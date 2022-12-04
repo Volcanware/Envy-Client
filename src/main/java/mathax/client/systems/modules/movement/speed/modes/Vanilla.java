@@ -16,7 +16,7 @@ public class Vanilla extends SpeedMode {
     }
 
     @Override
-    public void onMove(PlayerMoveEvent event) {
+    public boolean onMove(PlayerMoveEvent event) {
         Vec3d vel = PlayerUtils.getHorizontalVelocity(settings.vanillaSpeed.get());
         double velX = vel.getX();
         double velZ = vel.getZ();
@@ -34,5 +34,6 @@ public class Vanilla extends SpeedMode {
         }
 
         ((IVec3d) event.movement).set(velX, event.movement.y, velZ);
+        return false;
     }
 }

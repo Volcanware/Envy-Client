@@ -58,8 +58,7 @@ dependencies {
         }
     }
 
-    // Installer
-    library "com.github.MatHax:Installer:master-SNAPSHOT"
+
 
     // Fabric
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -76,9 +75,7 @@ dependencies {
 
     // Compat fixes
     modCompileOnly fabricApi.module("fabric-renderer-indigo", project.api_version)
-    modCompileOnly("me.jellysquid.mods:sodium-fabric:${project.sodium_version}") {
-        transitive = false
-    }
+
     modCompileOnly("io.vram:canvas-fabric-mc118:1.0.+") {
         transitive = false
     }
@@ -130,26 +127,13 @@ processResources {
             line -> line.replace("@mc_version@", project.minecraft_version)
         }
     }
-
-    filesMatching("metadata.json") {
-        expand "version": project.installer_version
-        filter {
-            line -> line.replace("@installer_version@", project.installer_version)
-        }
-    }
 }
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding("UTF-8")
 }
 
-jar {
-    from "LICENSE"
 
-    manifest {
-        attributes("Main-Class": project.installer_class)
-    }
-}
 
 remapJar {
     dependsOn shadowJar

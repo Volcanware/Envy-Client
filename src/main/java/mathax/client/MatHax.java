@@ -109,8 +109,8 @@ public class MatHax implements ClientModInitializer {
         return Arrays.asList(
 
             // SPLASHES
-            Formatting.RED + "MatHax on top!",
-            Formatting.GRAY + "Matejko06" + Formatting.RED + " based god",
+            Formatting.RED + "AnarchyClef on top!",
+            Formatting.GRAY + "Volcan" + Formatting.RED + " based god",
             Formatting.RED + "MatHaxClient.xyz",
             Formatting.RED + "MatHaxClient.xyz/Discord",
             Formatting.RED + Version.getStylized(),

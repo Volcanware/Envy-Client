@@ -60,7 +60,7 @@ public class TitleScreenMixin extends Screen {
         int proxyUsingLength = textRenderer.getWidth(proxyUsing);
         String proxyDetails = proxy != null ? "(" + proxy.name + ") " + proxy.address + ":" + proxy.port : null;
 
-        String watermarkName = "MatHax";
+        String watermarkName = "AnarchyClef";
         int watermarkNameLength = textRenderer.getWidth(watermarkName);
         String watermarkVersion = Version.getStylized();
         int watermarkVersionLength = textRenderer.getWidth(watermarkVersion);
@@ -68,7 +68,7 @@ public class TitleScreenMixin extends Screen {
 
         String authorBy = "By";
         int authorByLength = textRenderer.getWidth(authorBy);
-        String authorName = "Matejko06";
+        String authorName = "Volcan, SquidScopes";
         int authorNameLength = textRenderer.getWidth(authorName);
         int authorFullLength = authorByLength + spaceLength + authorNameLength;
 
