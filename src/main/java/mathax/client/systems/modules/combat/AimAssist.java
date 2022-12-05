@@ -47,6 +47,13 @@ public class AimAssist extends Module {
         .build()
     );
 
+    private final Setting<Boolean> ignoreinvisible = sgGeneral.add(new BoolSetting.Builder()
+        .name("Ignore Invisible")
+        .description("Ignore invisible entities.")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<Boolean> ignoreWalls = sgGeneral.add(new BoolSetting.Builder()
         .name("ignore-walls")
         .description("Whether or not to ignore aiming through walls.")
@@ -97,6 +104,7 @@ public class AimAssist extends Module {
             if (!entity.isAlive()) return false;
             if (mc.player.distanceTo(entity) >= range.get()) return false;
             if (!ignoreWalls.get() && !PlayerUtils.canSeeEntity(entity)) return false;
+            if (ignoreinvisible.get() && entity.isInvisible()) return false;
             if (entity == mc.player || !entities.get().getBoolean(entity.getType())) return false;
             if (entity instanceof PlayerEntity) return Friends.get().shouldAttack((PlayerEntity) entity);
             return true;

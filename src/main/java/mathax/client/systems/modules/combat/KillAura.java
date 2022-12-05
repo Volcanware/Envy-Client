@@ -92,6 +92,13 @@ public class KillAura extends Module {
         .build()
     );
 
+    private final Setting<Boolean> ignoreinvisible = sgGeneral.add(new BoolSetting.Builder()
+        .name("ignoreinvisible")
+        .description("Attacks even if the target is invisible.")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<Boolean> noRightClick = sgGeneral.add(new BoolSetting.Builder()
         .name("no-right-click")
         .description("Does not attack if the right mouse button is pressed (Using a shield, you eat food or drink a potion).")
@@ -333,6 +340,7 @@ public class KillAura extends Module {
         if (PlayerUtils.distanceTo(entity) > targetRange.get()) return false;
         if (!entities.get().getBoolean(entity.getType())) return false;
         if (noRightClick.get() && mc.options.useKey.isPressed()) return false;
+        if (ignoreinvisible.get() && entity.isInvisible()) return false;
         if (!nametagged.get() && entity.hasCustomName() && !(entity instanceof PlayerEntity)) return false;
         if (!PlayerUtils.canSeeEntity(entity) && PlayerUtils.distanceTo(entity) > wallsRange.get()) return false;
         if (ignoreTamed.get() && entity instanceof Tameable tameable && tameable.getOwnerUuid() != null && tameable.getOwnerUuid().equals(mc.player.getUuid())) return false;
