@@ -1,0 +1,16 @@
+List of Todos
+
+- [ ] Team Module (Leather Armor Colour, Name Colour, Suffix, Prefix, Whitelist, Bot, etc.)
+- [ ] MatHax Chat (Chat Color, Chat Prefix, Chat Suffix, etc.)
+- [ ] More Hud Control
+- [ ] TabGUI
+- [ ] Auto H-Clip and Auto V-Clip
+- [ ] Ban Alert
+- [ ] RubberBand Protection (Anti-Kick)
+- [ ] Auto-Fireball (Auto-Throw Fireball)
+- [ ] Fucker (Auto Destroy Bed)
+- [ ] Spawn Blocker (Auto-Block Spawn)
+- [ ] Spawn Finder (Auto-Find Spawn)
+- [ ] Spawn Timer (Auto-Countdown Spawn on tablist)
+- [ ] Aura Target HUD (Show Aura Target on HUD)
+- [ ] Cheater Detect (Detect Cheater)
