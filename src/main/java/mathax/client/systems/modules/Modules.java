@@ -430,6 +430,7 @@ public class Modules extends System<Modules> {
         add(new PotionSpoof());
         add(new Reach());
         add(new Rotation());
+        add(new ShieldSpoof());
         add(new SpeedMine());
     }
 

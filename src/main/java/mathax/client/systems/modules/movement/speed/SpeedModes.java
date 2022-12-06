@@ -6,7 +6,8 @@ public enum SpeedModes {
     Vanilla("Vanilla"),
     Strafe("Strafe"),
     MineBerry("MineBerry"),
-    VelocityHop("VelocityHop");
+    VelocityHop("VelocityHop"),
+    Jitter("Jitter");
 
     private final String title;
 

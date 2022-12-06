@@ -18,9 +18,9 @@ public class VelocityHop extends SpeedMode {
     @Override
     public boolean onMove(PlayerMoveEvent event) {
         Vec3d vel = PlayerUtils.getHorizontalVelocity(settings.vanillaSpeed.get());
-        double velX = vel.getX() * 1.1;
-        double velZ = vel.getZ() * 1.1;
-        double velY = vel.getY() * 0.1;
+        double velX = vel.getX() * 1.5;
+        double velZ = vel.getZ() * 1.5;
+        double velY = vel.getY() - 0.5;
 
         if (PlayerUtils.isMoving()) {
             (Modules.get().get(AutoJump.class)).toggle();
