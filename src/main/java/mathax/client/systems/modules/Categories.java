@@ -12,6 +12,7 @@ public class Categories {
     public static final Category World = new Category("World", Items.GRASS_BLOCK, Color.fromRGBA(0, 150, 0, 255));
     public static final Category Chat = new Category("Chat", Items.BEACON, Color.fromRGBA(255, 255, 255, 255));
     public static final Category Misc = new Category("Misc", Items.NETHER_STAR, Color.fromRGBA(0, 50, 175, 255));
+    public static final Category Ghost = new Category("Ghost", Items.GOLD_INGOT, Color.fromRGBA(255, 0, 0, 255));
     public static final Category Client = new Category("Client", Items.COMMAND_BLOCK, Color.fromRGBA(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b, 255));
 
     public static boolean REGISTERING;

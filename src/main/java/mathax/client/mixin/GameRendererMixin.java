@@ -13,7 +13,7 @@ import mathax.client.utils.render.NametagUtils;
 import mathax.client.utils.render.RenderUtils;
 import mathax.client.systems.modules.player.LiquidInteract;
 import mathax.client.systems.modules.player.NoMiningTrace;
-import mathax.client.systems.modules.player.Reach;
+import mathax.client.systems.modules.ghost.Reach;
 import mathax.client.systems.modules.world.HighwayBuilder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.ShaderEffect;
