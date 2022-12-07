@@ -7,6 +7,7 @@ import mathax.client.renderer.text.TextRenderer;
 import mathax.client.settings.*;
 import mathax.client.systems.friends.Friends;
 import mathax.client.utils.Utils;
+import mathax.client.utils.entity.DangerEval;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.entity.SortPriority;
 import mathax.client.utils.entity.TargetUtils;
@@ -23,10 +24,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BedItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
@@ -265,11 +263,14 @@ public class CombatInfoHud extends HudElement {
                     for (int position = 5; position >= 0; position--) {
                         ItemStack itemStack = getItem(position);
 
-                        if (itemStack.getItem() instanceof SwordItem || itemStack.getItem() == Items.END_CRYSTAL || itemStack.getItem() == Items.RESPAWN_ANCHOR || itemStack.getItem() instanceof BedItem) threat = true;
+                        if (itemStack.getItem() instanceof SwordItem || itemStack.getItem() instanceof AxeItem || itemStack.getItem() == Items.END_CRYSTAL || itemStack.getItem() == Items.RESPAWN_ANCHOR || itemStack.getItem() instanceof BedItem) threat = true;
                     }
 
                     if (threat) {
                         friendText = "Threat";
+                        int danger_percent = (int) (DangerEval.eval(player) * 100);
+                        DangerEval.LOGGER.info("Danger percent: " + danger_percent);
+                        friendText += " (" + danger_percent + "%)";
                         friendColor = RED;
                     }
                 }
