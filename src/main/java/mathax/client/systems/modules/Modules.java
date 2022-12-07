@@ -18,6 +18,7 @@ import mathax.client.systems.modules.movement.*;
 import mathax.client.systems.modules.player.*;
 import mathax.client.systems.modules.render.*;
 import mathax.client.systems.modules.world.*;
+import mathax.client.systems.modules.ghost.*;
 import mathax.client.systems.modules.world.Timer;
 import mathax.client.utils.misc.input.Input;
 import mathax.client.utils.misc.input.KeyAction;
@@ -90,6 +91,7 @@ public class Modules extends System<Modules> {
         initChat();
         initMisc();
         initClient();
+        initGhost();
     }
 
     @Override
@@ -360,7 +362,6 @@ public class Modules extends System<Modules> {
     }
 
     private void initCombat() {
-        add(new AimAssist());
         add(new AnchorAura());
         add(new AntiAnvil());
         add(new ArrowDodge());
@@ -416,7 +417,6 @@ public class Modules extends System<Modules> {
         add(new AutoTool());
         add(new ChestSwap());
         add(new EXPThrower());
-        add(new FastUse());
         add(new GhostHand());
         add(new Ghost());
         add(new LiquidInteract());
@@ -428,9 +428,16 @@ public class Modules extends System<Modules> {
         add(new Portals());
         add(new PotionSaver());
         add(new PotionSpoof());
-        add(new Reach());
         add(new Rotation());
+        //add(new ShieldSpoof());
         add(new SpeedMine());
+    }
+
+    private void initGhost() {
+        add(new AutoClicker());
+        add(new Reach());
+        add(new AimAssist());
+        add(new FastUse());
     }
 
     private void initMovement() {
@@ -586,7 +593,6 @@ public class Modules extends System<Modules> {
     private void initMisc() {
         add(new AntiDesync());
         add(new AntiPacketKick());
-        add(new AutoClicker());
         add(new AutoMountBypassDupe());
         add(new AutoReconnect());
         add(new AutoRespawn());

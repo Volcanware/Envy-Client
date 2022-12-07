@@ -8,10 +8,8 @@ import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.movement.speed.modes.*;
 import mathax.client.systems.modules.movement.speed.modes.MineBerry;
-import mathax.client.systems.modules.movement.speed.modes.Strafe;
-import mathax.client.systems.modules.movement.speed.modes.MineBerry;
-import mathax.client.systems.modules.movement.speed.modes.Vanilla;
 import mathax.client.utils.player.PlayerUtils;
 import mathax.client.systems.modules.world.Timer;
 import net.minecraft.entity.MovementType;
@@ -148,6 +146,7 @@ public class Speed extends Module {
             case Vanilla -> currentMode = new Vanilla();
             case Strafe -> currentMode = new Strafe();
             case MineBerry -> currentMode = new MineBerry();
+            case VelocityHop -> currentMode = new VelocityHop();
         }
     }
 

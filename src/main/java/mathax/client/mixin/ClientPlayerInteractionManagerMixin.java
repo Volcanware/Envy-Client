@@ -7,7 +7,7 @@ import mathax.client.systems.modules.Modules;
 import mathax.client.utils.world.BlockUtils;
 import mathax.client.MatHax;
 import mathax.client.systems.modules.player.NoBreakDelay;
-import mathax.client.systems.modules.player.Reach;
+import mathax.client.systems.modules.ghost.Reach;
 import mathax.client.systems.modules.world.Nuker;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
