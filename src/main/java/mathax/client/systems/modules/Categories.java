@@ -27,6 +27,7 @@ public class Categories {
         Modules.registerCategory(World);
         Modules.registerCategory(Chat);
         Modules.registerCategory(Misc);
+        Modules.registerCategory(Ghost);
         Modules.registerCategory(Client);
 
         REGISTERING = false;
