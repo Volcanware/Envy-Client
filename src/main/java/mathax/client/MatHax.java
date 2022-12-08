@@ -101,7 +101,6 @@ public class MatHax implements ClientModInitializer {
             //NobreHD
             "2905e61c51794d0d967c255a16287056",
             "4c3d2322a3df30fcb371837ba257ea37"
-
         );
     }
 

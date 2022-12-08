@@ -438,6 +438,7 @@ public class Modules extends System<Modules> {
         add(new Reach());
         add(new AimAssist());
         add(new FastUse());
+        //add(new WTap());
     }
 
     private void initMovement() {
