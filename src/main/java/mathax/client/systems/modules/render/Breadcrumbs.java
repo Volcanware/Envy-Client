@@ -124,6 +124,7 @@ public class Breadcrumbs extends Module {
 
     private List<Entity> getWorldEntitiesFiltered() {
         List<Entity> filtered = new ArrayList<>();
+        filtered.add(mc.player);
         for (Entity entity : mc.world.getEntities()) {
             if (this.entities.get().getBoolean(entity.getType())) {
                 filtered.add(entity);
@@ -134,7 +135,6 @@ public class Breadcrumbs extends Module {
 
     private void populateSectionManagers() {
         sectionManagers.clear();
-        sectionManagers.put(mc.player, new SectionManager(mc.player));
         for (Entity entity : getWorldEntitiesFiltered()) {
             sectionManagers.put(entity, new SectionManager(entity));
         }
