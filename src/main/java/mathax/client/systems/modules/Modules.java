@@ -439,6 +439,7 @@ public class Modules extends System<Modules> {
         add(new AimAssist());
         add(new FastUse());
         //add(new WTap());
+        //add(new AutoBlock());
     }
 
     private void initMovement() {
@@ -498,6 +499,7 @@ public class Modules extends System<Modules> {
         add(new Chams());
         add(new CityESP());
         add(new Confetti());
+        add(new AntiSale());
         //add(new CustomCrosshair());
         add(new EntityOwner());
         add(new ESP());

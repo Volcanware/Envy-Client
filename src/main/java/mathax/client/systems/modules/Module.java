@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public abstract class Module implements ISerializable<Module>, Comparable<Module> {
-    protected final MinecraftClient mc;
+    protected static MinecraftClient mc = null;
 
     public final Category category;
     public final Item icon;

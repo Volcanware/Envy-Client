@@ -3,20 +3,19 @@
 //import mathax.client.systems.modules.Categories;
 //import net.minecraft.item.Items;
 //import mathax.client.systems.modules.Module;
+import net.minecraft.text.Text;
 
-//import static net.minecraft.entity.EntityType.PLAYER;
+import javax.swing.text.html.parser.Entity;
 
 //public class WTap extends Module {
 
-    //public boolean onTick() {
-        //if (mc.targetedEntity != null && mc.targetedEntity.getType() == PLAYER) {
-            //mc.options.sprintKey.setPressed(true);
-            //mc.options.forwardKey.setPressed(true);
-        //}
-        //return true;
-    //}
-
     //public WTap() {
         //super(Categories.Ghost, Items.COMMAND_BLOCK, "WTap", "WTaps for you");
+//}
+
+    //public void onTick() {
+        //if (mc.player.handSwinging) {
+            //mc.player.setSprinting(true);
+        //}
     //}
 //}
