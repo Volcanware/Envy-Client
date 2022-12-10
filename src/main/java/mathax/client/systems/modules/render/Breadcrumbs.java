@@ -134,6 +134,7 @@ public class Breadcrumbs extends Module {
 
     private void populateSectionManagers() {
         sectionManagers.clear();
+        sectionManagers.put(mc.player, new SectionManager(mc.player));
         for (Entity entity : getWorldEntitiesFiltered()) {
             sectionManagers.put(entity, new SectionManager(entity));
         }
