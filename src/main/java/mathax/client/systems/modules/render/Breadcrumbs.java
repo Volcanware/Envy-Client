@@ -13,6 +13,7 @@ import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.SettingColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.world.dimension.DimensionType;
 
@@ -124,7 +125,7 @@ public class Breadcrumbs extends Module {
 
     private List<Entity> getWorldEntitiesFiltered() {
         List<Entity> filtered = new ArrayList<>();
-        filtered.add(mc.player);
+        filtered.add((PlayerEntity) mc.player);
         for (Entity entity : mc.world.getEntities()) {
             if (this.entities.get().getBoolean(entity.getType())) {
                 filtered.add(entity);

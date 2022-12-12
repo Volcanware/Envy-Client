@@ -52,6 +52,7 @@ public class Commands extends System<Commands> {
         add(new EnemiesCommand());
         add(new CommandsCommand());
         add(new InventoryCommand());
+        add(new IRCCommand());
         add(new LocateCommand());
         add(new NbtCommand());
         add(new NotebotCommand());

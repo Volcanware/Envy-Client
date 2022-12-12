@@ -102,6 +102,10 @@ dependencies {
     library "com.sedmelluq:lava-common:${project.lava_common_version}"
     library "com.sedmelluq:lavaplayer-natives:${project.lavaplayer_natives_version}"
 
+    // IRC
+    implementation 'org.java-websocket:Java-WebSocket:1.5.3'
+    implementation 'com.google.code.gson:gson:2.10'
+
     // Other
     library "org.apache.httpcomponents:httpclient:${project.apache_http_client_version}"
     library "com.fasterxml.jackson.core:jackson-core:${project.jackson_version}"
