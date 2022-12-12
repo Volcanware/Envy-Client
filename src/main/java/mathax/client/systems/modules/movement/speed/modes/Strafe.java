@@ -3,6 +3,7 @@ package mathax.client.systems.modules.movement.speed.modes;
 import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.Vec2;
 import mathax.client.utils.player.PlayerUtils;
@@ -93,6 +94,10 @@ public class Strafe extends SpeedMode {
         velZ = (double) forward * speed * mz - (double) side * speed * mx;
 
         return new Vec2(velX, velZ);
+    }
+    @Override
+    public void onRubberband() {
+        (Modules.get().get(Speed.class)).forceToggle(false);
     }
 
     @Override

@@ -3,6 +3,7 @@ package mathax.client.systems.modules.movement.speed.modes;
 import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.utils.player.PlayerUtils;
 import mathax.client.systems.modules.movement.Anchor;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
@@ -35,5 +36,9 @@ public class Vanilla extends SpeedMode {
 
         ((IVec3d) event.movement).set(velX, event.movement.y, velZ);
         return false;
+    }
+    @Override
+    public void onRubberband() {
+        (Modules.get().get(Speed.class)).forceToggle(false);
     }
 }

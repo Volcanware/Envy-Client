@@ -13,7 +13,7 @@ public class Reach extends Module {
     private final Setting<Double> reach = sgGeneral.add(new DoubleSetting.Builder()
         .name("reach")
         .description("Your reach modifier.")
-        .defaultValue(5)
+        .defaultValue(3.5)
         .min(0)
         .sliderRange(0, 7.5)
         .build()
