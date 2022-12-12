@@ -7,5 +7,5 @@ public enum MessageType {
     AUTH,
     AUTH_SUCCESS,
     ERROR,
-    DISCONNECT
+    PING
 }

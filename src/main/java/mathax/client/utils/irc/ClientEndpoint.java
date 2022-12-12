@@ -45,6 +45,7 @@ public class ClientEndpoint extends WebSocketClient {
                 }
                 case PUB_KEY ->
                     send(Message.auth(msg.data.get("public_key"), this.secretKey, this.iv).toJSON());
+                case PING -> send(Message.ping().toJSON());
             }
         } catch (Exception e) {
             e.printStackTrace();

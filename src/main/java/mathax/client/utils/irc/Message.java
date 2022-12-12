@@ -37,6 +37,8 @@ public class Message {
         return obj;
     }
 
+    public static Message ping() {return new Message(MessageType.PING);}
+
     public Message encrypt(SecretKey secret, int iv) throws Exception {
         if (this.data.containsKey("message")) {
             this.data.put("message", CryptUtils.encryptAES(this.data.get("message"), secret, iv));
