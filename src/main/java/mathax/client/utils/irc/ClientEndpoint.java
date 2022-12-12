@@ -3,7 +3,6 @@ package mathax.client.utils.irc;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft;
 import org.java_websocket.handshake.ServerHandshake;
 
 import javax.crypto.SecretKey;
@@ -37,7 +36,7 @@ public class ClientEndpoint extends WebSocketClient {
             switch (msg.type) {
                 case BROADCAST -> {
                     msg = msg.decrypt(this.secretKey, this.iv);
-                    Client.sendToChat(Text.literal(msg.data.get("from") + ": " + msg.data.get("message")));
+                    Client.sendToChat(Text.literal(msg.data.get("from") + ": " + msg.data.get("message")).formatted(Formatting.WHITE));
                 }
                 case DIRECT_MESSAGE -> {
                     msg = msg.decrypt(this.secretKey, this.iv);
@@ -56,6 +55,7 @@ public class ClientEndpoint extends WebSocketClient {
     public void onClose(int code, String reason, boolean remote) {
         Client.logger.info(reason);
         Client.sendToChat(Text.literal("Disconnected from IRC server").formatted(Formatting.RED));
+        Client.endpoint = null;
     }
 
     @Override

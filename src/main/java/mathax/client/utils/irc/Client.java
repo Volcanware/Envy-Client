@@ -22,9 +22,7 @@ public class Client {
     protected static String password;
 
     public static Gson gson = new Gson();
-    public static MutableText prefix = Text.literal("[IRC]")
-        .formatted(Formatting.BLUE)
-        .append(Text.literal(" ").formatted(Formatting.WHITE));
+    public static MutableText prefix = Text.literal("[IRC] ").formatted(Formatting.BLUE);
     public static Logger logger = Logger.getLogger("IRC");
     public static ClientEndpoint endpoint = null;
 
@@ -86,9 +84,13 @@ public class Client {
             MutableText text = Text.literal("Username and password can't be empty. Use .irc auth <username> <password> to set them.");
             text.setStyle(text.getStyle().withColor(0xFF0000));
             sendToChat(text);
-        } else {
+        } else if (endpoint == null) {
             endpoint = new ClientEndpoint(new URI("ws://51.161.192.31:8107/irc"));
             endpoint.connect();
+        } else {
+            MutableText text = Text.literal("You are already connected to the IRC server.");
+            text.setStyle(text.getStyle().withColor(0xFF0000));
+            sendToChat(text);
         }
     }
 
@@ -116,7 +118,7 @@ public class Client {
     public static void sendDirect(String user, String message) throws Exception {
         if (endpoint != null) {
             endpoint.sendDirect(user, message);
-            sendToChat(Text.literal("To " + user + ": " + message));
+            sendToChat(Text.literal("To " + user + ": " + message).formatted(Formatting.RED));
         }else {
             MutableText text = Text.literal("You are not connected to the IRC server.");
             text.setStyle(text.getStyle().withColor(0xFF0000));
