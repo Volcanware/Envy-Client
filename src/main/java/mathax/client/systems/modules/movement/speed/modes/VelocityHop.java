@@ -4,6 +4,7 @@ import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.AutoJump;
+import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.utils.player.PlayerUtils;
 import mathax.client.systems.modules.movement.Anchor;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
@@ -38,4 +39,9 @@ public class VelocityHop extends SpeedMode {
         public void onDeactivate() {
             (Modules.get().get(AutoJump.class)).forceToggle(false);
         }
+
+        @Override
+        public void onRubberband() {
+        (Modules.get().get(Speed.class)).forceToggle(false);
     }
+}

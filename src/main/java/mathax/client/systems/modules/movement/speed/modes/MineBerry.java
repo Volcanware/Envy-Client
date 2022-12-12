@@ -3,6 +3,7 @@ package mathax.client.systems.modules.movement.speed.modes;
 import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.AutoJump;
+import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.systems.modules.world.Timer;
@@ -45,5 +46,9 @@ public class MineBerry extends SpeedMode {
         if (mc.player.hasStatusEffect(StatusEffects.SLOWNESS)) {
             mc.player.removeStatusEffect(StatusEffects.SLOWNESS);
         }
+    }
+    @Override
+    public void onRubberband() {
+        (Modules.get().get(Speed.class)).forceToggle(false);
     }
 }
