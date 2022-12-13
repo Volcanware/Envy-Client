@@ -1,17 +1,12 @@
 package mathax.client.systems.modules.world;
 
 import mathax.client.systems.modules.Categories;
-import mathax.client.systems.modules.Modules;
-import mathax.client.MatHax;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.render.search.Search;
 import net.minecraft.block.BedBlock;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class Fucker extends Module {
