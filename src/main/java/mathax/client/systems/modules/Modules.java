@@ -573,6 +573,7 @@ public class Modules extends System<Modules> {
         add(new SpawnProofer());
         add(new Timer());
         add(new VeinMiner());
+        add(new Fucker());
     }
 
     private void initChat() {
