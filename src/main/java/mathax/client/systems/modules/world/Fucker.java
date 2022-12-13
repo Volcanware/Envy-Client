@@ -15,8 +15,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class Fucker extends Module {
-
-
     public void onTick(PlayerEntity player) {
         int centerX = player.getBlockPos().getX();
         int centerY = player.getBlockPos().getY();
@@ -27,7 +25,7 @@ public class Fucker extends Module {
             for (int y = (int) (centerY - radius); y <= (int) (centerY + radius); y++) {
                 for (int z = (int) (centerZ - radius); z <= (int) (centerZ + radius); z++) {
                     if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) + (z - centerZ) * (z - centerZ) <= radius * radius) {
-                        BlockState blockState = world.getBlockState(x, y, z);
+                        BlockState blockState = world.getBlockState(new BlockPos(x, y, z));
                         if (blockState.getBlock() instanceof BedBlock) {
                             // Mine the Bed
                             player.swingHand(player.getActiveHand());
