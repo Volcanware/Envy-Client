@@ -42,9 +42,9 @@ public class Spam extends Module {
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
         .name("delay")
         .description("The delay between specified messages in ticks.")
-        .defaultValue(20)
+        .defaultValue(250)
         .min(0)
-        .sliderRange(0, 200)
+        .sliderRange(0, 1000)
         .build()
     );
 
@@ -66,7 +66,7 @@ public class Spam extends Module {
     private final Setting<Boolean> random = sgGeneral.add(new BoolSetting.Builder()
         .name("randomise")
         .description("Selects a random message from your spam message list.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 
