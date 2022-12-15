@@ -19,7 +19,7 @@ public class Fucker extends Module {
         for (int x = (int) (centerX - radius); x <= (int) (centerX + radius); x++) {
             for (int y = (int) (centerY - radius); y <= (int) (centerY + radius); y++) {
                 for (int z = (int) (centerZ - radius); z <= (int) (centerZ + radius); z++) {
-                    if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) + (z - centerZ) * (z - centerZ) <= radius * radius) {
+                    if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) + (z - centerZ) * (z - centerZ) < radius * radius) {
                         BlockState blockState = world.getBlockState(new BlockPos(x, y, z));
                         if (blockState.getBlock() instanceof BedBlock) {
                             // Mine the Bed
