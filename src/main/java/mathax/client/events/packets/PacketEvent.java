@@ -4,6 +4,7 @@ import mathax.client.events.Cancellable;
 import net.minecraft.network.Packet;
 
 public class PacketEvent extends Cancellable {
+    public static PacketEvent.Receive Receive;
     public Packet<?> packet;
 
     public static class Receive extends PacketEvent {
