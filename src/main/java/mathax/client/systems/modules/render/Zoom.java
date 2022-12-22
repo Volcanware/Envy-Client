@@ -39,7 +39,7 @@ public class Zoom extends Module {
     private final Setting<Double> scrollSensitivity = sgGeneral.add(new DoubleSetting.Builder()
         .name("scroll-sensitivity")
         .description("Allows you to change zoom value using scroll wheel. 0 to disable.")
-        .defaultValue(0)
+        .defaultValue(1)
         .min(0)
         .build()
     );

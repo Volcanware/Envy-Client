@@ -9,6 +9,8 @@ import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.movement.speed.Speed;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Items;
 
@@ -41,8 +43,9 @@ public class SpeedMine extends Module {
     private void onTick(TickEvent.Post event) {
 
         if (mode.get() == Mode.Normal) {
-            mc.player.removeStatusEffect(HASTE);
-            return;
+            if (mc.player.hasStatusEffect(HASTE)) {
+                Modules.get().get(SpeedMine.class).forceToggle(false);
+            }
         }
 
         int amplifier = mode.get() == Mode.Haste2 ? 1 : 0;

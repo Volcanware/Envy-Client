@@ -10,6 +10,7 @@ import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.speed.modes.*;
 import mathax.client.systems.modules.movement.speed.modes.MineBerry;
+import mathax.client.systems.modules.movement.speed.modes.VelocityHop;
 import mathax.client.utils.player.PlayerUtils;
 import mathax.client.systems.modules.world.Timer;
 import net.minecraft.entity.MovementType;

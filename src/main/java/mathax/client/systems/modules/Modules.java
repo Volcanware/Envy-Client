@@ -487,6 +487,7 @@ public class Modules extends System<Modules> {
         add(new Step());
         add(new TridentBoost());
         add(new Velocity());
+        //add(new DepthStriderSpoof());
     }
 
     private void initRender() {
@@ -592,6 +593,7 @@ public class Modules extends System<Modules> {
         add(new TotemNotifier());
         add(new VisualRange());
         add(new Welcomer());
+        add(new AutoCope());
     }
 
     private void initMisc() {

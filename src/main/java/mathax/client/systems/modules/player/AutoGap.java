@@ -108,7 +108,7 @@ public class AutoGap extends Module {
     private final Setting<Integer> healthThreshold = sgHealth.add(new IntSetting.Builder()
         .name("health-threshold")
         .description("Health threshold to eat at. Includes absorption.")
-        .defaultValue(20)
+        .defaultValue(4)
         .min(0)
         .sliderRange(0, 40)
         .build()
