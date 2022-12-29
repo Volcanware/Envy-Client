@@ -587,6 +587,7 @@ public class Modules extends System<Modules> {
         add(new GroupChat());
         //add(new ChatBot());
         add(new MessageAura());
+        add(new Roast());
         add(new Spam());
         add(new StayHydrated());
         add(new TotemNotifier());
