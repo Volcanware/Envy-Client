@@ -1,37 +1,26 @@
 package mathax.client.systems.modules.chat;
 
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.game.GameLeftEvent;
 import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
 import mathax.client.systems.friends.Friends;
-import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Categories;
+import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
-import mathax.client.eventbus.EventHandler;
+import mathax.client.utils.network.HTTP;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.item.Items;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.List;
-
-public class Spam extends Module {
+public class Roast extends Module {
     private int messageI, timer;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgAntiSpamBypass = settings.createGroup("Anti Spam Bypass");
 
     // General
-
-    private final Setting<List<String>> messages = sgGeneral.add(new StringListSetting.Builder()
-        .name("messages")
-        .description("Messages to use for spam. Use %player% for a name of a random player.")
-        .defaultValue(
-            "MatHax on top!",
-            "Matejko06 on top!"
-        )
-        .build()
-    );
 
     private final Setting<Boolean> ignoreSelf = sgGeneral.add(new BoolSetting.Builder()
         .name("ignore-self")
@@ -71,13 +60,6 @@ public class Spam extends Module {
         .build()
     );
 
-    private final Setting<Boolean> random = sgGeneral.add(new BoolSetting.Builder()
-        .name("randomise")
-        .description("Selects a random message from your spam message list.")
-        .defaultValue(true)
-        .build()
-    );
-
     // Anti Spam Bypass
 
     private final Setting<Boolean> randomText = sgAntiSpamBypass.add(new BoolSetting.Builder()
@@ -96,8 +78,8 @@ public class Spam extends Module {
         .build()
     );
 
-    public Spam() {
-        super(Categories.Chat, Items.PAPER, "spam", "Spams specified messages in chat.");
+    public Roast() {
+        super(Categories.Chat, Items.FIRE_CHARGE, "roast", "Insults a random player");
     }
 
     @Override
@@ -118,17 +100,8 @@ public class Spam extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        if (messages.get().isEmpty()) return;
-
         if (timer <= 0) {
-            int i;
-            if (random.get()) i = Utils.random(0, messages.get().size());
-            else {
-                if (messageI >= messages.get().size()) messageI = 0;
-                i = messageI++;
-            }
-
-            String text = messages.get().get(i);
+            String text = ((RoastMessage)HTTP.get("https://evilinsult.com/generate_insult.php?lang=en&type=json").sendJson(RoastMessage.class)).insult;
             if (randomText.get()) text += " " + RandomStringUtils.randomAlphabetic(randomTextLength.get()).toLowerCase();
 
             String player;
@@ -136,9 +109,20 @@ public class Spam extends Module {
                 player = Utils.getRandomPlayer();
             } while (ignoreSelf.get() && player.equals(mc.getSession().getUsername()) || ignoreFriends.get() && Friends.get().get(player) != null);
 
-            mc.player.sendChatMessage(text.replace("%player%", player));
+            mc.player.sendChatMessage(player + ", " + text);
 
             timer = delay.get();
         } else timer--;
+    }
+
+    private static class RoastMessage {
+        public String number;
+        public String language;
+        public String insult;
+        public String created;
+        public String shown;
+        public String createdby;
+        public String active;
+        public String comment;
     }
 }
