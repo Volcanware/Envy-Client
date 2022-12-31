@@ -1,21 +1,19 @@
-//package mathax.client.systems.modules.ghost;
+package mathax.client.systems.modules.ghost;
 
-//import mathax.client.systems.modules.Categories;
-//import net.minecraft.item.Items;
-//import mathax.client.systems.modules.Module;
-import net.minecraft.text.Text;
+import mathax.client.eventbus.EventHandler;
+import mathax.client.systems.modules.Categories;
+import mathax.client.systems.modules.Module;
+import net.minecraft.item.Items;
 
-import javax.swing.text.html.parser.Entity;
-
-//public class WTap extends Module {
-
-    //public WTap() {
-        //super(Categories.Ghost, Items.COMMAND_BLOCK, "WTap", "WTaps for you");
-//}
-
-    //public void onTick() {
-        //if (mc.player.handSwinging) {
-            //mc.player.setSprinting(true);
-        //}
-    //}
-//}
+public class WTap extends Module {
+            public WTap() {
+            super(Categories.Ghost, Items.BARRIER, "WTap", "Sprint On Hit");
+        }
+    @EventHandler
+    public <SwingArmEvent> void onSwingArm(SwingArmEvent event) {
+        // Only send the packet if the player is not sprinting already
+            // Send a player movement packet with sprinting set to true
+            boolean onGround = mc.player.isOnGround();
+            mc.player.setSprinting(true);
+        }
+    }

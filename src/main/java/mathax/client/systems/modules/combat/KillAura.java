@@ -106,6 +106,34 @@ public class KillAura extends Module {
         .build()
     );
 
+    //private final Setting<Boolean> AntiBot = sgGeneral.add(new BoolSetting.Builder()
+        //.name("Anti-Bot1")
+       // .description("Does Not Attack if They have a Diamond Helmet")
+       // .defaultValue(false)
+       // .build()
+   // );
+
+    //private final Setting<Boolean> AntiBot2 = sgGeneral.add(new BoolSetting.Builder()
+        //.name("Anti-Bot2")
+       // .description("Does Not Attack if They have a Diamond Chestplate")
+       // .defaultValue(false)
+        //.build()
+    //);
+
+    //private final Setting<Boolean> AntiBot3 = sgGeneral.add(new BoolSetting.Builder()
+        //.name("Anti-Bot3")
+        //.description("Does Not Attack if They have a Diamond Axe in their hand")
+        //.defaultValue(false)
+        //.build()
+    //);
+
+    //private final Setting<Boolean> AntiBot4 = sgGeneral.add(new BoolSetting.Builder()
+        //.name("Anti-Bot4")
+        //.description("Does Not Attack if They are not on the ground")
+        //.defaultValue(false)
+        //.build()
+    //);
+
     private final Setting<RotationMode> rotation = sgGeneral.add(new EnumSetting.Builder<RotationMode>()
         .name("rotate")
         .description("Determines when you should rotate towards the target.")
@@ -341,6 +369,10 @@ public class KillAura extends Module {
         if (!entities.get().getBoolean(entity.getType())) return false;
         if (noRightClick.get() && mc.options.useKey.isPressed()) return false;
         if (ignoreinvisible.get() && entity.isInvisible()) return false;
+        //List<ItemStack> armorItems = (List<ItemStack>) getTarget().getArmorItems();
+        //if (AntiBot.get() && armorItems.contains(Items.DIAMOND_HELMET.getDefaultStack())) {
+            //return false;
+       // }
         if (!nametagged.get() && entity.hasCustomName() && !(entity instanceof PlayerEntity)) return false;
         if (!PlayerUtils.canSeeEntity(entity) && PlayerUtils.distanceTo(entity) > wallsRange.get()) return false;
         if (ignoreTamed.get() && entity instanceof Tameable tameable && tameable.getOwnerUuid() != null && tameable.getOwnerUuid().equals(mc.player.getUuid())) return false;

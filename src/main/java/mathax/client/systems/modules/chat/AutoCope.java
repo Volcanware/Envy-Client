@@ -24,7 +24,7 @@ public class AutoCope extends Module {
 
     private final Setting<List<String>> messagesSetting = generalSettings.add(new StringListSetting.Builder()
         .name("messages")
-        .description("Messages to send when you die ('${random_player}' for random player name).")
+        .description("Messages to send when you die")
         .defaultValue(
             "Haxxer",
             "Fucking Lunar Hacker",

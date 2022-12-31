@@ -28,7 +28,7 @@ public class AntiSale extends Module {
         }
         if (event.packet instanceof GameMessageS2CPacket) {
             GameMessageS2CPacket packet = (GameMessageS2CPacket) event.packet;
-            if (packet.toString().contains("SALE") || packet.toString().contains("sale") || packet.toString().contains("Sale")) {
+            if (packet.toString().contains("SALE") || packet.toString().contains("sale") || packet.toString().contains("Sale")  || packet.toString().contains("LOWBALLING") || packet.toString().contains("lowballing") || packet.toString().contains("Lowballing") || packet.toString().contains("LowBalling") || packet.toString().contains("LoWbAlLiNg") || packet.toString().contains("lOwBaLlInG")) {
                 event.cancel();
             }
         }
