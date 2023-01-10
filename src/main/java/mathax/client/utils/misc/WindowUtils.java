@@ -16,15 +16,15 @@ public class WindowUtils {
         }
 
         public static void setTitleLoading() {
-            mc.getWindow().setTitle("MatHax " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
+            mc.getWindow().setTitle("MatHax+ " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft() + " is being loaded...");
         }
 
         public static void setTitleLoaded() {
-            mc.getWindow().setTitle("MatHax " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft() + " loaded!");
+            mc.getWindow().setTitle("MatHax+ " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft() + " loaded!");
         }
 
         public static void setTitle() {
-            mc.getWindow().setTitle("MatHax " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft());
+            mc.getWindow().setTitle("MatHax+ " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft());
         }
     }
 

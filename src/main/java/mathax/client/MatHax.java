@@ -81,7 +81,7 @@ public class MatHax implements ClientModInitializer {
     public static final File VERSION_FOLDER = new File(FOLDER + "/" + Version.getMinecraft());
     public static final File MUSIC_FOLDER = new File(FOLDER + "/Music");
 
-    public final Color MATHAX_COLOR = new Color(230, 75, 100, 255);
+    public final Color MATHAX_COLOR = new Color(0, 104, 255, 255);
     public final int MATHAX_COLOR_INT = Color.fromRGBA(MATHAX_COLOR.r, MATHAX_COLOR.g, MATHAX_COLOR.b, MATHAX_COLOR.a);
     public final Color MATHAX_BACKGROUND_COLOR = new Color(30, 30, 45, 255);
     public final int MATHAX_BACKGROUND_COLOR_INT = Color.fromRGBA(MATHAX_BACKGROUND_COLOR.r, MATHAX_BACKGROUND_COLOR.g, MATHAX_BACKGROUND_COLOR.b, MATHAX_BACKGROUND_COLOR.a);
@@ -218,7 +218,7 @@ public class MatHax implements ClientModInitializer {
         }
 
         // Log
-        LOG.info("Initializing MatHax " + Version.getStylized() + " for Minecraft " + Version.getMinecraft() + "...");
+        LOG.info("Initializing MatHax+ " + Version.getStylized() + " for Minecraft " + Version.getMinecraft() + "...");
 
         // Global Minecraft client accessor
         mc = MinecraftClient.getInstance();
@@ -331,7 +331,7 @@ public class MatHax implements ClientModInitializer {
         else WindowUtils.MatHax.setTitle();
 
         // Log
-        LOG.info("MatHax " + Version.getStylized() + " initialized for Minecraft " + Version.getMinecraft() + "!");
+        LOG.info("MatHax+ " + Version.getStylized() + " initialized for Minecraft " + Version.getMinecraft() + "!");
     }
 
     @EventHandler

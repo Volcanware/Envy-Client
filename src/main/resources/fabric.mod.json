@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "name": "MatHax+",
   "id": "mathax",
-  "version": "${version}",
-  "description": "MatHax+i is an advanced Minecraft utility client for Fabric Based on MatHax.",
+  "version": "1.0.0",
+  "description": "MatHax+ is an advanced Minecraft utility client for Fabric Based on MatHax.",
   "authors": [
     "Volcan"
   ],
