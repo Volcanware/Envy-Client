@@ -76,8 +76,8 @@ public class Version {
     }
 
     public static class UpdateChecker {
-        public static boolean checkForLatestTitle = true;
-        public static boolean checkForLatest = true;
+        public static boolean checkForLatestTitle = false;
+        public static boolean checkForLatest = false;
 
         @EventHandler
         private static void onGameJoined(GameJoinedEvent event) {

@@ -624,6 +624,7 @@ public class Modules extends System<Modules> {
         add(new TPSSync());
         add(new Twerk());
         add(new VanillaSpoof());
+        add(new AutoMolest());
     }
 
     private void initClient() {

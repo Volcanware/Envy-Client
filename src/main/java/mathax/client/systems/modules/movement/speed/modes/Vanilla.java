@@ -1,15 +1,21 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.PlayerMoveEvent;
+import mathax.client.events.world.TickEvent;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.speed.Speed;
+import mathax.client.systems.modules.player.SpeedMine;
 import mathax.client.utils.player.PlayerUtils;
 import mathax.client.systems.modules.movement.Anchor;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.Vec3d;
+
+import static net.minecraft.entity.effect.StatusEffects.HASTE;
+import static net.minecraft.entity.effect.StatusEffects.SPEED;
 
 public class Vanilla extends SpeedMode {
     public Vanilla() {
@@ -40,5 +46,12 @@ public class Vanilla extends SpeedMode {
     @Override
     public void onRubberband() {
         (Modules.get().get(Speed.class)).forceToggle(false);
+    }
+
+    @EventHandler
+    public void onTick() {
+        if (mc.player.hasStatusEffect(SPEED)) {
+            Modules.get().get(Speed.class).forceToggle(false);
+        }
     }
 }

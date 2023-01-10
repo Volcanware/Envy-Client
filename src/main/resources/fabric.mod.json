@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "name": "MatHax",
+  "name": "MatHax+",
   "id": "mathax",
   "version": "${version}",
-  "description": "MatHax is an advanced Minecraft utility client for Fabric forked from Meteor Client.",
+  "description": "MatHax+i is an advanced Minecraft utility client for Fabric Based on MatHax.",
   "authors": [
-    "Matejko06"
+    "Volcan"
   ],
   "icon": "assets/mathax/textures/icons/icon.png",
   "license": "GPL-3.0",
@@ -45,7 +45,6 @@
   "breaks": {
     "optifabric": "*",
     "feather": "*",
-    "origins": "*",
-    "wurst": "*"
+    "origins": "*"
   }
 }
