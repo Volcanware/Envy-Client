@@ -9,7 +9,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.Map;
 
 public class KeyBinds {
-    private static final String CATEGORY = "MatHax " + Version.getStylized();
+    private static final String CATEGORY = "Envy " + Version.getStylized();
 
     public static KeyBinding OPEN_CLICK_GUI = new KeyBinding("Open Click GUI", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, CATEGORY);
     public static KeyBinding OPEN_COMMANDS = new KeyBinding("Open Commands", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_PERIOD, CATEGORY);

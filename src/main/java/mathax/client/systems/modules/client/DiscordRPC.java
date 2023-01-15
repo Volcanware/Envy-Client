@@ -42,7 +42,7 @@ public class DiscordRPC extends Module {
     private static final DiscordEventHandlers handlers = new DiscordEventHandlers();
     private static final DiscordRichPresence rpc = new DiscordRichPresence();
 
-    private static final String APP_ID = "1044852387761893440";
+    private static final String APP_ID = "1063976066726772858";
     private static final String STEAM_ID = "";
 
     private static int number = 1;
@@ -82,7 +82,7 @@ public class DiscordRPC extends Module {
     );
 
     public DiscordRPC() {
-        super(Categories.Client, Items.COMMAND_BLOCK, "discord-rpc", "Shows MatHax as your Discord status.", true);
+        super(Categories.Client, Items.COMMAND_BLOCK, "discord-rpc", "Shows Envy as your Discord status.", true);
     }
 
     @Override
@@ -93,8 +93,8 @@ public class DiscordRPC extends Module {
         rpc.startTimestamp = Utils.getCurrentTimeMillis() / 1000;
         rpc.details = Version.getStylized() + " | " + getUsername() + getHealth();
         rpc.state = getActivity();
-        rpc.largeImageKey = "mathaxplus";
-        rpc.largeImageText = "Mathax+ " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
+        rpc.largeImageKey = "envyicon";
+        rpc.largeImageText = "envy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
         applySmallImage();
         rpc.smallImageText = getActivity();
         rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
@@ -111,8 +111,8 @@ public class DiscordRPC extends Module {
                 try {
                     rpc.details = Version.getStylized() + " | " + getUsername() + getHealth();
                     rpc.state = getActivity();
-                    rpc.largeImageKey = "mathaxplus";
-                    rpc.largeImageText = "Mathax+ " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
+                    rpc.largeImageKey = "envyicon";
+                    rpc.largeImageText = "envy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
                     applySmallImage();
                     rpc.smallImageText = getActivity();
                     rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;

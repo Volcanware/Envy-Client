@@ -77,7 +77,7 @@ public class MatHax implements ClientModInitializer {
     public static final IEventBus EVENT_BUS = new EventBus();
 
     public static final File GAME_FOLDER = new File(FabricLoader.getInstance().getGameDir().toString());
-    public static final File FOLDER = new File(GAME_FOLDER, "MatHax");
+    public static final File FOLDER = new File(GAME_FOLDER, "Envy");
     public static final File VERSION_FOLDER = new File(FOLDER + "/" + Version.getMinecraft());
     public static final File MUSIC_FOLDER = new File(FOLDER + "/Music");
 
@@ -86,7 +86,7 @@ public class MatHax implements ClientModInitializer {
     public final Color MATHAX_BACKGROUND_COLOR = new Color(30, 30, 45, 255);
     public final int MATHAX_BACKGROUND_COLOR_INT = Color.fromRGBA(MATHAX_BACKGROUND_COLOR.r, MATHAX_BACKGROUND_COLOR.g, MATHAX_BACKGROUND_COLOR.b, MATHAX_BACKGROUND_COLOR.a);
 
-    public static final Logger LOG = LoggerFactory.getLogger("MatHax");
+    public static final Logger LOG = LoggerFactory.getLogger("Envy");
 
     public static final String URL = "https://mathaxclient.xyz/";
     public static final String API_URL = "https://api.mathaxclient.xyz/";
@@ -100,17 +100,14 @@ public class MatHax implements ClientModInitializer {
         return Arrays.asList(
 
             // SPLASHES
-            Formatting.RED + "AnarchyClef on top!",
+            Formatting.RED + "Envy Client on top!",
             Formatting.GRAY + "Volcan" + Formatting.RED + " based god",
-            Formatting.RED + "MatHaxClient.xyz",
-            Formatting.RED + "MatHaxClient.xyz/Discord",
             Formatting.RED + Version.getStylized(),
             Formatting.RED + Version.getMinecraft(),
 
             // MEME SPLASHES
             Formatting.YELLOW + "cope",
             Formatting.YELLOW + "I am funny -HiIAmFunny",
-            Formatting.YELLOW + "There is only 1 thing that is true in the world. Mathax Crashes",
             Formatting.YELLOW + "IntelliJ IDEa",
             Formatting.YELLOW + "I <3 nns",
             Formatting.YELLOW + "haha 69",
@@ -130,8 +127,6 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "Hack on 2b2t.au",
             Formatting.YELLOW + "Hack on 6b6t.org",
             Formatting.YELLOW + "Compatible with JexClient",
-            Formatting.YELLOW + "If you see this Message show everyone in the Mathax discord :P",
-            Formatting.YELLOW + "If incompatible with X then fix it yourself KAPPA",
             Formatting.YELLOW + "Better Than Wurst",
             Formatting.YELLOW + "Better Than Impact",
             Formatting.YELLOW + "Better Than Future",
@@ -151,6 +146,7 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "Better Than Novoline",
             Formatting.YELLOW + "Better Than Vape",
             Formatting.YELLOW + "Better Than BleachHack",
+            Formatting.YELLOW + "Better Than Mathax",
             Formatting.YELLOW + "Better Than Feather",
             Formatting.YELLOW + "Better Than OptiFine",
             Formatting.YELLOW + "Better Than Sodium",

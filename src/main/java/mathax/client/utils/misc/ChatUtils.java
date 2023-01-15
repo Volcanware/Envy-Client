@@ -99,7 +99,7 @@ public class ChatUtils {
     private static MutableText getMatHaxPrefix() {
         ClientSpoof cs = Modules.get().get(ClientSpoof.class);
 
-        MutableText text = Text.literal("MatHax+");
+        MutableText text = Text.literal("Envy Client");
         if (cs.changeChatFeedback()) text = Text.literal(cs.chatFeedbackText.get());
         MutableText prefix = Text.literal("");
 

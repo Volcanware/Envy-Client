@@ -1,13 +1,14 @@
 {
   "schemaVersion": 1,
-  "name": "MatHax+",
-  "id": "mathax",
+  "name": "Envy Client",
+  "id": "envy",
   "version": "1.0.0",
-  "description": "MatHax+ is an advanced Minecraft utility client for Fabric Based on MatHax.",
+  "description": "Envy Client is an advanced Minecraft utility client for Fabric that is a continuation of MatHax.",
   "authors": [
-    "Volcan"
+    "Volcan",
+    "NobreHD"
   ],
-  "icon": "assets/mathax/textures/icons/icon.png",
+  "icon": "assets/mathax/textures/icons/envy.png",
   "license": "GPL-3.0",
   "contact": {
     "homepage": "https://mathaxclient.xyz",

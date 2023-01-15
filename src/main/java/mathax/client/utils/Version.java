@@ -50,7 +50,7 @@ public class Version {
     }
 
     public static Version get() {
-        return new Version(FabricLoader.getInstance().getModContainer("mathax").get().getMetadata().getVersion().getFriendlyString());
+        return new Version(FabricLoader.getInstance().getModContainer("envy").get().getMetadata().getVersion().getFriendlyString());
     }
 
     public static Integer getDev() {
