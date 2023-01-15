@@ -1,12 +1,14 @@
 package mathax.client.systems.modules.movement.speed;
 
+import mathax.client.systems.modules.movement.speed.modes.Weird;
 import mathax.client.systems.modules.movement.speed.modes.VelocityHop;
 
 public enum SpeedModes {
     Vanilla("Vanilla"),
-    Strafe("Strafe"),
+    Strafe("BunnyHop"),
     MineBerry("MineBerry"),
-    VelocityHop("VelocityHop");
+    VelocityHop("VelocityHop"),
+    Weird("Please Don't Crash me :(");
 
     private final String title;
 

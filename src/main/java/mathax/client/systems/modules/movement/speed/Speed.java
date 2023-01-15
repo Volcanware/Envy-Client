@@ -41,10 +41,13 @@ public class Speed extends Module {
         .build()
     );
 
-    public final Setting<Double> TimerHop = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Speed")
+    public final Setting<Double> VelocityHop = sgGeneral.add(new DoubleSetting.Builder()
+        .name("VelocityHop-speed")
         .description("The speed in blocks per second.")
-        .defaultValue(1.0)
+        .defaultValue(1)
+        .min(0)
+        .sliderRange(0, 20)
+        .visible(() -> speedMode.get() == SpeedModes.VelocityHop)
         .build()
     );
 
@@ -79,6 +82,13 @@ public class Speed extends Module {
         .description("Uses speed when in lava or water.")
         .defaultValue(true)
         .visible(() -> speedMode.get() == SpeedModes.Vanilla || speedMode.get() == SpeedModes.Strafe)
+        .build()
+    );
+
+    public final Setting<Boolean> Strict = sgGeneral.add(new BoolSetting.Builder()
+        .name("Strict")
+        .description("Useful for servers with strict anticheats.")
+        .defaultValue(true)
         .build()
     );
 
@@ -148,6 +158,7 @@ public class Speed extends Module {
             case Strafe -> currentMode = new Strafe();
             case MineBerry -> currentMode = new MineBerry();
             case VelocityHop -> currentMode = new VelocityHop();
+            case Weird -> currentMode = new Weird();
         }
     }
 

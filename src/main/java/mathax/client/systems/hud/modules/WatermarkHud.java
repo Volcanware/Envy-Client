@@ -50,12 +50,12 @@ public class WatermarkHud extends TripleTextHudElement {
     );
 
     public WatermarkHud(HUD hud) {
-        super(hud, "watermark", "Displays a MatHax watermark.", true);
+        super(hud, "watermark", "Displays a MatHax+ watermark.", true);
     }
 
     protected String getLeft() {
         if (cs.changeWatermark()) return cs.watermarkText.get() + " ";
-        return "MatHax ";
+        return "MatHax+ ";
     }
 
     protected String getRight() {

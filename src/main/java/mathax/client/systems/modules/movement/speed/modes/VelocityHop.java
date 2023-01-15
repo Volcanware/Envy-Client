@@ -1,5 +1,6 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.systems.modules.Modules;
@@ -12,13 +13,15 @@ import mathax.client.systems.modules.movement.speed.SpeedModes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.Vec3d;
 
+import static net.minecraft.entity.effect.StatusEffects.SPEED;
+
 public class VelocityHop extends SpeedMode {
     public VelocityHop() {
         super(SpeedModes.VelocityHop);
     }
     @Override
     public boolean onMove(PlayerMoveEvent event) {
-        Vec3d vel = PlayerUtils.getHorizontalVelocity(settings.vanillaSpeed.get());
+        Vec3d vel = PlayerUtils.getHorizontalVelocity(settings.VelocityHop.get());
         double velX = vel.getX() * 1.5;
         double velZ = vel.getZ() * 1.5;
         double velY = vel.getY() - 0.5;
@@ -33,6 +36,18 @@ public class VelocityHop extends SpeedMode {
 
         ((IVec3d) event.movement).set(velX, event.movement.y, velZ);
         return false;
+    }
+
+    @EventHandler
+    public void onTick() {
+        settings.Strict.get();
+        if (mc.player.hasStatusEffect(SPEED)) {
+            Modules.get().get(Speed.class).forceToggle(false);
+
+            if (mc.player.hasStatusEffect(StatusEffects.SLOWNESS)) {
+                Modules.get().get(Speed.class).forceToggle(false);
+            }
+        }
     }
 
         @Override

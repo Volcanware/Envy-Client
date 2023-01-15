@@ -2,44 +2,33 @@ package mathax.client.systems.modules.movement.speed.modes;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.PlayerMoveEvent;
+import mathax.client.mixininterface.IVec3d;
 import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.movement.AutoJump;
 import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
-import mathax.client.systems.modules.world.Timer;
-import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.util.math.Vec3d;
 
 import static net.minecraft.entity.effect.StatusEffects.SPEED;
 
-public class MineBerry extends SpeedMode {
-    public MineBerry() {
-        super(SpeedModes.MineBerry);
+public class Weird extends SpeedMode {
+    private boolean isBhopEnabled = false;
+
+    public Weird() {
+        super(SpeedModes.Weird);
     }
 
     @Override
     public boolean onMove(PlayerMoveEvent event) {
-
-        if (PlayerUtils.isMoving()) {
-            (Modules.get().get(AutoJump.class)).toggle();
+        if (mc.player.isOnGround() == false) {
+            double velX = event.movement.x * 2;
+            double velZ = event.movement.z * 2;
+            double velY = 0.4;
+            mc.player.setVelocity(velX, velY, velZ);
+            ((IVec3d) event.movement).set(velX, event.movement.y, velZ);
         }
-
-        if (mc.player.fallDistance <= 0.1)
-            Modules.get().get(Timer.class).setOverride(1.2f);
-        else if (mc.player.fallDistance < 1.3)
-            Modules.get().get(Timer.class).setOverride(0.7f);
-        else
-            Modules.get().get(Timer.class).setOverride(1.0f);
         return false;
     }
-
-    @Override
-    public void onDeactivate() {
-        (Modules.get().get(AutoJump.class)).forceToggle(false);
-    }
-
     @EventHandler
     public void onTick() {
         settings.Strict.get();

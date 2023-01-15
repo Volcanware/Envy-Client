@@ -42,11 +42,7 @@ public class SpeedMine extends Module {
     @EventHandler
     private void onTick(TickEvent.Post event) {
 
-        if (mode.get() == Mode.Normal) {
-            if (mc.player.hasStatusEffect(HASTE)) {
-                Modules.get().get(SpeedMine.class).forceToggle(false);
-            }
-        }
+        if (mode.get() == Mode.Normal) return;
 
         int amplifier = mode.get() == Mode.Haste2 ? 1 : 0;
 

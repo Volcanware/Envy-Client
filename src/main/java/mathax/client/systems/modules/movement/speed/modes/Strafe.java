@@ -1,5 +1,6 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.systems.modules.Modules;
@@ -10,6 +11,9 @@ import mathax.client.utils.player.PlayerUtils;
 import mathax.client.systems.modules.movement.Anchor;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
+import net.minecraft.entity.effect.StatusEffects;
+
+import static net.minecraft.entity.effect.StatusEffects.SPEED;
 
 public class Strafe extends SpeedMode {
     private long timer = 0L;
@@ -103,5 +107,13 @@ public class Strafe extends SpeedMode {
     @Override
     public void onTick() {
         distance = Math.sqrt((mc.player.getX() - mc.player.prevX) * (mc.player.getX() - mc.player.prevX) + (mc.player.getZ() - mc.player.prevZ) * (mc.player.getZ() - mc.player.prevZ));
+        settings.Strict.get();
+        if (mc.player.hasStatusEffect(SPEED)) {
+            Modules.get().get(Speed.class).forceToggle(false);
+
+            if (mc.player.hasStatusEffect(StatusEffects.SLOWNESS)) {
+                Modules.get().get(Speed.class).forceToggle(false);
+            }
+        }
     }
 }
