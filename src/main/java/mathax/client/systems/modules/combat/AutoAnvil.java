@@ -97,9 +97,10 @@ public class AutoAnvil extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         timer = 0;
         target = null;
+        return false;
     }
 
     @EventHandler

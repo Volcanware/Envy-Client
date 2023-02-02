@@ -165,8 +165,9 @@ public class InventoryTweaks extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         invOpened = false;
+        return false;
     }
 
     @Override

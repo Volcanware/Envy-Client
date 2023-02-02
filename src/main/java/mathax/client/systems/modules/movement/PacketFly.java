@@ -284,7 +284,7 @@ public class PacketFly extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         packets.clear();
         posLooks.clear();
         teleportId = 0;
@@ -305,6 +305,7 @@ public class PacketFly extends Module {
         startingOutOfBoundsPos = new PlayerMoveC2SPacket.PositionAndOnGround(randomHorizontal(), 1, randomHorizontal(), mc.player.isOnGround());
         packets.add(startingOutOfBoundsPos);
         mc.getNetworkHandler().sendPacket(startingOutOfBoundsPos);
+        return false;
     }
 
     @Override

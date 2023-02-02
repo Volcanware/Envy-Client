@@ -103,12 +103,13 @@ public class LogoutSpots extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         lastPlayerList.addAll(mc.getNetworkHandler().getPlayerList());
         updateLastPlayers();
 
         timer = 10;
         lastDimension = PlayerUtils.getDimension();
+        return false;
     }
 
     @Override

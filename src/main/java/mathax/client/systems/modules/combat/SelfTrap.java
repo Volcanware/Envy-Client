@@ -112,7 +112,7 @@ public class SelfTrap extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         if (Modules.get().isActive(WallHack.class)) {
             error("(highlight)Self Trap+(default) was enabled while enabling (highlight)Self Trap(default), disabling (highlight)Self Trap+(default)...");
             Modules.get().get(SelfTrapPlus.class).toggle();
@@ -123,6 +123,7 @@ public class SelfTrap extends Module {
         placed = false;
 
         if (center.get()) PlayerUtils.centerPlayer();
+        return false;
     }
 
     @EventHandler

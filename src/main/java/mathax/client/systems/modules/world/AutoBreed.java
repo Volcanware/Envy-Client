@@ -76,8 +76,9 @@ public class AutoBreed extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         animalsFed.clear();
+        return false;
     }
 
     @EventHandler

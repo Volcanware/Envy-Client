@@ -402,6 +402,7 @@ public class Modules extends System<Modules> {
         add(new SurroundBreak());
         add(new TNTAura());
         add(new TriggerBot());
+        //add(new Block());
     }
 
     private void initPlayer() {

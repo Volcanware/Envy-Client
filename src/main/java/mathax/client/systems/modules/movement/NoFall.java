@@ -7,12 +7,10 @@ import mathax.client.events.packets.PacketEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.mixin.PlayerMoveC2SPacketAccessor;
 import mathax.client.mixin.PlayerPositionLookS2CPacketAccessor;
-import mathax.client.mixininterface.IPlayerMoveC2SPacket;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.player.FindItemResult;
 import mathax.client.utils.player.InvUtils;
@@ -117,10 +115,11 @@ public class NoFall extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         preBaritoneFallHeight = BaritoneAPI.getSettings().maxFallHeightNoWater.value;
         if (mode.get() == Mode.Packet) BaritoneAPI.getSettings().maxFallHeightNoWater.value = 255;
         ticksExisted = 0;
+        return false;
     }
 
     @Override

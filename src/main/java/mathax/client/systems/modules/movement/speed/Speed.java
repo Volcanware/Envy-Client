@@ -84,14 +84,6 @@ public class Speed extends Module {
         .visible(() -> speedMode.get() == SpeedModes.Vanilla || speedMode.get() == SpeedModes.Strafe)
         .build()
     );
-
-    public final Setting<Boolean> Strict = sgGeneral.add(new BoolSetting.Builder()
-        .name("Strict")
-        .description("Useful for servers with strict anticheats.")
-        .defaultValue(true)
-        .build()
-    );
-
     public final Setting<Boolean> whenSneaking = sgGeneral.add(new BoolSetting.Builder()
         .name("when-sneaking")
         .description("Uses speed when sneaking.")
@@ -115,8 +107,9 @@ public class Speed extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         currentMode.onActivate();
+        return false;
     }
 
     @Override
@@ -159,6 +152,8 @@ public class Speed extends Module {
             case MineBerry -> currentMode = new MineBerry();
             case VelocityHop -> currentMode = new VelocityHop();
             case Weird -> currentMode = new Weird();
+            case LBL_SlowHop -> currentMode = new LBL_SlowHop();
+            case Matrix -> currentMode = new Matrix();
         }
     }
 

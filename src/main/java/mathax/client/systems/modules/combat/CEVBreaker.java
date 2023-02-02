@@ -129,10 +129,11 @@ public class CEVBreaker extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         pos = null;
         isDone = false;
         pause = 0;
+        return false;
     }
 
     @EventHandler

@@ -73,9 +73,10 @@ public class Anchor extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         wasInHole = false;
         holeX = holeZ = 0;
+        return false;
     }
 
     @EventHandler

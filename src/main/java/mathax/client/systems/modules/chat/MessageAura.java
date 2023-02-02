@@ -64,8 +64,9 @@ public class MessageAura extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         messageI = 0;
+        return false;
     }
 
     @EventHandler

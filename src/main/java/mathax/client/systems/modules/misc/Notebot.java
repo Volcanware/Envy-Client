@@ -208,9 +208,10 @@ public class Notebot extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         ticks = 0;
         resetVariables();
+        return false;
     }
 
     private void resetVariables() {

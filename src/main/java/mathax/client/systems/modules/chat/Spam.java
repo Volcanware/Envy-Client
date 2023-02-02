@@ -101,9 +101,10 @@ public class Spam extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         timer = delay.get();
         messageI = 0;
+        return false;
     }
 
     @EventHandler

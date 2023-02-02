@@ -315,7 +315,7 @@ public class BedAura extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         target = null;
         ogItem = InvUtils.getItemFromSlot(autoMoveSlot.get() - 1);
         if (ogItem instanceof BedItem) ogItem = null;
@@ -326,6 +326,7 @@ public class BedAura extends Module {
         webTimer = 0;
         direction = CardinalDirection.North;
         stb = null;
+        return false;
     }
 
     @Override

@@ -137,16 +137,17 @@ public class BookBot extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         if ((file == null || !file.exists()) && mode.get() == Mode.File) {
             info("No file selected, please select a file in the GUI.");
             toggle();
-            return;
+            return false;
         }
 
         random = new Random();
         delayTimer = delay.get();
         bookCount = 0;
+        return false;
     }
 
     @EventHandler

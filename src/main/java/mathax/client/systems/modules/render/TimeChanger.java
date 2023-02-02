@@ -29,8 +29,9 @@ public class TimeChanger extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         oldTime = mc.world.getTime();
+        return false;
     }
 
     @Override

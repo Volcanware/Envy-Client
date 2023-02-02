@@ -48,9 +48,10 @@ public class CapesModule extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         timer = 0;
         Capes.init();
+        return false;
     }
 
     @Override

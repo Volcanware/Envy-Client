@@ -2,7 +2,6 @@ package mathax.client.systems.modules.movement;
 
 import mathax.client.MatHax;
 import mathax.client.eventbus.EventHandler;
-import mathax.client.events.packets.PacketEvent;
 import mathax.client.events.render.Render3DEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.renderer.ShapeMode;
@@ -21,7 +20,6 @@ import net.minecraft.block.FallingBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -139,12 +137,13 @@ public class Scaffold extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         lastWasSneaking = mc.options.sneakKey.isPressed();
         if (lastWasSneaking) lastSneakingY = mc.player.getY();
 
         for (RenderBlock renderBlock : renderBlocks) renderBlockPool.free(renderBlock);
         renderBlocks.clear();
+        return false;
     }
 
     @Override

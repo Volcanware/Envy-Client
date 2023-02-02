@@ -64,16 +64,17 @@ public class FreeLook extends Module {
     );
 
     public FreeLook() {
-        super(Categories.Render, Items.PLAYER_HEAD, "free-look", "Allows more rotation options in third person.");
+        super(Categories.Minigame, Items.PLAYER_HEAD, "free-look", "Allows more rotation options in third person.");
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         cameraYaw = mc.player.getYaw();
         cameraPitch = mc.player.getPitch();
         prePers = mc.options.getPerspective();
 
         if (prePers != Perspective.THIRD_PERSON_BACK &&  togglePerpective.get()) mc.options.setPerspective(Perspective.THIRD_PERSON_BACK);
+        return false;
     }
 
     @Override

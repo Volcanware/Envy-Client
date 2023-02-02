@@ -109,7 +109,7 @@ public class Freecam extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         yaw = mc.player.getYaw();
         pitch = mc.player.getPitch();
 
@@ -131,6 +131,7 @@ public class Freecam extends Module {
 
         unpress();
         if (reloadChunks.get()) mc.worldRenderer.reload();
+        return false;
     }
 
     @Override

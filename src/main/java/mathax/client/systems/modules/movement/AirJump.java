@@ -32,8 +32,9 @@ public class AirJump extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         level = mc.player.getBlockPos().getY();
+        return false;
     }
 
     @EventHandler

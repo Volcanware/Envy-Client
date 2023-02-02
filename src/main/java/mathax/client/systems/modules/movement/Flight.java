@@ -109,19 +109,20 @@ public class Flight extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         delayLeft = delay.get();
         offLeft = offTime.get();
 
         if (mode.get() == Mode.Abilities && !mc.player.isSpectator()) {
             mc.player.getAbilities().flying = true;
-            if (mc.player.getAbilities().creativeMode) return;
+            if (mc.player.getAbilities().creativeMode) return false;
             mc.player.getAbilities().allowFlying = true;
         } else if (mode.get() == Mode.Creative && !mc.player.getAbilities().creativeMode) {
             mc.player.getAbilities().allowFlying = true;
 
             if (instantFlight.get()) mc.player.getAbilities().flying = true;
         }
+        return false;
     }
 
     @Override

@@ -31,8 +31,9 @@ public class AntiVoid extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         if (mode.get() == Mode.Flight) wasFlightEnabled = Modules.get().isActive(Flight.class);
+        return false;
     }
 
     @Override

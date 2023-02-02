@@ -106,7 +106,7 @@ public class Blink extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         synchronized (blinks) {
             blinks.add(new BlinkPlayer(mc.player));
         }
@@ -115,6 +115,7 @@ public class Blink extends Module {
         section.set1();
 
         lastDimension = mc.world.getDimension();
+        return false;
     }
 
     @Override

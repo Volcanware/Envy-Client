@@ -231,7 +231,7 @@ public class HighwayBuilder extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         dir = HorizontalDirection.get(mc.player.getYaw());
         leftDir = dir.rotateLeftSkipOne();
         rightDir = leftDir.opposite();
@@ -247,6 +247,7 @@ public class HighwayBuilder extends Module {
         blocksBroken = blocksPlaced = 0;
         lastBreakingPos.set(0, 0, 0);
         displayInfo = true;
+        return false;
     }
 
     @Override

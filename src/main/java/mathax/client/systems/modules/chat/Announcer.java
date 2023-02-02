@@ -33,13 +33,14 @@ public class Announcer extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         for (Feature feature : features) {
             if (feature.isEnabled()) {
                 MatHax.EVENT_BUS.subscribe(feature);
                 feature.reset();
             }
         }
+        return false;
     }
 
     @Override

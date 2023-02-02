@@ -48,7 +48,7 @@ public class Quiver extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
 
         FindItemResult bow = InvUtils.findInHotbar(Items.BOW);
 
@@ -86,6 +86,7 @@ public class Quiver extends Module {
                 arrowSlots.add(i);
             }
         }
+        return false;
     }
 
     private boolean hasEffect(StatusEffect effect) {

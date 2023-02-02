@@ -37,10 +37,11 @@ public class ChestSwap extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         swap();
 
         if (!stayOn.get()) toggle();
+        return false;
     }
 
     @Override

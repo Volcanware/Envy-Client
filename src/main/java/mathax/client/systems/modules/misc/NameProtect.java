@@ -26,8 +26,9 @@ public class NameProtect extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         username = mc.getSession().getUsername();
+        return false;
     }
 
     public String replaceName(String string) {

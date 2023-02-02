@@ -46,10 +46,11 @@ public class AutoClicker extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         timer = 0;
         mc.options.attackKey.setPressed(false);
         mc.options.useKey.setPressed(false);
+        return false;
     }
 
     @Override

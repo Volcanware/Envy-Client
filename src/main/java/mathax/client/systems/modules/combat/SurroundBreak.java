@@ -153,11 +153,12 @@ public class SurroundBreak extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         if (!placePositions.isEmpty()) placePositions.clear();
         target = null;
         renderTimer = 0;
         delay = 0;
+        return false;
     }
 
     @EventHandler(priority = EventPriority.MEDIUM + 60)

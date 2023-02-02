@@ -158,7 +158,7 @@ public class InstaAutoCity extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         count = 0;
         mining = false;
         target = CityUtils.getPlayerTarget(range.get() + 1.0);
@@ -173,7 +173,7 @@ public class InstaAutoCity extends Module {
                 if (selfToggle.get()) {
                     if (chatInfo.get()) info("Target block out of reach, disabling...");
                     toggle();
-                    return;
+                    return false;
                 }
             }
 
@@ -188,7 +188,7 @@ public class InstaAutoCity extends Module {
             if (slot == -1) {
                 if (chatInfo.get()) info("No pickaxe found, disabling...");
                 toggle();
-                return;
+                return false;
             }
 
             if (support.get()) {
@@ -209,6 +209,7 @@ public class InstaAutoCity extends Module {
                 toggle();
             }
         }
+        return false;
     }
 
     private void doMine() {

@@ -65,8 +65,9 @@ public class CameraTweaks extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         distance = cameraDistance.get();
+        return false;
     }
 
     @EventHandler

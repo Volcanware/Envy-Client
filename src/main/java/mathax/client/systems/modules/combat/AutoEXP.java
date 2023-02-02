@@ -87,8 +87,9 @@ public class AutoEXP extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         repairingI = -1;
+        return false;
     }
 
     @EventHandler

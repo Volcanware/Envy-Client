@@ -86,7 +86,7 @@ public class DiscordRPC extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         MatHax.LOG.info("Enabling Discord Rich Presence...");
 
         discord.discordInitialize(APP_ID, handlers, true, STEAM_ID);
@@ -129,6 +129,7 @@ public class DiscordRPC extends Module {
                 }
             }
         }, "RPC-Callback-Handler").start();
+        return false;
     }
 
     @Override

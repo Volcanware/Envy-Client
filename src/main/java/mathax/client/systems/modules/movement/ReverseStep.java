@@ -54,8 +54,9 @@ public class ReverseStep extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         valid = false;
+        return false;
     }
 
     @Override

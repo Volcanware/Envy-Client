@@ -83,8 +83,9 @@ public class Swarm extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         close();
+        return false;
     }
 
     @Override

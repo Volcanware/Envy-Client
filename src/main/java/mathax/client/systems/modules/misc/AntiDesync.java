@@ -46,8 +46,9 @@ public class AntiDesync extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         teleportIDs = new ArrayList<>();
+        return false;
     }
 
     @EventHandler

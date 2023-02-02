@@ -58,8 +58,9 @@ public class AutoWalk extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         if (mode.get() == Mode.Smart) createGoal();
+        return false;
     }
 
     @Override

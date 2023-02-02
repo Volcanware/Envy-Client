@@ -50,13 +50,14 @@ public class Phase extends Module {
     );
 
     public Phase() {
-        super(Categories.Movement, Items.ELYTRA, "phase", "Lets you clip through ground sometimes.");
+        super(Categories.Movement, Items.ELYTRA, "NoClip", "Lets you clip through ground sometimes.");
     }
 
     @Override
-    public void onActivate() {
-        if (mc.player == null) return;
+    public boolean onActivate() {
+        if (mc.player == null) return false;
         setPos();
+        return false;
     }
 
     @Override

@@ -50,8 +50,9 @@ public class AutoMend extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         didMove = false;
+        return false;
     }
 
     @EventHandler

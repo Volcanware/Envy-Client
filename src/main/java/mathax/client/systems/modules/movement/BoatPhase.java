@@ -86,12 +86,13 @@ public class BoatPhase extends Module {
     );
 
     public BoatPhase() {
-        super(Categories.Movement, Items.OAK_BOAT, "boat-phase", "Phase through blocks using a boat.");
+        super(Categories.Movement, Items.OAK_BOAT, "boat-NoClip", "Phase through blocks using a boat.");
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         boat = null;
+        return false;
     }
 
     @Override

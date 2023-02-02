@@ -85,10 +85,11 @@ public class AutoFish extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         ticksEnabled = false;
         autoCastEnabled = false;
         autoCastCheckTimer = 0;
+        return false;
     }
 
     @EventHandler

@@ -138,12 +138,13 @@ public class Nuker extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         firstBlock = true;
         for (RenderBlock renderBlock : renderBlocks) renderBlockPool.free(renderBlock);
         renderBlocks.clear();
         timer = 0;
         noBlockTimer = 0;
+        return false;
     }
 
     @Override

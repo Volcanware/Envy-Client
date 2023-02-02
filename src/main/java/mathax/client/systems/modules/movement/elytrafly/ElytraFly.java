@@ -234,9 +234,10 @@ public class ElytraFly extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         currentMode.onActivate();
         if ((chestSwap.get() == ChestSwapMode.Always || chestSwap.get() == ChestSwapMode.Wait_for_Ground) && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() != Items.ELYTRA) Modules.get().get(ChestSwap.class).swap();
+        return false;
     }
 
     @Override

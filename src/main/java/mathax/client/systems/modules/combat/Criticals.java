@@ -53,11 +53,12 @@ public class Criticals extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         attackPacket = null;
         swingPacket = null;
         sendPackets = false;
         sendTimer = 0;
+        return false;
     }
 
     @EventHandler

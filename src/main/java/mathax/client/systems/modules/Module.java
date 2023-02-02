@@ -69,7 +69,9 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
         return null;
     }
 
-    public void onActivate() {}
+    public boolean onActivate() {
+        return false;
+    }
     public void onDeactivate() {}
 
     public void toggle() {

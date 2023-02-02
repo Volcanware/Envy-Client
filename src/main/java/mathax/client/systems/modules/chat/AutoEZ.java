@@ -124,9 +124,10 @@ public class AutoEZ extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         canSendPop = true;
         ticks = 0;
+        return false;
     }
 
     @EventHandler

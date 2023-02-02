@@ -48,9 +48,10 @@ public class AntiHunger extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         lastOnGround = mc.player.isOnGround();
         sendOnGroundTruePacket = true;
+        return false;
     }
 
     @EventHandler

@@ -84,10 +84,11 @@ public class Offhand extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         sentMessage = false;
         isClicking = false;
         currentItem = item.get();
+        return false;
     }
 
     @EventHandler

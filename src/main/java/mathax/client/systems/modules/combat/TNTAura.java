@@ -249,11 +249,12 @@ public class TNTAura extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         obsidianPos.clear();
         ticks = 0;
         startBreak = false;
         toggled = false;
+        return false;
     }
 
     @Override

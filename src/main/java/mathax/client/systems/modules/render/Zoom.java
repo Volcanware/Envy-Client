@@ -71,7 +71,7 @@ public class Zoom extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         if (!enabled) {
             preCinematic = mc.options.smoothCameraEnabled;
             preMouseSensitivity = mc.options.getMouseSensitivity().getValue();
@@ -82,6 +82,7 @@ public class Zoom extends Module {
             MatHax.EVENT_BUS.subscribe(this);
             enabled = true;
         }
+        return false;
     }
 
     public void onStop() {

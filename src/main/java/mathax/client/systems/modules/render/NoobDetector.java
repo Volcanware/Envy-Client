@@ -79,9 +79,10 @@ public class NoobDetector extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         isTargetANoob = false;
         target = null;
+        return false;
     }
 
     @EventHandler

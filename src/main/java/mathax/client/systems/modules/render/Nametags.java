@@ -275,8 +275,9 @@ public class Nametags extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         totemPopMap.clear();
+        return false;
     }
 
     @EventHandler

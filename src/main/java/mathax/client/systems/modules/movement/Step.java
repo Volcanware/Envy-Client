@@ -69,8 +69,9 @@ public class Step extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         prevStepHeight = mc.player.stepHeight;
+        return false;
     }
 
     @Override

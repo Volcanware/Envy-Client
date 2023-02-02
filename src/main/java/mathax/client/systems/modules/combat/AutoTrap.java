@@ -138,11 +138,12 @@ public class AutoTrap extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         target = null;
         placePositions.clear();
         timer = 0;
         placed = false;
+        return false;
     }
 
     @Override

@@ -84,13 +84,14 @@ public class InstaMine extends Module {
     );
 
     public InstaMine() {
-        super(Categories.World, Items.DIAMOND_PICKAXE, "insta-mine", "Attempts to instantly mine blocks.");
+        super(Categories.Minigame, Items.DIAMOND_PICKAXE, "CivBreak", "Attempts to instantly mine blocks.");
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         ticks = 0;
         blockPos.set(0, -1, 0);
+        return false;
     }
 
     @EventHandler

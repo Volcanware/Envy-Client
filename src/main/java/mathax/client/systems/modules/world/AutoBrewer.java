@@ -36,8 +36,9 @@ public class AutoBrewer extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         first = false;
+        return false;
     }
 
     public void onBrewingStandClose() {

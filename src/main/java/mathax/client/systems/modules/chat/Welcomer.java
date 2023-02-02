@@ -149,13 +149,14 @@ public class Welcomer extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         prevEntries = new ArrayList<>();
         random = new Random();
         sentWelcome = false;
         welcomeTimer = 0;
         sentBye = false;
         byeTimer = 0;
+        return false;
     }
 
     @EventHandler

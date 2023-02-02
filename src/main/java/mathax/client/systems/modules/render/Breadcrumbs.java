@@ -82,10 +82,11 @@ public class Breadcrumbs extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         populateSectionManagers();
 
         lastDimension = mc.world.getDimension();
+        return false;
     }
 
     @Override

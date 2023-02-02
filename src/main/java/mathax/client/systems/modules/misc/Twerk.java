@@ -40,8 +40,9 @@ public class Twerk extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         timer = 0;
+        return false;
     }
 
     @Override

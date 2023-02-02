@@ -106,10 +106,11 @@ public class EChestFarmer extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         target = null;
         startCount = InvUtils.find(Items.OBSIDIAN).count();
         prevSlot = mc.player.getInventory().selectedSlot;
+        return false;
     }
 
     @Override

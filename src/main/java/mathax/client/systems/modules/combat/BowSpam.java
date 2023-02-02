@@ -41,9 +41,10 @@ public class BowSpam extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         wasBow = false;
         wasHoldingRightClick = false;
+        return false;
     }
 
     @Override

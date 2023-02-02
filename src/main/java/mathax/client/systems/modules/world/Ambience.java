@@ -161,8 +161,9 @@ public class Ambience extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         reload();
+        return false;
     }
 
     @Override

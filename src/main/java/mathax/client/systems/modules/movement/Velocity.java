@@ -124,6 +124,22 @@ public class Velocity extends Module {
         .build()
     );
 
+    public final Setting<Boolean> Delay = sgGeneral.add(new BoolSetting.Builder()
+        .name("Delay")
+        .description("Adds Fake Lag to the Velocity.")
+        .defaultValue(false)
+        .build()
+    );
+
+    public final Setting<Double> DelayAmount = sgGeneral.add(new DoubleSetting.Builder()
+        .name("DelayAmount")
+        .description("How much Fake Lag to add.")
+        .defaultValue(0)
+        .sliderRange(0, 1)
+        .visible(Delay::get)
+        .build()
+    );
+
     public Velocity() {
         super(Categories.Movement, Items.COMMAND_BLOCK, "velocity", "Prevents you from being moved by external forces.");
     }

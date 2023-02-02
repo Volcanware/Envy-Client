@@ -86,8 +86,9 @@ public class Auto32K extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         bestBlock = findValidBlocksDispenser();
+        return false;
     }
 
     @EventHandler

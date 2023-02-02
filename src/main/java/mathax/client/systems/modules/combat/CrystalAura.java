@@ -683,7 +683,7 @@ public class CrystalAura extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         breakTimer = 0;
         placeTimer = 0;
         ticksPassed = 0;
@@ -704,6 +704,7 @@ public class CrystalAura extends Module {
 
         renderTimer = 0;
         breakRenderTimer = 0;
+        return false;
     }
 
     @Override

@@ -123,12 +123,13 @@ public class ClientSpoof extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         // Icon
         if (window.get() && windowMeteorIcon.get()) WindowUtils.Meteor.setIcon();
 
         // Window Title
         if (window.get() && windowMeteorTitle.get()) WindowUtils.Meteor.setTitle();
+        return false;
     }
 
     @Override

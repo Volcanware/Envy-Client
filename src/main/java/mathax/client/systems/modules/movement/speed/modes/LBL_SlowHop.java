@@ -1,0 +1,20 @@
+package mathax.client.systems.modules.movement.speed.modes;
+
+import mathax.client.systems.modules.movement.speed.SpeedMode;
+import mathax.client.systems.modules.movement.speed.SpeedModes;
+import mathax.client.utils.player.PlayerUtils;
+
+public class LBL_SlowHop extends SpeedMode {
+
+    public LBL_SlowHop() {
+        super(SpeedModes.LBL_SlowHop);
+    }
+
+    @Override
+    public void onTick() {
+        if (mc.player.isSubmergedInWater()) return;
+        if (PlayerUtils.isMoving()) {
+            if (mc.player.isOnGround()) mc.player.jump(); else mc.player.airStrafingSpeed = 0.05f;
+        }
+    }
+}

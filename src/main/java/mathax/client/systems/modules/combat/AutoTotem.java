@@ -127,9 +127,10 @@ public class AutoTotem extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         shouldOverrideTotem = true;
         selectedSlot = mc.player.getInventory().selectedSlot;
+        return false;
     }
 
     @EventHandler

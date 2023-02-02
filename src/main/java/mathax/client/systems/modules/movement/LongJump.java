@@ -122,11 +122,12 @@ public class LongJump extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         stage = 0;
         jumping = false;
         airTicks = 0;
         groundTicks = -5;
+        return false;
     }
 
     @Override

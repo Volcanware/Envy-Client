@@ -48,13 +48,14 @@ public class WallHack extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         if (Modules.get().isActive(Xray.class)) {
             error("(highlight)Xray(default) was enabled while enabling (highlight)Wall Hack(default), disabling (highlight)Xray(default)...");
             Modules.get().get(Xray.class).toggle();
         }
 
         mc.worldRenderer.reload();
+        return false;
     }
 
     @Override

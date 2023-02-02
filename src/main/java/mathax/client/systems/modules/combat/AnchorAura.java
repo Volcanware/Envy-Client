@@ -283,13 +283,14 @@ public class AnchorAura extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         placeDelayLeft = 0;
         breakDelayLeft = 0;
         target = null;
         sentTrapMine = false;
         sentBurrowMine = false;
         sentAntiStuck = false;
+        return false;
     }
 
     @EventHandler

@@ -75,10 +75,11 @@ public class AutoReplenish extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         fillItems();
         tickDelayLeft = tickDelay.get();
         prevHadOpenScreen = mc.currentScreen != null;
+        return false;
     }
 
     @EventHandler

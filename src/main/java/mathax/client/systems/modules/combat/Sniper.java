@@ -100,8 +100,9 @@ public class Sniper extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         lastShootTime = Utils.getCurrentTimeMillis();
+        return false;
     }
 
     @EventHandler

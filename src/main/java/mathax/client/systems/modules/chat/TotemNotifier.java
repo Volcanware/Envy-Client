@@ -60,9 +60,10 @@ public class TotemNotifier extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         totemPopMap.clear();
         chatIdMap.clear();
+        return false;
     }
 
     @EventHandler

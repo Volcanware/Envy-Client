@@ -185,9 +185,10 @@ public class AntiAFK extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         prevYaw = mc.player.getYaw();
         timer = delay.get() * 20;
+        return false;
     }
 
     @Override

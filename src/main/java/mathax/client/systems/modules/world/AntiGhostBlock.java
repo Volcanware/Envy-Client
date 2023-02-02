@@ -56,8 +56,8 @@ public class AntiGhostBlock extends Module {
     private static final BlockPos.Mutable blockPos = new BlockPos.Mutable();
 
     @Override
-    public void onActivate() {
-        if (mc.getNetworkHandler() == null) return;
+    public boolean onActivate() {
+        if (mc.getNetworkHandler() == null) return false;
 
         BlockPos pos = mc.player.getBlockPos();
         for (int dz = -horizontalRange.get(); dz <= horizontalRange.get(); dz++) {
@@ -75,5 +75,6 @@ public class AntiGhostBlock extends Module {
         }
 
         toggle();
+        return false;
     }
 }

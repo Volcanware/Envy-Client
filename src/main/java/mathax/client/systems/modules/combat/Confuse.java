@@ -107,11 +107,12 @@ public class Confuse extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         delayWaited = 0;
         circleProgress = 0;
         addition = 0.0;
         target = null;
+        return false;
     }
 
     @EventHandler

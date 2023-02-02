@@ -61,8 +61,9 @@ public class FakePlayer extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         FakePlayerManager.clear();
+        return false;
     }
 
     @Override

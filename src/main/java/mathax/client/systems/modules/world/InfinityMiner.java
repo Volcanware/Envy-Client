@@ -95,12 +95,13 @@ public class InfinityMiner extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         prevMineScanDroppedItems = baritoneSettings.mineScanDroppedItems.value;
         baritoneSettings.mineScanDroppedItems.value = true;
 
         homePos.set(mc.player.getBlockPos());
         repairing = false;
+        return false;
     }
 
     @Override

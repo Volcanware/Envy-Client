@@ -45,8 +45,9 @@ public class StayHydrated extends Module {
     }
 
     @EventHandler
-    public void onActivate() {
+    public boolean onActivate() {
         ticks = 0;
+        return false;
     }
 
     @EventHandler

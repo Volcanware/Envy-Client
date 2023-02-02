@@ -48,15 +48,4 @@ public class Vanilla extends SpeedMode {
         (Modules.get().get(Speed.class)).forceToggle(false);
     }
 
-    @EventHandler
-    public void onTick() {
-        settings.Strict.get();
-        if (mc.player.hasStatusEffect(SPEED)) {
-            Modules.get().get(Speed.class).forceToggle(false);
-
-            if (mc.player.hasStatusEffect(StatusEffects.SLOWNESS)) {
-                Modules.get().get(Speed.class).forceToggle(false);
-            }
-        }
-    }
 }

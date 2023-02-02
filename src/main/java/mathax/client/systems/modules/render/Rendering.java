@@ -56,12 +56,13 @@ public class Rendering extends Module {
     );
 
     public Rendering() {
-        super(Categories.Render, Items.CREEPER_HEAD, "rendering", "Various render tweaks.");
+        super(Categories.Render, Items.CREEPER_HEAD, "Super Secret Settings", "Various render tweaks.");
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         mc.worldRenderer.reload();
+        return false;
     }
 
     @Override

@@ -32,9 +32,10 @@ public class ColorSigns extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         super.onActivate();
         checkWarning();
+        return false;
     }
 
     private void checkWarning() {

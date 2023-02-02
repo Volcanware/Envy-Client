@@ -37,11 +37,12 @@ public class ArmorNotifier extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         alertedHelmet = false;
         alertedChestplate = false;
         alertedLeggings = false;
         alertedBoots = false;
+        return false;
     }
 
     @EventHandler

@@ -137,8 +137,9 @@ public class StashFinder extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         load();
+        return false;
     }
 
     @EventHandler

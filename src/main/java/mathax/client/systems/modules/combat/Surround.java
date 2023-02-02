@@ -213,12 +213,13 @@ public class Surround extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         lastPos = (mc.player.isOnGround() ? PlayerUtils.roundBlockPos(mc.player.getPos()) : mc.player.getBlockPos());
         if (center.get()) PlayerUtils.centerPlayer();
 
         for (Scaffold.RenderBlock renderBlock : renderBlocks) renderBlockPool.free(renderBlock);
         renderBlocks.clear();
+        return false;
     }
 
     @Override

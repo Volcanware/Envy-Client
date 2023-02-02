@@ -87,7 +87,7 @@ public class Search extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         synchronized (chunks) {
             chunks.clear();
             groups.clear();
@@ -98,6 +98,7 @@ public class Search extends Module {
         }
 
         lastDimension = PlayerUtils.getDimension();
+        return false;
     }
 
     @Override

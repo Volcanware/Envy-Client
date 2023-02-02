@@ -145,12 +145,13 @@ public class Jesus extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         preBaritoneAssumeWalkOnWater = BaritoneAPI.getSettings().assumeWalkOnWater.value;
         preBaritoneAssumeWalkOnLava = BaritoneAPI.getSettings().assumeWalkOnLava.value;
 
         BaritoneAPI.getSettings().assumeWalkOnWater.value = waterMode.get() == Mode.Solid;
         BaritoneAPI.getSettings().assumeWalkOnLava.value = lavaMode.get() == Mode.Solid;
+        return false;
     }
 
     @Override

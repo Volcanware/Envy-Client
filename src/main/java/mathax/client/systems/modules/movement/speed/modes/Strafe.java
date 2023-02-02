@@ -107,13 +107,5 @@ public class Strafe extends SpeedMode {
     @Override
     public void onTick() {
         distance = Math.sqrt((mc.player.getX() - mc.player.prevX) * (mc.player.getX() - mc.player.prevX) + (mc.player.getZ() - mc.player.prevZ) * (mc.player.getZ() - mc.player.prevZ));
-        settings.Strict.get();
-        if (mc.player.hasStatusEffect(SPEED)) {
-            Modules.get().get(Speed.class).forceToggle(false);
-
-            if (mc.player.hasStatusEffect(StatusEffects.SLOWNESS)) {
-                Modules.get().get(Speed.class).forceToggle(false);
-            }
-        }
     }
 }

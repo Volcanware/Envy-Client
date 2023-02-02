@@ -55,8 +55,9 @@ public class Rotation extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         onTick(null);
+        return false;
     }
 
     @EventHandler

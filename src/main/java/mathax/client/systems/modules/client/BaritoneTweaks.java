@@ -57,8 +57,9 @@ public class BaritoneTweaks extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         paused = false;
+        return false;
     }
 
     @EventHandler

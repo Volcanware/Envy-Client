@@ -69,11 +69,12 @@ public class SelfTrapPlus extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         if (Modules.get().isActive(WallHack.class)) {
             error("(highlight)Self Trap(default) was enabled while enabling (highlight)Self Trap+(default), disabling (highlight)Self Trap(default)...");
             Modules.get().get(SelfTrap.class).toggle();
         }
+        return false;
     }
 
     @EventHandler

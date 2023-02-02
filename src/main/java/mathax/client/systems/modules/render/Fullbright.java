@@ -38,8 +38,9 @@ public class Fullbright extends Module {
     }
 
     @Override
-    public void onActivate() {
+    public boolean onActivate() {
         if (mode.get() == Mode.Luminance) mc.worldRenderer.reload();
+        return false;
     }
 
     @Override
