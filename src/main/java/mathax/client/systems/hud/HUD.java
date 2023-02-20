@@ -158,6 +158,8 @@ public class HUD extends System<HUD> {
         itemsArmor.add(new ObsidianHud(this));
         itemsArmor.add(new BedHud(this));
         itemsArmor.add(new ArmorHud(this));
+        itemsArmor.add(new AnchorHUD(this));
+        itemsArmor.add(new TNTHUD(this));
 
         // CROSSHAIR
         crosshair = new HudElementLayer(RENDERER, elements, AlignmentX.Center, AlignmentY.Center, 0, 0);
