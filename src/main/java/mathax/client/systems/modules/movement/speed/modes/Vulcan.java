@@ -6,10 +6,10 @@ import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.systems.modules.world.Timer;
 import mathax.client.utils.player.PlayerUtils;
 
-public class Matrix extends SpeedMode {
+public class Vulcan extends SpeedMode {
 
-    public Matrix() {
-        super(SpeedModes.Matrix);
+    public Vulcan() {
+        super(SpeedModes.Vulcan);
     }
     public void onTick() {
         if (mc.player.isSubmergedInWater()) return;

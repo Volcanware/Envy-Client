@@ -153,7 +153,7 @@ public class Speed extends Module {
             case VelocityHop -> currentMode = new VelocityHop();
             case Weird -> currentMode = new Weird();
             case LBL_SlowHop -> currentMode = new LBL_SlowHop();
-            case Matrix -> currentMode = new Matrix();
+            case Vulcan -> currentMode = new Vulcan();
         }
     }
 
