@@ -103,7 +103,8 @@ public class MatHax implements ClientModInitializer {
             "4c3d2322a3df30fcb371837ba257ea37",
 
             //Volcan
-            "0e986848824f4215b346018190cf923d"
+            "0e986848824f4215b346018190cf923d",
+            "6186d473ea704c36a3472e2b3c3ef5e6"
         );
     }
 
@@ -205,6 +206,16 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "Better than Grumm",
             Formatting.YELLOW + "Better than Minecon",
             Formatting.YELLOW + "L Bozo",
+            Formatting.YELLOW + "MEDIC!",
+            Formatting.YELLOW + "Femboy's On Top!",
+            Formatting.YELLOW + "https://thisfootdoesnotexist.com/",
+            Formatting.YELLOW + "https://thispersondoesnotexist.com/",
+            Formatting.YELLOW + "MUST....TELEPORT....BREAD....",
+            Formatting.YELLOW + "Better than lmaobox",
+            Formatting.YELLOW + "The Oldest Anarchy Server in minecraft",
+            Formatting.YELLOW + "Clown Down",
+            Formatting.YELLOW + "Hippity Hoppity Your Anarchy Server is now my property",
+            Formatting.YELLOW + "\"is this mathax?\"",
 
 
 

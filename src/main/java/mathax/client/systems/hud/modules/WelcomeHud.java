@@ -43,9 +43,9 @@ public class WelcomeHud extends TripleTextHudElement {
     protected String getLeft() {
         switch (message.get()) {
             case Using -> {
-                if (Modules.get().isActive(NameProtect.class)) return "You are using MatHax, ";
-                if (Utils.isDeveloper(mc.getSession().getUuid())) return "You are using MatHax, Developer ";
-                else return "You are using MatHax, ";
+                if (Modules.get().isActive(NameProtect.class)) return "You are using Envy Client, ";
+                if (Utils.isDeveloper(mc.getSession().getUuid())) return "You are using Envy Client, Developer ";
+                else return "You are using Envy Client, ";
             }
             case Time -> {
                 if (Modules.get().isActive(NameProtect.class)) return getTime() + ", ";
@@ -63,9 +63,9 @@ public class WelcomeHud extends TripleTextHudElement {
                 else return "You are a sussy baka, ";
             }
             default -> {
-                if (Modules.get().isActive(NameProtect.class)) return "Welcome to MatHax, ";
-                if (Utils.isDeveloper(mc.getSession().getUuid())) return "Welcome to MatHax, Developer ";
-                else return "Welcome to MatHax, ";
+                if (Modules.get().isActive(NameProtect.class)) return "Welcome to Envy Client, ";
+                if (Utils.isDeveloper(mc.getSession().getUuid())) return "Welcome to Envy Client, Developer ";
+                else return "Welcome to Envy Client, ";
             }
         }
     }

@@ -1,6 +1,5 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
-import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.AutoJump;
@@ -9,10 +8,6 @@ import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.systems.modules.world.Timer;
 import mathax.client.utils.player.PlayerUtils;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.util.math.Vec3d;
-
-import static net.minecraft.entity.effect.StatusEffects.SPEED;
 
 public class MineBerry extends SpeedMode {
     public MineBerry() {

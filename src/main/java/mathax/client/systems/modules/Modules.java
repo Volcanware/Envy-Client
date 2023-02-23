@@ -33,6 +33,7 @@ import mathax.client.systems.System;
 import mathax.client.systems.Systems;
 import mathax.client.systems.modules.client.swarm.Swarm;
 import mathax.client.systems.modules.movement.elytrafly.ElytraFly;
+//import mathax.client.systems.modules.misc.CrazyCape;
 import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.systems.modules.render.marker.Marker;
 import mathax.client.systems.modules.render.search.Search;
@@ -444,6 +445,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initMovement() {
+        add(new JetPack());
         add(new AirJump());
         add(new Anchor());
         add(new AntiAFK());
@@ -626,6 +628,7 @@ public class Modules extends System<Modules> {
         add(new Twerk());
         add(new VanillaSpoof());
         add(new AutoMolest());
+        //add(new CrazyCape());
     }
 
     private void initClient() {

@@ -41,6 +41,16 @@ public class Speed extends Module {
         .build()
     );
 
+    public final Setting<Double> SpeedTest2 = sgGeneral.add(new DoubleSetting.Builder()
+        .name("Speed")
+        .description("Speed Value")
+        .defaultValue(1)
+        .min(0)
+        .sliderRange(0, 12)
+        .visible(() -> speedMode.get() == SpeedModes.Vanilla)
+        .build()
+    );
+
     public final Setting<Double> VelocityHop = sgGeneral.add(new DoubleSetting.Builder()
         .name("VelocityHop-speed")
         .description("The speed in blocks per second.")
@@ -48,6 +58,16 @@ public class Speed extends Module {
         .min(0)
         .sliderRange(0, 20)
         .visible(() -> speedMode.get() == SpeedModes.VelocityHop)
+        .build()
+    );
+
+    public final Setting<Double> EnvyAnarchy = sgGeneral.add(new DoubleSetting.Builder()
+        .name("Speed")
+        .description("The speed in blocks per second.")
+        .defaultValue(1)
+        .min(0)
+        .sliderRange(0, 20)
+        .visible(() -> speedMode.get() == SpeedModes.EnvyAnarchy)
         .build()
     );
 
@@ -154,6 +174,9 @@ public class Speed extends Module {
             case Weird -> currentMode = new Weird();
             case LBL_SlowHop -> currentMode = new LBL_SlowHop();
             case Vulcan -> currentMode = new Vulcan();
+            case OnGround -> currentMode = new OnGround();
+            case LegitHop -> currentMode = new LegitHop();
+            case EnvyAnarchy -> currentMode = new EnvyAnarchy();
         }
     }
 

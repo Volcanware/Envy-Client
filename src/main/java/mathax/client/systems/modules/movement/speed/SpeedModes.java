@@ -11,7 +11,10 @@ public enum SpeedModes {
     VelocityHop("Yport"),
     Weird("Please Don't Crash me :("),
     LBL_SlowHop("SlowHop"),
-    Vulcan("Vulcan");
+    Vulcan("Vulcan"),
+    OnGround("RubberBand"),
+    LegitHop("LegitHop"),
+    EnvyAnarchy("EnvyAnarchy");
 
     private final String title;
 
