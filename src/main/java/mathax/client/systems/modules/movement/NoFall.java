@@ -59,7 +59,7 @@ public class NoFall extends Module {
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("How to cancel the fall damage.")
-        .defaultValue(Mode.Packet)
+        .defaultValue(Mode.Vanilla)
         .build()
     );
 
@@ -90,7 +90,7 @@ public class NoFall extends Module {
     private final Setting<Boolean> bounds = sgGeneral.add(new BoolSetting.Builder()
         .name("bounds")
         .description("Bounds for the player.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 

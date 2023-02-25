@@ -95,7 +95,7 @@ public class KillAura extends Module {
     private final Setting<Boolean> ignoreinvisible = sgGeneral.add(new BoolSetting.Builder()
         .name("Ignore Invisible")
         .description("Attacks even if the target is invisible.")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 

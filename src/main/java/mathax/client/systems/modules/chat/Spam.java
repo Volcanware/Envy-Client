@@ -28,8 +28,9 @@ public class Spam extends Module {
         .name("messages")
         .description("Messages to use for spam. Use %player% for a name of a random player.")
         .defaultValue(
-            "MatHax on top!",
-            "Matejko06 on top!"
+            "Envy on top!",
+            "Volcan on top!",
+            "https://discord.gg/fG5T78aQYP"
         )
         .build()
     );

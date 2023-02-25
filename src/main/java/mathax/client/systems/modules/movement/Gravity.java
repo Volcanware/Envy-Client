@@ -24,7 +24,7 @@ public class Gravity extends Module {
         .description("Gravity strength.")
         .defaultValue(0.0568000030517578)
         .min(0.0000001)
-        .sliderRange(0, 3)
+        .sliderRange(0, 1)
         .build()
     );
 

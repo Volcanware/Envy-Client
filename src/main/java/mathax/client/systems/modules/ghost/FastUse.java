@@ -43,7 +43,7 @@ public class FastUse extends Module {
         .description("Fast-use cooldown in ticks.")
         .defaultValue(0)
         .min(0)
-        .sliderMax(4)
+        .sliderMax(5)
         .build()
     );
 

@@ -30,7 +30,7 @@ public class Velocity extends Module {
         .name("knockback-horizontal")
         .description("How much horizontal knockback you will take.")
         .defaultValue(0)
-        .sliderRange(0, 1)
+        .sliderRange(0, 2)
         .visible(knockback::get)
         .build()
     );
@@ -39,7 +39,7 @@ public class Velocity extends Module {
         .name("knockback-vertical")
         .description("How much vertical knockback you will take.")
         .defaultValue(0)
-        .sliderRange(0, 1)
+        .sliderRange(0, 2)
         .visible(knockback::get)
         .build()
     );
@@ -55,7 +55,7 @@ public class Velocity extends Module {
         .name("explosions-horizontal")
         .description("How much velocity you will take from explosions horizontally.")
         .defaultValue(0)
-        .sliderRange(0, 1)
+        .sliderRange(0, 2)
         .visible(explosions::get)
         .build()
     );
@@ -64,7 +64,7 @@ public class Velocity extends Module {
         .name("explosions-vertical")
         .description("How much velocity you will take from explosions vertically.")
         .defaultValue(0)
-        .sliderRange(0, 1)
+        .sliderRange(0, 2)
         .visible(explosions::get)
         .build()
     );
@@ -80,7 +80,7 @@ public class Velocity extends Module {
         .name("liquids-horizontal")
         .description("How much velocity you will take from liquids horizontally.")
         .defaultValue(0)
-        .sliderRange(0, 1)
+        .sliderRange(0, 2)
         .visible(liquids::get)
         .build()
     );
@@ -89,7 +89,7 @@ public class Velocity extends Module {
         .name("liquids-vertical")
         .description("How much velocity you will take from liquids vertically.")
         .defaultValue(0)
-        .sliderRange(0, 1)
+        .sliderRange(0, 2)
         .visible(liquids::get)
         .build()
     );
@@ -105,7 +105,7 @@ public class Velocity extends Module {
         .name("entity-push-amount")
         .description("How much you will be pushed.")
         .defaultValue(0)
-        .sliderRange(0, 1)
+        .sliderRange(0, 2)
         .visible(entityPush::get)
         .build()
     );

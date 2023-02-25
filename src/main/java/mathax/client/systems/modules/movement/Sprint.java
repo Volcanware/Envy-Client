@@ -17,7 +17,7 @@ public class Sprint extends Module {
     private final Setting<Boolean> whenStationary = sgGeneral.add(new BoolSetting.Builder()
         .name("when-stationary")
         .description("Continues sprinting even if you do not move.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 

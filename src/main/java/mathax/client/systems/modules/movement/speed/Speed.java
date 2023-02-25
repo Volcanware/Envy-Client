@@ -36,7 +36,7 @@ public class Speed extends Module {
         .description("The speed in blocks per second.")
         .defaultValue(5.6)
         .min(0)
-        .sliderRange(0, 20)
+        .sliderRange(0, 35)
         .visible(() -> speedMode.get() == SpeedModes.Vanilla)
         .build()
     );
@@ -54,7 +54,7 @@ public class Speed extends Module {
     public final Setting<Double> VelocityHop = sgGeneral.add(new DoubleSetting.Builder()
         .name("VelocityHop-speed")
         .description("The speed in blocks per second.")
-        .defaultValue(1)
+        .defaultValue(6)
         .min(0)
         .sliderRange(0, 20)
         .visible(() -> speedMode.get() == SpeedModes.VelocityHop)
@@ -62,11 +62,11 @@ public class Speed extends Module {
     );
 
     public final Setting<Double> EnvyAnarchy = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Speed")
+        .name("Envy-Speed")
         .description("The speed in blocks per second.")
-        .defaultValue(1)
-        .min(0)
-        .sliderRange(0, 20)
+        .defaultValue(8)
+        .min(1)
+        .sliderRange(1, 12)
         .visible(() -> speedMode.get() == SpeedModes.EnvyAnarchy)
         .build()
     );
