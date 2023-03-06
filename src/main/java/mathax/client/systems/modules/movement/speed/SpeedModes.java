@@ -14,7 +14,9 @@ public enum SpeedModes {
     Vulcan("Vulcan"),
     OnGround("RubberBand"),
     LegitHop("LegitHop"),
-    EnvyAnarchy("EnvyAnarchy");
+    EnvyAnarchy("EnvyAnarchy"),
+    Test3("FastHop"),
+    Custom("Custom");
 
     private final String title;
 

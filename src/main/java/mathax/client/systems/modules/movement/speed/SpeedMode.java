@@ -21,7 +21,9 @@ public class SpeedMode {
         reset();
     }
 
-    public void onTick() {}
+    public boolean onTick() {
+        return false;
+    }
     public boolean onMove(PlayerMoveEvent event) throws InterruptedException {
         return false;
     }

@@ -6,7 +6,6 @@ import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
-
 public class Reach extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 

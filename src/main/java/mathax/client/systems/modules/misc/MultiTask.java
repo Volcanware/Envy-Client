@@ -9,7 +9,7 @@ import net.minecraft.item.Items;
 public class MultiTask extends Module {
 
     public MultiTask() {
-        super(Categories.Misc, Items.NETHERITE_PICKAXE, "multi-task", "Allows you to eat while mining a block.");
+        super(Categories.Player, Items.NETHERITE_PICKAXE, "multi-task", "Allows you to eat while mining a block.");
     }
 
     @EventHandler

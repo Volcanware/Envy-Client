@@ -3,17 +3,18 @@ package mathax.client.systems.modules.movement.speed.modes;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 
-public class LegitHop  extends SpeedMode {
-
-    public LegitHop() {
-        super(SpeedModes.LegitHop);
+public class SpeedTest3 extends SpeedMode {
+    public SpeedTest3() {
+        super(SpeedModes.Test3);
     }
 
     @Override
     public boolean onTick() {
-        if (mc.player.isOnGround()) {
+        if (mc.player.isOnGround() == false) {
+            mc.player.airStrafingSpeed = 0.1f;
+        }
+        if (mc.player.isOnGround() == true && mc.player.isSprinting() == true) {
             mc.player.jump();
-            mc.player.setSprinting(true);
         }
         return false;
     }

@@ -101,7 +101,8 @@ public class Strafe extends SpeedMode {
     }
 
     @Override
-    public void onTick() {
+    public boolean onTick() {
         distance = Math.sqrt((mc.player.getX() - mc.player.prevX) * (mc.player.getX() - mc.player.prevX) + (mc.player.getZ() - mc.player.prevZ) * (mc.player.getZ() - mc.player.prevZ));
+        return false;
     }
 }

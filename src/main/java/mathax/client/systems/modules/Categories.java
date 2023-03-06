@@ -13,6 +13,8 @@ public class Categories {
     public static final Category Chat = new Category("Chat", Items.BEACON, Color.fromRGBA(255, 255, 255, 255));
     public static final Category Misc = new Category("Misc", Items.NETHER_STAR, Color.fromRGBA(0, 50, 175, 255));
     public static final Category Ghost = new Category("Ghost", Items.GOLD_INGOT, Color.fromRGBA(255, 0, 0, 255));
+    public static final Category Fun = new Category("Fun", Items.TNT, Color.fromRGBA(255, 0, 0, 255));
+
     public static final Category Minigame = new Category("Minigame", Items.IRON_SWORD, Color.fromRGBA(255, 0, 0, 255));
     public static final Category Client = new Category("Client", Items.COMMAND_BLOCK, Color.fromRGBA(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b, 255));
 
@@ -31,6 +33,7 @@ public class Categories {
         Modules.registerCategory(Ghost);
         Modules.registerCategory(Minigame);
         Modules.registerCategory(Client);
+        Modules.registerCategory(Fun);
 
         REGISTERING = false;
     }

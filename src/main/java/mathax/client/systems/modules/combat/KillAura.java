@@ -10,6 +10,8 @@ import mathax.client.settings.*;
 import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.misc.SpinBot;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.entity.SortPriority;
 import mathax.client.utils.entity.Target;
@@ -40,6 +42,7 @@ public class KillAura extends Module {
     private final List<Entity> targets = new ArrayList<>();
 
     private int hitDelayTimer, switchTimer;
+    private short count = 0;
 
     private boolean wasPathing;
 
@@ -236,6 +239,13 @@ public class KillAura extends Module {
         .build()
     );
 
+    private final Setting<Boolean> offground = sgTargeting.add(new BoolSetting.Builder()
+        .name("offground")
+        .description("Whether or not to attack mobs that are on the ground.")
+        .defaultValue(false)
+        .build()
+    );
+
     // Delay
 
     private final Setting<Boolean> smartDelay = sgDelay.add(new BoolSetting.Builder()
@@ -281,6 +291,16 @@ public class KillAura extends Module {
         .sliderRange(0, 40)
         .build()
     );
+
+    private final Setting<Integer> speed = sgDelay.add(new IntSetting.Builder()
+        .name("Spin Speed")
+        .description("How fast you spin.")
+        .defaultValue(25)
+        .min(0)
+        .sliderRange(0, 100)
+        .build()
+    );
+
 
     public KillAura() {
         super(Categories.Combat, Items.DIAMOND_SWORD, "kill-aura", "Attacks specified entities around you.");
@@ -369,6 +389,13 @@ public class KillAura extends Module {
         if (!entities.get().getBoolean(entity.getType())) return false;
         if (noRightClick.get() && mc.options.useKey.isPressed()) return false;
         if (ignoreinvisible.get() && entity.isInvisible()) return false;
+        if (offground.get() && !entity.isOnGround()) return false;
+
+        if (rotation.get() == RotationMode.Spin) {
+            count = (short) (count + speed.get());
+            if (count > 180) count = (short) -180;
+            Rotations.rotate(count, 0.0);
+        }
         //List<ItemStack> armorItems = (List<ItemStack>) getTarget().getArmorItems();
         //if (AntiBot.get() && armorItems.contains(Items.DIAMOND_HELMET.getDefaultStack())) {
             //return false;
@@ -482,6 +509,7 @@ public class KillAura extends Module {
     public enum RotationMode {
         Always("Always"),
         On_Hit("On Hit"),
+        Spin("Spin"),
         None("None");
 
         private final String title;

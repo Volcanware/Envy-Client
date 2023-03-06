@@ -4,21 +4,21 @@ import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.systems.modules.Modules;
 import net.minecraft.item.Items;
 
 import java.util.Random;
 
-public class CrazyCape extends Module {
+public class BrokenPlayer extends Module {
 
     @EventHandler
     public void onTick(TickEvent.Post event) {
         Random random = new Random();
         int randomOffset = random.nextInt(5) - 1; // generates a random number between -1 and 1
-        mc.player.capeX = mc.player.prevCapeX + 0.7 + randomOffset;
-        mc.player.capeY = mc.player.prevCapeY + 0.5 + randomOffset;
-        mc.player.capeZ = mc.player.prevCapeZ + 0.7 + randomOffset;
+        mc.player.bodyYaw = mc.player.prevBodyYaw + 0.7f + randomOffset;
+        mc.player.headYaw = mc.player.prevHeadYaw + 0.5f + randomOffset;
     }
-    public CrazyCape() {
-        super(Categories.Fun, Items.PAPER, "Crazy Cape", "Breaks the Cape Physics");
+    public BrokenPlayer() {
+        super(Categories.Fun, Items.PAPER, "BrokenPlayer", "Makes the Player Act Oddly");
     }
 }

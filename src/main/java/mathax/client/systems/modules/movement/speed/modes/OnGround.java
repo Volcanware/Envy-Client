@@ -8,7 +8,7 @@ public class OnGround extends SpeedMode {
         super(SpeedModes.OnGround);
     }
 
-    public void onTick() {
+    public boolean onTick() {
         if (mc.player.isOnGround() == false) {
             mc.player.setVelocity(mc.player.getVelocity().x, -0.9, mc.player.getVelocity().z);
             mc.player.setPos(mc.player.getX(), mc.player.prevY, mc.player.getZ());
@@ -31,5 +31,6 @@ public class OnGround extends SpeedMode {
                 mc.player.setOnGround(true);
             }
         }
+        return false;
     }
 }

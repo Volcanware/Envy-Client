@@ -6,6 +6,6 @@ import net.minecraft.item.Items;
 
 public class NoBreakDelay extends Module {
     public NoBreakDelay() {
-        super(Categories.Player, Items.STONE, "no-break-delay", "Completely removes the delay between breaking blocks.");
+        super(Categories.Ghost, Items.STONE, "no-break-delay", "Completely removes the delay between breaking blocks.");
     }
 }

@@ -11,8 +11,8 @@ public class Vulcan extends SpeedMode {
     public Vulcan() {
         super(SpeedModes.Vulcan);
     }
-    public void onTick() {
-        if (mc.player.isSubmergedInWater()) return;
+    public boolean onTick() {
+        if (mc.player.isSubmergedInWater()) return false;
         if (PlayerUtils.isMoving())
         if (mc.player.isOnGround()) {
             mc.player.jump();
@@ -23,6 +23,7 @@ public class Vulcan extends SpeedMode {
         } else {
         Modules.get().get(Timer.class).setOverride(1);
         }
+        return false;
     }
 }
 

@@ -36,7 +36,7 @@ public class GuiThemes {
             }
         }
 
-        if (theme == null) select("MatHax");
+        if (theme == null) select("Envy");
     }
 
     public static void add(GuiTheme theme) {

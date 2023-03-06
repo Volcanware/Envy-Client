@@ -6,6 +6,6 @@ import net.minecraft.item.Items;
 
 public class AutoMolest extends Module {
     public AutoMolest() {
-        super(Categories.Misc, Items.COMPARATOR, "Auto Molest", "Does what you think it does");
+        super(Categories.Fun, Items.COMPARATOR, "Auto Molest", "Does what you think it does");
     }
 }

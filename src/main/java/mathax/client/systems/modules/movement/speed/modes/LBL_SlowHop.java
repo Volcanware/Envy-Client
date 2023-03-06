@@ -11,10 +11,11 @@ public class LBL_SlowHop extends SpeedMode {
     }
 
     @Override
-    public void onTick() {
-        if (mc.player.isSubmergedInWater()) return;
+    public boolean onTick() {
+        if (mc.player.isSubmergedInWater()) return false;
         if (PlayerUtils.isMoving()) {
             if (mc.player.isOnGround()) mc.player.jump(); else mc.player.airStrafingSpeed = 0.05f;
         }
+        return false;
     }
 }

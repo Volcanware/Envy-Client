@@ -93,6 +93,7 @@ public class Modules extends System<Modules> {
         initMisc();
         initClient();
         initGhost();
+        initFun();
     }
 
     @Override
@@ -380,7 +381,8 @@ public class Modules extends System<Modules> {
         add(new AutoWeb());
         add(new BedAura());
         add(new BowAimbot());
-        add(new BowSpam());
+        add(new FastBow());
+        //add(new BowSpam());
         add(new Burrow());
         add(new CEVBreaker());
         add(new Confuse());
@@ -445,6 +447,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initMovement() {
+        //add(new AspectOfTheEnd());
         add(new JetPack());
         add(new AirJump());
         add(new Anchor());
@@ -491,8 +494,16 @@ public class Modules extends System<Modules> {
         add(new TridentBoost());
         add(new Velocity());
         add(new FastFall());
+        //add(new HoleSneak());
         //add(new Ninja());
         //add(new DepthStriderSpoof());
+    }
+
+    private void initFun() {
+        add(new FakeExplosion());
+        add(new Twerk());
+        add(new CrazyCape());
+        add(new BrokenPlayer());
     }
 
     private void initRender() {
@@ -600,6 +611,7 @@ public class Modules extends System<Modules> {
         add(new VisualRange());
         add(new Welcomer());
         add(new AutoCope());
+        add(new AutoL());
     }
 
     private void initMisc() {
@@ -626,10 +638,11 @@ public class Modules extends System<Modules> {
         add(new SoundLocator());
         add(new SpinBot());
         add(new TPSSync());
-        add(new Twerk());
         add(new VanillaSpoof());
         add(new AutoMolest());
-        //add(new CrazyCape());
+        add(new AutoGG());
+        add(new Disabler());
+
     }
 
     private void initClient() {

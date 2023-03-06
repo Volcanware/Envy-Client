@@ -36,7 +36,7 @@ public class Twerk extends Module {
     );
 
     public Twerk() {
-        super(Categories.Misc, Items.DRIED_KELP, "twerk", "Makes you twerk like Miley Cyrus.");
+        super(Categories.Fun, Items.DRIED_KELP, "twerk", "Makes you twerk like Miley Cyrus.");
     }
 
     @Override

@@ -32,7 +32,7 @@ public class SpinBot extends Module {
     );
 
     public SpinBot() {
-        super(Categories.Misc, Items.GUNPOWDER, "spin-bot", "Makes you spin like in CS:GO.");
+        super(Categories.Fun, Items.GUNPOWDER, "spin-bot", "Makes you spin like in CS:GO.");
     }
 
     @EventHandler

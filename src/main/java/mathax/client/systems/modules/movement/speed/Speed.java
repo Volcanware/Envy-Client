@@ -31,6 +31,62 @@ public class Speed extends Module {
         .build()
     );
 
+    public final Setting<Boolean> autojump = sgGeneral.add(new BoolSetting.Builder()
+        .name("AutoJump")
+        .description("Jumps when your on the ground")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting<Boolean> autoSprint = sgGeneral.add(new BoolSetting.Builder()
+        .name("AutoSprint")
+        .description("Keeps Sprint On")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting<Double> airstrafe= sgGeneral.add(new DoubleSetting.Builder()
+        .name("AirStrafe")
+        .description("The speed in the air")
+        .defaultValue(1.1)
+        .min(0)
+        .sliderRange(0, 1.5)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting<Double> groundStrafe= sgGeneral.add(new DoubleSetting.Builder()
+        .name("GroundStrafe")
+        .description("The speed on the ground")
+        .defaultValue(1.1)
+        .min(0)
+        .sliderRange(0, 1.5)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting<Double> onfire= sgGeneral.add(new DoubleSetting.Builder()
+        .name("OnFire Speed")
+        .description("The speed while on fire")
+        .defaultValue(1.1)
+        .min(0)
+        .sliderRange(0, 2)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting<Double> floating= sgGeneral.add(new DoubleSetting.Builder()
+        .name("Float")
+        .description("how much to float")
+        .defaultValue(1)
+        .min(1)
+        .sliderRange(1, 10)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
     public final Setting<Double> vanillaSpeed = sgGeneral.add(new DoubleSetting.Builder()
         .name("vanilla-speed")
         .description("The speed in blocks per second.")
@@ -89,11 +145,48 @@ public class Speed extends Module {
         .build()
     );
 
+    public final Setting<Double> bowspeed = sgGeneral.add(new DoubleSetting.Builder()
+        .name("bow-speed")
+        .description("The speed when holding a bow")
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .defaultValue(1)
+        .min(0)
+        .sliderRange(0, 2)
+        .build()
+    );
+
+    public final Setting<Double> swordspeed = sgGeneral.add(new DoubleSetting.Builder()
+        .name("sword-speed")
+        .description("The speed when holding a sword")
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .defaultValue(1)
+        .min(0)
+        .sliderRange(0, 2)
+        .build()
+    );
+
+
+    public final Setting<Boolean> groundspoof = sgGeneral.add(new BoolSetting.Builder()
+        .name("groundspoof")
+        .description("Spoofs your ground status.")
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .defaultValue(false)
+        .build()
+    );
+
+    public final Setting<Boolean> rubberband = sgGeneral.add(new BoolSetting.Builder()
+        .name("rubberband")
+        .description("Disables Speed When you Rubberband / Teleport")
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .defaultValue(false)
+        .build()
+    );
+
     public final Setting<Double> timer = sgGeneral.add(new DoubleSetting.Builder()
         .name("timer")
         .description("Timer override.")
         .defaultValue(1)
-        .visible(() -> speedMode.get() == SpeedModes.Vanilla || speedMode.get() == SpeedModes.Strafe)
+        .visible(() -> speedMode.get() == SpeedModes.Vanilla || speedMode.get() == SpeedModes.Strafe || speedMode.get() == SpeedModes.Custom)
         .build()
     );
 
@@ -177,6 +270,8 @@ public class Speed extends Module {
             case OnGround -> currentMode = new OnGround();
             case LegitHop -> currentMode = new LegitHop();
             case EnvyAnarchy -> currentMode = new EnvyAnarchy();
+            case Test3 -> currentMode = new SpeedTest3();
+            case Custom -> currentMode = new Custom();
         }
     }
 

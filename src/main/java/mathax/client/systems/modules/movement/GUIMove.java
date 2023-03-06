@@ -81,7 +81,7 @@ public class GUIMove extends Module {
     );
 
     public GUIMove() {
-        super(Categories.Movement, Items.DIAMOND_BOOTS, "gui-move", "Allows you to perform various actions while in GUIs.");
+        super(Categories.Ghost, Items.DIAMOND_BOOTS, "gui-move", "Allows you to perform various actions while in GUIs.");
     }
 
     @Override
