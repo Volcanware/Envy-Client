@@ -30,6 +30,8 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
@@ -246,6 +248,13 @@ public class KillAura extends Module {
         .build()
     );
 
+    private final Setting<Boolean> Antibot = sgTargeting.add(new BoolSetting.Builder()
+        .name("Anti-Bot")
+        .description("Does Not Attack if They have not existed for over 10 ticks")
+        .defaultValue(false)
+        .build()
+    );
+
     // Delay
 
     private final Setting<Boolean> smartDelay = sgDelay.add(new BoolSetting.Builder()
@@ -389,6 +398,7 @@ public class KillAura extends Module {
         if (!entities.get().getBoolean(entity.getType())) return false;
         if (noRightClick.get() && mc.options.useKey.isPressed()) return false;
         if (ignoreinvisible.get() && entity.isInvisible()) return false;
+        if (Antibot.get() && entity instanceof PlayerEntity && entity.age < 10) return false;
         if (offground.get() && !entity.isOnGround()) return false;
 
         if (rotation.get() == RotationMode.Spin) {

@@ -16,7 +16,7 @@ public class AutoGG extends Module {
     private TitleS2CPacket packet;
 
     public AutoGG() {
-        super(Categories.Chat, Items.PAPER, "AutoGG", "Automatically says GG in chat when you win a game.");
+        super(Categories.Experimental, Items.PAPER, "AutoGG", "Automatically says GG in chat when you win a game.");
     }
 
     @EventHandler

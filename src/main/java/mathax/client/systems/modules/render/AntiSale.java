@@ -34,6 +34,6 @@ public class AntiSale extends Module {
         }
     }
     public AntiSale() {
-        super(Categories.Misc, Items.BARRIER, "Anti-Sale", "AD blocker For BlockGame");
+        super(Categories.Experimental, Items.BARRIER, "Anti-Sale", "AD blocker For BlockGame");
     }
 }

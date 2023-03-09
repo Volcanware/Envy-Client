@@ -13,6 +13,7 @@ import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.chat.*;
 import mathax.client.systems.modules.client.*;
 import mathax.client.systems.modules.combat.*;
+import mathax.client.systems.modules.experimental.Disabler;
 import mathax.client.systems.modules.misc.*;
 import mathax.client.systems.modules.movement.*;
 import mathax.client.systems.modules.player.*;
@@ -94,6 +95,7 @@ public class Modules extends System<Modules> {
         initClient();
         initGhost();
         initFun();
+        initExperimental();
     }
 
     @Override
@@ -442,7 +444,7 @@ public class Modules extends System<Modules> {
         add(new Reach());
         add(new AimAssist());
         add(new FastUse());
-        //add(new WTap());
+        add(new WTap());
         //add(new AutoBlock());
     }
 
@@ -641,7 +643,6 @@ public class Modules extends System<Modules> {
         add(new VanillaSpoof());
         add(new AutoMolest());
         add(new AutoGG());
-        add(new Disabler());
 
     }
 
@@ -653,6 +654,10 @@ public class Modules extends System<Modules> {
         add(new FakePlayer());
         add(new MiddleClickFriend());
         add(new Swarm());
+    }
+
+    private void initExperimental() {
+        add(new Disabler());
     }
 
     public static class ModuleRegistry extends Registry<Module> {
