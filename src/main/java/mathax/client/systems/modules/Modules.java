@@ -497,7 +497,7 @@ public class Modules extends System<Modules> {
         add(new Velocity());
         add(new FastFall());
         //add(new HoleSneak());
-        //add(new Ninja());
+        add(new Ninja());
         //add(new DepthStriderSpoof());
     }
 
