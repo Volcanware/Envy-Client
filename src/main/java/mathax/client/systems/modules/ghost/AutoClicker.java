@@ -2,14 +2,13 @@ package mathax.client.systems.modules.ghost;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
-import mathax.client.settings.EnumSetting;
-import mathax.client.settings.IntSetting;
-import mathax.client.settings.Setting;
-import mathax.client.settings.SettingGroup;
+import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
 import net.minecraft.item.Items;
+
+import java.util.Random;
 
 public class AutoClicker extends Module {
     private int timer;
@@ -28,19 +27,41 @@ public class AutoClicker extends Module {
     private final Setting<Button> button = sgGeneral.add(new EnumSetting.Builder<Button>()
         .name("button")
         .description("Which button to press.")
-        .defaultValue(Button.Right)
+        .defaultValue(Button.Attack)
         .build()
     );
-
-    private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
-        .name("click-delay")
-        .description("The amount of delay between clicks in ticks.")
+    private final Setting<Double> jitterAttack = sgGeneral.add(new DoubleSetting.Builder()
+        .name("Jitter Attack")
+        .description("Gives you grandma hands when attacking.")
+        .defaultValue(1)
+        .min(0)
+        .sliderRange(0, 10)
+        .build()
+    );
+    private final Setting<Double> jitterUse = sgGeneral.add(new DoubleSetting.Builder()
+        .name("Jitter Use")
+        .description("Gives you grandma hands when using an item.")
+        .defaultValue(1)
+        .min(0)
+        .sliderRange(0, 10)
+        .build()
+    );
+    private final Setting<Integer> minDelay = sgGeneral.add(new IntSetting.Builder()
+        .name("Minimum Click Delay")
+        .description("The shortest delay between clicks.")
         .defaultValue(2)
         .min(0)
         .sliderRange(0, 60)
         .build()
     );
-
+    private final Setting<Integer> maxDelay = sgGeneral.add(new IntSetting.Builder()
+        .name("Maximum Click Delay")
+        .description("The longest delay between clicks.")
+        .defaultValue(4)
+        .min(0)
+        .sliderRange(0, 60)
+        .build()
+    );
     public AutoClicker() {
         super(Categories.Ghost, Items.STONE_BUTTON, "auto-clicker", "Automatically clicks.");
     }
@@ -58,22 +79,41 @@ public class AutoClicker extends Module {
         mc.options.attackKey.setPressed(false);
         mc.options.useKey.setPressed(false);
     }
-
     @EventHandler
     private void onTick(TickEvent.Post event) {
         switch (mode.get()) {
             case Hold:
                 switch (button.get()) {
-                    case Left -> mc.options.attackKey.setPressed(true);
-                    case Right -> mc.options.useKey.setPressed(true);
+                    case Attack -> {
+                        mc.options.attackKey.setPressed(true);
+                        if (jitterAttack.get() > 0) applyJitter();
+                    }
+                    case Use -> {
+                        mc.options.useKey.setPressed(true);
+                        if (jitterUse.get() > 0) applyJitter();
+                    }
                 }
                 break;
             case Press:
                 timer++;
-                if (!(delay.get() > timer)) {
+                int min = minDelay.get();
+                int max = maxDelay.get();
+                if (min > max) {
+                    min = 0;
+                    max = 0;
+                }
+                Random random = new Random();
+                int randomDelay = random.nextInt(max - min + 1) + min;
+                if (!(randomDelay > timer)) {
                     switch (button.get()) {
-                        case Left -> Utils.leftClick();
-                        case Right -> Utils.rightClick();
+                        case Attack -> {
+                            Utils.leftClick();
+                            applyJitter();
+                        }
+                        case Use -> {
+                            Utils.rightClick();
+                            applyJitter();
+                        }
                     }
                     timer = 0;
                 }
@@ -81,9 +121,41 @@ public class AutoClicker extends Module {
         }
     }
 
+    private void applyJitter() {
+        if (jitterUse.get() > 0 || jitterAttack.get() > 0) {
+            Random random = new Random();
+            switch (button.get()) {
+                case Use:
+                    double yawJitterU = jitterUse.get() * (random.nextDouble() * 2 - 1);
+                    double pitchJitterU = jitterUse.get() * (random.nextDouble() * 2 - 1);
+                    double newYawU = mc.player.getYaw() + yawJitterU;
+                    double newPitchU = mc.player.getPitch() + pitchJitterU;
+                    if (newYawU > 180) newYawU -= 360;
+                    if (newYawU < -180) newYawU += 360;
+                    if (newPitchU > 90) newPitchU = 90;
+                    if (newPitchU < -90) newPitchU = -90;
+                    mc.player.setYaw((float)newYawU);
+                    mc.player.setPitch((float)newPitchU);
+
+                case Attack:
+                    double yawJitterA = jitterAttack.get() * (random.nextDouble() * 2 - 1);
+                    double pitchJitterA = jitterAttack.get() * (random.nextDouble() * 2 - 1);
+                    double newYawA = mc.player.getYaw() + yawJitterA;
+                    double newPitchA = mc.player.getPitch() + pitchJitterA;
+                    if (newYawA > 180) newYawA -= 360;
+                    if (newYawA < -180) newYawA += 360;
+                    if (newPitchA > 90) newPitchA = 90;
+                    if (newPitchA < -90) newPitchA = -90;
+                    mc.player.setYaw((float)newYawA);
+                    mc.player.setPitch((float)newPitchA);
+            }
+
+
+        }
+    }
     public enum Mode {
         Hold("Hold"),
-        Press("Press");
+        Press("Auto Click");
 
         private final String title;
 
@@ -98,8 +170,8 @@ public class AutoClicker extends Module {
     }
 
     public enum Button {
-        Right("Right"),
-        Left("Left");
+        Use("Use"),
+        Attack("Attack");
 
         private final String title;
 
