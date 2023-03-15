@@ -1,5 +1,7 @@
 package mathax.client;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.eventbus.EventBus;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.eventbus.EventPriority;
@@ -7,16 +9,14 @@ import mathax.client.eventbus.IEventBus;
 import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.mathax.KeyEvent;
 import mathax.client.events.mathax.MouseButtonEvent;
+import mathax.client.events.render.Render2DEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.gui.GuiThemes;
 import mathax.client.gui.WidgetScreen;
 import mathax.client.gui.renderer.GuiRenderer;
 import mathax.client.gui.tabs.Tabs;
 import mathax.client.music.Music;
-import mathax.client.renderer.GL;
-import mathax.client.renderer.PostProcessRenderer;
-import mathax.client.renderer.Renderer2D;
-import mathax.client.renderer.Shaders;
+import mathax.client.renderer.*;
 import mathax.client.renderer.text.Fonts;
 import mathax.client.systems.Systems;
 import mathax.client.systems.config.Config;
@@ -50,9 +50,18 @@ import mathax.client.systems.modules.render.Zoom;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.SplashOverlay;
+import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3f;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +70,9 @@ import java.io.File;
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
+import static net.minecraft.client.gui.DrawableHelper.drawTexture;
 
 /*/------------------------------------------------------------------/*/
 /*/ THIS CLIENT IS A FORK OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/
@@ -218,7 +230,6 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "\"is this mathax?\"",
 
 
-
             // PERSONALIZED
             Formatting.YELLOW + "You're cool, " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername(),
             Formatting.YELLOW + "Owning with " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername(),
@@ -355,10 +366,12 @@ public class MatHax implements ClientModInitializer {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        if (mc.currentScreen == null && mc.getOverlay() == null && KeyBinds.OPEN_COMMANDS.wasPressed()) mc.setScreen(new ChatScreen(Config.get().prefix.get()));
+        if (mc.currentScreen == null && mc.getOverlay() == null && KeyBinds.OPEN_COMMANDS.wasPressed())
+            mc.setScreen(new ChatScreen(Config.get().prefix.get()));
 
         if (Music.player == null) return;
-        if (Music.player.getVolume() != Config.get().musicVolume.get()) Music.player.setVolume(Config.get().musicVolume.get());
+        if (Music.player.getVolume() != Config.get().musicVolume.get())
+            Music.player.setVolume(Config.get().musicVolume.get());
     }
 
     @EventHandler

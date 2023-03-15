@@ -8,7 +8,7 @@ import mathax.client.systems.modules.Module;
 import mathax.client.utils.network.PacketUtils;
 import net.minecraft.item.Items;
 
-public final class WTap<PreMotionEvent> extends Module {
+public final class WTap<PreMotionEvent, AttackEvent> extends Module {
 
     public static int ticks;
 
@@ -16,11 +16,19 @@ public final class WTap<PreMotionEvent> extends Module {
         super(Categories.Ghost, Items.DIAMOND_SWORD, "WTap", "Makes people take more knockback");
     }
 
-    @EventHandler
-    public void onTick() {
-        if (mc.player.handSwinging) {
-            mc.player.setSprinting(true);
+    public void onAttackEvent(AttackEvent event) {
+        ticks = 0;
+    }
+
+    public void onPreMotion(PreMotionEvent event) {
+        ++ticks;
+        if (mc.player.isSprinting()) {
+                if (ticks == 2) {
+                    mc.player.setSprinting(false);
+                }
+                if (ticks == 3) {
+                    mc.player.setSprinting(true);
+                }
+            }
         }
     }
-}
-

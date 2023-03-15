@@ -383,7 +383,7 @@ public class Modules extends System<Modules> {
         add(new AutoWeb());
         add(new BedAura());
         add(new BowAimbot());
-        add(new FastBow());
+        //add(new FastBow());
         //add(new BowSpam());
         add(new Burrow());
         add(new CEVBreaker());
@@ -394,6 +394,7 @@ public class Modules extends System<Modules> {
         add(new HoleFiller());
         add(new InstaAutoCity());
         add(new KillAura());
+        add(new KillAuraPlus());
         add(new Offhand());
         add(new PistonAura());
         add(new Quiver());
@@ -445,11 +446,13 @@ public class Modules extends System<Modules> {
         add(new AimAssist());
         add(new FastUse());
         add(new WTap());
+        add(new AntiBotPlus());
         //add(new AutoBlock());
     }
 
     private void initMovement() {
         //add(new AspectOfTheEnd());
+        add(new EntityFly());
         add(new JetPack());
         add(new AirJump());
         add(new Anchor());
