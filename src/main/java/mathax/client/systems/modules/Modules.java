@@ -431,7 +431,7 @@ public class Modules extends System<Modules> {
         add(new NoInteract());
         add(new NoMiningTrace());
         add(new NoRotate());
-        add(new PacketMine());
+        //add(new PacketMine());
         add(new Portals());
         add(new PotionSaver());
         add(new PotionSpoof());

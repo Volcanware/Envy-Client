@@ -35,13 +35,6 @@ public class BreakIndicators extends Module {
         .build()
     );
 
-    public final Setting<Boolean> packetMine = sgGeneral.add(new BoolSetting.Builder()
-        .name("packet-mine")
-        .description("Whether or not to render blocks being packet mined.")
-        .defaultValue(true)
-        .build()
-    );
-
     private final Setting<SettingColor> startColor = sgGeneral.add(new ColorSetting.Builder()
         .name("start-color")
         .description("The color for the non-broken block.")
@@ -64,7 +57,9 @@ public class BreakIndicators extends Module {
     private void onRender3D(Render3DEvent event) {
         renderNormal(event);
 
+/*
         if (packetMine.get() && !Modules.get().get(PacketMine.class).blocks.isEmpty()) renderPacket(event, Modules.get().get(PacketMine.class).blocks);
+*/
     }
 
     private void renderNormal(Render3DEvent event) {

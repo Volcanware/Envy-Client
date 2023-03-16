@@ -186,13 +186,13 @@ public class PacketMine extends Module {
         }
     }
 
-    @EventHandler
+/*    @EventHandler
     private void onRender3D(Render3DEvent event) {
         for (MyBlock block : blocks) {
             if (Modules.get().get(BreakIndicators.class).isActive() && Modules.get().get(BreakIndicators.class).packetMine.get() && block.mining) continue;
             else block.render(event);
         }
-    }
+    }*/
 
     private double getBreakDelta(int slot, BlockState state) {
         float hardness = state.getHardness(null, null);
