@@ -8,6 +8,7 @@ import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
+import mathax.client.utils.player.MoveHelper;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class Flight extends Module {
     private double lastY = Double.MAX_VALUE;
+    double startHeight;
 
     private long lastModifiedTime = 0;
 
@@ -63,6 +65,24 @@ public class Flight extends Module {
         .description("Makes you automatically fly when enabling Flight.")
         .defaultValue(false)
         .visible(() -> mode.get() == Mode.Creative)
+        .build()
+    );
+
+    private final Setting<Boolean> Clipping = sgGeneral.add(new BoolSetting.Builder()
+        .name("clipping")
+        .description("If Should Clip")
+        .defaultValue(false)
+        .visible(() -> mode.get() == Mode.Vulcan)
+        .build()
+    );
+
+    private final Setting<Double> ClipAmount = sgGeneral.add(new DoubleSetting.Builder()
+        .name("clip-amount")
+        .description("Clip Amount")
+        .defaultValue(10)
+        .min(1)
+        .sliderRange(1, 100)
+        .visible(() -> Clipping.get() && mode.get() == Mode.Vulcan)
         .build()
     );
 
@@ -112,6 +132,7 @@ public class Flight extends Module {
     public boolean onActivate() {
         delayLeft = delay.get();
         offLeft = offTime.get();
+        startHeight = mc.player.getY();
 
         if (mode.get() == Mode.Abilities && !mc.player.isSpectator()) {
             mc.player.getAbilities().flying = true;
@@ -196,6 +217,26 @@ public class Flight extends Module {
     }
 
     @EventHandler
+    private void onTick() {
+
+        double clipHeight = startHeight - ClipAmount.get();
+        //System.out.println("The Player Height is " + mc.player.getY() + "\n And the clip height is " + mc.player.getY());
+
+        if (mc.player.fallDistance > 2) {
+            mc.player.setOnGround(true);
+            mc.player.fallDistance = 0f;
+        }
+        if (mc.player.age % 3 == 0) {
+            MoveHelper.motionYPlus(0.026);
+        } else {
+            MoveHelper.motionY(-0.0991);
+        }
+        if (Clipping.get() && clipHeight == mc.player.getY()) {
+            mc.player.updatePosition(mc.player.getX(), mc.player.getY() + ClipAmount.get(), mc.player.getZ());
+        }
+    }
+
+    @EventHandler
     private void onSendPacket(PacketEvent.Send event) {
         if (!(event.packet instanceof PlayerMoveC2SPacket) || antiKickMode.get() != AntiKickMode.Packet || mode.get() == Mode.Creative) return;
 
@@ -213,7 +254,8 @@ public class Flight extends Module {
     public enum Mode {
         Abilities("Abilities"),
         Velocity("Velocity"),
-        Creative("Creative");
+        Creative("Creative"),
+        Vulcan("Vulcan");
 
         private final String title;
 
