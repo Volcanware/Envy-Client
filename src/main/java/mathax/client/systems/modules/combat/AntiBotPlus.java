@@ -111,6 +111,13 @@ public class AntiBotPlus extends Module {
 		.build()
 	);
 
+    private final Setting<Boolean> invalidname = sgFilters.add(new BoolSetting.Builder()
+        .name("Invalid-Name")
+        .description("check invalid name.")
+        .defaultValue(false)
+        .build()
+    );
+
 
 	private ArrayList<Integer> swings = new ArrayList<Integer>();
 	private ArrayList<Integer> grounds = new ArrayList<Integer>();
@@ -147,6 +154,10 @@ public class AntiBotPlus extends Module {
 
 		if (swing.get() && !swings.contains(entity.getId()))
 			return true;
+        if (invalidname.get() && entity.getName().getString().contains("-") || entity.getName().getString().contains("_") || entity.getName().getString().contains(" ") || entity.getName().getString().contains("$"))
+            return true;
+        if (invalidname.get() && entity.getName().getString().length() > 16)
+            return true;
 
 
 		if (tab.get()) {

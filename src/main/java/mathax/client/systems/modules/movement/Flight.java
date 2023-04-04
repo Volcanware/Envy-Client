@@ -68,7 +68,7 @@ public class Flight extends Module {
         .build()
     );
 
-    private final Setting<Boolean> Clipping = sgGeneral.add(new BoolSetting.Builder()
+/*    private final Setting<Boolean> Clipping = sgGeneral.add(new BoolSetting.Builder()
         .name("clipping")
         .description("If Should Clip")
         .defaultValue(false)
@@ -84,7 +84,7 @@ public class Flight extends Module {
         .sliderRange(1, 100)
         .visible(() -> Clipping.get() && mode.get() == Mode.Vulcan)
         .build()
-    );
+    );*/
 
     private final Setting<Boolean> tickEnabler = sgGeneral.add(new BoolSetting.Builder()
         .name("update-every-tick")
@@ -216,8 +216,8 @@ public class Flight extends Module {
         }
     }
 
-    @EventHandler
-    private void onTick() {
+/*    @EventHandler
+    private void onUpdate() {
 
         double clipHeight = startHeight - ClipAmount.get();
         //System.out.println("The Player Height is " + mc.player.getY() + "\n And the clip height is " + mc.player.getY());
@@ -234,7 +234,7 @@ public class Flight extends Module {
         if (Clipping.get() && clipHeight == mc.player.getY()) {
             mc.player.updatePosition(mc.player.getX(), mc.player.getY() + ClipAmount.get(), mc.player.getZ());
         }
-    }
+    }*/
 
     @EventHandler
     private void onSendPacket(PacketEvent.Send event) {
@@ -254,8 +254,8 @@ public class Flight extends Module {
     public enum Mode {
         Abilities("Abilities"),
         Velocity("Velocity"),
-        Creative("Creative"),
-        Vulcan("Vulcan");
+        Creative("Creative");
+        //Vulcan("Vulcan");
 
         private final String title;
 

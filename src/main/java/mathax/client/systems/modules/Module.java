@@ -24,6 +24,7 @@ import java.util.Objects;
 public abstract class Module implements ISerializable<Module>, Comparable<Module> {
     protected static MinecraftClient mc = null;
 
+
     public final Category category;
     public final Item icon;
     public final String name, title, description;
@@ -42,6 +43,12 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     public boolean autoSubscribe = true;
 
     public final KeyBind keybind = KeyBind.none();
+    private String displayName;
+
+    public void setDisplayName(String name) {
+        this.displayName = name;
+    }
+
     public boolean toggleOnBindRelease = false;
 
     public Module(Category category, Item icon, String name, String description) {

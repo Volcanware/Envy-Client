@@ -1,27 +1,47 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
-import mathax.client.systems.modules.Modules;
+import mathax.client.eventbus.EventHandler;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
-import mathax.client.systems.modules.world.Timer;
+import mathax.client.utils.algorithms.extra.MovementUtils;
 import mathax.client.utils.player.PlayerUtils;
 
 public class Vulcan extends SpeedMode {
+    int ticks;
 
     public Vulcan() {
         super(SpeedModes.Vulcan);
     }
-    public boolean onTick() {
-        if (mc.player.isSubmergedInWater()) return false;
-        if (PlayerUtils.isMoving())
-        if (mc.player.isOnGround()) {
-            mc.player.jump();
-            mc.player.airStrafingSpeed = 0.02098f;
-            Modules.get().get(Timer.class).setOverride(1.055f);
-        } else {
 
-        } else {
-        Modules.get().get(Timer.class).setOverride(1);
+    @EventHandler
+    public void onEnable() {
+        ticks = 0;
+    }
+
+    @Override
+    public boolean onTick() {
+
+        mc.options.jumpKey.setPressed(false);
+        if (mc.player.isOnGround() && PlayerUtils.isMoving()) {
+            ticks = 0;
+            mc.player.jump();
+
+            MovementUtils.Vulcanstrafe();
+            if (MovementUtils.getSpeed() < 0.5f) {
+                MovementUtils.VulcanMoveStrafe(0.484f);
+            }
+        }
+
+        if (!mc.player.isOnGround()) {
+            ticks++;
+        }
+
+        if (ticks == 4) {
+            mc.player.setVelocity(mc.player.getVelocity().getX(), mc.player.getVelocity().getY() - 0.17, mc.player.getVelocity().getZ());
+        }
+
+        if (ticks == 1) {
+            MovementUtils.strafe(0.33f);
         }
         return false;
     }
