@@ -5,8 +5,7 @@
   "version": "1.0.0",
   "description": "Envy Client is an advanced Minecraft utility client for Fabric that is a continuation of MatHax.",
   "authors": [
-    "Volcan",
-    "NobreHD"
+    "Volcan"
   ],
   "icon": "assets/mathax/textures/icons/envy.png",
   "license": "GPL-3.0",

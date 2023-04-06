@@ -105,15 +105,6 @@ public class MatHax implements ClientModInitializer {
 
     public static List<String> getDeveloperUUIDs() {
         return Arrays.asList(
-
-            // MATEJKO06
-            "3e24ef27e66d45d2bf4b2c7ade68ff47",
-            "7c73f84473c33a7d9978004ba0a6436e",
-
-            //NobreHD
-            "2905e61c51794d0d967c255a16287056",
-            "4c3d2322a3df30fcb371837ba257ea37",
-
             //Volcan
             "0e986848824f4215b346018190cf923d",
             "6186d473ea704c36a3472e2b3c3ef5e6"

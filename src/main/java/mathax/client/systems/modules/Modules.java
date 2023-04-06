@@ -14,6 +14,8 @@ import mathax.client.systems.modules.chat.*;
 import mathax.client.systems.modules.client.*;
 import mathax.client.systems.modules.combat.*;
 import mathax.client.systems.modules.experimental.Disabler;
+import mathax.client.systems.modules.experimental.NewVelocity;
+import mathax.client.systems.modules.experimental.ResetVL;
 import mathax.client.systems.modules.misc.*;
 import mathax.client.systems.modules.movement.*;
 import mathax.client.systems.modules.player.*;
@@ -383,6 +385,7 @@ public class Modules extends System<Modules> {
         add(new AutoWeapon());
         add(new AutoWeb());
         add(new BedAura());
+        add(new KillAuraBetter());
         add(new BowAimbot());
         //add(new FastBow());
         //add(new BowSpam());
@@ -662,6 +665,8 @@ public class Modules extends System<Modules> {
 
     private void initExperimental() {
         add(new Disabler());
+        add(new NewVelocity());
+        add(new ResetVL());
     }
 
     public static class ModuleRegistry extends Registry<Module> {
