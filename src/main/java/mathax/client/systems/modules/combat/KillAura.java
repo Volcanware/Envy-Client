@@ -75,23 +75,6 @@ public class KillAura extends Module {
         .build()
     );
 
-    private final Setting<Boolean> onJump = sgGeneral.add(new BoolSetting.Builder()
-        .name("on-jump")
-        .description("Attack on jump.")
-        .defaultValue(true)
-        .build()
-    );
-
-    private final Setting<Double> fallRange = sgGeneral.add(new DoubleSetting.Builder()
-        .name("fall-range")
-        .description("Fall range.")
-        .defaultValue(0.4)
-        .range(0.1, 1)
-        .sliderRange(0.1, 1)
-        .visible(onJump::get)
-        .build()
-    );
-
     private final Setting<Boolean> onlyWhenLook = sgGeneral.add(new BoolSetting.Builder()
         .name("only-when-look")
         .description("Only attacks when you are looking at the entity.")
@@ -416,7 +399,6 @@ public class KillAura extends Module {
     }
 
     private boolean entityCheck(Entity entity) {
-        if (onJump.get() && !(mc.player.fallDistance > fallRange.get())) return true;
         if (entity.equals(mc.player) || entity.equals(mc.cameraEntity)) return false;
         if ((entity instanceof LivingEntity && ((LivingEntity) entity).isDead()) || !entity.isAlive()) return false;
         if (PlayerUtils.distanceTo(entity) > targetRange.get()) return false;
