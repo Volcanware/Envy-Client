@@ -318,6 +318,27 @@ public class KillAura extends Module {
     );
 
 
+    private final Setting<Boolean> autoBlock = sgGeneral.add(new BoolSetting.Builder()
+        .name("AutoBlock")
+        .description("1.8 module on 1.9+ wow")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<BlockMode> blockMode = sgGeneral.add(new EnumSetting.Builder<BlockMode>()
+        .name("Rotation mode")
+        .description(".")
+        .defaultValue(BlockMode.Constant)
+        .visible(autoBlock::get)
+        .build()
+    );
+
+    public enum BlockMode{
+        Constant,
+        NotOnHit,
+    }
+
+
     public KillAura() {
         super(Categories.Combat, Items.DIAMOND_SWORD, "Envy-kill-aura", "Attacks specified entities around you.");
     }
@@ -347,6 +368,14 @@ public class KillAura extends Module {
 
             return;
         }
+        if (autoBlock.get()){
+            if (mc.player.getOffHandStack().getItem().equals(Items.SHIELD)){
+                mc.options.useKey.setPressed(true);
+            }
+        }
+
+        if (blockMode.get().equals(BlockMode.NotOnHit))
+            mc.options.useKey.setPressed(false);
 
         if (pauseOnCombat.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing() && !wasPathing) {
             BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("pause");

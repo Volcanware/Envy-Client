@@ -8,8 +8,7 @@ import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import net.minecraft.item.Items;
 
-import static mathax.client.systems.modules.movement.FastFall.Mode.Matrix;
-import static mathax.client.systems.modules.movement.FastFall.Mode.Vanilla;
+import static mathax.client.systems.modules.movement.FastFall.Mode.*;
 
 
 public class FastFall extends Module {
@@ -21,7 +20,7 @@ public class FastFall extends Module {
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
-        .description("How to cancel the fall damage.")
+        .description("How to Handle Falling")
         .defaultValue(Mode.Vanilla)
         .build()
     );
@@ -57,6 +56,11 @@ public class FastFall extends Module {
                 mc.player.setVelocity(0, -0.54, 0);
             }
         }
+        if (mode.get() == CPVP) {
+            if (mc.player.fallDistance > 0) {
+                mc.player.setVelocity(0, -50, 0);
+            }
+        }
         if (mc.player.getHealth() < LowHealthDisable.get()) {
             toggle();
         }
@@ -67,7 +71,8 @@ public class FastFall extends Module {
 
     public enum Mode {
         Vanilla("Vanilla"),
-        Matrix("Matrix");
+        Matrix("Matrix"),
+        CPVP("CPVP");
 
         private final String title;
 

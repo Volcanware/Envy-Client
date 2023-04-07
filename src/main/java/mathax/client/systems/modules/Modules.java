@@ -368,6 +368,7 @@ public class Modules extends System<Modules> {
     private void initCombat() {
         add(new AnchorAura());
         add(new AntiAnvil());
+        add(new AntiCrystalPhase());
         add(new ArrowDodge());
         //add(new InfiniteReach());
         add(new Auto32K());
@@ -502,7 +503,6 @@ public class Modules extends System<Modules> {
         add(new TridentBoost());
         add(new Velocity());
         add(new FastFall());
-        add(new HoleSnap());
         //add(new HoleSneak());
         add(new Ninja());
         //add(new DepthStriderSpoof());
