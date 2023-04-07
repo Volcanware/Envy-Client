@@ -45,6 +45,9 @@ public class Custom extends SpeedMode {
         if (mc.player.getMainHandStack().getItem() instanceof SwordItem) {
             mc.player.setVelocity(mc.player.getVelocity().x * settings.swordspeed.get(), mc.player.getVelocity().y, mc.player.getVelocity().z * settings.swordspeed.get());
         }
+        if (mc.player.getHealth() < settings.lowhealthdisable.get()) {
+            (Modules.get().get(Speed.class)).forceToggle(false);
+        }
         return false;
     }
     @Override

@@ -39,6 +39,16 @@ public class Speed extends Module {
         .build()
     );
 
+    public final Setting<Double> lowhealthdisable = sgGeneral.add(new DoubleSetting.Builder()
+        .name("LowHealthDisable")
+        .description("Disables the module when your health is below this value.")
+        .defaultValue(4)
+        .min(0.5)
+        .sliderMax(20)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
     public final Setting<Boolean> autoSprint = sgGeneral.add(new BoolSetting.Builder()
         .name("AutoSprint")
         .description("Keeps Sprint On")
@@ -251,6 +261,11 @@ public class Speed extends Module {
         if (!inLiquids.get() && (mc.player.isTouchingWater() || mc.player.isInLava())) return;
 
         currentMode.onTick();
+    }
+
+    @EventHandler
+    private void onPreTick2(TickEvent.Pre event) {
+        currentMode.onTickEventPre(event);
     }
 
     @EventHandler

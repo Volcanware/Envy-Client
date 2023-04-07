@@ -62,7 +62,7 @@ public class CrystalAura extends Module {
     private final Vec3d playerEyePos = new Vec3d(0, 0, 0);
     private final Vec3d vec3dRayTraceEnd = new Vec3d(0, 0, 0);
     private final Vec3d vec3d = new Vec3d(0, 0, 0);
-    private final Vec3 vec3 = new Vec3();
+    private final Vec3 vec3 = new Vec3(0, 0, 0);
 
     private final BlockPos.Mutable placingCrystalBlockPos = new BlockPos.Mutable();
     private final BlockPos.Mutable breakRenderPos = new BlockPos.Mutable();

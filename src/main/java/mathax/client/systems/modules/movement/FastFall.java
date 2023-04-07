@@ -2,9 +2,7 @@ package mathax.client.systems.modules.movement;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
-import mathax.client.settings.EnumSetting;
-import mathax.client.settings.Setting;
-import mathax.client.settings.SettingGroup;
+import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
@@ -28,6 +26,23 @@ public class FastFall extends Module {
         .build()
     );
 
+    private final Setting<Double> LowHealthDisable = sgGeneral.add(new DoubleSetting.Builder()
+        .name("LowHealthDisable")
+        .description("Disables the module when your health is below this value.")
+        .defaultValue(4)
+        .min(0.5)
+        .sliderMax(20)
+        .build()
+    );
+
+    private final Setting<Boolean> Sprint = sgGeneral.add(new BoolSetting.Builder()
+        .name("Sprint")
+        .description("keeps sprint on | only works in vanilla mode")
+        .defaultValue(false)
+        .visible(() -> mode.get() == Vanilla)
+        .build()
+    );
+
 
     @EventHandler
     public void onTick(TickEvent.Post event) {
@@ -41,6 +56,12 @@ public class FastFall extends Module {
             if (mc.player.fallDistance > 0.8) {
                 mc.player.setVelocity(0, -0.54, 0);
             }
+        }
+        if (mc.player.getHealth() < LowHealthDisable.get()) {
+            toggle();
+        }
+        if (Sprint.get() && mode.get() == Vanilla) {
+            mc.player.setSprinting(true);
         }
     }
 

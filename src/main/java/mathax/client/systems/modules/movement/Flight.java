@@ -124,6 +124,15 @@ public class Flight extends Module {
         .build()
     );
 
+    private final Setting<Double> LowHealthDisable = sgGeneral.add(new DoubleSetting.Builder()
+        .name("LowHealthDisable")
+        .description("Disables the module when your health is below this value.")
+        .defaultValue(4)
+        .min(0.5)
+        .sliderMax(20)
+        .build()
+    );
+
     public Flight() {
         super(Categories.Movement, Items.COMMAND_BLOCK, "flight", "Allows you to fly. No Fall is recommended with this module.");
     }
@@ -248,6 +257,13 @@ public class Flight extends Module {
                 ((PlayerMoveC2SPacketAccessor) packet).setY(lastY - 0.03130D);
                 lastModifiedTime = currentTime;
             } else lastY = currentY;
+        }
+    }
+
+    @EventHandler
+    public void onTick() {
+        if (mc.player.getHealth() < LowHealthDisable.get()) {
+            toggle();
         }
     }
 

@@ -1,6 +1,7 @@
 package mathax.client.systems.modules.movement.speed;
 
 import mathax.client.events.entity.player.PlayerMoveEvent;
+import mathax.client.events.world.TickEvent;
 import mathax.client.systems.modules.Modules;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -63,4 +64,6 @@ public class SpeedMode {
     public String getHudString() {
         return type.name();
     }
+
+    public void onTickEventPre(TickEvent.Pre event) {}
 }

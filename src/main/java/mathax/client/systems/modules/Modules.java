@@ -394,6 +394,7 @@ public class Modules extends System<Modules> {
         add(new Confuse());
         add(new Criticals());
         add(new CrystalAura());
+        //add(new BananaBomber());
         add(new Hitboxes());
         add(new HoleFiller());
         add(new InstaAutoCity());

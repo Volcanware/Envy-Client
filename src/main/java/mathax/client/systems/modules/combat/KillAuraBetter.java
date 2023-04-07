@@ -241,6 +241,14 @@ public class KillAuraBetter extends Module {
         .build()
     );
 
+    private final Setting<Boolean> offground = sgTargeting.add(new BoolSetting.Builder()
+        .name("offground")
+        .description("Whether or not to attack mobs that are on the ground.")
+        .defaultValue(false)
+        .build()
+    );
+
+
     private final Setting<Double> fov = sgTargeting.add(new DoubleSetting.Builder()
         .name("Fov")
         .description("The fov the entity can be to attack it.")
@@ -438,6 +446,7 @@ public class KillAuraBetter extends Module {
         if (PlayerUtils.distanceTo(entity) > range.get()) return false;
         if (!entities.get().getBoolean(entity.getType())) return false;
         if (!nametagged.get() && entity.hasCustomName()) return false;
+        if (offground.get() && !entity.isOnGround()) return false;
         if (!PlayerUtils.canSeeEntity(entity) && PlayerUtils.distanceTo(entity) > wallsRange.get()) return false;
         if (entity instanceof PlayerEntity) {
             if (((PlayerEntity) entity).isCreative()) return false;

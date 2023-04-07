@@ -75,6 +75,23 @@ public class KillAura extends Module {
         .build()
     );
 
+    private final Setting<Boolean> onJump = sgGeneral.add(new BoolSetting.Builder()
+        .name("on-jump")
+        .description("Attack on jump.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> fallRange = sgGeneral.add(new DoubleSetting.Builder()
+        .name("fall-range")
+        .description("Fall range.")
+        .defaultValue(0.4)
+        .range(0.1, 1)
+        .sliderRange(0.1, 1)
+        .visible(onJump::get)
+        .build()
+    );
+
     private final Setting<Boolean> onlyWhenLook = sgGeneral.add(new BoolSetting.Builder()
         .name("only-when-look")
         .description("Only attacks when you are looking at the entity.")
@@ -194,6 +211,13 @@ public class KillAura extends Module {
         .defaultValue(3.5)
         .min(0)
         .sliderRange(0, 6)
+        .build()
+    );
+
+    private final Setting<Boolean> AirStrict = sgTargeting.add(new BoolSetting.Builder()
+        .name("Air-Strict")
+        .description("Only attacks if your on the ground. Helps with some weird Anticheat Setups")
+        .defaultValue(false)
         .build()
     );
 
@@ -392,6 +416,7 @@ public class KillAura extends Module {
     }
 
     private boolean entityCheck(Entity entity) {
+        if (onJump.get() && !(mc.player.fallDistance > fallRange.get())) return true;
         if (entity.equals(mc.player) || entity.equals(mc.cameraEntity)) return false;
         if ((entity instanceof LivingEntity && ((LivingEntity) entity).isDead()) || !entity.isAlive()) return false;
         if (PlayerUtils.distanceTo(entity) > targetRange.get()) return false;
@@ -400,6 +425,7 @@ public class KillAura extends Module {
         if (ignoreinvisible.get() && entity.isInvisible()) return false;
         if (Antibot.get() && entity instanceof PlayerEntity && entity.age < 10) return false;
         if (offground.get() && !entity.isOnGround()) return false;
+        if (AirStrict.get() && !mc.player.isOnGround()) return false;
 
         if (rotation.get() == RotationMode.Spin) {
             count = (short) (count + speed.get());
