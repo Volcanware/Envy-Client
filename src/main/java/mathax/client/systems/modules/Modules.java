@@ -385,6 +385,8 @@ public class Modules extends System<Modules> {
         add(new AutoWeb());
         add(new BedAura());
         add(new KillAuraBetter());
+        add(new KillAuraButBad2());
+        add(new KillAuraButBad());
         add(new BowAimbot());
         //add(new FastBow());
         //add(new BowSpam());
