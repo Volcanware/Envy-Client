@@ -422,6 +422,8 @@ public class Modules extends System<Modules> {
         add(new AntiSpawnpoint());
         add(new AutoBedCraft());
         add(new AutoCraft());
+        add(new FastEat());
+//        add(new FastBow());
         add(new AutoEat());
         add(new AutoFish());
         add(new AutoGap());
@@ -453,7 +455,7 @@ public class Modules extends System<Modules> {
         add(new FastUse());
         add(new WTap());
         add(new AntiBotPlus());
-        //add(new AutoBlock());
+        add(new AutoBlock());
     }
 
     private void initMovement() {
