@@ -80,7 +80,7 @@ public class PlayerUtils {
         return player.forwardSpeed != 0 || player.sidewaysSpeed != 0;
     }
 
-    public static double[] directionSpeed(float speed) {
+    public static double[] directionSpeed(double speed) {
         float forward = mc.player.input.movementForward;
         float side = mc.player.input.movementSideways;
         float yaw = mc.player.prevYaw + (mc.player.getYaw() - mc.player.prevYaw);
