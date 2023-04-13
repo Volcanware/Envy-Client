@@ -107,7 +107,10 @@ public class MatHax implements ClientModInitializer {
         return Arrays.asList(
             //Volcan
             "0e986848824f4215b346018190cf923d",
-            "6186d473ea704c36a3472e2b3c3ef5e6"
+            "6186d473ea704c36a3472e2b3c3ef5e6",
+            //HardlineMouse16
+            "6904b1a0a8a246fab09fd66f10a8136e",
+            "8a89cdaa3cc049e0bae40cfc88e23e0c"
         );
     }
 

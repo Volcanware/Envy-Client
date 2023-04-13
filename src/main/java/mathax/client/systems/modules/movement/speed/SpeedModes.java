@@ -17,7 +17,10 @@ public enum SpeedModes {
     LegitHop("LegitHop"),
     EnvyAnarchy("EnvyAnarchy"),
     Test3("FastHop"),
+    dumbspeed("dumbspeed"),
     Custom("Custom");
+
+
 
     private final String title;
 

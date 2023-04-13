@@ -223,6 +223,14 @@ public class Speed extends Module {
         .build()
     );
 
+    public final Setting<Double> dumbspeed = sgGeneral.add(new DoubleSetting.Builder()
+        .name("dumb-speed")
+        .description("dumbspeed")
+        .defaultValue(1)
+        .visible(() -> speedMode.get() == SpeedModes.dumbspeed)
+        .build()
+    );
+
     public Speed() {
         super(Categories.Movement, Items.DIAMOND_BOOTS, "speed", "Modifies your movement speed when moving.");
 
@@ -287,6 +295,7 @@ public class Speed extends Module {
             case EnvyAnarchy -> currentMode = new EnvyAnarchy();
             case Test3 -> currentMode = new SpeedTest3();
             case TimerHop -> currentMode = new TimerHop();
+            case dumbspeed -> currentMode = new dumbspeed();
             case Custom -> currentMode = new Custom();
         }
     }
