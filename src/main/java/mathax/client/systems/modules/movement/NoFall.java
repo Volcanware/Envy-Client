@@ -18,7 +18,11 @@ import mathax.client.utils.player.PlayerUtils;
 import mathax.client.utils.player.Rotations;
 import mathax.client.utils.world.BlockUtils;
 import mathax.client.utils.world.Dimension;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FarmlandBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
@@ -28,9 +32,12 @@ import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.RaycastContext;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Random;
 import java.util.function.Predicate;
 
@@ -73,8 +80,8 @@ public class NoFall extends Module {
     private final Setting<Double> fallDistance = sgGeneral.add(new DoubleSetting.Builder()
         .name("fall-distance")
         .description("After what fall distance to trigger this module.")
-        .defaultValue(5)
-        .range(3, 6)
+        .defaultValue(3)
+        .range(0, 6)
         .build()
     );
 
@@ -90,6 +97,13 @@ public class NoFall extends Module {
     private final Setting<Boolean> bounds = sgGeneral.add(new BoolSetting.Builder()
         .name("bounds")
         .description("Bounds for the player.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Boolean> antitrample = sgGeneral.add(new BoolSetting.Builder()
+        .name("anti-trample")
+        .description("Prevents you from trampling crops.")
         .defaultValue(false)
         .build()
     );
@@ -240,6 +254,26 @@ public class NoFall extends Module {
         if (random.nextBoolean()) return randomValue;
         return -randomValue;
     }
+
+
+
+
+    @EventHandler
+    public void onTick(TickEvent.Post event) {
+
+        Block farmland = mc.world.getBlockState(mc.player.getBlockPos().down()).getBlock();
+
+        if (farmland == Blocks.FARMLAND && antitrample.get()) {
+            mc.player.setPos(mc.player.getX(), mc.player.getY() + 0.2, mc.player.getZ());
+            mc.player.setVelocity(mc.player.getVelocity().x, 0, mc.player.getVelocity().z);
+            mc.player.fallDistance = 0f;
+            mc.player.setOnGround(false);
+            if (mc.player.getVelocity().y < 0.3) {
+                mc.player.setVelocity(mc.player.getVelocity().x, 0.5, mc.player.getVelocity().z);
+            }
+        }
+    }
+
 
     public enum Mode {
         Vanilla("Vanilla"),

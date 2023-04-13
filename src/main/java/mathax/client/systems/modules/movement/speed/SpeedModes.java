@@ -9,6 +9,7 @@ public enum SpeedModes {
     Strafe("BunnyHop"),
     MineBerry("Mineberry"),
     VelocityHop("Yport"),
+    TimerHop("TimerHop"),
     Weird("Please Don't Crash me :("),
     LBL_SlowHop("SlowHop"),
     Vulcan("Vulcan"),

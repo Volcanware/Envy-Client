@@ -520,6 +520,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initRender() {
+        //add(new BetterVisuals());
         add(new BetterTooltips());
         add(new BlockSelection());
         add(new BossStack());

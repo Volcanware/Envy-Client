@@ -286,6 +286,7 @@ public class Speed extends Module {
             case LegitHop -> currentMode = new LegitHop();
             case EnvyAnarchy -> currentMode = new EnvyAnarchy();
             case Test3 -> currentMode = new SpeedTest3();
+            case TimerHop -> currentMode = new TimerHop();
             case Custom -> currentMode = new Custom();
         }
     }

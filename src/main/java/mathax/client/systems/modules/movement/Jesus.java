@@ -13,6 +13,8 @@ import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.entity.EntityUtils;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.effect.StatusEffects;
@@ -189,6 +191,18 @@ public class Jesus extends Module {
         else if (tickTimer == 1) ((IVec3d) mc.player.getVelocity()).setY(0);
 
         tickTimer++;
+
+        Block water = mc.world.getBlockState(mc.player.getBlockPos().down()).getBlock();
+
+        if (water == Blocks.WATER && waterMode.get() == Mode.Hydrophobe || water == Blocks.LAVA && lavaMode.get() == Mode.Hydrophobe) {
+            mc.player.setPos(mc.player.getX(), mc.player.getY() + 0.2, mc.player.getZ());
+            mc.player.setVelocity(mc.player.getVelocity().x, 0, mc.player.getVelocity().z);
+            mc.player.fallDistance = 0f;
+            mc.player.setOnGround(false);
+            if (mc.player.getVelocity().y < 0.3) {
+                mc.player.setVelocity(mc.player.getVelocity().x, 0.5, mc.player.getVelocity().z);
+            }
+        }
     }
 
     @EventHandler
@@ -286,7 +300,8 @@ public class Jesus extends Module {
     public enum Mode {
         Solid("Solid"),
         Bob("Bob"),
-        Ignore("Ignore");
+        Ignore("Ignore"),
+        Hydrophobe("Hydrophobe");
 
         private final String title;
 
