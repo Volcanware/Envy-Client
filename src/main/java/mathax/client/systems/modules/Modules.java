@@ -465,6 +465,7 @@ public class Modules extends System<Modules> {
         add(new AirJump());
         add(new Anchor());
         add(new AntiAFK());
+        add(new AntiJebus());
         add(new AntiLevitation());
         add(new AntiVoid());
         add(new AutoJump());
