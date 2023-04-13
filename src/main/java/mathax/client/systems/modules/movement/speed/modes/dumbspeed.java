@@ -4,8 +4,6 @@ import mathax.client.eventbus.EventHandler;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.utils.player.PlayerUtils;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 
 public class dumbspeed extends SpeedMode {
 
@@ -37,12 +35,7 @@ public class dumbspeed extends SpeedMode {
         if (xlim > 1 && zlim > 1) {
             mc.player.setVelocity(1, mc.player.getVelocity().y, 1);
         }
-        Block jebusv2down = mc.world.getBlockState(mc.player.getBlockPos().down()).getBlock();
-        Block jebusv2up = mc.world.getBlockState(mc.player.getBlockPos().up()).getBlock();
 
-        if (jebusv2down == Blocks.WATER) {
-            mc.player.setVelocity(mc.player.getVelocity().x, -1, mc.player.getVelocity().z);
-        }
         return false;
     }
 

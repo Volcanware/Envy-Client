@@ -224,8 +224,8 @@ public class Speed extends Module {
     );
 
     public final Setting<Double> dumbspeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("dumb-speed")
-        .description("dumbspeed")
+        .name("dumbspeed")
+        .description("Speed, of which is dumb.")
         .defaultValue(1)
         .visible(() -> speedMode.get() == SpeedModes.dumbspeed)
         .build()

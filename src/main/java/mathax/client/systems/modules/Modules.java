@@ -370,7 +370,6 @@ public class Modules extends System<Modules> {
         add(new AntiAnvil());
         add(new AntiCrystalPhase());
         add(new ArrowDodge());
-        //add(new InfiniteReach());
         add(new Auto32K());
         add(new AutoAnvil());
         add(new AutoArmor());
@@ -383,23 +382,25 @@ public class Modules extends System<Modules> {
         add(new AutoTrap());
         add(new AutoWeapon());
         add(new AutoWeb());
+        //add(new BananaBomber());
         add(new BedAura());
-        add(new KillAuraBetter());
-        add(new KillAuraButBad2());
-        add(new KillAuraButBad());
+        //add(new Block());
         add(new BowAimbot());
-        //add(new FastBow());
         //add(new BowSpam());
         add(new Burrow());
         add(new CEVBreaker());
         add(new Confuse());
         add(new Criticals());
         add(new CrystalAura());
-        //add(new BananaBomber());
+        //add(new FastBow());
         add(new Hitboxes());
         add(new HoleFiller());
+        //add(new InfiniteReach());
         add(new InstaAutoCity());
         add(new KillAura());
+        add(new KillAuraBetter());
+        add(new KillAuraButBad());
+        add(new KillAuraButBad2());
         add(new KillAuraPlus());
         add(new Offhand());
         add(new PistonAura());
@@ -409,13 +410,12 @@ public class Modules extends System<Modules> {
         add(new SelfTrap());
         add(new SelfTrapPlus());
         add(new SelfWeb());
+        add(new ShieldBypass());
         add(new Sniper());
         add(new Surround());
         add(new SurroundBreak());
-        add(new ShieldBypass());
         add(new TNTAura());
         add(new TriggerBot());
-        //add(new Block());
     }
 
     private void initPlayer() {
@@ -423,8 +423,6 @@ public class Modules extends System<Modules> {
         add(new AntiSpawnpoint());
         add(new AutoBedCraft());
         add(new AutoCraft());
-        add(new FastEat());
-//        add(new FastBow());
         add(new AutoEat());
         add(new AutoFish());
         add(new AutoGap());
@@ -433,8 +431,9 @@ public class Modules extends System<Modules> {
         add(new AutoTool());
         add(new ChestSwap());
         add(new EXPThrower());
-        add(new GhostHand());
+        add(new FastEat());
         add(new Ghost());
+        add(new GhostHand());
         add(new LiquidInteract());
         add(new NoBreakDelay());
         add(new NoInteract());
@@ -450,25 +449,23 @@ public class Modules extends System<Modules> {
     }
 
     private void initGhost() {
-        add(new AutoClicker());
-        add(new Reach());
         add(new AimAssist());
-        add(new FastUse());
-        add(new WTap());
         add(new AntiBotPlus());
         add(new AutoBlock());
+        add(new AutoClicker());
+        add(new FastUse());
+        add(new Reach());
+        add(new WTap());
     }
 
     private void initMovement() {
-        //add(new AspectOfTheEnd());
-        add(new EntityFly());
-        add(new JetPack());
         add(new AirJump());
         add(new Anchor());
         add(new AntiAFK());
         add(new AntiJebus());
         add(new AntiLevitation());
         add(new AntiVoid());
+        //add(new AspectOfTheEnd());
         add(new AutoJump());
         add(new AutoMLG());
         add(new AutoWalk());
@@ -477,25 +474,31 @@ public class Modules extends System<Modules> {
         add(new BoatPhase());
         add(new ChorusExploit());
         add(new ClickTP());
+        //add(new DepthStriderSpoof());
         add(new ElytraBoost());
         add(new ElytraFly());
         add(new EntityControl());
+        add(new EntityFly());
         add(new EntitySpeed());
         add(new FastClimb());
+        add(new FastFall());
         add(new Flight());
         add(new Glide());
         add(new Gravity());
         add(new GUIMove());
         add(new HighJump());
+        //add(new HoleSneak());
         add(new Jesus());
+        add(new JetPack());
         add(new LongJump());
         add(new Moses());
+        add(new Ninja());
         add(new NoFall());
         add(new NoSlow());
         add(new PacketFly());
         add(new Parkour());
-        add(new Prone());
         add(new Phase());
+        add(new Prone());
         add(new ReverseStep());
         add(new SafeWalk());
         add(new SafeWalk());
@@ -508,22 +511,20 @@ public class Modules extends System<Modules> {
         add(new Step());
         add(new TridentBoost());
         add(new Velocity());
-        add(new FastFall());
-        //add(new HoleSneak());
-        add(new Ninja());
-        //add(new DepthStriderSpoof());
     }
 
     private void initFun() {
+        add(new BrokenPlayer());
+        add(new CrazyCape());
         add(new FakeExplosion());
         add(new Twerk());
-        add(new CrazyCape());
-        add(new BrokenPlayer());
     }
 
     private void initRender() {
-        //add(new BetterVisuals());
+        add(new AntiSale());
+        add(new Background());
         add(new BetterTooltips());
+        //add(new BetterVisuals());
         add(new BlockSelection());
         add(new BossStack());
         add(new Breadcrumbs());
@@ -532,7 +533,6 @@ public class Modules extends System<Modules> {
         add(new Chams());
         add(new CityESP());
         add(new Confetti());
-        add(new AntiSale());
         //add(new CustomCrosshair());
         add(new EntityOwner());
         add(new ESP());
@@ -558,10 +558,10 @@ public class Modules extends System<Modules> {
         add(new PopChams());
         add(new Rendering());
         add(new RideStats());
+        add(new Search());
         add(new SkeletonESP());
         add(new SmallFire());
         //add(new SmoothChunks());
-        add(new Search());
         add(new StorageESP());
         add(new TimeChanger());
         add(new Tracers());
@@ -574,7 +574,6 @@ public class Modules extends System<Modules> {
         add(new WaypointsModule());
         add(new Xray());
         add(new Zoom());
-        add(new Background());
     }
 
     private void initWorld() {
@@ -596,29 +595,31 @@ public class Modules extends System<Modules> {
         add(new EChestFarmer());
         add(new EndermanLook());
         add(new Flamethrower());
+        //add(new Fucker());
         add(new HighwayBuilder());
         add(new InfinityMiner());
         add(new InstaMine());
         add(new LiquidFiller());
         add(new MountBypass());
         add(new Nuker());
-        add(new StashFinder());
         add(new SpawnProofer());
+        add(new StashFinder());
         add(new Timer());
         add(new VeinMiner());
-        //add(new Fucker());
     }
 
     private void initChat() {
         add(new Announcer());
         add(new ArmorNotifier());
+        add(new AutoCope());
         add(new AutoEZ());
+        add(new AutoL());
         add(new AutoLogin());
         add(new BetterChat());
         add(new BurrowNotifier());
+        //add(new ChatBot());
         add(new ChatEncryption());
         add(new GroupChat());
-        //add(new ChatBot());
         add(new MessageAura());
         add(new Roast());
         add(new Spam());
@@ -626,13 +627,13 @@ public class Modules extends System<Modules> {
         add(new TotemNotifier());
         add(new VisualRange());
         add(new Welcomer());
-        add(new AutoCope());
-        add(new AutoL());
     }
 
     private void initMisc() {
         add(new AntiDesync());
         add(new AntiPacketKick());
+        add(new AutoGG());
+        add(new AutoMolest());
         add(new AutoMountBypassDupe());
         add(new AutoReconnect());
         add(new AutoRespawn());
@@ -655,8 +656,6 @@ public class Modules extends System<Modules> {
         add(new SpinBot());
         add(new TPSSync());
         add(new VanillaSpoof());
-        add(new AutoMolest());
-        add(new AutoGG());
 
     }
 
