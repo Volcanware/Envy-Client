@@ -223,7 +223,7 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "Hippity Hoppity Your Anarchy Server is now my property",
             Formatting.YELLOW + "\"is this mathax?\"",
             Formatting.YELLOW + "please help me",
-            Formatting.YELLOW + "I'm hungry - china man"
+            Formatting.YELLOW + "I'm hungry - china man",
 
 
             // PERSONALIZED
