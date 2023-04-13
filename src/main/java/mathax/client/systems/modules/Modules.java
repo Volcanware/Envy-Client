@@ -606,6 +606,7 @@ public class Modules extends System<Modules> {
         add(new SpawnProofer());
         add(new StashFinder());
         add(new Timer());
+        add(new TreeAura());
         add(new VeinMiner());
     }
 
