@@ -201,6 +201,9 @@ public class Rotations {
         rotationTimer = 0;
     }
 
+    public static void rotate(float yaw, float pitch, int i) {
+    }
+
     private static class Rotation {
         public double yaw, pitch;
         public int priority;

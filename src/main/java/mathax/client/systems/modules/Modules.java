@@ -412,6 +412,7 @@ public class Modules extends System<Modules> {
         add(new Sniper());
         add(new Surround());
         add(new SurroundBreak());
+        add(new ShieldBypass());
         add(new TNTAura());
         add(new TriggerBot());
         //add(new Block());
