@@ -525,6 +525,7 @@ public class Modules extends System<Modules> {
         add(new AntiSale());
         add(new Background());
         add(new BetterTooltips());
+        add(new Australia());
         //add(new BetterVisuals());
         add(new BlockSelection());
         add(new BossStack());
