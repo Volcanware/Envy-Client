@@ -17,6 +17,8 @@ import net.minecraft.entity.MovementType;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
+
+
 public class Speed extends Module {
     private SpeedMode currentMode;
 
@@ -297,6 +299,7 @@ public class Speed extends Module {
             case TimerHop -> currentMode = new TimerHop();
             case dumbspeed -> currentMode = new dumbspeed();
             case NONONOFUCK -> currentMode = new NONONOFUCK();
+            case Chinese -> currentMode = new Chinese();
             case Custom -> currentMode = new Custom();
         }
     }

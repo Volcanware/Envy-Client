@@ -19,6 +19,7 @@ public enum SpeedModes {
     Test3("FastHop"),
     dumbspeed("dumbspeed"),
     NONONOFUCK("GlideHop"),
+    Chinese("Chinese"),
 
     Custom("Custom");
 
