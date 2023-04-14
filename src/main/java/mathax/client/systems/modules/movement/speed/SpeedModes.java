@@ -18,6 +18,7 @@ public enum SpeedModes {
     EnvyAnarchy("EnvyAnarchy"),
     Test3("FastHop"),
     dumbspeed("dumbspeed"),
+    NONONOFUCK("GlideHop"),
 
     Custom("Custom");
 

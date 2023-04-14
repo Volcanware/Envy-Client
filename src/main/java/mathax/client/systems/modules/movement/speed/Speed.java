@@ -296,6 +296,7 @@ public class Speed extends Module {
             case Test3 -> currentMode = new SpeedTest3();
             case TimerHop -> currentMode = new TimerHop();
             case dumbspeed -> currentMode = new dumbspeed();
+            case NONONOFUCK -> currentMode = new NONONOFUCK();
             case Custom -> currentMode = new Custom();
         }
     }
