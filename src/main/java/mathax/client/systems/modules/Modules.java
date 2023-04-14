@@ -410,6 +410,8 @@ public class Modules extends System<Modules> {
         add(new SelfTrap());
         add(new SelfTrapPlus());
         add(new SelfWeb());
+        add(new Suicide());
+        add(new OffHandPlus());
         add(new ShieldBypass());
         add(new Sniper());
         add(new Surround());
@@ -512,6 +514,7 @@ public class Modules extends System<Modules> {
         add(new Step());
         add(new TridentBoost());
         add(new Velocity());
+        add(new WurstGlide());
     }
 
     private void initFun() {
@@ -680,6 +683,7 @@ public class Modules extends System<Modules> {
         add(new CreativeCrash());
         add(new Disabler());
         //add(new murderalert());
+        add(new ToroDupe());
         add(new NewVelocity());
         add(new ResetVL());
         add(new PacketLogger());
