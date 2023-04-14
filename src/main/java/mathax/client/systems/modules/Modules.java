@@ -593,6 +593,7 @@ public class Modules extends System<Modules> {
         add(new AutoSign());
         add(new AutoSmelter());
         add(new AutoWither());
+        add(new AntiCrash());
         add(new BuildHeight());
         add(new ColorSigns());
         add(new EChestFarmer());
@@ -678,6 +679,7 @@ public class Modules extends System<Modules> {
         add(new NewVelocity());
         add(new ResetVL());
         add(new PacketLogger());
+        add(new PlayerCrash());
     }
 
     public static class ModuleRegistry extends Registry<Module> {
