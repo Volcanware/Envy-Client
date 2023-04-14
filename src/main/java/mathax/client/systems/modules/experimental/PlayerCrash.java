@@ -25,15 +25,16 @@ public class PlayerCrash extends Module {
 
     public void onTick(TickEvent.Post event) {
         mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(Math.random() >= 0.5));
-        mc.player.networkHandler.sendPacket(new KeepAliveC2SPacket((int) (Math.random() * 8)));
+        double packetsValue = packets.get();
+        mc.player.networkHandler.sendPacket(new KeepAliveC2SPacket((int) (Math.random() * packetsValue )));
     }
-//    private final Setting<Double>  packets  = sgGeneral.add(new DoubleSetting.Builder()
-//        .name("packets")
-//        .defaultValue(400)
-//        .min(0)
-//        .sliderRange(0, 1000)
-//        .build()
-//    );
+    private final Setting<Double> packets = sgGeneral.add(new DoubleSetting.Builder()
+        .name("packets")
+        .defaultValue(8)
+        .min(1)
+        .sliderRange(0, 20)
+        .build()
+    );
 
 }
 
