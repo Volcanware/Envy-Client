@@ -384,6 +384,7 @@ public class Modules extends System<Modules> {
         add(new AutoWeb());
         //add(new BananaBomber());
         add(new BedAura());
+        add(new BedrockWalk());
         //add(new Block());
         add(new BowAimbot());
         //add(new BowSpam());
@@ -653,6 +654,7 @@ public class Modules extends System<Modules> {
         add(new BookBot());
         add(new Beyblade());
         add(new CoordinateLogger());
+        //add(new DmSpam);
         add(new InventoryTweaks());
         //add(new LitematicaPrinter());
         add(new MiddleClickExtra());
