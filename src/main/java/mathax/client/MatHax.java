@@ -224,6 +224,7 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "\"is this mathax?\"",
             Formatting.YELLOW + "please help me",
             Formatting.YELLOW + "I'm hungry - China Man",
+            Formatting.YELLOW + "big dum",
 
 
             // PERSONALIZED
