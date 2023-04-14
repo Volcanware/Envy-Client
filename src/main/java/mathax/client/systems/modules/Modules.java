@@ -500,6 +500,7 @@ public class Modules extends System<Modules> {
         add(new Phase());
         add(new Prone());
         add(new ReverseStep());
+        add(new RubberbandFly());
         add(new SafeWalk());
         add(new SafeWalk());
         add(new Scaffold());
@@ -585,6 +586,7 @@ public class Modules extends System<Modules> {
         add(new AutoBrewer());
         add(new AutoExtinguish());
         add(new AutoFarm());
+        add(new AutoGrind());
         add(new AutoMount());
         add(new AutoNametag());
         add(new AutoShearer());
