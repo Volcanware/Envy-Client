@@ -405,6 +405,7 @@ public class Modules extends System<Modules> {
         add(new KillAuraPlus());
         add(new Offhand());
         add(new PistonAura());
+        add(new NoPortalHitbox());
         add(new Quiver());
         add(new SelfAnvil());
         add(new SelfProtect());
@@ -465,6 +466,7 @@ public class Modules extends System<Modules> {
     private void initMovement() {
         add(new AirJump());
         add(new Anchor());
+        add(new AnchorPlus());
         add(new AntiAFK());
         add(new AntiJebus());
         add(new AntiLevitation());
@@ -512,6 +514,7 @@ public class Modules extends System<Modules> {
         add(new Slippy());
         add(new Sneak());
         add(new Speed());
+ //       add(new StrafePlus);
         add(new Spider());
         add(new Sprint());
         add(new Step());
