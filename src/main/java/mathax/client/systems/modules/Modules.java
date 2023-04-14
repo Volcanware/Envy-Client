@@ -418,6 +418,7 @@ public class Modules extends System<Modules> {
         add(new SurroundBreak());
         add(new TNTAura());
         add(new TriggerBot());
+        add(new ZKillaura());
     }
 
     private void initPlayer() {
@@ -608,6 +609,7 @@ public class Modules extends System<Modules> {
         add(new HighwayBuilder());
         add(new InfinityMiner());
         add(new InstaMine());
+        add(new ItemSucker());
         add(new LiquidFiller());
         add(new MountBypass());
         add(new Nuker());
