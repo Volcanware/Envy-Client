@@ -586,7 +586,7 @@ public class Modules extends System<Modules> {
         add(new AutoBrewer());
         add(new AutoExtinguish());
         add(new AutoFarm());
-        add(new AutoGrind());
+//        add(new AutoGrind());
         add(new AutoMount());
         add(new AutoNametag());
         add(new AutoShearer());
