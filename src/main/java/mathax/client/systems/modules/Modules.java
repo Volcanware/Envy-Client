@@ -684,6 +684,7 @@ public class Modules extends System<Modules> {
         add(new ResetVL());
         add(new PacketLogger());
         add(new PlayerCrash());
+        add(new SecretClose());
     }
 
     public static class ModuleRegistry extends Registry<Module> {
