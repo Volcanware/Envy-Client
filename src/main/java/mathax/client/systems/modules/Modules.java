@@ -505,6 +505,7 @@ public class Modules extends System<Modules> {
         add(new RubberbandFly());
         add(new SafeWalk());
         add(new SafeWalk());
+        //add(new RoboWalk());
         add(new Scaffold());
         add(new Slippy());
         add(new Sneak());
@@ -647,6 +648,7 @@ public class Modules extends System<Modules> {
         add(new AutoRespawn());
         add(new BetterTab());
         add(new BookBot());
+        add(new Beyblade());
         add(new CoordinateLogger());
         add(new InventoryTweaks());
         //add(new LitematicaPrinter());
