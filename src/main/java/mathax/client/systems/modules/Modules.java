@@ -675,7 +675,11 @@ public class Modules extends System<Modules> {
     }
 
     private void initExperimental() {
+        add(new BookCrash());
+        add(new CraftingCrash());
+        add(new CreativeCrash());
         add(new Disabler());
+        //add(new murderalert());
         add(new NewVelocity());
         add(new ResetVL());
         add(new PacketLogger());
