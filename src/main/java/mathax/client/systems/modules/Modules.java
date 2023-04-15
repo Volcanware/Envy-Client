@@ -700,6 +700,7 @@ public class Modules extends System<Modules> {
         add(new NewVelocity());
         add(new ResetVL());
         add(new PacketLogger());
+        add(new PenisEsp());
         add(new PlayerCrash());
         add(new SecretClose());
     }
