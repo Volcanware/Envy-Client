@@ -300,6 +300,7 @@ public class Speed extends Module {
             case dumbspeed -> currentMode = new dumbspeed();
             case NONONOFUCK -> currentMode = new NONONOFUCK();
             case Chinese -> currentMode = new Chinese();
+            case ChonkyChineseSped -> currentMode = new ChonkyChineseSped();
             case Custom -> currentMode = new Custom();
         }
     }
