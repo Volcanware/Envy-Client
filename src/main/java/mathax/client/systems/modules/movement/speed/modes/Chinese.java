@@ -15,7 +15,7 @@ public class Chinese extends SpeedMode {
                 mc.player.jump();
             }
             if (mc.player.fallDistance > 0.2) {
-                mc.player.airStrafingSpeed = (float) 0.3;
+                mc.player.airStrafingSpeed = (float) 0.1;
             }
             if (mc.player.fallDistance == 0.4) {
                 MovementUtils.strafe(7f);

@@ -496,6 +496,7 @@ public class Modules extends System<Modules> {
         //add(new HoleSneak());
         add(new Jesus());
         add(new JetPack());
+        add(new JetPackPlus());
         add(new LongJump());
         add(new Moses());
         add(new Ninja());
@@ -563,6 +564,7 @@ public class Modules extends System<Modules> {
         add(new Nametags());
         add(new NewChunks());
         add(new NoBob());
+        add(new NoSwang());
         add(new NoobDetector());
         add(new NoRender());
         //add(new PenisESP());
