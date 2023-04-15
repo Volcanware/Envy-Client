@@ -9,7 +9,7 @@ import net.minecraft.item.Items;
 public class NoSwang extends Module {
 
     public NoSwang() {
-        super(Categories.Render, Items.AIR, "NoSwing", "Removes the swing animation | Client Side Only");
+        super(Categories.Render, Items.AIR, "NoSwang", "Removes the swang animation | Client Side Only");
     }
 
     @EventHandler
