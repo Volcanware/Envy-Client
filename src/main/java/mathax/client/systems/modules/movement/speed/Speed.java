@@ -301,6 +301,7 @@ public class Speed extends Module {
             case NONONOFUCK -> currentMode = new NONONOFUCK();
             case Chinese -> currentMode = new Chinese();
             case EnvyHop -> currentMode = new EnvyHop();
+            case ChonkyChineseSped -> currentMode = new ChonkyChineseSped();
             case Custom -> currentMode = new Custom();
         }
     }
