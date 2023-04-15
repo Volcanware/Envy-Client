@@ -15,11 +15,12 @@ public enum SpeedModes {
     Vulcan("Vulcan"),
     OnGround("RubberBand"),
     LegitHop("LegitHop"),
-    EnvyAnarchy("EnvyAnarchy"),
+    EnvyAnarchy("EnvyAnarchy || Legacy"),
     Test3("FastHop"),
     dumbspeed("dumbspeed"),
     NONONOFUCK("GlideHop"),
     Chinese("Chinese"),
+    EnvyHop("EnvyHop"),
 
     Custom("Custom");
 
