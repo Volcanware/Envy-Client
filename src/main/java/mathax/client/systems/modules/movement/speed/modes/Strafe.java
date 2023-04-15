@@ -12,6 +12,8 @@ import mathax.client.utils.misc.Vec2;
 import mathax.client.utils.player.PlayerUtils;
 
 public class Strafe extends SpeedMode {
+
+    //Add Themis Button that fakes a 2 Block Tall Wall as it somehow bypasses ¯\_(ツ)_/¯
     private long timer = 0L;
 
     public Strafe() {
