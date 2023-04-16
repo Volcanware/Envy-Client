@@ -461,6 +461,7 @@ public class Modules extends System<Modules> {
         add(new FastUse());
         add(new Reach());
         add(new WTap());
+        add(new Ninja());
     }
 
     private void initMovement() {
@@ -499,7 +500,6 @@ public class Modules extends System<Modules> {
         add(new JetPackPlus());
         add(new LongJump());
         add(new Moses());
-        add(new Ninja());
         add(new NoFall());
         add(new NoSlow());
         add(new PacketFly());
@@ -564,7 +564,7 @@ public class Modules extends System<Modules> {
         add(new Nametags());
         add(new NewChunks());
         add(new NoBob());
-        add(new NoCaveCulling());
+        //add(new NoCaveCulling());
         add(new NoSwang());
         add(new NoobDetector());
         add(new NoRender());

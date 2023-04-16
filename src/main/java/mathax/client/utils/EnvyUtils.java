@@ -3,7 +3,7 @@ package mathax.client.utils;
 import static mathax.client.MatHax.mc;
 
 public class EnvyUtils {
-    
+
     public static void pos() {
         mc.player.getPos();
     }

@@ -14,6 +14,9 @@ import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
+import mathax.client.utils.algorithms.extra.MovementUtils;
+import mathax.client.utils.player.MoveHelper;
+import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Items;
@@ -22,6 +25,9 @@ import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 public class Criticals extends Module {
+
+    private int ticks;
+    private int offGroundTicks;
     private PlayerInteractEntityC2SPacket attackPacket;
 
     private HandSwingC2SPacket swingPacket;
@@ -59,6 +65,11 @@ public class Criticals extends Module {
         sendPackets = false;
         sendTimer = 0;
         return false;
+    }
+
+    @Override
+    public void onDeactivate() {
+        this.ticks = 0;
     }
 
     @EventHandler
@@ -117,6 +128,27 @@ public class Criticals extends Module {
                 swingPacket = null;
             } else sendTimer--;
         }
+
+        if (mode.get() == Mode.Low) {
+            if (mc.player.isOnGround()) {
+                this.offGroundTicks = 0;
+            } else {
+                ++this.offGroundTicks;
+            }
+
+            if (this.offGroundTicks == 1) {
+                MoveHelper.motionY(-(0.01 - Math.random() / 500.0));
+            }
+
+            if (mc.player.isOnGround()) {
+                MoveHelper.motionY(0.1 + Math.random() / 500.0);
+            }
+        }
+        if (mode.get() == Mode.Low2) {
+            if (mc.player.isOnGround()) {
+                mc.player.setPosition(mc.player.getPos().x, mc.player.getPos().y + (0.3 - Math.random() / 500.0), mc.player.getPos().z);
+            }
+        }
     }
 
     private void sendPacket(double height) {
@@ -143,6 +175,8 @@ public class Criticals extends Module {
         Packet("Packet"),
         Bypass("Bypass"),
         Jump("Jump"),
+        Low("Low"),
+        Low2("Low 2"),
         Mini_Jump("Mini Jump");
 
         private final String title;

@@ -8,7 +8,7 @@ import net.minecraft.item.Items;
 
 public class Ninja extends Module {
     public Ninja() {
-        super(Categories.Movement, Items.DIAMOND_SWORD, "Ninja", "SpeedBridges For You");
+        super(Categories.Ghost, Items.DIAMOND_SWORD, "Ninja", "SpeedBridges For You");
     }
 
     boolean turn = true;

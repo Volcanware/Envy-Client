@@ -273,6 +273,7 @@ public class Flight extends Module {
         Creative("Creative");
         //Vulcan("Vulcan");
 
+
         private final String title;
 
         Mode(String title) {
