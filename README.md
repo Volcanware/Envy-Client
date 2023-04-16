@@ -26,6 +26,7 @@
 ## Usage
 
 ### Building
+-chineseman hungry
 - Clone this repository
 - Run `./gradlew build`
 
