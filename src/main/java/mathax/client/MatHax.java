@@ -229,6 +229,13 @@ public class MatHax implements ClientModInitializer {
             Formatting.BLUE + "操你妈",
             Formatting.BLUE + "Chyna man says hai",
             Formatting.LIGHT_PURPLE + "UwU",
+            Formatting.YELLOW + "These orphans are getting destroyed",
+            Formatting.YELLOW + "Do you guys like my content? Just kidding, I dont care",
+            Formatting.YELLOW + "Officer, I drop kicked that child in self defence",
+            Formatting.YELLOW + "Murder is cringe",
+            Formatting.YELLOW + "If you see a murder being committed, immediately call them a boomer",
+            Formatting.YELLOW + "It's my 360 Ghost client",
+            Formatting.YELLOW + "If you have a problem, the answer is slavery",
 
 
             // PERSONALIZED
