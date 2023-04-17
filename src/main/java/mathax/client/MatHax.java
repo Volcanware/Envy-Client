@@ -226,6 +226,9 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "I'm hungry - China Man",
             Formatting.YELLOW + "big dum",
             Formatting.YELLOW + "we need all 5 of these, trust me",
+            Formatting.BLUE + "操你妈",
+            Formatting.BLUE + "Chyna man says hai",
+            Formatting.LIGHT_PURPLE + "UwU",
 
 
             // PERSONALIZED
