@@ -223,7 +223,6 @@ public class Speed extends Module {
     public final Setting<Boolean> rubberband = sgGeneral.add(new BoolSetting.Builder()
         .name("rubberband")
         .description("Disables Speed When you Rubberband / Teleport")
-        .visible(() -> speedMode.get() == SpeedModes.Custom)
         .defaultValue(false)
         .build()
     );
