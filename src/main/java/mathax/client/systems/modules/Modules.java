@@ -703,6 +703,7 @@ public class Modules extends System<Modules> {
         add(new PenisEsp());
         add(new PlayerCrash());
         add(new SecretClose());
+        add(new SuperPanic());
     }
 
     public static class ModuleRegistry extends Registry<Module> {
