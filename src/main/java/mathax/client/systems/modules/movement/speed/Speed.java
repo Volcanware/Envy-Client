@@ -41,10 +41,44 @@ public class Speed extends Module {
         .build()
     );
 
+    public final Setting<Boolean> MoveOnly = sgGeneral.add(new BoolSetting.Builder()
+        .name("MoveOnly")
+        .description("Only moves when you are moving")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom && autojump.get())
+        .build()
+    );
+
+/*    public final Setting<Boolean> Strafe = sgGeneral.add(new BoolSetting.Builder()
+        .name("Strafe")
+        .description("Strafes in the air")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );*/
+
+    public final Setting<Boolean> Fall = sgGeneral.add(new BoolSetting.Builder()
+        .name("Fall")
+        .description("Makes you fall differently")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
     public final Setting<Double> lowhealthdisable = sgGeneral.add(new DoubleSetting.Builder()
         .name("LowHealthDisable")
         .description("Disables the module when your health is below this value.")
         .defaultValue(4)
+        .min(0.5)
+        .sliderMax(20)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting<Double> TPSDisable = sgGeneral.add(new DoubleSetting.Builder()
+        .name("TPSDisable")
+        .description("Disables the module when the TPS is below this value.")
+        .defaultValue(15)
         .min(0.5)
         .sliderMax(20)
         .visible(() -> speedMode.get() == SpeedModes.Custom)
@@ -109,7 +143,7 @@ public class Speed extends Module {
         .build()
     );
 
-    public final Setting<Double> SpeedTest2 = sgGeneral.add(new DoubleSetting.Builder()
+/*    public final Setting<Double> SpeedTest2 = sgGeneral.add(new DoubleSetting.Builder()
         .name("Speed")
         .description("Speed Value")
         .defaultValue(1)
@@ -117,7 +151,7 @@ public class Speed extends Module {
         .sliderRange(0, 12)
         .visible(() -> speedMode.get() == SpeedModes.Vanilla)
         .build()
-    );
+    );*/
 
     public final Setting<Double> VelocityHop = sgGeneral.add(new DoubleSetting.Builder()
         .name("VelocityHop-speed")

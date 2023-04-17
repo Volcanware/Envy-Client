@@ -9,6 +9,7 @@ import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.utils.Utils;
 import mathax.client.eventbus.EventHandler;
+import mathax.client.utils.player.MoveHelper;
 import net.minecraft.item.Items;
 
 public class AntiVoid extends Module {
@@ -50,8 +51,10 @@ public class AntiVoid extends Module {
                 Modules.get().get(Flight.class).toggle();
                 hasRun = false;
             }
-
-            return;
+            if (mode.get() == Mode.Boost && mc.player.getY() < minY - 15)
+                MoveHelper.motionY(1.0);
+                mc.player.fallDistance = 0f;
+                mc.player.setOnGround(true);
         }
 
         switch (mode.get()) {
@@ -65,7 +68,8 @@ public class AntiVoid extends Module {
 
     public enum Mode {
         Flight("Flight"),
-        Jump("Jump");
+        Jump("Jump"),
+        Boost("Boost");
 
         private final String title;
 
