@@ -1,5 +1,7 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
+import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 
@@ -32,5 +34,11 @@ public class OnGround extends SpeedMode {
             }
         }
         return false;
+    }
+    @Override
+    public void onRubberband() {
+        if (settings.rubberband.get()) {
+            (Modules.get().get(Speed.class)).forceToggle(false);
+        }
     }
 }

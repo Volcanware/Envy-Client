@@ -36,6 +36,6 @@ public class Australia extends Module {
     @EventHandler
     public void onDeactivate() {
         mc.options.getFov().setValue(FOV.get());
-        info("You are no longer in Australia.");
+        info("You have been deported from Australia.");
     }
 }
