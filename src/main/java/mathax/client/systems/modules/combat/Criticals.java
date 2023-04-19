@@ -116,6 +116,11 @@ public class Criticals extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
+
+        Entity entity = Modules.get().get(KillAura.class).getTarget();
+        Entity entity1 = Modules.get().get(KillAuraBetter.class).getTarget();
+        Entity entity2 = Modules.get().get(KillAuraPlus.class).getTarget();
+        if (!(entity instanceof LivingEntity) || (entity != Modules.get().get(KillAura.class).getTarget() && ka.get()) || (entity1 != Modules.get().get(KillAuraBetter.class).getTarget() && ka.get()) || (entity2 != Modules.get().get(KillAuraPlus.class).getTarget() && ka.get())) return;
         if (sendPackets) {
             if (sendTimer <= 0) {
                 sendPackets = false;

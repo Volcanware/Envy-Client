@@ -466,6 +466,7 @@ public class Modules extends System<Modules> {
 
     private void initMovement() {
         add(new AirJump());
+        add(new AirWalk());
         add(new Anchor());
         add(new AnchorPlus());
         add(new AntiAFK());
@@ -703,6 +704,7 @@ public class Modules extends System<Modules> {
         add(new PenisEsp());
         add(new PlayerCrash());
         add(new SecretClose());
+        //add(new EntityAlert());
     }
 
     public static class ModuleRegistry extends Registry<Module> {
