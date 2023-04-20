@@ -14,8 +14,11 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.misc.TPSSync;
+import mathax.client.systems.modules.world.Timer;
 import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.item.Items;
+
+import static mathax.client.systems.modules.movement.FastFall.Mode.Vanilla;
 
 public class Sprint extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -40,14 +43,22 @@ public class Sprint extends Module {
         .build()
     );
 
-    /*private final Setting<Double> multiplier = sgGeneral.add(new DoubleSetting.Builder()
+    private final Setting<Boolean> Timer = sgGeneral.add(new BoolSetting.Builder()
+        .name("Timer")
+        .description("Enable timer")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Double> TimerMultiplier = sgGeneral.add(new DoubleSetting.Builder()
         .name("multiplier")
         .description("The timer multiplier amount.")
         .defaultValue(1)
         .min(0.1)
         .sliderRange(0.1, 3)
+        .visible(() -> Timer.get())
         .build()
-    );*/
+    );
 
     public Sprint() {
         super(Categories.Ghost, Items.DIAMOND_BOOTS, "sprint", "Automatically sprints.");
@@ -65,27 +76,11 @@ public class Sprint extends Module {
         if (PlayerUtils.isMoving() && MultiDirection.get()) {
             mc.player.setSprinting(true);
         }
-    }
-
-    /*@Override
-    public WWidget getWidget(GuiTheme theme) {
-        if (Modules.get().get(TPSSync.class).isActive()) {
-            WHorizontalList list = theme.horizontalList();
-            list.add(theme.label("Multiplier is overwritten by TPSSync."));
-            WButton disableBtn = list.add(theme.button("Disable TPSSync")).widget();
-            disableBtn.action = () -> {
-                TPSSync tpsSync = Modules.get().get(TPSSync.class);
-                if (tpsSync.isActive()) tpsSync.toggle();
-                list.visible = false;
-            };
-            return list;
+        if (PlayerUtils.isMoving()) {
+            if (Timer.get()) {
+                Modules.get().get(Timer.class).setOverride(TimerMultiplier.get());
+            }
         }
-
-        return null;
     }
-
-    public void setOverride(double override) {
-        this.override = override;
-    }*/
 }
 
