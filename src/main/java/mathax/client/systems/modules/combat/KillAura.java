@@ -104,10 +104,31 @@ public class KillAura extends Module {
         .build()
     );
 
+/*    private final Setting<Boolean> ignoreImpossibleNames = sgGeneral.add(new BoolSetting.Builder()
+        .name("Ignore Impossible Names")
+        .description("Ignores players with impossible names.")
+        .defaultValue(false)
+        .build()
+    );*/
+
     private final Setting<Boolean> noRightClick = sgGeneral.add(new BoolSetting.Builder()
         .name("no-right-click")
         .description("Does not attack if the right mouse button is pressed (Using a shield, you eat food or drink a potion).")
         .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> AutoSprint = sgGeneral.add(new BoolSetting.Builder()
+        .name("Auto-Sprint")
+        .description("Automatically sprints on attack.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> AttemptVelocity = sgGeneral.add(new BoolSetting.Builder()
+        .name("Attempt Velocity")
+        .description("Attempts to cancel velocity on attack || Good For Sumo Duels where KB is needed")
+        .defaultValue(false)
         .build()
     );
 
@@ -249,15 +270,16 @@ public class KillAura extends Module {
     );
 
     private final Setting<Boolean> offground = sgTargeting.add(new BoolSetting.Builder()
-        .name("offground")
+        .name("Ignore Air")
         .description("Whether or not to attack mobs that are on the ground.")
         .defaultValue(false)
         .build()
     );
 
+    //Shit Implimentation needs rework
     private final Setting<Boolean> Antibot = sgTargeting.add(new BoolSetting.Builder()
-        .name("Anti-Bot")
-        .description("Does Not Attack if They have not existed for over 10 ticks")
+        .name("Anti-Bot || (Experimental)")
+        .description("Does Not Attack if They have not existed for over 10 ticks || Shitty Implimentation")
         .defaultValue(false)
         .build()
     );
@@ -500,6 +522,15 @@ public class KillAura extends Module {
 
         if (rotation.get() == RotationMode.On_Hit) rotate(target, () -> hitEntity(target));
         else hitEntity(target);
+
+        if (AutoSprint.get()) {
+            assert mc.player != null;
+            mc.player.setSprinting(true);
+        }
+        if (AttemptVelocity.get()) {
+            assert mc.player != null;
+            mc.player.setVelocity(0, 0, 0);
+        }
     }
 
     private void hitEntity(Entity target) {
