@@ -236,6 +236,8 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "If you see a murder being committed, immediately call them a boomer",
             Formatting.YELLOW + "It's my 360 Ghost client",
             Formatting.YELLOW + "If you have a problem, the answer is slavery",
+            Formatting.YELLOW + "alts.bigrat.monster",
+            Formatting.YELLOW + "Technoblade Never Dies!",
 
 
             // PERSONALIZED
