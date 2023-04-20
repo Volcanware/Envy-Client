@@ -5,12 +5,12 @@ import mathax.client.events.packets.PacketEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.mixin.EntityVelocityUpdateS2CPacketAccessor;
 import mathax.client.mixininterface.IVec3d;
-import mathax.client.settings.BoolSetting;
-import mathax.client.settings.DoubleSetting;
-import mathax.client.settings.Setting;
-import mathax.client.settings.SettingGroup;
+import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.misc.PingSpoof;
+import mathax.client.systems.modules.world.Timer;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 
@@ -124,6 +124,14 @@ public class Velocity extends Module {
         .build()
     );
 
+    private final Setting<Integer> ping = sgGeneral.add(new IntSetting.Builder()
+        .name("ping")
+        .description("The Ping to set.")
+        .defaultValue(200)
+        .sliderRange(0, 1000)
+        .build()
+    );
+
     public Velocity() {
         super(Categories.Movement, Items.COMMAND_BLOCK, "velocity", "Prevents you from being moved by external forces.");
     }
@@ -146,6 +154,10 @@ public class Velocity extends Module {
             ((EntityVelocityUpdateS2CPacketAccessor) packet).setY((int) (velY * 8000 + mc.player.getVelocity().y * 8000));
             ((EntityVelocityUpdateS2CPacketAccessor) packet).setZ((int) (velZ * 8000 + mc.player.getVelocity().z * 8000));
         }
+         /*if (ping.get() > 0 && event.packet instanceof EntityVelocityUpdateS2CPacket packet && ((EntityVelocityUpdateS2CPacket) event.packet).getId() == mc.player.getId()) {
+            Modules.get().get(PingSpoof.class).toggle();
+            Modules.get().get(PingSpoof.class).equals(ping.get());
+        }*/
     }
 
     public double getHorizontal(Setting<Double> setting) {
