@@ -21,7 +21,8 @@ public enum SpeedModes {
     NONONOFUCK("GlideHop"),
     Chinese("Chinese"),
     EnvyHop("EnvyHop"),
-    ChonkyChineseSped("中國男人搞砸了"),
+    EnvyHop2("EnvyHop2"),
+    ChonkyChineseSped("Chinese2"),
 
     Custom("Custom");
 
