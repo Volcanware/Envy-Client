@@ -40,7 +40,7 @@ public class AutoSign extends Module {
     private final Setting<String> linethree = sgGeneral.add(new StringSetting.Builder()
         .name("line-three")
         .description("Text of the third line of the sign.")
-        .defaultValue("MatHax on top!")
+        .defaultValue("Envy on top!")
         .build()
     );
 

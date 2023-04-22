@@ -12,7 +12,7 @@ import mathax.client.systems.hud.HudRenderer;
 import net.minecraft.util.Identifier;
 
 public class BigRatHud extends HudElement {
-    private static final Identifier BIG_RAT = new Identifier("mathax", "textures/big-rat.gif");
+    private static final Identifier BIG_RAT = new Identifier("mathax", "textures/big-rat.png");
     private final Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

@@ -59,13 +59,14 @@ public class AntiJebus extends Module {
 
         if (mode.get() == Vanilla) {
 
-            Block antijebus = mc.world.getBlockState(mc.player.getBlockPos().up()).getBlock();
+            Block antijebusup = mc.world.getBlockState(mc.player.getBlockPos().up()).getBlock();
+            Block antijebusdown = mc.world.getBlockState(mc.player.getBlockPos().down()).getBlock();
 
-            if (antijebus == Blocks.WATER) {
+            if (antijebusup == Blocks.WATER || antijebusdown == Blocks.WATER) {
                 mc.player.setVelocity(mc.player.getVelocity().x, -Jebusv2.get(), mc.player.getVelocity().z);
             }
 
-            if (antijebus == Blocks.BUBBLE_COLUMN) {
+            if (antijebusup == Blocks.BUBBLE_COLUMN || antijebusdown == Blocks.BUBBLE_COLUMN) {
                 mc.player.setVelocity(mc.player.getVelocity().x, -Jebusv2.get(), mc.player.getVelocity().z);
 
             }
