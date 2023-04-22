@@ -13,9 +13,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.List;
 
-import static mathax.client.systems.modules.movement.AntiJebus.Mode.Vanilla;
-import static mathax.client.utils.render.EntityShaders.timer;
-
 public class Bot extends Module {
 
     public Bot() {
@@ -126,34 +123,100 @@ public class Bot extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        if (messages.get().isEmpty()) return;
+        if (Chat.get()) {
+            if (messages.get().isEmpty()) return;
 
-        if (timer <= 0) {
-            int i;
-            if (random.get()) i = Utils.random(0, messages.get().size());
-            else {
-                if (messageI >= messages.get().size()) messageI = 0;
-                i = messageI++;
-            }
+            if (timer <= 0) {
+                int i;
+                if (random.get()) i = Utils.random(0, messages.get().size());
+                else {
+                    if (messageI >= messages.get().size()) messageI = 0;
+                    i = messageI++;
+                }
 
-            String text = messages.get().get(i);
-            if (randomText.get()) text += " " + RandomStringUtils.randomAlphabetic(randomTextLength.get()).toLowerCase();
+                String text = messages.get().get(i);
+                if (randomText.get())
+                    text += " " + RandomStringUtils.randomAlphabetic(randomTextLength.get()).toLowerCase();
 
-            String player;
-            do {
-                player = Utils.getRandomPlayer();
-            } while (ignoreSelf.get() && player.equals(mc.getSession().getUsername()) || ignoreFriends.get() && Friends.get().get(player) != null);
+                String player;
+                do {
+                    player = Utils.getRandomPlayer();
+                } while (ignoreSelf.get() && player.equals(mc.getSession().getUsername()) || ignoreFriends.get() && Friends.get().get(player) != null);
 
-            mc.player.sendChatMessage(text.replace("%player%", player));
+                mc.player.sendChatMessage(text.replace("%player%", player));
 
-            timer = delay.get();
-        } else timer--;
+                timer = delay.get();
+            } else timer--;
+        }
     }
-
     //_____________________________AI______________________________________
     //_____________________________COMBAT______________________________________
     //_____________________________MOVEMENT______________________________________
     //_____________________________BARITONE______________________________________
+
+    private final SettingGroup sgBaritone = settings.createGroup("Baritone Options");
+
+    private final Setting<Boolean> Baritone = sgBaritone.add(new BoolSetting.Builder()
+        .name("Baritone")
+        .description("Baritone Options")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> BaritoneFollow = sgBaritone.add(new BoolSetting.Builder()
+        .name("Baritone Follow")
+        .description("Make Baritone Follow a Player")
+        .defaultValue(true)
+        .visible(() -> Baritone.get())
+        .build()
+    );
+
+    //Required For Baritone Commands
+    private final Setting<String> BaritoneCommandPrefix = sgBaritone.add(new StringSetting.Builder()
+        .name("Prefix")
+        .description("What Prefix to use for Baritone Commands || You need to change it to what your prefix is")
+        .defaultValue("#")
+        .visible(() -> BaritoneFollow.get() && Baritone.get())
+        .build()
+    );
+
+    //Bad Implementation of Baritone Follow
+    private final Setting<String> FollowPlayer = sgBaritone.add(new StringSetting.Builder()
+        .name("Player")
+        .description("What Player to Follow")
+        .defaultValue("Envy")
+        .visible(() -> BaritoneFollow.get() && Baritone.get())
+        .build()
+    );
+
+    //What to Do When Module Activates
+    @EventHandler
+    public boolean onActivate() {
+        if (Baritone.get()) {
+            if (BaritoneFollow.get()) {
+
+                FollowPlayer.get();
+                mc.player.sendChatMessage(BaritoneCommandPrefix.get() + "follow " + "player " + FollowPlayer.get());
+            }
+        }
+        return false;
+    }
+
+    //What to Do When Module Deactivates
+    //Use this to reset current running actions e.g a baritone command
+    @EventHandler
+    public void onDeactivate() {
+        if (Baritone.get()) {
+
+            if (BaritoneFollow.get()) {
+
+                FollowPlayer.get();
+                mc.player.sendChatMessage(BaritoneCommandPrefix.get() + "stop");
+            }
+        }
+    }
+
+
     //_____________________________SERVER______________________________________
     //_____________________________RENDER______________________________________
     //_____________________________DISCORD______________________________________
