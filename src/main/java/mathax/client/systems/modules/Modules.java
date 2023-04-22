@@ -451,6 +451,10 @@ public class Modules extends System<Modules> {
         add(new Rotation());
         //add(new ShieldSpoof());
         add(new SpeedMine());
+        add(new LoliFinder());
+    }
+
+    private void add(LoliFinder loliFinder) {
     }
 
     private void initGhost() {

@@ -42,14 +42,14 @@ public class InstaMine extends Module {
     private final Setting<Boolean> pick = sgGeneral.add(new BoolSetting.Builder()
         .name("only-pick")
         .description("Only tries to mine the block if you are holding a pickaxe.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 
     private final Setting<Boolean> rotate = sgGeneral.add(new BoolSetting.Builder()
         .name("rotate")
         .description("Faces the blocks being mined server side.")
-        .defaultValue(true)
+        .defaultValue(false)
         .build()
     );
 

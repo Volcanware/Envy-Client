@@ -72,7 +72,7 @@ public class MatHaxGuiTheme extends GuiTheme {
     public final Setting<Boolean> hideHUD = sgGeneral.add(new BoolSetting.Builder()
         .name("hide-hud")
         .description("Hide HUD when in GUI.")
-        .defaultValue(true)
+        .defaultValue(false)
         .onChanged(v -> {
             if (mc.currentScreen instanceof WidgetScreen) mc.options.hudHidden = v;
         })

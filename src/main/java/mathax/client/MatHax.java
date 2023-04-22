@@ -401,17 +401,5 @@ public class MatHax implements ClientModInitializer {
 
     private boolean wasWidgetScreen, wasHudHiddenRoot;
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    private void onOpenScreen(OpenScreenEvent event) {
-        boolean hideHud = GuiThemes.get().hideHUD();
-
-        if (hideHud) {
-            if (!wasWidgetScreen) wasHudHiddenRoot = mc.options.hudHidden;
-
-            if (event.screen instanceof WidgetScreen) mc.options.hudHidden = true;
-            else if (!wasHudHiddenRoot) mc.options.hudHidden = false;
-        }
-
-        wasWidgetScreen = event.screen instanceof WidgetScreen;
     }
 }
