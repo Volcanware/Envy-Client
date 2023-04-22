@@ -84,17 +84,6 @@ public class Bot extends Module {
         .build()
     );
 
-    private final Setting<Integer> LowHealthDisable = sgChat.add(new IntSetting.Builder()
-        .name("health disable")
-        .description("Disables spam when you reach a health value")
-        .defaultValue(5)
-        .min(1)
-        .max(19)
-        .sliderRange(1, 19)
-        .visible(() -> Chat.get())
-        .build()
-    );
-
     private final Setting<Boolean> disableOnDisconnect = sgChat.add(new BoolSetting.Builder()
         .name("disable-on-disconnect")
         .description("Disables spam when you are disconnected from a server.")
@@ -159,9 +148,23 @@ public class Bot extends Module {
 
             timer = delay.get();
         } else timer--;
-
-        if (LowHealthDisable.get() < mc.player.getHealth()) {
-            toggle();
-        }
     }
+
+    //_____________________________AI______________________________________
+    //_____________________________COMBAT______________________________________
+    //_____________________________MOVEMENT______________________________________
+    //_____________________________BARITONE______________________________________
+    //_____________________________SERVER______________________________________
+    //_____________________________RENDER______________________________________
+    //_____________________________DISCORD______________________________________
+    //_____________________________SWARM______________________________________
+    //_____________________________FORCE OP______________________________________
+    //_____________________________AUTO LOGIN______________________________________
+    //_____________________________FIGHTBOT______________________________________
+    //_____________________________EXPLOIT______________________________________
+    //_____________________________MINIGAME______________________________________
+    //_____________________________WORLD______________________________________
+    //_____________________________VIAVERSION______________________________________
+    //_____________________________EXPERIMENTAL______________________________________
+    //_____________________________MISC______________________________________
 }
