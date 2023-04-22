@@ -63,10 +63,15 @@ public class WatermarkHud extends TripleTextHudElement {
         return Version.getStylized();
     }
 
+    @Override
     protected String getEnd() {
+        return "";
+    }
+
+/*    protected String getEnd() {
         if (!updateCheck.get() || cs.changeVersion()) return "";
         return checkForUpdate();
-    }
+    }*/
 
     @Override
     public void update(HudRenderer renderer) {
@@ -141,7 +146,7 @@ public class WatermarkHud extends TripleTextHudElement {
         Renderer2D.TEXTURE.render(null);
     }
 
-    public String checkForUpdate() {
+/*    public String checkForUpdate() {
         if (versionString == null) versionString = "";
 
         if (Version.UpdateChecker.checkForLatest) {
@@ -155,7 +160,7 @@ public class WatermarkHud extends TripleTextHudElement {
         }
 
         return versionString;
-    }
+    }*/
 
     public enum Mode {
         Text("Text"),

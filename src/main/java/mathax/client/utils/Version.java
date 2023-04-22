@@ -13,11 +13,11 @@ import net.minecraft.util.Util;
 
 public class Version {
     private final String string;
-    private final int[] numbers;
+    //private final int[] numbers;
 
     public Version(String string) {
         this.string = string;
-        this.numbers = new int[3];
+/*        this.numbers = new int[3];
 
         String[] split = string.split("\\.");
         if (split.length != 3) throw new IllegalArgumentException("[MatHax] Version string needs to have 3 numbers.");
@@ -28,21 +28,21 @@ public class Version {
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("[MatHax] Failed to parse version string.");
             }
-        }
+        }*/
     }
 
     public static void init() {
         MatHax.EVENT_BUS.subscribe(Version.class);
     }
 
-    public boolean isHigherThan(Version version) {
+/*    public boolean isHigherThan(Version version) {
         for (int i = 0; i < 3; i++) {
             if (numbers[i] > version.numbers[i]) return true;
             if (numbers[i] < version.numbers[i]) return false;
         }
 
         return false;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -50,7 +50,7 @@ public class Version {
     }
 
     public static Version get() {
-        return new Version(FabricLoader.getInstance().getModContainer("envy").get().getMetadata().getVersion().getFriendlyString());
+        return new Version("I Don't Fucking Know Dude");
     }
 
     public static Integer getDev() {
@@ -89,7 +89,7 @@ public class Version {
             Version.UpdateChecker.checkForLatest = true;
         }
 
-        public static Version getLatest() {
+/*        public static Version getLatest() {
             String api = HTTP.get(MatHax.API_URL + "Version/metadata.json").sendString();
             if (api == null || !api.contains(getMinecraft().replace(".", "-"))) return null;
 
@@ -137,6 +137,6 @@ public class Version {
             Newer_Found,
             Latest,
             Running_Dev
-        }
+        }*/
     }
 }

@@ -43,6 +43,7 @@ import mathax.client.utils.player.Rotations;
 import mathax.client.utils.render.EntityShaders;
 import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.RainbowColors;
+import mathax.client.utils.render.color.SettingColor;
 import mathax.client.utils.world.BlockIterator;
 import mathax.client.utils.world.BlockUtils;
 import mathax.client.systems.modules.render.Background;
@@ -66,6 +67,7 @@ import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.plaf.ColorUIResource;
 import java.io.File;
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
@@ -96,6 +98,9 @@ public class MatHax implements ClientModInitializer {
     public final Color MATHAX_COLOR = new Color(0, 104, 255, 255);
     public final int MATHAX_COLOR_INT = Color.fromRGBA(MATHAX_COLOR.r, MATHAX_COLOR.g, MATHAX_COLOR.b, MATHAX_COLOR.a);
     public final Color MATHAX_BACKGROUND_COLOR = new Color(30, 30, 45, 255);
+    public final Color MATHAX_COLOR_RAINBOW = new SettingColor(0,0,0,0, true);
+    public final int MATHAX_COLOR_RAINBOW_INT = MATHAX_COLOR_RAINBOW.getPacked();
+
     public final int MATHAX_BACKGROUND_COLOR_INT = Color.fromRGBA(MATHAX_BACKGROUND_COLOR.r, MATHAX_BACKGROUND_COLOR.g, MATHAX_BACKGROUND_COLOR.b, MATHAX_BACKGROUND_COLOR.a);
 
     public static final Logger LOG = LoggerFactory.getLogger("Envy");

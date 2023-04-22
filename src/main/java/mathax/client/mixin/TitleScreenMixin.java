@@ -1,13 +1,18 @@
 package mathax.client.mixin;
 
 import mathax.client.MatHax;
+import mathax.client.settings.ColorSetting;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.misc.NameProtect;
 import mathax.client.systems.proxies.Proxies;
 import mathax.client.systems.proxies.Proxy;
 import mathax.client.utils.Utils;
 import mathax.client.utils.Version;
+import mathax.client.utils.algorithms.extra.RandomString;
+import mathax.client.utils.misc.text.ColoredText;
 import mathax.client.utils.render.color.Color;
+import mathax.client.utils.render.color.RainbowColors;
+import mathax.client.utils.render.color.SettingColor;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +27,7 @@ import net.minecraft.text.Text;
 public class TitleScreenMixin extends Screen {
     private final int WHITE = Color.fromRGBA(255, 255, 255, 255);
     private final int GRAY = Color.fromRGBA(175, 175, 175, 255);
-
+    private final int BLUE = Color.fromRGBA(0, 104, 255, 255);
     protected TitleScreenMixin(Text title) {
         super(title);
     }
@@ -31,8 +36,6 @@ public class TitleScreenMixin extends Screen {
     private void checkForUpdate(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
         if (Version.UpdateChecker.checkForLatestTitle) {
             Version.UpdateChecker.checkForLatestTitle = false;
-
-            Version.UpdateChecker.checkForUpdate();
         }
     }
 
@@ -66,9 +69,9 @@ public class TitleScreenMixin extends Screen {
         int watermarkVersionLength = textRenderer.getWidth(watermarkVersion);
         int watermarkFullLength = watermarkNameLength + spaceLength + watermarkVersionLength;
 
-        String authorBy = "By";
+        String authorBy = "Made By These Retards";
         int authorByLength = textRenderer.getWidth(authorBy);
-        String authorName = "Volcan";
+        String authorName = "Volcan, ChineseSkiddaMan, Mr.Jebus and Floppa";
         int authorNameLength = textRenderer.getWidth(authorName);
         int authorFullLength = authorByLength + spaceLength + authorNameLength;
 
@@ -91,7 +94,7 @@ public class TitleScreenMixin extends Screen {
         drawStringWithShadow(matrices, textRenderer, watermarkVersion, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, GRAY);
 
         int authorPreviousWidth = 0;
-        drawStringWithShadow(matrices, textRenderer, authorBy, width - authorFullLength - 2, (int) y2, GRAY);
+        drawStringWithShadow(matrices, textRenderer, authorBy, width - authorFullLength - 2, (int) y2, BLUE);
         authorPreviousWidth += authorByLength;
         drawStringWithShadow(matrices, textRenderer, space, width - authorFullLength + authorPreviousWidth - 2, (int) y2, GRAY);
         authorPreviousWidth += spaceLength;
