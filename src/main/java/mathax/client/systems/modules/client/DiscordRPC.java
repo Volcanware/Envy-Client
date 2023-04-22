@@ -76,7 +76,7 @@ public class DiscordRPC extends Module {
 
     public final Setting<SmallImageMode> smallImageMode = sgGeneral.add(new EnumSetting.Builder<SmallImageMode>()
         .name("small-images")
-        .description("Shows cats or dogs on MatHax rpc.")
+        .description("Shows cats or dogs on Envy rpc.")
         .defaultValue(SmallImageMode.Cats)
         .build()
     );

@@ -105,8 +105,8 @@ public class MatHax implements ClientModInitializer {
 
     public static final Logger LOG = LoggerFactory.getLogger("Envy");
 
-    public static final String URL = "https://mathaxclient.xyz/";
-    public static final String API_URL = "https://api.mathaxclient.xyz/";
+    public static final String URL = "Coming soon";
+    public static final String API_URL = "Coming soon";
 
     public static List<String> getDeveloperUUIDs() {
         return Arrays.asList(
@@ -249,7 +249,8 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "You're cool, " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername(),
             Formatting.YELLOW + "Owning with " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername(),
             Formatting.YELLOW + "Who is " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername() + Formatting.YELLOW + "?",
-            Formatting.YELLOW + "Watching Hentai with " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername()
+            Formatting.YELLOW + "Watching Hentai with " + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername(),
+            Formatting.YELLOW + "Getting rekt by" + Formatting.GRAY + MinecraftClient.getInstance().getSession().getUsername()
 
         );
     }
@@ -263,7 +264,7 @@ public class MatHax implements ClientModInitializer {
         }
 
         // Log
-        LOG.info("Initializing MatHax+ " + Version.getStylized() + " for Minecraft " + Version.getMinecraft() + "...");
+        LOG.info("Initializing Envy " + Version.getStylized() + " for Minecraft " + Version.getMinecraft() + "...");
 
         // Global Minecraft client accessor
         mc = MinecraftClient.getInstance();
@@ -376,7 +377,7 @@ public class MatHax implements ClientModInitializer {
         else WindowUtils.MatHax.setTitle();
 
         // Log
-        LOG.info("MatHax+ " + Version.getStylized() + " initialized for Minecraft " + Version.getMinecraft() + "!");
+        LOG.info("Envy " + Version.getStylized() + " initialized for Minecraft " + Version.getMinecraft() + "!");
     }
 
     @EventHandler
