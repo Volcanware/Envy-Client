@@ -1,0 +1,10 @@
+package enums;
+
+public enum SwingType {
+    Crystal,
+    Interact,
+    Mining,
+    Placing,
+    Attacking,
+    Using
+}
