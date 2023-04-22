@@ -213,7 +213,7 @@ public class BetterChat extends Module {
     public final Setting<String> suffixText = sgSuffix.add(new StringSetting.Builder()
         .name("text")
         .description("The text to add as your suffix.")
-        .defaultValue(" | MatHax")
+        .defaultValue(" | Envy")
         .visible(() -> !suffixRandom.get())
         .build()
     );
@@ -399,7 +399,7 @@ public class BetterChat extends Module {
 
         return sb.toString();
     }
-    
+
     public String applyUwU(String message) {
         message = message.replace("ove", "uv");
         message = message.replace("the", "da");
@@ -432,7 +432,7 @@ public class BetterChat extends Module {
         message = message.replace("T", "7");
         return message.replace("t", "7");
     }
-    
+
     public String applyZV(String message) {
         message = message.replace("в", "v");
         message = message.replace("В", "V");

@@ -34,7 +34,7 @@ import javax.crypto.spec.SecretKeySpec;
 /*/-----------------/*/
 
 public class ChatEncryption extends Module {
-    private static final String password = "MatHaxEncryption";
+    private static final String password = "EnvyEncryption";
     public final String encryptedPrefix = "Ø";
     private String actualPassword = "";
 
@@ -78,7 +78,7 @@ public class ChatEncryption extends Module {
     private final Setting<String> groupKey = sgGeneral.add(new StringSetting.Builder()
         .name("key")
         .description("The key to use.")
-        .defaultValue("MatHaxEncryption")
+        .defaultValue("EnvyEncryption")
         .visible(customKey::get)
         .build()
     );
