@@ -67,16 +67,6 @@ public class MeteorGuiTheme extends GuiTheme {
         .build()
     );
 
-    public final Setting<Boolean> hideHUD = sgGeneral.add(new BoolSetting.Builder()
-        .name("hide-hud")
-        .description("Hide HUD when in GUI.")
-        .defaultValue(false)
-        .onChanged(v -> {
-            if (mc.currentScreen instanceof WidgetScreen) mc.options.hudHidden = v;
-        })
-        .build()
-    );
-
     public final Setting<Integer> round = sgGeneral.add(new IntSetting.Builder()
         .name("round")
         .description("How much windows should be rounded. (0 to disable)")
@@ -308,10 +298,6 @@ public class MeteorGuiTheme extends GuiTheme {
         return categoryIcons.get();
     }
 
-    @Override
-    public boolean hideHUD() {
-        return hideHUD.get();
-    }
 
     @Override
     public int roundAmount() {
