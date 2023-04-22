@@ -249,6 +249,7 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "alts.bigrat.monster",
             Formatting.YELLOW + "Technoblade Never Dies!",
             Formatting.YELLOW + "please help me volcan trapped me in his basement",
+            Formatting.YELLOW + "I was bored so i made this",
 
 
             // PERSONALIZED
