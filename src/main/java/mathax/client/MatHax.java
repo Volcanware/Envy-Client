@@ -113,6 +113,11 @@ public class MatHax implements ClientModInitializer {
             //Volcan
             "0e986848824f4215b346018190cf923d",
             "6186d473ea704c36a3472e2b3c3ef5e6",
+            "850b366c0bed4d71a731760e30167b72",
+            "1466c42c86d44c71883f2156029b638c",
+            "b1e727a1472349e482db7bb74c21375a",
+            "781eaca0ff3649b490490d980d6fe10c",
+            "5dd703bb78a44285bff91be63e32b485",
             //HardlineMouse16
             "6904b1a0a8a246fab09fd66f10a8136e",
             "8a89cdaa3cc049e0bae40cfc88e23e0c"
@@ -243,6 +248,7 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "If you have a problem, the answer is slavery",
             Formatting.YELLOW + "alts.bigrat.monster",
             Formatting.YELLOW + "Technoblade Never Dies!",
+            Formatting.YELLOW + "please help me volcan trapped me in his basement",
 
 
             // PERSONALIZED
