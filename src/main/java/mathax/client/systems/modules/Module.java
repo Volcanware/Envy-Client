@@ -81,6 +81,9 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     }
     public void onDeactivate() {}
 
+    public void onActivateServer() {}
+    public void onDeactivateServer() {}
+
     public void toggle() {
         if (!active) {
             active = true;
@@ -91,11 +94,13 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
             if (runInMainMenu || Utils.canUpdate()) {
                 if (autoSubscribe) MatHax.EVENT_BUS.subscribe(this);
                 onActivate();
+                onActivateServer();
             }
         } else {
             if (runInMainMenu || Utils.canUpdate()) {
                 if (autoSubscribe) MatHax.EVENT_BUS.unsubscribe(this);
                 onDeactivate();
+                onDeactivateServer();
             }
 
             active = false;
@@ -114,11 +119,13 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
             if (runInMainMenu || Utils.canUpdate()) {
                 if (autoSubscribe) MatHax.EVENT_BUS.subscribe(this);
                 onActivate();
+                onActivateServer();
             }
         } else {
             if (runInMainMenu || Utils.canUpdate()) {
                 if (autoSubscribe) MatHax.EVENT_BUS.unsubscribe(this);
                 onDeactivate();
+                onDeactivateServer();
             }
 
             Modules.get().removeActive(this);
