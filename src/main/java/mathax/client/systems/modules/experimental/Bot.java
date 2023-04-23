@@ -46,8 +46,7 @@ public class Bot extends Module {
     public Bot() {
         super(Categories.Experimental, Items.CRAFTING_TABLE, "Bot", "Experimental Super Customizable Bot");
     }
-
-    private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final SettingGroup sgToggles = settings.createGroup("All the toggles!");
 
     //_____________________________CHAT______________________________________
 
@@ -57,7 +56,7 @@ public class Bot extends Module {
 
     private final SettingGroup sgChatBypass = settings.createGroup("Chat Bypasses");
 
-    private final Setting<Boolean> Chat = sgChat.add(new BoolSetting.Builder()
+    private final Setting<Boolean> Chat = sgToggles.add(new BoolSetting.Builder()
         .name("Chat")
         .description("Chat")
         .defaultValue(true)
@@ -196,7 +195,7 @@ public class Bot extends Module {
 
     private final SettingGroup sgBaritone = settings.createGroup("Baritone Options");
 
-    private final Setting<Boolean> Baritone = sgBaritone.add(new BoolSetting.Builder()
+    private final Setting<Boolean> Baritone = sgToggles.add(new BoolSetting.Builder()
         .name("Baritone")
         .description("Baritone Options")
         .defaultValue(true)
@@ -279,7 +278,7 @@ public class Bot extends Module {
 
     private final SettingGroup sgKADelay = settings.createGroup("KA Delay options");
 
-    private final Setting<Boolean> Combat = sgGeneral.add(new BoolSetting.Builder()
+    private final Setting<Boolean> Combat = sgToggles.add(new BoolSetting.Builder()
         .name("Combat")
         .description("Enable Combat")
         .defaultValue(false)
