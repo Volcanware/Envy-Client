@@ -697,7 +697,6 @@ public class Modules extends System<Modules> {
 
     private void initExperimental() {
         add(new BookCrash());
-        add(new Bot());
         add(new CraftingCrash());
         add(new CreativeCrash());
         add(new Disabler());
