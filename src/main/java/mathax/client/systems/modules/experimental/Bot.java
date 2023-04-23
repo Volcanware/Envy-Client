@@ -39,6 +39,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static mathax.client.systems.modules.movement.FastFall.Mode.Vanilla;
+
 public class Bot extends Module {
 
     public Bot() {
@@ -187,8 +189,8 @@ public class Bot extends Module {
             }*/
         }
     }
-    //_____________________________AI______________________________________
-    //_____________________________COMBAT______________________________________
+    //_____________________________AI____________________________________________
+    //_____________________________FIGHTBOT______________________________________
     //_____________________________MOVEMENT______________________________________
     //_____________________________BARITONE______________________________________
 
@@ -261,7 +263,7 @@ public class Bot extends Module {
     //_____________________________SWARM_______________________________________
     //_____________________________FORCE_OP____________________________________
     //_____________________________AUTO_LOGIN__________________________________
-    //_____________________________FIGHTBOT____________________________________
+    //_____________________________COMBAT______________________________________
 
     private final List<Entity> targets = new ArrayList<>();
 
@@ -277,10 +279,18 @@ public class Bot extends Module {
 
     private final SettingGroup sgKADelay = settings.createGroup("KA Delay options");
 
+    private final Setting<Boolean> Combat = sgGeneral.add(new BoolSetting.Builder()
+        .name("Combat")
+        .description("Enable Combat")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<KillAura.Weapon> weapon = sgKillaura.add(new EnumSetting.Builder<KillAura.Weapon>()
         .name("weapon")
         .description("Only attacks an entity when a specified item is in your hand.")
         .defaultValue(KillAura.Weapon.Sword_and_Axe)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -288,6 +298,7 @@ public class Bot extends Module {
         .name("auto-switch")
         .description("Switches to your selected weapon when attacking the target.")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -295,6 +306,7 @@ public class Bot extends Module {
         .name("only-on-click")
         .description("Only attacks when hold left click.")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -302,6 +314,7 @@ public class Bot extends Module {
         .name("only-when-look")
         .description("Only attacks when you are looking at the entity.")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -309,7 +322,7 @@ public class Bot extends Module {
         .name("random-teleport")
         .description("Randomly teleport around the target.")
         .defaultValue(false)
-        .visible(() -> !onlyWhenLook.get())
+        .visible(() -> !onlyWhenLook.get() && Combat.get())
         .build()
     );
 
@@ -317,6 +330,7 @@ public class Bot extends Module {
         .name("ignore-shield")
         .description("Attacks only if the blow is not blocked by a shield.")
         .defaultValue(true)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -324,6 +338,7 @@ public class Bot extends Module {
         .name("Ignore Invisible")
         .description("Attacks even if the target is invisible.")
         .defaultValue(true)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -331,6 +346,7 @@ public class Bot extends Module {
         .name("no-right-click")
         .description("Does not attack if the right mouse button is pressed (Using a shield, you eat food or drink a potion).")
         .defaultValue(true)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -338,6 +354,7 @@ public class Bot extends Module {
         .name("Auto-Sprint")
         .description("Automatically sprints on attack.")
         .defaultValue(true)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -345,6 +362,7 @@ public class Bot extends Module {
         .name("Attempt Velocity")
         .description("Attempts to cancel velocity on attack || Good For Sumo Duels where KB is needed")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -352,6 +370,7 @@ public class Bot extends Module {
         .name("rotate")
         .description("Determines when you should rotate towards the target.")
         .defaultValue(KillAura.RotationMode.Always)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -361,6 +380,7 @@ public class Bot extends Module {
         .defaultValue(100)
         .range(1, 100)
         .sliderRange(1, 100)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -368,6 +388,7 @@ public class Bot extends Module {
         .name("disconnect-toggle")
         .description("Toggles the module on disconnect.")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -375,6 +396,7 @@ public class Bot extends Module {
         .name("combat-pause")
         .description("Freezes Baritone temporarily until you are finished attacking the entity.")
         .defaultValue(true)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -385,6 +407,7 @@ public class Bot extends Module {
         .description("Entities to attack.")
         .defaultValue(EntityType.PLAYER)
         .onlyAttackable()
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -394,6 +417,7 @@ public class Bot extends Module {
         .defaultValue(4.5)
         .min(0)
         .sliderRange(0, 6)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -403,6 +427,7 @@ public class Bot extends Module {
         .defaultValue(3.5)
         .min(0)
         .sliderRange(0, 6)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -410,6 +435,7 @@ public class Bot extends Module {
         .name("Air-Strict")
         .description("Only attacks if your on the ground. Helps with some weird Anticheat Setups")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -417,6 +443,7 @@ public class Bot extends Module {
         .name("priority")
         .description("How to filter targets within range.")
         .defaultValue(SortPriority.Lowest_Health)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -426,6 +453,7 @@ public class Bot extends Module {
         .defaultValue(1)
         .min(1)
         .sliderRange(1, 5)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -433,6 +461,7 @@ public class Bot extends Module {
         .name("ignore-passive")
         .description("Will only attack sometimes passive mobs if they are targeting you.")
         .defaultValue(true)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -440,6 +469,7 @@ public class Bot extends Module {
         .name("ignore-tamed")
         .description("Will avoid attacking mobs you tamed.")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -447,6 +477,7 @@ public class Bot extends Module {
         .name("babies")
         .description("Whether or not to attack baby variants of the entity.")
         .defaultValue(true)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -454,6 +485,7 @@ public class Bot extends Module {
         .name("nametagged")
         .description("Whether or not to attack mobs with a name tag.")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -461,6 +493,7 @@ public class Bot extends Module {
         .name("Ignore Air")
         .description("Whether or not to attack mobs that are on the ground.")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -469,6 +502,7 @@ public class Bot extends Module {
         .name("Anti-Bot || (Experimental)")
         .description("Does Not Attack if They have not existed for over 10 ticks || Shitty Implimentation")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -478,6 +512,7 @@ public class Bot extends Module {
         .name("smart-delay")
         .description("Uses the vanilla cooldown to attack entities.")
         .defaultValue(true)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -487,7 +522,7 @@ public class Bot extends Module {
         .defaultValue(0)
         .min(0)
         .sliderRange(0, 60)
-        .visible(() -> !smartDelay.get())
+        .visible(() -> !smartDelay.get() && Combat.get())
         .build()
     );
 
@@ -495,7 +530,7 @@ public class Bot extends Module {
         .name("random-delay-enabled")
         .description("Adds a random delay between hits to attempt to bypass anti-cheats.")
         .defaultValue(false)
-        .visible(() -> !smartDelay.get())
+        .visible(() -> !smartDelay.get() && Combat.get())
         .build()
     );
 
@@ -505,7 +540,7 @@ public class Bot extends Module {
         .defaultValue(4)
         .min(0)
         .sliderRange(0, 20)
-        .visible(() -> randomDelayEnabled.get() && !smartDelay.get())
+        .visible(() -> randomDelayEnabled.get() && !smartDelay.get() && Combat.get())
         .build()
     );
 
@@ -515,6 +550,7 @@ public class Bot extends Module {
         .defaultValue(0)
         .min(0)
         .sliderRange(0, 40)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -524,6 +560,7 @@ public class Bot extends Module {
         .defaultValue(25)
         .min(0)
         .sliderRange(0, 100)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -531,6 +568,7 @@ public class Bot extends Module {
         .name("AutoBlock")
         .description("1.8 module on 1.9+ wow")
         .defaultValue(false)
+        .visible(() -> Combat.get())
         .build()
     );
 
@@ -538,7 +576,7 @@ public class Bot extends Module {
         .name("Rotation mode")
         .description(".")
         .defaultValue(BlockMode.Constant)
-        .visible(autoBlock::get)
+        .visible(() -> autoBlock.get() && Combat.get())
         .build()
     );
 
