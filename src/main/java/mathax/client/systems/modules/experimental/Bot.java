@@ -81,6 +81,14 @@ public class Bot extends Module {
         .build()
     );
 
+    private final Setting<String> BotCommunicate = sgChat.add(new StringSetting.Builder()
+        .name("BotCommunicate")
+        .description("Uses /msg to Communicate with other Bots.")
+        .defaultValue("sjsawscba")
+        .visible(() -> Chat.get())
+        .build()
+    );
+
     private final Setting<Boolean> ignoreFriends = sgChat.add(new BoolSetting.Builder()
         .name("ignore-friends")
         .description("Skips messages when the %player% is a friend.")
@@ -150,6 +158,7 @@ public class Bot extends Module {
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (Chat.get()) {
+
             if (messages.get().isEmpty()) return;
 
             if (timer <= 0) {
@@ -173,6 +182,9 @@ public class Bot extends Module {
 
                 timer = delay.get();
             } else timer--;
+/*            if (BotCommunicate.get().length() > 0) {
+                mc.player.sendChatMessage("/msg " + BotCommunicate.get());
+            }*/
         }
     }
     //_____________________________AI______________________________________
