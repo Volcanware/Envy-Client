@@ -703,7 +703,6 @@ public class Modules extends System<Modules> {
         add(new Disabler());
         //add(new murderalert());
         add(new ToroDupe());
-        add(new SuperPanic());
         add(new NewVelocity());
         add(new ResetVL());
         add(new PacketLogger());

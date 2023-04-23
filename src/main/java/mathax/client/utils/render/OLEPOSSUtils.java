@@ -2,7 +2,8 @@ package mathax.client.utils.render;
 
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.ChatUtils;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -269,7 +270,7 @@ public class OLEPOSSUtils extends Utils {
         if (dir.getOffsetZ() < 0 && mc.player.getZ() < pos.getZ()) {return true;}
         return false;
     }
-    public static net.minecraft.util.math.Box getCrystalBox(Vec3d pos) {
+    public static net.minecraft.util.math.Box getCrystalBox(BlockPos pos) {
         return new Box(pos.getX() - 0.5, pos.getY(), pos.getZ() - 0.5, pos.getX() + 1.5, pos.getY() + 2, pos.getZ() + 1.5);
     }
     public static boolean isCrystalBlock(Block block) {
@@ -278,9 +279,4 @@ public class OLEPOSSUtils extends Utils {
     public static boolean canPlaceOn(BlockPos block) {
         return mc.world != null && mc.world.getBlockState(block).getBlock().hasDynamicBounds();
     }
-    public static boolean solid(BlockPos block) {
-        Block b = mc.world.getBlockState(block).getBlock();
-        return !(b instanceof AbstractFireBlock || b instanceof FluidBlock || b instanceof AirBlock);
-    }
-
 }

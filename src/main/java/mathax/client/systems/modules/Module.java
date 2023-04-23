@@ -1,8 +1,5 @@
 package mathax.client.systems.modules;
 
-import enums.RotationType;
-import enums.SwingState;
-import enums.SwingType;
 import mathax.client.MatHax;
 import mathax.client.systems.config.Config;
 import mathax.client.utils.render.color.Color;
@@ -20,7 +17,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -247,10 +243,4 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     public int hashCode() {
         return Objects.hash(name);
     }
-
-    public abstract boolean shouldRotate(RotationType type);
-
-    public abstract int getExisted(RotationType type);
-
-    public abstract void swing(SwingState state, SwingType type, Hand hand);
 }
