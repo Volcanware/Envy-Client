@@ -11,6 +11,8 @@ import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.combat.KillAura;
+import mathax.client.events.packets.PacketEvent;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import mathax.client.utils.Utils;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.entity.SortPriority;
@@ -31,6 +33,9 @@ import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
+import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
+import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
@@ -56,6 +61,8 @@ public class Bot extends Module {
     //_____________________________CHAT______________________________________
 
     private int messageI, timer;
+
+    private GameMessageS2CPacket packet;
 
     private final SettingGroup sgChat = settings.createGroup("Chat Options");
 
@@ -87,13 +94,13 @@ public class Bot extends Module {
         .build()
     );
 
-    private final Setting<String> BotCommunicate = sgChat.add(new StringSetting.Builder()
+/*    private final Setting<String> BotCommunicate = sgChat.add(new StringSetting.Builder()
         .name("BotCommunicate")
         .description("Uses /msg to Communicate with other Bots.")
         .defaultValue("sjsawscba")
         .visible(() -> Chat.get())
         .build()
-    );
+    );*/
 
     private final Setting<Boolean> ignoreFriends = sgChat.add(new BoolSetting.Builder()
         .name("ignore-friends")
@@ -199,6 +206,8 @@ public class Bot extends Module {
     //_____________________________BARITONE______________________________________
 
     private final SettingGroup sgBaritone = settings.createGroup("Baritone Options");
+
+
 
     private final Setting<Boolean> Baritone = sgToggles.add(new BoolSetting.Builder()
         .name("Baritone")
@@ -414,6 +423,14 @@ public class Bot extends Module {
         .visible(() -> Combat.get())
         .build()
     );
+
+/*    private final Setting<Boolean> Bots = sgKATargeting.add(new BoolSetting.Builder()
+        .name("Bots")
+        .description("Attacks Bots Found with BotCommunication")
+        .defaultValue(false)
+        .visible(() -> Combat.get())
+        .build()
+    );*/
 
     public final Setting<Double> targetRange = sgKATargeting.add(new DoubleSetting.Builder()
         .name("range")
