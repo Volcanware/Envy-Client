@@ -515,9 +515,6 @@ public class Bot extends Module {
         .build()
     );
 
-    public void onActivateServer() {
-        //PlaceHolder
-
     private final Setting<Boolean> autoBlock = sgKillaura.add(new BoolSetting.Builder()
         .name("AutoBlock")
         .description("1.8 module on 1.9+ wow")
@@ -525,10 +522,10 @@ public class Bot extends Module {
         .build()
     );
 
-    private final Setting<Bot.BlockMode> blockMode = sgKillaura.add(new EnumSetting.Builder<Bot.BlockMode>()
+    private final Setting<BlockMode> blockMode = sgKillaura.add(new EnumSetting.Builder<BlockMode>()
         .name("Rotation mode")
         .description(".")
-        .defaultValue(Bot.BlockMode.Constant)
+        .defaultValue(BlockMode.Constant)
         .visible(autoBlock::get)
         .build()
     );
@@ -540,7 +537,7 @@ public class Bot extends Module {
 
 
     @Override
-    public void onDeactivate() {
+    public void onDeactivateCombat() {
         hitDelayTimer = 0;
         targets.clear();
     }
