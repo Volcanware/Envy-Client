@@ -80,6 +80,8 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
         return false;
     }
     public void onActivateCombat() {}
+
+    public void onActivateDefault() {}
     public void onDeactivate() {}
     public void onDeactivateCombat() {}
 
@@ -98,6 +100,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
                 onActivate();
                 onActivateServer();
                 onActivateCombat();
+                onDeactivateCombat();
             }
         } else {
             if (runInMainMenu || Utils.canUpdate()) {
@@ -124,6 +127,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
                 if (autoSubscribe) MatHax.EVENT_BUS.subscribe(this);
                 onActivate();
                 onActivateServer();
+                onDeactivateCombat();
             }
         } else {
             if (runInMainMenu || Utils.canUpdate()) {

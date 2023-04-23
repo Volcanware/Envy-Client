@@ -48,6 +48,11 @@ public class Bot extends Module {
     }
     private final SettingGroup sgToggles = settings.createGroup("All the toggles!");
 
+
+    public void onActivateDefault() {
+        info("Bot Activated");
+    }
+
     //_____________________________CHAT______________________________________
 
     private int messageI, timer;
@@ -215,7 +220,7 @@ public class Bot extends Module {
         .name("Prefix")
         .description("What Prefix to use for Baritone Commands || You need to change it to what your prefix is")
         .defaultValue("#")
-        .visible(() -> BaritoneFollow.get() && Baritone.get())
+        .visible(() -> Baritone.get())
         .build()
     );
 
