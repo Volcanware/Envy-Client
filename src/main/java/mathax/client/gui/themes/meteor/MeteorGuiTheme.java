@@ -304,6 +304,11 @@ public class MeteorGuiTheme extends GuiTheme {
         return round.get();
     }
 
+    @Override
+    public boolean hideHUD() {
+        return false;
+    }
+
     public class ThreeStateColorSetting {
         private final Setting<SettingColor> normal, hovered, pressed;
 

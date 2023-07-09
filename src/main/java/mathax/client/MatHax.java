@@ -357,11 +357,6 @@ public class MatHax implements ClientModInitializer {
         WindowUtils.MatHax.setTitleLoaded();
 
         // Shutdown hook
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            DiscordRPC.disable();
-            Systems.save();
-            GuiThemes.save();
-        }));
 
         // Icon & Title
         ClientSpoof cs = Modules.get().get(ClientSpoof.class);

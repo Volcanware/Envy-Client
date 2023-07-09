@@ -49,6 +49,13 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.sun.jna:jna:3.0.9'
+    implementation 'com.sun.jna:jna:3.0.9'
+    implementation 'com.github.oshi:oshi-core:6.4.0'
+    implementation 'com.github.oshi:oshi-core:6.4.0'
+    implementation 'com.github.oshi:oshi-core:6.4.0'
+    implementation 'com.github.oshi:oshi-core:6.4.0'
+    implementation 'com.github.oshi:oshi-core:6.4.0'
     def library = { id ->
         implementation(id) {
             exclude group: "org.slf4j"
@@ -91,9 +98,6 @@ dependencies {
     // Malilib for Litematica
     /*modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
     include "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"*/
-
-    // Discord RPC
-    library "com.github.Vatuu:discord-rpc:${project.discord_version}"
 
     // Music
 
@@ -141,7 +145,7 @@ tasks.withType(JavaCompile).configureEach {
 
 remapJar {
     dependsOn shadowJar
-    input.set(shadowJar.archiveFile)
+    input.set shadowJar.archiveFile
 }
 
 javadoc {

@@ -25,8 +25,6 @@ import mathax.client.utils.render.PeekScreen;
 import mathax.client.utils.render.prompts.OkPrompt;
 import mathax.client.utils.render.prompts.YesNoPrompt;
 import mathax.client.systems.modules.misc.NameProtect;
-import net.arikia.dev.drpc.DiscordEventHandlers;
-import net.arikia.dev.drpc.DiscordRichPresence;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.*;
@@ -38,9 +36,6 @@ import net.minecraft.item.Items;
 import java.io.File;
 
 public class DiscordRPC extends Module {
-    private static final net.arikia.dev.drpc.DiscordRPC discord = new net.arikia.dev.drpc.DiscordRPC();
-    private static final DiscordEventHandlers handlers = new DiscordEventHandlers();
-    private static final DiscordRichPresence rpc = new DiscordRichPresence();
 
     private static final String APP_ID = "1063976066726772858";
     private static final String STEAM_ID = "";
@@ -85,64 +80,7 @@ public class DiscordRPC extends Module {
         super(Categories.Client, Items.COMMAND_BLOCK, "discord-rpc", "Shows Envy as your Discord status.", true);
     }
 
-    @Override
-    public boolean onActivate() {
-        MatHax.LOG.info("Enabling Discord Rich Presence...");
 
-        discord.discordInitialize(APP_ID, handlers, true, STEAM_ID);
-        rpc.startTimestamp = Utils.getCurrentTimeMillis() / 1000;
-        rpc.details = Version.getStylized() + " | " + getUsername() + getHealth();
-        rpc.state = getActivity();
-        rpc.largeImageKey = "envyicon";
-        rpc.largeImageText = "envy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
-        applySmallImage();
-        rpc.smallImageText = getActivity();
-        rpc.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
-        rpc.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
-        rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
-        rpc.partyMax = 1;
-        discord.discordUpdatePresence(rpc);
-
-        MatHax.LOG.info("Discord Rich Presence enabled!");
-
-        new Thread(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
-                discord.discordRunCallbacks();
-                try {
-                    rpc.details = Version.getStylized() + " | " + getUsername() + getHealth();
-                    rpc.state = getActivity();
-                    rpc.largeImageKey = "envyicon";
-                    rpc.largeImageText = "envy " + Version.getStylized() + " - " + mc.getVersionType() + " " + Version.getMinecraft();
-                    applySmallImage();
-                    rpc.smallImageText = getActivity();
-                    rpc.partySize = mc.getNetworkHandler() != null ? mc.getNetworkHandler().getPlayerList().size() : 1;
-                    rpc.partyMax = 1;
-                    discord.discordUpdatePresence(rpc);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }, "RPC-Callback-Handler").start();
-        return false;
-    }
-
-    @Override
-    public void onDeactivate() {
-        disable();
-    }
-
-    public static void disable() {
-        MatHax.LOG.info("Disabling Discord Rich Presence...");
-        discord.discordClearPresence();
-        discord.discordShutdown();
-        MatHax.LOG.info("Discord Rich Presence disabled!");
-    }
 
     // TODO: Rewrite
     private String getActivity() {
@@ -388,19 +326,6 @@ public class DiscordRPC extends Module {
         }
 
         return "Could not get server/world";
-    }
-
-    private static void applySmallImage() {
-        if (delay == 5) {
-            delay = 0;
-
-            if (number == 16) number = 1;
-
-            if (Modules.get().get(DiscordRPC.class).smallImageMode.get() == SmallImageMode.Dogs) rpc.smallImageKey = "dog-" + number;
-            else rpc.smallImageKey = "cat-" + number;
-
-            number++;
-        } else delay++;
     }
 
     public enum SmallImageMode {

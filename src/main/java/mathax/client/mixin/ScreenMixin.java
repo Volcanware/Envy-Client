@@ -19,13 +19,7 @@ import java.util.List;
 public abstract class ScreenMixin {
     @Inject(method = "renderBackground(Lnet/minecraft/client/util/math/MatrixStack;)V", at = @At("HEAD"), cancellable = true)
     private void onRenderBackground(CallbackInfo info) {
-        if (Utils.canUpdate() && Modules.get().get(NoRender.class).noGUIBackground()) info.cancel();
-    }
-
-    @Inject(method = "method_32635", at = @At("HEAD"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void onComponentConstruct(List<TooltipComponent> list, TooltipData data, CallbackInfo info) {
-        if (data instanceof MatHaxTooltipData) {
-            list.add(((MatHaxTooltipData) data).getComponent());
+        if (Utils.canUpdate() && Modules.get().get(NoRender.class).noGUIBackground()) {
             info.cancel();
         }
     }
