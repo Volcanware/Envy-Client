@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://cdn.discordapp.com/attachments/1104320661930909797/1127951651970490388/Z.png" width="200" height="200">
+  [<img src="https://cdn.discordapp.com/attachments/1104320661930909797/1127951651970490388/Z.png" width="200" height="200">](volcanware.xyz)
 </div>
 
 <h1 align="center">
