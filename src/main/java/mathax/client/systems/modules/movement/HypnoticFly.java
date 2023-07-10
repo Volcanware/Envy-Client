@@ -103,7 +103,7 @@ public class HypnoticFly extends Module {
     @EventHandler
     public void onMotion(EventMove event) {
         this.setDisplayName("ElytraFly " + Color.gray.getRGB() + mode.get());
-        if (wearingElytra() && (autoElytra.get() && mc.player.fallDistance >= fallDistance.get() && !mc.player.isOnGround() && !mc.player.isFallFlying())) {
+        if (wearingElytra() && (autoElytra.get().booleanValue() && mc.player.fallDistance >= fallDistance.get().doubleValue() && !mc.player.isOnGround() && !mc.player.isFallFlying())) {
             if (mc.player.age % 5 == 0)
                 mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
         }
@@ -117,12 +117,12 @@ public class HypnoticFly extends Module {
                 mc.player.setVelocity(vec3d_2.add(vec3d_1.x * 0.1D + (vec3d_1.x * 1.5D - vec3d_2.x) * 0.5D, vec3d_1.y * 0.1D + (vec3d_1.y * 1.5D - vec3d_2.y) * 0.5D, vec3d_1.z * 0.1D + (vec3d_1.z * 1.5D - vec3d_2.z) * 0.5D));
             } else {
                 if (mode.get() == Mode.NCP || mode.get() == Mode.Vanilla) {
-                    PlayerUtils.setMoveSpeed(event, flyspeed.get());
+                    PlayerUtils.setMoveSpeed(event, flyspeed.get().doubleValue());
                     if (event.getY() <= 0)
                         event.setY(mc.player.isSneaking() ? (float)-downspeed.get() : (slowglide.get() ? -0.01 : 0));
                     if (mode.get() == Mode.NCP) {
-                        if (mc.options.jumpKey.isPressed()) event.setY(flyspeed.get());
-                        if (mc.options.sneakKey.isPressed()) event.setY(-flyspeed.get());
+                        if (mc.options.jumpKey.isPressed()) event.setY(flyspeed.get().doubleValue());
+                        if (mc.options.sneakKey.isPressed()) event.setY(-flyspeed.get().doubleValue());
                     }
                 }
 
