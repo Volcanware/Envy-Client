@@ -184,7 +184,7 @@ public class Background extends Module {
                 GL.bindTexture(fbo1.texture);
                 shader.set("u_Direction", 0.0, 1.0);
                 PostProcessRenderer.render();
-            }
+            } //volcan sucks
 
             PostProcessRenderer.endRender();
         }

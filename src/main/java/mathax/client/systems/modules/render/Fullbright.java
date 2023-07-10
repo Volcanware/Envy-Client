@@ -37,7 +37,7 @@ public class Fullbright extends Module {
         super(Categories.Render, Items.BEACON, "fullbright", "Allows you to see at any light level.");
     }
 
-    @Override
+    @Override //luminance go brrr
     public boolean onActivate() {
         if (mode.get() == Mode.Luminance) mc.worldRenderer.reload();
         return false;

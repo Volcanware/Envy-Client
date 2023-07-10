@@ -416,7 +416,7 @@ public class NoRender extends Module {
     public boolean noBlockBreakOverlay() {
         return isActive() && noBlockBreakOverlay.get();
     }
-
+    //he lives in australia
     public boolean noSkylightUpdates() {
         return isActive() && noSkylightUpdates.get();
     }

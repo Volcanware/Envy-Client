@@ -105,7 +105,7 @@ public class StashFinder extends Module {
 
         return list;
     }
-
+    //chestesp on steriods or something idk
     private void fillTable(GuiTheme theme, WTable table) {
         for (Chunk chunk : chunks) {
             table.add(theme.label("Pos: " + chunk.x + ", " + chunk.z));

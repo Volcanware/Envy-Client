@@ -150,7 +150,7 @@ public class RideStats extends Module {
 
         // Name
         String name;
-        name = horseEntity.getType().getName().getString();
+        name = horseEntity.getType().getName().getString(); //i would be surpirsed if you found all of these
 
         // Health
         double health = horseEntity.getMaxHealth();

@@ -166,7 +166,7 @@ public class Chams extends Module {
         .visible(renderFrame1::get)
         .build()
     );
-
+    //so many settings
     public final Setting<Boolean> renderFrame2 = sgCrystals.add(new BoolSetting.Builder()
         .name("render-outer-frame")
         .description("Enables rendering of the frame of the crystal.")

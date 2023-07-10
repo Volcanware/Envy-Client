@@ -194,6 +194,7 @@ public class BetterTooltips extends Module {
                     food.getStatusEffects().forEach((e) -> {
                         StatusEffectInstance effect = e.getFirst();
                         event.list.add(1, getStatusText(effect));
+                        //im so bored
                     });
                 }
             }

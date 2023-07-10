@@ -82,7 +82,7 @@ public class InstaMine extends Module {
         .defaultValue(new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
-
+    //Just use haste 2 eff 5 ._.
     public InstaMine() {
         super(Categories.Minigame, Items.DIAMOND_PICKAXE, "CivBreak", "Attempts to instantly mine blocks.");
     }

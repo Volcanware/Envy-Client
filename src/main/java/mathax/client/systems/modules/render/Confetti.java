@@ -32,7 +32,7 @@ public class Confetti extends Module {
     public Confetti() {
         super(Categories.Render, Items.TOTEM_OF_UNDYING, "Confetti", "Changes the color of the totem pop particles.");
     }
-
+    //does this work
     public Vec3d getColorOne() {
         return getDoubleVectorColor(colorOne);
     }

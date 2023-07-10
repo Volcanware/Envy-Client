@@ -46,7 +46,7 @@ public class ItemPhysics extends Module {
             if (shape.getMax(Direction.Axis.Y) <= .5) renderBlockFlat = true;
         }
 
-        Item item = event.itemEntity.getStack().getItem();
+        Item item = event.itemEntity.getStack().getItem(); //how tf does physics work
         if (item instanceof BlockItem && !(item instanceof AliasedBlockItem) && !renderBlockFlat) event.matrixStack.translate(0, -0.06, 0);
 
         if (!renderBlockFlat) {

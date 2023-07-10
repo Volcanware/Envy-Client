@@ -15,6 +15,7 @@ public class NoCaveCulling extends Module {
         mc.chunkCullingEnabled = false;
         mc.worldRenderer.reload();
         return false;
+        //lives near "the road"
     }
 
     @Override

@@ -37,7 +37,7 @@ public class Trail extends Module {
     public Trail() {
         super(Categories.Render, Items.BLUE_STAINED_GLASS, "trail", "Renders a customizable trail behind your player.");
     }
-
+    //SOUPPPPPPPPPPPPPP
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (pause.get() && mc.player.getVelocity().x == 0 && mc.player.getVelocity().y == 0 && mc.player.getVelocity().z == 0) return;

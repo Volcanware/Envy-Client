@@ -125,7 +125,7 @@ public class BlockSelection extends Module {
         VoxelShape shape = state.getOutlineShape(mc.world, bp);
 
         if (shape.isEmpty()) return;
-        Box box = shape.getBoundingBox();
+        Box box = shape.getBoundingBox(); //bosses are cool
 
         if (oneSide.get()) {
             if (side == Direction.UP || side == Direction.DOWN) {

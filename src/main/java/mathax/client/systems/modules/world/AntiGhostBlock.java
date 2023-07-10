@@ -54,7 +54,7 @@ public class AntiGhostBlock extends Module {
     }
 
     private static final BlockPos.Mutable blockPos = new BlockPos.Mutable();
-
+    //just have good ping ez
     @Override
     public boolean onActivate() {
         if (mc.getNetworkHandler() == null) return false;

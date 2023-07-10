@@ -113,7 +113,7 @@ public class AutoExtinguish extends Module {
                 doesWaterBucketWork = true;
             }
         }
-
+        //just use water??? What???
         if (onGround.get() && !mc.player.isOnGround()) return;
 
         if (waterBucket.get() && doesWaterBucketWork) {

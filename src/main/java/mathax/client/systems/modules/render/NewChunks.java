@@ -175,7 +175,7 @@ public class NewChunks extends Module {
                             Direction dir = directions[y];
                             if (mc.world.getBlockState(packet.getPos().offset(dir)).getFluidState().isStill() && !oldChunks.contains(pos)) {
                                 newChunks.add(pos);
-                                return;
+                                return; //this barely works
                             }
                         }
                     }

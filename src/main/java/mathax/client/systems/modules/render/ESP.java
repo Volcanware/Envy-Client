@@ -148,7 +148,7 @@ public class ESP extends Module {
         .visible(() -> !distance.get())
         .build()
     );
-
+    //WHY
     private final Setting<SettingColor> waterAnimalsColor = sgColors.add(new ColorSetting.Builder()
         .name("water-animals")
         .description("The water animal's color.")

@@ -115,7 +115,7 @@ public class TreeAura extends Module {
         else
             mc.player.networkHandler.sendPacket(new PlayerInteractBlockC2SPacket(Hand.MAIN_HAND, new BlockHitResult(Utils.vec3d(sapling), Direction.UP, sapling, false), 0));
     }
-
+    //who would use this
     private boolean canPlant(BlockPos pos) {
         Block b = mc.world.getBlockState(pos).getBlock();
         if (b.equals(Blocks.GRASS) || b.equals(Blocks.GRASS_BLOCK) || b.equals(Blocks.DIRT) || b.equals(Blocks.COARSE_DIRT)) {

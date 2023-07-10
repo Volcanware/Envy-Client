@@ -13,7 +13,7 @@ public class BuildHeight extends Module {
     public BuildHeight() {
         super(Categories.World, Items.SCAFFOLDING, "build-height", "Allows you to interact with objects at the build limit.");
     }
-
+    //build height is just 255 or 320??? why is this needed :/
     @EventHandler
     private void onSendPacket(PacketEvent.Send event) {
         if (!(event.packet instanceof PlayerInteractBlockC2SPacket packet)) return;

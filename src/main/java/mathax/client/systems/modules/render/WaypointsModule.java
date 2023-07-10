@@ -89,7 +89,7 @@ public class WaypointsModule extends Module {
         if (!event.isCancelled()) addDeath(mc.player.getPos());
     }
 
-    public void addDeath(Vec3d deathPos) {
+    public void addDeath(Vec3d deathPos) { //remove death better
         String time = dateFormat.format(new Date());
         if (dpChat.get()) {
             MutableText text = Text.literal("Died at ");

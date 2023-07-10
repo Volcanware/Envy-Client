@@ -113,7 +113,7 @@ public class LogoutSpots extends Module {
     }
 
     @Override
-    public void onDeactivate() {
+    public void onDeactivate() { //imagine logging out
         players.clear();
         lastPlayerList.clear();
     }

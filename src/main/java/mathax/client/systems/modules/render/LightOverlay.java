@@ -123,7 +123,7 @@ public class LightOverlay extends Module {
         );
     }
 
-    private class Cross {
+    private class Cross { //just place torches on every single block
         private double x, y, z;
         private boolean potential;
 

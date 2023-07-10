@@ -189,7 +189,7 @@ public class Tracers extends Module {
                     default -> miscColor.get();
                 };
             }
-
+            //trace dat bish
             double x = entity.prevX + (entity.getX() - entity.prevX) * event.tickDelta;
             double y = entity.prevY + (entity.getY() - entity.prevY) * event.tickDelta;
             double z = entity.prevZ + (entity.getZ() - entity.prevZ) * event.tickDelta;

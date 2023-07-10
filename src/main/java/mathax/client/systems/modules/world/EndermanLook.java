@@ -39,7 +39,7 @@ public class EndermanLook extends Module {
         } else {
             for (Entity entity : mc.world.getEntities()) {
                 if (!(entity instanceof EndermanEntity enderman)) continue;
-
+                //just use a pumpkin forehead
                 if (enderman.isAngry() || !enderman.isAlive() || !mc.player.canSee(enderman)) continue;
 
                 Rotations.rotate(Rotations.getYaw(enderman), Rotations.getPitch(enderman, Target.Head), -75, null);

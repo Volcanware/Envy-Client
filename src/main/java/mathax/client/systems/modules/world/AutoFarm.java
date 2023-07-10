@@ -170,6 +170,7 @@ public class AutoFarm extends Module {
         boolean tillable = block == Blocks.GRASS_BLOCK ||
             block == Blocks.DIRT_PATH ||
             block == Blocks.DIRT ||
+            //if you see this, dm me HardlineMouse16 "memory leaks are great" and you get a fancy role in the VolcanWare Discord and a custom cape soon:tm:
             block == Blocks.COARSE_DIRT ||
             block == Blocks.ROOTED_DIRT;
         if (moist && tillable && mc.world.getBlockState(pos.up()).isAir()) {

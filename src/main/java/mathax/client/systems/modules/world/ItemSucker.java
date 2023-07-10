@@ -57,7 +57,7 @@ public class ItemSucker extends Module {
         .defaultValue(true)
         .build()
     );
-
+    //SUCCCCCCC
     boolean changeSpeed = false;
     BlockPos pos = null;
 

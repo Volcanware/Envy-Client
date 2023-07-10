@@ -30,7 +30,7 @@ public class ItemHighlight extends Module {
         .build()
     );
 
-    public ItemHighlight() {
+    public ItemHighlight() { //just look at your inventory
         super(Categories.Render, Items.PURPLE_STAINED_GLASS_PANE, "item-highlight", "Highlights selected items when in GUIs.");
     }
 

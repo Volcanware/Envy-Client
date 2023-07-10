@@ -104,7 +104,7 @@ public class EChestFarmer extends Module {
     public EChestFarmer() {
         super(Categories.World, Items.ENDER_CHEST, "echest-farmer", "Places and breaks EChests to farm obsidian.");
     }
-
+    //what??? you cant plant echests?
     @Override
     public boolean onActivate() {
         target = null;

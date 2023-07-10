@@ -36,6 +36,7 @@ public class AutoBreed extends Module {
             EntityType.WOLF,
             EntityType.CAT,
             EntityType.OCELOT,
+            //GIB PANDA
             EntityType.RABBIT,
             EntityType.LLAMA,
             EntityType.TURTLE,

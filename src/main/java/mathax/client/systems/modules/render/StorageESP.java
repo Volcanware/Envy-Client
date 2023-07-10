@@ -143,7 +143,7 @@ public class StorageESP extends Module {
         vertexConsumerProvider = new MeshVertexConsumerProvider(mesh);
     }
 
-    private void getBlockEntityColor(BlockEntity blockEntity) {
+    private void getBlockEntityColor(BlockEntity blockEntity) { //stash finder but bad
         render = false;
 
         if (!storageBlocks.get().contains(blockEntity.getType())) return;

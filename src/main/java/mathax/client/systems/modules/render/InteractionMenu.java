@@ -101,7 +101,7 @@ public class InteractionMenu extends Module {
     public WWidget getWidget(GuiTheme theme) {
         WTable table = theme.table();
         fillTable(theme, table);
-        return table;
+        return table; //imagine interacting
     }
 
     private void fillTable(GuiTheme theme, WTable table) {
