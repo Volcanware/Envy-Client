@@ -490,6 +490,7 @@ public class Modules extends System<Modules> {
         add(new ElytraBoost());
         add(new ElytraFly());
         add(new HypnoticFly());
+        add(new TensorFly());
         add(new EntityControl());
         add(new EntityFly());
         add(new EntitySpeed());
