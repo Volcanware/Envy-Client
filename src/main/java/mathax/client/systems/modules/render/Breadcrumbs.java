@@ -100,7 +100,7 @@ public class Breadcrumbs extends Module {
             lastDimension = mc.world.getDimension();
             populateSectionManagers();
         }
-
+        //EW NOBRE EWWWWWWW
         Set<Entity> entities = new HashSet<>(sectionManagers.keySet());
         List<Entity> inWorld = getWorldEntitiesFiltered();
         entities.addAll(inWorld);

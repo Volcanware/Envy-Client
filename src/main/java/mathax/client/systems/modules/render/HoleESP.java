@@ -141,7 +141,7 @@ public class HoleESP extends Module {
         .defaultValue(new SettingColor(255, 0, 0, 150))
         .build()
     );
-
+    //thats sus
     private final Setting<SettingColor> mixedColorTop = sgRender.add(new ColorSetting.Builder()
         .name("mixed-top")
         .description("The top color for holes that have mixed bedrock and obsidian.")

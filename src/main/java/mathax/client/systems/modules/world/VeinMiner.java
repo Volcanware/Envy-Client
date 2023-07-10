@@ -34,7 +34,7 @@ public class VeinMiner extends Module {
     private final Pool<MyBlock> blockPool = new Pool<>(MyBlock::new);
     private final List<MyBlock> blocks = new ArrayList<>();
     private final List<BlockPos> foundBlockPositions = new ArrayList<>();
-
+    //wtf does this do?
     private final Set<Vec3i> blockNeighbours = Sets.newHashSet(
         new Vec3i(1, -1, 1), new Vec3i(0, -1, 1), new Vec3i(-1, -1, 1),
         new Vec3i(1, -1, 0), new Vec3i(0, -1, 0), new Vec3i(-1, -1, 0),
@@ -158,7 +158,7 @@ public class VeinMiner extends Module {
     @EventHandler
     private void onStartBreakingBlock(StartBreakingBlockEvent event) {
         BlockState state = mc.world.getBlockState(event.blockPos);
-
+        //how does this work???
         if (state.getHardness(mc.world, event.blockPos) < 0) return;
         if (mode.get() == ListMode.Whitelist && !selectedBlocks.get().contains(state.getBlock())) return;
         if (mode.get() == ListMode.Blacklist && selectedBlocks.get().contains(state.getBlock())) return;

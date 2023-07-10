@@ -29,7 +29,7 @@ public class Timer extends Module {
     );
 
     // Buttons
-
+    //mixins go brrrrrrrr
     @Override
     public WWidget getWidget(GuiTheme theme) {
         if (Modules.get().get(TPSSync.class).isActive()) {

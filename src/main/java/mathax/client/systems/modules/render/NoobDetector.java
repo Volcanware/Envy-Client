@@ -93,6 +93,7 @@ public class NoobDetector extends Module {
                     isTargetANoob = true;
                     if (chat.get()) info("Your target is a noob!");
                     count = 0;
+                    //new south wales
                 }
             }
         }

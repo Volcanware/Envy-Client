@@ -144,7 +144,7 @@ public class AutoWither extends Module {
             });
         }
     }
-
+    //withers arent hard to make...
     @EventHandler
     private void onPostTick(TickEvent.Post event) {
         if (wither == null) {

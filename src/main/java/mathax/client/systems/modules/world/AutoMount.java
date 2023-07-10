@@ -98,7 +98,7 @@ public class AutoMount extends Module {
     public AutoMount() {
         super(Categories.World, Items.SADDLE, "auto-mount", "Automatically mounts entities.");
     }
-
+    //im a minor
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (mc.player.hasVehicle()) return;

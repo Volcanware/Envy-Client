@@ -67,11 +67,11 @@ public class SmallFire extends Module{
     public SmallFire() {
         super(Categories.Render, Items.SPYGLASS, "small-fire", "Smalls fire on screen.");
     }
-    
-    public Vec3f getFireScale() {
+
+    public Vec3f getFireScale() { //your fired
         return new Vec3f(scaleX.get().floatValue(), scaleY.get().floatValue(), scaleZ.get().floatValue());
     }
-    
+
     public Vec3f getFirePosition() {
         return new Vec3f(scaleX.get().floatValue(), scaleY.get().floatValue(), scaleZ.get().floatValue());
     }

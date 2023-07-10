@@ -30,7 +30,7 @@ public class ColorSigns extends Module {
 
         event.packet = p;
     }
-
+    //cant you colour signs normally?
     @Override
     public boolean onActivate() {
         super.onActivate();

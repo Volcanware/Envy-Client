@@ -106,7 +106,7 @@ public class TunnelESP extends Module {
     private static byte getPackedZ(int p) {
         return (byte) (p & 0xFF);
     }
-
+    //wtf is a 0xFF
     private void searchChunk(Chunk chunk, TChunk tChunk) {
         Context ctx = new Context();
         IntSet set = new IntOpenHashSet();

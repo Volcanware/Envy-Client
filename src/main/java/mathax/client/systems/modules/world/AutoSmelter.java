@@ -115,7 +115,7 @@ public class AutoSmelter extends Module {
 
         InvUtils.move().fromId(slot).toId(0);
     }
-
+    //SMELT
     private void checkFuel(AbstractFurnaceScreenHandler c) {
         ItemStack fuelStack = c.slots.get(1).getStack();
 

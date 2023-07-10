@@ -73,7 +73,7 @@ public class AutoNametag extends Module {
         if (!findNametag.found()) {
             error("No Nametag in Hotbar");
             toggle();
-            return;
+            return; //no, dont return
         }
 
         target = TargetUtils.get(entity -> {

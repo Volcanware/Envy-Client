@@ -89,7 +89,7 @@ public class InfinityMiner extends Module {
         .defaultValue(false)
         .build()
     );
-
+    //this is just budget mending
     public InfinityMiner() {
         super(Categories.World, Items.DIAMOND_PICKAXE, "infinity-miner", "Allows you to essentially mine forever by mining repair blocks when the durability gets low. Needs a mending pickaxe.");
     }

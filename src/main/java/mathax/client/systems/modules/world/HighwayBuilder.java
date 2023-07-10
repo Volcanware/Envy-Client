@@ -385,6 +385,7 @@ public class HighwayBuilder extends Module {
     private enum State {
         Center {
             @Override
+            //imagine doing math
             protected void tick(HighwayBuilder b) {
                 // There is probably a much better way to do this
                 double x = Math.abs(b.mc.player.getX() - (int) b.mc.player.getX()) - 0.5;

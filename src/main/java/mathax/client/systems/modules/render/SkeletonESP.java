@@ -106,7 +106,7 @@ public class SkeletonESP extends Module {
         RenderSystem.defaultBlendFunc();
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(MinecraftClient.isFancyGraphicsOrBetter());
-        RenderSystem.enableCull();
+        RenderSystem.enableCull(); //are you reading this?
 
         mc.world.getEntities().forEach(entity -> {
             if (!(entity instanceof PlayerEntity player)) return;

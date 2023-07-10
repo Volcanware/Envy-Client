@@ -68,7 +68,7 @@ public class FreeLook extends Module {
     }
 
     @Override
-    public boolean onActivate() {
+    public boolean onActivate() { //imagine looking
         cameraYaw = mc.player.getYaw();
         cameraPitch = mc.player.getPitch();
         prePers = mc.options.getPerspective();

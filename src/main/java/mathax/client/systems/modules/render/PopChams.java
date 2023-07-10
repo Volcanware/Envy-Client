@@ -104,7 +104,7 @@ public class PopChams extends Module {
             ghosts.clear();
         }
     }
-
+    //actually, maybe the bible
     @EventHandler
     private void onReceivePacket(PacketEvent.Receive event) {
         if (!(event.packet instanceof EntityStatusS2CPacket packet)) return;

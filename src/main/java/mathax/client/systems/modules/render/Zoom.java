@@ -71,7 +71,7 @@ public class Zoom extends Module {
     }
 
     @Override
-    public boolean onActivate() {
+    public boolean onActivate() { //zoom go brrrr
         if (!enabled) {
             preCinematic = mc.options.smoothCameraEnabled;
             preMouseSensitivity = mc.options.getMouseSensitivity().getValue();

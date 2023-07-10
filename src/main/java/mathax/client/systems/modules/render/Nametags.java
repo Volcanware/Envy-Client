@@ -318,7 +318,7 @@ public class Nametags extends Module {
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post event) {
+    private void onTick(TickEvent.Post event) { //imagine needing nametags
         entityList.clear();
 
         boolean freecamNotActive = !Modules.get().isActive(Freecam.class);

@@ -54,7 +54,7 @@ public class AutoBrewer extends Module {
             ingredientI = -2;
             timer = 0;
         }
-
+        //i just want some damn potions bruh
         // Wait for the brewing to complete.
         if (c.getBrewTime() != 0 || timer < 5) return;
 

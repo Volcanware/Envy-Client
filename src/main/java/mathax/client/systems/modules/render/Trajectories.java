@@ -125,7 +125,7 @@ public class Trajectories extends Module {
         paths.add(path);
         return path;
     }
-
+    //MATH
     private void calculatePath(PlayerEntity player, double tickDelta) {
         // Clear paths
         for (Path path : paths) path.clear();

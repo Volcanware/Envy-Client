@@ -52,7 +52,7 @@ public class Freecam extends Module {
         .min(0.0)
         .build()
     );
-
+    //this is taking so long
     private final Setting<Double> speedScrollSensitivity = sgGeneral.add(new DoubleSetting.Builder()
         .name("speed-scroll-sensitivity")
         .description("Allows you to change speed value using scroll wheel. 0 to disable.")

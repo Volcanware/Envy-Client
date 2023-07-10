@@ -30,7 +30,7 @@ public class Australia extends Module {
     public boolean onActivate() {
         mc.options.getFov().setValue(260);
         info("You are now in Australia.");
-        return false;
+        return false; //hes prob gay
     }
 
     @EventHandler

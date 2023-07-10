@@ -57,7 +57,7 @@ public class AutoShearer extends Module {
         entity = null;
     }
 
-    @EventHandler
+    @EventHandler //who needs an event handler
     private void onTick(TickEvent.Pre event) {
         entity = null;
 

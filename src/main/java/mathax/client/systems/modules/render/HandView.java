@@ -207,7 +207,7 @@ public class HandView extends Module {
     @EventHandler
     private void onHeldItemRender(HeldItemRendererEvent event) {
         if (!isActive()) return;
-
+        //how the FUCK does this work
         if (event.hand == Hand.MAIN_HAND) {
             event.matrix.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(rotationXMain.get().floatValue()));
             event.matrix.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotationYMain.get().floatValue()));
