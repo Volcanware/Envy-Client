@@ -2,6 +2,7 @@ package mathax.client.utils.player;
 
 import baritone.api.BaritoneAPI;
 import baritone.api.utils.Rotation;
+import mathax.client.events.movement.EventMove;
 import mathax.client.systems.config.Config;
 import mathax.client.systems.enemies.Enemies;
 import mathax.client.systems.friends.Friends;
@@ -79,6 +80,7 @@ public class PlayerUtils {
     public static boolean isPlayerMoving(PlayerEntity player) {
         return player.forwardSpeed != 0 || player.sidewaysSpeed != 0;
     }
+
 
     public static double[] directionSpeed(double speed) {
         float forward = mc.player.input.movementForward;
@@ -634,6 +636,32 @@ public class PlayerUtils {
         PlayerListEntry playerListEntry = mc.getNetworkHandler().getPlayerListEntry(mc.player.getUuid());
         if (playerListEntry == null) return 0;
         return playerListEntry.getLatency();
+    }
+
+    public static void setMoveSpeed(EventMove event, final double speed) {
+        double forward = mc.player.input.movementForward;
+        double strafe = mc.player.input.movementSideways;
+        float yaw = mc.player.getYaw();
+        if (forward == 0.0 && strafe == 0.0) {
+            event.setX(0.0);
+            event.setZ(0.0);
+        } else {
+            if (forward != 0.0) {
+                if (strafe > 0.0) {
+                    yaw += ((forward > 0.0) ? -45 : 45);
+                } else if (strafe < 0.0) {
+                    yaw += ((forward > 0.0) ? 45 : -45);
+                }
+                strafe = 0.0;
+                if (forward > 0.0) {
+                    forward = 1.0;
+                } else if (forward < 0.0) {
+                    forward = -1.0;
+                }
+            }
+            event.setX(forward * speed * Math.cos(Math.toRadians(yaw + 90.0f)) + strafe * speed * Math.sin(Math.toRadians(yaw + 90.0f)));
+            event.setZ(forward * speed * Math.sin(Math.toRadians(yaw + 90.0f)) - strafe * speed * Math.cos(Math.toRadians(yaw + 90.0f)));
+        }
     }
 
     public static BlockPos roundBlockPos(final Vec3d vec) {

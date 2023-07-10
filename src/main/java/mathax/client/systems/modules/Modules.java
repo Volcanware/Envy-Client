@@ -489,6 +489,7 @@ public class Modules extends System<Modules> {
         //add(new DepthStriderSpoof());
         add(new ElytraBoost());
         add(new ElytraFly());
+        add(new HypnoticFly());
         add(new EntityControl());
         add(new EntityFly());
         add(new EntitySpeed());
@@ -597,6 +598,7 @@ public class Modules extends System<Modules> {
 
     private void initWorld() {
         add(new AirPlace());
+        add(new AntiSculkSensor());
         add(new Ambience());
         add(new AntiCactus());
         add(new AntiGhostBlock());
