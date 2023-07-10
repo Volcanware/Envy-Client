@@ -300,6 +300,7 @@ public class Jesus extends Module {
     public enum Mode {
         Solid("Solid"),
         Bob("Bob"),
+
         Ignore("Ignore"),
         Hydrophobe("Hydrophobe");
 

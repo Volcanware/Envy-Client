@@ -7,7 +7,7 @@ import mathax.client.systems.modules.movement.speed.modes.VelocityHop;
 public enum SpeedModes {
     Vanilla("Vanilla"),
     Strafe("BunnyHop"),
-    MineBerry("Mineberry"),
+    MineBerry("Mineberry || Old"),
     VelocityHop("Yport"),
     TimerHop("TimerHop"),
     Weird("Please Don't Crash me :("),

@@ -38,7 +38,7 @@ public class MiddleClickFriend extends Module {
     private final Setting<String> friendAddMessageText = sgAdd.add(new StringSetting.Builder()
         .name("friend-add-message-text")
         .description("The message sent to the player after friending him.")
-        .defaultValue("I just friended you on MatHax!")
+        .defaultValue("I just friended you on Envy!")
         .visible(friendAddMessage::get)
         .build()
     );
@@ -55,7 +55,7 @@ public class MiddleClickFriend extends Module {
     private final Setting<String> friendRemoveMessageText = sgRemove.add(new StringSetting.Builder()
         .name("friend-remove-message-text")
         .description("The message sent to the player after unfriending him.")
-        .defaultValue("I just unfriended you on MatHax!")
+        .defaultValue("I just unfriended you on Envy!")
         .visible(friendRemoveMessage::get)
         .build()
     );

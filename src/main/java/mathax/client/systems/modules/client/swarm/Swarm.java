@@ -68,13 +68,13 @@ public class Swarm extends Module {
         stop.action = this::close;
 
         WButton guide = list.add(theme.button("Guide")).expandX().widget();
-        guide.action = () -> Util.getOperatingSystem().open("https://mathaxclient.xyz/Swarm-Guide");
+        guide.action = () -> Util.getOperatingSystem().open("Coming Soon");
 
         return list;
     }
 
     public Swarm() {
-        super(Categories.Client, Items.BEEHIVE, "Swarm", "Allows you to control multiple instances of MatHax from one central host.");
+        super(Categories.Client, Items.BEEHIVE, "Swarm", "Allows you to control multiple instances of Envy from one central host.");
     }
 
     @Override

@@ -34,7 +34,7 @@ import javax.crypto.spec.SecretKeySpec;
 /*/-----------------/*/
 
 public class ChatEncryption extends Module {
-    private static final String password = "MatHaxEncryption";
+    private static final String password = "EnvyEncryption";
     public final String encryptedPrefix = "Ø";
     private String actualPassword = "";
 

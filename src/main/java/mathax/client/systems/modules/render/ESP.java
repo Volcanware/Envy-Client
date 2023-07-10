@@ -213,7 +213,6 @@ public class ESP extends Module {
 
         lineColor.a *= a;
         sideColor.a *= a;
-
         if (mode.get() == Mode.Box) {
             double x = MathHelper.lerp(event.tickDelta, entity.lastRenderX, entity.getX()) - entity.getX();
             double y = MathHelper.lerp(event.tickDelta, entity.lastRenderY, entity.getY()) - entity.getY();
