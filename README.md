@@ -27,11 +27,12 @@
 
 ### Building
 -chineseman hungry
+-floppa i hate hide hud
 - Clone this repository
 - Run `./gradlew build`
 
 ### Installation
-Follow guide on the [wiki](https://github.com/MatHax/Client/wiki/Installation).
+Follow guide on the [wiki](gayniggas.win).
 
 ## Contribution Guidelines
 
