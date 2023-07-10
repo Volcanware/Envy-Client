@@ -17,4 +17,4 @@
 ## Bugs and Suggestions
 Bug reports and suggestions shouldn't be made anywhere.
 
-If you have any other questions, please hesitate to ask in our [Discord](https://discord.gg/DXZ8sb6eSf).
+If you have any other questions, please hesitate to ask in our [Discord](https://discord.gg/rXFjkj4JqY).
