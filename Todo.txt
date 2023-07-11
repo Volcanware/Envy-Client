@@ -14,3 +14,4 @@ List of Todos
 - [ ] Spawn Timer (Auto-Countdown Spawn on tablist)
 - [ ] Aura Target HUD (Show Aura Target on HUD)
 - [ ] Cheater Detect (Detect Cheater)
+- [ ] [Add Targetstrafe](https://github.com/Hypnotic-Development/Hypnotic-Client/blob/main/src/main/java/dev/hypnotic/module/combat/TargetStrafe.java)
