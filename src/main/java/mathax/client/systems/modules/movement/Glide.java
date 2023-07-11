@@ -12,10 +12,6 @@ import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
-/*/------------------/*/
-/*/ Made by Piotrek4 /*/
-/*/------------------/*/
-
 public class Glide extends Module {
 	int x = 0;
 	int z = 0;

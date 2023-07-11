@@ -499,6 +499,7 @@ public class Modules extends System<Modules> {
         add(new FastFall());
         add(new Flight());
         add(new Glide());
+        add(new GodBridge());
         add(new Gravity());
         add(new GUIMove());
         add(new HighJump());
@@ -630,6 +631,7 @@ public class Modules extends System<Modules> {
         add(new LiquidFiller());
         add(new MountBypass());
         add(new Nuker());
+        add(new NoStrip());
         add(new SpawnProofer());
         add(new StashFinder());
         add(new Timer());

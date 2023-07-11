@@ -35,12 +35,14 @@ public class HypnoticFly extends Module {
     );
 
     private final Setting<Boolean> autoElytra = sgGeneral.add(new BoolSetting.Builder()
+        .name("autoElytra")
         .description("Automatically activates the elytra when you fall.")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Double> fallDistance = sgGeneral.add(new DoubleSetting.Builder()
+        .name("fallDistance")
         .description("The distance you have to fall before the elytra is activated.")
         .defaultValue(3.0)
         .min(0)
@@ -85,7 +87,6 @@ public class HypnoticFly extends Module {
     public enum Mode {
         Vanilla("Vanilla"),
         Firework("Firework"),
-
         NCP("NCP");
 
         private final String title;
@@ -111,9 +112,7 @@ public class HypnoticFly extends Module {
 
         if (mc.player.isFallFlying()) {
             if (mode.get() == Mode.Firework) {
-
                 Vec3d vec3d_1 = mc.player.getRotationVector();
-//                double double_1 = 1.5D;
                 Vec3d vec3d_2 = mc.player.getVelocity();
                 mc.player.setVelocity(vec3d_2.add(vec3d_1.x * 0.1D + (vec3d_1.x * 1.5D - vec3d_2.x) * 0.5D, vec3d_1.y * 0.1D + (vec3d_1.y * 1.5D - vec3d_2.y) * 0.5D, vec3d_1.z * 0.1D + (vec3d_1.z * 1.5D - vec3d_2.z) * 0.5D));
             } else {
@@ -126,7 +125,6 @@ public class HypnoticFly extends Module {
                         if (mc.options.sneakKey.isPressed()) event.setY(-flyspeed.get().doubleValue());
                     }
                 }
-
             }
         }
     }

@@ -15,11 +15,6 @@ import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
-/*/--------------------------------------------------------------------------------------------------------------/*/
-/*/ Used from Meteor Rejects                                                                                     /*/
-/*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/anticope/rejects/modules/BoatPhase.java /*/
-/*/--------------------------------------------------------------------------------------------------------------/*/
-
 public class BoatPhase extends Module {
     private BoatEntity boat = null;
 

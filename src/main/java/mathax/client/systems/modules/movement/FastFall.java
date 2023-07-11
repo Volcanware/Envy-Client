@@ -5,7 +5,6 @@ import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
 import net.minecraft.item.Items;
 
 import static mathax.client.systems.modules.movement.FastFall.Mode.*;
