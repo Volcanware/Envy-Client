@@ -1,6 +1,7 @@
 package mathax.client.systems.modules.combat;
 
 import mathax.client.MatHax;
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.render.Render3DEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.renderer.ShapeMode;
@@ -10,14 +11,13 @@ import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.Blink;
 import mathax.client.systems.modules.movement.Scaffold;
+import mathax.client.utils.misc.ChatUtils;
 import mathax.client.utils.misc.KeyBind;
 import mathax.client.utils.misc.Pool;
 import mathax.client.utils.misc.Timer;
-import mathax.client.utils.misc.ChatUtils;
 import mathax.client.utils.player.FindItemResult;
 import mathax.client.utils.player.InvUtils;
 import mathax.client.utils.player.PlayerUtils;
-import mathax.client.eventbus.EventHandler;
 import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.SettingColor;
 import net.minecraft.block.Block;

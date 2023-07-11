@@ -9,8 +9,8 @@ import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
-import mathax.client.utils.misc.input.KeyAction;
 import mathax.client.systems.modules.render.Freecam;
+import mathax.client.utils.misc.input.KeyAction;
 import net.minecraft.item.Items;
 
 public class AirJump extends Module {

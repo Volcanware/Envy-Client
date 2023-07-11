@@ -1,9 +1,5 @@
 package mathax.client.systems.modules.movement.speed;
 
-import mathax.client.systems.modules.movement.speed.modes.LBL_SlowHop;
-import mathax.client.systems.modules.movement.speed.modes.Weird;
-import mathax.client.systems.modules.movement.speed.modes.VelocityHop;
-
 public enum SpeedModes {
     Vanilla("Vanilla"),
     Strafe("BunnyHop"),

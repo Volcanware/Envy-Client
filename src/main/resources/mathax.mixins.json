@@ -62,8 +62,8 @@
     "CustomPayloadC2SPacketAccessor",
     "Deadmau5FeatureRendererMixin",
     "DefaultSkinHelperMixin",
-    "DisconnectedScreenMixin",
     "DirectConnectScreenMixin",
+    "DisconnectedScreenMixin",
     "EnchantingTableBlockEntityRendererMixin",
     "EndCrystalEntityRendererMixin",
     "EntityAccessor",
@@ -102,11 +102,11 @@
     "KeyBindingAccessor",
     "KeyboardInputMixin",
     "KeyboardMixin",
-    "LightningEntityRendererMixin",
     "LightmapTextureManagerMixin",
-    "LivingEntityRendererMixin",
+    "LightningEntityRendererMixin",
     "LivingEntityAccessor",
     "LivingEntityMixin",
+    "LivingEntityRendererMixin",
     "MapRendererAccessor",
     "MapRendererMixin",
     "Matrix4fMixin",
@@ -162,11 +162,12 @@
     "VertexBufferMixin",
     "WindowMixin",
     "WorldAccessor",
-    "ChunkAccessor",
     "WorldRendererAccessor",
     "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "mixins": [
+  ]
 }

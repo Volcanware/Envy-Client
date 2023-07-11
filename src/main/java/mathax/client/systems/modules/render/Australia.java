@@ -1,7 +1,6 @@
 package mathax.client.systems.modules.render;
 
 import mathax.client.eventbus.EventHandler;
-import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.IntSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;

@@ -1,5 +1,6 @@
 package mathax.client.systems.modules.movement;
 
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.EnumSetting;
 import mathax.client.settings.Setting;
@@ -8,7 +9,6 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.utils.Utils;
-import mathax.client.eventbus.EventHandler;
 import mathax.client.utils.player.MoveHelper;
 import net.minecraft.item.Items;
 

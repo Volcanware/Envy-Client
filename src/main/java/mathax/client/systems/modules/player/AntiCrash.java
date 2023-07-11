@@ -1,7 +1,6 @@
 package mathax.client.systems.modules.player;
 
 import mathax.client.eventbus.EventHandler;
-import mathax.client.events.Cancellable;
 import mathax.client.events.packets.PacketEvent;
 import mathax.client.settings.BoolSetting;
 import mathax.client.settings.Setting;
@@ -13,8 +12,6 @@ import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.ExplosionS2CPacket;
 import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
-
-import javax.management.MalformedObjectNameException;
 
 public class AntiCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

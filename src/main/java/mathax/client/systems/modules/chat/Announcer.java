@@ -1,16 +1,16 @@
 package mathax.client.systems.modules.chat;
 
 import mathax.client.MatHax;
-import mathax.client.events.entity.player.BreakBlockEvent;
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.DropItemsEvent;
+import mathax.client.events.entity.player.BreakBlockEvent;
 import mathax.client.events.entity.player.PickItemsEvent;
 import mathax.client.events.entity.player.PlaceBlockEvent;
 import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.world.TickEvent;
-import mathax.client.eventbus.EventHandler;
 import mathax.client.settings.*;
-import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Categories;
+import mathax.client.systems.modules.Module;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.Item;

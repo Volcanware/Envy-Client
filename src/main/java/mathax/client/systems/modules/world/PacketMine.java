@@ -9,8 +9,6 @@ import mathax.client.renderer.ShapeMode;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.render.BreakIndicators;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.Pool;
 import mathax.client.utils.player.FindItemResult;

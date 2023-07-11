@@ -14,7 +14,10 @@ import mathax.client.utils.misc.input.KeyAction;
 import mathax.client.utils.player.FindItemResult;
 import mathax.client.utils.player.InvUtils;
 import mathax.client.utils.player.PlayerUtils;
-import net.minecraft.item.*;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.SwordItem;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 

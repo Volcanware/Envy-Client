@@ -4,9 +4,9 @@ import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
+import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3f;
-import mathax.client.systems.modules.Module;
 
 public class SmallFire extends Module{
     private final SettingGroup sgScale = settings.createGroup("Scale");

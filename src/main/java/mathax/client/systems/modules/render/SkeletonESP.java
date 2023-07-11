@@ -1,5 +1,6 @@
 package mathax.client.systems.modules.render;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.MatHax;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.render.Render3DEvent;
@@ -16,7 +17,6 @@ import mathax.client.systems.modules.Modules;
 import mathax.client.utils.player.Rotations;
 import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.SettingColor;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.option.Perspective;
@@ -25,9 +25,9 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.Items;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.*;
 
 /*/----------------------------------------------------------------------------------------------------------------------/*/

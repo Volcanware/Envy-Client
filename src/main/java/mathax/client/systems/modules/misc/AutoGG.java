@@ -4,12 +4,8 @@ import mathax.client.eventbus.EventHandler;
 import mathax.client.events.packets.PacketEvent;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
-import org.apache.commons.compress.harmony.unpack200.bytecode.forms.SuperFieldRefForm;
-
-import static mathax.client.MatHax.mc;
 
 public class AutoGG extends Module {
 

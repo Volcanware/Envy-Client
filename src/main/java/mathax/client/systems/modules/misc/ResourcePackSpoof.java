@@ -7,9 +7,9 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.ResourcePackSendS2CPacket;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 

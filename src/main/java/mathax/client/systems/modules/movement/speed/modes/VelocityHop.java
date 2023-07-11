@@ -1,19 +1,14 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
-import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.AutoJump;
 import mathax.client.systems.modules.movement.speed.Speed;
-import mathax.client.utils.player.PlayerUtils;
-import mathax.client.systems.modules.movement.Anchor;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
-import net.minecraft.entity.effect.StatusEffects;
+import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.util.math.Vec3d;
-
-import static net.minecraft.entity.effect.StatusEffects.SPEED;
 
 public class VelocityHop extends SpeedMode {
     public VelocityHop() {

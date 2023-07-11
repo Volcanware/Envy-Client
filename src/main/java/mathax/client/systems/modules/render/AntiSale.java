@@ -1,18 +1,12 @@
 package mathax.client.systems.modules.render;
 
-import baritone.api.event.events.ChatEvent;
-import com.mojang.brigadier.Message;
 import mathax.client.eventbus.EventHandler;
-import mathax.client.systems.modules.Categories;
-import mathax.client.utils.misc.ChatUtils;
-import net.minecraft.client.util.ChatMessages;
-import net.minecraft.item.Items;
-import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
-import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
-import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.Module;
 import mathax.client.events.packets.PacketEvent;
+import mathax.client.systems.modules.Categories;
+import mathax.client.systems.modules.Module;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
+import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 
 public class AntiSale extends Module {
 

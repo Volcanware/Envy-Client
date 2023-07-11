@@ -4,7 +4,6 @@ import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.item.Items;
 
 public class AirWalk extends Module {

@@ -1,12 +1,12 @@
 package mathax.client.systems.modules.render;
 
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
+import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.input.Input;
-import mathax.client.eventbus.EventHandler;
-import mathax.client.settings.*;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.item.Items;
 import org.lwjgl.glfw.GLFW;

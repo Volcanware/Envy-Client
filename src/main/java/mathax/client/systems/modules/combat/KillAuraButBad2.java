@@ -7,7 +7,6 @@ import mathax.client.settings.*;
 import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
 import mathax.client.utils.player.Rotations;
 import mathax.client.utils.render.OLEPOSSUtils;
 import net.minecraft.entity.player.PlayerEntity;

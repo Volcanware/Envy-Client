@@ -1,16 +1,16 @@
 package mathax.client.systems.modules;
 
 import mathax.client.MatHax;
-import mathax.client.systems.config.Config;
-import mathax.client.utils.render.color.Color;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.widgets.WWidget;
 import mathax.client.settings.Settings;
+import mathax.client.systems.config.Config;
 import mathax.client.utils.Utils;
+import mathax.client.utils.misc.ChatUtils;
 import mathax.client.utils.misc.ISerializable;
 import mathax.client.utils.misc.KeyBind;
-import mathax.client.utils.misc.ChatUtils;
 import mathax.client.utils.render.ToastSystem;
+import mathax.client.utils.render.color.Color;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;

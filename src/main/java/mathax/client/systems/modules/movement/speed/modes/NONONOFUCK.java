@@ -5,7 +5,6 @@ import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
-import mathax.client.systems.modules.world.Timer;
 import mathax.client.utils.algorithms.extra.MovementUtils;
 import mathax.client.utils.player.PlayerUtils;
 

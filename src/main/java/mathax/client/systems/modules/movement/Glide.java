@@ -2,11 +2,7 @@ package mathax.client.systems.modules.movement;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
-import mathax.client.settings.BoolSetting;
-import mathax.client.settings.DoubleSetting;
-import mathax.client.settings.EnumSetting;
-import mathax.client.settings.Setting;
-import mathax.client.settings.SettingGroup;
+import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;

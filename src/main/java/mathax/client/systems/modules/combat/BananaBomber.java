@@ -8,7 +8,6 @@ import mathax.client.events.entity.EntityAddedEvent;
 import mathax.client.events.entity.EntityRemovedEvent;
 import mathax.client.events.packets.PacketEvent;
 import mathax.client.events.render.Render2DEvent;
-import mathax.client.events.render.Render3DEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.mixininterface.IBox;
 import mathax.client.mixininterface.IRaycastContext;
@@ -26,7 +25,6 @@ import mathax.client.utils.BananaUtils.TimerUtils;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.entity.Target;
 import mathax.client.utils.misc.KeyBind;
-import mathax.client.utils.misc.Pool;
 import mathax.client.utils.misc.Vec3;
 import mathax.client.utils.player.FindItemResult;
 import mathax.client.utils.player.InvUtils;
@@ -55,15 +53,11 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.world.RaycastContext;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-
-import static mathax.client.utils.misc.ChatUtils.warning;
 
 public class BananaBomber extends Module {
     public enum YawStepMode {

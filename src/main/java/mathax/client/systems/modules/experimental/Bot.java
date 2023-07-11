@@ -11,8 +11,6 @@ import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.combat.KillAura;
-import mathax.client.events.packets.PacketEvent;
-import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import mathax.client.utils.Utils;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.entity.SortPriority;
@@ -33,9 +31,7 @@ import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
-import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
-import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
@@ -43,8 +39,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static mathax.client.systems.modules.movement.FastFall.Mode.Vanilla;
 
 public class Bot extends Module {
 

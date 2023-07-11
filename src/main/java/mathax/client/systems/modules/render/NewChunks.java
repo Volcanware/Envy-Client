@@ -16,11 +16,17 @@ import mathax.client.utils.render.color.SettingColor;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.*;
-import net.minecraft.util.math.*;
+import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
+import net.minecraft.network.packet.s2c.play.ChunkDataS2CPacket;
+import net.minecraft.network.packet.s2c.play.ChunkDeltaUpdateS2CPacket;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.chunk.WorldChunk;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /*/--------------------------------------------------/*/
 /*/ Ported from BleachHack and modified by Matejko06 /*/

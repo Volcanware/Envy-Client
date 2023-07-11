@@ -14,20 +14,19 @@ import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.utils.base91.Base91;
 import net.minecraft.item.Items;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.HoverEvent;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterOutputStream;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 
 /*/-----------------/*/
 /*/ Made by NobreHD /*/

@@ -5,7 +5,6 @@ import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.events.movement.EventMove;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
-import mathax.client.systems.modules.Category;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.entity.EquipmentSlot;
@@ -15,8 +14,6 @@ import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
-
-import static mathax.client.MatHax.mc;
 
 //This is broken, why I don't fucking know
 //Someone Else Figure it out

@@ -2,7 +2,6 @@ package mathax.client.systems.modules.movement;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
-import mathax.client.gui.renderer.packer.TexturePacker;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.Setting;

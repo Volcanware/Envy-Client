@@ -2,8 +2,6 @@ package mathax.client.systems.modules.render;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.client.MatHax;
-import mathax.client.eventbus.EventHandler;
-import mathax.client.events.packets.PacketEvent;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.screens.interactionmenu.InteractionScreen;
 import mathax.client.gui.widgets.WWidget;
@@ -14,8 +12,6 @@ import mathax.client.gui.widgets.pressable.WPlus;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.movement.NoSlow;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.KeyBind;
 import mathax.client.utils.render.color.SettingColor;
@@ -25,7 +21,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
 import java.util.HashMap;
 import java.util.Optional;

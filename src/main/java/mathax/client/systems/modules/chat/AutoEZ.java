@@ -4,17 +4,20 @@ import mathax.client.eventbus.EventHandler;
 import mathax.client.events.packets.PacketEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
-import mathax.client.systems.modules.combat.*;
 import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.combat.*;
 import mathax.client.utils.misc.Placeholders;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
-import net.minecraft.network.packet.s2c.play.*;
+import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class AutoEZ extends Module {
     private final Random random = new Random();

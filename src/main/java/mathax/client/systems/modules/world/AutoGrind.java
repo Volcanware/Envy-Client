@@ -5,8 +5,6 @@ import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.utils.network.MatHaxExecutor;
-import mathax.client.utils.player.InvUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;

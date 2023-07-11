@@ -2,10 +2,6 @@ package mathax.client.systems.modules.movement;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
-import mathax.client.gui.GuiTheme;
-import mathax.client.gui.widgets.WWidget;
-import mathax.client.gui.widgets.containers.WHorizontalList;
-import mathax.client.gui.widgets.pressable.WButton;
 import mathax.client.settings.BoolSetting;
 import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.Setting;
@@ -13,12 +9,9 @@ import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.misc.TPSSync;
 import mathax.client.systems.modules.world.Timer;
 import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.item.Items;
-
-import static mathax.client.systems.modules.movement.FastFall.Mode.Vanilla;
 
 public class Sprint extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

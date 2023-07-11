@@ -7,15 +7,8 @@ import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.world.Timer;
-import mathax.client.utils.player.PlayerUtils;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 public class Disabler extends Module {

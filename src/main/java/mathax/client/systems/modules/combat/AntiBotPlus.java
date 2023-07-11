@@ -1,22 +1,22 @@
 package mathax.client.systems.modules.combat;
 
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.packets.PacketEvent;
 import mathax.client.events.world.ConnectToServerEvent;
-import mathax.client.settings.*;
+import mathax.client.settings.BoolSetting;
+import mathax.client.settings.EnumSetting;
+import mathax.client.settings.Setting;
+import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
-import mathax.client.systems.modules.Category;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.combat.AntiBotPlus;
-import mathax.client.eventbus.EventHandler;
+import mathax.client.utils.misc.ColorRemover;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityAnimationS2CPacket;
 import net.minecraft.network.packet.s2c.play.EntityPositionS2CPacket;
-import mathax.client.utils.misc.ColorRemover;
 
 import java.util.ArrayList;
 import java.util.Collection;

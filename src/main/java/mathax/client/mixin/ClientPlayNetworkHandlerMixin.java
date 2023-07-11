@@ -11,6 +11,7 @@ import mathax.client.mixininterface.IExplosionS2CPacket;
 import mathax.client.systems.modules.Modules;
 import mathax.client.MatHax;
 import mathax.client.systems.modules.movement.Velocity;
+import mathax.client.systems.modules.render.AntiScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
@@ -88,4 +89,14 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
         if (itemEntity instanceof ItemEntity && entity == client.player) MatHax.EVENT_BUS.post(PickItemsEvent.get(((ItemEntity) itemEntity).getStack(), packet.getStackAmount()));
     }
+    /*@Inject(method = "onGameStateChange", at = @At("HEAD"), cancellable = true)
+    private void onSend (GameStateChangeS2CPacket packet, CallbackInfo info) {
+        AntiScreen screen = Modules.get().get(AntiScreen.class);
+
+        if (screen.isActive()
+            && packet.getReason() == GameStateChangeS2CPacket.DEMO_MESSAGE_SHOWN && packet.getValue() == 0.0F && screen.cancelDemoScreen()
+            || packet.getReason() == GameStateChangeS2CPacket.GAME_WON && screen.cancelEndScreen()) {
+            info.cancel();
+        }
+    }*/
 }

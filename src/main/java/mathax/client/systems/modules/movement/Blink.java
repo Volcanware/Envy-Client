@@ -19,7 +19,10 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.world.dimension.DimensionType;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 
 public class Blink extends Module {
     private final List<PlayerMoveC2SPacket> packets = new ArrayList<>();

@@ -318,7 +318,7 @@ public class KillAura extends Module {
         .build()
     );
 
-    public enum BlockMode{
+    public enum BlockMode {
         Constant,
         NotOnHit,
     }
@@ -353,8 +353,8 @@ public class KillAura extends Module {
 
             return;
         }
-        if (autoBlock.get()){
-            if (mc.player.getOffHandStack().getItem().equals(Items.SHIELD)){
+        if (autoBlock.get()) {
+            if (mc.player.getOffHandStack().getItem().equals(Items.SHIELD)) {
                 mc.options.useKey.setPressed(true);
             }
         }
@@ -400,7 +400,8 @@ public class KillAura extends Module {
 
         if (!itemInHand()) return;
         if (delayCheck()) targets.forEach(this::attack);
-        if (randomTeleport.get() && !onlyWhenLook.get()) mc.player.setPosition(primary.getX() + randomOffset(), primary.getY(), primary.getZ() + randomOffset());
+        if (randomTeleport.get() && !onlyWhenLook.get())
+            mc.player.setPosition(primary.getX() + randomOffset(), primary.getY(), primary.getZ() + randomOffset());
     }
 
     @EventHandler
@@ -431,7 +432,8 @@ public class KillAura extends Module {
 
         if (!nametagged.get() && entity.hasCustomName() && !(entity instanceof PlayerEntity)) return false;
         if (!PlayerUtils.canSeeEntity(entity) && PlayerUtils.distanceTo(entity) > wallsRange.get()) return false;
-        if (ignoreTamed.get() && entity instanceof Tameable tameable && tameable.getOwnerUuid() != null && tameable.getOwnerUuid().equals(mc.player.getUuid())) return false;
+        if (ignoreTamed.get() && entity instanceof Tameable tameable && tameable.getOwnerUuid() != null && tameable.getOwnerUuid().equals(mc.player.getUuid()))
+            return false;
         if (ignorePassive.get()) {
             if (entity instanceof EndermanEntity enderman && !enderman.isAngryAt(mc.player)) return false;
             if (entity instanceof ZombifiedPiglinEntity piglin && !piglin.isAngryAt(mc.player)) return false;
@@ -440,12 +442,12 @@ public class KillAura extends Module {
         if (entity instanceof PlayerEntity) {
             if (((PlayerEntity) entity).isCreative()) return false;
             if (!Friends.get().shouldAttack((PlayerEntity) entity)) return false;
-            if (ignoreShield.get() && shieldCheck((PlayerEntity)entity)) return false;
+            if (ignoreShield.get() && shieldCheck((PlayerEntity) entity)) return false;
         }
         return !(entity instanceof AnimalEntity) || babies.get() || !((AnimalEntity) entity).isBaby();
     }
 
-    public boolean shieldCheck (PlayerEntity player) {
+    public boolean shieldCheck(PlayerEntity player) {
         if (player.isBlocking()) {
             Vec3d persistentProjectileEntity = mc.player.getPos();
             if (persistentProjectileEntity != null) {
@@ -507,8 +509,10 @@ public class KillAura extends Module {
             case Sword -> mc.player.getMainHandStack().getItem() instanceof SwordItem;
             case Axe -> mc.player.getMainHandStack().getItem() instanceof AxeItem;
             case Hoe -> mc.player.getMainHandStack().getItem() instanceof HoeItem;
-            case Sword_and_Axe -> mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem;
-            case All_Three -> mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem || mc.player.getMainHandStack().getItem() instanceof HoeItem;
+            case Sword_and_Axe ->
+                mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem;
+            case All_Three ->
+                mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem || mc.player.getMainHandStack().getItem() instanceof HoeItem;
             default -> true;
         };
     }
