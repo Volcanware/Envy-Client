@@ -401,7 +401,7 @@ public class KillAura extends Module {
         if (!itemInHand()) return;
         if (delayCheck()) targets.forEach(this::attack);
         if (randomTeleport.get() && !onlyWhenLook.get())
-            mc.player.setPosition(primary.getX() + randomOffset(), primary.getY(), primary.getZ() + randomOffset());
+            mc.player.setPosition(primary.getX() + targetRange.get(), primary.getY(), primary.getZ() + targetRange.get());
     }
 
     @EventHandler
