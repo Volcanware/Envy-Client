@@ -201,6 +201,8 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "Better than NoComm",
             Formatting.YELLOW + "Better than SSG",
             Formatting.YELLOW + "Better than 1.8",
+            Formatting.YELLOW + "First only me and god knew what the code did now only god knows",
+            Formatting.YELLOW + "So Skidded we forgor what license we use",
             Formatting.YELLOW + "Better than 1.12.2",
             Formatting.YELLOW + "Better than 1.16.5",
             Formatting.YELLOW + "Better than 1.17.1",
