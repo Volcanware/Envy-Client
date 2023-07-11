@@ -630,6 +630,7 @@ public class Modules extends System<Modules> {
         add(new InstaMine());
         add(new ItemSucker());
         add(new LiquidFiller());
+        add(new Lavacast());
         add(new MountBypass());
         add(new Nuker());
         add(new NoStrip());
