@@ -1,6 +1,7 @@
 package mathax.client.systems.modules.movement;
 
 import mathax.client.eventbus.EventHandler;
+import mathax.client.events.world.TickEvent;
 import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
@@ -31,7 +32,7 @@ public class SwimSpeed extends Module {
     );
 
     @EventHandler
-    public boolean onTick() {
+    public boolean onTick(TickEvent.Post event) {
         if (mc.options.forwardKey.isPressed() && Objects.requireNonNull(mc.player).isSwimming() && mc.player.isSubmergedInWater()) {
             SwimSpeedUtils.throwPlayer(velocityMultiplier.get());
         }

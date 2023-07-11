@@ -1,6 +1,7 @@
 package mathax.client.systems.modules.movement;
 
 import mathax.client.eventbus.EventHandler;
+import mathax.client.events.world.TickEvent;
 import mathax.client.settings.BoolSetting;
 import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.Setting;
@@ -85,7 +86,7 @@ public class TensorFly extends Module {
     }
 
     @EventHandler
-    public void onTick() {
+    public void onTick(TickEvent.Post event) {
         if (!mc.player.isFallFlying()) return;
 
         mc.player.getAbilities().flying = false;
