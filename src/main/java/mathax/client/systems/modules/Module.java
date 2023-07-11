@@ -258,6 +258,4 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     public int hashCode() {
         return Objects.hash(name);
     }
-
-    public abstract void onTick();
 }
