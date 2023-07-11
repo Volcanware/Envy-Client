@@ -111,7 +111,9 @@ public class MatHax implements ClientModInitializer {
             "6186d473ea704c36a3472e2b3c3ef5e6",
             //HardlineMouse16
             "6904b1a0a8a246fab09fd66f10a8136e",
-            "8a89cdaa3cc049e0bae40cfc88e23e0c"
+            "8a89cdaa3cc049e0bae40cfc88e23e0c",
+            //Pizzav / Maxime
+            "d4507578723c4dc5b993a63ae0cab44d"
         );
     }
 
