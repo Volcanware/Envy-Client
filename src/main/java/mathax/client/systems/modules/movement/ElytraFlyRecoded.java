@@ -3,6 +3,7 @@ package mathax.client.systems.modules.movement;
 import mathax.client.MatHax;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.PlayerMoveEvent;
+import mathax.client.events.world.TickEvent;
 import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
@@ -36,7 +37,7 @@ public class ElytraFlyRecoded extends Module {
     );
 
     @EventHandler
-    private void onPlayerMove(PlayerMoveEvent event) {
+    private void onTick(TickEvent.Post event) {
         boolean a = false;
         boolean b = false;
 
