@@ -15,7 +15,7 @@ import mathax.client.systems.modules.world.Timer;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
-
+//todo: add new features and modes
 public class LongJump extends Module {
     private boolean jumping = false;
     private boolean jumped = false;

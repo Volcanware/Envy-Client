@@ -10,7 +10,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.shape.VoxelShape;
 
 import java.util.stream.Stream;
-
+//We Should write a smart mode that is a lot more complex
+//todo: write a smart mode
 public class Parkour extends Module {
     public Parkour() {
         super(Categories.Minigame, Items.DIAMOND_BOOTS, "parkour", "Automatically jumps at the edges of blocks.");

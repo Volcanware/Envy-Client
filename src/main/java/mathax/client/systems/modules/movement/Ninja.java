@@ -5,7 +5,7 @@ import mathax.client.events.world.TickEvent;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
-
+//This could have a better implimentation like not using the key and instead just doing the action
 public class Ninja extends Module {
     public Ninja() {
         super(Categories.Ghost, Items.DIAMOND_SWORD, "Ninja", "SpeedBridges For You");

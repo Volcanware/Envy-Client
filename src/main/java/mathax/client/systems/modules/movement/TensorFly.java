@@ -15,7 +15,7 @@ import net.minecraft.util.math.Vec3d;
 public class TensorFly extends Module {
 
     public TensorFly() {
-        super(Categories.Movement, Items.ELYTRA, "tensor-fly", "Allows you to fly.");
+        super(Categories.Movement, Items.ELYTRA, "tensor-fly", "Tensor Client's Elytra Fly.");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

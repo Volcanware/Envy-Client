@@ -14,7 +14,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.shape.VoxelShapes;
 
 import java.util.List;
-
+//This needs a update
 public class SafeWalk extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 

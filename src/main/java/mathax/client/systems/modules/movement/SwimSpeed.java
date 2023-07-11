@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import static mathax.client.MatHax.mc;
 
+//This is utterly fucking retarded
 public class SwimSpeed extends Module {
 
     public SwimSpeed() {

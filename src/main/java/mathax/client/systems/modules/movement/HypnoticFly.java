@@ -23,7 +23,7 @@ import static mathax.client.MatHax.mc;
 public class HypnoticFly extends Module {
 
     public HypnoticFly() {
-        super(Categories.Movement, Items.ELYTRA, "hypnotic-fly", "Allows you to fly with an elytra. || Currently Broken");
+        super(Categories.Movement, Items.ELYTRA, "hypnotic-fly", "Allows you to fly with an elytra. || Currently Broken || Stolen from Hypnotic Client");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

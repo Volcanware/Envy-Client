@@ -5,6 +5,7 @@ import mathax.client.events.world.TickEvent;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -31,8 +32,8 @@ public class GodBridge extends Module {
         }
         HitResult hr = mc.crosshairTarget;
         if (hr.getType() == HitResult.Type.BLOCK && hr instanceof BlockHitResult result) {
-            if(Arrays.stream(allowedSides).anyMatch(direction -> direction == result.getSide())) {
-                mc.player.swingHand(Hand.MAIN_HAND);
+            if(Arrays.stream(allowedSides).anyMatch(direction -> direction == result.getSide()) && mc.player.getMainHandStack().getItem() instanceof BlockItem){
+                mc.options.useKey.setPressed(true);
             }
         }
     }

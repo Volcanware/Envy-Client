@@ -7,6 +7,7 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 
+//We Should add more modes to this
 public class Sneak extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 

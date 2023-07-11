@@ -8,6 +8,7 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 
+//We Should Update this
 public class TridentBoost extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 

@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//todo: add a Vulcan Mode
 public class Jesus extends Module {
     private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
 
