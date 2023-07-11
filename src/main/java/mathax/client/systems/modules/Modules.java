@@ -487,8 +487,9 @@ public class Modules extends System<Modules> {
         add(new ChorusExploit());
         add(new ClickTP());
         //add(new DepthStriderSpoof());
-        add(new ElytraBoost());
+        //add(new ElytraBoost());
         add(new ElytraFly());
+        add(new ElytraFlyRecoded());
         add(new HypnoticFly());
         add(new TensorFly());
         add(new EntityControl());

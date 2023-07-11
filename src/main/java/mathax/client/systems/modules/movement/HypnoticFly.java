@@ -1,6 +1,7 @@
 package mathax.client.systems.modules.movement;
 
 import mathax.client.eventbus.EventHandler;
+import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.events.movement.EventMove;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
@@ -101,7 +102,7 @@ public class HypnoticFly extends Module {
 
 
     @EventHandler
-    public void onMotion(EventMove event) {
+    public void onPlayerMove(EventMove event) {
         this.setDisplayName("ElytraFly " + Color.gray.getRGB() + mode.get());
         if (wearingElytra() && (autoElytra.get().booleanValue() && mc.player.fallDistance >= fallDistance.get().doubleValue() && !mc.player.isOnGround() && !mc.player.isFallFlying())) {
             if (mc.player.age % 5 == 0)
