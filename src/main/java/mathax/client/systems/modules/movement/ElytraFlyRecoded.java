@@ -45,7 +45,7 @@ public class ElytraFlyRecoded extends Module {
             return; //Checks if the player is wearing an elytra, if this somehow breaks then what the fuck did you do
         if (mc.player.isFallFlying()) { //This is how we know we are using the elytra || Experiment with this
 
-            if (MatHax.mc.options.forwardKey.isPressed()) {
+            if (MatHax.mc.options.forwardKey.isPressed()) { //This crashes, why, it just does, don't question it
                 velX += forward.x * horizontalSpeed.get() * 10;
                 velZ += forward.z * horizontalSpeed.get() * 10;
                 a = true;
