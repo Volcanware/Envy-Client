@@ -439,7 +439,7 @@ public class Modules extends System<Modules> {
         add(new Ghost());
         add(new GhostHand());
         add(new LiquidInteract());
-        add(new Worldborder());
+        //add(new Worldborder());
         add(new NoBreakDelay());
         add(new NoInteract());
         add(new NoMiningTrace());
@@ -488,7 +488,7 @@ public class Modules extends System<Modules> {
         add(new ChorusExploit());
         add(new ClickTP());
         //add(new DepthStriderSpoof());
-        //add(new ElytraBoost());
+        add(new ElytraBoost());
         add(new ElytraFly());
         add(new ElytraFlyRecoded());
         add(new HypnoticFly());
@@ -721,6 +721,7 @@ public class Modules extends System<Modules> {
         add(new SecretClose());
         add(new SuperPanic());
         //add(new EntityAlert());
+        add(new Sudoku());
     }
 
     public static class ModuleRegistry extends Registry<Module> {
