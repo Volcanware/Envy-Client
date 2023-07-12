@@ -1,5 +1,6 @@
 package mathax.client.utils.misc;
 
+import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -98,6 +99,14 @@ public class Vec3 {
         x = -x;
         y = -y;
         z = -z;
+    }
+
+    public double distanceTo(Vector3d vec) {
+        double d = vec.x - x;
+        double e = vec.y - y;
+        double f = vec.z - z;
+
+        return Math.sqrt(d * d + e * e + f * f);
     }
 
     public double distanceTo(Vec3 vec) {
