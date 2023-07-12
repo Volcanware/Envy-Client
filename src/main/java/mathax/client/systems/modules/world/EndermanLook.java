@@ -46,6 +46,11 @@ public class EndermanLook extends Module {
                 break;
             }
         }
+        if (lookMode.get() == Mode.Challenge) {
+            if (mc.crosshairTarget.equals(EndermanEntity.class)) {
+                throw new NullPointerException("You failed the challenge!");
+            }
+        }
     }
 
     private boolean shouldLook() {
@@ -70,7 +75,8 @@ public class EndermanLook extends Module {
 
     public enum Mode {
         At("At"),
-        Away("Away");
+        Away("Away"),
+        Challenge("Challenge");
 
         private final String title;
 
