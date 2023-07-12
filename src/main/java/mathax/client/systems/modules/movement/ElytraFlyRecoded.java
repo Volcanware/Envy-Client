@@ -1,55 +1,153 @@
 package mathax.client.systems.modules.movement;
 
-import mathax.client.MatHax;
 import mathax.client.eventbus.EventHandler;
-import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.events.world.TickEvent;
-import mathax.client.settings.DoubleSetting;
+import mathax.client.settings.EnumSetting;
+import mathax.client.settings.IntSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.movement.elytrafly.ElytraFlightModes;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ElytraItem;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
-//When I started this only me and god knew how it worked, now only god knows how it works
+//When I started this only me and god knew how it worked, now only god knows how it works.
 public class ElytraFlyRecoded extends Module {
-    protected double velX, velY, velZ; //This is dumb
-    protected Vec3d forward, right; //This is also dumb, why I have no fucking clue
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    //TODO: Baritone integration
+    //TODO: Make this anti bullshit.
     public ElytraFlyRecoded() {
-        super(Categories.Movement, Items.ELYTRA, "ElytraFlyRecoded", "Gives you more control over your elytra. | BETA");
+        super(Categories.Movement, Items.ELYTRA, "ElytraFlyRecoded", "Port of Vayze Clients Elytra Fly! | EXPERIMENTAL");
     }
 
-    public final Setting<Double> horizontalSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("horizontal-speed")
-        .description("How fast you go forward and backward.")
+    private boolean isFrozen = false;
+
+
+    private final Setting<Integer> multiplier = sgGeneral.add(new IntSetting.Builder()
+        .name("Speed")
+        .description("Speed of elytra")
         .defaultValue(1)
-        .min(0)
-        .sliderRange(0, 3)
+        .range(1, 10)
+        .sliderRange(1, 10)
         .build()
     );
-
+    private final Setting<Integer> leftspeed = sgGeneral.add(new IntSetting.Builder()
+        .name("Left Speed")
+        .description("Left Speed of elytra")
+        .defaultValue(1)
+        .range(1, 10)
+        .sliderRange(1, 10)
+        .build()
+    );
+    private final Setting<Integer> rightspeed = sgGeneral.add(new IntSetting.Builder()
+        .name("Right Speed")
+        .description("Right Speed of elytra")
+        .defaultValue(1)
+        .range(1, 10)
+        .sliderRange(1, 10)
+        .build()
+    );
+    private final Setting<Integer> descendspeed = sgGeneral.add(new IntSetting.Builder()
+        .name("Descend Speed")
+        .description("Movement down Speed of elytra")
+        .defaultValue(1)
+        .range(1, 10)
+        .sliderRange(1, 10)
+        .build()
+    );
+    private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+        .name("mode")
+        .description("How to treat the lava.")
+        .defaultValue(Mode.CursorLock)
+        .build()
+    );
     @EventHandler
     private void onTick(TickEvent.Post event) {
-        boolean a = false;
-        boolean b = false;
 
-        if (!(mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof ElytraItem))
-            return; //Checks if the player is wearing an elytra, if this somehow breaks then what the fuck did you do
-        if (mc.player.isFallFlying()) { //This is how we know we are using the elytra || Experiment with this
+        assert mc.player != null;
+        if (mc.player.isFallFlying()) {
+            boolean moveForward = mc.options.forwardKey.isPressed();
+            boolean moveBackward = mc.options.backKey.isPressed();
+            boolean moveLeft = mc.options.leftKey.isPressed();
+            boolean moveRight = mc.options.rightKey.isPressed();
 
-            if (MatHax.mc.options.forwardKey.isPressed()) { //This crashes, why, it just does, don't question it
-                velX += forward.x * horizontalSpeed.get() * 10;
-                velZ += forward.z * horizontalSpeed.get() * 10;
-                a = true;
+            if (moveForward && (moveLeft || moveRight)) {
+                float yaw = mc.player.getYaw(); // Get the player's yaw rotation
+                double radian;
+                if (moveLeft) {
+                    radian = Math.toRadians(yaw - 45.0); // Calculate the diagonal angle for forward and left
+                } else {
+                    radian = Math.toRadians(yaw + 45.0); // Calculate the diagonal angle for forward and right
+                }
+
+                double speed = multiplier.get(); // Adjust the speed as desired
+                double velX = -Math.sin(radian) * speed; // Calculate the x component of velocity
+                double velZ = Math.cos(radian) * speed; // Calculate the z component of velocity
+
+                mc.player.setVelocity(velX, mc.player.getVelocity().y, velZ);
+            } else if (moveForward) {
+                if (mode.get() == Mode.CursorLock) {
+                    Vec3d velocity = mc.player.getRotationVector().multiply(multiplier.get()); // Adjust the speed by changing the multiplier
+                    mc.player.setVelocity(velocity.x, velocity.y, velocity.z);
+                } else {
+                    Vec3d forward = mc.player.getRotationVector(); // Get the player's forward direction vector
+                    double speed = multiplier.get(); // Adjust the speed as desired
+                    double velX = forward.x * speed; // Calculate the x component of velocity
+                    double velZ = forward.z * speed; // Calculate the z component of velocity
+                    mc.player.setVelocity(velX, 0.0, velZ);
+                }
+            } else if (moveBackward && (moveLeft || moveRight)) {
+                float yaw = mc.player.getYaw(); // Get the player's yaw rotation
+                double radian;
+                if (moveLeft) {
+                    radian = Math.toRadians(yaw + 45.0); // Calculate the diagonal angle for backward and left
+                } else {
+                    radian = Math.toRadians(yaw - 45.0); // Calculate the diagonal angle for backward and right
+                }
+
+                double speed = multiplier.get(); // Adjust the speed as desired
+                double velX = Math.sin(radian) * speed; // Calculate the x component of velocity
+                double velZ = -Math.cos(radian) * speed; // Calculate the z component of velocity
+
+                mc.player.setVelocity(velX, mc.player.getVelocity().y, velZ);
             }
+
+            if (mc.options.sneakKey.isPressed()) {
+                mc.player.setVelocity(mc.player.getVelocity().x, descendspeed.get() * -1, mc.player.getVelocity().z);
+            }
+
+            if (mc.options.jumpKey.isPressed()) {
+
+                if (!isFrozen) {
+                    // Freeze the player's Y-axis movement
+                    mc.player.setVelocity(Vec3d.ZERO);
+                    isFrozen = true;
+                }
+                else {
+                    // Allow Y-axis movement when space bar is released
+                    isFrozen = false;
+                }
+            }
+            else {
+                mc.player.setNoGravity(false);
+            }
+        } else {
+            mc.player.setNoGravity(false);
         }
     }
+    public enum Mode {
+        CursorLock("CursorLock"),
+        YLock("Y-Lock");
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
+    }
+
 }
