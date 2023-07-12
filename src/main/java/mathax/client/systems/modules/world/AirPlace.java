@@ -51,7 +51,7 @@ public class AirPlace extends Module {
     public AirPlace() {
         super(Categories.World, Items.BARRIER, "air-place", "Places a block where your crosshair is pointing at.");
     }
-
+    //does a thing
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (!(mc.crosshairTarget instanceof BlockHitResult) || !(mc.player.getMainHandStack().getItem() instanceof BlockItem)) return;

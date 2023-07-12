@@ -6,6 +6,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import mathax.client.MatHax;
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.ChunkDataEvent;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.WindowScreen;
@@ -19,7 +20,6 @@ import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
-import mathax.client.eventbus.EventHandler;
 import mathax.client.utils.misc.NotificationMode;
 import mathax.client.utils.render.ToastSystem;
 import net.minecraft.block.entity.*;
@@ -105,7 +105,7 @@ public class StashFinder extends Module {
 
         return list;
     }
-
+    //chestesp on steriods or something idk
     private void fillTable(GuiTheme theme, WTable table) {
         for (Chunk chunk : chunks) {
             table.add(theme.label("Pos: " + chunk.x + ", " + chunk.z));

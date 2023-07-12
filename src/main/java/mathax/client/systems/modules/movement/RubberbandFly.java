@@ -1,4 +1,5 @@
 package mathax.client.systems.modules.movement;
+
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.events.packets.PacketEvent;
@@ -24,7 +25,6 @@ import java.util.List;
 import java.util.Random;
 
 import static mathax.client.utils.player.PlayerUtils.directionSpeed;
-import static mathax.client.utils.player.PlayerUtils.isPlayerMoving;
 
 public class RubberbandFly extends Module {
     private final SettingGroup sgBounds = settings.createGroup("Bounds");

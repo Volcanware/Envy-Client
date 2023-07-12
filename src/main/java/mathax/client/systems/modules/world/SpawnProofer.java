@@ -98,7 +98,7 @@ public class SpawnProofer extends Module {
             if ((spawn == BlockUtils.MobSpawn.Always && (mode.get() == Mode.Always || mode.get() == Mode.Both)) || spawn == BlockUtils.MobSpawn.Potential && (mode.get() == Mode.Potential || mode.get() == Mode.Both)) spawns.add(spawnPool.get().set(blockPos));
         });
     }
-
+    //cant u just spam torches?
     @EventHandler
     private void onTickPost(TickEvent.Post event) {
         if (delay.get() != 0 && ticksWaited < delay.get() - 1) {

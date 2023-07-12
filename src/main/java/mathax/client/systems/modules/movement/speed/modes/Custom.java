@@ -1,13 +1,11 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
-import mathax.client.events.world.TickEvent;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.AutoJump;
 import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.utils.EnvyUtils;
-import mathax.client.utils.algorithms.extra.MovementUtils;
 import mathax.client.utils.player.PlayerUtils;
 import mathax.client.utils.world.TickRate;
 import net.minecraft.item.Items;

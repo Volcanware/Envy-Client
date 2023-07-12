@@ -1,11 +1,8 @@
 
 package mathax.client.systems.modules.ghost;
 
-import baritone.api.utils.input.Input;
-import mathax.client.eventbus.EventHandler;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.utils.network.PacketUtils;
 import net.minecraft.item.Items;
 
 public final class WTap<PreMotionEvent, AttackEvent> extends Module {

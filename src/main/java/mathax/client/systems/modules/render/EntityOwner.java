@@ -104,7 +104,7 @@ public class EntityOwner extends Module {
         NametagUtils.end();
     }
 
-    private String getOwnerName(UUID uuid) {
+    private String getOwnerName(UUID uuid) { //this is terrible
         // Check if the player is online
         PlayerEntity player = mc.world.getPlayerByUuid(uuid);
         if (player != null) return player.getEntityName();

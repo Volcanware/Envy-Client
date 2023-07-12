@@ -29,7 +29,6 @@ import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-//import net.minecraft.world.explosion.Explosion;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

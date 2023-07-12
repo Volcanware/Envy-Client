@@ -66,9 +66,9 @@ public class TitleScreenMixin extends Screen {
         int watermarkVersionLength = textRenderer.getWidth(watermarkVersion);
         int watermarkFullLength = watermarkNameLength + spaceLength + watermarkVersionLength;
 
-        String authorBy = "By";
+        String authorBy = "By these fucking idiots:";
         int authorByLength = textRenderer.getWidth(authorBy);
-        String authorName = "Volcan";
+        String authorName = "Volcan, HardlineMouse16, Chynamahn, Cheef, Foopah, Largoon, Vulken AC, PizzaV";
         int authorNameLength = textRenderer.getWidth(authorName);
         int authorFullLength = authorByLength + spaceLength + authorNameLength;
 

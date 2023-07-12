@@ -1,6 +1,5 @@
 package mathax.client.systems.modules.experimental;
 
-import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.Setting;
@@ -10,9 +9,6 @@ import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.KeepAliveC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-
-import static mathax.client.systems.modules.movement.FastFall.Mode.*;
-import static mathax.client.systems.modules.movement.FastFall.Mode.Vanilla;
 
 public class PlayerCrash extends Module {
 

@@ -12,7 +12,7 @@ public class NoSwang extends Module {
         super(Categories.Render, Items.AIR, "NoSwang", "Removes the swang animation | Client Side Only");
     }
 
-    @EventHandler
+    @EventHandler //hmmm, maybe volcans ip
     private void onTick(TickEvent.Post event) {
         if (mc.player.handSwingProgress > 0) {
             mc.player.handSwingProgress = 0;

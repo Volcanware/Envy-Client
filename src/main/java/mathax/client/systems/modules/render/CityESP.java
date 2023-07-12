@@ -52,7 +52,7 @@ public class CityESP extends Module {
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post event) {
+    private void onTick(TickEvent.Post event) { //i think this works
         PlayerEntity targetEntity = TargetUtils.getPlayerTarget(mc.interactionManager.getReachDistance() + 2, SortPriority.Lowest_Distance);
 
         if (TargetUtils.isBadTarget(targetEntity, mc.interactionManager.getReachDistance() + 2)) target = null;

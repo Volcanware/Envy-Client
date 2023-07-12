@@ -11,7 +11,7 @@ import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 
 public class MountBypass extends Module {
     private boolean dontCancel;
-
+    //please dont
     public MountBypass() {
         super(Categories.World, Items.SADDLE, "mount-bypass", "Allows you to bypass the IllegalStack plugin and put chests on entities.");
     }

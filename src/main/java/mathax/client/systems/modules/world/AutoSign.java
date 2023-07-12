@@ -71,7 +71,7 @@ public class AutoSign extends Module {
             return date + " US";
         }
     }
-
+    //You should write the entire bee movie on signs
     @EventHandler
     private void onOpenScreen(OpenScreenEvent event) {
         if (!(event.screen instanceof SignEditScreen)) return;

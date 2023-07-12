@@ -7,7 +7,6 @@ import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.utils.EnvyUtils;
 import mathax.client.utils.algorithms.extra.MovementUtils;
-import mathax.client.utils.network.PacketUtils;
 import mathax.client.utils.player.PlayerUtils;
 
 public class EnvyHop extends SpeedMode {

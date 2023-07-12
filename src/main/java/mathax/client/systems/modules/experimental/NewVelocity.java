@@ -8,8 +8,6 @@ import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 
-import static mathax.client.MatHax.mc;
-
 public class NewVelocity extends Module {
 
     public NewVelocity() {

@@ -9,8 +9,6 @@ import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.movement.speed.Speed;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Items;
 

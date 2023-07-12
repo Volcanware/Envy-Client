@@ -49,7 +49,7 @@ public class WallHack extends Module {
 
     @Override
     public boolean onActivate() {
-        if (Modules.get().isActive(Xray.class)) {
+        if (Modules.get().isActive(Xray.class)) { //csgo players be like
             error("(highlight)Xray(default) was enabled while enabling (highlight)Wall Hack(default), disabling (highlight)Xray(default)...");
             Modules.get().get(Xray.class).toggle();
         }

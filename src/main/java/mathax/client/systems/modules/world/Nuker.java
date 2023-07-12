@@ -132,7 +132,7 @@ public class Nuker extends Module {
         .defaultValue(new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
-
+    //USA Would like to know your location
     public Nuker() {
         super(Categories.World, Items.TNT, "nuker", "Breaks blocks around you.");
     }

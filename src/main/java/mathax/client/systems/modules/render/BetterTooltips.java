@@ -27,8 +27,8 @@ import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
@@ -194,6 +194,7 @@ public class BetterTooltips extends Module {
                     food.getStatusEffects().forEach((e) -> {
                         StatusEffectInstance effect = e.getFirst();
                         event.list.add(1, getStatusText(effect));
+                        //im so bored
                     });
                 }
             }

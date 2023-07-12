@@ -6,14 +6,10 @@ import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
-import mathax.client.systems.modules.world.Timer;
-import net.minecraft.item.Items;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
-
-import java.util.Optional;
-
-import static mathax.client.MatHax.mc;
+import mathax.client.systems.modules.world.Timer;
+import net.minecraft.item.Items;
 
 public class AutoBlock extends Module {
 

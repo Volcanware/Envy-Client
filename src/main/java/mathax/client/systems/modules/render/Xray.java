@@ -102,7 +102,7 @@ public class Xray extends Module {
         if (isBlocked(event.blockEntity.getCachedState().getBlock(), event.blockEntity.getPos())) event.cancel();
     }
 
-    @EventHandler
+    @EventHandler //baritone more better
     private void onChunkOcclusion(ChunkOcclusionEvent event) {
         event.cancel();
     }

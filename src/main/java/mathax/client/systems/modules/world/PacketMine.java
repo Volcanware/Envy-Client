@@ -9,8 +9,6 @@ import mathax.client.renderer.ShapeMode;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.render.BreakIndicators;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.Pool;
 import mathax.client.utils.player.FindItemResult;
@@ -141,7 +139,7 @@ public class PacketMine extends Module {
             shouldUpdateSlot = false;
         }
     }
-
+    //dont we always mine with packets?
     @EventHandler
     private void onStartBreakingBlock(StartBreakingBlockEvent event) {
         if (mc.world.getBlockState(event.blockPos).getHardness(mc.world, event.blockPos) < 0) return;
@@ -185,14 +183,6 @@ public class PacketMine extends Module {
             }
         }
     }
-
-/*    @EventHandler
-    private void onRender3D(Render3DEvent event) {
-        for (MyBlock block : blocks) {
-            if (Modules.get().get(BreakIndicators.class).isActive() && Modules.get().get(BreakIndicators.class).packetMine.get() && block.mining) continue;
-            else block.render(event);
-        }
-    }*/
 
     private double getBreakDelta(int slot, BlockState state) {
         float hardness = state.getHardness(null, null);

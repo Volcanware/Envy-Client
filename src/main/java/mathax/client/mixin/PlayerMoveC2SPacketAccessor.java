@@ -14,4 +14,12 @@ public interface PlayerMoveC2SPacketAccessor {
     @Mutable
     @Accessor("onGround")
     void setOnGround(boolean onGround);
+
+    @Mutable
+    @Accessor("x")
+    void setX(double x);
+
+    @Mutable
+    @Accessor("z")
+    void setZ(double z);
 }

@@ -174,6 +174,7 @@ public class Ambience extends Module {
     private void reload() {
         if (mc.worldRenderer != null && isActive()) mc.worldRenderer.reload();
     }
+    //dont reload
 
     public static class Custom extends DimensionEffects {
         public Custom() {

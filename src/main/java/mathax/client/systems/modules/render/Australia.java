@@ -1,7 +1,6 @@
 package mathax.client.systems.modules.render;
 
 import mathax.client.eventbus.EventHandler;
-import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.IntSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
@@ -30,7 +29,7 @@ public class Australia extends Module {
     public boolean onActivate() {
         mc.options.getFov().setValue(260);
         info("You are now in Australia.");
-        return false;
+        return false; //hes prob gay
     }
 
     @EventHandler

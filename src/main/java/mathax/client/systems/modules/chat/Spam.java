@@ -1,16 +1,15 @@
 package mathax.client.systems.modules.chat;
 
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.game.GameLeftEvent;
 import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
 import mathax.client.systems.friends.Friends;
-import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Categories;
+import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
-import mathax.client.eventbus.EventHandler;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
-import net.minecraft.client.network.ServerAddress;
 import net.minecraft.item.Items;
 import org.apache.commons.lang3.RandomStringUtils;
 

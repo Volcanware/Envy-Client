@@ -1,16 +1,16 @@
 package mathax.client.systems.modules.chat;
 
 import mathax.client.MatHax;
-import mathax.client.events.entity.player.BreakBlockEvent;
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.DropItemsEvent;
+import mathax.client.events.entity.player.BreakBlockEvent;
 import mathax.client.events.entity.player.PickItemsEvent;
 import mathax.client.events.entity.player.PlaceBlockEvent;
 import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.world.TickEvent;
-import mathax.client.eventbus.EventHandler;
 import mathax.client.settings.*;
-import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Categories;
+import mathax.client.systems.modules.Module;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.Item;
@@ -98,7 +98,7 @@ public class Announcer extends Module {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
         .name("message")
         .description("The chat message for moving a certain amount of blocks.")
-        .defaultValue("I just moved %distance% blocks thanks to MatHax!")
+        .defaultValue("I just moved %distance% blocks thanks to Envy!")
         .build()
         );
 
@@ -170,7 +170,7 @@ public class Announcer extends Module {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
             .name("message")
             .description("The chat message for mining blocks.")
-            .defaultValue("I just mined %count% %block% thanks to MatHax!")
+            .defaultValue("I just mined %count% %block% thanks to Envy!")
             .build()
         );
 
@@ -218,7 +218,7 @@ public class Announcer extends Module {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
             .name("message")
             .description("The chat message for placing blocks.")
-            .defaultValue("I just placed %count% %block% thanks to MatHax!")
+            .defaultValue("I just placed %count% %block% thanks to Envy!")
             .build()
         );
 
@@ -264,7 +264,7 @@ public class Announcer extends Module {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
             .name("message")
             .description("The chat message for dropping items.")
-            .defaultValue("I just dropped %count% %item% thanks to MatHax!")
+            .defaultValue("I just dropped %count% %item% thanks to Envy!")
             .build()
         );
 
@@ -310,7 +310,7 @@ public class Announcer extends Module {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
             .name("message")
             .description("The chat message for picking up items.")
-            .defaultValue("I just picked up %count% %item% thanks to MatHax!")
+            .defaultValue("I just picked up %count% %item% thanks to Envy!")
             .build()
         );
 
@@ -352,7 +352,7 @@ public class Announcer extends Module {
         private final Setting<String> message = sg.add(new StringSetting.Builder()
             .name("message")
             .description("The chat message for opening a container.")
-            .defaultValue("I just opened %name% thanks to MatHax!")
+            .defaultValue("I just opened %name% thanks to Envy!")
             .build()
         );
 

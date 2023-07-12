@@ -5,42 +5,41 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Lifecycle;
 import mathax.client.MatHax;
+import mathax.client.eventbus.EventHandler;
+import mathax.client.eventbus.EventPriority;
+import mathax.client.events.game.GameJoinedEvent;
+import mathax.client.events.game.GameLeftEvent;
+import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.mathax.ActiveModulesChangedEvent;
 import mathax.client.events.mathax.KeyEvent;
 import mathax.client.events.mathax.ModuleBindChangedEvent;
 import mathax.client.events.mathax.MouseButtonEvent;
-import mathax.client.systems.config.Config;
-import mathax.client.systems.modules.chat.*;
-import mathax.client.systems.modules.client.*;
-import mathax.client.systems.modules.combat.*;
-import mathax.client.systems.modules.experimental.*;
-import mathax.client.systems.modules.misc.*;
-import mathax.client.systems.modules.movement.*;
-import mathax.client.systems.modules.player.*;
-import mathax.client.systems.modules.render.*;
-import mathax.client.systems.modules.world.*;
-import mathax.client.systems.modules.ghost.*;
-import mathax.client.systems.modules.world.Timer;
-import mathax.client.utils.misc.input.Input;
-import mathax.client.utils.misc.input.KeyAction;
-import mathax.client.events.game.GameJoinedEvent;
-import mathax.client.events.game.GameLeftEvent;
-import mathax.client.events.game.OpenScreenEvent;
-import mathax.client.eventbus.EventHandler;
-import mathax.client.eventbus.EventPriority;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.System;
 import mathax.client.systems.Systems;
+import mathax.client.systems.config.Config;
+import mathax.client.systems.modules.chat.*;
+import mathax.client.systems.modules.client.*;
 import mathax.client.systems.modules.client.swarm.Swarm;
+import mathax.client.systems.modules.combat.*;
+import mathax.client.systems.modules.experimental.*;
+import mathax.client.systems.modules.ghost.*;
+import mathax.client.systems.modules.misc.*;
+import mathax.client.systems.modules.movement.*;
 import mathax.client.systems.modules.movement.elytrafly.ElytraFly;
-//import mathax.client.systems.modules.misc.CrazyCape;
 import mathax.client.systems.modules.movement.speed.Speed;
+import mathax.client.systems.modules.player.*;
+import mathax.client.systems.modules.render.*;
 import mathax.client.systems.modules.render.marker.Marker;
 import mathax.client.systems.modules.render.search.Search;
+import mathax.client.systems.modules.world.Timer;
+import mathax.client.systems.modules.world.*;
 import mathax.client.utils.Utils;
-import mathax.client.utils.misc.ValueComparableMap;
 import mathax.client.utils.misc.ChatUtils;
+import mathax.client.utils.misc.ValueComparableMap;
+import mathax.client.utils.misc.input.Input;
+import mathax.client.utils.misc.input.KeyAction;
 import mathax.client.utils.render.ToastSystem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -446,6 +445,7 @@ public class Modules extends System<Modules> {
         add(new NoRotate());
         //add(new PacketMine());
         add(new Portals());
+        add(new InventoryScroll());
         add(new PotionSaver());
         add(new PotionSpoof());
         add(new Rotation());
@@ -487,8 +487,11 @@ public class Modules extends System<Modules> {
         add(new ChorusExploit());
         add(new ClickTP());
         //add(new DepthStriderSpoof());
-        add(new ElytraBoost());
+        //add(new ElytraBoost());
         add(new ElytraFly());
+        add(new ElytraFlyRecoded());
+        add(new HypnoticFly());
+        add(new TensorFly());
         add(new EntityControl());
         add(new EntityFly());
         add(new EntitySpeed());
@@ -496,6 +499,7 @@ public class Modules extends System<Modules> {
         add(new FastFall());
         add(new Flight());
         add(new Glide());
+        add(new GodBridge());
         add(new Gravity());
         add(new GUIMove());
         add(new HighJump());
@@ -515,7 +519,7 @@ public class Modules extends System<Modules> {
         add(new RubberbandFly());
         add(new SafeWalk());
         add(new SafeWalk());
-        //add(new RoboWalk());
+        add(new RoboWalk());
         add(new Scaffold());
         add(new Slippy());
         add(new Sneak());
@@ -524,6 +528,7 @@ public class Modules extends System<Modules> {
         add(new Spider());
         add(new Sprint());
         add(new Step());
+        add(new SwimSpeed());
         add(new TridentBoost());
         add(new Velocity());
         add(new WurstGlide());
@@ -538,6 +543,7 @@ public class Modules extends System<Modules> {
 
     private void initRender() {
         add(new AntiSale());
+        //add(new AntiScreen());
         add(new Background());
         add(new BetterTooltips());
         add(new Australia());
@@ -597,6 +603,7 @@ public class Modules extends System<Modules> {
 
     private void initWorld() {
         add(new AirPlace());
+        add(new AntiSculkSensor());
         add(new Ambience());
         add(new AntiCactus());
         add(new AntiGhostBlock());
@@ -623,8 +630,10 @@ public class Modules extends System<Modules> {
         add(new InstaMine());
         add(new ItemSucker());
         add(new LiquidFiller());
+        add(new Lavacast());
         add(new MountBypass());
         add(new Nuker());
+        add(new NoStrip());
         add(new SpawnProofer());
         add(new StashFinder());
         add(new Timer());
@@ -697,6 +706,7 @@ public class Modules extends System<Modules> {
 
     private void initExperimental() {
         add(new BookCrash());
+        add(new Bot());
         add(new CraftingCrash());
         add(new CreativeCrash());
         add(new Disabler());

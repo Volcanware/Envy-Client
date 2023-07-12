@@ -22,19 +22,11 @@ import net.minecraft.world.RaycastContext;
 
 import java.util.Random;
 
-/*/------------------------------------------------------------------------------------------------------------/*/
-/*/ Used from Meteor Rejects                                                                                   /*/
-/*/ https://github.com/AntiCope/meteor-rejects/blob/master/src/main/java/anticope/rejects/modules/Confuse.java /*/
-/*/------------------------------------------------------------------------------------------------------------/*/
-
 public class Confuse extends Module {
     private final Random random = new Random();
-
     Entity target = null;
-
     double circleProgress = 0;
     double addition = 0.0;
-
     int delayWaited = 0;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

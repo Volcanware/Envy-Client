@@ -32,7 +32,7 @@ public class TimeChanger extends Module {
     public boolean onActivate() {
         oldTime = mc.world.getTime();
         return false;
-    }
+    } //im going insane
 
     @Override
     public void onDeactivate() {

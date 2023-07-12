@@ -4,17 +4,20 @@ import mathax.client.eventbus.EventHandler;
 import mathax.client.events.packets.PacketEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
-import mathax.client.systems.modules.combat.*;
 import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.combat.*;
 import mathax.client.utils.misc.Placeholders;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
-import net.minecraft.network.packet.s2c.play.*;
+import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class AutoEZ extends Module {
     private final Random random = new Random();
@@ -172,23 +175,23 @@ public class AutoEZ extends Module {
 
     private static List<String> getMessages() {
         return Arrays.asList(
-            "%player% just got raped by MatHax!",
-            "%player% just got ended by MatHax!",
-            "haha %player% is a noob! MatHax on top!",
-            "I just EZZz'd %player% using MatHax!",
-            "I just fucked %player% using MatHax!",
-            "Take the L nerd %player%! You just got ended by MatHax!",
-            "I just nae nae'd %player% using MatHax!",
-            "I am too good for %player%! MatHax on top!"
+            "%player% just got raped by Envy!",
+            "%player% just got ended by Envy!",
+            "haha %player% is a noob! Envy on top!",
+            "I just EZZz'd %player% using Envy!",
+            "I just fucked %player% using Envy!",
+            "Take the L nerd %player%! You just got ended by Envy!",
+            "I just nae nae'd %player% using Envy!",
+            "I am too good for %player%! Envy on top!"
         );
     }
 
     private static List<String> getGGMessages() {
         return Arrays.asList(
-            "GG %player%! MatHax is so op!",
-            "Nice fight but MatHax is better, %player%! I really enjoyed it!",
-            "Close fight %player%, but MatHax won!",
-            "Good fight, %player%! MatHax on top!"
+            "GG %player%! Envy is so op!",
+            "Nice fight but Envy is better, %player%! I really enjoyed it!",
+            "Close fight %player%, but Envy won!",
+            "Good fight, %player%! Envy on top!"
         );
     }
 
@@ -227,16 +230,16 @@ public class AutoEZ extends Module {
 
     private static List<String> getTotemMessages() {
         return Arrays.asList(
-            "%player% just got popped by MatHax!",
-            "Keep popping %player%! MatHax owns you!",
-            "%player%'s totem just got ended by MatHax!",
-            "%player% just lost 1 totem thanks to MatHax!",
-            "I just easily popped %player% using MatHax!"
+            "%player% just got popped by Envy!",
+            "Keep popping %player%! Envy owns you!",
+            "%player%'s totem just got ended by Envy!",
+            "%player% just lost 1 totem thanks to Envy!",
+            "I just easily popped %player% using Envy!"
         );
     }
 
     public enum Mode {
-        MatHax("MatHax"),
+        MatHax("Envy"),
         Custom("Custom");
 
         private final String title;

@@ -10,8 +10,6 @@ import mathax.client.settings.*;
 import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.misc.SpinBot;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.entity.SortPriority;
 import mathax.client.utils.entity.Target;
@@ -30,8 +28,6 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
@@ -104,12 +100,6 @@ public class KillAura extends Module {
         .build()
     );
 
-/*    private final Setting<Boolean> ignoreImpossibleNames = sgGeneral.add(new BoolSetting.Builder()
-        .name("Ignore Impossible Names")
-        .description("Ignores players with impossible names.")
-        .defaultValue(false)
-        .build()
-    );*/
 
     private final Setting<Boolean> noRightClick = sgGeneral.add(new BoolSetting.Builder()
         .name("no-right-click")
@@ -132,33 +122,6 @@ public class KillAura extends Module {
         .build()
     );
 
-    //private final Setting<Boolean> AntiBot = sgGeneral.add(new BoolSetting.Builder()
-        //.name("Anti-Bot1")
-       // .description("Does Not Attack if They have a Diamond Helmet")
-       // .defaultValue(false)
-       // .build()
-   // );
-
-    //private final Setting<Boolean> AntiBot2 = sgGeneral.add(new BoolSetting.Builder()
-        //.name("Anti-Bot2")
-       // .description("Does Not Attack if They have a Diamond Chestplate")
-       // .defaultValue(false)
-        //.build()
-    //);
-
-    //private final Setting<Boolean> AntiBot3 = sgGeneral.add(new BoolSetting.Builder()
-        //.name("Anti-Bot3")
-        //.description("Does Not Attack if They have a Diamond Axe in their hand")
-        //.defaultValue(false)
-        //.build()
-    //);
-
-    //private final Setting<Boolean> AntiBot4 = sgGeneral.add(new BoolSetting.Builder()
-        //.name("Anti-Bot4")
-        //.description("Does Not Attack if They are not on the ground")
-        //.defaultValue(false)
-        //.build()
-    //);
 
     private final Setting<RotationMode> rotation = sgGeneral.add(new EnumSetting.Builder<RotationMode>()
         .name("rotate")
@@ -355,7 +318,7 @@ public class KillAura extends Module {
         .build()
     );
 
-    public enum BlockMode{
+    public enum BlockMode {
         Constant,
         NotOnHit,
     }
@@ -390,8 +353,8 @@ public class KillAura extends Module {
 
             return;
         }
-        if (autoBlock.get()){
-            if (mc.player.getOffHandStack().getItem().equals(Items.SHIELD)){
+        if (autoBlock.get()) {
+            if (mc.player.getOffHandStack().getItem().equals(Items.SHIELD)) {
                 mc.options.useKey.setPressed(true);
             }
         }
@@ -437,7 +400,8 @@ public class KillAura extends Module {
 
         if (!itemInHand()) return;
         if (delayCheck()) targets.forEach(this::attack);
-        if (randomTeleport.get() && !onlyWhenLook.get()) mc.player.setPosition(primary.getX() + randomOffset(), primary.getY(), primary.getZ() + randomOffset());
+        if (randomTeleport.get() && !onlyWhenLook.get())
+            mc.player.setPosition(primary.getX() + targetRange.get(), primary.getY(), primary.getZ() + targetRange.get());
     }
 
     @EventHandler
@@ -465,13 +429,11 @@ public class KillAura extends Module {
             if (count > 180) count = (short) -180;
             Rotations.rotate(count, 0.0);
         }
-        //List<ItemStack> armorItems = (List<ItemStack>) getTarget().getArmorItems();
-        //if (AntiBot.get() && armorItems.contains(Items.DIAMOND_HELMET.getDefaultStack())) {
-            //return false;
-       // }
+
         if (!nametagged.get() && entity.hasCustomName() && !(entity instanceof PlayerEntity)) return false;
         if (!PlayerUtils.canSeeEntity(entity) && PlayerUtils.distanceTo(entity) > wallsRange.get()) return false;
-        if (ignoreTamed.get() && entity instanceof Tameable tameable && tameable.getOwnerUuid() != null && tameable.getOwnerUuid().equals(mc.player.getUuid())) return false;
+        if (ignoreTamed.get() && entity instanceof Tameable tameable && tameable.getOwnerUuid() != null && tameable.getOwnerUuid().equals(mc.player.getUuid()))
+            return false;
         if (ignorePassive.get()) {
             if (entity instanceof EndermanEntity enderman && !enderman.isAngryAt(mc.player)) return false;
             if (entity instanceof ZombifiedPiglinEntity piglin && !piglin.isAngryAt(mc.player)) return false;
@@ -480,12 +442,12 @@ public class KillAura extends Module {
         if (entity instanceof PlayerEntity) {
             if (((PlayerEntity) entity).isCreative()) return false;
             if (!Friends.get().shouldAttack((PlayerEntity) entity)) return false;
-            if (ignoreShield.get() && shieldCheck((PlayerEntity)entity)) return false;
+            if (ignoreShield.get() && shieldCheck((PlayerEntity) entity)) return false;
         }
         return !(entity instanceof AnimalEntity) || babies.get() || !((AnimalEntity) entity).isBaby();
     }
 
-    public boolean shieldCheck (PlayerEntity player) {
+    public boolean shieldCheck(PlayerEntity player) {
         if (player.isBlocking()) {
             Vec3d persistentProjectileEntity = mc.player.getPos();
             if (persistentProjectileEntity != null) {
@@ -547,8 +509,10 @@ public class KillAura extends Module {
             case Sword -> mc.player.getMainHandStack().getItem() instanceof SwordItem;
             case Axe -> mc.player.getMainHandStack().getItem() instanceof AxeItem;
             case Hoe -> mc.player.getMainHandStack().getItem() instanceof HoeItem;
-            case Sword_and_Axe -> mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem;
-            case All_Three -> mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem || mc.player.getMainHandStack().getItem() instanceof HoeItem;
+            case Sword_and_Axe ->
+                mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem;
+            case All_Three ->
+                mc.player.getMainHandStack().getItem() instanceof SwordItem || mc.player.getMainHandStack().getItem() instanceof AxeItem || mc.player.getMainHandStack().getItem() instanceof HoeItem;
             default -> true;
         };
     }

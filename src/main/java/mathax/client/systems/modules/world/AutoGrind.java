@@ -5,8 +5,6 @@ import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.utils.network.MatHaxExecutor;
-import mathax.client.utils.player.InvUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
@@ -55,25 +53,7 @@ public class AutoGrind extends Module {
 
     }
 
-//    MatHaxExecutor.execute(() -> {
-//        for (int i = 0; i <= mc.player.getInventory().size(); i++) {
-//            if (canGrind(mc.player.getInventory().getStack(i))) {
-//                try {
-//                    Thread.sleep(delay.get());
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                if (mc.currentScreen == null) break;
-//
-//                InvUtils.quickMove().slot(i);
-//                InvUtils.move().fromId(2).to(i);
-//            }
-//        }
-//    });
-//}
-
-    private boolean canGrind(ItemStack stack) {
+    private boolean canGrind(ItemStack stack) { //but i cant grind?
         if (itemBlacklist.get().contains(stack.getItem())) return false;
 
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(stack);

@@ -114,7 +114,7 @@ public class Flamethrower extends Module {
             }
         }
     }
-
+    //not_a_flamethrower
     private void interact() {
         Block block = mc.world.getBlockState(entity.getBlockPos()).getBlock();
         Block bottom = mc.world.getBlockState(entity.getBlockPos().down()).getBlock();

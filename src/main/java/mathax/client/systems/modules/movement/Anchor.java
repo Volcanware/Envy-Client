@@ -19,9 +19,7 @@ public class Anchor extends Module {
     private boolean wasInHole;
     private boolean foundHole;
     private int holeX, holeZ;
-
     public boolean cancelJump;
-
     public boolean controlMovement;
     public double deltaX, deltaZ;
 

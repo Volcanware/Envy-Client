@@ -1,19 +1,19 @@
 package mathax.client.systems.modules.combat;
 
 import mathax.client.MatHax;
+import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.BoolSetting;
 import mathax.client.settings.IntSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
-import mathax.client.systems.modules.Module;
 import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
+import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
 import mathax.client.utils.player.DamageUtils;
 import mathax.client.utils.player.InvUtils;
 import mathax.client.utils.player.PlayerUtils;
-import mathax.client.eventbus.EventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;

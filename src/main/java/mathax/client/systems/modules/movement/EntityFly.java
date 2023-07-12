@@ -12,8 +12,6 @@ import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
-import static mathax.client.MatHax.mc;
-
 public class EntityFly extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 

@@ -1,6 +1,5 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
-import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.AutoJump;

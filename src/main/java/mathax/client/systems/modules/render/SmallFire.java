@@ -4,9 +4,9 @@ import mathax.client.settings.DoubleSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
+import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3f;
-import mathax.client.systems.modules.Module;
 
 public class SmallFire extends Module{
     private final SettingGroup sgScale = settings.createGroup("Scale");
@@ -67,11 +67,11 @@ public class SmallFire extends Module{
     public SmallFire() {
         super(Categories.Render, Items.SPYGLASS, "small-fire", "Smalls fire on screen.");
     }
-    
-    public Vec3f getFireScale() {
+
+    public Vec3f getFireScale() { //your fired
         return new Vec3f(scaleX.get().floatValue(), scaleY.get().floatValue(), scaleZ.get().floatValue());
     }
-    
+
     public Vec3f getFirePosition() {
         return new Vec3f(scaleX.get().floatValue(), scaleY.get().floatValue(), scaleZ.get().floatValue());
     }

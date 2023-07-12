@@ -1,16 +1,13 @@
 package mathax.client.systems.modules.combat;
 
-import mathax.client.MatHax;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.AttackEntityEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.BoolSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
-import mathax.client.settings.Settings;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.movement.speed.modes.EnvyAnarchy;
 import mathax.client.utils.chinaman.FloorUtil;
 import mathax.client.utils.player.Rotations;
 import net.minecraft.entity.Entity;
@@ -18,9 +15,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-
-import static mathax.client.MatHax.mc;
-import static net.minecraft.util.math.BlockPos.*;
 
 public class ShieldBypass extends Module {
 

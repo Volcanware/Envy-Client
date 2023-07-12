@@ -148,7 +148,7 @@ public class ESP extends Module {
         .visible(() -> !distance.get())
         .build()
     );
-
+    //WHY
     private final Setting<SettingColor> waterAnimalsColor = sgColors.add(new ColorSetting.Builder()
         .name("water-animals")
         .description("The water animal's color.")
@@ -213,7 +213,6 @@ public class ESP extends Module {
 
         lineColor.a *= a;
         sideColor.a *= a;
-
         if (mode.get() == Mode.Box) {
             double x = MathHelper.lerp(event.tickDelta, entity.lastRenderX, entity.getX()) - entity.getX();
             double y = MathHelper.lerp(event.tickDelta, entity.lastRenderY, entity.getY()) - entity.getY();

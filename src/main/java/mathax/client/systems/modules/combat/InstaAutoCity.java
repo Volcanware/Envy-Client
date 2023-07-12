@@ -5,6 +5,7 @@ import mathax.client.eventbus.EventHandler;
 import mathax.client.events.render.Render3DEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.renderer.ShapeMode;
+import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.player.InvUtils;
@@ -12,36 +13,25 @@ import mathax.client.utils.player.Rotations;
 import mathax.client.utils.render.color.SettingColor;
 import mathax.client.utils.world.BlockUtils;
 import mathax.client.utils.world.CityUtils;
-import mathax.client.settings.BoolSetting;
-import mathax.client.settings.ColorSetting;
-import mathax.client.settings.DoubleSetting;
-import mathax.client.settings.EnumSetting;
-import mathax.client.settings.IntSetting;
-import mathax.client.settings.Setting;
-import mathax.client.settings.SettingGroup;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 
 public class InstaAutoCity extends Module {
     static final boolean assertionsDisabled = !InstaAutoCity.class.desiredAssertionStatus();
-
     private Direction direction;
-
     private PlayerEntity target;
-
     private BlockPos targetBlockPos;
     private BlockPos mineTarget;
-
     private boolean mining;
-
     private int delayLeft;
     private int count;
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 

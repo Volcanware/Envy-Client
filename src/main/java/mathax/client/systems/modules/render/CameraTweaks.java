@@ -74,6 +74,7 @@ public class CameraTweaks extends Module {
     private void onPerspectiveChanged(ChangePerspectiveEvent event) {
         distance = cameraDistance.get();
     }
+    //so many very important code comments
 
     @EventHandler
     private void onMouseScroll(MouseScrollEvent event) {

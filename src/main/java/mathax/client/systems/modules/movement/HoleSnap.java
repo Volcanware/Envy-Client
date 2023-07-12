@@ -1,6 +1,7 @@
 package mathax.client.systems.modules.movement;
 
 import mathax.client.eventbus.EventHandler;
+import mathax.client.events.world.TickEvent;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.player.PlayerUtils;
@@ -12,7 +13,7 @@ public class HoleSnap extends Module {
     }
 
     @EventHandler
-    public boolean onTick() {
+    public boolean onTick(TickEvent.Post event) {
         assert mc.player != null;
         if (!PlayerUtils.isInHole(mc.player) && (!mc.player.isOnGround())) {
             assert mc.world != null;

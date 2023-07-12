@@ -1,16 +1,16 @@
 package mathax.client.systems.modules;
 
 import mathax.client.MatHax;
-import mathax.client.systems.config.Config;
-import mathax.client.utils.render.color.Color;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.widgets.WWidget;
 import mathax.client.settings.Settings;
+import mathax.client.systems.config.Config;
 import mathax.client.utils.Utils;
+import mathax.client.utils.misc.ChatUtils;
 import mathax.client.utils.misc.ISerializable;
 import mathax.client.utils.misc.KeyBind;
-import mathax.client.utils.misc.ChatUtils;
 import mathax.client.utils.render.ToastSystem;
+import mathax.client.utils.render.color.Color;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
@@ -79,7 +79,14 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     public boolean onActivate() {
         return false;
     }
+    public void onActivateCombat() {}
+
+    public void onActivateDefault() {}
     public void onDeactivate() {}
+    public void onDeactivateCombat() {}
+
+    public void onActivateServer() {}
+    public void onDeactivateServer() {}
 
     public void toggle() {
         if (!active) {
@@ -91,11 +98,16 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
             if (runInMainMenu || Utils.canUpdate()) {
                 if (autoSubscribe) MatHax.EVENT_BUS.subscribe(this);
                 onActivate();
+                onActivateServer();
+                onActivateCombat();
+                onDeactivateCombat();
             }
         } else {
             if (runInMainMenu || Utils.canUpdate()) {
                 if (autoSubscribe) MatHax.EVENT_BUS.unsubscribe(this);
                 onDeactivate();
+                onDeactivateServer();
+                onDeactivateCombat();
             }
 
             active = false;
@@ -114,11 +126,14 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
             if (runInMainMenu || Utils.canUpdate()) {
                 if (autoSubscribe) MatHax.EVENT_BUS.subscribe(this);
                 onActivate();
+                onActivateServer();
+                onDeactivateCombat();
             }
         } else {
             if (runInMainMenu || Utils.canUpdate()) {
                 if (autoSubscribe) MatHax.EVENT_BUS.unsubscribe(this);
                 onDeactivate();
+                onDeactivateServer();
             }
 
             Modules.get().removeActive(this);

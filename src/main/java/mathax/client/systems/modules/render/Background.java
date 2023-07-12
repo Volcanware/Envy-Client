@@ -68,8 +68,8 @@ public class Background extends Module {
     // Screens
 
     private final Setting<Boolean> mathax = sgScreens.add(new BoolSetting.Builder()
-        .name("matHax")
-        .description("Applies blur to MatHax screens.")
+        .name("Envy")
+        .description("Applies blur to Envy screens.")
         .defaultValue(true)
         .build()
     );
@@ -184,7 +184,7 @@ public class Background extends Module {
                 GL.bindTexture(fbo1.texture);
                 shader.set("u_Direction", 0.0, 1.0);
                 PostProcessRenderer.render();
-            }
+            } //volcan sucks
 
             PostProcessRenderer.endRender();
         }

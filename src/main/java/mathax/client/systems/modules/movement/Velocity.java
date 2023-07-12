@@ -8,12 +8,10 @@ import mathax.client.mixininterface.IVec3d;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.misc.PingSpoof;
-import mathax.client.systems.modules.world.Timer;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 
+//We Should Add Jump Velocity And Delayed Velocity
 public class Velocity extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 

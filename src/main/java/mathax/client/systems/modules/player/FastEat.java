@@ -9,10 +9,7 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.world.Timer;
-import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.item.Items;
-
-import static mathax.client.MatHax.mc;
 
 public class FastEat extends Module {
 

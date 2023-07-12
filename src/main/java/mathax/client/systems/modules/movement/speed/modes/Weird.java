@@ -1,15 +1,11 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
-import mathax.client.eventbus.EventHandler;
 import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
-import net.minecraft.entity.effect.StatusEffects;
-
-import static net.minecraft.entity.effect.StatusEffects.SPEED;
 
 public class Weird extends SpeedMode {
     private boolean isBhopEnabled = false;

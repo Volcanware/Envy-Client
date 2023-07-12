@@ -9,13 +9,13 @@ import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.world.Timer;
 import mathax.client.utils.Utils;
 import mathax.client.utils.player.PlayerUtils;
-import mathax.client.systems.modules.world.Timer;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
-
+//todo: add new features and modes
 public class LongJump extends Module {
     private boolean jumping = false;
     private boolean jumped = false;
