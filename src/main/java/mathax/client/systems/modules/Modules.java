@@ -440,7 +440,7 @@ public class Modules extends System<Modules> {
         add(new Ghost());
         add(new GhostHand());
         add(new LiquidInteract());
-        //add(new Worldborder());
+        add(new worldborder());
         add(new NoBreakDelay());
         add(new NoInteract());
         add(new NoMiningTrace());

@@ -4,16 +4,20 @@ import mathax.client.eventbus.EventHandler;
 import mathax.client.events.packets.PacketEvent;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
+import mathax.client.systems.modules.Category;
 import mathax.client.systems.modules.Module;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.*;
 
-public class Worldborder extends Module {
+public class worldborder extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    public Worldborder() {
+    public worldborder() {
         super(Categories.Player, Items.DIAMOND_BOOTS, "WorldBorder", "Let you disable the worldborder client-side");
     }
+
+
 
     @EventHandler
     void onReceivedPacket(PacketEvent.Receive event) {
