@@ -2,10 +2,7 @@ package mathax.client.systems.modules.movement;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
-import mathax.client.settings.EnumSetting;
-import mathax.client.settings.IntSetting;
-import mathax.client.settings.Setting;
-import mathax.client.settings.SettingGroup;
+import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
@@ -14,6 +11,7 @@ import net.minecraft.util.math.Vec3d;
 //When I started this only me and god knew how it worked, now only god knows how it works.
 public class ElytraFlyRecoded extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private double lockY = 0;
 
     //TODO: Make this anti bullshit.
     public ElytraFlyRecoded() {
@@ -29,6 +27,13 @@ public class ElytraFlyRecoded extends Module {
         .defaultValue(1)
         .range(1, 10)
         .sliderRange(1, 10)
+        .build()
+    );
+
+    private final Setting<Boolean> ylock = sgGeneral.add(new BoolSetting.Builder()
+        .name("Lock Y")
+        .description("Locks Y position to the Y you started at")
+        .defaultValue(false)
         .build()
     );
     private final Setting<Integer> leftspeed = sgGeneral.add(new IntSetting.Builder()
@@ -55,17 +60,56 @@ public class ElytraFlyRecoded extends Module {
         .sliderRange(1, 10)
         .build()
     );
+
+    private final Setting<Boolean> spin = sgGeneral.add(new BoolSetting.Builder()
+        .name("Spin")
+        .description("Spinny Elytra")
+        .defaultValue(false)
+        .build()
+    );
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("How to treat the lava.")
         .defaultValue(Mode.CursorLock)
         .build()
     );
+
+    @EventHandler
+    public boolean onActivate() {
+        lockY = mc.player.getY(); //How the fuck does this work
+        return false; //hes prob gay
+    }
+
+    @EventHandler
+    private void onTick(TickEvent.Pre event) { //Why the fuck does this need Post tick D:
+
+        if (mc.player.isFallFlying()) { //Fuck this shit
+            if (mc.options.jumpKey.isPressed()) {
+
+                if (!isFrozen) {
+                    // Freeze the player's Y-axis movement
+                    mc.player.setVelocity(Vec3d.ZERO);
+                    isFrozen = true;
+                }
+                else {
+                    // Allow Y-axis movement when space bar is released
+                    isFrozen = false;
+                }
+            }
+        }
+    }
+
     @EventHandler
     private void onTick(TickEvent.Post event) {
-
         assert mc.player != null;
         if (mc.player.isFallFlying()) {
+            if (ylock.get()) { //This is absolute bullshit
+                mc.player.setPos(mc.player.getX(), lockY, mc.player.getZ());
+            }
+            if (spin.get()) {
+                mc.player.bodyYaw = mc.player.prevBodyYaw + 2;
+                mc.player.headYaw = mc.player.prevHeadYaw + 2;
+            }
             boolean moveForward = mc.options.forwardKey.isPressed();
             boolean moveBackward = mc.options.backKey.isPressed();
             boolean moveLeft = mc.options.leftKey.isPressed();
@@ -114,19 +158,6 @@ public class ElytraFlyRecoded extends Module {
 
             if (mc.options.sneakKey.isPressed()) {
                 mc.player.setVelocity(mc.player.getVelocity().x, descendspeed.get() * -1, mc.player.getVelocity().z);
-            }
-
-            if (mc.options.jumpKey.isPressed()) {
-
-                if (!isFrozen) {
-                    // Freeze the player's Y-axis movement
-                    mc.player.setVelocity(Vec3d.ZERO);
-                    isFrozen = true;
-                }
-                else {
-                    // Allow Y-axis movement when space bar is released
-                    isFrozen = false;
-                }
             }
             else {
                 mc.player.setNoGravity(false);

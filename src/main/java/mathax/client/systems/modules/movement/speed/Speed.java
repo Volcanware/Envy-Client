@@ -31,6 +31,16 @@ public class Speed extends Module {
         .build()
     );
 
+    public final Setting<Double> speed5b5t = sgGeneral.add(new DoubleSetting.Builder()
+        .name("5b5t-speed")
+        .description("The speed for 5b5t.")
+        .defaultValue(1.0)
+        .min(0)
+        .sliderMax(10)
+        .visible(() -> speedMode.get() == SpeedModes._5b5t)
+        .build()
+    );
+
     public final Setting<Boolean> autojump = sgGeneral.add(new BoolSetting.Builder()
         .name("AutoJump")
         .description("Jumps when your on the ground")
@@ -323,6 +333,7 @@ public class Speed extends Module {
             case Weird -> currentMode = new Weird();
             case LBL_SlowHop -> currentMode = new LBL_SlowHop();
             case Vulcan -> currentMode = new Vulcan();
+            case _5b5t -> currentMode = new _5b5t();
             case OnGround -> currentMode = new OnGround();
             case LegitHop -> currentMode = new LegitHop();
             case EnvyAnarchy -> currentMode = new EnvyAnarchy();

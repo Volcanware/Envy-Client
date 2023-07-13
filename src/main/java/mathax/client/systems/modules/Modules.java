@@ -52,6 +52,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.border.WorldBorder;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -368,6 +369,7 @@ public class Modules extends System<Modules> {
         add(new AnchorAura());
         add(new AntiAnvil());
         add(new AntiCrystalPhase());
+        add(new AntiSurround());
         add(new ArrowDodge());
         add(new Auto32K());
         add(new AutoAnvil());
@@ -451,6 +453,7 @@ public class Modules extends System<Modules> {
         //add(new ShieldSpoof());
         add(new SpeedMine());
         add(new LoliFinder());
+        add(new Worldborder());
     }
 
     private void add(LoliFinder loliFinder) {
@@ -668,6 +671,7 @@ public class Modules extends System<Modules> {
     private void initMisc() {
         add(new AntiDesync());
         add(new AntiPacketKick());
+        add(new AntiAim());
         add(new AutoGG());
         add(new AutoMolest());
         add(new AutoMountBypassDupe());
@@ -725,6 +729,7 @@ public class Modules extends System<Modules> {
         add(new SecretClose());
         add(new SuperPanic());
         //add(new EntityAlert());
+        add(new Sudoku());
     }
 
     public static class ModuleRegistry extends Registry<Module> {

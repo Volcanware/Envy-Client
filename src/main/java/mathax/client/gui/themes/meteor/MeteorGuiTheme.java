@@ -215,6 +215,11 @@ public class MeteorGuiTheme extends GuiTheme {
     }
 
     @Override
+    public WTextBox textBox(String text, String placeholder, CharFilter filter, Class<? extends WTextBox.Renderer> renderer) {
+        return null;
+    }
+
+    @Override
     public <T> WDropdown<T> dropdown(T[] values, T value) {
         return w(new WMeteorDropdown<>(values, value));
     }

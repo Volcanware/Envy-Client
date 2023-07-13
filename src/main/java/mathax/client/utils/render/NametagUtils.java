@@ -6,6 +6,7 @@ import mathax.client.utils.Utils;
 import mathax.client.utils.misc.Vec3;
 import mathax.client.utils.misc.Vec4;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.util.math.Matrix4f;
 
 import static mathax.client.MatHax.mc;
@@ -53,7 +54,35 @@ public class NametagUtils {
         return true;
     }
 
+    public static boolean to2D(Vector3d pos, double scale) {
+        NametagUtils.scale = getScale(pos) * scale;
+
+        vec4.set(cameraNegated.x + pos.x, cameraNegated.y + pos.y, cameraNegated.z + pos.z, 1);
+
+        ((IMatrix4f) (Object) model).multiplyMatrix(vec4, mmMat4);
+        ((IMatrix4f) (Object) projection).multiplyMatrix(mmMat4, pmMat4);
+
+        if (pmMat4.w <= 0.0f) return false;
+
+        pmMat4.toScreen();
+        double x = pmMat4.x * mc.getWindow().getFramebufferWidth();
+        double y = pmMat4.y * mc.getWindow().getFramebufferHeight();
+
+        if (Double.isInfinite(x) || Double.isInfinite(y)) return false;
+
+        pos.set(x / windowScale, mc.getWindow().getFramebufferHeight() - y / windowScale, pmMat4.z);
+        return true;
+    }
+
     public static void begin(Vec3 pos) {
+        MatrixStack matrices = RenderSystem.getModelViewStack();
+
+        matrices.push();
+        matrices.translate(pos.x, pos.y, 0);
+        matrices.scale((float) scale, (float) scale, 1);
+    }
+
+    public static void begin(Vector3d pos) {
         MatrixStack matrices = RenderSystem.getModelViewStack();
 
         matrices.push();
@@ -66,6 +95,11 @@ public class NametagUtils {
     }
 
     private static double getScale(Vec3 pos) {
+        double dist = camera.distanceTo(pos);
+        return Utils.clamp(1 - dist * 0.01, 0.5, Integer.MAX_VALUE);
+    }
+
+    private static double getScale(Vector3d pos) {
         double dist = camera.distanceTo(pos);
         return Utils.clamp(1 - dist * 0.01, 0.5, Integer.MAX_VALUE);
     }

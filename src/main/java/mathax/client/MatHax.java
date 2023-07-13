@@ -219,6 +219,8 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "Better than Dinnerbone",
             Formatting.YELLOW + "Better than Grumm",
             Formatting.YELLOW + "Better than Minecon",
+            Formatting.YELLOW + "Blame it on Hardline",
+            Formatting.YELLOW + "Crashes if you look at it funny",
             Formatting.YELLOW + "L Bozo",
             Formatting.YELLOW + "MEDIC!",
             Formatting.YELLOW + "Femboy's On Top!",

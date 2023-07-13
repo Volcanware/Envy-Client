@@ -68,7 +68,7 @@ public class TitleScreenMixin extends Screen {
 
         String authorBy = "By these fucking idiots:";
         int authorByLength = textRenderer.getWidth(authorBy);
-        String authorName = "Volcan, HardlineMouse16, Chynamahn, Cheef, Foopah, Largoon, Vulken AC, PizzaV";
+        String authorName = "Volcan, HordLoinMuuse16, Chynamahn, Cheef, Foopah, Largoon, Vulken AC, PizuhaVee";
         int authorNameLength = textRenderer.getWidth(authorName);
         int authorFullLength = authorByLength + spaceLength + authorNameLength;
 
