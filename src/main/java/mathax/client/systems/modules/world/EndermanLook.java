@@ -36,7 +36,13 @@ public class EndermanLook extends Module {
             if (mc.player.getAbilities().creativeMode || !shouldLook()) return;
 
             Rotations.rotate(mc.player.getYaw(), 90, -75, null);
-        } else {
+        }
+        if (lookMode.get() == Mode.Challenge) {
+            if (mc.crosshairTarget.equals(EndermanEntity.class)) {
+                throw new NullPointerException("You failed the challenge!");
+            }
+        }
+        if (lookMode.get() == Mode.At) {
             for (Entity entity : mc.world.getEntities()) {
                 if (!(entity instanceof EndermanEntity enderman)) continue;
                 //just use a pumpkin forehead
@@ -44,11 +50,6 @@ public class EndermanLook extends Module {
 
                 Rotations.rotate(Rotations.getYaw(enderman), Rotations.getPitch(enderman, Target.Head), -75, null);
                 break;
-            }
-        }
-        if (lookMode.get() == Mode.Challenge) {
-            if (mc.crosshairTarget.equals(EndermanEntity.class)) {
-                throw new NullPointerException("You failed the challenge!");
             }
         }
     }
