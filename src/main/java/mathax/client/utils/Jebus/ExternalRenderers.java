@@ -137,7 +137,7 @@ public class ExternalRenderers {
                 @Override // disable the module that opened the window when the window is closed
                 public void windowClosing(WindowEvent e) {
                     Module m = Modules.get().get(parent.getClass());
-                    if (Module.isActive()) m.toggle();
+                    if (Module.StatIsActive()) m.toggle();
                 }
             });
         }
