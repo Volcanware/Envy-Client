@@ -123,11 +123,13 @@ public class MatHax implements ClientModInitializer {
             // SPLASHES
             Formatting.RED + "Envy Client on top!",
             Formatting.GRAY + "Volcan" + Formatting.RED + " based god",
+            Formatting.GRAY + "Deez" + Formatting.RED + " NUTS",
             Formatting.RED + Version.getStylized(),
             Formatting.RED + Version.getMinecraft(),
 
             // MEME SPLASHES
             Formatting.YELLOW + "cope",
+            Formatting.YELLOW + "Damn Boze.",
             Formatting.YELLOW + "I am funny -HiIAmFunny",
             Formatting.YELLOW + "IntelliJ IDEa",
             Formatting.YELLOW + "I <3 nns",
@@ -139,6 +141,7 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "owned",
             Formatting.YELLOW + "your mom :joy:",
             Formatting.YELLOW + "BOOM BOOM BOOM!",
+            Formatting.YELLOW + "STOP FUCKING WITH THE SOURCE",
             Formatting.YELLOW + "I <3 forks",
             Formatting.YELLOW + "based",
             Formatting.YELLOW + "Pog",
@@ -226,7 +229,7 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "The Oldest Anarchy Server in minecraft",
             Formatting.YELLOW + "Clown Down",
             Formatting.YELLOW + "Hippity Hoppity Your Anarchy Server is now my property",
-            Formatting.YELLOW + "\"is this mathax?\"",
+            Formatting.YELLOW + "\"is this mathax? or meteor\"",
             Formatting.YELLOW + "please help me",
             Formatting.YELLOW + "I'm hungry - China Man",
             Formatting.YELLOW + "big dum",

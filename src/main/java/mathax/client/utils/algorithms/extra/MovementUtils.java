@@ -28,6 +28,12 @@ public class MovementUtils {
         Vec3d motion = new Vec3d(x, mc.player.getVelocity().y, z);
         mc.player.setVelocity(motion);
     }
+    public static boolean isMoving() {
+        return mc.player != null && test();
+    }
+    public static boolean test() {
+        return mc.options.forwardKey.isPressed() || mc.options.backKey.isPressed() || mc.options.leftKey.isPressed() || mc.options.rightKey.isPressed();
+    }
 
     public static void Vulcanstrafe() {
         strafe(getSpeed());

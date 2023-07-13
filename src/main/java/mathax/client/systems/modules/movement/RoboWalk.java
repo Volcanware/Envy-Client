@@ -22,20 +22,22 @@ public class RoboWalk extends Module {
 
     @EventHandler
     private void onPacketSend(PacketEvent.Send event) {
-        if (event.packet instanceof PlayerMoveC2SPacket packet) {
-            if (!packet.changesPosition()) return;
+        if (!mc.player.isRiding()) {
+            if (event.packet instanceof PlayerMoveC2SPacket packet) {
+                if (!packet.changesPosition()) return;
 
-            double x = smooth(packet.getX(0));
-            double z = smooth(packet.getZ(0));
+                double x = smooth(packet.getX(0));
+                double z = smooth(packet.getZ(0));
 
-            ((PlayerMoveC2SPacketAccessor) packet).setX(x);
-            ((PlayerMoveC2SPacketAccessor) packet).setZ(z);
-        } else if (event.packet instanceof VehicleMoveC2SPacket packet) {
-            double x = smooth(packet.getX());
-            double z = smooth(packet.getZ());
+                ((PlayerMoveC2SPacketAccessor) packet).setX(x);
+                ((PlayerMoveC2SPacketAccessor) packet).setZ(z);
+            } else if (event.packet instanceof VehicleMoveC2SPacket packet) {
+                double x = smooth(packet.getX());
+                double z = smooth(packet.getZ());
 
-            ((VehicleMoveC2SPacketAccessor) packet).setX(x);
-            ((VehicleMoveC2SPacketAccessor) packet).setZ(z);
+                ((VehicleMoveC2SPacketAccessor) packet).setX(x);
+                ((VehicleMoveC2SPacketAccessor) packet).setZ(z);
+            }
         }
     }
 }
