@@ -6,6 +6,7 @@ import mathax.client.settings.SettingGroup;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.*;
 
+/*
 public class Worldborder extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -23,3 +24,4 @@ public class Worldborder extends Module {
         }
     }
 }
+*/

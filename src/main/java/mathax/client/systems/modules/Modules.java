@@ -439,7 +439,6 @@ public class Modules extends System<Modules> {
         add(new Ghost());
         add(new GhostHand());
         add(new LiquidInteract());
-        //add(new Worldborder());
         add(new NoBreakDelay());
         add(new NoInteract());
         add(new NoMiningTrace());
@@ -640,6 +639,7 @@ public class Modules extends System<Modules> {
         add(new Timer());
         add(new TreeAura());
         add(new VeinMiner());
+        //add(new Worldborder());
     }
 
     private void initChat() {

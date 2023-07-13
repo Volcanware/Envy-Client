@@ -323,6 +323,7 @@ public class Speed extends Module {
             case Weird -> currentMode = new Weird();
             case LBL_SlowHop -> currentMode = new LBL_SlowHop();
             case Vulcan -> currentMode = new Vulcan();
+            case _5b5t -> currentMode = new _5b5t();
             case OnGround -> currentMode = new OnGround();
             case LegitHop -> currentMode = new LegitHop();
             case EnvyAnarchy -> currentMode = new EnvyAnarchy();
