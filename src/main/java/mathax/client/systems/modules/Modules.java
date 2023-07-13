@@ -368,6 +368,7 @@ public class Modules extends System<Modules> {
         add(new AnchorAura());
         add(new AntiAnvil());
         add(new AntiCrystalPhase());
+        add(new AntiSurround());
         add(new ArrowDodge());
         add(new Auto32K());
         add(new AutoAnvil());
@@ -666,6 +667,7 @@ public class Modules extends System<Modules> {
     private void initMisc() {
         add(new AntiDesync());
         add(new AntiPacketKick());
+        add(new AntiAim());
         add(new AutoGG());
         add(new AutoMolest());
         add(new AutoMountBypassDupe());

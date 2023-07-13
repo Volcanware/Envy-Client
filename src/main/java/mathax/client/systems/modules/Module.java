@@ -32,7 +32,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
 
     public final Settings settings = new Settings();
 
-    private boolean active;
+    private static boolean active;
     private boolean toggleMessage = true;
     private boolean toggleToast = false;
     public boolean favorite = false;
@@ -194,7 +194,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
         return toggleToast;
     }
 
-    public boolean isActive() {
+    public static boolean isActive() {
         return active;
     }
 
