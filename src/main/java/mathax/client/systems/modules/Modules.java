@@ -52,6 +52,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.border.WorldBorder;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -453,6 +454,7 @@ public class Modules extends System<Modules> {
         //add(new ShieldSpoof());
         add(new SpeedMine());
         add(new LoliFinder());
+        add(new Worldborder());
     }
 
     private void add(LoliFinder loliFinder) {
@@ -640,7 +642,6 @@ public class Modules extends System<Modules> {
         add(new Timer());
         add(new TreeAura());
         add(new VeinMiner());
-        add(new worldborder());
     }
 
     private void initChat() {

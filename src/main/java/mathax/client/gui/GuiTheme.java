@@ -92,6 +92,10 @@ public abstract class GuiTheme implements ISerializable<GuiTheme> {
     public abstract WSlider slider(double value, double min, double max);
 
     public abstract WTextBox textBox(String text, CharFilter filter);
+    public abstract WTextBox textBox(String text, String placeholder, CharFilter filter, Class<? extends WTextBox.Renderer> renderer);
+    public WTextBox textBox(String text, String placeholder) {
+        return textBox(text, placeholder, (text1, c) -> true, null);
+    }
     public WTextBox textBox(String text) {
         return textBox(text, (text1, c) -> true);
     }
