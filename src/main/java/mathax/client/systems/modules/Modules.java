@@ -640,7 +640,7 @@ public class Modules extends System<Modules> {
         add(new Timer());
         add(new TreeAura());
         add(new VeinMiner());
-        //add(new Worldborder());
+        add(new worldborder());
     }
 
     private void initChat() {
