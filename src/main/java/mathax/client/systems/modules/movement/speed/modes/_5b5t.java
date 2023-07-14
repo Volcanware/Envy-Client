@@ -1,7 +1,9 @@
 package mathax.client.systems.modules.movement.speed.modes;
 
 import mathax.client.events.entity.player.PlayerMoveEvent;
+import mathax.client.mixin.ClientPlayNetworkHandlerMixin;
 import mathax.client.mixininterface.IVec3d;
+import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.AutoJump;
 import mathax.client.systems.modules.movement.speed.Speed;
@@ -12,6 +14,7 @@ import mathax.client.utils.algorithms.extra.MovementUtils;
 import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.border.WorldBorder;
 
 import static mathax.client.utils.misc.ChatUtils.info;
 

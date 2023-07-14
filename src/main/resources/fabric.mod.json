@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "name": "Envy Client",
   "id": "envy",
-  "version": "1.0.0",
-  "description": "Envy Client is an advanced Minecraft utility client for Fabric that is a continuation of MatHax.",
+  "version": "1.1.1",
+  "description": "Envy Client is an advanced Minecraft utility client for Fabric",
   "authors": [
     "Volcan"
   ],
