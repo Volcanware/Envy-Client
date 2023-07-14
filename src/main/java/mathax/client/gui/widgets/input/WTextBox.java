@@ -7,8 +7,11 @@ import mathax.client.gui.renderer.GuiRenderer;
 import mathax.client.gui.utils.CharFilter;
 import mathax.client.gui.widgets.WWidget;
 import mathax.client.utils.Utils;
+import mathax.client.utils.render.color.Color;
 import net.minecraft.client.MinecraftClient;
 import org.apache.commons.lang3.SystemUtils;
+
+import java.util.List;
 
 import static mathax.client.MatHax.mc;
 import static org.lwjgl.glfw.GLFW.*;
@@ -395,6 +398,14 @@ public abstract class WTextBox extends WWidget {
         if (isFocused()) GuiKeyEvents.canUseKeys = false;
 
         return super.render(renderer, mouseX, mouseY, delta);
+    }
+
+    public interface Renderer {
+        void render(GuiRenderer renderer, double x, double y, String text, Color color);
+
+        default List<String> getCompletions(String text, int position) {
+            return null;
+        }
     }
 
     private void clearSelection() {

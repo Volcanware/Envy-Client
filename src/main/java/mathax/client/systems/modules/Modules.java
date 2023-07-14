@@ -52,6 +52,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.border.WorldBorder;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -382,7 +383,6 @@ public class Modules extends System<Modules> {
         add(new AutoTrap());
         add(new AutoWeapon());
         add(new AutoWeb());
-        //add(new BananaBomber());
         add(new BedAura());
         add(new BedrockWalk());
         //add(new Block());
@@ -453,6 +453,7 @@ public class Modules extends System<Modules> {
         //add(new ShieldSpoof());
         add(new SpeedMine());
         add(new LoliFinder());
+        add(new Worldborder());
     }
 
     private void add(LoliFinder loliFinder) {
@@ -470,6 +471,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initMovement() {
+        add(new VulcanJesus());
         add(new AirJump());
         add(new AirWalk());
         add(new Anchor());
@@ -540,6 +542,9 @@ public class Modules extends System<Modules> {
         add(new CrazyCape());
         add(new FakeExplosion());
         add(new Twerk());
+        add(new PacketPitch());
+        add(new PacketBodyYaw());
+        add(new PacketHeadYaw());
     }
 
     private void initRender() {
@@ -640,7 +645,6 @@ public class Modules extends System<Modules> {
         add(new Timer());
         add(new TreeAura());
         add(new VeinMiner());
-        //add(new Worldborder());
     }
 
     private void initChat() {
@@ -708,6 +712,8 @@ public class Modules extends System<Modules> {
     }
 
     private void initExperimental() {
+        add(new TestModule());
+        add(new AntiWall());
         add(new BookCrash());
         add(new Bot());
         add(new CraftingCrash());
