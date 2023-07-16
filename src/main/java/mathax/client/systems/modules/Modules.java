@@ -669,6 +669,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initMisc() {
+        add(new VillagerRoller());
         add(new AntiDesync());
         add(new AntiPacketKick());
         add(new AntiAim());
