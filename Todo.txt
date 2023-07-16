@@ -15,3 +15,4 @@ List of Todos
 - [ ] Aura Target HUD (Show Aura Target on HUD)
 - [ ] Cheater Detect (Detect Cheater)
 - [ ] [Add Targetstrafe](https://github.com/Hypnotic-Development/Hypnotic-Client/blob/main/src/main/java/dev/hypnotic/module/combat/TargetStrafe.java)
+- [ ] [EasyMc](https://github.com/MeteorDevelopment/meteor-client/blob/master/src/main/java/meteordevelopment/meteorclient/systems/accounts/types/EasyMCAccount.java)
