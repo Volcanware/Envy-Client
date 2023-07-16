@@ -3,7 +3,7 @@
 </div>
 
 <h1 align="center">
-  Envy Rebo- I mean Legacy
+  Envy Client
 </h1>
 
 ## Usage
