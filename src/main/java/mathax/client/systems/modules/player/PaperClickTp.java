@@ -1,4 +1,5 @@
 /*
+
 package mathax.client.systems.modules.player;
 
 import mathax.client.eventbus.EventHandler;
@@ -53,7 +54,7 @@ public class PaperClickTp extends Module {
         .visible(() -> render.get())
         .build()
     );
-
+    //cant resolve keybind
     private final Setting<Keybind> cancelBlink = sgGeneral.add(new KeybindSetting.Builder()
         .name("Keybind to tp")
         .description("Cancels sending packets and sends you back to your original position.")
@@ -96,6 +97,7 @@ public class PaperClickTp extends Module {
         double x2 = x1 + 1;
         double y2 = y1 + 1;
         double z2 = z1 + 1;
+
 
         if (render.get()) {
             event.renderer.box(x1, y1, z1, x2, y2, z2, sideColor.get(), lineColor.get(), shapeMode.get(), 0);
