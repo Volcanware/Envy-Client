@@ -9,6 +9,8 @@ public enum SpeedModes {
     Weird("Please Don't Crash me :("),
     LBL_SlowHop("SlowHop"),
     Vulcan("Vulcan"),
+    Viper("Viper"),
+    ViperHigh("ViperHigh"),
     _5b5t("_5b5t"),
     OnGround("RubberBand"),
     LegitHop("LegitHop"),

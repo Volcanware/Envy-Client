@@ -15,6 +15,7 @@ import net.minecraft.entity.MovementType;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
+import java.util.Set;
 
 
 public class Speed extends Module {
@@ -80,6 +81,39 @@ public class Speed extends Module {
         .min(0.5)
         .sliderMax(20)
         .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting<Boolean> timerhop = sgGeneral.add(new BoolSetting.Builder()
+        .name("TimerHop")
+        .description("Impliments the TimerHop into custom speed")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting<Boolean> vulcan = sgGeneral.add(new BoolSetting.Builder()
+        .name("Vulcan")
+        .description("Impliments the Vulcan into custom speed")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+    public final Setting<Boolean> strafe = sgGeneral.add(new BoolSetting.Builder()
+        .name("Strafe")
+        .description("Strafe in the air")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting <Double> strafespeed = sgGeneral.add(new DoubleSetting.Builder()
+        .name("Strafe")
+        .description("The speed in the air")
+        .defaultValue(5.6)
+        .min(0)
+        .sliderRange(0.001, 20)
+        .visible(() -> speedMode.get() == SpeedModes.Custom && strafe.get())
         .build()
     );
 
@@ -333,6 +367,8 @@ public class Speed extends Module {
             case Weird -> currentMode = new Weird();
             case LBL_SlowHop -> currentMode = new LBL_SlowHop();
             case Vulcan -> currentMode = new Vulcan();
+            case Viper -> currentMode = new Viper();
+            case ViperHigh -> currentMode = new ViperHigh();
             case _5b5t -> currentMode = new _5b5t();
             case OnGround -> currentMode = new OnGround();
             case LegitHop -> currentMode = new LegitHop();

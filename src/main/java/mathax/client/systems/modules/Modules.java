@@ -549,6 +549,7 @@ public class Modules extends System<Modules> {
 
     private void initRender() {
         add(new AntiSale());
+        add(new NoVisualCooldown());
         //add(new AntiScreen());
         add(new Background());
         add(new BetterTooltips());
