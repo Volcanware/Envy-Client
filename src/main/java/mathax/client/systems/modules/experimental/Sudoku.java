@@ -14,6 +14,7 @@ public class Sudoku extends Module {
 
     @EventHandler
     public boolean onActivate() {
+        //it was at this moment he knew he fucked up
         throw new NullPointerException("Shit");
     }
 }

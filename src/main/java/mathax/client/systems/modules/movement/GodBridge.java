@@ -7,12 +7,15 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Direction;
 
 import java.util.Arrays;
+
+import static mathax.client.utils.misc.ChatUtils.info;
 
 public class GodBridge extends Module {
 
@@ -33,8 +36,14 @@ public class GodBridge extends Module {
         HitResult hr = mc.crosshairTarget;
         if (hr.getType() == HitResult.Type.BLOCK && hr instanceof BlockHitResult result) {
             if(Arrays.stream(allowedSides).anyMatch(direction -> direction == result.getSide()) && mc.player.getMainHandStack().getItem() instanceof BlockItem){
-                mc.options.useKey.setPressed(true);
+
             }
         }
+    }
+
+    @Override
+    public boolean onActivate() {
+        info(Formatting.GOLD + "GodBridge is now enabled place blocks to bridge Fast Use is recommended");
+        return false;
     }
 }

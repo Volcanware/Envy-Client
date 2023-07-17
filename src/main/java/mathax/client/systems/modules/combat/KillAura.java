@@ -14,6 +14,7 @@ import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.entity.SortPriority;
 import mathax.client.utils.entity.Target;
 import mathax.client.utils.entity.TargetUtils;
+import mathax.client.utils.network.PacketUtils;
 import mathax.client.utils.player.FindItemResult;
 import mathax.client.utils.player.InvUtils;
 import mathax.client.utils.player.PlayerUtils;
@@ -28,8 +29,12 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
 
@@ -311,7 +316,7 @@ public class KillAura extends Module {
     );
 
     private final Setting<BlockMode> blockMode = sgGeneral.add(new EnumSetting.Builder<BlockMode>()
-        .name("Rotation mode")
+        .name("Blocking Mode")
         .description(".")
         .defaultValue(BlockMode.Constant)
         .visible(autoBlock::get)
@@ -321,6 +326,7 @@ public class KillAura extends Module {
     public enum BlockMode {
         Constant,
         NotOnHit,
+        Packet,
     }
 
 
@@ -354,8 +360,16 @@ public class KillAura extends Module {
             return;
         }
         if (autoBlock.get()) {
-            if (mc.player.getOffHandStack().getItem().equals(Items.SHIELD)) {
-                mc.options.useKey.setPressed(true);
+            if (BlockMode.Constant == blockMode.get()) {
+                if (mc.player.getOffHandStack().getItem().equals(Items.SHIELD) && mc.player.handSwingProgress > 0) {
+                    mc.options.useKey.setPressed(true);
+                }
+            }
+            if (BlockMode.Packet == blockMode.get()) {
+                if (mc.player.getOffHandStack().getItem().equals(Items.SHIELD) && mc.player.handSwingProgress > 0) {
+                    //mc.getNetworkHandler().sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, Direction.DOWN)); not this
+
+                }
             }
         }
 

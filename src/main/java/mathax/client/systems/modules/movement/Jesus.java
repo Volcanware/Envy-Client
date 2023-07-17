@@ -12,7 +12,9 @@ import mathax.client.mixininterface.IVec3d;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.utils.algorithms.extra.MovementUtils;
 import mathax.client.utils.entity.EntityUtils;
+import mathax.client.utils.vayzeutils.VulcanBooster;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
@@ -35,6 +37,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 //todo: add a Vulcan Mode
+//Done but its kinda janky
 public class Jesus extends Module {
     private final BlockPos.Mutable blockPos = new BlockPos.Mutable();
 
@@ -204,6 +207,30 @@ public class Jesus extends Module {
                 mc.player.setVelocity(mc.player.getVelocity().x, 0.5, mc.player.getVelocity().z);
             }
         }
+
+        if (waterMode.get() == Mode.Vulcan) {
+            if (MovementUtils.isMoving()) {
+                assert mc.player != null;
+                if (mc.player.isTouchingWater()) {
+                    mc.player.setVelocity(mc.player.getVelocity().x, 0.3, mc.player.getVelocity().z);
+                    VulcanBooster.VulcanBoost(0.14);
+                }
+                else {
+                    if (!mc.player.isOnGround()) {
+                        mc.player.setVelocity(mc.player.getVelocity().x, -0.25, mc.player.getVelocity().z);
+                    }
+                }
+            }
+            else {
+                assert mc.player != null;
+                if (mc.player.isTouchingWater()) {
+                    mc.player.setVelocity(mc.player.getVelocity().x, 0.01, mc.player.getVelocity().z);
+                }
+                else {
+                    mc.player.setVelocity(mc.player.getVelocity().x,-0.01 ,mc.player.getVelocity().z);
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -303,7 +330,8 @@ public class Jesus extends Module {
         Bob("Bob"),
 
         Ignore("Ignore"),
-        Hydrophobe("Hydrophobe");
+        Hydrophobe("Hydrophobe"),
+        Vulcan("Vulcan");
 
         private final String title;
 

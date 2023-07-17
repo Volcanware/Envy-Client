@@ -22,7 +22,7 @@ public class PenisEsp extends Module {
 
     public Setting<Boolean> onlyOwn = sgGeneral.add(new BoolSetting.Builder().name("only-own").defaultValue(false).build());
     public Setting<Double> ballsSize = sgGeneral.add(new DoubleSetting.Builder().name("balls-size").defaultValue(0.1).range(0.1, 0.5).sliderRange(0.1, 0.5).build());
-    public Setting<Double> penisSize = sgGeneral.add(new DoubleSetting.Builder().name("penis-size").defaultValue(0.5).range(0.1, 3.0).sliderRange(0.1, 3.0).build());
+    public Setting<Double> penisSize = sgGeneral.add(new DoubleSetting.Builder().name("penis-size").defaultValue(0.5).range(0.1, 100.0).sliderRange(0.1, 3.0).build());
     public Setting<Double> friendsSize = sgGeneral.add(new DoubleSetting.Builder().name("friends-size").defaultValue(0.5).range(0.1, 3.0).sliderRange(0.1, 3.0).build());
     public Setting<Double> enemySize = sgGeneral.add(new DoubleSetting.Builder().name("enemy-size").defaultValue(0.3).range(0.1, 3.0).sliderRange(0.1, 3.0).build());
     public Setting<Integer> gradation = sgGeneral.add(new IntSetting.Builder().name("gradation").defaultValue(30).range(20, 100).sliderRange(20, 100).build());

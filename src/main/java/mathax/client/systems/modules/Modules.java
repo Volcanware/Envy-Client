@@ -471,7 +471,6 @@ public class Modules extends System<Modules> {
     }
 
     private void initMovement() {
-        add(new VulcanJesus());
         add(new AirJump());
         add(new AirWalk());
         add(new Anchor());
@@ -535,6 +534,7 @@ public class Modules extends System<Modules> {
         add(new TridentBoost());
         add(new Velocity());
         add(new WurstGlide());
+        add(new ScaffoldPlus()); //prob broken
     }
 
     private void initFun() {
@@ -634,6 +634,7 @@ public class Modules extends System<Modules> {
         //add(new Fucker());
         add(new HighwayBuilder());
         add(new InfinityMiner());
+        add(new PacketMine());
         add(new InstaMine());
         add(new ItemSucker());
         add(new LiquidFiller());
