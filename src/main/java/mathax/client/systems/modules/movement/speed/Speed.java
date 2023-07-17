@@ -15,8 +15,6 @@ import net.minecraft.entity.MovementType;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
-import java.util.Set;
-
 
 public class Speed extends Module {
     private SpeedMode currentMode;
@@ -32,6 +30,38 @@ public class Speed extends Module {
         .build()
     );
 
+    public final Setting<Boolean> timerhop = sgGeneral.add(new BoolSetting.Builder()
+        .name("TimerHop")
+        .description("Impliments the TimerHop into custom speed")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting<Boolean> timerhopstrict = sgGeneral.add(new BoolSetting.Builder()
+        .name("TimerHopStrict")
+        .description("Makes TimerHop more strict")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom && timerhop.get())
+        .build()
+    );
+
+    public final Setting<Boolean> timerhopsubtle = sgGeneral.add(new BoolSetting.Builder()
+        .name("TimerHopSubtle")
+        .description("Makes TimerHop more subtle")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom && timerhop.get())
+        .build()
+    );
+
+    public final Setting<Boolean> timehopnormal = sgGeneral.add(new BoolSetting.Builder()
+        .name("TimeHopNormal")
+        .description("Makes TimerHop normal")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom && timerhop.get())
+        .build()
+    );
+
     public final Setting<Double> speed5b5t = sgGeneral.add(new DoubleSetting.Builder()
         .name("5b5t-speed")
         .description("The speed for 5b5t.")
@@ -39,6 +69,14 @@ public class Speed extends Module {
         .min(0)
         .sliderMax(10)
         .visible(() -> speedMode.get() == SpeedModes._5b5t)
+        .build()
+    );
+
+    public final Setting<Boolean> viperhigh = sgGeneral.add(new BoolSetting.Builder()
+        .name("ViperHigh")
+        .description("Adds Viper Bypass to Custom Speed")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
         .build()
     );
 
@@ -80,14 +118,6 @@ public class Speed extends Module {
         .defaultValue(4)
         .min(0.5)
         .sliderMax(20)
-        .visible(() -> speedMode.get() == SpeedModes.Custom)
-        .build()
-    );
-
-    public final Setting<Boolean> timerhop = sgGeneral.add(new BoolSetting.Builder()
-        .name("TimerHop")
-        .description("Impliments the TimerHop into custom speed")
-        .defaultValue(true)
         .visible(() -> speedMode.get() == SpeedModes.Custom)
         .build()
     );
@@ -356,6 +386,23 @@ public class Speed extends Module {
     @EventHandler
     private void onPacketReceive(PacketEvent.Receive event) {
         if (event.packet instanceof PlayerPositionLookS2CPacket) currentMode.onRubberband();
+    }
+
+    //This implimentation is fucking retarted, I couldn't think of another way to do this fucking shit
+    //Someone else optimise this for fuck sake
+    public void onTick() {
+        if (timerhopstrict.get()) {
+            timerhopsubtle.equals(false);
+            timehopnormal.equals(false);
+        }
+        if (timerhopsubtle.get()) {
+            timerhopstrict.equals(false);
+            timehopnormal.equals(false);
+        }
+        if (timehopnormal.get()) {
+            timerhopstrict.equals(false);
+            timerhopsubtle.equals(false);
+        }
     }
 
     private void onSpeedModeChanged(SpeedModes mode) {

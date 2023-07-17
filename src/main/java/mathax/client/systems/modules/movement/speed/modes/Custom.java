@@ -25,6 +25,7 @@ public class Custom extends SpeedMode {
 
     int vulcanticks;
 
+
     @Override
     public boolean onTick() {
         if (settings.autojump.get() && mc.player.isOnGround()) {
@@ -33,6 +34,14 @@ public class Custom extends SpeedMode {
             }
             if (settings.MoveOnly.get() && PlayerUtils.isMoving()) {
                 mc.player.jump();
+            }
+        }
+
+        if (settings.viperhigh.get()) {
+            if (PlayerUtils.isMoving()) {
+                if (mc.player.isOnGround()) {
+                    mc.player.setVelocity(mc.player.getVelocity().getX(), 0.7, mc.player.getVelocity().getZ());
+                }
             }
         }
 
@@ -110,19 +119,51 @@ public class Custom extends SpeedMode {
 
         //This is mainly for older versions of AAC
         if (settings.timerhop.get()) {
-            if (PlayerUtils.isMoving()) {
-                (Modules.get().get(AutoJump.class)).toggle();
-            }
-            if (!PlayerUtils.isMoving()) {
-                (Modules.get().get(AutoJump.class)).forceToggle(false);
-            }
+            if (settings.timehopnormal.get()) {
+                if (PlayerUtils.isMoving()) {
+                    (Modules.get().get(AutoJump.class)).toggle();
+                }
+                if (!PlayerUtils.isMoving()) {
+                    (Modules.get().get(AutoJump.class)).forceToggle(false);
+                }
 
-            if (mc.player.fallDistance <= 0.1)
-                Modules.get().get(Timer.class).setOverride(1.7f);
-            else if (mc.player.fallDistance < 1.3)
-                Modules.get().get(Timer.class).setOverride(0.8f);
-            else
-                Modules.get().get(Timer.class).setOverride(1.0f);
+                if (mc.player.fallDistance <= 0.1)
+                    Modules.get().get(Timer.class).setOverride(1.7f);
+                else if (mc.player.fallDistance < 1.3)
+                    Modules.get().get(Timer.class).setOverride(0.8f);
+                else
+                    Modules.get().get(Timer.class).setOverride(1.0f);
+            }
+            if (settings.timerhopstrict.get()) {
+                if (PlayerUtils.isMoving()) {
+                    (Modules.get().get(AutoJump.class)).toggle();
+                }
+                if (!PlayerUtils.isMoving()) {
+                    (Modules.get().get(AutoJump.class)).forceToggle(false);
+                }
+
+                if (mc.player.fallDistance <= 0.1)
+                    Modules.get().get(Timer.class).setOverride(2f);
+                else if (mc.player.fallDistance < 1.3)
+                    Modules.get().get(Timer.class).setOverride(0.9f);
+                else
+                    Modules.get().get(Timer.class).setOverride(1.0f);
+            }
+            if (settings.timerhopsubtle.get()) {
+                if (PlayerUtils.isMoving()) {
+                    (Modules.get().get(AutoJump.class)).toggle();
+                }
+                if (!PlayerUtils.isMoving()) {
+                    (Modules.get().get(AutoJump.class)).forceToggle(false);
+                }
+
+                if (mc.player.fallDistance <= 0.1)
+                    Modules.get().get(Timer.class).setOverride(1.1f);
+                else if (mc.player.fallDistance < 1.3)
+                    Modules.get().get(Timer.class).setOverride(0.7f);
+                else
+                    Modules.get().get(Timer.class).setOverride(1.0f);
+            }
         }
         return false;
     }
