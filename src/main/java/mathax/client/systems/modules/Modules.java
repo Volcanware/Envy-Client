@@ -613,6 +613,7 @@ public class Modules extends System<Modules> {
 
     private void initWorld() {
         add(new AirPlace());
+        add(new HighwayBuilderPlus());
         add(new AntiSculkSensor());
         add(new Ambience());
         add(new AntiCactus());
