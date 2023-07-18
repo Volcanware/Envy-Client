@@ -370,6 +370,7 @@ public class Modules extends System<Modules> {
         add(new AntiAnvil());
         add(new AntiCrystalPhase());
         add(new AntiSurround());
+        add(new AutoCrystal());
         add(new ArrowDodge());
         add(new Auto32K());
         add(new AutoAnvil());
@@ -377,6 +378,7 @@ public class Modules extends System<Modules> {
         add(new AutoCity());
         add(new AutoEXP());
         add(new AutoLog());
+        add(new TargetStrafe());
         //add(new AutoMinecart());
         add(new AutoPot());
         add(new AutoTotem());
@@ -425,6 +427,7 @@ public class Modules extends System<Modules> {
 
     private void initPlayer() {
         add(new AntiHunger());
+        add(new AfkLogout());
         add(new AntiSpawnpoint());
         add(new AutoBedCraft());
         add(new AutoCraft());

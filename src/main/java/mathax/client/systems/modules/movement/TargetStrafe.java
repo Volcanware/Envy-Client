@@ -8,7 +8,9 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.Jebus.Interactions;
 import mathax.client.utils.entity.TargetUtils;
+import mathax.client.utils.misc.input.Input;
 import mathax.client.utils.world.RotationHelper;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import mathax.client.utils.entity.SortPriority;
@@ -54,6 +56,8 @@ public class TargetStrafe extends Module {
         if (mc.player.isOnGround()) mc.player.jump(); // jump if needed, set direction
         if (mc.options.leftKey.isPressed()) {
             direction = 1;
+            setPressed(mc.options.forwardKey, true);
+
         } else if (mc.options.rightKey.isPressed()) {
             direction = -1;
         }
@@ -70,6 +74,11 @@ public class TargetStrafe extends Module {
             case Basic -> getBasic(yaw, speed, forward, direction);
             case Scroll -> getScroll(target, speed);
         }
+    }
+
+    private void setPressed(KeyBinding key, boolean pressed) {
+        key.setPressed(pressed);
+        Input.setKeyState(key, pressed);
     }
 
     private void getScroll(PlayerEntity target, double speed) {
