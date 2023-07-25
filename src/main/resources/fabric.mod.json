@@ -5,35 +5,35 @@
   "version": "1.0.0",
   "description": "Envy Client is an advanced Minecraft utility client for Fabric that is a continuation of MatHax.",
   "authors": [
-    "Volcan"
+    "Volcan",
+    "HardlineMouse16"
   ],
   "icon": "assets/mathax/textures/icons/envy.png",
   "license": "GPL-3.0",
   "contact": {
-    "homepage": "https://mathaxclient.xyz",
-    "discord": "https://mathaxclient.xyz/Discord",
-    "issues": "https://mathaxclient.xyz/Discord"
+    "homepage": "https://volcanware.xyz/",
+    "discord": "https://volcanware.xyz/",
+    "issues": "https://volcanware.xyz/"
   },
   "environment": "client",
   "entrypoints": {
     "client": [
-      "mathax.client.MatHax"
+      "envy.client.Envy"
     ]
   },
   "mixins": [
-    "mathax.mixins.json",
-    "mathax-baritone.mixins.json",
-    "mathax-canvas.mixins.json",
-    "mathax-indigo.mixins.json",
-    "mathax-sodium.mixins.json"
+    "envy.mixins.json",
+    "envy-baritone.mixins.json",
+    "envy-canvas.mixins.json",
+    "envy-indigo.mixins.json"
   ],
-  "accessWidener": "mathax.accesswidener",
+  "accessWidener": "envy.accesswidener",
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.website": "https://mathaxclient.xyz",
-        "modmenu.discord": "https://mathaxclient.xyz/Discord",
-        "modmenu.issues": "https://mathaxclient.xyz/Discord"
+        "modmenu.website": "https://volcanware.xyz/",
+        "modmenu.discord": "https://volcanware.xyz/",
+        "modmenu.issues": "https://volcanware.xyz/"
       }
     }
   },

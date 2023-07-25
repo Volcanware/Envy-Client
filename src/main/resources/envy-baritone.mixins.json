@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "envy.client.mixin.baritone",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "envy.client.MixinPlugin",
+  "client": [
+    "ComeCommandMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
