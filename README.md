@@ -1,6 +1,7 @@
 <div align="center">
   <img src="https://cdn.discordapp.com/attachments/1104320661930909797/1127951651970490388/Z.png" width="200" height="200">
 </div>
+i think envy is rasist to win 11
 
 <h1 align="center">
   Envy Client
