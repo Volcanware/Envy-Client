@@ -81,8 +81,9 @@ dependencies {
     }
 
     // Baritone integration
-    modImplementation "baritone:fabric:${project.baritone_version}"
-    include "baritone:fabric:${project.baritone_version}"
+/*    modImplementation "baritone:fabric:${project.baritone_version}"
+    include "baritone:fabric:${project.baritone_version}"*/
+    implementation files('libs/baritone.jar')
 
     // Litematica integration
     /*modImplementation "curse.maven:litematica-308892:${project.litematica_file_id}"
