@@ -36,6 +36,7 @@ import java.util.Map;
 
 public class CombatInfoHud extends HudElement {
     private static final Identifier MATHAX_LOGO = new Identifier("mathax", "textures/icons/icon.png");
+    private static final Identifier BASIC_TARGET = new Identifier("mathax", "textures/icons/basic_target.png");
     private final Color TEXTURE_COLOR = new Color(255, 255, 255, 255);
 
     private PlayerEntity player;
@@ -47,6 +48,13 @@ public class CombatInfoHud extends HudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // General
+
+    private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+        .name("mode")
+        .description("The Target HUD Theme")
+        .defaultValue(Mode.Envy)
+        .build()
+    );
 
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
         .name("scale")
@@ -181,218 +189,259 @@ public class CombatInfoHud extends HudElement {
 
     @Override
     public void render(HudRenderer renderer) {
-        renderer.addPostTask(() -> {
-            double x = box.getX();
-            double y = box.getY();
 
-            if (isInEditor()) player = FakeClientPlayer.getPlayer();
-            else player = TargetUtils.getPlayerTarget(range.get(), SortPriority.Lowest_Distance);
+        if (mode.get() == Mode.Envy) {
+            renderer.addPostTask(() -> {
+                double x = box.getX();
+                double y = box.getY();
 
-            if (player == null) return;
+                if (isInEditor()) player = FakeClientPlayer.getPlayer();
+                else player = TargetUtils.getPlayerTarget(range.get(), SortPriority.Lowest_Distance);
 
-            // Background
-            Renderer2D.COLOR.begin();
-            Renderer2D.COLOR.quadRounded(x, y, box.width, box.height, backgroundColor.get(), renderer.roundAmount(), true);
-            Renderer2D.COLOR.render(null);
+                if (player == null) return;
 
-            // Player Model
-            InventoryScreen.drawEntity((int) (x + (25 * scale.get())), (int) (y + (66 * scale.get())), (int) (30 * scale.get()), -MathHelper.wrapDegrees(player.prevYaw + (player.getYaw() - player.prevYaw) * mc.getTickDelta()), -player.getPitch(), player);
+                // Background
+                Renderer2D.COLOR.begin();
+                Renderer2D.COLOR.quadRounded(x, y, box.width, box.height, backgroundColor.get(), renderer.roundAmount(), true);
+                Renderer2D.COLOR.render(null);
 
-            // Moving pos to past player model
-            x += 50 * scale.get();
-            y += 5 * scale.get();
+                // Player Model
+                InventoryScreen.drawEntity((int) (x + (25 * scale.get())), (int) (y + (66 * scale.get())), (int) (30 * scale.get()), -MathHelper.wrapDegrees(player.prevYaw + (player.getYaw() - player.prevYaw) * mc.getTickDelta()), -player.getPitch(), player);
 
-            // Setting up texts
-            String breakText = " | ";
+                // Moving pos to past player model
+                x += 50 * scale.get();
+                y += 5 * scale.get();
 
-            // Name
-            String nameText = "";
+                // Setting up texts
+                String breakText = " | ";
 
-            if (Utils.isDeveloper(player.getUuidAsString())) {
-                nameText += "     " + player.getEntityName();
-                GL.bindTexture(MATHAX_LOGO);
-                Renderer2D.TEXTURE.begin();
-                Renderer2D.TEXTURE.texQuad(x, y, 16, 16, TEXTURE_COLOR);
-                Renderer2D.TEXTURE.render(null);
-            } else nameText += player.getEntityName();
+                // Name
+                String nameText = "";
 
-            Color nameColor = PlayerUtils.getPlayerColor(player, hud.primaryColor.get());
+                if (Utils.isDeveloper(player.getUuidAsString())) {
+                    nameText += "     " + player.getEntityName();
+                    GL.bindTexture(MATHAX_LOGO);
+                    Renderer2D.TEXTURE.begin();
+                    Renderer2D.TEXTURE.texQuad(x, y, 16, 16, TEXTURE_COLOR);
+                    Renderer2D.TEXTURE.render(null);
+                } else nameText += player.getEntityName();
 
-            // Ping
-            int ping = EntityUtils.getPing(player);
-            String pingText = ping + "ms";
+                Color nameColor = PlayerUtils.getPlayerColor(player, hud.primaryColor.get());
 
-            Color pingColor;
-            if (ping <= 75) pingColor = pingColor1.get();
-            else if (ping <= 200) pingColor = pingColor2.get();
-            else pingColor = pingColor3.get();
+                // Ping
+                int ping = EntityUtils.getPing(player);
+                String pingText = ping + "ms";
 
-            // Distance
-            double dist = 0;
-            if (!isInEditor()) dist = Math.round(mc.player.distanceTo(player) * 100.0) / 100.0;
-            String distText = dist + "m";
+                Color pingColor;
+                if (ping <= 75) pingColor = pingColor1.get();
+                else if (ping <= 200) pingColor = pingColor2.get();
+                else pingColor = pingColor3.get();
 
-            Color distColor;
-            if (dist <= 10) distColor = distColor1.get();
-            else if (dist <= 50) distColor = distColor2.get();
-            else distColor = distColor3.get();
+                // Distance
+                double dist = 0;
+                if (!isInEditor()) dist = Math.round(mc.player.distanceTo(player) * 100.0) / 100.0;
+                String distText = dist + "m";
 
-            // Status Text
-            String friendText = "Unknown";
+                Color distColor;
+                if (dist <= 10) distColor = distColor1.get();
+                else if (dist <= 50) distColor = distColor2.get();
+                else distColor = distColor3.get();
 
-            Color friendColor = hud.primaryColor.get();
+                // Status Text
+                String friendText = "Unknown";
 
-            if (Friends.get().isFriend(player)) {
-                friendText = "Friend";
-                friendColor = Friends.get().color;
-            } else {
-                boolean naked = true;
+                Color friendColor = hud.primaryColor.get();
 
-                for (int position = 3; position >= 0; position--) {
-                    ItemStack itemStack = getItem(position);
-
-                    if (!itemStack.isEmpty()) naked = false;
-                }
-
-                if (naked) {
-                    friendText = "Naked";
-                    friendColor = GREEN;
+                if (Friends.get().isFriend(player)) {
+                    friendText = "Friend";
+                    friendColor = Friends.get().color;
                 } else {
-                    boolean threat = false;
+                    boolean naked = true;
 
-                    for (int position = 5; position >= 0; position--) {
+                    for (int position = 3; position >= 0; position--) {
                         ItemStack itemStack = getItem(position);
 
-                        if (itemStack.getItem() instanceof SwordItem || itemStack.getItem() instanceof AxeItem || itemStack.getItem() == Items.END_CRYSTAL || itemStack.getItem() == Items.RESPAWN_ANCHOR || itemStack.getItem() instanceof BedItem) threat = true;
+                        if (!itemStack.isEmpty()) naked = false;
                     }
 
-                    if (threat) {
-                        friendText = "Threat";
-                        int danger_percent = (int) (DangerEval.eval(player) * 100);
-                        DangerEval.LOGGER.info("Danger percent: " + danger_percent);
-                        friendText += " (" + danger_percent + "%)";
-                        friendColor = RED;
+                    if (naked) {
+                        friendText = "Naked";
+                        friendColor = GREEN;
+                    } else {
+                        boolean threat = false;
+
+                        for (int position = 5; position >= 0; position--) {
+                            ItemStack itemStack = getItem(position);
+
+                            if (itemStack.getItem() instanceof SwordItem || itemStack.getItem() instanceof AxeItem || itemStack.getItem() == Items.END_CRYSTAL || itemStack.getItem() == Items.RESPAWN_ANCHOR || itemStack.getItem() instanceof BedItem)
+                                threat = true;
+                        }
+
+                        if (threat) {
+                            friendText = "Threat";
+                            int danger_percent = (int) (DangerEval.eval(player) * 100);
+                            DangerEval.LOGGER.info("Danger percent: " + danger_percent);
+                            friendText += " (" + danger_percent + "%)";
+                            friendColor = RED;
+                        }
                     }
                 }
-            }
 
-            TextRenderer.get().begin(0.45 * scale.get(), false, true);
+                TextRenderer.get().begin(0.45 * scale.get(), false, true);
 
-            double breakWidth = TextRenderer.get().getWidth(breakText);
-            double pingWidth = TextRenderer.get().getWidth(pingText);
-            double friendWidth = TextRenderer.get().getWidth(friendText);
+                double breakWidth = TextRenderer.get().getWidth(breakText);
+                double pingWidth = TextRenderer.get().getWidth(pingText);
+                double friendWidth = TextRenderer.get().getWidth(friendText);
 
-            TextRenderer.get().render(nameText, x, y, nameColor != null ? nameColor : hud.primaryColor.get());
+                TextRenderer.get().render(nameText, x, y, nameColor != null ? nameColor : hud.primaryColor.get());
 
-            y += TextRenderer.get().getHeight();
+                y += TextRenderer.get().getHeight();
 
-            TextRenderer.get().render(friendText, x, y, friendColor);
+                TextRenderer.get().render(friendText, x, y, friendColor);
 
-            if (displayPing.get()) {
-                TextRenderer.get().render(breakText, x + friendWidth, y, hud.secondaryColor.get());
-                TextRenderer.get().render(pingText, x + friendWidth + breakWidth, y, pingColor);
+                if (displayPing.get()) {
+                    TextRenderer.get().render(breakText, x + friendWidth, y, hud.secondaryColor.get());
+                    TextRenderer.get().render(pingText, x + friendWidth + breakWidth, y, pingColor);
 
-                if (displayDistance.get()) {
-                    TextRenderer.get().render(breakText, x + friendWidth + breakWidth + pingWidth, y, hud.secondaryColor.get());
-                    TextRenderer.get().render(distText, x + friendWidth + breakWidth + pingWidth + breakWidth, y, distColor);
-                }
-            } else if (displayDistance.get()) {
-                TextRenderer.get().render(breakText, x + friendWidth, y, hud.secondaryColor.get());
-                TextRenderer.get().render(distText, x + friendWidth + breakWidth, y, distColor);
-            }
-
-            TextRenderer.get().end();
-
-            // Moving pos down for armor
-            y += 10 * scale.get();
-
-            double armorX;
-            double armorY;
-            int slot = 5;
-
-            // Drawing armor
-            MatrixStack matrices = RenderSystem.getModelViewStack();
-
-            matrices.push();
-            matrices.scale(scale.get().floatValue(), scale.get().floatValue(), 1);
-
-            x /= scale.get();
-            y /= scale.get();
-
-            TextRenderer.get().begin(0.35, false, true);
-
-            for (int position = 0; position < 6; position++) {
-                armorX = x + position * 20;
-                armorY = y;
-
-                ItemStack itemStack = getItem(slot);
-
-                RenderUtils.drawItem(itemStack, (int) armorX, (int) armorY, true);
-
-                armorY += 18;
-
-                Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(itemStack);
-                Map<Enchantment, Integer> enchantmentsToShow = new HashMap<>();
-
-                for (Enchantment enchantment : displayedEnchantments.get()) {
-                    if (enchantments.containsKey(enchantment)) enchantmentsToShow.put(enchantment, enchantments.get(enchantment));
+                    if (displayDistance.get()) {
+                        TextRenderer.get().render(breakText, x + friendWidth + breakWidth + pingWidth, y, hud.secondaryColor.get());
+                        TextRenderer.get().render(distText, x + friendWidth + breakWidth + pingWidth + breakWidth, y, distColor);
+                    }
+                } else if (displayDistance.get()) {
+                    TextRenderer.get().render(breakText, x + friendWidth, y, hud.secondaryColor.get());
+                    TextRenderer.get().render(distText, x + friendWidth + breakWidth, y, distColor);
                 }
 
-                for (Enchantment enchantment : enchantmentsToShow.keySet()) {
-                    String enchantName = Utils.getEnchantSimpleName(enchantment, 3) + " " + enchantmentsToShow.get(enchantment);
+                TextRenderer.get().end();
 
-                    double enchX = (armorX + 8) - (TextRenderer.get().getWidth(enchantName) / 2);
+                // Moving pos down for armor
+                y += 10 * scale.get();
 
-                    TextRenderer.get().render(enchantName, enchX, armorY, enchantment.isCursed() ? RED : enchantmentTextColor.get());
-                    armorY += TextRenderer.get().getHeight();
+                double armorX;
+                double armorY;
+                int slot = 5;
+
+                // Drawing armor
+                MatrixStack matrices = RenderSystem.getModelViewStack();
+
+                matrices.push();
+                matrices.scale(scale.get().floatValue(), scale.get().floatValue(), 1);
+
+                x /= scale.get();
+                y /= scale.get();
+
+                TextRenderer.get().begin(0.35, false, true);
+
+                for (int position = 0; position < 6; position++) {
+                    armorX = x + position * 20;
+                    armorY = y;
+
+                    ItemStack itemStack = getItem(slot);
+
+                    RenderUtils.drawItem(itemStack, (int) armorX, (int) armorY, true);
+
+                    armorY += 18;
+
+                    Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(itemStack);
+                    Map<Enchantment, Integer> enchantmentsToShow = new HashMap<>();
+
+                    for (Enchantment enchantment : displayedEnchantments.get()) {
+                        if (enchantments.containsKey(enchantment))
+                            enchantmentsToShow.put(enchantment, enchantments.get(enchantment));
+                    }
+
+                    for (Enchantment enchantment : enchantmentsToShow.keySet()) {
+                        String enchantName = Utils.getEnchantSimpleName(enchantment, 3) + " " + enchantmentsToShow.get(enchantment);
+
+                        double enchX = (armorX + 8) - (TextRenderer.get().getWidth(enchantName) / 2);
+
+                        TextRenderer.get().render(enchantName, enchX, armorY, enchantment.isCursed() ? RED : enchantmentTextColor.get());
+                        armorY += TextRenderer.get().getHeight();
+                    }
+
+                    slot--;
                 }
 
-                slot--;
-            }
+                TextRenderer.get().end();
 
-            TextRenderer.get().end();
+                y = (int) (box.getY() + 75 * scale.get());
+                x = box.getX();
 
-            y = (int) (box.getY() + 75 * scale.get());
-            x = box.getX();
+                // Health bar
 
-            // Health bar
+                x /= scale.get();
+                y /= scale.get();
 
-            x /= scale.get();
-            y /= scale.get();
+                x += 5;
+                y += 5;
 
-            x += 5;
-            y += 5;
+                Renderer2D.COLOR.begin();
+                Renderer2D.COLOR.boxLines(x, y, 165, 11, BLACK);
+                Renderer2D.COLOR.render(null);
 
-            Renderer2D.COLOR.begin();
-            Renderer2D.COLOR.boxLines(x, y, 165, 11, BLACK);
-            Renderer2D.COLOR.render(null);
+                x += 2;
+                y += 2;
 
-            x += 2;
-            y += 2;
+                float maxHealth = player.getMaxHealth();
+                int maxAbsorb = 16;
+                int maxTotal = (int) (maxHealth + maxAbsorb);
 
-            float maxHealth = player.getMaxHealth();
-            int maxAbsorb = 16;
-            int maxTotal = (int) (maxHealth + maxAbsorb);
+                int totalHealthWidth = (int) (161 * maxHealth / maxTotal);
+                int totalAbsorbWidth = 161 * maxAbsorb / maxTotal;
 
-            int totalHealthWidth = (int) (161 * maxHealth / maxTotal);
-            int totalAbsorbWidth = 161 * maxAbsorb / maxTotal;
+                float health = player.getHealth();
+                float absorb = player.getAbsorptionAmount();
 
-            float health = player.getHealth();
-            float absorb = player.getAbsorptionAmount();
+                double healthPercent = health / maxHealth;
+                double absorbPercent = absorb / maxAbsorb;
 
-            double healthPercent = health / maxHealth;
-            double absorbPercent = absorb / maxAbsorb;
+                int healthWidth = (int) (totalHealthWidth * healthPercent);
+                int absorbWidth = (int) (totalAbsorbWidth * absorbPercent);
 
-            int healthWidth = (int) (totalHealthWidth * healthPercent);
-            int absorbWidth = (int) (totalAbsorbWidth * absorbPercent);
+                Renderer2D.COLOR.begin();
+                Renderer2D.COLOR.quad(x, y, healthWidth, 7, healthColor1.get(), healthColor2.get(), healthColor2.get(), healthColor1.get());
+                Renderer2D.COLOR.quad(x + healthWidth, y, absorbWidth, 7, healthColor2.get(), healthColor3.get(), healthColor3.get(), healthColor2.get());
+                Renderer2D.COLOR.render(null);
 
-            Renderer2D.COLOR.begin();
-            Renderer2D.COLOR.quad(x, y, healthWidth, 7, healthColor1.get(), healthColor2.get(), healthColor2.get(), healthColor1.get());
-            Renderer2D.COLOR.quad(x + healthWidth, y, absorbWidth, 7, healthColor2.get(), healthColor3.get(), healthColor3.get(), healthColor2.get());
-            Renderer2D.COLOR.render(null);
+                matrices.pop();
+            });
+        }
+        if (mode.get() == Mode.Basic) {
+            renderer.addPostTask(() -> {
+                double x = box.getX();
+                double y = box.getY();
 
-            matrices.pop();
-        });
+
+                if (isInEditor()) player = FakeClientPlayer.getPlayer();
+                else player = TargetUtils.getPlayerTarget(range.get(), SortPriority.Lowest_Distance);
+
+                if (player == null) return;
+
+                Renderer2D.COLOR.begin();
+                Renderer2D.COLOR.quadRounded(x, y, box.width, box.height, backgroundColor.get(), renderer.roundAmount(), true);
+                Renderer2D.COLOR.render(null);
+
+                //add the players name
+                TextRenderer.get().begin(1.2, false, true);
+                TextRenderer.get().render(player.getEntityName(), x + 5, y + 5, Color.BLUE);
+                TextRenderer.get().end();
+
+                //Add text that checks if I am winning based on my health vs their current health
+                TextRenderer.get().begin(1.2, false, true);
+                TextRenderer.get().render("Winning: " + (player.getHealth() < FakeClientPlayer.getPlayer().getHealth() ? "Yes" : "No"), x + 5, y + 140, Color.BLUE);
+                TextRenderer.get().end();
+
+                //Add text that shows their current Health
+                TextRenderer.get().begin(1.2, false, true);
+                TextRenderer.get().render("Health: " + player.getHealth(), x + 5, y + 160, Color.BLUE);
+                TextRenderer.get().end();
+
+                GL.bindTexture(BASIC_TARGET);
+                Renderer2D.TEXTURE.begin();
+                Renderer2D.TEXTURE.texQuad(x + 150, y + 8, 174, 174, TEXTURE_COLOR);
+                Renderer2D.TEXTURE.render(null);
+            });
+        }
     }
 
     private ItemStack getItem(int i) {
@@ -425,5 +474,22 @@ public class CombatInfoHud extends HudElement {
         }
 
         return enchantments;
+    }
+
+
+    public enum Mode {
+        Envy("Envy"),
+        Basic("Basic");
+
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }

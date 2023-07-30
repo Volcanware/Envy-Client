@@ -14,6 +14,7 @@ import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.world.Timer;
 import mathax.client.utils.player.MoveHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -128,7 +129,7 @@ public class Criticals extends Module {
         }
 
         if (mode.get() == Mode.Low) {
-            if (mc.player.isOnGround()) {
+            if (mc.player.isOnGround() && mc.player.handSwingProgress > 0) {
                 this.offGroundTicks = 0;
             } else {
                 ++this.offGroundTicks;
@@ -143,8 +144,20 @@ public class Criticals extends Module {
             }
         }
         if (mode.get() == Mode.Low2) {
-            if (mc.player.isOnGround()) {
+            if (mc.player.isOnGround() && mc.player.handSwingProgress > 0) {
                 mc.player.setPosition(mc.player.getPos().x, mc.player.getPos().y + (0.3 - Math.random() / 500.0), mc.player.getPos().z);
+            }
+        }
+        if (mode.get() == Mode.Matrix) {
+            if (mc.player.isOnGround() && mc.player.handSwingProgress > 0 && mc.player.handSwingProgress < 0.3 && mc.targetedEntity != null) {
+                mc.player.jump();
+                Modules.get().get(Timer.class).setOverride(0.8);
+            }
+            if (!mc.player.isOnGround() && mc.player.handSwingProgress > 0.3 && mc.targetedEntity != null) {
+                Modules.get().get(Timer.class).setOverride(1.2);
+            }
+            else {
+                Modules.get().get(Timer.class).setOverride(1);
             }
         }
     }
@@ -175,6 +188,7 @@ public class Criticals extends Module {
         Jump("Jump"),
         Low("Low"),
         Low2("Low 2"),
+        Matrix("Matrix"),
         Mini_Jump("Mini Jump");
 
         private final String title;
