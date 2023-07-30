@@ -7,6 +7,9 @@
   Envy Client
 </h1>
 
+## Baritone Download
+https://github.com/Volcanware/Envy-Client/releases/tag/Release
+
 ## Usage
 - You don't.
 
