@@ -467,6 +467,7 @@ public class Modules extends System<Modules> {
         add(new AntiBotPlus());
         add(new AutoBlock());
         add(new AutoClicker());
+        add(new AutoSoup());
         add(new FastUse());
         add(new Reach());
         add(new WTap());
