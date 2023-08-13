@@ -25,6 +25,7 @@ public class Custom extends SpeedMode {
 
     int vulcanticks;
 
+    int doublehopticks;
 
     @Override
     public boolean onTick() {
@@ -43,6 +44,29 @@ public class Custom extends SpeedMode {
                     mc.player.setVelocity(mc.player.getVelocity().getX(), 0.7, mc.player.getVelocity().getZ());
                 }
             }
+        }
+
+/*        if (settings.doublehop.get()) {
+            doublehopticks++;
+            if (PlayerUtils.isMoving()) {
+                if (mc.player.isOnGround()) {
+                    if (doublehopticks == 0) {
+                        mc.player.jump();
+                    }
+                }
+            }
+            if (PlayerUtils.isMoving()) {
+                if (!mc.player.isOnGround()) {
+                    if (doublehopticks == 3) {
+                        mc.player.jump();
+                        doublehopticks = 0;
+                    }
+                }
+            }
+        }*/
+
+        if (mc.player.isOnGround() && PlayerUtils.isMoving() && settings.ymotiontoggle.get()) {
+            mc.player.setVelocity(mc.player.getVelocity().getX(), settings.ymotion.get(), mc.player.getVelocity().getZ());
         }
 
         if (settings.autoSprint.get()) {
@@ -173,5 +197,10 @@ public class Custom extends SpeedMode {
         if (settings.rubberband.get()) {
             (Modules.get().get(Speed.class)).forceToggle(false);
         }
+    }
+
+    @Override
+    public void onDeactivate() {
+        Modules.get().get(AutoJump.class).forceToggle(false);
     }
 }

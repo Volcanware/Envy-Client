@@ -10,6 +10,9 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
 import mathax.client.utils.player.MoveHelper;
+import net.minecraft.block.AirBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
@@ -31,7 +34,6 @@ public class Flight extends Module {
     private final SettingGroup sgAntiKick = settings.createGroup("Anti Kick");
 
     // General
-
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Determines how Flight operates.")
@@ -181,6 +183,7 @@ public class Flight extends Module {
 
     @EventHandler
     private void onPostTick(TickEvent.Post event) {
+        Block floor = mc.world.getBlockState(mc.player.getBlockPos().down()).getBlock();
         if (mode.get() == Mode.Creative) return;
 
         if (antiKickMode.get() == AntiKickMode.Normal && delayLeft > 0) delayLeft--;
@@ -218,6 +221,20 @@ public class Flight extends Module {
                 mc.player.getAbilities().flying = true;
                 if (mc.player.getAbilities().creativeMode) return;
                 mc.player.getAbilities().allowFlying = true;
+            }
+        }
+        if (mode.get() == Mode.VulcanNew) {
+            if (mc.player == null) return;
+
+            //get the block beneath me and check if it is a block that can be stood on
+            if (mc.world.getBlockState(mc.player.getBlockPos().down()).getBlock() != Blocks.AIR) {
+                mc.player.setPos(mc.player.getX(), mc.player.getY() + 0.2, mc.player.getZ());
+                mc.player.setVelocity(mc.player.getVelocity().x, 0, mc.player.getVelocity().z);
+                mc.player.fallDistance = 0f;
+                mc.player.setOnGround(false);
+                if (mc.player.getVelocity().y < 0.3) {
+                    mc.player.setVelocity(mc.player.getVelocity().x, 0.5, mc.player.getVelocity().z);
+                }
             }
         }
     }
@@ -268,6 +285,7 @@ public class Flight extends Module {
         Abilities("Abilities"),
         Velocity("Velocity"),
         Creative("Creative"),
+        VulcanNew("VulcanNew"),
         Vulcan("Vulcan");
 
 

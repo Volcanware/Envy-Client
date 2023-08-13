@@ -367,6 +367,7 @@ public class Modules extends System<Modules> {
 
     private void initCombat() {
         add(new AnchorAura());
+        add(new SyracuseAimAssist());
         add(new AntiAnvil());
         add(new AntiCrystalPhase());
         add(new AntiSurround());
@@ -502,6 +503,7 @@ public class Modules extends System<Modules> {
         add(new EntitySpeed());
         add(new FastClimb());
         add(new FastFall());
+        add(new NoVulcan());
         add(new Flight());
         add(new Glide());
         add(new GodBridge());
@@ -548,6 +550,7 @@ public class Modules extends System<Modules> {
         add(new PacketPitch());
         add(new PacketBodyYaw());
         add(new PacketHeadYaw());
+        add(new AlwaysSwinging());
     }
 
     private void initRender() {

@@ -47,6 +47,15 @@ public class EntityUtils {
         return target.getHealth() + target.getAbsorptionAmount();
     }
 
+    public static <T extends Entity> T findClosest(Class<T> entityClass, float range) {
+        for (Entity entity : mc.world.getEntities()) {
+            if (entityClass.isAssignableFrom(entity.getClass()) && !entity.equals(mc.player) && entity.distanceTo(mc.player) <= range) {
+                return (T) entity;
+            }
+        }
+        return null;
+    }
+
     public static int getPing(PlayerEntity player) {
         if (mc.getNetworkHandler() == null) return 0;
         PlayerListEntry playerListEntry = mc.getNetworkHandler().getPlayerListEntry(player.getUuid());

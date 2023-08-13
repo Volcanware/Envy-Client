@@ -61,6 +61,30 @@ public class Speed extends Module {
         .visible(() -> speedMode.get() == SpeedModes.Custom && timerhop.get())
         .build()
     );
+/*    public final Setting<Boolean> doublehop = sgGeneral.add(new BoolSetting.Builder()
+        .name("DoubleHop")
+        .description("Impliments the DoubleHop into custom speed")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );*/
+
+    public final Setting<Boolean> ymotiontoggle = sgGeneral.add(new BoolSetting.Builder()
+        .name("YMotion")
+        .description("Should Use Y Motion")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+    public final Setting<Double> ymotion = sgGeneral.add(new DoubleSetting.Builder()
+        .name("YMotion Value")
+        .description("The Y motion for Custom Speed.")
+        .defaultValue(0.0)
+        .min(0)
+        .sliderMax(1)
+        .visible(() -> speedMode.get() == SpeedModes.Custom && ymotiontoggle.get())
+        .build()
+    );
 
     public final Setting<Double> speed5b5t = sgGeneral.add(new DoubleSetting.Builder()
         .name("5b5t-speed")

@@ -330,7 +330,7 @@ public class Jesus extends Module {
         Bob("Bob"),
 
         Ignore("Ignore"),
-        Hydrophobe("Hydrophobe"),
+        Hydrophobe("Vulcan-Blatant"),
         Vulcan("Vulcan");
 
         private final String title;
