@@ -391,6 +391,7 @@ public class Modules extends System<Modules> {
         //add(new Block());
         add(new BowAimbot());
         //add(new BowSpam());
+        add(new BowBomb());
         add(new Burrow());
         add(new CEVBreaker());
         add(new Confuse());
@@ -588,6 +589,7 @@ public class Modules extends System<Modules> {
         add(new MountHUD());
         add(new Nametags());
         add(new NewChunks());
+        add(new NewerNewChunks());
         add(new NoBob());
         //add(new NoCaveCulling());
         add(new NoSwang());
@@ -648,6 +650,7 @@ public class Modules extends System<Modules> {
         add(new LiquidFiller());
         add(new Lavacast());
         add(new MountBypass());
+        add(new RedstoneNuker());
         add(new Nuker());
         add(new NoStrip());
         add(new SpawnProofer());
@@ -730,11 +733,14 @@ public class Modules extends System<Modules> {
         add(new AntiWall());
         add(new BookCrash());
         add(new Bot());
+        add(new BoomPlus());
         add(new CraftingCrash());
         add(new CreativeCrash());
         add(new Disabler());
         //add(new murderalert());
+        add(new ExplosionAura());
         add(new ToroDupe());
+        add(new ShulkerDupe());
         add(new NewVelocity());
         add(new ResetVL());
         add(new PacketLogger());
