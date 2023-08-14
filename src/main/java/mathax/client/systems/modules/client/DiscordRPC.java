@@ -6,8 +6,6 @@ import mathax.client.gui.screens.accounts.AddCrackedAccountScreen;
 import mathax.client.gui.screens.clickgui.ModuleScreen;
 import mathax.client.gui.screens.clickgui.ModulesScreen;
 import mathax.client.gui.screens.hud.HudElementScreen;
-import mathax.client.gui.screens.music.PlaylistViewScreen;
-import mathax.client.gui.screens.music.PlaylistsScreen;
 import mathax.client.gui.screens.proxies.ProxiesImportScreen;
 import mathax.client.gui.screens.proxies.ProxiesScreen;
 import mathax.client.gui.screens.servermanager.ServerCleanUpScreen;
@@ -222,20 +220,6 @@ public class DiscordRPC extends Module {
         } else if (mc.currentScreen instanceof ProfilesTab.ProfilesScreen) {
             if (mc.world != null && serverVisibility.get()) return "Changing profiles (" + getWorldActivity(true, true) + ")";
             else return "Changing profiles";
-        } else if (mc.currentScreen instanceof MusicTab.MusicScreen) {
-            if (mc.world != null && serverVisibility.get()) return "Configuring music (" + getWorldActivity(true, true) + ")";
-            else return "Configuring music";
-        } else if (mc.currentScreen instanceof PlaylistsScreen) {
-            if (mc.world != null && serverVisibility.get()) return "Viewing playlists (" + getWorldActivity(true, true) + ")";
-            else return "Viewing playlists";
-        } else if (mc.currentScreen instanceof PlaylistViewScreen) {
-            if (((PlaylistViewScreen) mc.currentScreen).getTitleString().contains("Search")) {
-                if (mc.world != null && serverVisibility.get()) return "Searching for a song (" + getWorldActivity(true, true) + ")";
-                else return "Searching for a song";
-            } else {
-                if (mc.world != null && serverVisibility.get()) return "Viewing a playlist (" + getWorldActivity(true, true) + ")";
-                else return "Viewing a playlist";
-            }
         } else if (mc.currentScreen.getClass().getName().contains("me.jellysquid.mods.sodium.client")) {
             if (mc.world != null && serverVisibility.get()) return "Changing Sodium video settings (" + getWorldActivity(true, true) + ")";
             else return "Changing Sodium video settings";

@@ -17,7 +17,6 @@ public class Tabs {
         add(new ProfilesTab());
         add(new FriendsTab());
         add(new EnemiesTab());
-        add(new MusicTab());
         add(new BaritoneTab());
     }
 

@@ -95,13 +95,6 @@ dependencies {
 
     // Discord RPC
 
-    // Music
-
-    // Lava Player
-    library "com.github.Walkyst:lavaplayer:${project.lavaplayer_version}"
-    library "com.sedmelluq:lava-common:${project.lava_common_version}"
-    library "com.sedmelluq:lavaplayer-natives:${project.lavaplayer_natives_version}"
-
     // IRC
     library 'org.java-websocket:Java-WebSocket:1.5.3'
     library 'com.google.code.gson:gson:2.10'

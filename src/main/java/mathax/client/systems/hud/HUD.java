@@ -100,7 +100,6 @@ public class HUD extends System<HUD> {
         mainInfo.add(new DateHud(this));
         mainInfo.add(new RealTimeHud(this));
         mainInfo.add(new GameTimeHud(this));
-        mainInfo.add(new MusicHud(this));
 
         // MODULE INFO
         moduleInfo = new HudElementLayer(RENDERER, elements, AlignmentX.Left, AlignmentY.Top, 100, 200);

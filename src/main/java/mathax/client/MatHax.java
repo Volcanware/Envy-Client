@@ -15,7 +15,6 @@ import mathax.client.gui.GuiThemes;
 import mathax.client.gui.WidgetScreen;
 import mathax.client.gui.renderer.GuiRenderer;
 import mathax.client.gui.tabs.Tabs;
-import mathax.client.music.Music;
 import mathax.client.renderer.*;
 import mathax.client.renderer.text.Fonts;
 import mathax.client.systems.Systems;
@@ -123,6 +122,7 @@ public class MatHax implements ClientModInitializer {
             // SPLASHES
             Formatting.RED + "Envy Client on top!",
             Formatting.GRAY + "Volcan" + Formatting.RED + " based god",
+            Formatting.GRAY + "Hardline" + Formatting.RED + " also based god",
             Formatting.GRAY + "Deez" + Formatting.RED + " NUTS",
             Formatting.RED + Version.getStylized(),
             Formatting.RED + Version.getMinecraft(),
@@ -141,7 +141,7 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "owned",
             Formatting.YELLOW + "your mom :joy:",
             Formatting.YELLOW + "BOOM BOOM BOOM!",
-            Formatting.YELLOW + "STOP FUCKING WITH THE SOURCE",
+            Formatting.YELLOW + "STOP FUCKING WITH THE SAUCE",
             Formatting.YELLOW + "I <3 forks",
             Formatting.YELLOW + "based",
             Formatting.YELLOW + "Pog",
@@ -208,7 +208,25 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "Better than 1.8",
             Formatting.YELLOW + "First only me and god knew what the code did now only god knows",
             Formatting.YELLOW + "So Skidded we forgor what license we use",
+            Formatting.YELLOW + "Better than 1.12",
+            Formatting.YELLOW + "Better than 1.12.1",
             Formatting.YELLOW + "Better than 1.12.2",
+            Formatting.YELLOW + "Better than 1.13",
+            Formatting.YELLOW + "Better than 1.13.1",
+            Formatting.YELLOW + "Better than 1.13.2",
+            Formatting.YELLOW + "Better than 1.14",
+            Formatting.YELLOW + "Better than 1.14.1",
+            Formatting.YELLOW + "Better than 1.14.2",
+            Formatting.YELLOW + "Better than 1.14.3",
+            Formatting.YELLOW + "Better than 1.14.4",
+            Formatting.YELLOW + "Better than 1.15",
+            Formatting.YELLOW + "Better than 1.15.1",
+            Formatting.YELLOW + "Better than 1.15.2",
+            Formatting.YELLOW + "Better than 1.16",
+            Formatting.YELLOW + "Better than 1.16.1",
+            Formatting.YELLOW + "Better than 1.16.2",
+            Formatting.YELLOW + "Better than 1.16.3",
+            Formatting.YELLOW + "Better than 1.16.4",
             Formatting.YELLOW + "Better than 1.16.5",
             Formatting.YELLOW + "Better than 1.17.1",
             Formatting.YELLOW + "Better than 1.18",
@@ -340,7 +358,6 @@ public class MatHax implements ClientModInitializer {
         Fonts.init();
         DamageUtils.init();
         BlockUtils.init();
-        Music.init();
 
         // Register module categories
         Categories.init();
@@ -383,10 +400,6 @@ public class MatHax implements ClientModInitializer {
     private void onTick(TickEvent.Post event) {
         if (mc.currentScreen == null && mc.getOverlay() == null && KeyBinds.OPEN_COMMANDS.wasPressed())
             mc.setScreen(new ChatScreen(Config.get().prefix.get()));
-
-        if (Music.player == null) return;
-        if (Music.player.getVolume() != Config.get().musicVolume.get())
-            Music.player.setVolume(Config.get().musicVolume.get());
     }
 
     @EventHandler

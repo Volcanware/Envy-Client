@@ -655,6 +655,9 @@ public class Modules extends System<Modules> {
         add(new Timer());
         add(new TreeAura());
         add(new VeinMiner());
+        add(new VoiderPlus());
+        add(new AirstrikePlus());
+        add(new HandOfGod());
     }
 
     private void initChat() {
