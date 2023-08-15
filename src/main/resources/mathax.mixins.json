@@ -163,7 +163,10 @@
     "WindowMixin",
     "WorldAccessor",
     "WorldRendererAccessor",
-    "WorldRendererMixin"
+    "WorldRendererMixin",
+    "PlayerListEntryMixin",
+/*    "SkinOptionsScreenMixin",*/
+    "CapeFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
