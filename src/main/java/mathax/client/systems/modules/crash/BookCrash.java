@@ -1,4 +1,4 @@
-package mathax.client.systems.modules.experimental;
+package mathax.client.systems.modules.crash;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.game.GameLeftEvent;
@@ -43,7 +43,7 @@ public class BookCrash extends Module {
         .build());
 
     public BookCrash() {
-        super(Categories.Experimental, Items.BOOK, "book-crash", "Tries to crash the server by sending bad book sign packets.");
+        super(Categories.Crash, Items.BOOK, "book-crash", "Tries to crash the server by sending bad book sign packets.");
     }
     int slot = 5;
 

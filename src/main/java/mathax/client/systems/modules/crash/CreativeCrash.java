@@ -1,4 +1,4 @@
-package mathax.client.systems.modules.experimental;
+package mathax.client.systems.modules.crash;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.game.GameLeftEvent;
@@ -37,7 +37,7 @@ public class CreativeCrash extends Module {
         .build());
 
     public CreativeCrash() {
-        super(Categories.Experimental, Items.BEEF, "creative-crash", "Idk if it works");
+        super(Categories.Crash, Items.BEEF, "creative-crash", "Idk if it works");
     }
 
     @EventHandler

@@ -1,4 +1,4 @@
-package mathax.client.systems.modules.experimental;
+package mathax.client.systems.modules.crash;
 
 import mathax.client.events.world.TickEvent;
 import mathax.client.settings.DoubleSetting;
@@ -14,7 +14,7 @@ public class PlayerCrash extends Module {
 
 
     public PlayerCrash() {
-        super(Categories.Experimental, Items.BOOK, "PlayerCrash", "crashes players with packets");
+        super(Categories.Crash, Items.BOOK, "PlayerCrash", "crashes players with packets");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

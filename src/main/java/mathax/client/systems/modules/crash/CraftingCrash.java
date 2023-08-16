@@ -1,4 +1,4 @@
-package mathax.client.systems.modules.experimental;
+package mathax.client.systems.modules.crash;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
@@ -27,7 +27,7 @@ public class CraftingCrash extends Module {
         .build());
 
     public CraftingCrash() {
-        super(Categories.Experimental, Items.CRAFTING_TABLE, "Crafting-Crash", "Spam craft request packets. Use with planks in inventory for best results.");
+        super(Categories.Crash, Items.CRAFTING_TABLE, "Crafting-Crash", "Spam craft request packets. Use with planks in inventory for best results.");
     }
 
     @EventHandler

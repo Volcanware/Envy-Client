@@ -23,6 +23,7 @@ import mathax.client.systems.modules.chat.*;
 import mathax.client.systems.modules.client.*;
 import mathax.client.systems.modules.client.swarm.Swarm;
 import mathax.client.systems.modules.combat.*;
+import mathax.client.systems.modules.crash.*;
 import mathax.client.systems.modules.experimental.*;
 import mathax.client.systems.modules.ghost.*;
 import mathax.client.systems.modules.misc.*;
@@ -52,7 +53,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.border.WorldBorder;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -96,6 +96,7 @@ public class Modules extends System<Modules> {
         initGhost();
         initFun();
         initExperimental();
+        initCrash();
     }
 
     @Override
@@ -449,15 +450,18 @@ public class Modules extends System<Modules> {
         add(new NoInteract());
         add(new NoMiningTrace());
         add(new NoRotate());
+        add(new RainbowArmor());
         //add(new PacketMine());
         add(new Portals());
         add(new InventoryScroll());
+        add(new HeadRoll());
         add(new PotionSaver());
         add(new PotionSpoof());
         add(new Rotation());
         //add(new ShieldSpoof());
         add(new SpeedMine());
         add(new LoliFinder());
+        add(new VehicleOneHit());
         add(new Worldborder());
     }
 
@@ -485,6 +489,7 @@ public class Modules extends System<Modules> {
         add(new AntiJebus());
         add(new AntiLevitation());
         add(new AntiVoid());
+        add(new AutoClip());
         //add(new AspectOfTheEnd());
         add(new AutoJump());
         add(new AutoMLG());
@@ -520,6 +525,7 @@ public class Modules extends System<Modules> {
         add(new Moses());
         add(new NoFall());
         add(new NoSlow());
+        add(new NoJumpCooldown());
         add(new PacketFly());
         add(new Parkour());
         add(new Phase());
@@ -655,12 +661,14 @@ public class Modules extends System<Modules> {
         add(new NoStrip());
         add(new SpawnProofer());
         add(new StashFinder());
+        add(new SuperInstaMine());
         add(new Timer());
         add(new TreeAura());
         add(new VeinMiner());
         add(new VoiderPlus());
         add(new AirstrikePlus());
         add(new HandOfGod());
+        add(new WorldBorderCrash());
     }
 
     private void initChat() {
@@ -715,6 +723,7 @@ public class Modules extends System<Modules> {
         add(new SpinBot());
         add(new TPSSync());
         add(new VanillaSpoof());
+        add(new NoPauseOnLostFocus());
 
     }
 
@@ -730,11 +739,8 @@ public class Modules extends System<Modules> {
     private void initExperimental() {
         add(new TestModule());
         add(new AntiWall());
-        add(new BookCrash());
         add(new Bot());
         add(new BoomPlus());
-        add(new CraftingCrash());
-        add(new CreativeCrash());
         add(new Disabler());
         //add(new murderalert());
         add(new ExplosionAura());
@@ -744,11 +750,35 @@ public class Modules extends System<Modules> {
         add(new ResetVL());
         add(new PacketLogger());
         add(new PenisEsp());
-        add(new PlayerCrash());
+        add(new ServerOpNuke());
         add(new SecretClose());
         add(new SuperPanic());
         //add(new EntityAlert());
         add(new Sudoku());
+    }
+
+    private void initCrash() {
+        add(new AdvancedCrash());
+        add(new ArmorStandCrash());
+        add(new BookCrash());
+        add(new BungeeCrash());
+        add(new CraftingCrash());
+        add(new CreativeCrash());
+        add(new EntityCrash());
+        add(new ExceptionCrash());
+        add(new JigSawCrash());
+        add(new LagMessage());
+        add(new LecternCrash());
+        add(new MovementCrash());
+        add(new NullExceptionCrash());
+        add(new PlayerCrash());
+        add(new PositionCrash());
+        add(new StorageCrash());
+        add(new SwingCrash());
+        add(new TradeCrash());
+        add(new UDPFlood());
+        add(new VehicleCrash());
+        add(new WorldBorderCrash());
     }
 
     public static class ModuleRegistry extends Registry<Module> {
