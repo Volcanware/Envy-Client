@@ -15,6 +15,8 @@ import net.minecraft.entity.MovementType;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
+import java.util.Set;
+
 
 public class Speed extends Module {
     private SpeedMode currentMode;
@@ -33,6 +35,14 @@ public class Speed extends Module {
     public final Setting<Boolean> timerhop = sgGeneral.add(new BoolSetting.Builder()
         .name("TimerHop")
         .description("Impliments the TimerHop into custom speed")
+        .defaultValue(true)
+        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .build()
+    );
+
+    public final Setting<Boolean> bypass1 = sgGeneral.add(new BoolSetting.Builder()
+        .name("Bypass-1")
+        .description("Possibly Bypasses some Anticheats")
         .defaultValue(true)
         .visible(() -> speedMode.get() == SpeedModes.Custom)
         .build()
@@ -453,6 +463,7 @@ public class Speed extends Module {
             case EnvyHop2 -> currentMode = new EnvyHop2();
             case ChonkyChineseSped -> currentMode = new ChonkyChineseSped();
             case Custom -> currentMode = new Custom();
+
         }
     }
 

@@ -189,6 +189,14 @@ public class Custom extends SpeedMode {
                     Modules.get().get(Timer.class).setOverride(1.0f);
             }
         }
+        if (MovementUtils.isMoving()) {
+            if (settings.bypass1.get()) {
+                if (mc.player.isAlive() && !mc.player.isSleeping() && mc.player.isOnGround()) {
+                    mc.player.setVelocity(mc.player.getVelocity().x, 0.7, mc.player.getVelocity().z);
+                }
+                MovementUtils.strafe(3.4);
+            }
+        }
         return false;
     }
 
