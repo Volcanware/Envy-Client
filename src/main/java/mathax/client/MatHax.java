@@ -72,9 +72,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static net.minecraft.client.gui.DrawableHelper.drawTexture;
 
@@ -403,6 +401,7 @@ public class MatHax implements ClientModInitializer {
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
+        if (mc.player == null) return;
         if (mc.currentScreen == null && mc.getOverlay() == null && KeyBinds.OPEN_COMMANDS.wasPressed())
             mc.setScreen(new ChatScreen(Config.get().prefix.get()));
     }

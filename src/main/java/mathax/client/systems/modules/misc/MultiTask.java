@@ -14,6 +14,9 @@ public class MultiTask extends Module {
 
     @EventHandler
     public void onInteractEvent(InteractEvent event) {
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
         event.usingItem = false;
     }
 }

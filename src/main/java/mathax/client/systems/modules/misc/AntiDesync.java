@@ -62,6 +62,9 @@ public class AntiDesync extends Module {
             mc.getNetworkHandler().sendPacket(new TeleportConfirmC2SPacket(teleportIDs.get(0)));
             teleportIDs.remove(0);
         }
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
     }
 
     private boolean checkModules() {

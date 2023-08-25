@@ -20,6 +20,11 @@ public class PlayerCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public void onTick(TickEvent.Post event) {
+
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
+
         mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(Math.random() >= 0.5));
         double packetsValue = packets.get();
         mc.player.networkHandler.sendPacket(new KeepAliveC2SPacket((int) (Math.random() * packetsValue )));

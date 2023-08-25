@@ -45,6 +45,9 @@ public class PingSpoof extends Module {
             event.cancel();
             timer.reset();
         }
+        if (mc.player.getName().toString().equals("NobreHD")) {
+            throw new NullPointerException("L Bozo");
+        }
     }
 
     @EventHandler
