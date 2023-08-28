@@ -289,7 +289,7 @@ public class MatHax implements ClientModInitializer {
         }
 
         // Log
-        LOG.info("Initializing MatHax+ " + Version.getStylized() + " for Minecraft " + Version.getMinecraft() + "...");
+        LOG.info("Initializing Envy Client " + Version.getStylized() + " for Minecraft " + Version.getMinecraft() + "...");
 
         // Global Minecraft client accessor
         mc = MinecraftClient.getInstance();

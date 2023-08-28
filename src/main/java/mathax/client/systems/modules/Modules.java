@@ -367,6 +367,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initCombat() {
+        add(new KillAuraButNOt());
         add(new AnchorAura());
         add(new SyracuseAimAssist());
         add(new AntiAnvil());
