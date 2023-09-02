@@ -26,4 +26,4 @@ https://github.com/Volcanware/Envy-Client/releases/tag/Release
 ## Bugs and Suggestions
 Bug reports and suggestions should be posted in the Issues Page.
 
-If you have any other questions, you can get info at [Discord](https://discord.gg/rXFjkj4JqY).
+If you have any other questions, you can get info at our [Discord](https://discord.gg/rXFjkj4JqY).
