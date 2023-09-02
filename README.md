@@ -27,3 +27,14 @@ https://github.com/Volcanware/Envy-Client/releases/tag/Release
 Bug reports and suggestions should be posted in the Issues Page.
 
 If you have any other questions, you can get info at our [Discord](https://discord.gg/rXFjkj4JqY).
+
+
+##
+
+<div align="center">
+  <img src="https://avatars.githubusercontent.com/u/128879655?s=400&u=a582e091289fa3dc13264b75b1f001352a461600&v=4" width="100" height="100">
+</div>
+
+<div align="center">
+  Developed by the Volcanware Team
+</div>
