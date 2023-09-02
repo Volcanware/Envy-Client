@@ -10,16 +10,20 @@
 ## Baritone Download
 https://github.com/Volcanware/Envy-Client/releases/tag/Release
 
-## Usage
-- You don't.
+## Requirements
+- Baritone Jar (From Release Page)
+- Fabric 1.19 (not 1.19.1+)
+- More than 2 Braincells (I don't have that many sorry)
 
 ### Building
-- You can't.
+- Do it Bozo!
 
 ## Contribution Guidelines
-- Why would you want to contribute?
+- Has experience with the Minecraft Source Code.
+- Has enough free time.
+- Doesn't vomit from the sight of our source code.
 
 ## Bugs and Suggestions
-Bug reports and suggestions shouldn't be made anywhere.
+Bug reports and suggestions should be posted in the Issues Page.
 
-If you have any other questions, please hesitate to ask in our [Discord](https://discord.gg/rXFjkj4JqY).
+If you have any other questions, you can get info at [Discord](https://discord.gg/rXFjkj4JqY).
