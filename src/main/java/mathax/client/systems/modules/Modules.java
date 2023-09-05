@@ -549,6 +549,7 @@ public class Modules extends System<Modules> {
         add(new Velocity());
         add(new WurstGlide());
         add(new ScaffoldPlus()); //prob broken
+        add(new AutoPush());
     }
 
     private void initFun() {

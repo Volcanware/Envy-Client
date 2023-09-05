@@ -2,6 +2,7 @@ package mathax.client.utils.player;
 
 import baritone.api.BaritoneAPI;
 import baritone.api.utils.Rotation;
+import mathax.client.events.entity.player.PlayerMoveEvent;
 import mathax.client.events.movement.EventMove;
 import mathax.client.systems.config.Config;
 import mathax.client.systems.enemies.Enemies;
@@ -335,6 +336,10 @@ public class PlayerUtils {
         mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.isOnGround()));
     }
 
+    public static void bridgePos() {
+        mc.player.getPos().subtract(0, 1, 0);
+    }
+
     public static void centerPlayer(BlockPos lastPos) {
         double xPos = mc.player.getPos().x;
         double zPos = mc.player.getPos().z;
@@ -639,6 +644,32 @@ public class PlayerUtils {
     }
 
     public static void setMoveSpeed(EventMove event, final double speed) {
+        double forward = mc.player.input.movementForward;
+        double strafe = mc.player.input.movementSideways;
+        float yaw = mc.player.getYaw();
+        if (forward == 0.0 && strafe == 0.0) {
+            event.setX(0.0);
+            event.setZ(0.0);
+        } else {
+            if (forward != 0.0) {
+                if (strafe > 0.0) {
+                    yaw += ((forward > 0.0) ? -45 : 45);
+                } else if (strafe < 0.0) {
+                    yaw += ((forward > 0.0) ? 45 : -45);
+                }
+                strafe = 0.0;
+                if (forward > 0.0) {
+                    forward = 1.0;
+                } else if (forward < 0.0) {
+                    forward = -1.0;
+                }
+            }
+            event.setX(forward * speed * Math.cos(Math.toRadians(yaw + 90.0f)) + strafe * speed * Math.sin(Math.toRadians(yaw + 90.0f)));
+            event.setZ(forward * speed * Math.sin(Math.toRadians(yaw + 90.0f)) - strafe * speed * Math.cos(Math.toRadians(yaw + 90.0f)));
+        }
+    }
+
+    public static void setMoveSpeed2(PlayerMoveEvent event, final double speed) {
         double forward = mc.player.input.movementForward;
         double strafe = mc.player.input.movementSideways;
         float yaw = mc.player.getYaw();
