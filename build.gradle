@@ -35,10 +35,6 @@ repositories {
         url "https://maven.vram.io//"
     }
 
-    maven {
-        url 'https://m2.dv8tion.net/releases'
-    }
-
     // GitHub
     maven {
         url "https://jitpack.io"
