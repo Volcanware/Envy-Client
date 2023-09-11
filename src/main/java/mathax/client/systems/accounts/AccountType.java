@@ -4,7 +4,8 @@ public enum AccountType {
     Cracked("Cracked"),
     Microsoft("Microsoft"),
     Mojang("Mojang"),
-    The_Altening("The Altening");
+    The_Altening("The Altening"),
+    EasyMC("EasyMC");
 
     private final String title;
 

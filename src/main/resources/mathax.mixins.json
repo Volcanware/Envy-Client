@@ -33,6 +33,7 @@
     "CactusBlockMixin",
     "CameraMixin",
     "CapabilityTrackerMixin",
+    "CapeFeatureRendererMixin",
     "ChatHudAccessor",
     "ChatHudMixin",
     "ChatScreenMixin",
@@ -122,10 +123,12 @@
     "PlayerEntityMixin",
     "PlayerEntityRendererMixin",
     "PlayerInteractEntityC2SPacketMixin",
+    "PlayerListEntryMixin",
     "PlayerListHudMixin",
     "PlayerMoveC2SPacketAccessor",
     "PlayerMoveC2SPacketMixin",
     "PlayerPositionLookS2CPacketAccessor",
+    "PlayerSkinProviderAccessor",
     "PowderSnowBlockMixin",
     "ProfileKeysMixin",
     "ProjectileEntityAccessor",
@@ -163,14 +166,12 @@
     "WindowMixin",
     "WorldAccessor",
     "WorldRendererAccessor",
-    "WorldRendererMixin",
-    "PlayerListEntryMixin",
-/*    "SkinOptionsScreenMixin",*/
-    "CapeFeatureRendererMixin"
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "mixins": [
+    "YggdrasilMinecraftSessionServiceAccessor"
   ]
 }
