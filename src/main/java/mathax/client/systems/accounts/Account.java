@@ -1,10 +1,14 @@
 package mathax.client.systems.accounts;
 
+import com.mojang.authlib.minecraft.MinecraftSessionService;
+import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilEnvironment;
 import com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService;
 import mathax.client.mixin.MinecraftClientAccessor;
+import mathax.client.mixin.PlayerSkinProviderAccessor;
 import mathax.client.utils.misc.ISerializable;
 import mathax.client.utils.misc.NbtException;
+import net.minecraft.client.texture.PlayerSkinProvider;
 import net.minecraft.client.util.Session;
 import net.minecraft.nbt.NbtCompound;
 
@@ -40,6 +44,13 @@ public abstract class Account<T extends Account<?>> implements ISerializable<T> 
         return true;
     }
 
+    public static void applyLoginEnvironment(YggdrasilAuthenticationService authService, MinecraftSessionService sessService) {
+        MinecraftClientAccessor mca = (MinecraftClientAccessor) mc;
+        mca.setAuthenticationService(authService);
+        mca.setSessionService(sessService);
+        mca.setSkinProvider(new PlayerSkinProvider(mc.getTextureManager(), ((PlayerSkinProviderAccessor) mc.getSkinProvider()).getSkinCacheDir(), sessService));
+    }
+
     public String getUsername() {
         if (cache.username.isEmpty()) return name;
         return cache.username;
@@ -70,6 +81,7 @@ public abstract class Account<T extends Account<?>> implements ISerializable<T> 
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T fromTag(NbtCompound tag) {
         if (!tag.contains("name") || !tag.contains("cache")) throw new NbtException();
 
