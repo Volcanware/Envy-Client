@@ -3,7 +3,6 @@ package mathax.client.mixin;
 import io.netty.channel.Channel;
 import io.netty.handler.proxy.Socks4ProxyHandler;
 import io.netty.handler.proxy.Socks5ProxyHandler;
-import mathax.client.MatHax;
 import mathax.client.systems.proxies.Proxies;
 import mathax.client.systems.proxies.Proxy;
 import org.spongepowered.asm.mixin.Mixin;
