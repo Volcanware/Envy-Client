@@ -20,8 +20,6 @@ public class ClientConnectionInitChannelMixin {
         Proxy proxy = Proxies.get().getEnabled();
         if (proxy == null) return;
 
-        MatHax.LOG.info("Adding proxy " + proxy.address +":" + proxy.port + " to connection");
-
         switch (proxy.type) {
             case Socks4 -> channel.pipeline().addFirst(new Socks4ProxyHandler(new InetSocketAddress(proxy.address, proxy.port), proxy.username));
             case Socks5 -> channel.pipeline().addFirst(new Socks5ProxyHandler(new InetSocketAddress(proxy.address, proxy.port), proxy.username, proxy.password));
