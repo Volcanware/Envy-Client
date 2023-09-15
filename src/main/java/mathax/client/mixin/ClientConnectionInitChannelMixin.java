@@ -3,6 +3,7 @@ package mathax.client.mixin;
 import io.netty.channel.Channel;
 import io.netty.handler.proxy.Socks4ProxyHandler;
 import io.netty.handler.proxy.Socks5ProxyHandler;
+import mathax.client.MatHax;
 import mathax.client.systems.proxies.Proxies;
 import mathax.client.systems.proxies.Proxy;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,6 +19,8 @@ public class ClientConnectionInitChannelMixin {
     private void onInitChannel(Channel channel, CallbackInfo info) {
         Proxy proxy = Proxies.get().getEnabled();
         if (proxy == null) return;
+
+        MatHax.LOG.info("Adding proxy " + proxy.address +":" + proxy.port + " to connection");
 
         switch (proxy.type) {
             case Socks4 -> channel.pipeline().addFirst(new Socks4ProxyHandler(new InetSocketAddress(proxy.address, proxy.port), proxy.username));
