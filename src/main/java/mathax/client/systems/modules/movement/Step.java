@@ -9,8 +9,11 @@ import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.world.Timer;
 import mathax.client.utils.player.PlayerUtils;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 
 /*/------------------------------------------------------------------------------------------------------------------------------------------------/*/
@@ -31,6 +34,15 @@ public class Step extends Module {
         .name("mode")
         .description("Determines how to bypass.")
         .defaultValue(Mode.NCP)
+        .build()
+    );
+
+    private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
+        .name("Spider-Speed")
+        .description("The speed you go up blocks in Spider Mode.")
+        .defaultValue(0.2)
+        .min(0.0)
+        .sliderRange(0.0, 1.0)
         .build()
     );
 
@@ -88,7 +100,9 @@ public class Step extends Module {
                 mc.player.stepHeight = height.get().floatValue();
                 return;
             }
-            case NCP_Plus -> mc.player.stepHeight = height.get().floatValue();
+            case NCP_Plus -> {
+                mc.player.stepHeight = height.get().floatValue();
+            }
         }
 
         if (!timer.get()) Modules.get().get(Timer.class).setOverride(Timer.OFF);
