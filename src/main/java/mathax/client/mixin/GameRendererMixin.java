@@ -109,10 +109,13 @@ public abstract class GameRendererMixin {
         if (floatingItem.getItem() == Items.TOTEM_OF_UNDYING && Modules.get().get(NoRender.class).noTotemAnimation()) info.cancel();
     }
 
-    @Redirect(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;lerp(FFF)F"))
-    private float applyCameraTransformationsMathHelperLerpProxy(float delta, float first, float second) {
-        if (Modules.get().get(NoRender.class).noNausea()) return 0;
-        return MathHelper.lerp(delta, first, second);
+    @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;lerp(FFF)F"))
+    private void applyCameraTransformationsMathHelperLerpProxy(float tickDelta, long limitTime, MatrixStack matrices, CallbackInfo ci) {
+        if (Modules.get().get(NoRender.class).noNausea()) {
+            assert this.client.player != null;
+            this.client.player.lastNauseaStrength = 0;
+            this.client.player.nextNauseaStrength = 0;
+        }
     }
 
     // Freecam

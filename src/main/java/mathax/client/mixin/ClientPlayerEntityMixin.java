@@ -14,13 +14,13 @@ import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.misc.NoSignatures;
 import mathax.client.systems.modules.misc.Twerk;
-import mathax.client.utils.Utils;
-import mathax.client.utils.misc.ChatUtils;
 import mathax.client.systems.modules.movement.NoSlow;
 import mathax.client.systems.modules.movement.Scaffold;
 import mathax.client.systems.modules.movement.Sneak;
 import mathax.client.systems.modules.movement.Velocity;
 import mathax.client.systems.modules.player.Portals;
+import mathax.client.utils.Utils;
+import mathax.client.utils.misc.ChatUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -29,14 +29,17 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.encryption.PlayerPublicKey;
 import net.minecraft.network.message.ArgumentSignatureDataMap;
 import net.minecraft.network.message.ChatMessageSigner;
 import net.minecraft.network.message.MessageSignature;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -45,7 +48,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 
-@Mixin(ClientPlayerEntity.class)
+@Mixin(value = ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     @Shadow
     @Final
@@ -58,6 +61,18 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     }
 
     @Shadow public abstract void sendChatMessage(String string);
+
+    @Shadow
+    public abstract void tickMovement();
+
+    @Shadow
+    public abstract boolean isUsingItem();
+
+    @Shadow
+    private boolean usingItem;
+
+    @Shadow
+    public abstract void useBook(ItemStack book, Hand hand);
 
     @Inject(method = "dropSelectedItem", at = @At("HEAD"), cancellable = true)
     private void onDropSelectedItem(boolean dropEntireStack, CallbackInfoReturnable<Boolean> info) {
@@ -98,10 +113,20 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         return client.currentScreen;
     }
 
-    @Redirect(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"))
-    private boolean redirectUsingItem(ClientPlayerEntity player) {
-        if (Modules.get().get(NoSlow.class).items()) return false;
-        return player.isUsingItem();
+    @Unique
+    private boolean realUsingItem;
+
+    @Inject(method = "tickMovement", at = @At("HEAD"))
+    private void tickMovementHead(CallbackInfo ci) {
+        realUsingItem = usingItem;
+         if (Modules.get().get(NoSlow.class).items()) {
+             usingItem = false;
+         }
+    }
+
+    @Inject(method = "tickMovement", at = @At("TAIL"))
+    private void tickMovementTail(CallbackInfo ci) {
+        usingItem = realUsingItem;
     }
 
     @Inject(method = "isSneaking", at = @At("HEAD"), cancellable = true)
