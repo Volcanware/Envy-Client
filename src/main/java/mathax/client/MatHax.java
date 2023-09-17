@@ -388,6 +388,11 @@ public class MatHax implements ClientModInitializer {
 
         // Shutdown hook
 
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            Systems.save();
+            GuiThemes.save();
+        }));
+
         // Icon & Title
         ClientSpoof cs = Modules.get().get(ClientSpoof.class);
         if (cs.isActive() && cs.changeWindowIcon()) WindowUtils.Meteor.setIcon();
