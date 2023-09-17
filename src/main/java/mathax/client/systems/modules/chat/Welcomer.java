@@ -10,7 +10,6 @@ import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.client.DiscordRPC;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 
@@ -250,9 +249,6 @@ public class Welcomer extends Module {
         // Multiplayer
         if (mc.getCurrentServerEntry() != null) {
             String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
-
-            if (Modules.get().get(DiscordRPC.class).serverVisibility.get()) return name;
-            else return "a server";
         }
 
         if ((mc.getServer()) == null) return "unknown";
