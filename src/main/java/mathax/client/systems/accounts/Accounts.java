@@ -1,9 +1,6 @@
 package mathax.client.systems.accounts;
 
-import mathax.client.systems.accounts.types.CrackedAccount;
-import mathax.client.systems.accounts.types.MicrosoftAccount;
-import mathax.client.systems.accounts.types.MojangAccount;
-import mathax.client.systems.accounts.types.TheAlteningAccount;
+import mathax.client.systems.accounts.types.*;
 import mathax.client.systems.System;
 import mathax.client.systems.Systems;
 import mathax.client.utils.misc.NbtException;
@@ -76,6 +73,7 @@ public class Accounts extends System<Accounts> implements Iterable<Account<?>> {
                     case Microsoft ->  new MicrosoftAccount(null).fromTag(t);
                     case Mojang ->  new MojangAccount(null, null).fromTag(t);
                     case The_Altening -> new TheAlteningAccount(null).fromTag(t);
+                    case EasyMC -> new EasyMCAccount(null).fromTag(t);
                 };
 
                 if (account.fetchHead()) return account;

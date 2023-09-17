@@ -453,6 +453,7 @@ public class Modules extends System<Modules> {
         add(new NoRotate());
         add(new RainbowArmor());
         //add(new PacketMine());
+        add(new PaperClickTp());
         add(new Portals());
         add(new InventoryScroll());
         add(new HeadRoll());

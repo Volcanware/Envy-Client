@@ -53,7 +53,7 @@ public class SimpleOptionMixin<T> {
     }
 
     @Unique
-    private SimpleOption.Callbacks<T> getCallbacks() {
+    public SimpleOption.Callbacks<T> getCallbacks() {
         GameOptions options = MinecraftClient.getInstance().options;
 
         if ((Object) this == options.getGamma()) {
