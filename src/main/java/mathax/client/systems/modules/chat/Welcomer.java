@@ -248,7 +248,7 @@ public class Welcomer extends Module {
 
         // Multiplayer
         if (mc.getCurrentServerEntry() != null) {
-            String name = mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
+            return mc.isConnectedToRealms() ? "realms" : mc.getCurrentServerEntry().address;
         }
 
         if ((mc.getServer()) == null) return "unknown";
