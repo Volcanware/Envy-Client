@@ -11,6 +11,7 @@ import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.player.ChestSwap;
 import mathax.client.utils.Utils;
 import mathax.client.utils.player.InvUtils;
+import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ArmorItem;
@@ -51,6 +52,13 @@ public class AutoArmor extends Module {
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 5)
+        .build()
+    );
+
+    private final Setting<Boolean> NoMove = sgGeneral.add(new BoolSetting.Builder()
+        .name("Only when still")
+        .description("Only works when your not moving || should bypass hypixel")
+        .defaultValue(false)
         .build()
     );
 
@@ -99,6 +107,7 @@ public class AutoArmor extends Module {
 
     @EventHandler
     private void onPreTick(TickEvent.Pre event) {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         if (timer > 0) {
             timer--;
             return;
@@ -168,12 +177,14 @@ public class AutoArmor extends Module {
     }
 
     private void swap(int from, int armorSlotId) {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         InvUtils.move().from(from).toArmor(armorSlotId);
 
         timer = delay.get();
     }
 
     private void moveToEmpty(int armorSlotId) {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         for (int i = 0; i < mc.player.getInventory().main.size(); i++) {
             if (mc.player.getInventory().getStack(i).isEmpty()) {
                 InvUtils.move().fromArmor(armorSlotId).to(i);
@@ -242,6 +253,7 @@ public class AutoArmor extends Module {
         }
 
         public void apply() {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
             if (cannotSwap() || score == Integer.MAX_VALUE) return;
 
             if (bestScore > score) swap(bestSlot, id);

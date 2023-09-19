@@ -30,7 +30,7 @@ public class NoVulcan extends Module {
             }
         }
 
-        if (novulcan2 != Blocks.AIR && mc.player.fallDistance > 10) {
+        else if (novulcan2 != Blocks.AIR && mc.player.fallDistance > 10) {
             mc.player.setPos(mc.player.getX(), mc.player.getY() + 0.2, mc.player.getZ());
             mc.player.setVelocity(mc.player.getVelocity().x, 0, mc.player.getVelocity().z);
             mc.player.fallDistance = 0f;

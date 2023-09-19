@@ -18,6 +18,7 @@ import mathax.client.utils.misc.input.KeyAction;
 import mathax.client.utils.network.MatHaxExecutor;
 import mathax.client.utils.player.InvUtils;
 import mathax.client.utils.player.InventorySorter;
+import mathax.client.utils.player.PlayerUtils;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -47,6 +48,14 @@ public class InventoryTweaks extends Module {
         .name("mouse-drag-item-move")
         .description("Moving mouse over items while holding shift will transfer it to the other container.")
         .defaultValue(true)
+        .build()
+    );
+
+
+    private final Setting<Boolean> NoMove = sgGeneral.add(new BoolSetting.Builder()
+        .name("Only when still")
+        .description("Only works when your not moving || should bypass hypixel")
+        .defaultValue(false)
         .build()
     );
 
@@ -188,6 +197,7 @@ public class InventoryTweaks extends Module {
     }
 
     private void sort() {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         if (!sortingEnabled.get() || !(mc.currentScreen instanceof HandledScreen<?> screen) || sorter != null) return;
 
         Slot focusedSlot = ((HandledScreenAccessor) screen).getFocusedSlot();
@@ -208,6 +218,7 @@ public class InventoryTweaks extends Module {
 
     @EventHandler
     private void onTickPost(TickEvent.Post event) {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         if (mc.currentScreen instanceof HandledScreen<?> || autoDropItems.get().isEmpty()) return;
 
         for (int i = autoDropExcludeHotbar.get() ? 9 : 0; i < mc.player.getInventory().size(); i++) {
@@ -219,11 +230,13 @@ public class InventoryTweaks extends Module {
 
     @EventHandler
     private void onDropItems(DropItemsEvent event) {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         if (antiDropItems.get().contains(event.itemStack.getItem())) event.cancel();
     }
 
     @EventHandler
     private void onSendPacket(PacketEvent.Send event) {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         if (!xCarry.get() || !(event.packet instanceof CloseHandledScreenC2SPacket)) return;
 
         if (((CloseHandledScreenC2SPacketAccessor) event.packet).getSyncId() == mc.player.playerScreenHandler.syncId) {
@@ -233,6 +246,7 @@ public class InventoryTweaks extends Module {
     }
 
     private void checkAutoStealSetttings() {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         if (autoSteal.get() && autoDump.get()) {
             error("You can't enable Auto Steal and Auto Dump at the same time!");
             autoDump.set(false);
@@ -248,6 +262,7 @@ public class InventoryTweaks extends Module {
     }
 
     private void moveSlots(ScreenHandler handler, int start, int end) {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         for (int i = start; i < end; i++) {
             if (!handler.getSlot(i).hasStack()) continue;
 
@@ -267,10 +282,12 @@ public class InventoryTweaks extends Module {
     }
 
     public void steal(ScreenHandler handler) {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         MatHaxExecutor.execute(() -> moveSlots(handler, 0, getRows(handler) * 9));
     }
 
     public void dump(ScreenHandler handler) {
+            if (NoMove.get() && PlayerUtils.isMoving()) return;
         int playerInvOffset = getRows(handler) * 9;
         MatHaxExecutor.execute(() -> moveSlots(handler, playerInvOffset, playerInvOffset + 4 * 9));
     }
