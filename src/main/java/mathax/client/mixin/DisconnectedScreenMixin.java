@@ -43,18 +43,22 @@ public abstract class DisconnectedScreenMixin extends Screen {
             int x2 = width / 2 - 100;
             int y2 = Math.min((height / 2 + reasonHeight / 2) + 56, height - 30);
 
-            addDrawableChild(new ButtonWidget(x, y, 200, 20, Text.literal("Reconnect"), b -> {
+            addDrawableChild(ButtonWidget.builder(Text.literal("Reconnect"), b -> {
                 LastServerInfo.reconnect(parent);
-            }));
+            })
+                .dimensions(x, y, 200, 20)
+                .build());
 
             autoReconnectBtn =
-                addDrawableChild(new ButtonWidget(x2, y2, 200, 20, Text.literal(getText()), button -> {
+                addDrawableChild(ButtonWidget.builder(Text.literal(getText()), button -> {
                     Modules.get().get(AutoReconnect.class).toggle();
                     if (!Modules.get().isActive(AutoReconnect.class)) {
                         this.time = Modules.get().get(AutoReconnect.class).time.get() * 20;
                         ((AbstractButtonWidgetAccessor) autoReconnectBtn).setText(Text.literal(getText()));
                     }
-                }));
+                })
+                    .dimensions(x2, y2, 200, 20)
+                    .build());
         }
     }
 

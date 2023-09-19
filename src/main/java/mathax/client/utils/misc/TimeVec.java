@@ -1,8 +1,8 @@
 package mathax.client.utils.misc;
 
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.Vec3i;
+import org.joml.Vector3f;
 
 public class TimeVec extends Vec3d {
     private final long time;
@@ -13,7 +13,7 @@ public class TimeVec extends Vec3d {
     }
 
     public TimeVec(Vec3i vector, long time) {
-        super(new Vec3f(vector.getX(), vector.getY(), vector.getZ()));
+        super(new Vector3f(vector.getX(), vector.getY(), vector.getZ()));
         this.time = time;
     }
 

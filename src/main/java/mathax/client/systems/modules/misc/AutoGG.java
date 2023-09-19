@@ -20,7 +20,7 @@ public class AutoGG extends Module {
         if (event.packet instanceof TitleS2CPacket) {
             packet = (TitleS2CPacket) event.packet;
             if (packet.getTitle().getString().contains("Game") || packet.getTitle().getString().contains("Win") || packet.getTitle().getString().contains("Lose") || packet.getTitle().getString().contains("game") || packet.getTitle().getString().contains("win") || packet.getTitle().getString().contains("lose") || packet.getTitle().getString().contains("GAME") || packet.getTitle().getString().contains("WIN") || packet.getTitle().getString().contains("LOSE") || packet.getTitle().getString().contains("Victory")) {
-                mc.player.sendChatMessage("gg");
+                mc.player.networkHandler.sendChatMessage("gg");
             }
         }
     }

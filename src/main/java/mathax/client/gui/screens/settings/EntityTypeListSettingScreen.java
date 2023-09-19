@@ -14,9 +14,9 @@ import mathax.client.utils.Utils;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.misc.Names;
 import net.minecraft.entity.EntityType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -153,10 +153,10 @@ public class EntityTypeListSettingScreen extends WindowScreen {
             }
         };
 
-        if (filterText.isEmpty()) Registry.ENTITY_TYPE.forEach(entityTypeForEach);
+        if (filterText.isEmpty()) Registries.ENTITY_TYPE.forEach(entityTypeForEach);
         else {
             List<Pair<EntityType<?>, Integer>> entities = new ArrayList<>();
-            Registry.ENTITY_TYPE.forEach(entity -> {
+            Registries.ENTITY_TYPE.forEach(entity -> {
                 int words = Utils.search(Names.get(entity), filterText);
                 if (words > 0) entities.add(new Pair<>(entity, words));
             });

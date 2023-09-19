@@ -86,7 +86,7 @@ public class AutoCope extends Module {
                 i = messageI++;
             }
 
-            mc.player.sendChatMessage(messagesSetting.get().get(i));
+            mc.player.networkHandler.sendChatMessage(messagesSetting.get().get(i));
 
             sent = true;
         }

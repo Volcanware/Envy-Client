@@ -46,7 +46,7 @@ public abstract class BookEditScreenMixin extends Screen {
 
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
-        addDrawableChild(new ButtonWidget(4, 4, 120, 20, Text.literal("Copy"), button -> {
+        addDrawableChild(ButtonWidget.builder(Text.literal("Copy"), button -> {
             NbtList listTag = new NbtList();
             pages.stream().map(NbtString::of).forEach(listTag::add);
 
@@ -67,9 +67,11 @@ public abstract class BookEditScreenMixin extends Screen {
             } catch (OutOfMemoryError exception) {
                 GLFW.glfwSetClipboardString(mc.getWindow().getHandle(), exception.toString());
             }
-        }));
+        })
+            .dimensions(4, 4, 120, 20)
+            .build());
 
-        addDrawableChild(new ButtonWidget(4, 4 + 20 + 2, 120, 20, Text.literal("Paste"), button -> {
+        addDrawableChild(ButtonWidget.builder(Text.literal("Paste"), button -> {
             String clipboard = GLFW.glfwGetClipboardString(mc.getWindow().getHandle());
             if (clipboard == null) return;
 
@@ -101,6 +103,8 @@ public abstract class BookEditScreenMixin extends Screen {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }));
+        })
+            .dimensions(4, 4 + 20 + 2, 120, 20)
+            .build());
     }
 }

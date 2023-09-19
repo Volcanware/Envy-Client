@@ -10,14 +10,16 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
-import net.minecraft.util.registry.DynamicRegistryManager;
+import net.minecraft.registry.BuiltinRegistries;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.server.command.CommandManager;
 
 import java.util.*;
 
 import static mathax.client.MatHax.mc;
 
 public class Commands extends System<Commands> {
-    public static final CommandRegistryAccess REGISTRY_ACCESS = new CommandRegistryAccess(DynamicRegistryManager.BUILTIN.get());
+    public static final CommandRegistryAccess REGISTRY_ACCESS = CommandManager.createRegistryAccess(BuiltinRegistries.createWrapperLookup());
 
     private final CommandDispatcher<CommandSource> DISPATCHER = new CommandDispatcher<>();
     private final CommandSource COMMAND_SOURCE = new ChatCommandSource(mc);

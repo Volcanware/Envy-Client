@@ -88,8 +88,9 @@ public class ChatEncryption extends Module {
 
     @EventHandler
     private void onMessageReceive(ReceiveMessageEvent event) {
-        ((ChatHudAccessor) mc.inGameHud.getChatHud()).getVisibleMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
-        ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
+        // TODO: figure out how to rewrite this
+        //((ChatHudAccessor) mc.inGameHud.getChatHud()).getVisibleMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
+        //((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
 
         Text message = event.getMessage();
 

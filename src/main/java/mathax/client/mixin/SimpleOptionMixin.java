@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 @Mixin(SimpleOption.class)
@@ -59,7 +60,7 @@ public class SimpleOptionMixin<T> {
         if ((Object) this == options.getGamma()) {
             return new SimpleOption.Callbacks<>() {
                 @Override
-                public Function<SimpleOption<T>, ClickableWidget> getButtonCreator(SimpleOption.TooltipFactory<T> tooltipFactory, GameOptions gameOptions, int x, int y, int width) {
+                public Function<SimpleOption<T>, ClickableWidget> getButtonCreator(SimpleOption.TooltipFactory<T> tooltipFactory, GameOptions gameOptions, int x, int y, int width, Consumer<T> changeCallback) {
                     return null;
                 }
 
@@ -77,7 +78,7 @@ public class SimpleOptionMixin<T> {
         else if ((Object) this == options.getFov()) {
             return new SimpleOption.Callbacks<>() {
                 @Override
-                public Function<SimpleOption<T>, ClickableWidget> getButtonCreator(SimpleOption.TooltipFactory<T> tooltipFactory, GameOptions gameOptions, int x, int y, int width) {
+                public Function<SimpleOption<T>, ClickableWidget> getButtonCreator(SimpleOption.TooltipFactory<T> tooltipFactory, GameOptions gameOptions, int x, int y, int width, Consumer<T> changeCallback) {
                     return null;
                 }
 

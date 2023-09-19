@@ -6,7 +6,7 @@ import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import net.minecraft.client.gl.ShaderEffect;
+import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
@@ -18,7 +18,7 @@ import java.io.IOException;
 /*/--------------------------------------------------------------------------------------------------------------/*/
 
 public class Rendering extends Module {
-    private ShaderEffect shader = null;
+    private PostEffectProcessor shader = null;
 
     private final SettingGroup sgInvisible = settings.createGroup("Invisible");
     private final SettingGroup sgFun = settings.createGroup("Fun");
@@ -79,7 +79,7 @@ public class Rendering extends Module {
         Identifier shaderID = new Identifier(String.format("shaders/post/%s.json", name));
 
         try {
-            this.shader = new ShaderEffect(mc.getTextureManager(), mc.getResourceManager(), mc.getFramebuffer(), shaderID);
+            this.shader = new PostEffectProcessor(mc.getTextureManager(), mc.getResourceManager(), mc.getFramebuffer(), shaderID);
         } catch (IOException exception) {
             this.shader = null;
         }
@@ -89,7 +89,7 @@ public class Rendering extends Module {
         return this.isActive() && structureVoid.get();
     }
 
-    public ShaderEffect getShaderEffect() {
+    public PostEffectProcessor getShaderEffect() {
         if (!isActive()) return null;
         return shader;
     }

@@ -9,12 +9,14 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.SimpleRegistry;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.util.registry.RegistryEntryList;
-import net.minecraft.util.registry.RegistryKey;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,7 +58,7 @@ public class StorageBlockListSetting extends Setting<List<BlockEntityType<?>>> {
 
         try {
             for (String value : values) {
-                BlockEntityType<?> block = parseId(Registry.BLOCK_ENTITY_TYPE, value);
+                BlockEntityType<?> block = parseId(Registries.BLOCK_ENTITY_TYPE, value);
                 if (block != null) blocks.add(block);
             }
         } catch (Exception ignored) {}
@@ -71,14 +73,14 @@ public class StorageBlockListSetting extends Setting<List<BlockEntityType<?>>> {
 
     @Override
     public Iterable<Identifier> getIdentifierSuggestions() {
-        return Registry.BLOCK_ENTITY_TYPE.getIds();
+        return Registries.BLOCK_ENTITY_TYPE.getIds();
     }
 
     @Override
     public NbtCompound save(NbtCompound tag) {
         NbtList valueTag = new NbtList();
         for (BlockEntityType<?> type : get()) {
-            Identifier id = Registry.BLOCK_ENTITY_TYPE.getId(type);
+            Identifier id = Registries.BLOCK_ENTITY_TYPE.getId(type);
             if (id != null) valueTag.add(NbtString.of(id.toString()));
         }
         tag.put("value", valueTag);
@@ -92,7 +94,7 @@ public class StorageBlockListSetting extends Setting<List<BlockEntityType<?>>> {
 
         NbtList valueTag = tag.getList("value", 8);
         for (NbtElement tagI : valueTag) {
-            BlockEntityType<?> type = Registry.BLOCK_ENTITY_TYPE.get(new Identifier(tagI.asString()));
+            BlockEntityType<?> type = Registries.BLOCK_ENTITY_TYPE.get(new Identifier(tagI.asString()));
             if (type != null) get().add(type);
         }
 
@@ -114,14 +116,9 @@ public class StorageBlockListSetting extends Setting<List<BlockEntityType<?>>> {
         }
     }
 
-    private static class SRegistry extends Registry<BlockEntityType<?>> {
+    private static class SRegistry extends SimpleRegistry<BlockEntityType<?>> {
         public SRegistry() {
             super(RegistryKey.ofRegistry(new Identifier("mathax", "storage-blocks")), Lifecycle.stable());
-        }
-
-        @Override
-        public DataResult<RegistryEntry<BlockEntityType<?>>> getOrCreateEntryDataResult(RegistryKey<BlockEntityType<?>> key) {
-            return null;
         }
 
         @Override
@@ -205,7 +202,7 @@ public class StorageBlockListSetting extends Setting<List<BlockEntityType<?>>> {
         }
 
         @Override
-        public Optional<RegistryEntry<BlockEntityType<?>>> getRandom(net.minecraft.util.math.random.Random random) {
+        public Optional<RegistryEntry.Reference<BlockEntityType<?>>> getRandom(net.minecraft.util.math.random.Random random) {
             return Optional.empty();
         }
 
@@ -215,22 +212,17 @@ public class StorageBlockListSetting extends Setting<List<BlockEntityType<?>>> {
         }
 
         @Override
-        public RegistryEntry<BlockEntityType<?>> getOrCreateEntry(RegistryKey<BlockEntityType<?>> key) {
-            return null;
-        }
-
-        @Override
         public RegistryEntry.Reference<BlockEntityType<?>> createEntry(BlockEntityType<?> value) {
             return null;
         }
 
         @Override
-        public Optional<RegistryEntry<BlockEntityType<?>>> getEntry(int rawId) {
+        public Optional<RegistryEntry.Reference<BlockEntityType<?>>> getEntry(int rawId) {
             return Optional.empty();
         }
 
         @Override
-        public Optional<RegistryEntry<BlockEntityType<?>>> getEntry(RegistryKey<BlockEntityType<?>> key) {
+        public Optional<RegistryEntry.Reference<BlockEntityType<?>>> getEntry(RegistryKey<BlockEntityType<?>> key) {
             return Optional.empty();
         }
 
@@ -257,11 +249,6 @@ public class StorageBlockListSetting extends Setting<List<BlockEntityType<?>>> {
         @Override
         public Stream<TagKey<BlockEntityType<?>>> streamTags() {
             return null;
-        }
-
-        @Override
-        public boolean containsTag(TagKey<BlockEntityType<?>> tag) {
-            return false;
         }
 
         @Override

@@ -1,13 +1,10 @@
 package mathax.client.utils.Jebus;
 
-import mathax.client.utils.Jebus.Interactions;
-import mathax.client.utils.Jebus.PacketManager;
 import mathax.client.utils.Utils;
 import mathax.client.utils.player.FindItemResult;
 import mathax.client.utils.player.Rotations;
 import mathax.client.utils.world.CardinalDirection;
 import net.minecraft.block.*;
-import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowableFluid;
@@ -18,11 +15,13 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import org.joml.Vector3d;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
+
 import static mathax.client.MatHax.mc;
 
 public class BlockHelper {
@@ -174,7 +173,7 @@ public class BlockHelper {
     }
 
     public static boolean isClickable(Block block) {
-        return block instanceof CraftingTableBlock || block instanceof AnvilBlock || block instanceof WoodenButtonBlock || block instanceof StoneButtonBlock || block instanceof AbstractPressurePlateBlock || block instanceof BlockWithEntity || block instanceof BedBlock || block instanceof FenceGateBlock || block instanceof DoorBlock || block instanceof NoteBlock || block instanceof TrapdoorBlock;
+        return block == Blocks.CRAFTING_TABLE || block instanceof AnvilBlock || block instanceof ButtonBlock || block instanceof AbstractPressurePlateBlock || block instanceof BlockWithEntity || block instanceof BedBlock || block instanceof FenceGateBlock || block instanceof DoorBlock || block instanceof NoteBlock || block instanceof TrapdoorBlock;
     }
 
     public static List<BlockPos> getSphere(BlockPos centerPos, int radius, int height) {

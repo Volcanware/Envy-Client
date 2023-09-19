@@ -31,9 +31,7 @@ public abstract class SkinOptionsScreenMixin extends GameOptionsScreen {
         at = @At("TAIL"),
         method = "init()V")
     public void iTInject(CallbackInfo info) {
-        this.addDrawableChild(new ButtonWidget(
-            this.width - 155, this.height - 25,
-            150,               20,
+        this.addDrawableChild(ButtonWidget.builder(
             changeBtnText,
             (btn) -> {
                 BigInteger intA = new BigInteger(128, new Random());
@@ -46,6 +44,10 @@ public abstract class SkinOptionsScreenMixin extends GameOptionsScreen {
                 }
                 Util.getOperatingSystem().open(url);
             }
-        ));
+        )
+            .dimensions(
+                this.width - 155, this.height - 25,
+                150,               20)
+            .build());
     }
 }
