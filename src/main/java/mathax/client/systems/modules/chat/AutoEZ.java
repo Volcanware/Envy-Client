@@ -147,17 +147,17 @@ public class AutoEZ extends Module {
             if (message.contains(player.getName().getString())) {
                 if (message.contains("by " + mc.getSession().getUsername()) || message.contains("whilst fighting " + mc.getSession().getUsername()) || message.contains(mc.getSession().getUsername() + " sniped") || message.contains(mc.getSession().getUsername() + " annaly fucked") || message.contains(mc.getSession().getUsername() + " destroyed") || message.contains(mc.getSession().getUsername() + " killed") || message.contains(mc.getSession().getUsername() + " fucked") || message.contains(mc.getSession().getUsername() + " separated") || message.contains(mc.getSession().getUsername() + " punched") || message.contains(mc.getSession().getUsername() + " shoved")) {
                     if (message.contains("end crystal") || message.contains("end-crystal")) {
-                        if (Modules.get().isActive(CrystalAura.class) && mc.player.distanceTo(player) < Modules.get().get(CrystalAura.class).targetRange.get()) mc.player.sendChatMessage(msg);
-                        else if (Modules.get().isActive(PistonAura.class) && mc.player.distanceTo(player) < Modules.get().get(PistonAura.class).targetRange.get()) mc.player.sendChatMessage(msg);
-                        else if (Modules.get().isActive(CEVBreaker.class) && mc.player.distanceTo(player) < Modules.get().get(CEVBreaker.class).targetRange.get()) mc.player.sendChatMessage(msg);
-                        else if (mc.player.distanceTo(player) < 7) mc.player.sendChatMessage(msg);
+                        if (Modules.get().isActive(CrystalAura.class) && mc.player.distanceTo(player) < Modules.get().get(CrystalAura.class).targetRange.get()) mc.player.networkHandler.sendChatMessage(msg);
+                        else if (Modules.get().isActive(PistonAura.class) && mc.player.distanceTo(player) < Modules.get().get(PistonAura.class).targetRange.get()) mc.player.networkHandler.sendChatMessage(msg);
+                        else if (Modules.get().isActive(CEVBreaker.class) && mc.player.distanceTo(player) < Modules.get().get(CEVBreaker.class).targetRange.get()) mc.player.networkHandler.sendChatMessage(msg);
+                        else if (mc.player.distanceTo(player) < 7) mc.player.networkHandler.sendChatMessage(msg);
                     } else {
-                        if (Modules.get().isActive(KillAura.class) && mc.player.distanceTo(player) < Modules.get().get(KillAura.class).targetRange.get()) mc.player.sendChatMessage(msg);
-                        else if (mc.player.distanceTo(player) < 8) mc.player.sendChatMessage(msg);
+                        if (Modules.get().isActive(KillAura.class) && mc.player.distanceTo(player) < Modules.get().get(KillAura.class).targetRange.get()) mc.player.networkHandler.sendChatMessage(msg);
+                        else if (mc.player.distanceTo(player) < 8) mc.player.networkHandler.sendChatMessage(msg);
                     }
                 } else {
-                    if ((message.contains("bed") || message.contains("[Intentional Game Design]")) && Modules.get().isActive(BedAura.class) && mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get()) mc.player.sendChatMessage(msg);
-                    else if ((message.contains("anchor") || message.contains("[Intentional Game Design]")) && Modules.get().isActive(AnchorAura.class) && mc.player.distanceTo(player) < Modules.get().get(AnchorAura.class).targetRange.get()) mc.player.sendChatMessage(msg);
+                    if ((message.contains("bed") || message.contains("[Intentional Game Design]")) && Modules.get().isActive(BedAura.class) && mc.player.distanceTo(player) < Modules.get().get(BedAura.class).targetRange.get()) mc.player.networkHandler.sendChatMessage(msg);
+                    else if ((message.contains("anchor") || message.contains("[Intentional Game Design]")) && Modules.get().isActive(AnchorAura.class) && mc.player.distanceTo(player) < Modules.get().get(AnchorAura.class).targetRange.get()) mc.player.networkHandler.sendChatMessage(msg);
                 }
             }
         }
@@ -206,7 +206,7 @@ public class AutoEZ extends Module {
         if (mc.player.distanceTo(player) > 8) return;
 
         if (canSendPop) {
-            mc.player.sendChatMessage(Placeholders.apply(getTotemMessageStyle()).replace("%player%", player.getName().getString()));
+            mc.player.networkHandler.sendChatMessage(Placeholders.apply(getTotemMessageStyle()).replace("%player%", player.getName().getString()));
             canSendPop = false;
         }
     }

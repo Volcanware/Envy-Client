@@ -231,9 +231,6 @@ public class BetterChat extends Module {
 
     @EventHandler
     public void onMessageReceive(ReceiveMessageEvent event) {
-        ((ChatHudAccessor) mc.inGameHud.getChatHud()).getVisibleMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
-        ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages().removeIf((message) -> message.getId() == event.id && event.id != 0);
-
         Text message = event.getMessage();
 
         ChatEncryption chatEncryption = Modules.get().get(ChatEncryption.class);
@@ -288,14 +285,14 @@ public class BetterChat extends Module {
     }
 
     private Text appendAntiSpam(Text text, int index) {
-        List<ChatHudLine<OrderedText>> visibleMessages = ((ChatHudAccessor) mc.inGameHud.getChatHud()).getVisibleMessages();
+        List<ChatHudLine> visibleMessages = ((ChatHudAccessor) mc.inGameHud.getChatHud()).getMessages();
         if (visibleMessages.isEmpty() || index < 0 || index > visibleMessages.size() - 1) return null;
 
-        ChatHudLine<OrderedText> visibleMessage = visibleMessages.get(index);
+        ChatHudLine visibleMessage = visibleMessages.get(index);
 
         MutableText parsed = Text.literal("");
 
-        visibleMessage.getText().accept((i, style, codePoint) -> {
+        visibleMessage.content().asOrderedText().accept((i, style, codePoint) -> {
             parsed.append(Text.literal(new String(Character.toChars(codePoint))).setStyle(style));
             return true;
         });

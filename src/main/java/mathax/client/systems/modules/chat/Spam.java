@@ -142,7 +142,7 @@ public class Spam extends Module {
                 player = Utils.getRandomPlayer();
             } while (ignoreSelf.get() && player.equals(mc.getSession().getUsername()) || ignoreFriends.get() && Friends.get().get(player) != null);
 
-            mc.player.sendChatMessage(text.replace("%player%", player));
+            mc.player.networkHandler.sendChatMessage(text.replace("%player%", player));
 
             timer = delay.get();
         } else timer--;

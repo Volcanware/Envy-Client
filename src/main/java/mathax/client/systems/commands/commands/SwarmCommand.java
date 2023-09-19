@@ -264,7 +264,7 @@ public class SwarmCommand extends Command {
             Swarm swarm = Modules.get().get(Swarm.class);
             if (swarm.isActive()) {
                 if (swarm.isHost()) swarm.host.sendMessage(context.getInput());
-                else if (swarm.isWorker()) mc.player.sendChatMessage(StringArgumentType.getString(context, "command"));
+                else if (swarm.isWorker()) mc.player.networkHandler.sendChatMessage(StringArgumentType.getString(context, "command"));
             } else throw SWARM_NOT_ACTIVE.create();
 
             return SINGLE_SUCCESS;

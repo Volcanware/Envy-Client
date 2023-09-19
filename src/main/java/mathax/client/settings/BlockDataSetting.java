@@ -6,9 +6,9 @@ import mathax.client.utils.misc.IGetter;
 import mathax.client.utils.misc.ISerializable;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -41,7 +41,7 @@ public class BlockDataSetting<T extends ICopyable<T> & ISerializable<T> & IChang
     protected NbtCompound save(NbtCompound tag) {
         NbtCompound valueTag = new NbtCompound();
         for (Block block : get().keySet()) {
-            valueTag.put(Registry.BLOCK.getId(block).toString(), get().get(block).toTag());
+            valueTag.put(Registries.BLOCK.getId(block).toString(), get().get(block).toTag());
         }
         tag.put("value", valueTag);
 
@@ -54,7 +54,7 @@ public class BlockDataSetting<T extends ICopyable<T> & ISerializable<T> & IChang
 
         NbtCompound valueTag = tag.getCompound("value");
         for (String key : valueTag.getKeys()) {
-            get().put(Registry.BLOCK.get(new Identifier(key)), defaultData.get().copy().fromTag(valueTag.getCompound(key)));
+            get().put(Registries.BLOCK.get(new Identifier(key)), defaultData.get().copy().fromTag(valueTag.getCompound(key)));
         }
 
         return get();

@@ -55,7 +55,7 @@ public class ToastSystem implements Toast {
             justUpdated = false;
         }
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderTexture(0, TEXTURE);
         RenderSystem.setShaderColor(1, 1, 1, 1);
 
@@ -102,6 +102,6 @@ public class ToastSystem implements Toast {
     }
 
     public SoundInstance getSound() {
-        return PositionedSoundInstance.master(SoundEvents.BLOCK_NOTE_BLOCK_CHIME, 1.2f, 1);
+        return PositionedSoundInstance.master(SoundEvents.BLOCK_NOTE_BLOCK_CHIME.value(), 1.2f, 1);
     }
 }

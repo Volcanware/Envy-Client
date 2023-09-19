@@ -2,7 +2,7 @@ package mathax.client.systems.modules.world;
 
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.game.OpenScreenEvent;
-import mathax.client.mixin.SignEditScreenAccessor;
+import mathax.client.mixin.AbstractSignEditScreenAccessor;
 import mathax.client.settings.BoolSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
@@ -76,7 +76,7 @@ public class AutoSign extends Module {
     private void onOpenScreen(OpenScreenEvent event) {
         if (!(event.screen instanceof SignEditScreen)) return;
 
-        SignBlockEntity sign = ((SignEditScreenAccessor) event.screen).getSign();
+        SignBlockEntity sign = ((AbstractSignEditScreenAccessor) event.screen).getSign();
 
         String lineOne = Placeholders.apply(lineone.get().replace("%date%", getDate()));
         String lineTwo = Placeholders.apply(linetwo.get().replace("%date%", getDate()));

@@ -36,7 +36,7 @@ public class AutoLogin extends Module {
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onMessageRecieve(ReceiveMessageEvent event) {
         for (String loginMessage: loginMessages) {
-            if (event.getMessage().getString().contains(loginMessage)) mc.player.sendChatMessage("/login " + password.get());
+            if (event.getMessage().getString().contains(loginMessage)) mc.player.networkHandler.sendChatMessage("/login " + password.get());
         }
     }
 }

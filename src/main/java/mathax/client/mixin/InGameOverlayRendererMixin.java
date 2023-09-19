@@ -7,7 +7,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameOverlayRenderer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Vec3f;
+import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,11 +19,11 @@ public class InGameOverlayRendererMixin {
     private static void renderFireOverlay(MinecraftClient client, MatrixStack matrices, CallbackInfo ci) {
         SmallFire smallFire = Modules.get().get(SmallFire.class);
         if (smallFire.isActive()) {
-            Vec3f scale = smallFire.getFireScale();
-            Vec3f position = smallFire.getFirePosition();
+            Vector3f scale = smallFire.getFireScale();
+            Vector3f position = smallFire.getFirePosition();
 
-            matrices.scale(scale.getX(), scale.getY(), scale.getZ());
-            matrices.translate(position.getX(), position.getY(), position.getZ());
+            matrices.scale(scale.x, scale.y, scale.z);
+            matrices.translate(position.x, position.y, position.z);
         }
     }
 

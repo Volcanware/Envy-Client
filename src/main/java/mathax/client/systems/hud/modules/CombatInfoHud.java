@@ -25,10 +25,10 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -469,7 +469,7 @@ public class CombatInfoHud extends HudElement {
     public static List<Enchantment> getDefaultEnchantments() {
         List<Enchantment> enchantments = new ArrayList<>();
 
-        for (Enchantment enchantment : Registry.ENCHANTMENT) {
+        for (Enchantment enchantment : Registries.ENCHANTMENT) {
             enchantments.add(enchantment);
         }
 

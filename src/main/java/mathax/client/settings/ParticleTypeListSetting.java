@@ -6,9 +6,9 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ParticleTypeListSetting extends Setting<List<ParticleType<?>>> {
 
         try {
             for (String value : values) {
-                ParticleType<?> particleType = parseId(Registry.PARTICLE_TYPE, value);
+                ParticleType<?> particleType = parseId(Registries.PARTICLE_TYPE, value);
                 if (particleType instanceof ParticleEffect) particleTypes.add(particleType);
             }
         } catch (Exception ignored) {}
@@ -46,14 +46,14 @@ public class ParticleTypeListSetting extends Setting<List<ParticleType<?>>> {
 
     @Override
     public Iterable<Identifier> getIdentifierSuggestions() {
-        return Registry.PARTICLE_TYPE.getIds();
+        return Registries.PARTICLE_TYPE.getIds();
     }
 
     @Override
     public NbtCompound save(NbtCompound tag) {
         NbtList valueTag = new NbtList();
         for (ParticleType<?> particleType : get()) {
-            Identifier id = Registry.PARTICLE_TYPE.getId(particleType);
+            Identifier id = Registries.PARTICLE_TYPE.getId(particleType);
             if (id != null) valueTag.add(NbtString.of(id.toString()));
         }
         tag.put("value", valueTag);
@@ -67,7 +67,7 @@ public class ParticleTypeListSetting extends Setting<List<ParticleType<?>>> {
 
         NbtList valueTag = tag.getList("value", 8);
         for (NbtElement tagI : valueTag) {
-            ParticleType<?> particleType = Registry.PARTICLE_TYPE.get(new Identifier(tagI.asString()));
+            ParticleType<?> particleType = Registries.PARTICLE_TYPE.get(new Identifier(tagI.asString()));
             if (particleType != null) get().add(particleType);
         }
 

@@ -45,7 +45,7 @@ public class GroupChat extends Module {
         for(String playerString: players.get()) {
             for(PlayerListEntry onlinePlayer: mc.getNetworkHandler().getPlayerList()) {
                 if (onlinePlayer.getProfile().getName().equalsIgnoreCase(playerString)) {
-                    mc.player.sendChatMessage(command.get().replace("%player%", onlinePlayer.getProfile().getName()).replace("%message%", event.message));
+                    mc.player.networkHandler.sendChatMessage(command.get().replace("%player%", onlinePlayer.getProfile().getName()).replace("%message%", event.message));
                     break;
                 }
             }

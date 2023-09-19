@@ -35,7 +35,6 @@ import mathax.client.utils.render.color.SettingColor;
 import mathax.client.utils.world.BlockIterator;
 import mathax.client.utils.world.BlockUtils;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -52,6 +51,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.world.RaycastContext;
+import org.joml.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;

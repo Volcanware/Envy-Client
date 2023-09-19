@@ -151,19 +151,19 @@ public class NotebotUtils {
 
     public static SoundEvent getInstrumentSound(InstrumentType instrument) {
         return switch (instrument) {
-            case Bass -> SoundEvents.BLOCK_NOTE_BLOCK_BASS;
-            case Bells -> SoundEvents.BLOCK_NOTE_BLOCK_BELL;
-            case Flute -> SoundEvents.BLOCK_NOTE_BLOCK_FLUTE;
-            case Chimes -> SoundEvents.BLOCK_NOTE_BLOCK_CHIME;
-            case Guitar -> SoundEvents.BLOCK_NOTE_BLOCK_GUITAR;
-            case Xylophone -> SoundEvents.BLOCK_NOTE_BLOCK_XYLOPHONE;
-            case Iron_Xylophone -> SoundEvents.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE;
-            case Cow_Bell -> SoundEvents.BLOCK_NOTE_BLOCK_COW_BELL;
-            case Didgeridoo -> SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO;
-            case Bit -> SoundEvents.BLOCK_NOTE_BLOCK_BIT;
-            case Banjo -> SoundEvents.BLOCK_NOTE_BLOCK_BANJO;
-            case Pling -> SoundEvents.BLOCK_NOTE_BLOCK_PLING;
-            default -> SoundEvents.BLOCK_NOTE_BLOCK_HARP;
+            case Bass -> SoundEvents.BLOCK_NOTE_BLOCK_BASS.value();
+            case Bells -> SoundEvents.BLOCK_NOTE_BLOCK_BELL.value();
+            case Flute -> SoundEvents.BLOCK_NOTE_BLOCK_FLUTE.value();
+            case Chimes -> SoundEvents.BLOCK_NOTE_BLOCK_CHIME.value();
+            case Guitar -> SoundEvents.BLOCK_NOTE_BLOCK_GUITAR.value();
+            case Xylophone -> SoundEvents.BLOCK_NOTE_BLOCK_XYLOPHONE.value();
+            case Iron_Xylophone -> SoundEvents.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE.value();
+            case Cow_Bell -> SoundEvents.BLOCK_NOTE_BLOCK_COW_BELL.value();
+            case Didgeridoo -> SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO.value();
+            case Bit -> SoundEvents.BLOCK_NOTE_BLOCK_BIT.value();
+            case Banjo -> SoundEvents.BLOCK_NOTE_BLOCK_BANJO.value();
+            case Pling -> SoundEvents.BLOCK_NOTE_BLOCK_PLING.value();
+            default -> SoundEvents.BLOCK_NOTE_BLOCK_HARP.value();
         };
     }
 

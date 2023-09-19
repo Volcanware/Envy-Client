@@ -1,21 +1,18 @@
 package mathax.client;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.eventbus.EventBus;
 import mathax.client.eventbus.EventHandler;
-import mathax.client.eventbus.EventPriority;
 import mathax.client.eventbus.IEventBus;
-import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.mathax.KeyEvent;
 import mathax.client.events.mathax.MouseButtonEvent;
-import mathax.client.events.render.Render2DEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.gui.GuiThemes;
-import mathax.client.gui.WidgetScreen;
 import mathax.client.gui.renderer.GuiRenderer;
 import mathax.client.gui.tabs.Tabs;
-import mathax.client.renderer.*;
+import mathax.client.renderer.GL;
+import mathax.client.renderer.PostProcessRenderer;
+import mathax.client.renderer.Renderer2D;
+import mathax.client.renderer.Shaders;
 import mathax.client.renderer.text.Fonts;
 import mathax.client.systems.Systems;
 import mathax.client.systems.config.Config;
@@ -26,6 +23,8 @@ import mathax.client.systems.modules.client.CapesModule;
 import mathax.client.systems.modules.client.ClientSpoof;
 import mathax.client.systems.modules.client.MiddleClickFriend;
 import mathax.client.systems.modules.combat.*;
+import mathax.client.systems.modules.render.Background;
+import mathax.client.systems.modules.render.Zoom;
 import mathax.client.utils.Utils;
 import mathax.client.utils.Version;
 import mathax.client.utils.misc.FakeClientPlayer;
@@ -43,37 +42,20 @@ import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.RainbowColors;
 import mathax.client.utils.world.BlockIterator;
 import mathax.client.utils.world.BlockUtils;
-import mathax.client.systems.modules.render.Background;
-import mathax.client.systems.modules.render.Zoom;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.scoreboard.ScoreboardCriterion;
-import net.minecraft.scoreboard.ScoreboardObjective;
-import net.minecraft.scoreboard.ScoreboardPlayerScore;
-import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3f;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
-import java.util.*;
-
-import static net.minecraft.client.gui.DrawableHelper.drawTexture;
+import java.util.Arrays;
+import java.util.List;
 
 /*/------------------------------------------------------------------/*/
 /*/ THIS CLIENT IS A FORK OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/

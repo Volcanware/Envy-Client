@@ -1,6 +1,9 @@
 package mathax.client.utils.misc;
 
 import mathax.client.utils.Version;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.resource.ResourceType;
+import net.minecraft.util.Identifier;
 
 import static mathax.client.MatHax.mc;
 
@@ -12,7 +15,13 @@ public class WindowUtils {
         }
 
         public static void setIcon() {
-            mc.getWindow().setIcon(WindowUtils.class.getResourceAsStream("/assets/mathax/textures/icons/icon64.png"), WindowUtils.class.getResourceAsStream("/assets/mathax/textures/icons/icon128.png"));
+            Identifier smallIcon = new Identifier("mathax", "icons/64.png");
+            Identifier bigIcon = new Identifier("mathax", "icons/128.png");
+            setIcon(smallIcon, bigIcon);
+        }
+
+        public static void setIcon(Identifier icon1, Identifier icon2) {
+            mc.getWindow().setIcon(MinecraftClient.getInstance().getResourceManager().getResource(icon1).get().getPack().open(ResourceType.CLIENT_RESOURCES, icon1), MinecraftClient.getInstance().getResourceManager().getResource(icon2).get().getPack().open(ResourceType.CLIENT_RESOURCES, icon2));
         }
 
         public static void setTitleLoading() {
@@ -35,7 +44,12 @@ public class WindowUtils {
         }
 
         public static void setIcon() {
-            mc.getWindow().setIcon(WindowUtils.class.getResourceAsStream("/assets/mathax/textures/icons/meteor64.png"), WindowUtils.class.getResourceAsStream("/assets/mathax/textures/icons/meteor128.png"));
+            Identifier smallIcon = new Identifier("mathax", "textures/icons/meteor64.png");
+            Identifier bigIcon = new Identifier("mathax", "textures/icons/meteor128.png");
+            mc.getWindow().setIcon(
+                MinecraftClient.getInstance().getResourceManager().getResource(smallIcon).get().getPack().open(ResourceType.CLIENT_RESOURCES, smallIcon),
+                MinecraftClient.getInstance().getResourceManager().getResource(bigIcon).get().getPack().open(ResourceType.CLIENT_RESOURCES, bigIcon)
+            );
         }
 
         public static void setTitle() {

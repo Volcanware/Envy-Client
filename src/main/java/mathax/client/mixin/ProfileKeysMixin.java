@@ -2,7 +2,7 @@ package mathax.client.mixin;
 
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.misc.NoSignatures;
-import net.minecraft.client.util.ProfileKeys;
+import net.minecraft.client.util.ProfileKeysImpl;
 import net.minecraft.network.encryption.PlayerPublicKey;
 import net.minecraft.network.encryption.Signer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
-@Mixin(ProfileKeys.class)
+@Mixin(ProfileKeysImpl.class)
 public class ProfileKeysMixin {
     @Inject(method = "getSigner", at = @At("HEAD"), cancellable = true)
     private void onGetSigner(CallbackInfoReturnable<Signer> infoReturnable) {

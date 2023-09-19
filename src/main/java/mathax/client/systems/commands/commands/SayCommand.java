@@ -2,17 +2,23 @@ package mathax.client.systems.commands.commands;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import mathax.client.mixin.ClientPlayNetworkHandlerAccessor;
 import mathax.client.mixin.ClientPlayerEntityAccessor;
 import mathax.client.systems.commands.Command;
 import mathax.client.systems.modules.Modules;
 import mathax.client.utils.misc.ChatUtils;
 import mathax.client.systems.modules.chat.BetterChat;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.command.CommandSource;
-import net.minecraft.network.message.ChatMessageSigner;
-import net.minecraft.network.message.MessageSignature;
+import net.minecraft.network.encryption.NetworkEncryptionUtils;
+import net.minecraft.network.message.LastSeenMessagesCollector;
+import net.minecraft.network.message.MessageBody;
+import net.minecraft.network.message.MessageSignatureData;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+
+import java.time.Instant;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
@@ -60,11 +66,20 @@ public class SayCommand extends Command {
                     return SINGLE_SUCCESS;
                 }
 
-                MessageSignature messageSignature = ((ClientPlayerEntityAccessor) mc.player)._signChatMessage(ChatMessageSigner.create(mc.player.getUuid()), Text.literal(message));
-                mc.getNetworkHandler().sendPacket(new ChatMessageC2SPacket(message, messageSignature, false));
+                Instant instant = Instant.now();
+                long l = NetworkEncryptionUtils.SecureRandomUtil.nextLong();
+                ClientPlayNetworkHandler handler = mc.getNetworkHandler();
+                LastSeenMessagesCollector.LastSeenMessages lastSeenMessages = ((ClientPlayNetworkHandlerAccessor) handler).getLastSeenMessagesCollector().collect();
+                MessageSignatureData messageSignatureData = ((ClientPlayNetworkHandlerAccessor) handler).getMessagePacker().pack(new MessageBody(message, instant, l, lastSeenMessages.lastSeen()));
+                handler.sendPacket(new ChatMessageC2SPacket(message, instant, l, messageSignatureData, lastSeenMessages.update()));
             } else {
-                MessageSignature messageSignature = ((ClientPlayerEntityAccessor) mc.player)._signChatMessage(ChatMessageSigner.create(mc.player.getUuid()), Text.literal(context.getArgument("message", String.class)));
-                mc.getNetworkHandler().sendPacket(new ChatMessageC2SPacket(context.getArgument("message", String.class), messageSignature, false));
+                String message = context.getArgument("message", String.class);
+                Instant instant = Instant.now();
+                long l = NetworkEncryptionUtils.SecureRandomUtil.nextLong();
+                ClientPlayNetworkHandler handler = mc.getNetworkHandler();
+                LastSeenMessagesCollector.LastSeenMessages lastSeenMessages = ((ClientPlayNetworkHandlerAccessor) handler).getLastSeenMessagesCollector().collect();
+                MessageSignatureData messageSignatureData = ((ClientPlayNetworkHandlerAccessor) handler).getMessagePacker().pack(new MessageBody(message, instant, l, lastSeenMessages.lastSeen()));
+                handler.sendPacket(new ChatMessageC2SPacket(message, instant, l, messageSignatureData, lastSeenMessages.update()));
             }
 
             return SINGLE_SUCCESS;

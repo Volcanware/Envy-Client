@@ -10,6 +10,7 @@
     "AbstractClientPlayerEntityMixin",
     "AbstractFurnaceScreenHandlerAccessor",
     "AbstractFurnaceScreenMixin",
+    "AbstractSignEditScreenAccessor",
     "ArmorFeatureRendererMixin",
     "BackgroundRendererMixin",
     "BannerBlockEntityRendererMixin",
@@ -92,7 +93,6 @@
     "HorseScreenHandlerAccessor",
     "ICustomPayloadC2SPacketAccessor",
     "IdentifierAccessor",
-    "IndexBufferAccessor",
     "InGameHudMixin",
     "InGameOverlayRendererMixin",
     "ItemEntityMixin",
@@ -110,7 +110,6 @@
     "LivingEntityRendererMixin",
     "MapRendererAccessor",
     "MapRendererMixin",
-    "Matrix4fMixin",
     "MinecraftClientAccessor",
     "MinecraftClientMixin",
     "MinecraftServerAccessor",
@@ -134,17 +133,16 @@
     "ProjectileEntityAccessor",
     "ProjectileInGroundAccessor",
     "RaycastContextMixin",
-    "RegistryMixin",
     "ReloadableResourceManagerImplMixin",
     "RenderLayersMixin",
     "RenderTickCounterMixin",
     "ScreenMixin",
     "SectionedEntityCacheAccessor",
     "SelectWorldScreenMixin",
+    "ShapeIndexBufferAccessor",
     "ShulkerBoxBlockMixin",
     "ShulkerBoxScreenMixin",
     "SignBlockEntityRendererMixin",
-    "SignEditScreenAccessor",
     "SimpleEntityLookupAccessor",
     "SimpleOptionMixin",
     "SlimeBlockMixin",
@@ -172,6 +170,7 @@
     "defaultRequire": 1
   },
   "mixins": [
+    "SimpleRegistryMixin",
     "YggdrasilMinecraftSessionServiceAccessor"
   ]
 }

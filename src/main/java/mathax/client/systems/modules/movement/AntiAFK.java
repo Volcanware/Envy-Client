@@ -236,7 +236,7 @@ public class AntiAFK extends Module {
                         i = messageI++;
                     }
 
-                    mc.player.sendChatMessage(messages.get(i));
+                    mc.player.networkHandler.sendChatMessage(messages.get(i));
 
                     timer = delay.get() * 20;
                 } else timer--;
