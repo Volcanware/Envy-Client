@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
+import org.joml.Matrix3f;
+import org.joml.Vector3f;
 
 import static mathax.client.MatHax.mc;
 
@@ -38,7 +40,8 @@ public class RenderUtils {
     }
 
     public static void updateScreenCenter() {
-        Vec3d pos = new Vec3d(0, 0, 1);
+
+        Vector3f pos = new Vector3f(0, 0, 1);
 
         if (mc.options.getBobView().getValue()) {
             if (!Modules.get().isActive(NoBob.class)) {
@@ -47,7 +50,7 @@ public class RenderUtils {
                 bobView(bobViewMatrices);
                 bobViewMatrices.peek().getPositionMatrix().invert();
 
-                pos = ((IMatrix4f) (Object) bobViewMatrices.peek().getPositionMatrix()).mul(pos);
+                pos.mul(bobViewMatrices.peek().getPositionMatrix().get3x3(new Matrix3f()));
             }
         }
 

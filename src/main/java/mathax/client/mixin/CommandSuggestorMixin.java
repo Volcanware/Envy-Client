@@ -25,31 +25,22 @@ import java.util.concurrent.CompletableFuture;
 
 @Mixin(ChatInputSuggestor.class)
 public abstract class CommandSuggestorMixin {
-    @Shadow
-    private ParseResults<CommandSource> parse;
+    // who has a more consistent naming convention? us or meteor's `ChatInputSuggestorMixin`?
+    @Shadow private ParseResults<CommandSource> parse;
+    @Shadow @Final TextFieldWidget textField;
+    @Shadow @Final MinecraftClient client;
+    @Shadow boolean completingSuggestions;
+    @Shadow private CompletableFuture<Suggestions> pendingSuggestions;
+    @Shadow private ChatInputSuggestor.SuggestionWindow window;
 
     @Shadow
-    @Final
-    TextFieldWidget textField;
+    protected abstract void showCommandSuggestions();
 
-    @Shadow
-    @Final
-    MinecraftClient client;
-
-    @Shadow
-    boolean completingSuggestions;
-
-    @Shadow
-    private CompletableFuture<Suggestions> pendingSuggestions;
-
-    @Shadow
-    protected abstract void show();
-
-    @Shadow
-    ChatInputSuggestor.SuggestionWindow window;
-
-    @Inject(method = "refresh", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-    public void onRefresh(CallbackInfo info, String string, StringReader reader) {
+    @Inject(method = "refresh",
+        at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false),
+        cancellable = true,
+        locals = LocalCapture.CAPTURE_FAILHARD)
+    public void onRefresh(CallbackInfo ci, String string, StringReader reader) {
         String prefix = Config.get().prefix.get();
         int length = prefix.length();
         if (reader.canRead(length) && reader.getString().startsWith(prefix, reader.getCursor())) {
@@ -57,22 +48,20 @@ public abstract class CommandSuggestorMixin {
             assert this.client.player != null;
             // Pretty much copy&paste from the refresh method
             CommandDispatcher<CommandSource> commandDispatcher = Commands.get().getDispatcher();
-            if (this.parse == null) this.parse = commandDispatcher.parse(reader, Commands.get().getCommandSource());
+            if (this.parse == null) {
+                this.parse = commandDispatcher.parse(reader, Commands.get().getCommandSource());
+            }
 
             int cursor = textField.getCursor();
             if (cursor >= 1 && (this.window == null || !this.completingSuggestions)) {
                 this.pendingSuggestions = commandDispatcher.getCompletionSuggestions(this.parse, cursor);
                 this.pendingSuggestions.thenRun(() -> {
-                    if (this.pendingSuggestions.isDone()) this.show();
+                    if (this.pendingSuggestions.isDone()) {
+                        this.showCommandSuggestions();
+                    }
                 });
             }
-
-            info.cancel();
+            ci.cancel();
         }
-    }
-
-    @Inject(method = "render", at = @At(value = "HEAD"), cancellable = true)
-    public void onRenderCommandSuggestion(MatrixStack matrices, int mouseX, int mouseY, CallbackInfo info) {
-        if (Modules.get().get(NoRender.class).noCommandSuggestions.get()) info.cancel();
     }
 }
