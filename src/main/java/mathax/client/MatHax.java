@@ -27,10 +27,7 @@ import mathax.client.systems.modules.render.Background;
 import mathax.client.systems.modules.render.Zoom;
 import mathax.client.utils.Utils;
 import mathax.client.utils.Version;
-import mathax.client.utils.misc.FakeClientPlayer;
-import mathax.client.utils.misc.KeyBind;
-import mathax.client.utils.misc.Names;
-import mathax.client.utils.misc.WindowUtils;
+import mathax.client.utils.misc.*;
 import mathax.client.utils.misc.input.KeyAction;
 import mathax.client.utils.misc.input.KeyBinds;
 import mathax.client.utils.network.MatHaxExecutor;
@@ -56,6 +53,7 @@ import java.io.File;
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /*/------------------------------------------------------------------/*/
 /*/ THIS CLIENT IS A FORK OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/
@@ -71,6 +69,12 @@ public class MatHax implements ClientModInitializer {
     public static MatHax INSTANCE;
     public static MinecraftClient mc;
     public static final IEventBus EVENT_BUS = new EventBus();
+
+    public static final String NAME = "Envy";
+    //version
+    public static final String version = "1.1.4";
+
+    public static final String ID = NAME.toLowerCase(Locale.ROOT);
 
     public static final File GAME_FOLDER = new File(FabricLoader.getInstance().getGameDir().toString());
     public static final File FOLDER = new File(GAME_FOLDER, "Envy");
@@ -278,8 +282,9 @@ public class MatHax implements ClientModInitializer {
         mc = MinecraftClient.getInstance();
 
         // Icon & Title
-        WindowUtils.MatHax.setIcon();
-        WindowUtils.MatHax.setTitleLoading();
+        Title.setTitle("[Initializing] " + "Envy" + " " + version + " - Minecraft " + mc.getVersionType() + " " + "1.19.3", true);
+        Icon.setIcon(new MatHaxIdentifier("icons/64.png"), new MatHaxIdentifier("icons/128.png"));
+
 
         // Register event handlers
         EVENT_BUS.registerLambdaFactory("mathax.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
@@ -365,7 +370,7 @@ public class MatHax implements ClientModInitializer {
         RainbowColors.init();
 
         // Title
-        WindowUtils.MatHax.setTitleLoaded();
+        Title.setTitle(NAME + " " + version + " - Minecraft " + mc.getVersionType() + " " + "1.19.3", true);
 
         // Shutdown hook
 
@@ -376,10 +381,8 @@ public class MatHax implements ClientModInitializer {
 
         // Icon & Title
         ClientSpoof cs = Modules.get().get(ClientSpoof.class);
-        if (cs.isActive() && cs.changeWindowIcon()) WindowUtils.Meteor.setIcon();
-        else WindowUtils.MatHax.setIcon();
-        if (cs.isActive() && cs.changeWindowTitle()) WindowUtils.Meteor.setTitle();
-        else WindowUtils.MatHax.setTitle();
+        Icon.setIcon(new MatHaxIdentifier("icons/64.png"), new MatHaxIdentifier("icons/128.png"));
+
 
         // Log
         LOG.info("MatHax+ " + Version.getStylized() + " initialized for Minecraft " + Version.getMinecraft() + "!");
