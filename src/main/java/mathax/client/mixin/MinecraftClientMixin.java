@@ -10,6 +10,7 @@ import mathax.client.events.game.WindowResizedEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.mixininterface.IMinecraftClient;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.misc.NoSignatures;
 import mathax.client.systems.modules.render.UnfocusedCPU;
 import mathax.client.utils.Utils;
 import mathax.client.gui.WidgetScreen;
@@ -18,6 +19,7 @@ import net.minecraft.client.Mouse;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
+import net.minecraft.client.util.ProfileKeys;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.hit.HitResult;
@@ -203,5 +205,12 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
     @Redirect(method = "setScreen(Lnet/minecraft/client/gui/screen/Screen;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/Screen;init(Lnet/minecraft/client/MinecraftClient;II)V"))
     private void disableInit(Screen screen, MinecraftClient client, int width, int height) {
         if (musicPassingScreens.remove(screen)) screen.init(client, width, height);
+    }
+
+    // anti chat signing
+    @Inject(method = "getProfileKeys", at = @At("HEAD"), cancellable = true)
+    private void onGetProfileKeys(CallbackInfoReturnable<ProfileKeys> cir) {
+        if (Modules.get().isActive(NoSignatures.class))
+            cir.setReturnValue(ProfileKeys.MISSING);
     }
 }
