@@ -36,6 +36,7 @@
     "CapabilityTrackerMixin",
     "CapeFeatureRendererMixin",
     "ChatHudAccessor",
+    "ChatHudLineMixin",
     "ChatHudMixin",
     "ChatScreenMixin",
     "ChunkAccessor",
