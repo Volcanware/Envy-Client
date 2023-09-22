@@ -130,7 +130,6 @@
     "PlayerPositionLookS2CPacketAccessor",
     "PlayerSkinProviderAccessor",
     "PowderSnowBlockMixin",
-    "ProfileKeysMixin",
     "ProjectileEntityAccessor",
     "ProjectileInGroundAccessor",
     "RaycastContextMixin",
