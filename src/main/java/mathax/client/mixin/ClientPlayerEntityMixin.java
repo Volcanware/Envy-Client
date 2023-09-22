@@ -19,6 +19,8 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.damage.DamageSource;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -27,6 +29,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
+    @Shadow
+    private boolean usingItem;
+
     public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
         super(world, profile);
     }
@@ -42,10 +47,20 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         return client.currentScreen;
     }
 
-    @Redirect(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"))
-    private boolean redirectUsingItem(ClientPlayerEntity player) {
-        if (Modules.get().get(NoSlow.class).items()) return false;
-        return player.isUsingItem();
+    @Unique
+    private boolean realUsingItem;
+
+    @Inject(method = "tickMovement", at = @At("HEAD"))
+    private void tickMovementHead(CallbackInfo ci) {
+        realUsingItem = usingItem;
+        if (Modules.get().get(NoSlow.class).items()) {
+            usingItem = false;
+        }
+    }
+
+    @Inject(method = "tickMovement", at = @At("TAIL"))
+    private void tickMovementTail(CallbackInfo ci) {
+        usingItem = realUsingItem;
     }
 
     @Inject(method = "isSneaking", at = @At("HEAD"), cancellable = true)
