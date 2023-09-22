@@ -53,7 +53,6 @@ import java.io.File;
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 /*/------------------------------------------------------------------/*/
 /*/ THIS CLIENT IS A FORK OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/
@@ -74,7 +73,7 @@ public class MatHax implements ClientModInitializer {
     //version
     public static final String version = "1.1.4";
 
-    public static final String ID = NAME.toLowerCase(Locale.ROOT);
+    public static final String ID = "mathax";
 
     public static final File GAME_FOLDER = new File(FabricLoader.getInstance().getGameDir().toString());
     public static final File FOLDER = new File(GAME_FOLDER, "Envy");
@@ -283,7 +282,7 @@ public class MatHax implements ClientModInitializer {
 
         // Icon & Title
         Title.setTitle("[Initializing] " + "Envy" + " " + version + " - Minecraft " + mc.getVersionType() + " " + "1.19.3", true);
-        Icon.setIcon(new MatHaxIdentifier("icons/64.png"), new MatHaxIdentifier("icons/128.png"));
+        Icon.setIcon(new MatHaxIdentifier("textures/icons/icon64.png"), new MatHaxIdentifier("textures/icons/icon128.png"));
 
 
         // Register event handlers
@@ -381,7 +380,7 @@ public class MatHax implements ClientModInitializer {
 
         // Icon & Title
         ClientSpoof cs = Modules.get().get(ClientSpoof.class);
-        Icon.setIcon(new MatHaxIdentifier("icons/64.png"), new MatHaxIdentifier("icons/128.png"));
+        Icon.setIcon(new MatHaxIdentifier("textures/icons/icon64.png"), new MatHaxIdentifier("textures/icons/icon128.png"));
 
 
         // Log
