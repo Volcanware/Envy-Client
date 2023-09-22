@@ -80,6 +80,10 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     public boolean onActivate() {
         return false;
     }
+
+    public double onActivate(double value) {
+        return value;
+    }
     public void onActivateCombat() {}
 
     public void onActivateDefault() {}

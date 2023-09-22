@@ -44,6 +44,9 @@ public abstract class Setting<T> implements IGetter<T>, ISerializable<T> {
         return value;
     }
 
+
+
+
     public boolean set(T value) {
         if (!isValueValid(value)) return false;
         this.value = value;
