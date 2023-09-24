@@ -98,7 +98,7 @@ public abstract class GameRendererMixin {
         return entity.raycast(maxDistance, tickDelta, includeFluids);
     }
 
-    @Inject(method = "tiltViewWhenHurt", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
     private void onBobViewWhenHurt(MatrixStack matrixStack, float f, CallbackInfo info) {
         if (Modules.get().get(NoRender.class).noHurtCam()) info.cancel();
     }
@@ -112,8 +112,8 @@ public abstract class GameRendererMixin {
     private void applyCameraTransformationsMathHelperLerpProxy(float tickDelta, long limitTime, MatrixStack matrices, CallbackInfo ci) {
         if (Modules.get().get(NoRender.class).noNausea()) {
             assert this.client.player != null;
-            this.client.player.prevNauseaIntensity = 0;
-            this.client.player.nauseaIntensity = 0;
+            this.client.player.lastNauseaStrength = 0;
+            this.client.player.nextNauseaStrength = 0;
         }
     }
 
@@ -121,7 +121,7 @@ public abstract class GameRendererMixin {
 
     private boolean freecamSet = false;
 
-    @Inject(method = "updateTargetedEntity", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "updateTargetedEntity", at = @At("INVOKE"), cancellable = true)
     private void updateTargetedEntityInvoke(float tickDelta, CallbackInfo info) {
         Freecam freecam = Modules.get().get(Freecam.class);
         boolean highwayBuilder = Modules.get().isActive(HighwayBuilder.class);

@@ -18,6 +18,6 @@ public class SpeedHud extends DoubleTextHudElement {
     protected String getRight() {
         if (isInEditor()) return "0";
 
-        return String.format("%.1f", Utils.getPlayerSpeed().length());
+        return String.format("%.1f", Utils.getPlayerSpeed());
     }
 }

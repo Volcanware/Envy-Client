@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import mathax.client.MatHax;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.screens.interactionmenu.InteractionScreen;
-import mathax.client.gui.utils.StarscriptTextBoxRenderer;
 import mathax.client.gui.widgets.WWidget;
 import mathax.client.gui.widgets.containers.WTable;
 import mathax.client.gui.widgets.input.WTextBox;
@@ -15,20 +14,15 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.KeyBind;
-import mathax.client.utils.misc.MathaxStarscript;
 import mathax.client.utils.render.color.SettingColor;
-import meteordevelopment.starscript.value.Value;
-import meteordevelopment.starscript.value.ValueMap;
 import net.minecraft.client.render.debug.DebugRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtString;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 /*/----------------------------------------------------------------------------------------------------------------------/*/
@@ -37,54 +31,58 @@ import java.util.Optional;
 /*/----------------------------------------------------------------------------------------------------------------------/*/
 
 public class InteractionMenu extends Module {
+    public final HashMap<String,String> messages = new HashMap<>();
+    private String currMsgK = "", currMsgV = "";
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgStyle = settings.createGroup("Style");
 
+    // General
+
     private final Setting<Object2BooleanMap<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
         .name("entities")
         .description("Entities")
-        .defaultValue(EntityType.PLAYER)
+        .defaultValue(Utils.asO2BMap(EntityType.PLAYER))
         .build()
     );
+
     public final Setting<KeyBind> keybind = sgGeneral.add(new KeyBindSetting.Builder()
         .name("keybind")
         .description("The keybind to open.")
         .action(this::onKey)
         .build()
     );
-    public final Setting<Boolean> useCrosshairTarget = sgGeneral.add(new BoolSetting.Builder()
-        .name("use-crosshair-target")
-        .description("Use crosshair target.")
-        .defaultValue(false)
-        .build()
-    );
 
     // Style
+
     public final Setting<SettingColor> selectedDotColor = sgStyle.add(new ColorSetting.Builder()
         .name("selected-dot-color")
         .description("Color of the dot when selected.")
-        .defaultValue(new SettingColor(76, 255, 0))
+        .defaultValue(new SettingColor(255, 25, 25))
         .build()
     );
+
     public final Setting<SettingColor> dotColor = sgStyle.add(new ColorSetting.Builder()
         .name("dot-color")
         .description("Color of the dot when.")
-        .defaultValue(new SettingColor(0, 148, 255))
+        .defaultValue(new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b))
         .build()
     );
+
     public final Setting<SettingColor> backgroundColor = sgStyle.add(new ColorSetting.Builder()
         .name("background-color")
         .description("Color of the background.")
-        .defaultValue(new SettingColor(128, 128, 128, 128))
+        .defaultValue(new SettingColor(0, 0, 0, 75))
         .build()
     );
+
     public final Setting<SettingColor> borderColor = sgStyle.add(new ColorSetting.Builder()
         .name("border-color")
         .description("Color of the border.")
         .defaultValue(new SettingColor(0, 0, 0))
         .build()
     );
+
     public final Setting<SettingColor> textColor = sgStyle.add(new ColorSetting.Builder()
         .name("text-color")
         .description("Color of the text.")
@@ -92,64 +90,82 @@ public class InteractionMenu extends Module {
         .build()
     );
 
-    public final Setting<Map<String, String>> messages = sgGeneral.add(new StringMapSetting.Builder()
-        .name("messages")
-        .description("Messages.")
-        .renderer(StarscriptTextBoxRenderer.class)
-        .build()
-    );
+    // Buttons
+
+    @Override
+    public WWidget getWidget(GuiTheme theme) {
+        WTable table = theme.table();
+        fillTable(theme, table);
+        return table; //imagine interacting
+    }
+
+    private void fillTable(GuiTheme theme, WTable table) {
+        table.clear();
+
+        messages.keySet().forEach((key) -> {
+            table.add(theme.label(key)).expandCellX();
+            table.add(theme.label(messages.get(key))).expandCellX();
+            WMinus delete = table.add(theme.minus()).widget();
+            delete.action = () -> {
+                messages.remove(key);
+                fillTable(theme,table);
+            };
+            table.row();
+        });
+
+        WTextBox textBoxK = table.add(theme.textBox(currMsgK)).minWidth(100).expandX().widget();
+        textBoxK.action = () -> currMsgK = textBoxK.get();
+
+        WTextBox textBoxV = table.add(theme.textBox(currMsgV)).minWidth(100).expandX().widget();
+        textBoxV.action = () -> currMsgV = textBoxV.get();
+
+        WPlus add = table.add(theme.plus()).widget();
+        add.action = () -> {
+            if (currMsgK.equals("")  && currMsgV.equals("")) {
+                messages.put(currMsgK, currMsgV);
+                currMsgK = ""; currMsgV = "";
+                fillTable(theme,table);
+            }
+        };
+
+        table.row();
+    }
 
     public InteractionMenu() {
-        super(Categories.Render, Items.ARMOR_STAND, "interaction-menu", "An interaction screen when looking at an entity.");
-        MathaxStarscript.ss.set("entity", () -> wrap(InteractionScreen.interactionMenuEntity));
+        super(Categories.Render, Items.ARMOR_STAND,"interaction-menu","An interaction screen when looking at an entity.");
     }
 
     public void onKey() {
-        if (mc.player == null || mc.currentScreen != null) return;
-        Entity e = null;
-        if (useCrosshairTarget.get()) {
-            e = mc.targetedEntity;
-        } else {
-            Optional<Entity> lookingAt = DebugRenderer.getTargetedEntity(mc.player, 20);
-            if (lookingAt.isPresent()) {
-                e = lookingAt.get();
+        if (mc.currentScreen != null) return;
+        Optional<Entity> lookingAt = DebugRenderer.getTargetedEntity(mc.player, 20);
+        if (lookingAt.isPresent()) {
+            Entity e = lookingAt.get();
+            if (entities.get().getBoolean(e.getType())) {
+                mc.setScreen(new InteractionScreen(e, this));
             }
         }
-
-        if (e == null) return;
-        if (entities.get().getOrDefault(e.getType(), false)) {
-            mc.setScreen(new InteractionScreen(e, this));
-        }
     }
 
-    private static Value wrap(Entity entity) {
-        if (entity == null) {
-            return Value.map(new ValueMap()
-                .set("_toString", Value.null_())
-                .set("health", Value.null_())
-                .set("pos", Value.map(new ValueMap()
-                    .set("_toString", Value.null_())
-                    .set("x", Value.null_())
-                    .set("y", Value.null_())
-                    .set("z", Value.null_())
-                ))
-                .set("uuid", Value.null_())
-            );
-        }
-        return Value.map(new ValueMap()
-            .set("_toString", Value.string(entity.getName().getString()))
-            .set("health", Value.number(entity instanceof LivingEntity e ? e.getHealth() : 0))
-            .set("pos", Value.map(new ValueMap()
-                .set("_toString", posString(entity.getX(), entity.getY(), entity.getZ()))
-                .set("x", Value.number(entity.getX()))
-                .set("y", Value.number(entity.getY()))
-                .set("z", Value.number(entity.getZ()))
-            ))
-            .set("uuid", Value.string(entity.getUuidAsString()))
-        );
+    @Override
+    public NbtCompound toTag() {
+        NbtCompound tag = super.toTag();
+
+        NbtCompound messTag = new NbtCompound();
+        messages.keySet().forEach((key) -> messTag.put(key, NbtString.of(messages.get(key))));
+
+        tag.put("messages", messTag);
+        return tag;
     }
 
-    private static Value posString(double x, double y, double z) {
-        return Value.string(String.format("X: %.0f Y: %.0f Z: %.0f", x, y, z));
+    @Override
+    public Module fromTag(NbtCompound tag) {
+
+        messages.clear();
+        if (tag.contains("messages")) {
+            NbtCompound msgs = tag.getCompound("messages");
+            msgs.getKeys().forEach((key) -> messages.put(key, msgs.getString(key)));
+        }
+
+        return super.fromTag(tag);
     }
 }

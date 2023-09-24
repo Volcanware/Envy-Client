@@ -15,12 +15,4 @@ public enum Dimension {
     public String toString() {
         return title;
     }
-
-    public Dimension opposite() {
-        return switch (this) {
-            case Overworld -> Nether;
-            case Nether -> Overworld;
-            default -> this;
-        };
-    }
 }

@@ -35,7 +35,6 @@ import mathax.client.utils.player.DamageUtils;
 import mathax.client.utils.player.EChestMemory;
 import mathax.client.utils.player.Rotations;
 import mathax.client.utils.render.EntityShaders;
-import mathax.client.utils.render.RenderUtils;
 import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.RainbowColors;
 import mathax.client.utils.world.BlockIterator;
@@ -329,7 +328,6 @@ public class MatHax implements ClientModInitializer {
         });
 
         // Pre init
-        MathaxStarscript.init();
         Utils.init();
         Version.init();
         GL.init();
@@ -369,7 +367,6 @@ public class MatHax implements ClientModInitializer {
         GuiRenderer.init();
         GuiThemes.postInit();
         RainbowColors.init();
-        RenderUtils.init();
 
         // Title
         Title.setTitle(NAME + " " + version + " - Minecraft " + mc.getVersionType() + " " + "1.19.3", true);

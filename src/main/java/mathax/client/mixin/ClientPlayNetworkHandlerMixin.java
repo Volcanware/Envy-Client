@@ -56,7 +56,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "onChunkData", at = @At("TAIL"))
     private void onChunkData(ChunkDataS2CPacket packet, CallbackInfo info) {
-        WorldChunk chunk = client.world.getChunk(packet.getX(), packet.getZ());
+        WorldChunk chunk = client.world.getChunk(packet.getChunkX(), packet.getChunkZ());
         MatHax.EVENT_BUS.post(ChunkDataEvent.get(chunk));
     }
 
@@ -72,7 +72,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
         }
     }
 
-    @Inject(method = "onExplosion", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkThreadUtils;forceMainThread(Lnet/minecraft/network/packet/Packet;Lnet/minecraft/network/listener/PacketListener;Lnet/minecraft/util/thread/ThreadExecutor;)V", shift = At.Shift.AFTER))
+    @Inject(method = "onExplosion", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkThreadUtils;forceMainThread(Lnet/minecraft/network/Packet;Lnet/minecraft/network/listener/PacketListener;Lnet/minecraft/util/thread/ThreadExecutor;)V", shift = At.Shift.AFTER))
     private void onExplosionVelocity(ExplosionS2CPacket packet, CallbackInfo info) {
         Velocity velocity = Modules.get().get(Velocity.class);
         if (!velocity.explosions.get()) return;

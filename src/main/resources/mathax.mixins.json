@@ -58,7 +58,6 @@
     "CobwebBlockMixin",
     "CommandSuggestorMixin",
     "CompassAnglePredicateProviderMixin",
-    "ConnectScreenMixin",
     "CrashReportMixin",
     "CreativeInventoryScreenAccessor",
     "CreativeSlotMixin",

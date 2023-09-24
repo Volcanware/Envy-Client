@@ -72,7 +72,6 @@ dependencies {
 
     library("io.netty:netty-handler-proxy:${project.netty_version}")
     library("io.netty:netty-codec-socks:${project.netty_version}")
-    library "meteordevelopment:starscript:${project.starscript_version}"
 
     // Compat fixes
     modCompileOnly("maven.modrinth:sodium:${project.sodium_version}") { transitive = false }
