@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.render.BetterTooltips;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -52,7 +52,7 @@ public class MapTooltipComponent implements TooltipComponent, MatHaxTooltipData 
         matrices.scale((64 + 8) / 64f, (64 + 8) / 64f, 0);
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderTexture(0, TEXTURE_MAP_BACKGROUND);
-        DrawableHelper.drawTexture(matrices, 0, 0, 0, 0, 0, 64, 64, 64, 64);
+        DrawContext.drawTexture(matrices, 0, 0, 0, 0, 0, 64, 64, 64, 64);
         matrices.pop();
 
         // Contents

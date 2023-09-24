@@ -12,7 +12,7 @@ import mathax.client.MatHax;
 import mathax.client.systems.modules.client.ClientSpoof;
 import mathax.client.systems.modules.chat.BetterChat;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.hud.ChatHudLine;
 import net.minecraft.client.gui.hud.MessageIndicator;
@@ -97,7 +97,7 @@ public abstract class ChatHudMixin implements IChatHud {
     }
 
     @Inject(method = "render", at = @At("TAIL"))
-    private void onRender(MatrixStack matrices, int currentTick, int mouseX, int mouseY, CallbackInfo info) {
+    private void onRender(DrawContext context, int currentTick, int mouseX, int mouseY, CallbackInfo ci) {
         if (!Modules.get().get(BetterChat.class).displayPlayerHeads()) return;
         if (mc.options.getChatVisibility().getValue() == ChatVisibility.HIDDEN) return;
         int maxLineCount = mc.inGameHud.getChatHud().getVisibleLineCount();
@@ -106,6 +106,7 @@ public abstract class ChatHudMixin implements IChatHud {
         double g = 9.0D * (mc.options.getChatLineSpacing().getValue() + 1.0D);
         double h = -8.0D * (mc.options.getChatLineSpacing().getValue() + 1.0D) + 4.0D * mc.options.getChatLineSpacing().getValue() + 8.0D;
 
+        MatrixStack matrices = context.getMatrices();
         matrices.push();
         matrices.translate(2, -0.1f, 10);
         RenderSystem.enableBlend();
@@ -119,7 +120,7 @@ public abstract class ChatHudMixin implements IChatHud {
                         double s = ((double)(-m) * g);
                         StringCharacterVisitor visitor = new StringCharacterVisitor();
                         chatHudLine.content().accept(visitor);
-                        drawIcon(matrices, visitor.result.toString(), (int)(s + h), (float)(o * d));
+                        drawIcon(context, matrices, visitor.result.toString(), (int)(s + h), (float)(o * d));
                     }
                 }
             }
@@ -148,24 +149,22 @@ public abstract class ChatHudMixin implements IChatHud {
     @Final
     private List<ChatHudLine> messages;
 
-    private void drawIcon(MatrixStack matrices, String line, int y, float opacity) {
+    private void drawIcon(DrawContext drawContext, MatrixStack matrices, String line, int y, float opacity) {
         if (METEOR_PREFIX_REGEX.matcher(line).find()) {
-            RenderSystem.setShaderTexture(0, METEOR_CHAT_ICON);
             matrices.push();
             RenderSystem.setShaderColor(1, 1, 1, opacity);
             matrices.translate(0, y, 0);
             matrices.scale(0.125f, 0.125f, 1);
-            DrawableHelper.drawTexture(matrices, 0, 0, 0f, 0f, 64, 64, 64, 64);
+            drawContext.drawTexture(METEOR_CHAT_ICON, 0, 0, 0f, 0f, 64, 64, 64, 64);
             RenderSystem.setShaderColor(1, 1, 1, 1);
             matrices.pop();
             return;
         } else if (BARITONE_PREFIX_REGEX.matcher(line).find()) {
-            RenderSystem.setShaderTexture(0, BARITONE_CHAT_ICON);
             matrices.push();
             RenderSystem.setShaderColor(1, 1, 1, opacity);
             matrices.translate(0, y, 10);
             matrices.scale(0.125f, 0.125f, 1);
-            DrawableHelper.drawTexture(matrices, 0, 0, 0f, 0f, 64, 64, 64, 64);
+            drawContext.drawTexture(BARITONE_CHAT_ICON, 0, 0, 0f, 0f, 64, 64, 64, 64);
             RenderSystem.setShaderColor(1, 1, 1, 1);
             matrices.pop();
             return;
@@ -174,9 +173,8 @@ public abstract class ChatHudMixin implements IChatHud {
         Identifier skin = getMessageTexture(line);
         if (skin != null) {
             RenderSystem.setShaderColor(1, 1, 1, opacity);
-            RenderSystem.setShaderTexture(0, skin);
-            DrawableHelper.drawTexture(matrices, 0, y, 8, 8, 8.0F, 8.0F,8, 8, 64, 64);
-            DrawableHelper.drawTexture(matrices, 0, y, 8, 8, 40.0F, 8.0F,8, 8, 64, 64);
+            drawContext.drawTexture(skin, 0, y, 8, 8, 8.0F, 8.0F, 8, 8, 64, 64);
+            drawContext.drawTexture(skin, 0, y, 8, 8, 40.0F, 8.0F, 8, 8, 64, 64);
             RenderSystem.setShaderColor(1, 1, 1, 1);
         }
     }

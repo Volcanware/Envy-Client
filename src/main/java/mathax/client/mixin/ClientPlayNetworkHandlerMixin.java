@@ -56,7 +56,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "onChunkData", at = @At("TAIL"))
     private void onChunkData(ChunkDataS2CPacket packet, CallbackInfo info) {
-        WorldChunk chunk = client.world.getChunk(packet.getX(), packet.getZ());
+        WorldChunk chunk = client.world.getChunk(packet.getChunkX(), packet.getChunkZ());
         MatHax.EVENT_BUS.post(ChunkDataEvent.get(chunk));
     }
 

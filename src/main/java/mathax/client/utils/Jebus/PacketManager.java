@@ -4,7 +4,7 @@ import mathax.client.utils.Jebus.Interactions;
 import mathax.client.utils.player.FindItemResult;
 import mathax.client.utils.player.Rotations;
 import net.minecraft.entity.Entity;
-import net.minecraft.network.Packet;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.*;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;

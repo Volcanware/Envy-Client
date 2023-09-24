@@ -28,6 +28,10 @@ public class SettingGroup implements ISerializable<SettingGroup>, Iterable<Setti
         return null;
     }
 
+    public Setting<?> getByIndex(int index) {
+        return settings.get(index);
+    }
+
     public <T> Setting<T> add(Setting<T> setting) {
         settings.add(setting);
 

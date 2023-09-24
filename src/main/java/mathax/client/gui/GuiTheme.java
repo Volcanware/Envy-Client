@@ -1,6 +1,7 @@
 package mathax.client.gui;
 
 import mathax.client.gui.renderer.packer.GuiTexture;
+import mathax.client.gui.screens.NotebotSongsScreen;
 import mathax.client.gui.screens.proxies.ProxiesScreen;
 import mathax.client.gui.screens.accounts.AccountsScreen;
 import mathax.client.gui.screens.clickgui.ModuleScreen;
@@ -219,6 +220,10 @@ public abstract class GuiTheme implements ISerializable<GuiTheme> {
 
     public WidgetScreen accountsScreen() {
         return new AccountsScreen(this);
+    }
+
+    public WidgetScreen notebotSongs() {
+        return new NotebotSongsScreen(this);
     }
 
     public WidgetScreen proxiesScreen() {

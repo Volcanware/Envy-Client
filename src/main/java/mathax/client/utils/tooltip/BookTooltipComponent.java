@@ -2,7 +2,7 @@ package mathax.client.utils.tooltip;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -40,7 +40,7 @@ public class BookTooltipComponent implements TooltipComponent, MatHaxTooltipData
         // Background
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderTexture(0, TEXTURE_BOOK_BACKGROUND);
-        DrawableHelper.drawTexture(matrices, x, y, z, 12, 0, 112, 134, 179, 179);
+        DrawContext.drawTexture(matrices, x, y, z, 12, 0, 112, 134, 179, 179);
 
         // Content
         matrices.push();

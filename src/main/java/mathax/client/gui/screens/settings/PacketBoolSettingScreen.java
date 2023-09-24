@@ -5,8 +5,7 @@ import mathax.client.gui.widgets.WWidget;
 import mathax.client.settings.PacketListSetting;
 import mathax.client.settings.Setting;
 import mathax.client.utils.network.PacketUtils;
-import net.minecraft.network.Packet;
-
+import net.minecraft.network.packet.Packet;
 import java.util.Set;
 import java.util.function.Predicate;
 

@@ -121,11 +121,11 @@ public class BreakIndicators extends Module {
     }
 
     private void renderBlock(Render3DEvent event, Box box, Box orig, BlockPos pos, double shrinkFactor, double progress) {
-        box = box.shrink(box.getXLength() * shrinkFactor, box.getYLength() * shrinkFactor, box.getZLength() * shrinkFactor);
+        box = box.shrink(box.getLengthX() * shrinkFactor, box.getLengthY() * shrinkFactor, box.getLengthZ() * shrinkFactor);
 
-        double xShrink = (orig.getXLength() * shrinkFactor) / 2;
-        double yShrink = (orig.getYLength() * shrinkFactor) / 2;
-        double zShrink = (orig.getZLength() * shrinkFactor) / 2;
+        double xShrink = (orig.getLengthX() * shrinkFactor) / 2;
+        double yShrink = (orig.getLengthY() * shrinkFactor) / 2;
+        double zShrink = (orig.getLengthZ() * shrinkFactor) / 2;
 
         double x1 = pos.getX() + box.minX + xShrink;
         double y1 = pos.getY() + box.minY + yShrink;

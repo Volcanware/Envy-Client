@@ -20,7 +20,6 @@ import mathax.client.utils.world.BlockUtils;
 import mathax.client.utils.world.CardinalDirection;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
 import net.minecraft.block.entity.BedBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -465,8 +464,8 @@ public class BedAura extends Module {
                 double selfDamage = DamageUtils.bedDamage(mc.player, Utils.vec3d(centerPos));
                 double offsetSelfDamage = DamageUtils.bedDamage(mc.player, Utils.vec3d(centerPos.offset(dir.toDirection())));
 
-                if (targetFeet.get() && !mc.world.getBlockState(underFeetPos).getMaterial().equals(Material.AIR) && !mc.world.getBlockState(underFeetPos.offset((direction = dir).toDirection())).getMaterial().equals(Material.AIR) && mc.world.getBlockState(centerPos).getMaterial().isReplaceable() && BlockUtils.canPlace(centerPos.offset(dir.toDirection())) && DamageUtils.bedDamage(target, Utils.vec3d(centerPos)) >= minDamage.get() && offsetSelfDamage < maxSelfDamage.get() && selfDamage < maxSelfDamage.get() && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - selfDamage > 0) && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - offsetSelfDamage > 0)) return centerPos.offset((direction = dir).toDirection());
-                if (!targetFeet.get() && mc.world.getBlockState(centerPos).getMaterial().isReplaceable() && BlockUtils.canPlace(centerPos.offset(dir.toDirection())) && DamageUtils.bedDamage(target, Utils.vec3d(centerPos)) >= minDamage.get() && offsetSelfDamage < maxSelfDamage.get() && selfDamage < maxSelfDamage.get() && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - selfDamage > 0) && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - offsetSelfDamage > 0)) return centerPos.offset((direction = dir).toDirection());
+                if (targetFeet.get() && !mc.world.getBlockState(underFeetPos).isAir() && !mc.world.getBlockState(underFeetPos.offset((direction = dir).toDirection())).isAir() && mc.world.getBlockState(centerPos).isReplaceable() && BlockUtils.canPlace(centerPos.offset(dir.toDirection())) && DamageUtils.bedDamage(target, Utils.vec3d(centerPos)) >= minDamage.get() && offsetSelfDamage < maxSelfDamage.get() && selfDamage < maxSelfDamage.get() && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - selfDamage > 0) && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - offsetSelfDamage > 0)) return centerPos.offset((direction = dir).toDirection());
+                if (!targetFeet.get() && mc.world.getBlockState(centerPos).isReplaceable() && BlockUtils.canPlace(centerPos.offset(dir.toDirection())) && DamageUtils.bedDamage(target, Utils.vec3d(centerPos)) >= minDamage.get() && offsetSelfDamage < maxSelfDamage.get() && selfDamage < maxSelfDamage.get() && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - selfDamage > 0) && (!antiSuicide.get() || PlayerUtils.getTotalHealth() - offsetSelfDamage > 0)) return centerPos.offset((direction = dir).toDirection());
             }
         }
 

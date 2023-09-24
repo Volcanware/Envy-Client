@@ -77,40 +77,40 @@ public class TitleScreenMixin extends Screen {
         String authorName = "Volcan, HardlineMouse16, PotatoMan, ChiefWarCry, Lagoon,  PizzaV";
         int authorNameLength = textRenderer.getWidth(authorName);
 
-        drawStringWithShadow(matrices, textRenderer, loggedInAs, 2, (int) y, GRAY);
-        drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, (int) y, GRAY);
-        drawStringWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, (int) y, WHITE);
+        drawTextWithShadow(matrices, textRenderer, loggedInAs, 2, (int) y, GRAY);
+        drawTextWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, (int) y, GRAY);
+        drawTextWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, (int) y, WHITE);
 
         if (Modules.get() != null && !Modules.get().isActive(NameProtect.class) && Utils.isDeveloper(client.getSession().getUuid())) {
-            drawStringWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, (int) y, GRAY);
-            drawStringWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, (int) y, GRAY);
-            drawStringWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, (int) y, MatHax.INSTANCE.MATHAX_COLOR_INT);
-            drawStringWithShadow(matrices, textRenderer, loggedCloseDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + loggedDeveloperLength + 2, (int) y, GRAY);
+            drawTextWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, (int) y, GRAY);
+            drawTextWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, (int) y, GRAY);
+            drawTextWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, (int) y, MatHax.INSTANCE.MATHAX_COLOR_INT);
+            drawTextWithShadow(matrices, textRenderer, loggedCloseDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + loggedDeveloperLength + 2, (int) y, GRAY);
         }
 
         int watermarkPreviousWidth = 0;
-        drawStringWithShadow(matrices, textRenderer, watermarkName, width - watermarkFullLength - 2, (int) y, MatHax.INSTANCE.MATHAX_COLOR_INT);
+        drawTextWithShadow(matrices, textRenderer, watermarkName, width - watermarkFullLength - 2, (int) y, MatHax.INSTANCE.MATHAX_COLOR_INT);
         watermarkPreviousWidth += watermarkNameLength;
-        drawStringWithShadow(matrices, textRenderer, space, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, WHITE);
+        drawTextWithShadow(matrices, textRenderer, space, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, WHITE);
         watermarkPreviousWidth += spaceLength;
-        drawStringWithShadow(matrices, textRenderer, watermarkVersion, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, GRAY);
+        drawTextWithShadow(matrices, textRenderer, watermarkVersion, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, GRAY);
 
         int authorY = (int) y2;
-        drawStringWithShadow(matrices, textRenderer, authorBy, width - authorByLength - 2, authorY, GRAY);
+        drawTextWithShadow(matrices, textRenderer, authorBy, width - authorByLength - 2, authorY, GRAY);
 
         List<String> importantAuthors = List.of("Volcan");
         for (String importantAuthor : importantAuthors) {
             authorY += textRenderer.fontHeight + 1;
-            drawStringWithShadow(matrices, textRenderer, importantAuthor, width - textRenderer.getWidth(importantAuthor), authorY, RED);
+            drawTextWithShadow(matrices, textRenderer, importantAuthor, width - textRenderer.getWidth(importantAuthor), authorY, RED);
         }
 
         assert FabricLoader.getInstance().getModContainer("envy").isPresent();  // 🤔 should we ever be not loaded? (skid protection)
         for (Person author : FabricLoader.getInstance().getModContainer("envy").get().getMetadata().getAuthors().stream().filter(person -> !importantAuthors.contains(person.getName())).sorted(Comparator.comparingInt(person -> textRenderer.getWidth(person.getName()))).toList()) {
             authorY += textRenderer.fontHeight + 1;
-            drawStringWithShadow(matrices, textRenderer, author.getName(), width - textRenderer.getWidth(author.getName()), authorY, WHITE);
+            drawTextWithShadow(matrices, textRenderer, author.getName(), width - textRenderer.getWidth(author.getName()), authorY, WHITE);
         }
 
-        drawStringWithShadow(matrices, textRenderer, proxyUsing, 2, (int) y2, GRAY);
-        if (proxyDetails != null) drawStringWithShadow(matrices, textRenderer, proxyDetails, 2 + proxyUsingLength, (int) y2, WHITE);
+        drawTextWithShadow(matrices, textRenderer, proxyUsing, 2, (int) y2, GRAY);
+        if (proxyDetails != null) drawTextWithShadow(matrices, textRenderer, proxyDetails, 2 + proxyUsingLength, (int) y2, WHITE);
     }
 }

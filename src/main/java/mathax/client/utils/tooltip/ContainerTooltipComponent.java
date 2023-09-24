@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.utils.render.RenderUtils;
 import mathax.client.utils.render.color.Color;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -46,7 +46,7 @@ public class ContainerTooltipComponent implements TooltipComponent, MatHaxToolti
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(color.r / 255f, color.g / 255f, color.b / 255f, color.a / 255f);
         RenderSystem.setShaderTexture(0, TEXTURE_CONTAINER_BACKGROUND);
-        DrawableHelper.drawTexture(matrices, x, y, z, 0, 0, 176, 67, 176, 67);
+        DrawContext.drawTexture(matrices, x, y, z, 0, 0, 176, 67, 176, 67);
 
         //Contents
         int row = 0;

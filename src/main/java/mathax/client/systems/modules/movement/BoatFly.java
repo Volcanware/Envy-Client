@@ -58,7 +58,7 @@ public class BoatFly extends Module {
 
     @EventHandler
     private void onBoatMove(BoatMoveEvent event) {
-        if (event.boat.getPrimaryPassenger() != mc.player) return;
+        if (event.boat.getControllingPassenger() != mc.player) return;
 
         event.boat.setYaw(mc.player.getYaw());
 

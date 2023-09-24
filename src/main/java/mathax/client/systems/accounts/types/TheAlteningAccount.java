@@ -12,7 +12,6 @@ import mathax.client.systems.accounts.Account;
 import mathax.client.systems.accounts.AccountType;
 import mathax.client.systems.accounts.AccountUtils;
 import net.minecraft.client.util.Session;
-
 import java.util.Optional;
 
 public class TheAlteningAccount extends Account<TheAlteningAccount> {
