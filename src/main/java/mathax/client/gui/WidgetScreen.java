@@ -13,6 +13,7 @@ import mathax.client.utils.Utils;
 import mathax.client.utils.misc.CursorStyle;
 import mathax.client.utils.misc.input.Input;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -229,8 +230,8 @@ public abstract class WidgetScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        if (!Utils.canUpdate()) renderBackground(matrices);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        if (!Utils.canUpdate()) renderBackground(context);
 
         double s = mc.getWindow().getScaleFactor();
         mouseX *= s;
@@ -249,15 +250,17 @@ public abstract class WidgetScreen extends Screen {
         RENDERER.theme = theme;
         theme.beforeRender();
 
-        RENDERER.begin(matrices);
+        RENDERER.begin(context);
         RENDERER.setAlpha(animProgress);
         root.render(RENDERER, mouseX, mouseY, delta / 20);
         RENDERER.setAlpha(1);
-        RENDERER.end(matrices);
+        RENDERER.end();
 
-        boolean tooltip = RENDERER.renderTooltip(mouseX, mouseY, delta / 20, matrices);
+        boolean tooltip = RENDERER.renderTooltip(context, mouseX, mouseY, delta / 20);
 
         if (debug) {
+            MatrixStack matrices = context.getMatrices();
+
             DEBUG_RENDERER.render(root, matrices);
             if (tooltip) DEBUG_RENDERER.render(RENDERER.tooltipWidget, matrices);
         }

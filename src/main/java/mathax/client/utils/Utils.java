@@ -91,17 +91,25 @@ public class Utils {
         return System.currentTimeMillis();
     }
 
-    public static double getPlayerSpeed() {
-        if (mc.player == null) return 0;
+    public static Vec3d getPlayerSpeed() {
+        if (mc.player == null) return Vec3d.ZERO;
 
-        double tX = Math.abs(mc.player.getX() - mc.player.prevX);
-        double tZ = Math.abs(mc.player.getZ() - mc.player.prevZ);
-        double length = Math.sqrt(tX * tX + tZ * tZ);
+        double tX = mc.player.getX() - mc.player.prevX;
+        double tY = mc.player.getY() - mc.player.prevY;
+        double tZ = mc.player.getZ() - mc.player.prevZ;
 
         Timer timer = Modules.get().get(Timer.class);
-        if (timer.isActive()) length *= Modules.get().get(Timer.class).getMultiplier();
+        if (timer.isActive()) {
+            tX *= timer.getMultiplier();
+            tY *= timer.getMultiplier();
+            tZ *= timer.getMultiplier();
+        }
 
-        return length * 20;
+        tX *= 20;
+        tY *= 20;
+        tZ *= 20;
+
+        return new Vec3d(tX, tY, tZ);
     }
 
     public static String getWorldTime() {

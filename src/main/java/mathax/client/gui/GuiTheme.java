@@ -236,6 +236,28 @@ public abstract class GuiTheme implements ISerializable<GuiTheme> {
 
     public abstract Color textSecondaryColor();
 
+    //     Starscript
+
+    public abstract Color starscriptTextColor();
+
+    public abstract Color starscriptBraceColor();
+
+    public abstract Color starscriptParenthesisColor();
+
+    public abstract Color starscriptDotColor();
+
+    public abstract Color starscriptCommaColor();
+
+    public abstract Color starscriptOperatorColor();
+
+    public abstract Color starscriptStringColor();
+
+    public abstract Color starscriptNumberColor();
+
+    public abstract Color starscriptKeywordColor();
+
+    public abstract Color starscriptAccessedObjectColor();
+
     // Other
 
     public abstract TextRenderer textRenderer();
