@@ -224,7 +224,7 @@ public class Auto32K extends Module {
         List<BlockPos> validBlocks = new ArrayList<>();
         for (BlockPos i = null; allBlocks.hasNext(); i = allBlocks.next()){
             if (i == null) continue;
-            if (!mc.world.getBlockState(i).getMaterial().isReplaceable() && (mc.world.getBlockState(i.up()).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up().getX(), i.up().getY(), i.up().getZ(), i.up().getX() + 1.0D, i.up().getY() + 2.0D, i.up().getZ() + 1.0D)).isEmpty()) && mc.world.getBlockState(i.up(2)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(2).getX(), i.up(2).getY(), i.up(2).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty()) validBlocks.add(i);
+            if (!mc.world.getBlockState(i).isReplaceable() && (mc.world.getBlockState(i.up()).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up().getX(), i.up().getY(), i.up().getZ(), i.up().getX() + 1.0D, i.up().getY() + 2.0D, i.up().getZ() + 1.0D)).isEmpty()) && mc.world.getBlockState(i.up(2)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(2).getX(), i.up(2).getY(), i.up(2).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty()) validBlocks.add(i);
         }
 
         return validBlocks;
@@ -236,7 +236,7 @@ public class Auto32K extends Module {
         Iterator<BlockPos> allBlocks = allBlocksNotSorted.iterator();
         for (BlockPos i = null; allBlocks.hasNext(); i = allBlocks.next()){
             if (i == null) continue;
-            if (!mc.world.getBlockState(i).getMaterial().isReplaceable() && (mc.world.getBlockState(i.up()).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up().getX(), i.up().getY(), i.up().getZ(), i.up().getX() + 1.0D, i.up().getY() + 2.0D, i.up().getZ() + 1.0D)).isEmpty()) && (mc.world.getBlockState(i.up(2)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(2).getX(), i.up(2).getY(), i.up(2).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty()) && (mc.world.getBlockState(i.up(3)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(3).getX(), i.up(3).getY(), i.up(3).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty())){
+            if (!mc.world.getBlockState(i).isReplaceable() && (mc.world.getBlockState(i.up()).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up().getX(), i.up().getY(), i.up().getZ(), i.up().getX() + 1.0D, i.up().getY() + 2.0D, i.up().getZ() + 1.0D)).isEmpty()) && (mc.world.getBlockState(i.up(2)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(2).getX(), i.up(2).getY(), i.up(2).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty()) && (mc.world.getBlockState(i.up(3)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.up(3).getX(), i.up(3).getY(), i.up(3).getZ(), i.up(2).getX() + 1.0D, i.up(2).getY() + 2.0D, i.up(2).getZ() + 1.0D)).isEmpty())){
                 if (mc.world.getBlockState(i.add(-1, 1, 0)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(-1, 1, 0).getX(), i.add(-1, 1, 0).getY(), i.add(-1, 1, 0).getZ(), i.add(-1, 1, 0).getX() + 1.0D, i.add(-1, 1, 0).getY() + 2.0D, i.add(-1, 1, 0).getZ() + 1.0D)).isEmpty()
                     && mc.world.getBlockState(i.add(-1, 0, 0)).getBlock() == Blocks.AIR && mc.world.getOtherEntities(null, new Box(i.add(-1, 0, 0).getX(), i.add(-1, 0, 0).getY(), i.add(-1, 0, 0).getZ(), i.add(-1, 0, 0).getX() + 1.0D, i.add(-1, 0, 0).getY() + 2.0D, i.add(-1, 0, 0).getZ() + 1.0D)).isEmpty()) {
                     x = -1;
@@ -276,7 +276,7 @@ public class Auto32K extends Module {
         for (double i = player.getX() - range; i < player.getX() + range; i++){
             for (double j = player.getZ() - range; j < player.getZ() + range; j++){
                 for (int k = player.getY() - 3; k < player.getY() + 3; k++){
-                    BlockPos x = new BlockPos(i, k, j);
+                    BlockPos x = BlockPos.ofFloored(i, k, j);
                     allBlocks.add(x);
                 }
             }

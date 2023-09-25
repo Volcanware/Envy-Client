@@ -3,6 +3,7 @@ package mathax.client.renderer.text;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.utils.render.color.Color;
 import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Matrix4f;
@@ -60,7 +61,7 @@ public class VanillaTextRenderer implements TextRenderer {
         int preA = color.a;
         color.a = (int) ((color.a / 255 * alpha) * 255);
 
-        double width = mc.textRenderer.draw(text, (float) (x / scale), (float) (y / scale), color.getPacked(), shadow, emptyMatrix, immediate, true, 0, 15728880);
+        double width = mc.textRenderer.draw(text, (float) (x / scale), (float) (y / scale), color.getPacked(), shadow, emptyMatrix, immediate, net.minecraft.client.font.TextRenderer.TextLayerType.NORMAL, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
 
         color.a = preA;
 

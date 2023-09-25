@@ -126,7 +126,7 @@ public class Vec3 {
     }
 
     public BlockPos toBlockPos() {
-        return new BlockPos(x, y, z);
+        return BlockPos.ofFloored(x, y, z);
     }
 
     @Override

@@ -27,15 +27,7 @@ public class WItem extends WWidget {
         renderer.post(() -> {
             double s = theme.scale(2);
 
-            MatrixStack matrices = RenderSystem.getModelViewStack();
-
-            matrices.push();
-            matrices.scale((float) s, (float) s, 1);
-            matrices.translate(x / s, y / s, 0);
-
-            mc.getItemRenderer().renderGuiItemIcon(itemStack, 0, 0);
-
-            matrices.pop();
+            renderer.item(itemStack, (int) x, (int) y, (float) s, true);
         });
     }
 

@@ -253,7 +253,7 @@ public class Surround extends Module {
                 final AbstractClientPlayerEntity loc = mc.player;
                 final BlockPos locRounded = PlayerUtils.roundBlockPos(loc.getPos());
                 if (!lastPos.equals(loc.isOnGround() ? locRounded : loc.getBlockPos())) {
-                    if (onlyOnGround.get() || loc.getPos().y > lastPos.getY() + 1.5 || ((Math.floor(loc.getPos().x) != lastPos.getX() || Math.floor(loc.getPos().z) != lastPos.getZ()) && loc.getPos().y > lastPos.getY() + 0.75) || (!mc.world.getBlockState(lastPos).getMaterial().isReplaceable() && loc.getBlockPos() != lastPos)) {
+                    if (onlyOnGround.get() || loc.getPos().y > lastPos.getY() + 1.5 || ((Math.floor(loc.getPos().x) != lastPos.getX() || Math.floor(loc.getPos().z) != lastPos.getZ()) && loc.getPos().y > lastPos.getY() + 0.75) || (!mc.world.getBlockState(lastPos).isReplaceable() && loc.getBlockPos() != lastPos)) {
                         toggle();
                         return;
                     }
@@ -268,7 +268,7 @@ public class Surround extends Module {
 
             if (needsToPlace()) {
                 for (BlockPos pos : getPositions()) {
-                    if (mc.world.getBlockState(pos).getMaterial().isReplaceable()) mc.player.getInventory().selectedSlot = blockIndex;
+                    if (mc.world.getBlockState(pos).isReplaceable()) mc.player.getInventory().selectedSlot = blockIndex;
                     if (!mc.world.isOutOfHeightLimit(pos.getY()) && canPlace(pos)) renderBlocks.add(renderBlockPool.get().set(pos));
                     if (PlayerUtils.placeBlockMainHand(pos, oldPlacement.get(), blockIndex, rotate.get(), swing.get(), !onlyOnGround.get(), placeOnCrystal.get()) && delay.get() != 0) {
                         mc.player.getInventory().selectedSlot = prevSlot;
@@ -284,8 +284,8 @@ public class Surround extends Module {
     private boolean canPlace(BlockPos pos) {
         BlockState state = mc.world.getBlockState(pos);
         if (state.isAir()) return true;
-        else if (state.getMaterial().isLiquid()) return true;
-        else return state.getMaterial().isReplaceable();
+        else if (!state.getFluidState().isEmpty()) return true;
+        else return state.isReplaceable();
     }
 
     private List<BlockPos> getPositions() {

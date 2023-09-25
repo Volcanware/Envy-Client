@@ -3,18 +3,21 @@ package mathax.client.systems.hud;
 import mathax.client.gui.GuiThemes;
 import mathax.client.renderer.text.TextRenderer;
 import mathax.client.utils.render.color.Color;
+import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HudRenderer {
     public double delta;
+    public DrawContext context;
     private final List<Runnable> postTasks = new ArrayList<>();
 
-    public void begin(double scale, double frameDelta, boolean scaleOnly) {
+    public void begin(double scale, double frameDelta, boolean scaleOnly, DrawContext context) {
         TextRenderer.get().begin(scale, scaleOnly, false);
 
         this.delta = frameDelta;
+        this.context = context;
     }
 
     public void end() {

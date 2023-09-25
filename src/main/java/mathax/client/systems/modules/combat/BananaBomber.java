@@ -1371,7 +1371,7 @@ public class BananaBomber extends Module {
             // Check for support
             if (!hasBlock) {
                 if (isSupport.get()) {
-                    if (!blockState.getMaterial().isReplaceable()) return;
+                    if (!blockState.isReplaceable()) return;
                 } else return;
             }
 
@@ -1685,8 +1685,8 @@ public class BananaBomber extends Module {
 
         Vector3d vec = new Vector3d(renderPos.getX() + 0.5, renderPos.getY() + 0.5, renderPos.getZ() + 0.5);
 
-        if (NametagUtils.to2D(new Vec3(vec.x, vec.y, vec.z), damageScale.get())) {
-            NametagUtils.begin(new Vec3(vec.x, vec.y, vec.z));
+        if (NametagUtils.to2D(new Vector3d(vec.x, vec.y, vec.z), damageScale.get())) {
+            NametagUtils.begin(new Vector3d(vec.x, vec.y, vec.z));
             TextRenderer.get().begin(1, false, true);
 
             String text = String.format("%.1f", damage);

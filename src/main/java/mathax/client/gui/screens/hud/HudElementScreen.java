@@ -12,6 +12,7 @@ import mathax.client.gui.WindowScreen;
 import mathax.client.systems.hud.HUD;
 import mathax.client.systems.hud.HudElement;
 import mathax.client.utils.Utils;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.nbt.NbtCompound;
 
 public class HudElementScreen extends WindowScreen {
@@ -61,8 +62,8 @@ public class HudElementScreen extends WindowScreen {
     }
 
     @Override
-    protected void onRenderBefore(float delta) {
-        if (!Utils.canUpdate()) Systems.get(HUD.class).render(delta, hudElement -> true);
+    protected void onRenderBefore(float delta, DrawContext context) {
+        if (!Utils.canUpdate()) Systems.get(HUD.class).render(context, delta, hudElement -> true);
     }
 
     @Override

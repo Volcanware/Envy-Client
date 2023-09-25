@@ -9,6 +9,7 @@ import mathax.client.systems.hud.HudElement;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.NbtUtils;
 import mathax.client.utils.render.color.Color;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.NbtCompound;
 import org.lwjgl.glfw.GLFW;
@@ -242,8 +243,8 @@ public class HudEditorScreen extends WidgetScreen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        if (!Utils.canUpdate()) renderBackground(matrices);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        if (!Utils.canUpdate()) renderBackground(context);
 
         double s = mc.getWindow().getScaleFactor();
 
@@ -252,7 +253,7 @@ public class HudEditorScreen extends WidgetScreen {
 
         Utils.unscaledProjection();
 
-        if (!Utils.canUpdate()) hud.render(delta, hudElement -> true);
+        if (!Utils.canUpdate()) hud.render(context, delta, hudElement -> true);
 
         Renderer2D.COLOR.begin();
 

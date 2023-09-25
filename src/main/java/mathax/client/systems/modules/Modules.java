@@ -35,6 +35,7 @@ import mathax.client.systems.modules.render.*;
 import mathax.client.systems.modules.render.marker.Marker;
 import mathax.client.systems.modules.render.search.Search;
 import mathax.client.systems.modules.world.*;
+import mathax.client.systems.modules.world.Timer;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.ChatUtils;
 import mathax.client.utils.misc.ValueComparableMap;

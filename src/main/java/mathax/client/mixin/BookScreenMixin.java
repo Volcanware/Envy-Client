@@ -52,7 +52,7 @@ public class BookScreenMixin extends Screen {
             FastByteArrayOutputStream bytes = new FastByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bytes);
             try {
-                NbtIo.writeCompound(tag, out);
+                NbtIo.write(tag, out);
             } catch (IOException e) {
                 e.printStackTrace();
             }

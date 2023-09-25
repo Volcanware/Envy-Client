@@ -68,7 +68,7 @@ public class ShieldBypass extends Module {
                 Vec3d newPos = tp.add(e.getPos());
                 BlockPos pos = FloorUtil.ofFloored(newPos);
                 for (int i = -2; i <= 2; i++) {
-                    if (mc.player.world.getBlockState(pos.up(i)).isAir() && mc.player.world.getBlockState(pos).isAir()) {
+                    if (mc.world.getBlockState(pos.up(i)).isAir() && mc.world.getBlockState(pos).isAir()) {
                         this.originalPos = originalPos;
                         if (rotate.get()) Rotations.rotate(-mc.player.getYaw(), mc.player.getPitch(),-10);
                         target = e;

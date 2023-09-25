@@ -130,8 +130,8 @@ public class Confuse extends Module {
                 double z = random.nextDouble() * range.get() - halfRange;
                 Vec3d addend = new Vec3d(x, y, z);
                 Vec3d goal = entityPos.add(addend);
-                if (mc.world.getBlockState(new BlockPos(goal.x, goal.y, goal.z)).getBlock() != Blocks.AIR) goal = new Vec3d(x, playerPos.y, z);
-                if (mc.world.getBlockState(new BlockPos(goal.x, goal.y, goal.z)).getBlock() == Blocks.AIR) {
+                if (mc.world.getBlockState(BlockPos.ofFloored(goal.x, goal.y, goal.z)).getBlock() != Blocks.AIR) goal = new Vec3d(x, playerPos.y, z);
+                if (mc.world.getBlockState(BlockPos.ofFloored(goal.x, goal.y, goal.z)).getBlock() == Blocks.AIR) {
                     hit = mc.world.raycast(new RaycastContext(mc.player.getPos(), goal, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.ANY, mc.player));
                     if (!moveThroughBlocks.get() && hit.isInsideBlock()) {
                         delayWaited = delay.get() - 1;

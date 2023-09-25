@@ -215,7 +215,7 @@ public class AutoMLG extends Module {
         } /*else if (slot >= 9 && slot <= 35 && allowInventory.get()) {
             PlayerUtils.windowClickSwap(slot, mc.player.getInventory().selectedSlot);
             return 1;
-        }*/ else if (mc.player.getOffHandStack().isItemEqual(stack)) return -1;
+        }*/ else if (mc.player.getOffHandStack().getItem().equals(stack.getItem())) return -1;
 
         return 0;
     }

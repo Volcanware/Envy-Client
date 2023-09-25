@@ -5,6 +5,7 @@ import mathax.client.gui.renderer.packer.GuiTexture;
 import mathax.client.gui.renderer.packer.TexturePacker;
 import mathax.client.utils.misc.Pool;
 import mathax.client.utils.render.ByteTexture;
+import mathax.client.utils.render.RenderUtils;
 import mathax.client.utils.render.color.Color;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.widgets.WWidget;
@@ -12,7 +13,9 @@ import mathax.client.renderer.GL;
 import mathax.client.renderer.Renderer2D;
 import mathax.client.renderer.Texture;
 import mathax.client.utils.Utils;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -50,7 +53,7 @@ public class GuiRenderer {
     public WWidget tooltipWidget;
     private double tooltipAnimProgress;
 
-    private MatrixStack matrices;
+    private DrawContext context;
 
     public static GuiTexture addTexture(Identifier id) {
         return TEXTURE_PACKER.add(id);
@@ -67,16 +70,16 @@ public class GuiRenderer {
         TEXTURE = TEXTURE_PACKER.pack();
     }
 
-    public void begin(MatrixStack matrices) {
-        this.matrices = matrices;
+    public void begin(DrawContext context) {
+        this.context = context;
 
         GL.enableBlend();
         GL.enableScissorTest();
         scissorStart(0, 0, getWindowWidth(), getWindowHeight());
     }
 
-    public void end(MatrixStack matrices) {
-        this.matrices = matrices;
+    public void end(DrawContext context) {
+        this.context = context;
 
         scissorEnd();
 
@@ -97,24 +100,24 @@ public class GuiRenderer {
         r.end();
         rTex.end();
 
-        r.render(matrices);
+        r.render(context.getMatrices());
 
         GL.bindTexture(TEXTURE.getGlId());
-        rTex.render(matrices);
+        rTex.render(context.getMatrices());
 
         // Normal text
         theme.textRenderer().begin(theme.scale(1));
         for (TextOperation text : texts) {
             if (!text.title) text.run(textPool);
         }
-        theme.textRenderer().end(matrices);
+        theme.textRenderer().end(context.getMatrices());
 
         // Title text
         theme.textRenderer().begin(theme.scale(1.25));
         for (TextOperation text : texts) {
             if (text.title) text.run(textPool);
         }
-        theme.textRenderer().end(matrices);
+        theme.textRenderer().end(context.getMatrices());
 
         texts.clear();
     }
@@ -148,7 +151,7 @@ public class GuiRenderer {
         scissorPool.free(scissor);
     }
 
-    public boolean renderTooltip(double mouseX, double mouseY, double delta, MatrixStack matrices) {
+    public boolean renderTooltip(double mouseX, double mouseY, double delta, DrawContext context) {
         tooltipAnimProgress += (tooltip != null ? 1 : -1) * delta * 14;
         tooltipAnimProgress = Utils.clamp(tooltipAnimProgress, 0, 1);
 
@@ -164,9 +167,9 @@ public class GuiRenderer {
 
             setAlpha(tooltipAnimProgress);
 
-            begin(matrices);
+            begin(context);
             tooltipWidget.render(this, mouseX, mouseY, delta);
-            end(matrices);
+            end(context);
 
             setAlpha(1);
 
@@ -260,7 +263,7 @@ public class GuiRenderer {
             rTex.end();
 
             texture.bind();
-            rTex.render(matrices);
+            rTex.render(context.getMatrices());
         });
     }
 
@@ -276,5 +279,9 @@ public class GuiRenderer {
         T op = pool.get();
         op.set(x, y, color);
         return op;
+    }
+
+    public void item(ItemStack itemStack, int x, int y, float scale, boolean overlay) {
+        RenderUtils.drawItem(itemStack, x, y, scale, overlay);
     }
 }

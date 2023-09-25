@@ -10,6 +10,7 @@ import mathax.client.utils.Version;
 import mathax.client.utils.render.color.Color;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.Person;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,8 +34,8 @@ public class TitleScreenMixin extends Screen {
         super(title);
     }
 
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/TitleScreen;drawStringWithShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V", ordinal = 0))
-    private void checkForUpdate(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTextWithShadow(Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)I", ordinal = 0))
+    private void checkForUpdate(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (Version.UpdateChecker.checkForLatestTitle) {
             Version.UpdateChecker.checkForLatestTitle = false;
 
@@ -43,7 +44,7 @@ public class TitleScreenMixin extends Screen {
     }
 
     @Inject(method = "render", at = @At("TAIL"))
-    private void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
+    private void onRender(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         float y = 2;
         float y2 = y + textRenderer.fontHeight + y;
 
@@ -74,43 +75,41 @@ public class TitleScreenMixin extends Screen {
 
         String authorBy = "Made by:";
         int authorByLength = textRenderer.getWidth(authorBy);
-        String authorName = "Volcan, HardlineMouse16, PotatoMan, ChiefWarCry, Lagoon,  PizzaV";
-        int authorNameLength = textRenderer.getWidth(authorName);
 
-        drawTextWithShadow(matrices, textRenderer, loggedInAs, 2, (int) y, GRAY);
-        drawTextWithShadow(matrices, textRenderer, space, loggedInAsLength + 2, (int) y, GRAY);
-        drawTextWithShadow(matrices, textRenderer, loggedName, loggedInAsLength + spaceLength + 2, (int) y, WHITE);
+        context.drawTextWithShadow(textRenderer, loggedInAs, 2, (int) y, GRAY);
+        context.drawTextWithShadow(textRenderer, space, loggedInAsLength + 2, (int) y, GRAY);
+        context.drawTextWithShadow(textRenderer, loggedName, loggedInAsLength + spaceLength + 2, (int) y, WHITE);
 
         if (Modules.get() != null && !Modules.get().isActive(NameProtect.class) && Utils.isDeveloper(client.getSession().getUuid())) {
-            drawTextWithShadow(matrices, textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, (int) y, GRAY);
-            drawTextWithShadow(matrices, textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, (int) y, GRAY);
-            drawTextWithShadow(matrices, textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, (int) y, MatHax.INSTANCE.MATHAX_COLOR_INT);
-            drawTextWithShadow(matrices, textRenderer, loggedCloseDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + loggedDeveloperLength + 2, (int) y, GRAY);
+            context.drawTextWithShadow(textRenderer, space, loggedInAsLength + spaceLength + loggedNameLength + 2, (int) y, GRAY);
+            context.drawTextWithShadow(textRenderer, loggedOpenDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + 2, (int) y, GRAY);
+            context.drawTextWithShadow(textRenderer, loggedDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + 2, (int) y, MatHax.INSTANCE.MATHAX_COLOR_INT);
+            context.drawTextWithShadow(textRenderer, loggedCloseDeveloper, loggedInAsLength + spaceLength + loggedNameLength + spaceLength + loggedOpenDeveloperLength + loggedDeveloperLength + 2, (int) y, GRAY);
         }
 
         int watermarkPreviousWidth = 0;
-        drawTextWithShadow(matrices, textRenderer, watermarkName, width - watermarkFullLength - 2, (int) y, MatHax.INSTANCE.MATHAX_COLOR_INT);
+        context.drawTextWithShadow(textRenderer, watermarkName, width - watermarkFullLength - 2, (int) y, MatHax.INSTANCE.MATHAX_COLOR_INT);
         watermarkPreviousWidth += watermarkNameLength;
-        drawTextWithShadow(matrices, textRenderer, space, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, WHITE);
+        context.drawTextWithShadow(textRenderer, space, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, WHITE);
         watermarkPreviousWidth += spaceLength;
-        drawTextWithShadow(matrices, textRenderer, watermarkVersion, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, GRAY);
+        context.drawTextWithShadow(textRenderer, watermarkVersion, width - watermarkFullLength + watermarkPreviousWidth - 2, (int) y, GRAY);
 
         int authorY = (int) y2;
-        drawTextWithShadow(matrices, textRenderer, authorBy, width - authorByLength - 2, authorY, GRAY);
+        context.drawTextWithShadow(textRenderer, authorBy, width - authorByLength - 2, authorY, GRAY);
 
         List<String> importantAuthors = List.of("Volcan");
         for (String importantAuthor : importantAuthors) {
             authorY += textRenderer.fontHeight + 1;
-            drawTextWithShadow(matrices, textRenderer, importantAuthor, width - textRenderer.getWidth(importantAuthor), authorY, RED);
+            context.drawTextWithShadow(textRenderer, importantAuthor, width - textRenderer.getWidth(importantAuthor), authorY, RED);
         }
 
         assert FabricLoader.getInstance().getModContainer("envy").isPresent();  // 🤔 should we ever be not loaded? (skid protection)
         for (Person author : FabricLoader.getInstance().getModContainer("envy").get().getMetadata().getAuthors().stream().filter(person -> !importantAuthors.contains(person.getName())).sorted(Comparator.comparingInt(person -> textRenderer.getWidth(person.getName()))).toList()) {
             authorY += textRenderer.fontHeight + 1;
-            drawTextWithShadow(matrices, textRenderer, author.getName(), width - textRenderer.getWidth(author.getName()), authorY, WHITE);
+            context.drawTextWithShadow(textRenderer, author.getName(), width - textRenderer.getWidth(author.getName()), authorY, WHITE);
         }
 
-        drawTextWithShadow(matrices, textRenderer, proxyUsing, 2, (int) y2, GRAY);
-        if (proxyDetails != null) drawTextWithShadow(matrices, textRenderer, proxyDetails, 2 + proxyUsingLength, (int) y2, WHITE);
+        context.drawTextWithShadow(textRenderer, proxyUsing, 2, (int) y2, GRAY);
+        if (proxyDetails != null) context.drawTextWithShadow(textRenderer, proxyDetails, 2 + proxyUsingLength, (int) y2, WHITE);
     }
 }

@@ -57,7 +57,7 @@ public abstract class BookEditScreenMixin extends Screen {
             FastByteArrayOutputStream bytes = new FastByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(bytes);
             try {
-                NbtIo.writeCompound(tag, out);
+                NbtIo.write(tag, out);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -85,7 +85,7 @@ public abstract class BookEditScreenMixin extends Screen {
             DataInputStream in = new DataInputStream(new ByteArrayInputStream(bytes));
 
             try {
-                NbtCompound tag = NbtIo.readCompound(in);
+                NbtCompound tag = NbtIo.read(in);
 
                 NbtList listTag = tag.getList("pages", 8).copy();
 

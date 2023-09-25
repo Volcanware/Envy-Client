@@ -206,7 +206,7 @@ public class CombatInfoHud extends HudElement {
                 Renderer2D.COLOR.render(null);
 
                 // Player Model
-                InventoryScreen.drawEntity((int) (x + (25 * scale.get())), (int) (y + (66 * scale.get())), (int) (30 * scale.get()), -MathHelper.wrapDegrees(player.prevYaw + (player.getYaw() - player.prevYaw) * mc.getTickDelta()), -player.getPitch(), player);
+                InventoryScreen.drawEntity(renderer.context, (int) (x + (25 * scale.get())), (int) (y + (66 * scale.get())), (int) (30 * scale.get()), -MathHelper.wrapDegrees(player.prevYaw + (player.getYaw() - player.prevYaw) * mc.getTickDelta()), -player.getPitch(), player);
 
                 // Moving pos to past player model
                 x += 50 * scale.get();

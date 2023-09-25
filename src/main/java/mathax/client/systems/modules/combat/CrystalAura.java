@@ -49,9 +49,11 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.world.RaycastContext;
+import org.joml.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -62,7 +64,7 @@ public class CrystalAura extends Module {
     private final Vec3d playerEyePos = new Vec3d(0, 0, 0);
     private final Vec3d vec3dRayTraceEnd = new Vec3d(0, 0, 0);
     private final Vec3d vec3d = new Vec3d(0, 0, 0);
-    private final Vec3 vec3 = new Vec3(0, 0, 0);
+    private final Vector3d vec3 = new Vector3d(0, 0, 0);
 
     private final BlockPos.Mutable placingCrystalBlockPos = new BlockPos.Mutable();
     private final BlockPos.Mutable breakRenderPos = new BlockPos.Mutable();
@@ -962,7 +964,7 @@ public class CrystalAura extends Module {
 
         BlockIterator.register((int) Math.ceil(placeRange.get()), (int) Math.ceil(placeRange.get()), (bp, blockState) -> {
             boolean hasBlock = blockState.isOf(Blocks.BEDROCK) || blockState.isOf(Blocks.OBSIDIAN);
-            if (!hasBlock && (!isSupport.get() || !blockState.getMaterial().isReplaceable())) return;
+            if (!hasBlock && (!isSupport.get() || !blockState.isReplaceable())) return;
 
             blockPos.set(bp.getX(), bp.getY() + 1, bp.getZ());
             if (!mc.world.getBlockState(blockPos).isAir()) return;

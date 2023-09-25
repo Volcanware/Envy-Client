@@ -39,7 +39,7 @@ public class ClientConnectionMixin {
         }
     }
 
-    @Inject(method = "connect", at = @At("HEAD"))
+    @Inject(method = "connect*", at = @At("HEAD"))
     private static void onConnect(InetSocketAddress address, boolean useEpoll, CallbackInfoReturnable<ClientConnection> info) {
         MatHax.EVENT_BUS.post(ConnectToServerEvent.get());
     }

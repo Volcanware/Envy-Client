@@ -26,6 +26,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -185,7 +186,7 @@ public class BDamageUtils {
     }
 
     private static float normalProtReduction(Entity player, float damage) {
-        int protLevel = EnchantmentHelper.getProtectionAmount(player.getArmorItems(), DamageSource.GENERIC);
+        int protLevel = EnchantmentHelper.getProtectionAmount(player.getArmorItems(), new DamageSources(mc.world.getRegistryManager()).generic());
         if (protLevel > 20) protLevel = 20;
 
         damage *= 1 - (protLevel * 0.04);
@@ -193,7 +194,7 @@ public class BDamageUtils {
     }
 
     private static float blastProtReduction(Entity player, float damage, Explosion explosion) {
-        int protLevel = EnchantmentHelper.getProtectionAmount(player.getArmorItems(), DamageSource.explosion(explosion));
+        int protLevel = EnchantmentHelper.getProtectionAmount(player.getArmorItems(), new DamageSources(mc.world.getRegistryManager()).explosion(explosion));
         if (protLevel > 20) protLevel = 20;
 
         damage *= (1 - (protLevel * 0.04));
