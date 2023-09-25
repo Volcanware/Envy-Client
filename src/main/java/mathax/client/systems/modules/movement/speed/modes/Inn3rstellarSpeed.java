@@ -17,7 +17,6 @@ public class Inn3rstellarSpeed extends SpeedMode {
 
             mc.player.jump();
             mc.player.airStrafingSpeed = 0.125f;
-            mc.player.setSprinting(true);
         }
 
 
