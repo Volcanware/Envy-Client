@@ -8,7 +8,7 @@ import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
-import mathax.client.utils.player.MoveHelper2;
+import mathax.client.utils.player.MoveHelper;
 import net.minecraft.item.Items;
 
 public class VulcanFly extends Module {
@@ -58,9 +58,9 @@ public class VulcanFly extends Module {
             mc.player.fallDistance = 0f;
         }
         if (mc.player.age % 3 == 0) {
-            MoveHelper2.motionYPlus(0.026);
+            MoveHelper.motionYPlus(0.026);
         } else {
-            MoveHelper2.motionY(-0.0991);
+            MoveHelper.motionY(-0.0991);
         }
     }
 }

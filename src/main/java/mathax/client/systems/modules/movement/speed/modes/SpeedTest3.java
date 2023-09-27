@@ -4,6 +4,7 @@ import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
+import mathax.client.utils.player.MoveHelper;
 
 public class SpeedTest3 extends SpeedMode {
     public SpeedTest3() {
@@ -13,7 +14,7 @@ public class SpeedTest3 extends SpeedMode {
     @Override
     public boolean onTick() {
         if (mc.player.isOnGround() == false) {
-            mc.player.airStrafingSpeed = 0.1f;
+            MoveHelper.setAirStrafeSpeed(mc.player, 0.1f);
         }
         if (mc.player.isOnGround() == true && mc.player.isSprinting() == true) {
             mc.player.jump();

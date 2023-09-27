@@ -6,6 +6,7 @@ import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.utils.algorithms.extra.MovementUtils;
+import mathax.client.utils.player.MoveHelper;
 import mathax.client.utils.player.PlayerUtils;
 
 public class ChineseBypass extends SpeedMode {
@@ -17,7 +18,7 @@ public class ChineseBypass extends SpeedMode {
                 mc.player.jump();
             }
             if (mc.player.fallDistance > 0.2) {
-                mc.player.airStrafingSpeed = (float) 0.1;
+                MoveHelper.setAirStrafeSpeed(mc.player, 0.1f);
             }
             if (mc.player.fallDistance == 0.4) {
                 if (mc.player.isOnGround()) {

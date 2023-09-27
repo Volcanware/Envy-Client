@@ -6,6 +6,7 @@ import mathax.client.systems.modules.movement.speed.Speed;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.systems.modules.world.Timer;
+import mathax.client.utils.player.MoveHelper;
 import mathax.client.utils.player.PlayerUtils;
 
 public class ChonkyChineseSped extends SpeedMode {
@@ -16,7 +17,7 @@ public class ChonkyChineseSped extends SpeedMode {
         if (mc.player.isOnGround() && PlayerUtils.isMoving()) {
             mc.player.jump();
         }if (mc.player.fallDistance <= 0.4){
-            mc.player.airStrafingSpeed = 2;
+            MoveHelper.setAirStrafeSpeed(mc.player, 2);
         }if (mc.player.fallDistance <= 0.1)
             Modules.get().get(Timer.class).setOverride(1.7f);
         else if (mc.player.fallDistance < 1.3)

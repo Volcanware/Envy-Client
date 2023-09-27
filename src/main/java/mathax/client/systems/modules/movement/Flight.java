@@ -209,7 +209,7 @@ public class Flight extends Module {
         switch (mode.get()) {
             case Velocity -> {
                 mc.player.getAbilities().flying = false;
-                mc.player.airStrafingSpeed = speed.get().floatValue() * (mc.player.isSprinting() ? 15f : 10f);
+                MoveHelper.setAirStrafeSpeed(mc.player, speed.get().floatValue() * (mc.player.isSprinting() ? 15f : 10f));
                 mc.player.setVelocity(0, 0, 0);
                 Vec3d initialVelocity = mc.player.getVelocity();
                 if (mc.options.jumpKey.isPressed()) mc.player.setVelocity(initialVelocity.add(0, speed.get() * (verticalSpeedMatch.get() ? 10f : 5f), 0));
