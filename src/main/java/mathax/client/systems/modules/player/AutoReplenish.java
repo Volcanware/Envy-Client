@@ -166,6 +166,6 @@ public class AutoReplenish extends Module {
         ((ItemStackAccessor) (Object) s).setItem(stack.getItem());
         s.setCount(stack.getCount());
         s.setNbt(stack.getNbt());
-        ((ItemStackAccessor) (Object) s).setEmpty(stack.isEmpty());
+        if (stack.isEmpty()) ((ItemStackAccessor) (Object) s).setItem(Items.AIR);
     }
 }

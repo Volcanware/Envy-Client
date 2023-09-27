@@ -1,11 +1,11 @@
 package mathax.client.mixin;
 
 import mathax.client.systems.modules.Modules;
-import mathax.client.utils.render.ContainerButtonWidget;
 import mathax.client.systems.modules.misc.InventoryTweaks;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.text.Text;
@@ -24,22 +24,26 @@ public abstract class GenericContainerScreenMixin extends HandledScreen<GenericC
         InventoryTweaks invTweaks = Modules.get().get(InventoryTweaks.class);
 
         if (invTweaks.isActive() && invTweaks.showButtons()) {
-            addDrawableChild(new ContainerButtonWidget(
-                x + backgroundWidth - 88,
-                y + 3,
-                40,
-                12,
+            addDrawableChild(new ButtonWidget.Builder(
                 Text.literal("Steal"),
                 button -> invTweaks.steal(handler))
+                .dimensions(
+                    x + backgroundWidth - 88,
+                    y + 3,
+                    40,
+                    12)
+                .build()
             );
 
-            addDrawableChild(new ContainerButtonWidget(
-                x + backgroundWidth - 46,
-                y + 3,
-                40,
-                12,
+            addDrawableChild(new ButtonWidget.Builder(
                 Text.literal("Dump"),
                 button -> invTweaks.dump(handler))
+                .dimensions(
+                    x + backgroundWidth - 46,
+                    y + 3,
+                    40,
+                    12)
+                .build()
             );
         }
 

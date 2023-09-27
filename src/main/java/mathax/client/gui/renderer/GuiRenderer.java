@@ -282,6 +282,6 @@ public class GuiRenderer {
     }
 
     public void item(ItemStack itemStack, int x, int y, float scale, boolean overlay) {
-        RenderUtils.drawItem(itemStack, x, y, scale, overlay);
+        RenderUtils.drawItem(context, itemStack, x, y, scale, overlay);
     }
 }

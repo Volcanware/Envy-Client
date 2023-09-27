@@ -65,3 +65,5 @@ accessible   field   net/minecraft/client/render/MapRenderer$MapTexture texture 
 accessible class net/minecraft/client/option/SimpleOption$Callbacks
 
 accessible field net/minecraft/entity/Entity world Lnet/minecraft/world/World;
+
+accessible field net/minecraft/item/ItemGroups INVENTORY Lnet/minecraft/registry/RegistryKey;

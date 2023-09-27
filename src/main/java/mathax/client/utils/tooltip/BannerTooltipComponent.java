@@ -2,6 +2,7 @@ package mathax.client.utils.tooltip;
 
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.*;
@@ -40,10 +41,11 @@ public class BannerTooltipComponent implements MatHaxTooltipData, TooltipCompone
     }
 
     @Override
-    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z) {
+    public void drawItems(TextRenderer textRenderer, int x, int y, DrawContext context) {
         DiffuseLighting.disableGuiDepthLighting();
+        MatrixStack matrices = context.getMatrices();
         matrices.push();
-        matrices.translate(x + 8, y + 8, z);
+        matrices.translate(x + 8, y + 8, 0);
 
         matrices.push();
         matrices.translate(0.5, 16, 0);

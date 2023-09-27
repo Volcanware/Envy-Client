@@ -23,6 +23,7 @@ import net.minecraft.client.texture.AbstractTexture;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.nbt.NbtCompound;
+import org.joml.Vector3d;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -120,7 +121,7 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
         if (!module.isActive()) return;
 
         TextRenderer text = TextRenderer.get();
-        Vec3 center = new Vec3(mc.getWindow().getFramebufferWidth() / 2.0, mc.getWindow().getFramebufferHeight() / 2.0, 0);
+        Vector3d center = new Vector3d(mc.getWindow().getFramebufferWidth() / 2.0, mc.getWindow().getFramebufferHeight() / 2.0, 0);
         int textRenderDist = module.textRenderDistance.get();
 
         for (Waypoint waypoint : this) {
@@ -128,7 +129,7 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
             if (!waypoint.visible || !checkDimension(waypoint)) continue;
 
             // Calculate distance
-            Vec3 pos = waypoint.getCoords().add(0.5, 0, 0.5);
+            Vector3d pos = waypoint.getCoords().add(0.5, 0, 0.5);
             double dist = PlayerUtils.distanceToCamera(pos.x, pos.y, pos.z);
 
             // Continue if this waypoint should not be rendered
@@ -136,7 +137,7 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
             if (!NametagUtils.to2D(pos, 1)) continue;
 
             // Calculate alpha and distance to center of the screen
-            double distToCenter = pos.distanceTo(center);
+            double distToCenter = pos.distance(center);
             double a = 1;
 
             if (dist < 20) {

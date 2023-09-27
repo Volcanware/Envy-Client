@@ -178,7 +178,7 @@ public class BWorldUtils {
     // World Utils
 
     public static BlockPos roundBlockPos(Vec3d vec) {
-        return new BlockPos(vec.x, (int) Math.round(vec.y), vec.z);
+        return BlockPos.ofFloored(vec.x, (int) Math.round(vec.y), vec.z);
     }
 
     // Player Utils

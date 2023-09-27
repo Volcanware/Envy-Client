@@ -70,7 +70,7 @@ public class ScaffoldPlus extends Module {
             // loop body
             Vec3d pos = mc.player.getPos().add(-f * i, -1.0, g * i);
             if (keepY.get() != -1) ((IVec3d) pos).setY(keepY.get() - 1.0);
-            BlockPos bpos = new BlockPos(pos);
+            BlockPos bpos = BlockPos.ofFloored(pos);
             if (!mc.world.getBlockState(bpos).canPlaceAt(mc.world, bpos)) {
                 worked = false;
                 continue;

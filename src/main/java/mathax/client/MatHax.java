@@ -282,7 +282,7 @@ public class MatHax implements ClientModInitializer {
 
         // Icon & Title
         Title.setTitle("[Initializing] " + "Envy" + " " + version + " - Minecraft " + mc.getVersionType() + " " + "1.19.3", true);
-        Icon.setIcon(new MatHaxIdentifier("textures/icons/icon64.png"), new MatHaxIdentifier("textures/icons/icon128.png"));
+        Icon.setIcon();
 
 
         // Register event handlers
@@ -380,7 +380,7 @@ public class MatHax implements ClientModInitializer {
 
         // Icon & Title
         ClientSpoof cs = Modules.get().get(ClientSpoof.class);
-        Icon.setIcon(new MatHaxIdentifier("textures/icons/icon64.png"), new MatHaxIdentifier("textures/icons/icon128.png"));
+        Icon.setIcon();
 
 
         // Log

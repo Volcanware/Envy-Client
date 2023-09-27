@@ -14,6 +14,7 @@ import mathax.client.systems.hud.HudElement;
 import mathax.client.systems.hud.HudRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 
@@ -64,10 +65,10 @@ public class HoleHud extends HudElement {
 
         Renderer2D.COLOR.begin();
 
-        drawBlock(get(Facing.Left), x, y + 16 * scale.get()); // Left
-        drawBlock(get(Facing.Front), x + 16 * scale.get(), y); // Front
-        drawBlock(get(Facing.Right), x + 32 * scale.get(), y + 16 * scale.get()); // Right
-        drawBlock(get(Facing.Back), x + 16 * scale.get(), y + 32 * scale.get()); // Back
+        drawBlock(renderer.context, get(Facing.Left), x, y + 16 * scale.get()); // Left
+        drawBlock(renderer.context, get(Facing.Front), x + 16 * scale.get(), y); // Front
+        drawBlock(renderer.context, get(Facing.Right), x + 32 * scale.get(), y + 16 * scale.get()); // Right
+        drawBlock(renderer.context, get(Facing.Back), x + 16 * scale.get(), y + 32 * scale.get()); // Back
 
         Renderer2D.COLOR.render(null);
     }
@@ -77,11 +78,11 @@ public class HoleHud extends HudElement {
         return Direction.fromRotation(MathHelper.wrapDegrees(mc.player.getYaw() + dir.offset));
     }
 
-    private void drawBlock(Direction dir, double x, double y) {
+    private void drawBlock(DrawContext context, Direction dir, double x, double y) {
         Block block = dir == Direction.DOWN ? Blocks.OBSIDIAN : mc.world.getBlockState(mc.player.getBlockPos().offset(dir)).getBlock();
         if (!safe.get().contains(block)) return;
 
-        RenderUtils.drawItem(block.asItem().getDefaultStack(), (int) x, (int) y, scale.get(), false);
+        RenderUtils.drawItem(context, block.asItem().getDefaultStack(), (int) x, (int) y, scale.get().floatValue(), false);
 
         if (dir == Direction.DOWN) return;
 

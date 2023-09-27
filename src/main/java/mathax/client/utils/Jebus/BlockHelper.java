@@ -92,7 +92,7 @@ public class BlockHelper {
     public static boolean isAir(BlockPos p) {return getBlock(p) == Blocks.AIR;}
     public static boolean isSolid(BlockPos pos) {return getState(pos).isSolidBlock(mc.world, pos);}
     public static boolean isLiquid(BlockPos pos) {return getBlock(pos) == Blocks.LAVA || getBlock(pos) == Blocks.WATER;}
-    public static boolean isReplacable(BlockPos pos) {return getState(pos).getMaterial().isReplaceable();}
+    public static boolean isReplacable(BlockPos pos) {return getState(pos).isReplaceable();}
     public static boolean isBlastRes(BlockPos pos) {return mc.world.getBlockState(pos).getBlock().getBlastResistance() >= 600;}
     public static boolean isAnvilBlock(BlockPos pos) {return getBlock(pos) == Blocks.ANVIL || getBlock(pos) == Blocks.CHIPPED_ANVIL || getBlock(pos) == Blocks.DAMAGED_ANVIL;}
     public static boolean isWeb(BlockPos pos) {return getBlock(pos) == Blocks.COBWEB || getBlock(pos) == Block.getBlockFromItem(Items.STRING);}

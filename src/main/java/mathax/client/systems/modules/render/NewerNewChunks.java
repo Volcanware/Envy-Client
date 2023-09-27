@@ -575,12 +575,12 @@ public class NewerNewChunks extends Module {
         else if (event.packet instanceof ChunkDataS2CPacket && mc.world != null) {
             ChunkDataS2CPacket packet = (ChunkDataS2CPacket) event.packet;
 
-            oldpos = new ChunkPos(packet.getChunkX(), packet.getChunkZ());
+            oldpos = new ChunkPos(packet.getX(), packet.getZ());
 
-            if (mc.world.getChunkManager().getChunk(packet.getChunkX(), packet.getChunkZ()) == null) {
+            if (mc.world.getChunkManager().getChunk(packet.getX(), packet.getZ()) == null) {
                 WorldChunk chunk = new WorldChunk(mc.world, oldpos);
                 try {
-                    chunk.loadFromPacket(packet.getChunkData().getSectionsDataBuf(), new NbtCompound(), packet.getChunkData().getBlockEntities(packet.getChunkX(), packet.getChunkZ()));
+                    chunk.loadFromPacket(packet.getChunkData().getSectionsDataBuf(), new NbtCompound(), packet.getChunkData().getBlockEntities(packet.getX(), packet.getZ()));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     return;
                 }

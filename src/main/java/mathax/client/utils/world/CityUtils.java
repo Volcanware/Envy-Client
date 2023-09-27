@@ -62,8 +62,8 @@ public class CityUtils {
 
     public static BlockPos getSurround(Entity entity, BlockPos blockPos) {
         Vec3d vec3d = entity.getPos();
-        if (blockPos == null) return new BlockPos(vec3d.x, vec3d.y, vec3d.z);
-        return new BlockPos(vec3d.x, vec3d.y, vec3d.z).add(blockPos);
+        if (blockPos == null) return BlockPos.ofFloored(vec3d.x, vec3d.y, vec3d.z);
+        return BlockPos.ofFloored(vec3d.x, vec3d.y, vec3d.z).add(blockPos);
     }
 
     public static PlayerEntity getPlayerTarget(double d) {

@@ -1219,12 +1219,12 @@ public class CrystalAura extends Module {
 
         if (fast) {
             LivingEntity target = getNearestTarget();
-            if (!(smartDelay.get() && breaking && target.hurtTime > 0)) damage = DamageUtils.crystalDamageLivingEntity(target, vec3d, predictMovement.get(), obsidianPos, ignoreTerrain.get());
+            if (!(smartDelay.get() && breaking && target.hurtTime > 0)) damage = DamageUtils.crystalDamage(target, vec3d, predictMovement.get(), obsidianPos, ignoreTerrain.get());
         } else {
             for (LivingEntity target : targets) {
                 if (smartDelay.get() && breaking && target.hurtTime > 0) continue;
 
-                double dmg = DamageUtils.crystalDamageLivingEntity(target, vec3d, predictMovement.get(), obsidianPos, ignoreTerrain.get());
+                double dmg = DamageUtils.crystalDamage(target, vec3d, predictMovement.get(), obsidianPos, ignoreTerrain.get());
 
                 if (dmg > bestTargetDamage) {
                     bestTarget = target;

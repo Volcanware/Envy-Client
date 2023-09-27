@@ -80,7 +80,8 @@ dependencies {
     modCompileOnly("maven.modrinth:indium:${project.indium_version}") { transitive = false }
 
     // Baritone integration
-    implementation("baritone:fabric:${project.minecraft_version}-SNAPSHOT")
+    modImplementation("baritone:fabric:${project.minecraft_version}-SNAPSHOT")
+    include("baritone:fabric:${project.minecraft_version}-SNAPSHOT")
 
     // Litematica integration
     /*modImplementation "curse.maven:litematica-308892:${project.litematica_file_id}"

@@ -29,6 +29,6 @@ public enum LastServerInfo {;
     public static void reconnect(Screen prevScreen) {
         if (lastServer == null) return;
 
-        ConnectScreen.connect(prevScreen, mc, ServerAddress.parse(lastServer.address), lastServer);
+        ConnectScreen.connect(prevScreen, mc, ServerAddress.parse(lastServer.address), lastServer, false);
     }
 }

@@ -36,19 +36,24 @@ public class BookTooltipComponent implements TooltipComponent, MatHaxTooltipData
     }
 
     @Override
-    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z) {
+    public void drawItems(TextRenderer textRenderer, int x, int y, DrawContext context) {
+        MatrixStack matrices = context.getMatrices();
+
         // Background
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderTexture(0, TEXTURE_BOOK_BACKGROUND);
-        DrawContext.drawTexture(matrices, x, y, z, 12, 0, 112, 134, 179, 179);
+        context.drawTexture(TEXTURE_BOOK_BACKGROUND, x, y, 0, 12, 0, 112, 134, 179, 179);
 
         // Content
         matrices.push();
-        matrices.translate(x + 16, y + 12, z + 1);
+        matrices.translate(x + 16, y + 12, 1);
         matrices.scale(0.7f, 0.7f, 1f);
         int offset = 0;
         for (OrderedText line : textRenderer.wrapLines(page, 112)) {
-            textRenderer.draw(matrices, line, 0, offset, 0x000000);
+            context.drawText(
+                textRenderer,
+                line, 0, offset, 0x000000,
+                false
+            );
             offset += 8;
         }
         matrices.pop();

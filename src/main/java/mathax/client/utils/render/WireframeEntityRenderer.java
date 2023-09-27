@@ -18,6 +18,7 @@ import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.Box;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector4f;
@@ -103,8 +104,8 @@ public class WireframeEntityRenderer {
             float limbAngle = 0;
 
             if (!livingEntity.hasVehicle() && livingEntity.isAlive()) {
-                limbDistance = MathHelper.lerp(event.tickDelta, livingEntity.lastLimbDistance, livingEntity.limbDistance);
-                limbAngle = livingEntity.limbAngle - livingEntity.limbDistance * (1 - event.tickDelta);
+                limbDistance = livingEntity.limbAnimator.getPos(event.tickDelta);
+                limbAngle = livingEntity.limbAnimator.getPos() - livingEntity.limbAnimator.getSpeed() * (1 - event.tickDelta);
 
                 if (livingEntity.isBaby()) limbAngle *= 3;
                 if (limbDistance > 1) limbDistance = 1;

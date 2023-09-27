@@ -39,7 +39,7 @@ public class ObsidianHud extends HudElement {
         double x = box.getX();
         double y = box.getY();
 
-        if (isInEditor()) RenderUtils.drawItem(Items.OBSIDIAN.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        else if (InvUtils.find(Items.OBSIDIAN).count() > 0) RenderUtils.drawItem(new ItemStack(Items.OBSIDIAN, InvUtils.find(Items.OBSIDIAN).count()), (int) x, (int) y, scale.get(), true);
+        if (isInEditor()) RenderUtils.drawItem(renderer.context, Items.OBSIDIAN.getDefaultStack(), (int) x, (int) y, scale.get().floatValue(), true);
+        else if (InvUtils.find(Items.OBSIDIAN).count() > 0) RenderUtils.drawItem(renderer.context, new ItemStack(Items.OBSIDIAN, InvUtils.find(Items.OBSIDIAN).count()), (int) x, (int) y, scale.get().floatValue(), true);
     }
 }

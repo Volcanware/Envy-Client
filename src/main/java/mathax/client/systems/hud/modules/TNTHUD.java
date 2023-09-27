@@ -39,7 +39,7 @@ public class TNTHUD extends HudElement {
         double x = box.getX();
         double y = box.getY();
 
-        if (isInEditor()) RenderUtils.drawItem(Items.TNT.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        else if (InvUtils.find(Items.TNT).count() > 0) RenderUtils.drawItem(new ItemStack(Items.TNT, InvUtils.find(Items.TNT).count()), (int) x, (int) y, scale.get(), true);
+        if (isInEditor()) RenderUtils.drawItem(renderer.context, Items.TNT.getDefaultStack(), (int) x, (int) y, scale.get().floatValue(), true);
+        else if (InvUtils.find(Items.TNT).count() > 0) RenderUtils.drawItem(renderer.context, new ItemStack(Items.TNT, InvUtils.find(Items.TNT).count()), (int) x, (int) y, scale.get().floatValue(), true);
     }
 }

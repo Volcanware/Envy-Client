@@ -2,6 +2,7 @@ package mathax.client.utils.tooltip;
 
 import mathax.client.utils.Utils;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -43,11 +44,12 @@ public class EntityTooltipComponent implements MatHaxTooltipData, TooltipCompone
     }
 
     @Override
-    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z) {
+    public void drawItems(TextRenderer textRenderer, int x, int y, DrawContext context) {
+        MatrixStack matrices = context.getMatrices();
         matrices.push();
-        matrices.translate(15, 2, z);
-        this.entity.setVelocity(1.f, 1.f, 1.f);
-        this.renderEntity(matrices, x, y);
+        matrices.translate(15, 2, 0);
+        entity.setVelocity(1.f, 1.f, 1.f);
+        renderEntity(matrices, x, y);
         matrices.pop();
     }
 

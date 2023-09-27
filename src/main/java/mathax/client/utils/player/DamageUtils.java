@@ -36,10 +36,8 @@ import static mathax.client.MatHax.mc;
 
 public class DamageUtils {
     private static final Vec3d vec3d = new Vec3d(0, 0, 0);
-
-    private static RaycastContext raycastContext;
-
     private static Explosion explosion;
+    private static RaycastContext raycastContext;
 
     public static void init() {
         MatHax.EVENT_BUS.subscribe(DamageUtils.class);
@@ -51,72 +49,55 @@ public class DamageUtils {
         raycastContext = new RaycastContext(null, null, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.ANY, mc.player);
     }
 
-    public static double crystalDamage(PlayerEntity player, Vec3d crystal) {
-        return crystalDamage(player, crystal, false, null, false);
-    }
+    // Crystal damage
 
-    public static double crystalDamage(PlayerEntity player, Vec3d crystal, boolean predictMovement, BlockPos obsidianPos, boolean ignoreTerrain) {
-        if (player == null) return 0;
-        if (EntityUtils.getGameMode(player) == GameMode.CREATIVE && !(player instanceof FakePlayerEntity)) return 0;
+    public static double crystalDamage(LivingEntity target, Vec3d crystal, boolean predictMovement, BlockPos obsidianPos, boolean ignoreTerrain) {
+        if (target == null) return 0;
+        if (target instanceof PlayerEntity player && EntityUtils.getGameMode(player) == GameMode.CREATIVE && !(player instanceof FakePlayerEntity)) return 0;
 
-        ((IVec3d) vec3d).set(player.getPos().x, player.getPos().y, player.getPos().z);
-        if (predictMovement) ((IVec3d) vec3d).set(vec3d.x + player.getVelocity().x, vec3d.y + player.getVelocity().y, vec3d.z + player.getVelocity().z);
+        ((IVec3d) vec3d).set(target.getPos().x, target.getPos().y, target.getPos().z);
+        if (predictMovement) ((IVec3d) vec3d).set(vec3d.x + target.getVelocity().x, vec3d.y + target.getVelocity().y, vec3d.z + target.getVelocity().z);
 
         double modDistance = Math.sqrt(vec3d.squaredDistanceTo(crystal));
         if (modDistance > 12) return 0;
 
-        double exposure = getExposure(crystal, player, predictMovement, raycastContext, obsidianPos, ignoreTerrain);
+        double exposure = getExposure(crystal, target, predictMovement, raycastContext, obsidianPos, ignoreTerrain);
         double impact = (1 - (modDistance / 12)) * exposure;
         double damage = ((impact * impact + impact) / 2 * 7 * (6 * 2) + 1);
 
         damage = getDamageForDifficulty(damage);
-        damage = DamageUtil.getDamageLeft((float) damage, (float) player.getArmor(), (float) player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
-        damage = resistanceReduction(player, damage);
+        damage = DamageUtil.getDamageLeft((float) damage, (float) target.getArmor(), (float) target.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
+        damage = resistanceReduction(target, damage);
 
         ((IExplosion) explosion).set(crystal, 6, false);
-        damage = blastProtReduction(player, damage, explosion);
+        damage = blastProtReduction(target, damage, explosion);
 
         return damage < 0 ? 0 : damage;
     }
 
-    public static double crystalDamageLivingEntity(LivingEntity livingEntity, Vec3d crystal) {
-        return crystalDamageLivingEntity(livingEntity, crystal, false, null, false);
+    public static double crystalDamage(LivingEntity target, Vec3d crystal) {
+        return crystalDamage(target, crystal, false, null, false);
     }
 
-    public static double crystalDamageLivingEntity(LivingEntity livingEntity, Vec3d crystal, boolean predictMovement, BlockPos obsidianPos, boolean ignoreTerrain) {
-        if (livingEntity == null) return 0;
-        if (livingEntity instanceof PlayerEntity player) {
-            if (EntityUtils.getGameMode(player) == GameMode.CREATIVE && !(player instanceof FakePlayerEntity)) return 0;
-        }
-
-        ((IVec3d) vec3d).set(livingEntity.getPos().x, livingEntity.getPos().y, livingEntity.getPos().z);
-        if (predictMovement) ((IVec3d) vec3d).set(vec3d.x + livingEntity.getVelocity().x, vec3d.y + livingEntity.getVelocity().y, vec3d.z + livingEntity.getVelocity().z);
-
-        double modDistance = Math.sqrt(vec3d.squaredDistanceTo(crystal));
-        if (modDistance > 12) return 0;
-
-        double exposure = getExposure(crystal, livingEntity, predictMovement, raycastContext, obsidianPos, ignoreTerrain);
-        double impact = (1 - (modDistance / 12)) * exposure;
-        double damage = ((impact * impact + impact) / 2 * 7 * (6 * 2) + 1);
-
-        damage = getDamageForDifficulty(damage);
-        damage = DamageUtil.getDamageLeft((float) damage, (float) livingEntity.getArmor(), (float) livingEntity.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
-        damage = resistanceReduction(livingEntity, damage);
-
-        ((IExplosion) explosion).set(crystal, 6, false);
-        damage = blastProtReduction(livingEntity, damage, explosion);
-
-        return damage < 0 ? 0 : damage;
-    }
+    // Sword damage
 
     public static double getSwordDamage(PlayerEntity entity, boolean charged) {
+        // Get sword damage
         double damage = 0;
         if (charged) {
-            if (entity.getActiveItem().getItem() == Items.DIAMOND_SWORD) damage += 7;
-            else if (entity.getActiveItem().getItem() == Items.GOLDEN_SWORD) damage += 4;
-            else if (entity.getActiveItem().getItem() == Items.IRON_SWORD) damage += 6;
-            else if (entity.getActiveItem().getItem() == Items.STONE_SWORD) damage += 5;
-            else if (entity.getActiveItem().getItem() == Items.WOODEN_SWORD) damage += 4;
+            if (entity.getActiveItem().getItem() == Items.NETHERITE_SWORD) {
+                damage += 8;
+            } else if (entity.getActiveItem().getItem() == Items.DIAMOND_SWORD) {
+                damage += 7;
+            } else if (entity.getActiveItem().getItem() == Items.GOLDEN_SWORD) {
+                damage += 4;
+            } else if (entity.getActiveItem().getItem() == Items.IRON_SWORD) {
+                damage += 6;
+            } else if (entity.getActiveItem().getItem() == Items.STONE_SWORD) {
+                damage += 5;
+            } else if (entity.getActiveItem().getItem() == Items.WOODEN_SWORD) {
+                damage += 4;
+            }
             damage *= 1.5;
         }
 
@@ -132,14 +113,19 @@ public class DamageUtils {
             damage += 3 * strength;
         }
 
+        // Reduce by resistance
         damage = resistanceReduction(entity, damage);
 
+        // Reduce by armour
         damage = DamageUtil.getDamageLeft((float) damage, (float) entity.getArmor(), (float) entity.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
 
+        // Reduce by enchants
         damage = normalProtReduction(entity, damage);
 
         return damage < 0 ? 0 : damage;
     }
+
+    // Bed damage
 
     public static double bedDamage(LivingEntity player, Vec3d bed) {
         if (player instanceof PlayerEntity && ((PlayerEntity) player).getAbilities().creativeMode) return 0;
@@ -151,36 +137,45 @@ public class DamageUtils {
         double impact = (1.0 - (modDistance / 10.0)) * exposure;
         double damage = (impact * impact + impact) / 2 * 7 * (5 * 2) + 1;
 
+        // Multiply damage by difficulty
         damage = getDamageForDifficulty(damage);
 
+        // Reduce by resistance
         damage = resistanceReduction(player, damage);
 
+        // Reduce by armour
         damage = DamageUtil.getDamageLeft((float) damage, (float) player.getArmor(), (float) player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
 
+        // Reduce by enchants
         ((IExplosion) explosion).set(bed, 5, true);
         damage = blastProtReduction(player, damage, explosion);
 
-        return damage < 0 ? 0 : damage;
-    }
-
-    public static double anchorDamage(LivingEntity player, Vec3d anchor) {
-        mc.world.removeBlock(new BlockPos(anchor), false);
-        double damage = bedDamage(player, anchor);
-        mc.world.setBlockState(new BlockPos(anchor), Blocks.RESPAWN_ANCHOR.getDefaultState());
+        if (damage < 0) damage = 0;
         return damage;
     }
 
-    public static double getDamageForDifficulty(double damage) {
+    // Anchor damage
+
+    public static double anchorDamage(LivingEntity player, Vec3d anchor) {
+        mc.world.removeBlock(BlockPos.ofFloored(anchor), false);
+        double damage = bedDamage(player, anchor);
+        mc.world.setBlockState(BlockPos.ofFloored(anchor), Blocks.RESPAWN_ANCHOR.getDefaultState());
+        return damage;
+    }
+
+    // Utils
+
+    private static double getDamageForDifficulty(double damage) {
         return switch (mc.world.getDifficulty()) {
             case PEACEFUL -> 0;
-            case EASY -> Math.min(damage / 2 + 1, damage);
-            case HARD -> damage * 3 / 2;
-            default -> damage;
+            case EASY     -> Math.min(damage / 2 + 1, damage);
+            case HARD     -> damage * 3 / 2;
+            default       -> damage;
         };
     }
 
     private static double normalProtReduction(Entity player, double damage) {
-        int protLevel = EnchantmentHelper.getProtectionAmount(player.getArmorItems(), DamageSource.GENERIC);
+        int protLevel = EnchantmentHelper.getProtectionAmount(player.getArmorItems(), mc.world.getDamageSources().generic());
         if (protLevel > 20) protLevel = 20;
 
         damage *= 1 - (protLevel / 25.0);
@@ -188,7 +183,7 @@ public class DamageUtils {
     }
 
     private static double blastProtReduction(Entity player, double damage, Explosion explosion) {
-        int protLevel = EnchantmentHelper.getProtectionAmount(player.getArmorItems(), DamageSource.explosion(explosion));
+        int protLevel = EnchantmentHelper.getProtectionAmount(player.getArmorItems(), mc.world.getDamageSources().explosion(explosion));
         if (protLevel > 20) protLevel = 20;
 
         damage *= (1 - (protLevel / 25.0));
@@ -208,7 +203,7 @@ public class DamageUtils {
         Box box = entity.getBoundingBox();
         if (predictMovement) {
             Vec3d v = entity.getVelocity();
-            box.offset(v.x, v.y, v.z);
+            box = box.offset(v.x, v.y, v.z);
         }
 
         double d = 1 / ((box.maxX - box.minX) * 2 + 1);
@@ -267,7 +262,7 @@ public class DamageUtils {
             return d <= e ? blockHitResult : blockHitResult2;
         }, (raycastContext) -> {
             Vec3d vec3d = raycastContext.getStart().subtract(raycastContext.getEnd());
-            return BlockHitResult.createMissed(raycastContext.getEnd(), Direction.getFacing(vec3d.x, vec3d.y, vec3d.z), new BlockPos(raycastContext.getEnd()));
+            return BlockHitResult.createMissed(raycastContext.getEnd(), Direction.getFacing(vec3d.x, vec3d.y, vec3d.z), BlockPos.ofFloored(raycastContext.getEnd()));
         });
     }
 }

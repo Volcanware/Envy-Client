@@ -6,8 +6,10 @@ import mathax.client.renderer.Renderer2D;
 import mathax.client.renderer.text.TextRenderer;
 import mathax.client.settings.*;
 import mathax.client.systems.friends.Friends;
+import mathax.client.systems.hud.HUD;
+import mathax.client.systems.hud.HudElement;
+import mathax.client.systems.hud.HudRenderer;
 import mathax.client.utils.Utils;
-import mathax.client.utils.entity.DangerEval;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.entity.SortPriority;
 import mathax.client.utils.entity.TargetUtils;
@@ -16,9 +18,6 @@ import mathax.client.utils.player.PlayerUtils;
 import mathax.client.utils.render.RenderUtils;
 import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.SettingColor;
-import mathax.client.systems.hud.HUD;
-import mathax.client.systems.hud.HudElement;
-import mathax.client.systems.hud.HudRenderer;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.enchantment.Enchantment;
@@ -26,9 +25,9 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -279,9 +278,7 @@ public class CombatInfoHud extends HudElement {
 
                         if (threat) {
                             friendText = "Threat";
-                            int danger_percent = (int) (DangerEval.eval(player) * 100);
-                            DangerEval.LOGGER.info("Danger percent: " + danger_percent);
-                            friendText += " (" + danger_percent + "%)";
+                            friendText += " (" + "idk, removed this because it was hard to port lol" + "%)";
                             friendColor = RED;
                         }
                     }
@@ -338,7 +335,7 @@ public class CombatInfoHud extends HudElement {
 
                     ItemStack itemStack = getItem(slot);
 
-                    RenderUtils.drawItem(itemStack, (int) armorX, (int) armorY, true);
+                    RenderUtils.drawItem(renderer.context, itemStack, (int) armorX, (int) armorY, 1, true);
 
                     armorY += 18;
 

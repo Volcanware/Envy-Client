@@ -22,6 +22,7 @@ import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
+import org.joml.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,7 +194,7 @@ public class LogoutSpots extends Module {
         return Integer.toString(players.size());
     }
 
-    private static final Vec3 pos = new Vec3();
+    private static final Vector3d pos = new Vector3d();
 
     private class Entry {
         public final double x, y, z;
@@ -210,9 +211,9 @@ public class LogoutSpots extends Module {
             y = entity.getY();
             z = entity.getZ() - halfWidth;
 
-            xWidth = entity.getBoundingBox().getLengthX();
-            zWidth = entity.getBoundingBox().getLengthZ();
-            height = entity.getBoundingBox().getLengthY();
+            xWidth = entity.getBoundingBox().getXLength();
+            zWidth = entity.getBoundingBox().getZLength();
+            height = entity.getBoundingBox().getYLength();
 
             uuid = entity.getUuid();
             name = entity.getEntityName();

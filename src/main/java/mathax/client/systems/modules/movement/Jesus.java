@@ -16,6 +16,7 @@ import mathax.client.utils.algorithms.extra.MovementUtils;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.vayzeutils.VulcanBooster;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.effect.StatusEffects;
@@ -319,10 +320,10 @@ public class Jesus extends Module {
 
         for (Box bb : blockCollisions) {
             blockPos.set(MathHelper.lerp(0.5D, bb.minX, bb.maxX), MathHelper.lerp(0.5D, bb.minY, bb.maxY), MathHelper.lerp(0.5D, bb.minZ, bb.maxZ));
-            Material material = mc.world.getBlockState(blockPos).getMaterial();
+            BlockState state = mc.world.getBlockState(blockPos);
 
-            if (material == Material.WATER || material == Material.LAVA) foundLiquid = true;
-            else if (material != Material.AIR) foundSolid = true;
+            if (!state.getFluidState().isEmpty()) foundLiquid = true;
+            else if (!state.isAir()) foundSolid = true;
         }
 
         return foundLiquid && !foundSolid;

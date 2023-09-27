@@ -196,7 +196,7 @@ public class BlockUtils {
         if (!World.isValid(blockPos)) return false;
 
         // Check if current block is replaceable
-        if (!mc.world.getBlockState(blockPos).getMaterial().isReplaceable()) return false;
+        if (!mc.world.getBlockState(blockPos).isReplaceable()) return false;
 
         // Check if intersects entities
         return !checkEntities || mc.world.canPlace(mc.world.getBlockState(blockPos), blockPos, ShapeContext.absent());

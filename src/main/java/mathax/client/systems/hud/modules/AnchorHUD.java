@@ -39,7 +39,7 @@ public class AnchorHUD extends HudElement {
         double x = box.getX();
         double y = box.getY();
 
-        if (isInEditor()) RenderUtils.drawItem(Items.RESPAWN_ANCHOR.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        else if (InvUtils.find(Items.RESPAWN_ANCHOR).count() > 0) RenderUtils.drawItem(new ItemStack(Items.RESPAWN_ANCHOR, InvUtils.find(Items.RESPAWN_ANCHOR).count()), (int) x, (int) y, scale.get(), true);
+        if (isInEditor()) RenderUtils.drawItem(renderer.context, Items.RESPAWN_ANCHOR.getDefaultStack(), (int) x, (int) y, scale.get().floatValue(), true);
+        else if (InvUtils.find(Items.RESPAWN_ANCHOR).count() > 0) RenderUtils.drawItem(renderer.context, new ItemStack(Items.RESPAWN_ANCHOR, InvUtils.find(Items.RESPAWN_ANCHOR).count()), (int) x, (int) y, scale.get().floatValue(), true);
     }
 }

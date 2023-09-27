@@ -40,7 +40,7 @@ public class BedHud extends HudElement {
         double x = box.getX();
         double y = box.getY();
 
-        if (isInEditor()) RenderUtils.drawItem(Items.RED_BED.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        else if (InvUtils.find(itemStack -> itemStack.getItem() instanceof BedItem).count() > 0) RenderUtils.drawItem(new ItemStack(Items.RED_BED, InvUtils.find(itemStack -> itemStack.getItem() instanceof BedItem).count()), (int) x, (int) y, scale.get(), true);
+        if (isInEditor()) RenderUtils.drawItem(renderer.context, Items.RED_BED.getDefaultStack(), (int) x, (int) y, scale.get().floatValue(), true);
+        else if (InvUtils.find(itemStack -> itemStack.getItem() instanceof BedItem).count() > 0) RenderUtils.drawItem(renderer.context, new ItemStack(Items.RED_BED, InvUtils.find(itemStack -> itemStack.getItem() instanceof BedItem).count()), (int) x, (int) y, scale.get().floatValue(), true);
     }
 }

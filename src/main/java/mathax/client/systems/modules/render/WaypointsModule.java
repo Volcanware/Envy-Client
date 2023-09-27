@@ -34,6 +34,7 @@ import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.item.Items;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.text.SimpleDateFormat;
@@ -196,7 +197,7 @@ public class WaypointsModule extends Module {
                     if (mc.player == null || mc.world == null) return;
                     IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
                     if (baritone.getPathingBehavior().isPathing()) baritone.getPathingBehavior().cancelEverything();
-                    baritone.getCustomGoalProcess().setGoalAndPath(new GoalGetToBlock(waypoint.getCoords().toBlockPos()));
+                    baritone.getCustomGoalProcess().setGoalAndPath(new GoalGetToBlock(BlockPos.ofFloored(waypoint.getCoords().x, waypoint.getCoords().y, waypoint.getCoords().z)));
                 };
             }
 

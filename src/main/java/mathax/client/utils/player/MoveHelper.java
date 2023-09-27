@@ -31,7 +31,7 @@ public class MoveHelper {
         final double playerZ = mc.player.getZ();
 
         for (int height = playerHeight; height > 0; height--) {
-            final BlockPos checkPosition = new BlockPos(playerX, height, playerZ);
+            final BlockPos checkPosition = BlockPos.ofFloored(playerX, height, playerZ);
 
             // Check if the block is solid
             if (!mc.world.isAir(checkPosition)) {
