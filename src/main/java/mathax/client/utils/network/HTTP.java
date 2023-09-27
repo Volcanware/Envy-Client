@@ -42,6 +42,12 @@ public class HTTP {
             return this;
         }
 
+        public Request header(String name, String value) {
+            builder.header(name, value);
+
+            return this;
+        }
+
         public Request bodyString(String string) {
             builder.header("Content-Type", "text/plain");
             builder.method(method.name(), HttpRequest.BodyPublishers.ofString(string));
@@ -81,6 +87,18 @@ public class HTTP {
             try {
                 var res = CLIENT.send(builder.build(), responseBodyHandler);
                 return res.statusCode() == 200 ? res.body() : null;
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        public  <T> HttpResponse<T> _sendRaw(String accept, HttpResponse.BodyHandler<T> responseBodyHandler) {
+            builder.header("Accept", accept);
+            if (method != null) builder.method(method.name(), HttpRequest.BodyPublishers.noBody());
+
+            try {
+                return CLIENT.send(builder.build(), responseBodyHandler);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
                 return null;

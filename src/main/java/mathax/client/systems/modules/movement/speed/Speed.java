@@ -205,7 +205,7 @@ public class Speed extends Module {
         .defaultValue(1.1)
         .min(0)
         .sliderRange(0, 1.5)
-        .visible(() -> speedMode.get() == SpeedModes.Custom)
+        .visible(() -> speedMode.get() == SpeedModes.Custom || speedMode.get() == SpeedModes.Inn3rstellarSpeed)
         .build()
     );
 
@@ -467,6 +467,7 @@ public class Speed extends Module {
             case EnvyHop2 -> currentMode = new EnvyHop2();
             case ChonkyChineseSped -> currentMode = new ChonkyChineseSped();
             case Custom -> currentMode = new Custom();
+            case Inn3rstellarSpeed -> currentMode = new Inn3rstellarSpeed();
 
         }
     }

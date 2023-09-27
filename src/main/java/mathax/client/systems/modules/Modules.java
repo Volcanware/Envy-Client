@@ -484,6 +484,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initMovement() {
+        add(new Clip());
         add(new AirJump());
         add(new AirWalk());
         add(new Anchor());
