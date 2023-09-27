@@ -74,6 +74,7 @@ dependencies {
     library("io.netty:netty-codec-socks:${project.netty_version}")
 
     // Compat fixes
+    modCompileOnly fabricApi.module("fabric-renderer-indigo", project.api_version)
     modCompileOnly("maven.modrinth:sodium:${project.sodium_version}") { transitive = false }
     modCompileOnly("maven.modrinth:lithium:${project.lithium_version}") { transitive = false }
     modCompileOnly("maven.modrinth:iris:${project.iris_version}") { transitive = false }
