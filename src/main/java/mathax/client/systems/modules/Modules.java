@@ -570,6 +570,7 @@ public class Modules extends System<Modules> {
         add(new NoVisualCooldown());
         //add(new AntiScreen());
         add(new Background());
+        add(new CapesModule());
         add(new BetterTooltips());
         add(new Australia());
         //add(new BetterVisuals());

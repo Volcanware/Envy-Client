@@ -51,6 +51,29 @@ public class Playerhandler {
                         capes.put(uuid, capeTexture);
                         response.response(capeTexture);
                     }
+                    if (Modules.get().get(CapesModule.class).capeurl ==  "https://raw.githubusercontent.com/Volcanware/Envy-Client/Now-Fixed/ToxinCape.png") {
+                        String uuid = player.getId().toString();
+                        NativeImageBackedTexture nIBT = getCapeFromURL(String.format("https://raw.githubusercontent.com/Volcanware/Envy-Client/Now-Fixed/ToxinCape.png"));
+                        Identifier capeTexture = MinecraftClient.getInstance().getTextureManager().registerDynamicTexture("of-capes-" + uuid, nIBT);
+                        capes.put(uuid, capeTexture);
+                        response.response(capeTexture);
+                    }
+                    if (Modules.get().get(CapesModule.class).capeurl ==  "https://raw.githubusercontent.com/Volcanware/Envy-Client/Now-Fixed/VolcanwareCape.png") {
+                        String uuid = player.getId().toString();
+                        NativeImageBackedTexture nIBT = getCapeFromURL(String.format("https://raw.githubusercontent.com/Volcanware/Envy-Client/Now-Fixed/VolcanwareCape.png"));
+                        Identifier capeTexture = MinecraftClient.getInstance().getTextureManager().registerDynamicTexture("of-capes-" + uuid, nIBT);
+                        capes.put(uuid, capeTexture);
+                        response.response(capeTexture);
+                    }
+                    if (Modules.get().get(CapesModule.class).CDOSCape ==  "https://cdn.discordapp.com/attachments/1121034355796619337/1156810304974495744/EnvyCapeCDOS.png?ex=6516530d&is=6515018d&hm=95ab8864826b5ae7f3b9d8274dd1e1d3232cbfedb5d81b832de2dde9fc0ddc0e&") {
+                        if (mc.player.getUuid().equals("f3611166-e8a6-4123-a9e1-f7cc01463698")) {
+                            String uuid = "f3611166-e8a6-4123-a9e1-f7cc01463698";
+                            NativeImageBackedTexture nIBT = getCapeFromURL(String.format("https://cdn.discordapp.com/attachments/1121034355796619337/1156810304974495744/EnvyCapeCDOS.png?ex=6516530d&is=6515018d&hm=95ab8864826b5ae7f3b9d8274dd1e1d3232cbfedb5d81b832de2dde9fc0ddc0e&"));
+                            Identifier capeTexture = MinecraftClient.getInstance().getTextureManager().registerDynamicTexture("of-capes-" + uuid, nIBT);
+                            capes.put(uuid, capeTexture);
+                            response.response(capeTexture);
+                        }
+                    }
                 } catch (Exception ignored) {
                 }
             });

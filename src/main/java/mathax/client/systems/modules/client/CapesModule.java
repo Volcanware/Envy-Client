@@ -1,5 +1,6 @@
 package mathax.client.systems.modules.client;
 
+import mathax.client.MatHax;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.world.TickEvent;
 import mathax.client.gui.GuiTheme;
@@ -24,12 +25,20 @@ public class CapesModule extends Module {
     }
 
     public String capeurl = "1.1.1.1";
+    public String CDOSCape = "1.2.1.2";
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("Decide from packet or client sided rotation.")
         .defaultValue(Mode.Envy)
+        .build()
+    );
+
+    private final Setting<Boolean> showCape = sgGeneral.add(new BoolSetting.Builder()
+        .name("Developer-Capes")
+        .description("Shows Developer Capes")
+        .defaultValue(true)
         .build()
     );
 
@@ -46,6 +55,25 @@ public class CapesModule extends Module {
         if (mode.get() == Mode.Cosmetica) {
             capeurl = "23.95.137.176";
         }
+        if (mode.get() == Mode.Volcanware) {
+            capeurl = "https://raw.githubusercontent.com/Volcanware/Envy-Client/Now-Fixed/VolcanwareCape.png";
+        }
+        if (mode.get() == Mode.Toxin) {
+            capeurl = "https://raw.githubusercontent.com/Volcanware/Envy-Client/Now-Fixed/ToxinCape.png";
+        }
+
+        return false;
+    }
+
+    @EventHandler
+    public boolean onTick(TickEvent.Pre event) {
+
+
+        if (showCape.get()) {
+            if (mc.player.getUuid().equals("f3611166-e8a6-4123-a9e1-f7cc01463698")) {
+                CDOSCape.equals("https://cdn.discordapp.com/attachments/1121034355796619337/1156810304974495744/EnvyCapeCDOS.png?ex=6516530d&is=6515018d&hm=95ab8864826b5ae7f3b9d8274dd1e1d3232cbfedb5d81b832de2dde9fc0ddc0e&");
+            }
+        }
 
         return false;
     }
@@ -55,6 +83,8 @@ public class CapesModule extends Module {
 
     public enum Mode {
         Envy("Envy"),
+        Volcanware("Volcanware"),
+        Toxin("Toxin"),
 
         Optifine("Optifine"),
         Cosmetica("Cosmetica");
