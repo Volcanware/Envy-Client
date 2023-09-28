@@ -20,6 +20,7 @@ public class Disabler extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+
     private final Setting<Boolean> OnGround = sgGeneral.add(new BoolSetting.Builder()
         .name("OnGround")
         .description("Bypasses by sending a packet with OnGround set to true.")
