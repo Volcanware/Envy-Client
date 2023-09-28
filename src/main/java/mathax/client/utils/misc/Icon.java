@@ -1,5 +1,6 @@
 package mathax.client.utils.misc;
 
+import mathax.client.MatHax;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Icons;
@@ -17,7 +18,7 @@ public class Icon {
     public static boolean iconChanged = false;
 
     public static void setIcon() {
-        try {
+        /*try {
             mc.getWindow().setIcon(
                 new DefaultResourcePackBuilder()
                     .withRoot(new File("/assets/mathax/").toPath())
@@ -28,7 +29,41 @@ public class Icon {
         }
         catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }*/
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        setMinecraft();
     }
 
     @SuppressWarnings("unused")
