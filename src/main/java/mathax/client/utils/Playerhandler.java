@@ -1,17 +1,23 @@
 package mathax.client.utils;
 
 import com.mojang.authlib.GameProfile;
+import mathax.client.eventbus.EventHandler;
+import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.client.CapesModule;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import mathax.client.systems.modules.client.CapesModule;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import static mathax.client.MatHax.mc;
 
 public class Playerhandler {
     public static Map<String, Identifier> capes = new HashMap<>();
@@ -21,16 +27,34 @@ public class Playerhandler {
     }
 
     public static void loadPlayerCape(GameProfile player, ReturnCapeTexture response) {
-        Util.getMainWorkerExecutor().execute(() -> {
-            try {
-                String uuid = player.getId().toString();
-                NativeImageBackedTexture nIBT = getCapeFromURL(String.format("https://raw.githubusercontent.com/Volcanware/Envy-Client/Now-Fixed/EnvyCape.png"));
-                Identifier capeTexture = MinecraftClient.getInstance().getTextureManager().registerDynamicTexture("of-capes-" + uuid, nIBT);
-                capes.put(uuid, capeTexture);
-                response.response(capeTexture);
-            } catch (Exception ignored) {
-            }
-        });
+        if(Modules.get().isActive(CapesModule.class)) {
+            Util.getMainWorkerExecutor().execute(() -> {
+                try {
+                    if (Modules.get().get(CapesModule.class).capeurl == "https://raw.githubusercontent.com/Volcanware/Envy-Client/Now-Fixed/EnvyCape.png") {
+                        String uuid = player.getId().toString();
+                        NativeImageBackedTexture nIBT = getCapeFromURL(Modules.get().get(CapesModule.class).capeurl);
+                        Identifier capeTexture = MinecraftClient.getInstance().getTextureManager().registerDynamicTexture("of-capes-" + uuid, nIBT);
+                        capes.put(uuid, capeTexture);
+                        response.response(capeTexture);
+                    }
+                    if (Modules.get().get(CapesModule.class).capeurl ==  "http://s.optifine.net/capes/%s.png") {
+                        String uuid = player.getId().toString();
+                        NativeImageBackedTexture nIBT = getCapeFromURL(String.format("http://s.optifine.net/capes/%s.png", player.getName()));
+                        Identifier capeTexture = MinecraftClient.getInstance().getTextureManager().registerDynamicTexture("of-capes-" + uuid, nIBT);
+                        capes.put(uuid, capeTexture);
+                        response.response(capeTexture);
+                    }
+                    if (Modules.get().get(CapesModule.class).capeurl ==  "23.95.137.176") {
+                        String uuid = player.getId().toString();
+                        NativeImageBackedTexture nIBT = getCapeFromURL(String.format("https://api.cosmetica.cc/get/cloak?username=" + player.getName()));
+                        Identifier capeTexture = MinecraftClient.getInstance().getTextureManager().registerDynamicTexture("of-capes-" + uuid, nIBT);
+                        capes.put(uuid, capeTexture);
+                        response.response(capeTexture);
+                    }
+                } catch (Exception ignored) {
+                }
+            });
+        }
     }
 
     public static NativeImageBackedTexture getCapeFromURL(String capeStringURL) {

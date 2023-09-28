@@ -7,67 +7,66 @@ import mathax.client.gui.widgets.WWidget;
 import mathax.client.gui.widgets.containers.WHorizontalList;
 import mathax.client.gui.widgets.pressable.WButton;
 import mathax.client.settings.BoolSetting;
+import mathax.client.settings.EnumSetting;
 import mathax.client.settings.Setting;
 import mathax.client.settings.SettingGroup;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.systems.modules.misc.PacketPitch;
 import mathax.client.utils.network.Capes;
+import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.item.Items;
 
 public class CapesModule extends Module {
-    private int timer = 0;
 
+    public CapesModule() {
+        super(Categories.Client, Items.CAKE, "capes", "Gives Players Envy Capes");
+    }
+
+    public String capeurl = "1.1.1.1";
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    // General
-
-    private final Setting<Boolean> autoReload = sgGeneral.add(new BoolSetting.Builder()
-        .name("auto-reload")
-        .description("Automatically reloads the capes every 10 minutes.")
-        .defaultValue(true)
+    private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
+        .name("mode")
+        .description("Decide from packet or client sided rotation.")
+        .defaultValue(Mode.Envy)
         .build()
     );
 
-    // Buttons
 
-    @Override
-    public WWidget getWidget(GuiTheme theme) {
-        WHorizontalList w = theme.horizontalList();
-
-        WButton reload = w.add(theme.button("Reload")).widget();
-        reload.action = () -> {
-            if (isActive()) Capes.init();
-        };
-        w.add(theme.label("Reloads the capes."));
-
-        return w;
-    }
-
-    public CapesModule() {
-        super(Categories.Client, Items.CAKE, "capes", "Shows very cool capes on users which have them.");
-    }
-
-    @Override
+    @EventHandler
     public boolean onActivate() {
-        timer = 0;
-        Capes.init();
+
+        if (mode.get() == Mode.Envy) {
+            capeurl = "https://raw.githubusercontent.com/Volcanware/Envy-Client/Now-Fixed/EnvyCape.png";
+        }
+        if (mode.get() == Mode.Optifine) {
+            capeurl = "http://s.optifine.net/capes/%s.png";
+        }
+        if (mode.get() == Mode.Cosmetica) {
+            capeurl = "23.95.137.176";
+        }
+
         return false;
     }
 
-    @Override
-    public void onDeactivate() {
-        Capes.disable();
-    }
 
-    @EventHandler
-    private void onTick(TickEvent.Pre event) {
-        if (!autoReload.get()) return;
 
-        if (timer >= 12000) {
-            timer = 0;
-            Capes.init();
+
+    public enum Mode {
+        Envy("Envy"),
+
+        Optifine("Optifine"),
+        Cosmetica("Cosmetica");
+        private final String title;
+
+        Mode(String title) {
+            this.title = title;
         }
 
-        timer++;
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 }
