@@ -195,15 +195,17 @@ public class CombatInfoHud extends HudElement {
                 double x = box.getX();
                 double y = box.getY();
 
-                if (isInEditor()) player = FakeClientPlayer.getPlayer();
+                if (isInEditor()) player = mc.player;
                 else player = TargetUtils.getPlayerTarget(range.get(), SortPriority.Lowest_Distance);
 
-                if (player == null) return;
+                if (player == null && !isInEditor()) return;
 
                 // Background
                 Renderer2D.COLOR.begin();
                 Renderer2D.COLOR.quadRounded(x, y, box.width, box.height, backgroundColor.get(), renderer.roundAmount(), true);
                 Renderer2D.COLOR.render(null);
+
+                if (player == null) return;
 
                 // Player Model
                 InventoryScreen.drawEntity((int) (x + (25 * scale.get())), (int) (y + (66 * scale.get())), (int) (30 * scale.get()), -MathHelper.wrapDegrees(player.prevYaw + (player.getYaw() - player.prevYaw) * mc.getTickDelta()), -player.getPitch(), player);
