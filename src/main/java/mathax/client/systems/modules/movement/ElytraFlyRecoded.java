@@ -5,6 +5,7 @@ import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import net.minecraft.entity.MovementType;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
@@ -20,7 +21,6 @@ public class ElytraFlyRecoded extends Module {
     }
 
     private boolean isFrozen = false;
-    private boolean grounded = !mc.player.isOnGround();
 
 
     private final Setting<Integer> multiplier = sgGeneral.add(new IntSetting.Builder()
@@ -78,7 +78,6 @@ public class ElytraFlyRecoded extends Module {
     );
 
 
-
     @EventHandler
     public boolean onActivate() {
         lockY = mc.player.getY(); //How the fuck does this work
@@ -87,7 +86,7 @@ public class ElytraFlyRecoded extends Module {
 
     @EventHandler
     private void onTick() {
-        if(mc.player.isOnGround()) {
+        if (mc.player.isOnGround()) {
 
             mc.player.jump();
             mc.player.startFallFlying();
@@ -96,24 +95,27 @@ public class ElytraFlyRecoded extends Module {
 
 
     @EventHandler
-    private void onTick(TickEvent.Pre event) { //Why the fuck does this need Post tick D:
+    private boolean onTick(TickEvent.Pre event) { //Why the fuck does this need Post tick D:
+        assert mc.player != null;
+        boolean grounded = !mc.player.isOnGround();
         if (mc.player.isOnGround()) {
             grounded = mc.player.isOnGround();
-        }
-        else if (!mc.player.isOnGround()) {
+        } else if (!mc.player.isOnGround()) {
             grounded = !mc.player.isOnGround();
         }
 
-
         if (mc.player.isFallFlying()) { //Fuck this shit
+
             if (mc.options.jumpKey.isPressed()) {
 
+                float pitchFloatPacket = -90f;
+                assert mc.player != null;
+                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(mc.player.getYaw(), pitchFloatPacket, !mc.player.isOnGround()));
                 if (!isFrozen) {
                     // Freeze the player's Y-axis movement
                     mc.player.setVelocity(Vec3d.ZERO);
                     isFrozen = true;
-                }
-                else {
+                } else {
                     // Allow Y-axis movement when space bar is released
                     isFrozen = false;
                 }
@@ -123,15 +125,7 @@ public class ElytraFlyRecoded extends Module {
         }
 
 
-        if(mc.options.jumpKey.isPressed()) {
-            float pitchFloatPacket = -90f;
-            assert mc.player != null;
-
-            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(mc.player.getYaw(), pitchFloatPacket, !mc.player.isOnGround()));
-            mc.options.forwardKey.setPressed(true);
-        } else if(!mc.options.jumpKey.isPressed()) {
-            mc.options.jumpKey.setPressed(false);
-        }
+        return false;
     }
 
     @EventHandler
