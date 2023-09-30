@@ -1,5 +1,7 @@
 package mathax.client.systems.hud;
 
+import mathax.client.MatHax;
+import mathax.client.eventbus.EventHandler;
 import mathax.client.settings.Settings;
 import mathax.client.utils.Utils;
 import mathax.client.utils.misc.ISerializable;
@@ -36,9 +38,13 @@ public abstract class HudElement implements ISerializable<HudElement> {
         this.defaultActive = defaultActive;
         this.mc = MinecraftClient.getInstance();
     }
-
+    @EventHandler
     public void toggle() {
         active = !active;
+        if (active)
+            MatHax.EVENT_BUS.subscribe(this);
+        else
+            MatHax.EVENT_BUS.unsubscribe(this);
     }
 
     public abstract void update(HudRenderer renderer);
