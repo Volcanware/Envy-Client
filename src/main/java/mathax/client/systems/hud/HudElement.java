@@ -70,6 +70,8 @@ public abstract class HudElement implements ISerializable<HudElement> {
     @Override
     public HudElement fromTag(NbtCompound tag) {
         active = tag.contains("active") ? tag.getBoolean("active") : defaultActive;
+        if (active) MatHax.EVENT_BUS.subscribe(this);   // hack to make it actually register on reboot
+
         if (tag.contains("settings")) settings.fromTag(tag.getCompound("settings"));
         if (tag.contains("box")) box.fromTag(tag.getCompound("box"));
 
