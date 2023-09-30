@@ -35,6 +35,7 @@ public class CapesModule extends Module {
         .build()
     );
 
+
     private final Setting<Boolean> showCape = sgGeneral.add(new BoolSetting.Builder()
         .name("Developer-Capes")
         .description("Shows Developer Capes")
@@ -44,7 +45,7 @@ public class CapesModule extends Module {
 
 
     @EventHandler
-    public boolean onActivate() {
+    public boolean onTick(TickEvent.Post event) {
 
         if (mode.get() == Mode.Envy) {
             capeurl = "https://raw.githubusercontent.com/Volcanware/Envy-Client/Now-Fixed/EnvyCape.png";
@@ -67,7 +68,6 @@ public class CapesModule extends Module {
 
     @EventHandler
     public boolean onTick(TickEvent.Pre event) {
-
 
         if (showCape.get()) {
             if (mc.player.getUuid().equals("f3611166-e8a6-4123-a9e1-f7cc01463698")) {
