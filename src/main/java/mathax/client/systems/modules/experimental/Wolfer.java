@@ -29,6 +29,7 @@ public class Wolfer extends Module {
         .sliderRange(1, 7)
         .build()
     );
+    //lol
 
 
     @EventHandler

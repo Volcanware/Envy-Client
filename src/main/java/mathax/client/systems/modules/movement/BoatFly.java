@@ -20,6 +20,7 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 
 import java.awt.event.KeyEvent;
 import java.util.Objects;
+//lol
 
 public class BoatFly extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

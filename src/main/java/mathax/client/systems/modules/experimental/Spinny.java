@@ -16,3 +16,4 @@ public class Spinny extends Module {
         super(Categories.Fun, Items.BARRIER, "Spinny", "Vary Spinny.");
     }
 }
+//lol
