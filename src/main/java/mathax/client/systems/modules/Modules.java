@@ -483,6 +483,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initMovement() {
+        add(new VulcanJesus());
         add(new AirJump());
         add(new AirWalk());
         add(new Anchor());
@@ -563,6 +564,7 @@ public class Modules extends System<Modules> {
         add(new PacketBodyYaw());
         add(new PacketHeadYaw());
         add(new AlwaysSwinging());
+        add(new Spinny());
     }
 
     private void initRender() {
@@ -699,6 +701,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initMisc() {
+        add(new Wolfer());
         add(new VillagerRoller());
         add(new AntiDesync());
         add(new AntiPacketKick());
