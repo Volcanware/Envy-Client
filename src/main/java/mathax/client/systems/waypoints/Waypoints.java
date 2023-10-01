@@ -205,6 +205,6 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
     }
 
     private void copyIcon(File file) {
-        StreamUtils.copy(Waypoints.class.getResourceAsStream("/assets/mathax/textures/icons/waypoints/" + file.getName()), file);
+        StreamUtils.copy(Waypoints.class.getResourceAsStream("/assets/mathax/icons/waypoints/" + file.getName()), file);
     }
 }
