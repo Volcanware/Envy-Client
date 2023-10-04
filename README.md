@@ -7,12 +7,9 @@
   Envy Client
 </h1>
 
-## Baritone Download
-https://github.com/Volcanware/Envy-Client/releases/tag/Release
 
 ## Requirements
-- Baritone Jar (From [here](https://github.com/cabaletta/baritone/releases/download/v1.9.1/baritone-api-fabric-1.9.1.jar))
-- Fabric 1.19.3 (not 1.19.4+)
+- Fabric 1.20.1
 - More than 2 Braincells (I don't have that many sorry)
 
 ### Building
