@@ -1,6 +1,8 @@
 package mathax.client.systems.modules.movement;
 
 import mathax.client.eventbus.EventHandler;
+import mathax.client.eventbus.EventPriority;
+import mathax.client.events.Event;
 import mathax.client.events.packets.PacketEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.mixin.EntityVelocityUpdateS2CPacketAccessor;
@@ -8,8 +10,11 @@ import mathax.client.mixininterface.IVec3d;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.utils.network.PacketUtils;
 import net.minecraft.item.Items;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
+import net.minecraft.util.profiling.jfr.sample.NetworkIoStatistics;
 
 //We Should Add Jump Velocity And Delayed Velocity
 public class Velocity extends Module {
@@ -23,7 +28,12 @@ public class Velocity extends Module {
         .defaultValue(true)
         .build()
     );
-
+    private final Setting<Boolean> cancelpackets = sgGeneral.add(new BoolSetting.Builder()
+        .name("Cancel-Packets")
+        .description("Vulcan-Bypass-Skrrrrrrt")
+        .defaultValue(false)
+        .build()
+    );
     public final Setting<Double> knockbackHorizontal = sgGeneral.add(new DoubleSetting.Builder()
         .name("knockback-horizontal")
         .description("How much horizontal knockback you will take.")
@@ -32,6 +42,7 @@ public class Velocity extends Module {
         .visible(knockback::get)
         .build()
     );
+
 
     public final Setting<Double> knockbackVertical = sgGeneral.add(new DoubleSetting.Builder()
         .name("knockback-vertical")
@@ -132,6 +143,16 @@ public class Velocity extends Module {
 
     public Velocity() {
         super(Categories.Movement, Items.COMMAND_BLOCK, "velocity", "Prevents you from being moved by external forces.");
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST + 1)
+    private void onReceivePacket(PacketEvent.Receive event) {
+        if (cancelpackets.get()) {
+            if (event.packet instanceof EntityVelocityUpdateS2CPacket) {
+                event.cancel();
+
+            }
+        }
     }
 
     @EventHandler
