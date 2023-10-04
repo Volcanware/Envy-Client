@@ -487,7 +487,7 @@ public class BananaBomber extends Module {
     public final Setting<KeyBind> forceSurroundBreak = sgSurround.add(new KeyBindSetting.Builder()
         .name("force-break")
         .description("Starts surround breaking when this button is pressed.")
-        .defaultValue(keybind.none())
+        .defaultValue(KeyBind.none())
         .build()
     );
 
@@ -1041,6 +1041,7 @@ public class BananaBomber extends Module {
         placeTimer = 0;
         ticksPassed = 0;
 
+        assert mc.player != null;
         raycastContext = new RaycastContext(new Vec3d(0, 0, 0), new Vec3d(0, 0, 0), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player);
 
         placing = false;
@@ -1141,7 +1142,10 @@ public class BananaBomber extends Module {
         }
 
         if ((cancelCrystalMode.get() == CancelCrystalMode.Hit)) {
-            removed.forEach((java.util.function.IntConsumer) id -> Objects.requireNonNull(mc.world.getEntityById(id)).kill());
+            removed.forEach((java.util.function.IntConsumer) id -> {
+                assert mc.world != null;
+                Objects.requireNonNull(mc.world.getEntityById(id)).kill();
+            });
             removed.clear();
         }
     }
@@ -1213,6 +1217,7 @@ public class BananaBomber extends Module {
         Entity crystal = null;
 
         // Find the best crystal to break
+        assert mc.world != null;
         for (Entity entity : mc.world.getEntities()) {
             float damage = getBreakDamage(entity, true);
 
@@ -1261,7 +1266,7 @@ public class BananaBomber extends Module {
 
         if (!CrystalUtils.shouldIgnoreSelfBreakDamage()) {
             float selfDamage = BDamageUtils.crystalDamage(mc.player, entity.getPos(), predictMovement.get(), breakRange.get().floatValue(), ignoreTerrain.get(), fullBlocks.get());
-            if (selfDamage > BmaxDamage.get() || (BantiSuicide.get() && selfDamage >= EntityUtils.getTotalHealth(mc.player)))
+            if (selfDamage > BmaxDamage.get() || (BantiSuicide.get() && selfDamage >= EntityUtils.getTotalHealth(Objects.requireNonNull(mc.player))))
                 return 0;
         } else if (debug.get()) warning("Ignoring self break dmg");
 
@@ -1277,6 +1282,7 @@ public class BananaBomber extends Module {
     private void doBreak(Entity crystal) {
         // Anti weakness
         if (antiWeakness.get()) {
+            assert mc.player != null;
             StatusEffectInstance weakness = mc.player.getStatusEffect(StatusEffects.WEAKNESS);
             StatusEffectInstance strength = mc.player.getStatusEffect(StatusEffects.STRENGTH);
 
@@ -1347,9 +1353,14 @@ public class BananaBomber extends Module {
         if (!InvUtils.findInHotbar(Items.END_CRYSTAL).found()) return;
 
         // Return if there are no crystals in either hand and auto switch mode is none
-        if (autoSwitch.get() == AutoSwitchMode.None && mc.player.getOffHandStack().getItem() != Items.END_CRYSTAL && mc.player.getMainHandStack().getItem() != Items.END_CRYSTAL) return;
+        if (autoSwitch.get() == AutoSwitchMode.None) {
+            assert mc.player != null;
+            if (mc.player.getOffHandStack().getItem() != Items.END_CRYSTAL && mc.player.getMainHandStack().getItem() != Items.END_CRYSTAL)
+                return;
+        }
 
         // Check for multiplace
+        assert mc.world != null;
         for (Entity entity : mc.world.getEntities()) {
             if (getBreakDamage(entity, false) > 0) return;
         }
@@ -1401,7 +1412,7 @@ public class BananaBomber extends Module {
             // Check damage to self and anti suicide
             if (!CrystalUtils.shouldIgnoreSelfPlaceDamage()) {
                 float selfDamage = BDamageUtils.crystalDamage(mc.player, vec3d, predictMovement.get(), placeRange.get().floatValue(), ignoreTerrain.get(), fullBlocks.get());
-                if (selfDamage > PmaxDamage.get() || (PantiSuicide.get() && selfDamage >= EntityUtils.getTotalHealth(mc.player)))
+                if (selfDamage > PmaxDamage.get() || (PantiSuicide.get() && selfDamage >= EntityUtils.getTotalHealth(Objects.requireNonNull(mc.player))))
                     return;
             } else if (debug.get()) warning("Ignoring self place dmg");
 
@@ -1456,6 +1467,7 @@ public class BananaBomber extends Module {
     }
 
     private BlockHitResult getPlaceInfo(BlockPos blockPos) {
+        assert mc.player != null;
         ((IVec3d) vec3d).set(mc.player.getX(), mc.player.getY() + mc.player.getEyeHeight(mc.player.getPose()), mc.player.getZ());
 
         for (Direction side : Direction.values()) {
@@ -1466,6 +1478,7 @@ public class BananaBomber extends Module {
             );
 
             ((IRaycastContext) raycastContext).set(vec3d, vec3dRayTraceEnd, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player);
+            assert mc.world != null;
             BlockHitResult result = mc.world.raycast(raycastContext);
 
             if (result != null && result.getType() == HitResult.Type.BLOCK && result.getBlockPos().equals(blockPos)) {
@@ -1484,6 +1497,7 @@ public class BananaBomber extends Module {
         FindItemResult item = InvUtils.findInHotbar(targetItem);
         if (!item.found()) return;
 
+        assert mc.player != null;
         int prevSlot = mc.player.getInventory().selectedSlot;
 
         if (!(mc.player.getOffHandStack().getItem() instanceof EndCrystalItem) && (autoSwitch.get() == AutoSwitchMode.Normal && noGapSwitch.get()) && (mc.player.getMainHandStack().getItem() instanceof EnchantedGoldenAppleItem)) return;
@@ -1498,7 +1512,7 @@ public class BananaBomber extends Module {
             mc.player.networkHandler.sendPacket(new PlayerInteractBlockC2SPacket(hand, result, 0));
 
             if (renderSwing.get()) mc.player.swingHand(hand);
-            if (!hideSwings.get()) mc.getNetworkHandler().sendPacket(new HandSwingC2SPacket(hand));
+            if (!hideSwings.get()) Objects.requireNonNull(mc.getNetworkHandler()).sendPacket(new HandSwingC2SPacket(hand));
 
             if (debug.get()) warning("Placing");
 
@@ -1567,14 +1581,17 @@ public class BananaBomber extends Module {
     private boolean isOutOfPlaceRange(Vec3d vec3d, BlockPos blockPos) {
         ((IRaycastContext) raycastContext).set(playerEyePos, vec3d, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player);
 
+        assert mc.world != null;
         BlockHitResult result = mc.world.raycast(raycastContext);
         boolean behindWall = result == null || !result.getBlockPos().equals(blockPos);
+        assert mc.player != null;
         double distance = mc.player.getEyePos().distanceTo(vec3d);
 
         return distance > (behindWall ? placeWallsRange.get() : placeRange.get());
     }
 
     private boolean isOutOfBreakRange(Entity entity) {
+        assert mc.player != null;
         boolean behindWall = !mc.player.canSee(entity);
         double distance = BPlayerUtils.distanceFromEye(entity);
 
@@ -1634,6 +1651,7 @@ public class BananaBomber extends Module {
         targets.clear();
 
         // Players
+        assert mc.world != null;
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (player.getAbilities().creativeMode || player == mc.player) continue;
 

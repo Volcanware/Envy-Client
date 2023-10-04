@@ -124,6 +124,8 @@ public class HUD extends System<HUD> {
         // Modules
         lagChat.add(new LagNotifierHud(this));
         lagChat.add(new BigRatHud(this));
+        lagChat.add(new LastPacket(this));
+
 
         // MODULES
         modules = new HudElementLayer(RENDERER, elements, AlignmentX.Right, AlignmentY.Bottom, 2, 2);

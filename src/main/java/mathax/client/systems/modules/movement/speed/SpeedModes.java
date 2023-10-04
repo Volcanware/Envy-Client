@@ -1,6 +1,7 @@
 package mathax.client.systems.modules.movement.speed;
 
 public enum SpeedModes {
+    Inn3rstellarSpeed("StellarSpeed"),
     Vanilla("Vanilla"),
     Strafe("BunnyHop"),
     MineBerry("Mineberry || Old"),

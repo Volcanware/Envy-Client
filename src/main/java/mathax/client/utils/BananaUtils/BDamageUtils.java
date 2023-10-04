@@ -59,6 +59,7 @@ public class BDamageUtils {
     @EventHandler
     private static void onGameJoined(GameJoinedEvent event) {
         explosion = new Explosion(mc.world, null, 0, 0, 0, 6, false, Explosion.DestructionType.DESTROY);
+        assert mc.player != null;
         raycastContext = new RaycastContext(null, null, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.ANY, mc.player);
     }
 
@@ -81,7 +82,7 @@ public class BDamageUtils {
         // Multiply damage by difficulty
         damage = getDamageForDifficulty(damage);
         // Reduce by Armor
-        damage = DamageUtil.getDamageLeft(damage, (float) player.getArmor(), (float) player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
+        damage = DamageUtil.getDamageLeft(damage, (float) player.getArmor(), (float) Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS)).getValue());
         // Reduce by Resistance
         damage = resistanceReduction(player, damage);
         // Set the IExplosion
@@ -113,7 +114,7 @@ public class BDamageUtils {
         // Multiply damage by difficulty
         damage = getDamageForDifficulty(damage);
         // Reduce by armour
-        damage = DamageUtil.getDamageLeft(damage, (float) player.getArmor(), (float) player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
+        damage = DamageUtil.getDamageLeft(damage, (float) player.getArmor(), (float) Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS)).getValue());
         // Reduce by resistance
         damage = resistanceReduction(player, damage);
         // Set the IExplosion
@@ -166,7 +167,7 @@ public class BDamageUtils {
         damage = resistanceReduction(entity, damage);
 
         // Reduce by armour
-        damage = DamageUtil.getDamageLeft(damage, (float) entity.getArmor(), (float) entity.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).getValue());
+        damage = DamageUtil.getDamageLeft(damage, (float) entity.getArmor(), (float) Objects.requireNonNull(entity.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS)).getValue());
 
         // Reduce by enchants
         damage = normalProtReduction(entity, damage);
@@ -177,6 +178,7 @@ public class BDamageUtils {
     // Utils
 
     private static float getDamageForDifficulty(float damage) {
+        assert mc.world != null;
         return switch (mc.world.getDifficulty()) {
             case PEACEFUL -> 0;
             case EASY     -> Math.min(damage * 0.5f + 1, damage);
@@ -203,7 +205,7 @@ public class BDamageUtils {
 
     private static float resistanceReduction(LivingEntity player, float damage) {
         if (player.hasStatusEffect(StatusEffects.RESISTANCE)) {
-            int lvl = (player.getStatusEffect(StatusEffects.RESISTANCE).getAmplifier() + 1);
+            int lvl = (Objects.requireNonNull(player.getStatusEffect(StatusEffects.RESISTANCE)).getAmplifier() + 1);
             damage *= (1 - (lvl * 0.2));
         }
 
@@ -237,7 +239,7 @@ public class BDamageUtils {
                         ((IVec3d) vec3d).set(n + g, o, p + h);
                         ((IRaycastContext) raycastContext).set(vec3d, source, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity);
 
-                        if (raycast(raycastContext, ignoreTerrain, fullBlocks).getType() == HitResult.Type.MISS) i++;
+                        if (Objects.requireNonNull(raycast(raycastContext, ignoreTerrain, fullBlocks)).getType() == HitResult.Type.MISS) i++;
 
                         j++;
                     }
@@ -251,35 +253,40 @@ public class BDamageUtils {
     }
 
     private static BlockHitResult raycast(RaycastContext context, boolean ignoreTerrain, boolean fullBlocks) {
-        return BlockView.raycast(context.getStart(), context.getEnd(), context, (raycastContext, blockPos) -> {
-            BlockState blockState;
+        if (!(raycastContext == null)) {
+            return BlockView.raycast(context.getStart(), context.getEnd(), context, (raycastContext, blockPos) -> {
+                BlockState blockState;
 
-            blockState = mc.world.getBlockState(blockPos);
-            if (blockState.getBlock() instanceof AnvilBlock && fullBlocks) blockState = Blocks.OBSIDIAN.getDefaultState();
-            else if (blockState.getBlock() instanceof EnderChestBlock && fullBlocks) blockState = Blocks.OBSIDIAN.getDefaultState();
-            else if (blockState.getBlock().getBlastResistance() < 600 && ignoreTerrain) blockState = Blocks.AIR.getDefaultState();
+                assert mc.world != null;
+                blockState = mc.world.getBlockState(blockPos);
+                if (blockState.getBlock() instanceof AnvilBlock && fullBlocks) blockState = Blocks.OBSIDIAN.getDefaultState();
+                else if (blockState.getBlock() instanceof EnderChestBlock && fullBlocks) blockState = Blocks.OBSIDIAN.getDefaultState();
+                else if (blockState.getBlock().getBlastResistance() < 600 && ignoreTerrain) blockState = Blocks.AIR.getDefaultState();
 
-            Vec3d vec3d = raycastContext.getStart();
-            Vec3d vec3d2 = raycastContext.getEnd();
+                Vec3d vec3d = raycastContext.getStart();
+                Vec3d vec3d2 = raycastContext.getEnd();
 
-            VoxelShape voxelShape = raycastContext.getBlockShape(blockState, mc.world, blockPos);
-            BlockHitResult blockHitResult = mc.world.raycastBlock(vec3d, vec3d2, blockPos, voxelShape, blockState);
-            VoxelShape voxelShape2 = VoxelShapes.empty();
-            BlockHitResult blockHitResult2 = voxelShape2.raycast(vec3d, vec3d2, blockPos);
+                VoxelShape voxelShape = raycastContext.getBlockShape(blockState, mc.world, blockPos);
+                BlockHitResult blockHitResult = mc.world.raycastBlock(vec3d, vec3d2, blockPos, voxelShape, blockState);
+                VoxelShape voxelShape2 = VoxelShapes.empty();
+                BlockHitResult blockHitResult2 = voxelShape2.raycast(vec3d, vec3d2, blockPos);
 
-            double d = blockHitResult == null ? Double.MAX_VALUE : raycastContext.getStart().squaredDistanceTo(blockHitResult.getPos());
-            double e = blockHitResult2 == null ? Double.MAX_VALUE : raycastContext.getStart().squaredDistanceTo(blockHitResult2.getPos());
+                double d = blockHitResult == null ? Double.MAX_VALUE : raycastContext.getStart().squaredDistanceTo(blockHitResult.getPos());
+                double e = blockHitResult2 == null ? Double.MAX_VALUE : raycastContext.getStart().squaredDistanceTo(blockHitResult2.getPos());
 
-            return d <= e ? blockHitResult : blockHitResult2;
-        }, (raycastContext) -> {
-            Vec3d vec3d = raycastContext.getStart().subtract(raycastContext.getEnd());
-            return BlockHitResult.createMissed(raycastContext.getEnd(), Direction.getFacing(vec3d.x, vec3d.y, vec3d.z), BlockPos.ofFloored(raycastContext.getEnd()));
-        });
+                return d <= e ? blockHitResult : blockHitResult2;
+            }, (raycastContext) -> {
+                Vec3d vec3d = raycastContext.getStart().subtract(raycastContext.getEnd());
+                return BlockHitResult.createMissed(raycastContext.getEnd(), Direction.getFacing(vec3d.x, vec3d.y, vec3d.z), new BlockPos(raycastContext.getEnd()));
+            });
+        }
+        return null;
     }
 
     public static float possibleHealthReductions(boolean crystals, double explosionRadius , boolean swords, float enemyDistance) {
         float damageTaken = 0;
 
+        assert mc.world != null;
         for (Entity entity : mc.world.getEntities()) {
             if (crystals) {
                 // Check for end crystals
@@ -291,9 +298,12 @@ public class BDamageUtils {
             if (swords) {
                 // Check for players holding swords
                 if (entity instanceof PlayerEntity && damageTaken < getSwordDamage((PlayerEntity) entity, true)) {
-                    if (!Friends.get().isFriend((PlayerEntity) entity) && mc.player.getPos().distanceTo(entity.getPos()) < enemyDistance) {
-                        if (((PlayerEntity) entity).getActiveItem().getItem() instanceof SwordItem) {
-                            damageTaken = getSwordDamage((PlayerEntity) entity, true);
+                    if (!Friends.get().isFriend((PlayerEntity) entity)) {
+                        assert mc.player != null;
+                        if (mc.player.getPos().distanceTo(entity.getPos()) < enemyDistance) {
+                            if (((PlayerEntity) entity).getActiveItem().getItem() instanceof SwordItem) {
+                                damageTaken = getSwordDamage((PlayerEntity) entity, true);
+                            }
                         }
                     }
                 }
