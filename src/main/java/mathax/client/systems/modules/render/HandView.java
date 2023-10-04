@@ -7,7 +7,7 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 public class HandView extends Module {
     private final SettingGroup mainHand = settings.createGroup("Main Hand");
@@ -209,15 +209,15 @@ public class HandView extends Module {
         if (!isActive()) return;
         //how the FUCK does this work
         if (event.hand == Hand.MAIN_HAND) {
-            event.matrix.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(rotationXMain.get().floatValue()));
-            event.matrix.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotationYMain.get().floatValue()));
-            event.matrix.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(rotationZMain.get().floatValue()));
+            event.matrix.multiply(RotationAxis.POSITIVE_X.rotationDegrees(rotationXMain.get().floatValue()));
+            event.matrix.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(rotationYMain.get().floatValue()));
+            event.matrix.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(rotationZMain.get().floatValue()));
             event.matrix.scale(scaleXMain.get().floatValue(), scaleYMain.get().floatValue(), scaleZMain.get().floatValue());
             event.matrix.translate(posXMain.get().floatValue(), posYMain.get().floatValue(), posZMain.get().floatValue());
         } else {
-            event.matrix.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(rotationXOff.get().floatValue()));
-            event.matrix.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotationYOff.get().floatValue()));
-            event.matrix.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(rotationZOff.get().floatValue()));
+            event.matrix.multiply(RotationAxis.POSITIVE_X.rotationDegrees(rotationXOff.get().floatValue()));
+            event.matrix.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(rotationYOff.get().floatValue()));
+            event.matrix.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(rotationZOff.get().floatValue()));
             event.matrix.scale(scaleXOff.get().floatValue(), scaleYOff.get().floatValue(), scaleZOff.get().floatValue());
             event.matrix.translate(posXOff.get().floatValue(), posYOff.get().floatValue(), posZOff.get().floatValue());
         }

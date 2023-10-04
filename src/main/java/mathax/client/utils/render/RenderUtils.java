@@ -9,8 +9,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
+import org.joml.Matrix3f;
+import org.joml.Vector3f;
 
 import static mathax.client.MatHax.mc;
 
@@ -38,7 +40,8 @@ public class RenderUtils {
     }
 
     public static void updateScreenCenter() {
-        Vec3d pos = new Vec3d(0, 0, 1);
+
+        Vector3f pos = new Vector3f(0, 0, 1);
 
         if (mc.options.getBobView().getValue()) {
             if (!Modules.get().isActive(NoBob.class)) {
@@ -47,7 +50,7 @@ public class RenderUtils {
                 bobView(bobViewMatrices);
                 bobViewMatrices.peek().getPositionMatrix().invert();
 
-                pos = ((IMatrix4f) (Object) bobViewMatrices.peek().getPositionMatrix()).mul(pos);
+                pos.mul(bobViewMatrices.peek().getPositionMatrix().get3x3(new Matrix3f()));
             }
         }
 
@@ -64,8 +67,8 @@ public class RenderUtils {
             float i = MathHelper.lerp(f, playerEntity.prevStrideDistance, playerEntity.strideDistance);
 
             matrices.translate(-(MathHelper.sin(h * 3.1415927f) * i * 0.5), -(-Math.abs(MathHelper.cos(h * 3.1415927f) * i)), 0);
-            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(MathHelper.sin(h * 3.1415927f) * i * 3));
-            matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(Math.abs(MathHelper.cos(h * 3.1415927f - 0.2f) * i) * 5));
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.sin(h * 3.1415927f) * i * 3));
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(Math.abs(MathHelper.cos(h * 3.1415927f - 0.2f) * i) * 5));
         }
     }
 }

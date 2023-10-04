@@ -20,13 +20,14 @@ import mathax.client.utils.player.Rotations;
 import mathax.client.utils.render.NametagUtils;
 import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.SettingColor;
-import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import mathax.client.utils.entity.SortPriority;
+import net.minecraft.util.math.Vec3d;
+import org.joml.Vector3d;
 
 public class AntiSurround extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();

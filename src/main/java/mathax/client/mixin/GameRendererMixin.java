@@ -7,16 +7,16 @@ import mathax.client.events.render.RenderAfterWorldEvent;
 import mathax.client.mixininterface.IVec3d;
 import mathax.client.renderer.Renderer3D;
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.ghost.Reach;
+import mathax.client.systems.modules.player.LiquidInteract;
+import mathax.client.systems.modules.player.NoMiningTrace;
 import mathax.client.systems.modules.render.*;
+import mathax.client.systems.modules.world.HighwayBuilder;
 import mathax.client.utils.Utils;
 import mathax.client.utils.render.NametagUtils;
 import mathax.client.utils.render.RenderUtils;
-import mathax.client.systems.modules.player.LiquidInteract;
-import mathax.client.systems.modules.player.NoMiningTrace;
-import mathax.client.systems.modules.ghost.Reach;
-import mathax.client.systems.modules.world.HighwayBuilder;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.ShaderEffect;
+import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -24,9 +24,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Matrix3f;
-import net.minecraft.util.math.Matrix4f;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -39,7 +38,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public abstract class GameRendererMixin {
     @Shadow
     @Final
-    private MinecraftClient client;
+    MinecraftClient client;
 
     @Shadow
     public abstract void updateTargetedEntity(float tickDelta);
@@ -54,7 +53,7 @@ public abstract class GameRendererMixin {
     @Unique
     private Renderer3D renderer;
 
-    @Inject(method = "renderWorld", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", args = "ldc=hand"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "renderWorld", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", args = { "ldc=hand" }), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void onRenderWorld(float tickDelta, long limitTime, MatrixStack matrices, CallbackInfo info, boolean bl, Camera camera, MatrixStack matrixStack, double d, float f, float g, Matrix4f matrix4f, Matrix3f matrix3f) {
         if (!Utils.canUpdate()) return;
 
@@ -217,7 +216,7 @@ public abstract class GameRendererMixin {
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;drawEntityOutlinesFramebuffer()V", ordinal = 0))
     private void renderShader(float tickDelta, long startTime, boolean tick, CallbackInfo ci) {
-        ShaderEffect shader = Modules.get().get(Rendering.class).getShaderEffect();
+        PostEffectProcessor shader = Modules.get().get(Rendering.class).getShaderEffect();
 
         if (shader != null) {
             shader.setupDimensions(client.getWindow().getFramebufferWidth(), client.getWindow().getFramebufferHeight());

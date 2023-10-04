@@ -1,11 +1,9 @@
 package mathax.client.mixin.canvas;
 
-import grondag.canvas.render.world.CanvasWorldRenderer;
+/*import grondag.canvas.render.world.CanvasWorldRenderer;
 import mathax.client.systems.modules.Modules;
-import mathax.client.utils.render.EntityShaders;
 import mathax.client.systems.modules.render.BlockSelection;
-import mathax.client.systems.modules.render.Fullbright;
-import mathax.client.utils.Utils;
+import mathax.client.utils.render.EntityShaders;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.LightmapTextureManager;
@@ -31,8 +29,11 @@ public class CanvasWorldRendererMixin {
     }
 
     // Injected through ASM because mixins are fucking retarded and don't work outside of development environment for this one injection
-    /*@Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/OutlineVertexConsumerProvider;draw()V", shift = At.Shift.AFTER))
-    private void onRenderOutlines(CallbackInfo info) {
-        EntityShaders.endRender();
-    }*/
-}
+    //@Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/OutlineVertexConsumerProvider;draw()V", shift = At.Shift.AFTER))
+    //private void onRenderOutlines(CallbackInfo info) {
+    //    EntityShaders.endRender();
+    //}
+}*/
+
+// just use the same solution as the meteor devs
+class CanvasWorldRendererMixin{}

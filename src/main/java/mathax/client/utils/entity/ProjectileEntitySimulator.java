@@ -15,6 +15,9 @@ import net.minecraft.item.*;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.world.RaycastContext;
+import org.joml.Quaterniond;
+import org.joml.Quaternionf;
+import org.joml.Vector3d;
 
 import static mathax.client.MatHax.mc;
 
@@ -66,14 +69,14 @@ public class ProjectileEntitySimulator {
             z = Math.cos(yaw * 0.017453292) * Math.cos(pitch * 0.017453292);
         } else {
             Vec3d vec3d = user.getOppositeRotationVector(1.0F);
-            Quaternion quaternion = new Quaternion(new Vec3f(vec3d), (float) simulated, true);
+            Quaterniond quaternion = new Quaterniond().setAngleAxis(simulated, vec3d.x, vec3d.y, vec3d.z);
             Vec3d vec3d2 = user.getRotationVec(1.0F);
-            Vec3f vector3f = new Vec3f(vec3d2);
+            Vector3d vector3f = new Vector3d(vec3d2.x, vec3d2.y, vec3d2.z);
             vector3f.rotate(quaternion);
 
-            x = vector3f.getX();
-            y = vector3f.getY();
-            z = vector3f.getZ();
+            x = vector3f.x;
+            y = vector3f.y;
+            z = vector3f.z;
         }
 
         velocity.set(x, y, z).normalize().multiply(speed);
@@ -177,7 +180,7 @@ public class ProjectileEntitySimulator {
         HitResult hitResult = mc.world.raycast(new RaycastContext(vec3d3, pos3d, RaycastContext.ShapeType.COLLIDER, waterDrag == 0 ? RaycastContext.FluidHandling.ANY : RaycastContext.FluidHandling.NONE, mc.player));
         if (hitResult.getType() != HitResult.Type.MISS) vec3d3 = hitResult.getPos();
 
-        HitResult hitResult2 = ProjectileUtil.getEntityCollision(mc.world, mc.player, vec3d3, pos3d, new Box(pos.x, pos.y, pos.z, pos.x, pos.y, pos.z).stretch(mc.player.getVelocity()).expand(1.0D), entity -> !entity.isSpectator() && entity.isAlive() && entity.collides());
+        HitResult hitResult2 = ProjectileUtil.getEntityCollision(mc.world, mc.player, vec3d3, pos3d, new Box(pos.x, pos.y, pos.z, pos.x, pos.y, pos.z).stretch(mc.player.getVelocity()).expand(1.0D), entity -> !entity.isSpectator() && entity.isAlive() && entity.canHit());
         if (hitResult2 != null) hitResult = hitResult2;
 
         return hitResult;

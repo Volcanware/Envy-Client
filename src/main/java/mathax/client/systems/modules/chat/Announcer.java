@@ -158,7 +158,7 @@ public class Announcer extends Module {
         }
 
         void sendMsg() {
-            mc.player.sendChatMessage(message.get().replace("%distance%", String.format("%.1f", distance)));
+            mc.player.networkHandler.sendChatMessage(message.get().replace("%distance%", String.format("%.1f", distance)));
         }
     }
 
@@ -204,7 +204,7 @@ public class Announcer extends Module {
 
         void sendMsg() {
             if (count > 0) {
-                mc.player.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%block%", lastBlock.getName().getString()));
+                mc.player.networkHandler.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%block%", lastBlock.getName().getString()));
                 count = 0;
             }
         }
@@ -250,7 +250,7 @@ public class Announcer extends Module {
 
         void sendMsg() {
             if (count > 0) {
-                mc.player.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%block%", lastBlock.getName().getString()));
+                mc.player.networkHandler.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%block%", lastBlock.getName().getString()));
                 count = 0;
             }
         }
@@ -296,7 +296,7 @@ public class Announcer extends Module {
 
         void sendMsg() {
             if (count > 0) {
-                mc.player.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%item%", lastItem.getName().getString()));
+                mc.player.networkHandler.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%item%", lastItem.getName().getString()));
                 count = 0;
             }
         }
@@ -342,7 +342,7 @@ public class Announcer extends Module {
 
         void sendMsg() {
             if (count > 0) {
-                mc.player.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%item%", lastItem.getName().getString()));
+                mc.player.networkHandler.sendChatMessage(message.get().replace("%count%", Integer.toString(count)).replace("%item%", lastItem.getName().getString()));
                 count = 0;
             }
         }
@@ -375,7 +375,7 @@ public class Announcer extends Module {
         }
 
         void sendMsg(String name) {
-            mc.player.sendChatMessage(message.get().replace("%name%", name));
+            mc.player.networkHandler.sendChatMessage(message.get().replace("%name%", name));
         }
     }
 }

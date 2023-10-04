@@ -5,7 +5,9 @@ import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import net.minecraft.entity.MovementType;
 import net.minecraft.item.Items;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
 
 //When I started this only me and god knew how it worked, now only god knows how it works.
@@ -67,12 +69,14 @@ public class ElytraFlyRecoded extends Module {
         .defaultValue(false)
         .build()
     );
+
     private final Setting<Mode> mode = sgGeneral.add(new EnumSetting.Builder<Mode>()
         .name("mode")
         .description("How to treat the lava.")
         .defaultValue(Mode.CursorLock)
         .build()
     );
+
 
     @EventHandler
     public boolean onActivate() {
@@ -81,22 +85,47 @@ public class ElytraFlyRecoded extends Module {
     }
 
     @EventHandler
-    private void onTick(TickEvent.Pre event) { //Why the fuck does this need Post tick D:
+    private void onTick() {
+        if (mc.player.isOnGround()) {
+
+            mc.player.jump();
+            mc.player.startFallFlying();
+        }
+    }
+
+
+    @EventHandler
+    private boolean onTick(TickEvent.Pre event) { //Why the fuck does this need Post tick D:
+        assert mc.player != null;
+        boolean grounded = !mc.player.isOnGround();
+        if (mc.player.isOnGround()) {
+            grounded = mc.player.isOnGround();
+        } else if (!mc.player.isOnGround()) {
+            grounded = !mc.player.isOnGround();
+        }
 
         if (mc.player.isFallFlying()) { //Fuck this shit
+
             if (mc.options.jumpKey.isPressed()) {
 
+                float pitchFloatPacket = -90f;
+                assert mc.player != null;
+                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(mc.player.getYaw(), pitchFloatPacket, !mc.player.isOnGround()));
                 if (!isFrozen) {
                     // Freeze the player's Y-axis movement
                     mc.player.setVelocity(Vec3d.ZERO);
                     isFrozen = true;
-                }
-                else {
+                } else {
                     // Allow Y-axis movement when space bar is released
                     isFrozen = false;
                 }
             }
+
+
         }
+
+
+        return false;
     }
 
     @EventHandler

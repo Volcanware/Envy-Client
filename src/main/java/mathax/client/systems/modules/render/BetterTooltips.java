@@ -29,14 +29,14 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
-
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -275,7 +275,7 @@ public class BetterTooltips extends Module {
         // Banner preview
         else if (event.itemStack.getItem() instanceof BannerItem && previewBanners()) event.tooltipData = new BannerTooltipComponent(event.itemStack);
         else if (event.itemStack.getItem() instanceof BannerPatternItem patternItem && previewBanners()) {
-            RegistryEntry<BannerPattern> bannerPattern = (Registry.BANNER_PATTERN.getEntryList(patternItem.getPattern()).isPresent() ? Registry.BANNER_PATTERN.getEntryList(patternItem.getPattern()).get().get(0) : null);
+            RegistryEntry<BannerPattern> bannerPattern = (Registries.BANNER_PATTERN.getEntryList(patternItem.getPattern()).isPresent() ? Registries.BANNER_PATTERN.getEntryList(patternItem.getPattern()).get().get(0) : null);
             if (bannerPattern != null) event.tooltipData = new BannerTooltipComponent(createBannerFromPattern(bannerPattern));
         } else if (event.itemStack.getItem() == Items.SHIELD && previewBanners()) {
             ItemStack banner = createBannerFromShield(event.itemStack);

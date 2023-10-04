@@ -3,6 +3,7 @@ package mathax.client.systems.accounts;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import mathax.client.MatHax;
 import mathax.client.utils.network.HTTP;
 import mathax.client.utils.network.MatHaxExecutor;
 import net.minecraft.util.Util;
@@ -37,8 +38,8 @@ public class MicrosoftLogin {
     }
 
     //TODO: Make MatHax's own Client ID.
-    private static final String CLIENT_ID = "4673b348-3efa-4f6a-bbb6-34e141cdc638";
-    private static final int PORT = 9675;
+    public static final String CLIENT_ID = "4673b348-3efa-4f6a-bbb6-34e141cdc638";
+    public static final int PORT = 9675;
 
     private static HttpServer server;
     private static Consumer<String> callback;
@@ -47,7 +48,11 @@ public class MicrosoftLogin {
         MicrosoftLogin.callback = callback;
 
         startServer();
-        Util.getOperatingSystem().open("https://login.live.com/oauth20_authorize.srf?client_id=" + CLIENT_ID + "&response_type=code&redirect_uri=http://127.0.0.1:" + PORT + "&scope=XboxLive.signin%20offline_access");
+        Util.getOperatingSystem().open(getUrl());
+    }
+
+    public static String getUrl() {
+        return "https://login.live.com/oauth20_authorize.srf?client_id=" + CLIENT_ID + "&response_type=code&redirect_uri=http://127.0.0.1:" + PORT + "&scope=XboxLive.signin%20offline_access";
     }
 
     public static LoginData login(String refreshToken) {
@@ -81,8 +86,9 @@ public class MicrosoftLogin {
         return new LoginData(mcRes.access_token, refreshToken, profileRes.id, profileRes.name);
     }
 
-    private static void startServer() {
+    public static void startServer() {
         if (server != null) return;
+        MatHax.LOG.info("Starting server on port " + PORT);
 
         try {
             server = HttpServer.create(new InetSocketAddress("127.0.0.1", PORT), 0);
@@ -93,6 +99,10 @@ public class MicrosoftLogin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setCallback(Consumer<String> callback) {
+        MicrosoftLogin.callback = callback;
     }
 
     private static void stopServer() {
@@ -107,6 +117,7 @@ public class MicrosoftLogin {
     private static class Handler implements HttpHandler {
         @Override
         public void handle(HttpExchange req) throws IOException {
+            MatHax.LOG.info("Got request from " + req.getRemoteAddress());
             if (req.getRequestMethod().equals("GET")) {
                 List<NameValuePair> query = URLEncodedUtils.parse(req.getRequestURI(), StandardCharsets.UTF_8.name());
 
@@ -114,7 +125,7 @@ public class MicrosoftLogin {
 
                 for (NameValuePair pair : query) {
                     if (pair.getName().equals("code")) {
-                        handleCode(pair.getValue());
+                        callback.accept(handleCode(pair.getValue()));
 
                         ok = true;
                         break;
@@ -128,13 +139,6 @@ public class MicrosoftLogin {
             stopServer();
         }
 
-        private void handleCode(String code) {
-            AuthTokenResponse res = HTTP.post("https://login.live.com/oauth20_token.srf").bodyForm("client_id=" + CLIENT_ID + "&code=" + code + "&grant_type=authorization_code&redirect_uri=http://127.0.0.1:" + PORT).sendJson(AuthTokenResponse.class);
-
-            if (res == null) callback.accept(null);
-            else callback.accept(res.refresh_token);
-        }
-
         private void writeText(HttpExchange req, String text) throws IOException {
             OutputStream out = req.getResponseBody();
 
@@ -146,7 +150,14 @@ public class MicrosoftLogin {
         }
     }
 
-    private static class AuthTokenResponse {
+    public static String handleCode(String code) {
+        AuthTokenResponse res = HTTP.post("https://login.live.com/oauth20_token.srf").bodyForm("client_id=" + CLIENT_ID + "&code=" + code + "&grant_type=authorization_code&redirect_uri=http://127.0.0.1:" + PORT).sendJson(AuthTokenResponse.class);
+
+        if (res == null) return null;
+        else return res.refresh_token;
+    }
+
+    static class AuthTokenResponse {
         public String access_token;
         public String refresh_token;
     }

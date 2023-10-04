@@ -16,10 +16,10 @@ import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -204,7 +204,7 @@ public class Interactions {
     public static FindItemResult findSword() {return InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof SwordItem);}
     public static FindItemResult findAxe() {return InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof AxeItem);}
     public static FindItemResult findAnvil() {return InvUtils.findInHotbar(itemStack -> Block.getBlockFromItem(itemStack.getItem()) instanceof AnvilBlock);}
-    public static FindItemResult findButton() {return InvUtils.findInHotbar(itemStack -> Block.getBlockFromItem(itemStack.getItem()) instanceof AbstractPressurePlateBlock || Block.getBlockFromItem(itemStack.getItem()) instanceof WoodenButtonBlock || Block.getBlockFromItem(itemStack.getItem()) instanceof StoneButtonBlock);}
+    public static FindItemResult findButton() {return InvUtils.findInHotbar(itemStack -> Block.getBlockFromItem(itemStack.getItem()) instanceof AbstractPressurePlateBlock || Block.getBlockFromItem(itemStack.getItem()) instanceof ButtonBlock);}
     public static FindItemResult findChorus() {
         return InvUtils.findInHotbar(Items.CHORUS_FRUIT);
     }

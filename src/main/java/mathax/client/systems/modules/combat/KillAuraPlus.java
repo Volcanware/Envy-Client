@@ -14,6 +14,7 @@ import mathax.client.utils.algorithms.Smooth;
 import mathax.client.utils.algorithms.extra.Perlin2D;
 import mathax.client.utils.algorithms.extra.RaycastUtils;
 import mathax.client.utils.algorithms.extra.RotationUtils;
+import mathax.client.utils.algorithms.extra.RotationUtils.Rotation;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.entity.SortPriority;
 import mathax.client.utils.entity.Target;

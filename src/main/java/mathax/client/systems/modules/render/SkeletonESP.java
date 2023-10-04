@@ -29,6 +29,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.*;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 
 /*/----------------------------------------------------------------------------------------------------------------------/*/
 /*/ Remastered the code using Jex Client Skeletons module                                                                /*/
@@ -100,7 +102,7 @@ public class SkeletonESP extends Module {
 
         float g = event.tickDelta;
 
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
         RenderSystem.disableTexture();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
@@ -153,8 +155,8 @@ public class SkeletonESP extends Module {
             matrixStack.translate(footPos.x, footPos.y, footPos.z);
             if (swimming) matrixStack.translate(0, 0.35f, 0);
 
-            matrixStack.multiply(new Quaternion(new Vec3f(0, -1, 0), h + 180, true));
-            if (swimming || flying) matrixStack.multiply(new Quaternion(new Vec3f(-1, 0, 0), 90 + m, true));
+            matrixStack.multiply(new Quaternionf().setAngleAxis(h + 180, 0, -1, 0));
+            if (swimming || flying) matrixStack.multiply(new Quaternionf().setAngleAxis(90 + m, -1, 0, 0));
             if (swimming) matrixStack.translate(0, -0.95f, 0);
 
             BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
@@ -216,13 +218,13 @@ public class SkeletonESP extends Module {
             matrixStack.pop();
 
             bufferBuilder.clear();
-            BufferRenderer.drawWithShader(bufferBuilder.end());
+            BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
 
             if (swimming) matrixStack.translate(0, 0.95f, 0);
-            if (swimming || flying) matrixStack.multiply(new Quaternion(new Vec3f(1, 0, 0), 90 + m, true));
+            if (swimming || flying) matrixStack.multiply(new Quaternionf().setAngleAxis(90 + m, 1, 0, 0));
             if (swimming) matrixStack.translate(0, -0.35f, 0);
 
-            matrixStack.multiply(new Quaternion(new Vec3f(0, 1, 0), h + 180, true));
+            matrixStack.multiply(new Quaternionf().setAngleAxis(h + 180, 0, 1, 0));
             matrixStack.translate(-footPos.x, -footPos.y, -footPos.z);
         });
 
@@ -231,13 +233,13 @@ public class SkeletonESP extends Module {
         RenderSystem.disableBlend();
         RenderSystem.enableDepthTest();
         RenderSystem.depthMask(true);
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
     }
 
     private void rotate(MatrixStack matrix, ModelPart modelPart) {
-        if (modelPart.roll != 0.0F) matrix.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(modelPart.roll));
-        if (modelPart.yaw != 0.0F) matrix.multiply(Vec3f.NEGATIVE_Y.getRadialQuaternion(modelPart.yaw));
-        if (modelPart.pitch != 0.0F) matrix.multiply(Vec3f.NEGATIVE_X.getRadialQuaternion(modelPart.pitch));
+        if (modelPart.roll != 0.0F) matrix.multiply(RotationAxis.POSITIVE_Z.rotation(modelPart.roll));
+        if (modelPart.yaw != 0.0F) matrix.multiply(RotationAxis.NEGATIVE_Y.rotation(modelPart.yaw));
+        if (modelPart.pitch != 0.0F) matrix.multiply(RotationAxis.NEGATIVE_X.rotation(modelPart.pitch));
     }
 
     private Vec3d getEntityRenderPosition(Entity entity, double partial) {

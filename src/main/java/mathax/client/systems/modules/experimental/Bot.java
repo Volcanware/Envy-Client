@@ -189,7 +189,7 @@ public class Bot extends Module {
                     player = Utils.getRandomPlayer();
                 } while (ignoreSelf.get() && player.equals(mc.getSession().getUsername()) || ignoreFriends.get() && Friends.get().get(player) != null);
 
-                mc.player.sendChatMessage(text.replace("%player%", player));
+                mc.player.networkHandler.sendChatMessage(text.replace("%player%", player));
 
                 timer = delay.get();
             } else timer--;
@@ -247,7 +247,7 @@ public class Bot extends Module {
             if (BaritoneFollow.get()) {
 
                 FollowPlayer.get();
-                mc.player.sendChatMessage(BaritoneCommandPrefix.get() + "follow " + "player " + FollowPlayer.get());
+                mc.player.networkHandler.sendChatMessage(BaritoneCommandPrefix.get() + "follow " + "player " + FollowPlayer.get());
             }
         }
         return false;
@@ -262,7 +262,7 @@ public class Bot extends Module {
             if (BaritoneFollow.get()) {
 
                 FollowPlayer.get();
-                mc.player.sendChatMessage(BaritoneCommandPrefix.get() + "stop");
+                mc.player.networkHandler.sendChatMessage(BaritoneCommandPrefix.get() + "stop");
             }
         }
     }

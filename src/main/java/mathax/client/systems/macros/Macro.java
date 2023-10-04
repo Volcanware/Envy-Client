@@ -30,7 +30,7 @@ public class Macro implements ISerializable<Macro> {
     public boolean onAction(boolean isKey, int value) {
         if (keybind.matches(isKey, value) && mc.currentScreen == null) {
             for (String command : messages) {
-                mc.player.sendChatMessage(command);
+                mc.player.networkHandler.sendChatMessage(command);
             }
 
             return true;

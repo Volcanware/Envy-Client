@@ -113,7 +113,7 @@ public class Roast extends Module {
                 player = Utils.getRandomPlayer();
             } while (ignoreSelf.get() && player.equals(mc.getSession().getUsername()) || ignoreFriends.get() && Friends.get().get(player) != null);
 
-            mc.player.sendChatMessage(player + ", " + text);
+            mc.player.networkHandler.sendChatMessage(player + ", " + text);
 
             timer = delay.get();
         } else timer--;

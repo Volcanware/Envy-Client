@@ -89,7 +89,7 @@ public class MessageAura extends Module {
 
         String text = messages.get().get(i);
         String playerName = player.getGameProfile().getName();
-        if (publicChat.get()) mc.player.sendChatMessage(Placeholders.apply(text).replace("%player%", playerName));
-        else mc.player.sendChatMessage("/msg " + playerName + " " + Placeholders.apply(text).replace("%player%", playerName));
+        if (publicChat.get()) mc.player.networkHandler.sendChatMessage(Placeholders.apply(text).replace("%player%", playerName));
+        else mc.player.networkHandler.sendChatMessage("/msg " + playerName + " " + Placeholders.apply(text).replace("%player%", playerName));
     }
 }

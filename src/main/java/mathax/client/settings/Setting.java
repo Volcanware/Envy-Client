@@ -5,9 +5,8 @@ import mathax.client.utils.misc.IGetter;
 import mathax.client.utils.misc.ISerializable;
 import mathax.client.utils.Utils;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

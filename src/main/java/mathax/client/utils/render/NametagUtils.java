@@ -6,17 +6,19 @@ import mathax.client.utils.Utils;
 import mathax.client.utils.misc.Vec3;
 import mathax.client.utils.misc.Vec4;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3d;
-import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Vec3d;
+import org.joml.Matrix4f;
+import org.joml.Vector3d;
+import org.joml.Vector4f;
 
 import static mathax.client.MatHax.mc;
 
 public class NametagUtils {
-    private static final Vec4 vec4 = new Vec4();
-    private static final Vec4 mmMat4 = new Vec4();
-    private static final Vec4 pmMat4 = new Vec4();
-    private static final Vec3 camera = new Vec3();
-    private static final Vec3 cameraNegated = new Vec3();
+    private static final Vector4f vec4 = new Vector4f();
+    private static final Vector4f mmMat4 = new Vector4f();
+    private static final Vector4f pmMat4 = new Vector4f();
+    private static final Vector3d camera = new Vector3d();
+    private static final Vector3d cameraNegated = new Vector3d();
     private static Matrix4f model;
     private static Matrix4f projection;
     private static double windowScale;
@@ -24,10 +26,10 @@ public class NametagUtils {
     public static double scale;
 
     public static void onRender(MatrixStack matrices, Matrix4f projection) {
-        model = matrices.peek().getPositionMatrix().copy();
+        model = new Matrix4f(matrices.peek().getPositionMatrix());
         NametagUtils.projection = projection;
 
-        camera.set(mc.gameRenderer.getCamera().getPos());
+        Utils.set(camera, mc.gameRenderer.getCamera().getPos());
         cameraNegated.set(camera);
         cameraNegated.negate();
 
@@ -39,12 +41,12 @@ public class NametagUtils {
 
         vec4.set(cameraNegated.x + pos.x, cameraNegated.y + pos.y, cameraNegated.z + pos.z, 1);
 
-        ((IMatrix4f) (Object) model).multiplyMatrix(vec4, mmMat4);
-        ((IMatrix4f) (Object) projection).multiplyMatrix(mmMat4, pmMat4);
+        vec4.mul(model, mmMat4);
+        mmMat4.mul(projection, pmMat4);
 
         if (pmMat4.w <= 0.0f) return false;
 
-        pmMat4.toScreen();
+        toScreen(pmMat4);
         double x = pmMat4.x * mc.getWindow().getFramebufferWidth();
         double y = pmMat4.y * mc.getWindow().getFramebufferHeight();
 
@@ -59,12 +61,12 @@ public class NametagUtils {
 
         vec4.set(cameraNegated.x + pos.x, cameraNegated.y + pos.y, cameraNegated.z + pos.z, 1);
 
-        ((IMatrix4f) (Object) model).multiplyMatrix(vec4, mmMat4);
-        ((IMatrix4f) (Object) projection).multiplyMatrix(mmMat4, pmMat4);
+        vec4.mul(model, mmMat4);
+        mmMat4.mul(projection, pmMat4);
 
         if (pmMat4.w <= 0.0f) return false;
 
-        pmMat4.toScreen();
+        toScreen(pmMat4);
         double x = pmMat4.x * mc.getWindow().getFramebufferWidth();
         double y = pmMat4.y * mc.getWindow().getFramebufferHeight();
 
@@ -95,12 +97,20 @@ public class NametagUtils {
     }
 
     private static double getScale(Vec3 pos) {
-        double dist = camera.distanceTo(pos);
-        return Utils.clamp(1 - dist * 0.01, 0.5, Integer.MAX_VALUE);
+        return getScale(new Vector3d(pos.x, pos.y, pos.z));
     }
 
     private static double getScale(Vector3d pos) {
-        double dist = camera.distanceTo(pos);
+        double dist = camera.distance(pos);
         return Utils.clamp(1 - dist * 0.01, 0.5, Integer.MAX_VALUE);
+    }
+
+    private static void toScreen(Vector4f vec) {
+        float newW = 1.0f / vec.w * 0.5f;
+
+        vec.x = vec.x * newW + 0.5f;
+        vec.y = vec.y * newW + 0.5f;
+        vec.z = vec.z * newW + 0.5f;
+        vec.w = newW;
     }
 }

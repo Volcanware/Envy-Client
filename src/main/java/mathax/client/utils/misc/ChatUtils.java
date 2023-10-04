@@ -1,6 +1,7 @@
 package mathax.client.utils.misc;
 
 import baritone.api.BaritoneAPI;
+import mathax.client.mixininterface.IChatHud;
 import mathax.client.systems.config.Config;
 import mathax.client.systems.modules.Modules;
 import mathax.client.MatHax;
@@ -78,7 +79,7 @@ public class ChatUtils {
 
         if (!Config.get().deleteChatFeedback.get()) id = 0;
 
-        ((ChatHudAccessor) mc.inGameHud.getChatHud()).add(message, id);
+        ((IChatHud) mc.inGameHud.getChatHud()).add(message, id);
     }
 
     private static MutableText getCustomPrefix(String prefixTitle, Formatting prefixColor) {

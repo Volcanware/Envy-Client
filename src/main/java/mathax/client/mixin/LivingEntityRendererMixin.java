@@ -19,7 +19,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.AbstractTeam;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -139,7 +139,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     private void dinnerboneEntities(LivingEntity entity, MatrixStack matrices, float _animationProgress, float _bodyYaw, float _tickDelta, CallbackInfo _info) {
         if ((!(entity instanceof PlayerEntity)) && Modules.get().get(Rendering.class).dinnerboneEnabled()) {
             matrices.translate(0.0D, entity.getHeight() + 0.1F, 0.0D);
-            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F));
         }
     }
 }

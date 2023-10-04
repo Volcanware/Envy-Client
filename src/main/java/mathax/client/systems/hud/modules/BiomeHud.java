@@ -2,9 +2,11 @@ package mathax.client.systems.hud.modules;
 
 import mathax.client.systems.hud.DoubleTextHudElement;
 import mathax.client.systems.hud.HUD;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
@@ -27,7 +29,7 @@ public class BiomeHud extends DoubleTextHudElement {
         if (isInEditor()) return "Plains";
 
         blockPos.set(mc.player.getX(), mc.player.getY(), mc.player.getZ());
-        Identifier id = mc.world.getRegistryManager().get(Registry.BIOME_KEY).getId(mc.world.getBiome(blockPos).value());
+        Identifier id = mc.world.getRegistryManager().get(RegistryKeys.BIOME).getId(mc.world.getBiome(blockPos).value());
         if (id == null) return "Unknown";
 
         return Arrays.stream(id.getPath().split("_")).map(StringUtils::capitalize).collect(Collectors.joining(" "));

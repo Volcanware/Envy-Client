@@ -1,21 +1,18 @@
 package mathax.client;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.eventbus.EventBus;
 import mathax.client.eventbus.EventHandler;
-import mathax.client.eventbus.EventPriority;
 import mathax.client.eventbus.IEventBus;
-import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.events.mathax.KeyEvent;
 import mathax.client.events.mathax.MouseButtonEvent;
-import mathax.client.events.render.Render2DEvent;
 import mathax.client.events.world.TickEvent;
 import mathax.client.gui.GuiThemes;
-import mathax.client.gui.WidgetScreen;
 import mathax.client.gui.renderer.GuiRenderer;
 import mathax.client.gui.tabs.Tabs;
-import mathax.client.renderer.*;
+import mathax.client.renderer.GL;
+import mathax.client.renderer.PostProcessRenderer;
+import mathax.client.renderer.Renderer2D;
+import mathax.client.renderer.Shaders;
 import mathax.client.renderer.text.Fonts;
 import mathax.client.systems.Systems;
 import mathax.client.systems.config.Config;
@@ -26,12 +23,11 @@ import mathax.client.systems.modules.client.CapesModule;
 import mathax.client.systems.modules.client.ClientSpoof;
 import mathax.client.systems.modules.client.MiddleClickFriend;
 import mathax.client.systems.modules.combat.*;
+import mathax.client.systems.modules.render.Background;
+import mathax.client.systems.modules.render.Zoom;
 import mathax.client.utils.Utils;
 import mathax.client.utils.Version;
-import mathax.client.utils.misc.FakeClientPlayer;
-import mathax.client.utils.misc.KeyBind;
-import mathax.client.utils.misc.Names;
-import mathax.client.utils.misc.WindowUtils;
+import mathax.client.utils.misc.*;
 import mathax.client.utils.misc.input.KeyAction;
 import mathax.client.utils.misc.input.KeyBinds;
 import mathax.client.utils.network.MatHaxExecutor;
@@ -43,37 +39,20 @@ import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.RainbowColors;
 import mathax.client.utils.world.BlockIterator;
 import mathax.client.utils.world.BlockUtils;
-import mathax.client.systems.modules.render.Background;
-import mathax.client.systems.modules.render.Zoom;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.scoreboard.ScoreboardCriterion;
-import net.minecraft.scoreboard.ScoreboardObjective;
-import net.minecraft.scoreboard.ScoreboardPlayerScore;
-import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3f;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
-import java.util.*;
-
-import static net.minecraft.client.gui.DrawableHelper.drawTexture;
+import java.util.Arrays;
+import java.util.List;
 
 /*/------------------------------------------------------------------/*/
 /*/ THIS CLIENT IS A FORK OF METEOR CLIENT BY MINEGAME159 & SEASNAIL /*/
@@ -89,6 +68,12 @@ public class MatHax implements ClientModInitializer {
     public static MatHax INSTANCE;
     public static MinecraftClient mc;
     public static final IEventBus EVENT_BUS = new EventBus();
+
+    public static final String NAME = "Envy";
+    //version
+    public static final String version = "1.1.4";
+
+    public static final String ID = "mathax";
 
     public static final File GAME_FOLDER = new File(FabricLoader.getInstance().getGameDir().toString());
     public static final File FOLDER = new File(GAME_FOLDER, "Envy");
@@ -296,8 +281,9 @@ public class MatHax implements ClientModInitializer {
         mc = MinecraftClient.getInstance();
 
         // Icon & Title
-        WindowUtils.MatHax.setIcon();
-        WindowUtils.MatHax.setTitleLoading();
+        Title.setTitle("[Initializing] " + "Envy" + " " + version + " - Minecraft " + mc.getVersionType() + " " + "1.19.3", true);
+        Icon.setIcon(new MatHaxIdentifier("textures/icons/icon64.png"), new MatHaxIdentifier("textures/icons/icon128.png"));
+
 
         // Register event handlers
         EVENT_BUS.registerLambdaFactory("mathax.client", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
@@ -383,7 +369,7 @@ public class MatHax implements ClientModInitializer {
         RainbowColors.init();
 
         // Title
-        WindowUtils.MatHax.setTitleLoaded();
+        Title.setTitle(NAME + " " + version + " - Minecraft " + mc.getVersionType() + " " + "1.19.3", true);
 
         // Shutdown hook
 
@@ -394,10 +380,8 @@ public class MatHax implements ClientModInitializer {
 
         // Icon & Title
         ClientSpoof cs = Modules.get().get(ClientSpoof.class);
-        if (cs.isActive() && cs.changeWindowIcon()) WindowUtils.Meteor.setIcon();
-        else WindowUtils.MatHax.setIcon();
-        if (cs.isActive() && cs.changeWindowTitle()) WindowUtils.Meteor.setTitle();
-        else WindowUtils.MatHax.setTitle();
+        Icon.setIcon(new MatHaxIdentifier("textures/icons/icon64.png"), new MatHaxIdentifier("textures/icons/icon128.png"));
+
 
         // Log
         LOG.info("MatHax+ " + Version.getStylized() + " initialized for Minecraft " + Version.getMinecraft() + "!");

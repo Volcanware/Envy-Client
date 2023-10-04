@@ -50,8 +50,8 @@ public class ChatUtils{
     public static void sendPlayerMsg(String message) {
         mc.inGameHud.getChatHud().addToMessageHistory(message);
 
-        if (message.startsWith("/")) mc.player.sendCommand(message.substring(1));
-        else mc.player.sendChatMessage(message);
+        if (message.startsWith("/")) mc.player.networkHandler.sendCommand(message.substring(1));
+        else mc.player.networkHandler.sendChatMessage(message);
     }
 
     // Default

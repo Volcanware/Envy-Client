@@ -3,6 +3,7 @@ package mathax.client.systems.modules.player;
 import mathax.client.eventbus.EventHandler;
 import mathax.client.events.game.ReceiveMessageEvent;
 import mathax.client.settings.*;
+import mathax.client.systems.friends.Friend;
 import mathax.client.systems.friends.Friends;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
@@ -11,6 +12,7 @@ import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

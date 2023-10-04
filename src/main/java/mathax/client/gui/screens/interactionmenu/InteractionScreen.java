@@ -182,7 +182,7 @@ public class InteractionScreen extends Screen {
             }
         }
 
-        e.getItemsHand().forEach(itemStack -> {
+        e.getHandItems().forEach(itemStack -> {
             if (itemStack!=null) {
                 stack[index[0]] = itemStack;
                 index[0]++;
@@ -235,7 +235,7 @@ public class InteractionScreen extends Screen {
 
     public void render(MatrixStack matrix, int mouseX, int mouseY, float delta) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderTexture(0, GUI_ICONS_TEXTURE);
         RenderSystem.enableBlend();
         RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.ONE_MINUS_DST_COLOR, GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);

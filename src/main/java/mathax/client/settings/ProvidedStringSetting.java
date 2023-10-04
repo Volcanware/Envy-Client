@@ -12,14 +12,14 @@ public class ProvidedStringSetting extends StringSetting {
         this.supplier = supplier;
     }
 
-    public static class Builder extends SettingBuilder<Builder, String, ProvidedStringSetting> {
+    public static class Builder extends SettingBuilder<mathax.client.settings.ProvidedStringSetting.Builder, String, ProvidedStringSetting> {
         private Supplier<String[]> supplier;
 
         public Builder() {
             super(null);
         }
 
-        public Builder supplier(Supplier<String[]> supplier) {
+        public mathax.client.settings.ProvidedStringSetting.Builder supplier(Supplier<String[]> supplier) {
             this.supplier = supplier;
             return this;
         }

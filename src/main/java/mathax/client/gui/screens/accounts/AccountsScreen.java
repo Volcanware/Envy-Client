@@ -1,11 +1,12 @@
 package mathax.client.gui.screens.accounts;
 
-import mathax.client.gui.widgets.containers.WContainer;
-import mathax.client.gui.widgets.containers.WHorizontalList;
-import mathax.client.gui.widgets.pressable.WButton;
 import mathax.client.gui.GuiTheme;
 import mathax.client.gui.WindowScreen;
 import mathax.client.gui.widgets.WAccount;
+import mathax.client.gui.widgets.containers.WContainer;
+import mathax.client.gui.widgets.containers.WHorizontalList;
+import mathax.client.gui.widgets.containers.WTable;
+import mathax.client.gui.widgets.pressable.WButton;
 import mathax.client.systems.accounts.Account;
 import mathax.client.systems.accounts.Accounts;
 import mathax.client.systems.accounts.MicrosoftLogin;
@@ -30,7 +31,7 @@ public class AccountsScreen extends WindowScreen {
         }
 
         // Add account
-        WHorizontalList l = add(theme.horizontalList()).expandX().widget();
+        WTable l = add(theme.table()).expandX().widget();
 
         addButton(l, "Cracked", () -> mc.setScreen(new AddCrackedAccountScreen(theme, this)));
         addButton(l, "Microsoft", () -> {
@@ -45,6 +46,8 @@ public class AccountsScreen extends WindowScreen {
                 }
             });
         });
+        addButton(l, "Cookie (broken)", () -> mc.setScreen(new AddCookieAccountScreen(theme, this)));
+        l.row();
         addButton(l, "Mojang", () -> mc.setScreen(new AddMojangAccountScreen(theme, this)));
         addButton(l, "The Altening", () -> mc.setScreen(new AddAlteningAccountScreen(theme, this)));
         addButton(l, "EasyMC", () -> mc.setScreen(new AddEasyMCAccountScreen(theme, this)));

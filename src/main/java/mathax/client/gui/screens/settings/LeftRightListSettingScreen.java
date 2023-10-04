@@ -9,9 +9,8 @@ import mathax.client.gui.widgets.WWidget;
 import mathax.client.gui.widgets.input.WTextBox;
 import mathax.client.settings.Setting;
 import mathax.client.utils.Utils;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;

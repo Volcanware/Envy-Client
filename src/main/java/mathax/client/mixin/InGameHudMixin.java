@@ -14,6 +14,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.JumpingMount;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import org.spongepowered.asm.mixin.Final;
@@ -103,10 +104,10 @@ public abstract class InGameHudMixin {
         if (Modules.get().get(NoRender.class).noHeldItemName()) info.cancel();
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;hasJumpingMount()Z"))
-    private boolean onSwitchBar(ClientPlayerEntity player) {
-        if (!Modules.get().isActive(MountHUD.class) || !client.interactionManager.hasExperienceBar()) return player.hasJumpingMount();
-        return player.hasJumpingMount() && client.options.jumpKey.isPressed() || player.getMountJumpStrength() > 0;
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getJumpingMount()Lnet/minecraft/entity/JumpingMount;"))
+    private JumpingMount onSwitchBar(ClientPlayerEntity player) {
+        if (!Modules.get().isActive(MountHUD.class) || !client.interactionManager.hasExperienceBar()) return player.getJumpingMount();
+        return client.options.jumpKey.isPressed() || player.getMountJumpStrength() > 0? player.getJumpingMount() : null;
     }
 
     @ModifyConstant(method = "renderMountHealth", constant = @Constant(intValue = 39))
@@ -116,7 +117,7 @@ public abstract class InGameHudMixin {
 
     @ModifyVariable(method = "renderStatusBars", at = @At(value = "STORE", ordinal = 1), ordinal = 10)
     private int onRenderStatusBars(int y) {
-        return Modules.get().isActive(MountHUD.class) && client.player.hasJumpingMount() ? y - 10 : y;
+        return Modules.get().isActive(MountHUD.class) && client.player.getJumpingMount() != null ? y - 10 : y;
     }
 
     @ModifyArg(method = "renderStatusBars", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;getHeartCount(Lnet/minecraft/entity/LivingEntity;)I", ordinal = 0))
