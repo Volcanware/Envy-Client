@@ -185,7 +185,7 @@ public class SelfTrap extends Module {
     }
 
     private void add(BlockPos blockPos) {
-        if (!placePositions.contains(blockPos) && mc.world.getBlockState(blockPos).getMaterial().isReplaceable() && mc.world.canPlace(Blocks.OBSIDIAN.getDefaultState(), blockPos, ShapeContext.absent())) placePositions.add(blockPos);
+        if (!placePositions.contains(blockPos) && mc.world.getBlockState(blockPos).isReplaceable() && mc.world.canPlace(Blocks.OBSIDIAN.getDefaultState(), blockPos, ShapeContext.absent())) placePositions.add(blockPos);
     }
 
     public enum TopMode {

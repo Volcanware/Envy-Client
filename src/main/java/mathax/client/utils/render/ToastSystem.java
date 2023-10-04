@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.MatHax;
 import mathax.client.systems.config.Config;
 import mathax.client.utils.render.color.Color;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundInstance;
@@ -49,29 +50,28 @@ public class ToastSystem implements Toast {
         this.duration = 6000;
     }
 
-    public Visibility draw(MatrixStack matrices, ToastManager toastManager, long currentTime) {
+    public Visibility draw(DrawContext context, ToastManager toastManager, long currentTime) {
         if (justUpdated) {
             start = currentTime;
             justUpdated = false;
         }
 
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderTexture(0, TEXTURE);
         RenderSystem.setShaderColor(1, 1, 1, 1);
 
-        toastManager.drawTexture(matrices, 0, 0, 0, 0, getWidth(), getHeight());
+        context.drawTexture(TEXTURE, 0, 0, 0, 0, getWidth(), getHeight());
 
         int x = icon != null ? 28 : 12;
         int titleY = 12;
 
         if (text != null) {
-            mc.textRenderer.draw(matrices, text, x, 18, textColor);
+            context.drawText(mc.textRenderer, text, x, 18, textColor, false);
             titleY = 7;
         }
 
-        mc.textRenderer.draw(matrices, title, x, titleY, titleColor);
+        context.drawText(mc.textRenderer, title, x, titleY, titleColor, false);
 
-        if (icon != null) mc.getItemRenderer().renderInGui(icon, 8, 8);
+        if (icon != null) context.drawItem(icon, 8, 8);
 
         if (!playedSound && Config.get().toastSound.get()) {
             mc.getSoundManager().play(getSound());

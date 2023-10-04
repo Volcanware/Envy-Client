@@ -66,7 +66,7 @@ public class ContainerViewerHud extends HudElement {
                 ItemStack stack = inventory[row * 9 + i];
                 if (stack == null || stack.isEmpty()) continue;
 
-                RenderUtils.drawItem(stack, (int) (x + (8 + i * 18) * scale.get()), (int) (y + (7 + row * 18) * scale.get()), scale.get(), true);
+                RenderUtils.drawItem(renderer.context, stack, (int) (x + (8 + i * 18) * scale.get()), (int) (y + (7 + row * 18) * scale.get()), scale.get().floatValue(), true);
             }
         }
     }

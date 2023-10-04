@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.utils.render.RenderUtils;
 import mathax.client.utils.render.color.Color;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -40,19 +40,19 @@ public class ContainerTooltipComponent implements TooltipComponent, MatHaxToolti
     }
 
     @Override
-    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z) {
+    public void drawItems(TextRenderer textRenderer, int x, int y, DrawContext context) {
 
         // Background
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(color.r / 255f, color.g / 255f, color.b / 255f, color.a / 255f);
-        RenderSystem.setShaderTexture(0, TEXTURE_CONTAINER_BACKGROUND);
-        DrawableHelper.drawTexture(matrices, x, y, z, 0, 0, 176, 67, 176, 67);
+        context.drawTexture(TEXTURE_CONTAINER_BACKGROUND, x, y, 0, 0, 0, 176, 67, 176, 67);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
 
         //Contents
         int row = 0;
         int i = 0;
         for (ItemStack itemStack : items) {
-            RenderUtils.drawItem(itemStack, x + 8 + i * 18, y + 7 + row * 18, true);
+            RenderUtils.drawItem(context, itemStack, x + 8 + i * 18, y + 7 + row * 18, 1, true);
 
             i++;
             if (i >= 9) {

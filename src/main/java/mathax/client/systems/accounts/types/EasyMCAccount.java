@@ -8,7 +8,6 @@ import mathax.client.systems.accounts.Account;
 import mathax.client.systems.accounts.AccountType;
 import mathax.client.utils.network.HTTP;
 import net.minecraft.client.util.Session;
-
 import java.util.Optional;
 
 import static mathax.client.MatHax.mc;

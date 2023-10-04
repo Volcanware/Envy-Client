@@ -104,8 +104,8 @@ public class WireframeEntityRenderer {
             float limbAngle = 0;
 
             if (!livingEntity.hasVehicle() && livingEntity.isAlive()) {
-                limbDistance = MathHelper.lerp(event.tickDelta, livingEntity.lastLimbDistance, livingEntity.limbDistance);
-                limbAngle = livingEntity.limbAngle - livingEntity.limbDistance * (1 - event.tickDelta);
+                limbDistance = livingEntity.limbAnimator.getPos(event.tickDelta);
+                limbAngle = livingEntity.limbAnimator.getPos() - livingEntity.limbAnimator.getSpeed() * (1 - event.tickDelta);
 
                 if (livingEntity.isBaby()) limbAngle *= 3;
                 if (limbDistance > 1) limbDistance = 1;

@@ -1,12 +1,17 @@
 package mathax.client.utils.player;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static mathax.client.MatHax.mc;
 
 public class MoveHelper {
+    private static final Map<LivingEntity, Float> airStrafeSpeedMultipliers = new HashMap<>();
 
     public static boolean hasMovement() {
         final Vec3d playerMovement = mc.player.getVelocity();
@@ -31,7 +36,7 @@ public class MoveHelper {
         final double playerZ = mc.player.getZ();
 
         for (int height = playerHeight; height > 0; height--) {
-            final BlockPos checkPosition = new BlockPos(playerX, height, playerZ);
+            final BlockPos checkPosition = BlockPos.ofFloored(playerX, height, playerZ);
 
             // Check if the block is solid
             if (!mc.world.isAir(checkPosition)) {
@@ -39,5 +44,16 @@ public class MoveHelper {
             }
         }
         return 0;
+    }
+
+    public static float getAirStrafeSpeedMultiplier(LivingEntity entity) {
+        return airStrafeSpeedMultipliers.containsKey(entity) ? airStrafeSpeedMultipliers.get(entity) : 1;
+    }
+
+    public static void setAirStrafeSpeedMultiplier(LivingEntity entity, float multiplier) {
+        airStrafeSpeedMultipliers.put(entity, multiplier);
+    }
+    public static void setAirStrafeSpeed(LivingEntity entity, float value) {
+        setAirStrafeSpeedMultiplier(entity, value / 0.02F); // 0.02F is the default value
     }
 }

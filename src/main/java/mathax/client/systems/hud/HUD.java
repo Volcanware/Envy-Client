@@ -14,6 +14,7 @@ import mathax.client.utils.misc.NbtUtils;
 import mathax.client.utils.render.AlignmentX;
 import mathax.client.utils.render.AlignmentY;
 import mathax.client.utils.render.color.SettingColor;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -180,7 +181,7 @@ public class HUD extends System<HUD> {
     }
 
     private void align() {
-        RENDERER.begin(scale.get(), 0, true);
+        RENDERER.begin(scale.get(), 0, true, null);
 
         mainInfo.align();
         moduleInfo.align();
@@ -202,11 +203,11 @@ public class HUD extends System<HUD> {
     public void onRender2D(Render2DEvent event) {
         if (mc.options.debugEnabled || mc.options.hudHidden) return;
 
-        render(event.tickDelta, hudElement -> isEditorScreen() || (hudElement.active && active));
+        render(event.drawContext, event.tickDelta, hudElement -> isEditorScreen() || (hudElement.active && active));
     }
 
-    public void render(float delta, Predicate<HudElement> shouldRender) {
-        RENDERER.begin(scale.get(), delta, false);
+    public void render(DrawContext context, float delta, Predicate<HudElement> shouldRender) {
+        RENDERER.begin(scale.get(), delta, false, context);
 
         for (HudElement element : elements) {
             if (shouldRender.test(element)) {

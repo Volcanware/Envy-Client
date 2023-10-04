@@ -101,7 +101,9 @@ public class MatHax implements ClientModInitializer {
             //Pizzav / Maxime
             "d4507578723c4dc5b993a63ae0cab44d",
             //Meesterbouwer123
-            "6d0ecaf42d074aa19bb7b5e318897ee3"
+            "6d0ecaf42d074aa19bb7b5e318897ee3",
+            //Inn3rStellar
+            "4b7bdb8ba18145cfaeb84ca8d421d65b"
         );
     }
 
@@ -282,7 +284,7 @@ public class MatHax implements ClientModInitializer {
 
         // Icon & Title
         Title.setTitle("[Initializing] " + "Envy" + " " + version + " - Minecraft " + mc.getVersionType() + " " + "1.19.3", true);
-        Icon.setIcon(new MatHaxIdentifier("textures/icons/icon64.png"), new MatHaxIdentifier("textures/icons/icon128.png"));
+        Icon.setIcon();
 
 
         // Register event handlers
@@ -380,7 +382,7 @@ public class MatHax implements ClientModInitializer {
 
         // Icon & Title
         ClientSpoof cs = Modules.get().get(ClientSpoof.class);
-        Icon.setIcon(new MatHaxIdentifier("textures/icons/icon64.png"), new MatHaxIdentifier("textures/icons/icon128.png"));
+        Icon.setIcon();
 
 
         // Log

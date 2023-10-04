@@ -60,7 +60,7 @@ public class SimpleOptionMixin<T> {
         if ((Object) this == options.getGamma()) {
             return new SimpleOption.Callbacks<>() {
                 @Override
-                public Function<SimpleOption<T>, ClickableWidget> getButtonCreator(SimpleOption.TooltipFactory<T> tooltipFactory, GameOptions gameOptions, int x, int y, int width, Consumer<T> changeCallback) {
+                public Function<SimpleOption<T>, ClickableWidget> getWidgetCreator(SimpleOption.TooltipFactory<T> tooltipFactory, GameOptions gameOptions, int x, int y, int width, Consumer<T> changeCallback) {
                     return null;
                 }
 
@@ -78,7 +78,7 @@ public class SimpleOptionMixin<T> {
         else if ((Object) this == options.getFov()) {
             return new SimpleOption.Callbacks<>() {
                 @Override
-                public Function<SimpleOption<T>, ClickableWidget> getButtonCreator(SimpleOption.TooltipFactory<T> tooltipFactory, GameOptions gameOptions, int x, int y, int width, Consumer<T> changeCallback) {
+                public Function<SimpleOption<T>, ClickableWidget> getWidgetCreator(SimpleOption.TooltipFactory<T> tooltipFactory, GameOptions gameOptions, int x, int y, int width, Consumer<T> changeCallback) {
                     return null;
                 }
 

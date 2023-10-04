@@ -210,8 +210,8 @@ public class PlayerUtils {
     }
 
     public static boolean placeBlock2(Hand hand, BlockPos pos, boolean oldPlacement, int slot, boolean rotate, boolean swing, boolean airPlace, boolean ignoreEntity, Direction overrideSide) {
-        if (ignoreEntity && !mc.world.getBlockState(pos).getMaterial().isReplaceable()) return false;
-        else if (!mc.world.getBlockState(pos).getMaterial().isReplaceable() || !mc.world.canPlace(Blocks.OBSIDIAN.getDefaultState(), pos, ShapeContext.absent())) return false;
+        if (ignoreEntity && !mc.world.getBlockState(pos).isReplaceable()) return false;
+        else if (!mc.world.getBlockState(pos).isReplaceable() || !mc.world.canPlace(Blocks.OBSIDIAN.getDefaultState(), pos, ShapeContext.absent())) return false;
 
         final Vec3d eyesPos = new Vec3d(mc.player.getX(), mc.player.getY() + mc.player.getEyeHeight(mc.player.getPose()), mc.player.getZ());
         Vec3d hitVec = null;
@@ -424,19 +424,19 @@ public class PlayerUtils {
         return mc.player.isSprinting() && (mc.player.forwardSpeed != 0 || mc.player.sidewaysSpeed != 0);
     }
 
-    public static ArrayList<Vec3d> selfTrapPositions = new ArrayList<Vec3d>() {{
-        add(new Vec3d(1, 1, 0));
-        add(new Vec3d(-1, 1, 0));
-        add(new Vec3d(0, 1, 1));
-        add(new Vec3d(0, 1, -1));
-    }};
+    public static List<BlockPos> selfTrapPositions = List.of(
+        BlockPos.ofFloored(1, 1, 0),
+        BlockPos.ofFloored(-1, 1, 0),
+        BlockPos.ofFloored(0, 1, 1),
+        BlockPos.ofFloored(0, 1, -1)
+    );
 
     public static BlockPos getSelfTrapBlock(PlayerEntity p, Boolean escapePrevention) {
         BlockPos tpos = p.getBlockPos();
         List<BlockPos> selfTrapBlocks = new ArrayList<>();
         if (!escapePrevention && BlockUtils.isTrapBlock(tpos.up(2))) return tpos.up(2);
-        for (Vec3d stp : selfTrapPositions) {
-            BlockPos stb = tpos.add(stp.x, stp.y, stp.z);
+        for (BlockPos stp : selfTrapPositions) {
+            BlockPos stb = tpos.add(stp);
             if (BlockUtils.isTrapBlock(stb)) selfTrapBlocks.add(stb);
         }
         if (selfTrapBlocks.isEmpty()) return null;
@@ -697,7 +697,7 @@ public class PlayerUtils {
     }
 
     public static BlockPos roundBlockPos(final Vec3d vec) {
-        return new BlockPos(vec.x, Math.round(vec.y), vec.z);
+        return BlockPos.ofFloored(vec.x, Math.round(vec.y), vec.z);
     }
 
     public boolean isGrounded() {

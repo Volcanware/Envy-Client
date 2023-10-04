@@ -38,7 +38,7 @@ public class NotebotCommand extends Command {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("status").executes(ctx -> {
             Notebot notebot = Modules.get().get(Notebot.class);
-            notebot.printStatus();
+            info(notebot.getStatus());
             return SINGLE_SUCCESS;
         }));
         builder.then(literal("pause").executes(ctx -> {

@@ -16,13 +16,13 @@ import mathax.client.utils.algorithms.extra.MovementUtils;
 import mathax.client.utils.entity.EntityUtils;
 import mathax.client.utils.vayzeutils.VulcanBooster;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
-import net.minecraft.network.Packet;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
@@ -235,15 +235,23 @@ public class Jesus extends Module {
 
     @EventHandler
     private void onCanWalkOnFluid(CanWalkOnFluidEvent event) {
-        if ((event.fluidState.getFluid() == Fluids.WATER || event.fluidState.getFluid() == Fluids.FLOWING_WATER) && waterShouldBeSolid()) event.walkOnFluid = true;
-        else if ((event.fluidState.getFluid() == Fluids.LAVA || event.fluidState.getFluid() == Fluids.FLOWING_LAVA) && lavaShouldBeSolid()) event.walkOnFluid = true;
+        if ((event.fluidState.getFluid() == Fluids.WATER || event.fluidState.getFluid() == Fluids.FLOWING_WATER) && waterShouldBeSolid()) {
+            event.walkOnFluid = true;
+        }
+        else if ((event.fluidState.getFluid() == Fluids.LAVA || event.fluidState.getFluid() == Fluids.FLOWING_LAVA) && lavaShouldBeSolid()) {
+            event.walkOnFluid = true;
+        }
     }
 
     @EventHandler
     private void onFluidCollisionShape(CollisionShapeEvent event) {
-        if (event.type != CollisionShapeEvent.CollisionType.FLUID) return;
-        if (event.state.getMaterial() == Material.WATER && !mc.player.isTouchingWater() && waterShouldBeSolid()) event.shape = VoxelShapes.fullCube();
-        else if (event.state.getMaterial() == Material.LAVA && !mc.player.isInLava() && lavaShouldBeSolid()) event.shape = VoxelShapes.fullCube();
+        if (event.state.getFluidState().isEmpty()) return;
+
+        if ((event.state.getBlock() == Blocks.WATER | event.state.getFluidState().getFluid() == Fluids.WATER) && !mc.player.isTouchingWater() && waterShouldBeSolid()) {
+            event.shape = VoxelShapes.fullCube();
+        } else if (event.state.getBlock() == Blocks.LAVA && !mc.player.isInLava() && lavaShouldBeSolid()) {
+            event.shape = VoxelShapes.fullCube();
+        }
     }
 
     @EventHandler
@@ -312,10 +320,10 @@ public class Jesus extends Module {
 
         for (Box bb : blockCollisions) {
             blockPos.set(MathHelper.lerp(0.5D, bb.minX, bb.maxX), MathHelper.lerp(0.5D, bb.minY, bb.maxY), MathHelper.lerp(0.5D, bb.minZ, bb.maxZ));
-            Material material = mc.world.getBlockState(blockPos).getMaterial();
+            BlockState state = mc.world.getBlockState(blockPos);
 
-            if (material == Material.WATER || material == Material.LAVA) foundLiquid = true;
-            else if (material != Material.AIR) foundSolid = true;
+            if (!state.getFluidState().isEmpty()) foundLiquid = true;
+            else if (!state.isAir()) foundSolid = true;
         }
 
         return foundLiquid && !foundSolid;

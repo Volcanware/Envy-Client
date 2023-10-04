@@ -10,6 +10,7 @@ import mathax.client.systems.modules.movement.AntiLevitation;
 import mathax.client.systems.modules.movement.Moses;
 import mathax.client.systems.modules.render.HandView;
 import mathax.client.systems.modules.render.NoRender;
+import mathax.client.utils.player.MoveHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -106,5 +107,10 @@ public abstract class LivingEntityMixin extends Entity {
     private boolean travelIsInLavaProxy(LivingEntity self) {
         if (self.isInLava() && Modules.get().isActive(Moses.class)) return !Modules.get().get(Moses.class).lava.get();
         return self.isInLava();
+    }
+
+    @Inject(method = "getOffGroundSpeed", at = @At("RETURN"), cancellable = true)
+    private void spoofAirStrafeSpeed(CallbackInfoReturnable<Float> cir) {
+        cir.setReturnValue(cir.getReturnValueF() * MoveHelper.getAirStrafeSpeedMultiplier((LivingEntity) (Object) this));
     }
 }

@@ -27,6 +27,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
+import org.joml.Vector3d;
 
 public class ESP extends Module {
     private final Color lineColor = new Color();
@@ -35,7 +36,7 @@ public class ESP extends Module {
 
     private final Vec3 pos1 = new Vec3();
     private final Vec3 pos2 = new Vec3();
-    private final Vec3 pos = new Vec3();
+    private final Vector3d pos = new Vector3d();
 
     private int count;
 

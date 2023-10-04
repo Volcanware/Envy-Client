@@ -23,6 +23,7 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Items;
+import org.joml.Vector3d;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class EntityOwner extends Module {
-    private final Vec3 pos = new Vec3();
+    private final Vector3d pos = new Vector3d();
     private final Map<UUID, String> uuidToName = new HashMap<>();
 
     private static final Color BACKGROUND = new Color(0, 0, 0, 75);
@@ -75,7 +76,7 @@ public class EntityOwner extends Module {
             else continue;
 
             if (ownerUuid != null) {
-                pos.set(entity, event.tickDelta);
+                pos.set(entity.getX(), entity.getY(), entity.getZ());
                 pos.add(0, entity.getEyeHeight(entity.getPose()) + 0.75, 0);
 
                 if (NametagUtils.to2D(pos, scale.get())) renderNametag(getOwnerName(ownerUuid));

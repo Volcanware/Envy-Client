@@ -10,8 +10,10 @@ import mathax.client.utils.misc.ISerializable;
 import mathax.client.utils.world.Dimension;
 import net.minecraft.client.texture.AbstractTexture;
 import net.minecraft.nbt.NbtCompound;
+import org.joml.Vector3d;
 
 import java.util.Map;
+import java.util.Vector;
 
 public class Waypoint implements ISerializable<Waypoint> {
     public SettingColor color = new SettingColor(MatHax.INSTANCE.MATHAX_COLOR.r, MatHax.INSTANCE.MATHAX_COLOR.g, MatHax.INSTANCE.MATHAX_COLOR.b);
@@ -91,7 +93,7 @@ public class Waypoint implements ISerializable<Waypoint> {
         icon = getIcon(findIconIndex() + 1);
     }
 
-    public Vec3 getCoords() {
+    public Vector3d getCoords() {
         double x = this.x;
         double y = this.y;
         double z = this.z;
@@ -104,7 +106,7 @@ public class Waypoint implements ISerializable<Waypoint> {
             z = z * 8;
         }
 
-        return new Vec3(x, y, z);
+        return new Vector3d(x, y, z);
     }
 
     @Override

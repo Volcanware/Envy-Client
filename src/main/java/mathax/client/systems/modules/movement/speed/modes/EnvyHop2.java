@@ -5,6 +5,7 @@ import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.systems.modules.world.Timer;
+import mathax.client.utils.player.MoveHelper;
 import mathax.client.utils.player.PlayerUtils;
 
 public class EnvyHop2 extends SpeedMode {
@@ -34,7 +35,7 @@ public class EnvyHop2 extends SpeedMode {
             mc.player.setVelocity(mc.player.getVelocity().getX(), mc.player.getVelocity().getY() - 0.17, mc.player.getVelocity().getZ());
         }
         if (ticks == 1 || ticks == 2) {
-            mc.player.airStrafingSpeed = 0.05f;
+            MoveHelper.setAirStrafeSpeed(mc.player, 0.05f);
         }
         if (ticks == 4 || ticks > 8) {
             Modules.get().get(Timer.class).setOverride(2.2f);

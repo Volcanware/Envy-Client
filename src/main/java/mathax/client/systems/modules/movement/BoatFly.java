@@ -127,7 +127,7 @@ int timer = 0;
             Objects.requireNonNull(mc.player.getVehicle()).setInvisible(true);
         }
         timer++;
-        if (event.boat.getPrimaryPassenger() != mc.player) return;
+        if (event.boat.getControllingPassenger() != mc.player) return;
 
         if (spinnyMode.get()) {
     assert mc.player != null;

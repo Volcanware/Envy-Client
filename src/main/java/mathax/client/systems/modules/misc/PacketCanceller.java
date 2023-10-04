@@ -10,8 +10,7 @@ import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.utils.network.PacketUtils;
 import net.minecraft.item.Items;
-import net.minecraft.network.Packet;
-
+import net.minecraft.network.packet.Packet;
 import java.util.Set;
 
 public class PacketCanceller extends Module {

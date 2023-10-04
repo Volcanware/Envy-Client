@@ -18,6 +18,8 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -95,7 +97,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         MatHax.EVENT_BUS.post(SendMovementPacketsEvent.Pre.get());
     }
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/Packet;)V", ordinal = 0))
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/packet/Packet;)V", ordinal = 0))
     private void onTickHasVehicleBeforeSendPackets(CallbackInfo info) {
         MatHax.EVENT_BUS.post(SendMovementPacketsEvent.Pre.get());
     }
@@ -105,7 +107,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         MatHax.EVENT_BUS.post(SendMovementPacketsEvent.Post.get());
     }
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/Packet;)V", ordinal = 1, shift = At.Shift.AFTER))
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/packet/Packet;)V", ordinal = 1, shift = At.Shift.AFTER))
     private void onTickHasVehicleAfterSendPackets(CallbackInfo info) {
         MatHax.EVENT_BUS.post(SendMovementPacketsEvent.Post.get());
     }

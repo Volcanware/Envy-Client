@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mathax.client.systems.modules.Modules;
 import mathax.client.systems.modules.render.BetterTooltips;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -42,17 +42,17 @@ public class MapTooltipComponent implements TooltipComponent, MatHaxTooltipData 
     }
 
     @Override
-    public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z) {
+    public void drawItems(TextRenderer textRenderer, int x, int y, DrawContext context) {
         double scale = Modules.get().get(BetterTooltips.class).mapsScale.get();
 
         // Background
+        MatrixStack matrices = context.getMatrices();
         matrices.push();
-        matrices.translate(x, y, z);
+        matrices.translate(x, y, 0);
         matrices.scale((float) (scale) * 2, (float) (scale) * 2, 0);
         matrices.scale((64 + 8) / 64f, (64 + 8) / 64f, 0);
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderTexture(0, TEXTURE_MAP_BACKGROUND);
-        DrawableHelper.drawTexture(matrices, 0, 0, 0, 0, 0, 64, 64, 64, 64);
+        context.drawTexture(TEXTURE_MAP_BACKGROUND, 0, 0, 0, 0, 0, 64, 64, 64, 64);
         matrices.pop();
 
         // Contents
@@ -60,7 +60,7 @@ public class MapTooltipComponent implements TooltipComponent, MatHaxTooltipData 
         MapState mapState = FilledMapItem.getMapState(this.mapId, mc.world);
         if (mapState == null) return;
         matrices.push();
-        matrices.translate(x, y, z);
+        matrices.translate(x, y, 0);
         matrices.scale((float) scale, (float) scale, 0);
         matrices.translate(8, 8, 0);
         mc.gameRenderer.getMapRenderer().draw(matrices, consumer, this.mapId, mapState, false, 0xF000F0);

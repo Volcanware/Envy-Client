@@ -20,11 +20,13 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     private static boolean loaded;
 
-    private static boolean isResourceLoaderPresent;
     private static boolean isOriginsPresent;
     private static boolean isIndigoPresent;
-    private static boolean isSodiumPresent;
+    public static boolean isSodiumPresent;
     private static boolean isCanvasPresent;
+    private static boolean isLithiumPresent;
+    public static boolean isIrisPresent;
+    private static boolean isIndiumPresent;
 
     @Override
     public void onLoad(String mixinPackage) {
@@ -58,18 +60,18 @@ public class MixinPlugin implements IMixinConfigPlugin {
             mixinTransformer.delegate = (IMixinTransformer) mixinTransformerField.get(delegate);
 
             mixinTransformerField.set(delegate, mixinTransformer);
-        } catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
+        }
+        catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
 
-        for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
-            isResourceLoaderPresent = isResourceLoaderPresent || mod.getMetadata().getId().startsWith("fabric-resource-loader");
-            isIndigoPresent = isIndigoPresent || mod.getMetadata().getId().startsWith("fabric-renderer-indigo");
-        }
-
+        isIndigoPresent = FabricLoader.getInstance().isModLoaded("fabric-renderer-indigo");
         isOriginsPresent = FabricLoader.getInstance().isModLoaded("origins");
         isSodiumPresent = FabricLoader.getInstance().isModLoaded("sodium");
         isCanvasPresent = FabricLoader.getInstance().isModLoaded("canvas");
+        isLithiumPresent = FabricLoader.getInstance().isModLoaded("lithium");
+        isIrisPresent = FabricLoader.getInstance().isModLoaded("iris");
+        isIndiumPresent = FabricLoader.getInstance().isModLoaded("indium");
 
         loaded = true;
     }
@@ -81,12 +83,28 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (!mixinClassName.startsWith(mixinPackage)) throw new RuntimeException("Mixin " + mixinClassName + " is not in the mixin package");
-        else if (mixinClassName.endsWith("NamespaceResourceManagerMixin") || mixinClassName.endsWith("ReloadableResourceManagerImplMixin")) return !isResourceLoaderPresent;
-        else if (mixinClassName.endsWith("PlayerEntityRendererMixin")) return !isOriginsPresent;
-        else if (mixinClassName.startsWith(mixinPackage + ".sodium")) return isSodiumPresent;
-        else if (mixinClassName.startsWith(mixinPackage + ".indigo")) return isIndigoPresent;
-        else if (mixinClassName.startsWith(mixinPackage + ".canvas")) return isCanvasPresent;
+        if (!mixinClassName.startsWith(mixinPackage)) {
+            throw new RuntimeException("Mixin " + mixinClassName + " is not in the mixin package");
+        }
+        else if (mixinClassName.endsWith("PlayerEntityRendererMixin")) {
+            return !isOriginsPresent;
+        }
+        else if (mixinClassName.startsWith(mixinPackage + ".sodium")) {
+            return isSodiumPresent;
+        }
+        else if (mixinClassName.startsWith(mixinPackage + ".indigo")) {
+            return isIndigoPresent;
+        }
+        else if (mixinClassName.startsWith(mixinPackage + ".canvas")) {
+            return isCanvasPresent;
+        }
+        else if (mixinClassName.startsWith(mixinPackage + ".lithium")) {
+            return isLithiumPresent;
+        }
+        else if (mixinClassName.startsWith(mixinPackage + ".indium")) {
+            return isIndiumPresent;
+        }
+
 
         return true;
     }

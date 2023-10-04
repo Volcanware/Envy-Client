@@ -107,7 +107,7 @@ public class Burrow extends Module {
 
     @Override
     public boolean onActivate() {
-        if (!mc.world.getBlockState(mc.player.getBlockPos()).getMaterial().isReplaceable()) {
+        if (!mc.world.getBlockState(mc.player.getBlockPos()).isReplaceable()) {
             error("Already burrowed, disabling...");
             toggle();
             return false;
@@ -212,7 +212,7 @@ public class Burrow extends Module {
     }
 
     private boolean checkHead() {
-        return mc.world.getBlockState(blockPos.set(mc.player.getX() + .3, mc.player.getY() + 2.3, mc.player.getZ() + .3)).getMaterial().isReplaceable() & mc.world.getBlockState(blockPos.set(mc.player.getX() + .3, mc.player.getY() + 2.3, mc.player.getZ() - .3)).getMaterial().isReplaceable() & mc.world.getBlockState(blockPos.set(mc.player.getX() - .3, mc.player.getY() + 2.3, mc.player.getZ() - .3)).getMaterial().isReplaceable() & mc.world.getBlockState(blockPos.set(mc.player.getX() - .3, mc.player.getY() + 2.3, mc.player.getZ() + .3)).getMaterial().isReplaceable();
+        return mc.world.getBlockState(blockPos.set(mc.player.getX() + .3, mc.player.getY() + 2.3, mc.player.getZ() + .3)).isReplaceable() & mc.world.getBlockState(blockPos.set(mc.player.getX() + .3, mc.player.getY() + 2.3, mc.player.getZ() - .3)).isReplaceable() & mc.world.getBlockState(blockPos.set(mc.player.getX() - .3, mc.player.getY() + 2.3, mc.player.getZ() - .3)).isReplaceable() & mc.world.getBlockState(blockPos.set(mc.player.getX() - .3, mc.player.getY() + 2.3, mc.player.getZ() + .3)).isReplaceable();
     }
 
     public enum Block {

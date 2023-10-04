@@ -83,7 +83,7 @@ public class AutoSign extends Module {
         String lineThree = Placeholders.apply(linethree.get().replace("%date%", getDate()));
         String lineFour = Placeholders.apply(linefour.get().replace("%date%", getDate()));
 
-        mc.player.networkHandler.sendPacket(new UpdateSignC2SPacket(sign.getPos(), lineOne, lineTwo, lineThree, lineFour));
+        mc.player.networkHandler.sendPacket(new UpdateSignC2SPacket(sign.getPos(), true, lineOne, lineTwo, lineThree, lineFour));   // TODO: find out if we want the front or back
 
         event.cancel();
     }

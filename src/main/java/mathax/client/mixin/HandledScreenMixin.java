@@ -5,6 +5,7 @@ import mathax.client.utils.Utils;
 import mathax.client.systems.modules.render.BetterTooltips;
 import mathax.client.systems.modules.render.ItemHighlight;
 import mathax.client.systems.modules.misc.InventoryTweaks;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
@@ -79,8 +80,8 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
 
     // Item Highlight
     @Inject(method = "drawSlot", at = @At("HEAD"))
-    private void onDrawSlot(MatrixStack matrices, Slot slot, CallbackInfo info) {
+    private void onDrawSlot(DrawContext context, Slot slot, CallbackInfo info) {
         int color = Modules.get().get(ItemHighlight.class).getColor(slot.getStack());
-        if (color != -1) fill(matrices, slot.x, slot.y, slot.x + 16, slot.y + 16, color);
+        if (color != -1) context.fill(slot.x, slot.y, slot.x + 16, slot.y + 16, color);
     }
 }

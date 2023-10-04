@@ -48,7 +48,7 @@ public class EntitySpeed extends Module {
 
     @EventHandler
     private void onLivingEntityMove(LivingEntityMoveEvent event) {
-        if (event.entity.getPrimaryPassenger() != mc.player) return;
+        if (event.entity.getControllingPassenger() != mc.player) return;
 
         LivingEntity entity = event.entity;
         if (onlyOnGround.get() && !entity.isOnGround()) return;

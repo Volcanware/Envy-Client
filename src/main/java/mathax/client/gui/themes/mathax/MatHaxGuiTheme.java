@@ -1,6 +1,5 @@
 package mathax.client.gui.themes.mathax;
 
-import grondag.canvas.mixin.MixinVideoSettingsScreen;
 import mathax.client.MatHax;
 import mathax.client.gui.renderer.packer.GuiTexture;
 import mathax.client.gui.themes.mathax.widgets.*;

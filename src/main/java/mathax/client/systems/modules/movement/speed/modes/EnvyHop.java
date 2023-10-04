@@ -7,6 +7,7 @@ import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.utils.EnvyUtils;
 import mathax.client.utils.algorithms.extra.MovementUtils;
+import mathax.client.utils.player.MoveHelper;
 import mathax.client.utils.player.PlayerUtils;
 
 public class EnvyHop extends SpeedMode {
@@ -24,7 +25,7 @@ public class EnvyHop extends SpeedMode {
             EnvyUtils.fall();
         }
         if (PlayerUtils.isMoving() && mc.player.fallDistance < 0.15f) {
-            mc.player.airStrafingSpeed = 0.1f;
+            MoveHelper.setAirStrafeSpeed(mc.player, 0.1f);
         }
         MovementUtils.Vulcanstrafe();
         return false;

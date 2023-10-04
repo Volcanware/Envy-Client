@@ -5,6 +5,7 @@ import mathax.client.events.world.TickEvent;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.utils.player.MoveHelper;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
@@ -56,7 +57,8 @@ public class Glide extends Module {
 
     @EventHandler
     private void onTick(final TickEvent.Post event) {
-    	if (!defaultStrafe.get()) mc.player.airStrafingSpeed = speed.get().floatValue();
+    	if (!defaultStrafe.get())
+            MoveHelper.setAirStrafeSpeed(mc.player, speed.get().floatValue());
 
         if (mode.get() == Mode.Vertical) {
         	if (mc.player.isOnGround() || mc.player.isTouchingWater() || mc.player.isInLava() || mc.player.isClimbing()) return;

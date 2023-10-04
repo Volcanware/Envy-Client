@@ -29,6 +29,7 @@ import mathax.client.utils.render.NametagUtils;
 import mathax.client.utils.render.RenderUtils;
 import mathax.client.utils.render.color.Color;
 import mathax.client.utils.render.color.SettingColor;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -41,6 +42,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
+import org.joml.Vector3d;
 
 import java.util.*;
 
@@ -61,7 +63,7 @@ public class Nametags extends Module {
     private final Color GREY = new Color(150, 150, 150);
     private final Color BLUE = new Color(20, 170, 170);
 
-    private final Vec3 pos = new Vec3();
+    private final Vector3d pos = new Vector3d();
     private final double[] itemWidths = new double[6];
 
     private final Object2IntMap<UUID> totemPopMap = new Object2IntOpenHashMap<>();
@@ -347,13 +349,13 @@ public class Nametags extends Module {
         for (int i = count - 1; i > -1; i--) {
             Entity entity = entityList.get(i);
 
-            pos.set(entity, event.tickDelta);
+            Utils.set(pos,   entity, event.tickDelta);
             pos.add(0, getHeight(entity), 0);
 
             EntityType<?> type = entity.getType();
 
             if (NametagUtils.to2D(pos, scale.get())) {
-                if (type == EntityType.PLAYER) renderNametagPlayer((PlayerEntity) entity, shadow);
+                if (type == EntityType.PLAYER) renderNametagPlayer(event.drawContext, (PlayerEntity) entity, shadow);
                 else if (type == EntityType.ITEM) renderNametagItem(((ItemEntity) entity).getStack(), shadow);
                 else if (type == EntityType.ITEM_FRAME) renderNametagItem(((ItemFrameEntity) entity).getHeldItemStack(), shadow);
                 else if (type == EntityType.TNT) renderTntNametag((TntEntity) entity, shadow);
@@ -387,7 +389,7 @@ public class Nametags extends Module {
         return height;
     }
 
-    private void renderNametagPlayer(PlayerEntity player, boolean shadow) {
+    private void renderNametagPlayer(DrawContext context, PlayerEntity player, boolean shadow) {
         if (ignoreFriends.get() && Friends.get().isFriend(player)) return;
         if (ignoreEnemies.get() && Enemies.get().isEnemy(player)) return;
 
@@ -520,7 +522,7 @@ public class Nametags extends Module {
             for (int i = 0; i < 6; i++) {
                 ItemStack stack = getItem(player, i);
 
-                RenderUtils.drawItem(stack, (int) x, (int) y, 2, true);
+                RenderUtils.drawItem(context, stack, (int) x, (int) y, 2, true);
 
                 if (maxEnchantCount > 0 && displayItemEnchants.get()) {
                     text.begin(0.5 * enchantTextScale.get(), false, true);

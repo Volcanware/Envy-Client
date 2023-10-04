@@ -82,13 +82,13 @@ public class Step extends Module {
 
     @Override
     public boolean onActivate() {
-        prevStepHeight = mc.player.stepHeight;
+        prevStepHeight = mc.player.getStepHeight();
         return false;
     }
 
     @Override
     public void onDeactivate() {
-        mc.player.stepHeight = prevStepHeight;
+        mc.player.setStepHeight(prevStepHeight);
         Modules.get().get(Timer.class).setOverride(Timer.OFF);
     }
 
@@ -97,11 +97,11 @@ public class Step extends Module {
         if ((activeWhen.get() == ActiveWhen.Sneaking && !mc.player.isSneaking()) || (activeWhen.get() == ActiveWhen.Not_Sneaking && mc.player.isSneaking()) || (!mc.player.isOnGround() && onlyOnGround.get())) return;
         switch (mode.get()) {
             case Normal -> {
-                mc.player.stepHeight = height.get().floatValue();
+                mc.player.setStepHeight(height.get().floatValue());
                 return;
             }
             case NCP_Plus -> {
-                mc.player.stepHeight = height.get().floatValue();
+                mc.player.setStepHeight(height.get().floatValue());
             }
         }
 

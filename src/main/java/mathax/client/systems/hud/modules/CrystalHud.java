@@ -39,7 +39,7 @@ public class CrystalHud extends HudElement {
         double x = box.getX();
         double y = box.getY();
 
-        if (isInEditor()) RenderUtils.drawItem(Items.END_CRYSTAL.getDefaultStack(), (int) x, (int) y, scale.get(), true);
-        else if (InvUtils.find(Items.END_CRYSTAL).count() > 0) RenderUtils.drawItem(new ItemStack(Items.END_CRYSTAL, InvUtils.find(Items.END_CRYSTAL).count()), (int) x, (int) y, scale.get(), true);
+        if (isInEditor()) RenderUtils.drawItem(renderer.context, Items.END_CRYSTAL.getDefaultStack(), (int) x, (int) y, scale.get().floatValue(), true);
+        else if (InvUtils.find(Items.END_CRYSTAL).count() > 0) RenderUtils.drawItem(renderer.context, new ItemStack(Items.END_CRYSTAL, InvUtils.find(Items.END_CRYSTAL).count()), (int) x, (int) y, scale.get().floatValue(), true);
     }
 }

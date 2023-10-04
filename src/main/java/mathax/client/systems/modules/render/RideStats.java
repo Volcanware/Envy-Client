@@ -7,6 +7,7 @@ import mathax.client.renderer.text.TextRenderer;
 import mathax.client.settings.*;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
+import mathax.client.utils.Utils;
 import mathax.client.utils.misc.Vec3;
 import mathax.client.utils.render.NametagUtils;
 import mathax.client.utils.render.color.Color;
@@ -17,6 +18,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.LlamaEntity;
 import net.minecraft.item.Items;
+import org.joml.Vector3d;
 
 import java.util.Objects;
 
@@ -26,7 +28,7 @@ import java.util.Objects;
 /*/-----------------------------------------------------------------------------------------------------------------------------/*/
 
 public class RideStats extends Module {
-    private final Vec3 pos = new Vec3();
+    private final Vector3d pos = new Vector3d();
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgEntities = settings.createGroup("Entities");
@@ -134,7 +136,7 @@ public class RideStats extends Module {
             boolean donkey = entity.getType() == EntityType.DONKEY && this.donkey.get();
             boolean llama = entity.getType() == EntityType.LLAMA && this.llama.get();
             if (horse || mule || donkey || llama) {
-                pos.set(entity, event.tickDelta);
+                Utils.set(pos, entity, event.tickDelta);
                 pos.add(0, entity.getEyeHeight(entity.getPose()) + 0.75, 0);
                 pos.add(0, -1 + height.get(), 0);
                 if (NametagUtils.to2D(pos, scale.get())) renderHorseNametag((AbstractHorseEntity) entity, entity);

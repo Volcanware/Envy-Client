@@ -1,9 +1,15 @@
 package mathax.client.utils.misc;
 
+import mathax.client.MatHax;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.Icons;
+import net.minecraft.resource.DefaultResourcePackBuilder;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.Objects;
 
 import static mathax.client.MatHax.mc;
@@ -11,18 +17,67 @@ import static mathax.client.MatHax.mc;
 public class Icon {
     public static boolean iconChanged = false;
 
-    public static void setIcon(Identifier icon1, Identifier icon2) {
-        mc.getWindow().setIcon(
-            () -> Objects.requireNonNull(Icon.class.getResourceAsStream("/assets/" + icon1.getNamespace() +"/" + icon1.getPath())),
-            () -> Objects.requireNonNull(Icon.class.getResourceAsStream("/assets/" + icon2.getNamespace() +"/" + icon2.getPath()))
-        );
-        iconChanged = true;
+    public static void setIcon() {
+        /*try {
+            mc.getWindow().setIcon(
+                new DefaultResourcePackBuilder()
+                    .withRoot(new File("/assets/mathax/").toPath())
+                    .build(),
+                Icons.RELEASE
+            );
+            iconChanged = true;
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }*/
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        //TODO: find out how to do this
+        setMinecraft();
     }
 
     @SuppressWarnings("unused")
     public static void setMinecraft() {
-        mc.getWindow().setIcon(MinecraftClient.getInstance().getDefaultResourcePack().open(ResourceType.CLIENT_RESOURCES, new Identifier("icons/icon_16x16.png")), MinecraftClient.getInstance().getDefaultResourcePack().open(ResourceType.CLIENT_RESOURCES, new Identifier("icons/icon_32x32.png")));
-        iconChanged = false;
+        try {
+            mc.getWindow().setIcon(
+                MinecraftClient.getInstance().getDefaultResourcePack(),
+                Icons.RELEASE
+            );
+            iconChanged = false;
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
