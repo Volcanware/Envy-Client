@@ -48,6 +48,7 @@ import static mathax.client.utils.Utils.WHITE;
 import static mathax.client.MatHax.mc;
 
 public class PlayerUtils {
+    private boolean grounded = !mc.player.isOnGround();
     private static final Vec3d hitPos = new Vec3d(0.0, 0.0, 0.0);
     private static final double diagonal = 1 / Math.sqrt(2);
     private static final Vec3d horizontalVelocity = new Vec3d(0, 0, 0);
@@ -697,5 +698,15 @@ public class PlayerUtils {
 
     public static BlockPos roundBlockPos(final Vec3d vec) {
         return new BlockPos(vec.x, Math.round(vec.y), vec.z);
+    }
+
+    public boolean isGrounded() {
+        if (mc.player.isOnGround()) {
+            grounded = mc.player.isOnGround();
+        }
+        else if (!mc.player.isOnGround()) {
+            grounded = !mc.player.isOnGround();
+        }
+        return false;
     }
 }
