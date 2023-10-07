@@ -283,7 +283,7 @@ public class MatHax implements ClientModInitializer {
         mc = MinecraftClient.getInstance();
 
         // Icon & Title
-        Title.setTitle("[Initializing] " + "Envy" + " " + version + " - Minecraft " + mc.getVersionType() + " " + "1.19.3", true);
+        Title.setTitle("[Initializing] " + "Envy" + " " + version + " - Minecraft " + mc.getVersionType() + " " + Version.getMinecraft(), true);
         Icon.setIcon();
 
 
@@ -371,7 +371,7 @@ public class MatHax implements ClientModInitializer {
         RainbowColors.init();
 
         // Title
-        Title.setTitle(NAME + " " + version + " - Minecraft " + mc.getVersionType() + " " + "1.19.3", true);
+        Title.setTitle(NAME + " " + version + " - Minecraft " + mc.getVersionType() + " " + Version.getMinecraft(), true);
 
         // Shutdown hook
 
