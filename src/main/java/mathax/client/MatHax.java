@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
 
@@ -224,12 +225,19 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "Better than 1.18.1",
             Formatting.YELLOW + "Better than 1.18.2",
             Formatting.YELLOW + "Better than 1.19",
+            Formatting.YELLOW + "Better than 1.19.1",
+            Formatting.YELLOW + "Better than 1.19.2",
+            Formatting.YELLOW + "Better than 1.19.3",
+            Formatting.YELLOW + "Better than 1.19.4",
+            Formatting.YELLOW + "Better than 1.20",
             Formatting.YELLOW + "Better than Jeb_",
             Formatting.YELLOW + "Better than Notch",
             Formatting.YELLOW + "Better than Dinnerbone",
             Formatting.YELLOW + "Better than Grumm",
             Formatting.YELLOW + "Better than Minecon",
             Formatting.YELLOW + "Blame it on Hardline",
+            Formatting.YELLOW + "Better than Impact",
+            Formatting.YELLOW + "Worse than Future",
             Formatting.YELLOW + "Crashes if you look at it funny",
             Formatting.YELLOW + "L Bozo",
             Formatting.YELLOW + "MEDIC!",
