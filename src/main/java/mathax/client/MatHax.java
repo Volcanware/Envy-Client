@@ -223,6 +223,7 @@ public class MatHax implements ClientModInitializer {
             Formatting.YELLOW + "Better than 1.18",
             Formatting.YELLOW + "Better than 1.18.1",
             Formatting.YELLOW + "Better than 1.18.2",
+            Formatting.YELLOW + "Better than 1.19",
             Formatting.YELLOW + "Better than Jeb_",
             Formatting.YELLOW + "Better than Notch",
             Formatting.YELLOW + "Better than Dinnerbone",
