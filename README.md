@@ -10,7 +10,6 @@
 
 ## Requirements
 - Fabric 1.20.1
-- More than 2 Braincells (I don't have that many sorry)
 
 ### Building
 - Do it Bozo!
@@ -29,7 +28,7 @@ If you have any other questions, you can get info at our [Discord](https://disco
 ##
 
 <div align="center">
-  <img src="https://avatars.githubusercontent.com/u/128879655?s=400&u=a582e091289fa3dc13264b75b1f001352a461600&v=4" width="100" height="100">
+  <img src="https://avatars.githubusercontent.com/u/128879655?s=400&u=a582e091289fa3dc13264b75b1f001352a461600&v=4" width="100" height="100" alt="Image forgor to load">
 </div>
 
 <div align="center">
