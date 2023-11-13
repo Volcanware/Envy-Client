@@ -10,6 +10,7 @@
 
 ## Requirements
 - Fabric 1.20.1
+- baritone api
 
 ### Building
 - Do it Bozo!
