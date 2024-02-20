@@ -56,10 +56,6 @@ public class RainbowColors {
             color.update();
         }
 
-        for (Waypoint waypoint : Waypoints.get()) {
-            waypoint.color.update();
-        }
-
         if (mc.currentScreen instanceof WidgetScreen) {
             for (SettingGroup group : GuiThemes.get().settings) {
                 for (Setting<?> setting : group) {

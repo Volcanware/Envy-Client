@@ -41,7 +41,6 @@ public class Systems {
         add(new Enemies());
         add(new Macros());
         add(new Accounts());
-        add(new Waypoints());
         add(new Profiles());
         add(new Proxies());
         add(new HUD());

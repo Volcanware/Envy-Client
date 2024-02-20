@@ -6,7 +6,6 @@ import mathax.client.events.game.OpenScreenEvent;
 import mathax.client.systems.modules.Categories;
 import mathax.client.systems.modules.Module;
 import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.render.WaypointsModule;
 import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.item.Items;
 
@@ -18,7 +17,6 @@ public class AutoRespawn extends Module {
     @EventHandler(priority = EventPriority.HIGH)
     private void onOpenScreenEvent(OpenScreenEvent event) {
         if (!(event.screen instanceof DeathScreen)) return;
-        Modules.get().get(WaypointsModule.class).addDeath(mc.player.getPos());
         mc.player.requestRespawn();
         event.cancel();
     }

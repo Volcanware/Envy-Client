@@ -9,7 +9,6 @@ import mathax.client.events.render.Render2DEvent;
 import mathax.client.systems.System;
 import mathax.client.systems.Systems;
 import mathax.client.systems.modules.Modules;
-import mathax.client.systems.modules.render.WaypointsModule;
 import mathax.client.utils.Utils;
 import mathax.client.utils.files.StreamUtils;
 import mathax.client.utils.misc.NbtUtils;
@@ -116,62 +115,6 @@ public class Waypoints extends System<Waypoints> implements Iterable<Waypoint> {
 
     @EventHandler
     private void onRender2D(Render2DEvent event) {
-        WaypointsModule module = Modules.get().get(WaypointsModule.class);
-        if (!module.isActive()) return;
-
-        TextRenderer text = TextRenderer.get();
-        Vec3 center = new Vec3(mc.getWindow().getFramebufferWidth() / 2.0, mc.getWindow().getFramebufferHeight() / 2.0, 0);
-        int textRenderDist = module.textRenderDistance.get();
-
-        for (Waypoint waypoint : this) {
-            // Continue if this waypoint should not be rendered
-            if (!waypoint.visible || !checkDimension(waypoint)) continue;
-
-            // Calculate distance
-            Vec3 pos = waypoint.getCoords().add(0.5, 0, 0.5);
-            double dist = PlayerUtils.distanceToCamera(pos.x, pos.y, pos.z);
-
-            // Continue if this waypoint should not be rendered
-            if (dist > waypoint.maxVisibleDistance) continue;
-            if (!NametagUtils.to2D(pos, 1)) continue;
-
-            // Calculate alpha and distance to center of the screen
-            double distToCenter = pos.distanceTo(center);
-            double a = 1;
-
-            if (dist < 20) {
-                a = (dist - 10) / 10;
-                if (a < 0.01) continue;
-            }
-
-            // Render
-            NametagUtils.scale = waypoint.scale - 0.25;
-            NametagUtils.begin(pos);
-
-            // Render icon
-            waypoint.renderIcon(-16, -16, a, 32);
-
-            // Render text if cursor is close enough
-            if (distToCenter <= textRenderDist) {
-                // Setup text rendering
-                int preTextA = TEXT.a;
-                TEXT.a *= a;
-                text.begin();
-
-                // Render name
-                text.render(waypoint.name, -text.getWidth(waypoint.name) / 2, -16 - text.getHeight(), TEXT, true);
-
-                // Render distance
-                String distText = String.format("%d blocks", (int) Math.round(dist));
-                text.render(distText, -text.getWidth(distText) / 2, 16, TEXT, true);
-
-                // End text rendering
-                text.end();
-                TEXT.a = preTextA;
-            }
-
-            NametagUtils.end();
-        }
     }
 
     @Override
