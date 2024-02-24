@@ -86,7 +86,7 @@ dependencies {
     // Discord RPC
 
     // IRC
-    library 'org.java-websocket:Java-WebSocket:1.5.3'
+    library 'org.java-websocket:Java-WebSocket:1.5.4'
     library 'com.google.code.gson:gson:2.10'
 
     // Other
