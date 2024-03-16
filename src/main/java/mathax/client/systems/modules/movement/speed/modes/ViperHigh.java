@@ -5,6 +5,7 @@ import mathax.client.events.world.TickEvent;
 import mathax.client.systems.modules.movement.speed.SpeedMode;
 import mathax.client.systems.modules.movement.speed.SpeedModes;
 import mathax.client.utils.algorithms.extra.MovementUtils;
+import mathax.client.utils.player.MoveUtilV;
 import mathax.client.utils.player.PlayerUtils;
 
 public class ViperHigh extends SpeedMode {
@@ -16,9 +17,11 @@ public class ViperHigh extends SpeedMode {
     @Override
     public boolean onTick() {
         if (PlayerUtils.isMoving()) {
+            mc.options.jumpKey.setPressed(false);
             if (mc.player.isOnGround()) {
                 mc.player.setVelocity(mc.player.getVelocity().getX(), 0.7, mc.player.getVelocity().getZ());
             }
+            MoveUtilV.strafe();
         }
 
         return false;

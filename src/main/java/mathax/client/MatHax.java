@@ -71,7 +71,7 @@ public class MatHax implements ClientModInitializer {
 
     public static final String NAME = "Envy";
     //version
-    public static final String version = "1.1.4";
+    public static final String version = "1.2.0";
 
     public static final String ID = "mathax";
 

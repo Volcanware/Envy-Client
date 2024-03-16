@@ -484,6 +484,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initMovement() {
+        add(new Strafe());
         add(new VulcanJesus());
         add(new Clip());
         add(new AirJump());
@@ -570,6 +571,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initRender() {
+        add(new Animations());
         add(new AntiSale());
         add(new NoVisualCooldown());
         //add(new AntiScreen());
@@ -746,6 +748,7 @@ public class Modules extends System<Modules> {
     }
 
     private void initExperimental() {
+        add(new MatrixElytra());
         add(new TestModule());
         add(new AntiWall());
         add(new Bot());

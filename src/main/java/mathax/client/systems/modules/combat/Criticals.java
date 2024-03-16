@@ -23,6 +23,8 @@ import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Criticals extends Module {
 
     private int ticks;
@@ -113,43 +115,44 @@ public class Criticals extends Module {
         }
     }
 
+
     @EventHandler
     private void onTick(TickEvent.Pre event) {
+
         if (sendPackets) {
             if (sendTimer <= 0) {
                 sendPackets = false;
-
                 if (attackPacket == null || swingPacket == null) return;
                 mc.getNetworkHandler().sendPacket(attackPacket);
                 mc.getNetworkHandler().sendPacket(swingPacket);
-
                 attackPacket = null;
                 swingPacket = null;
             } else sendTimer--;
         }
-
         if (mode.get() == Mode.Low) {
             if (mc.player.isOnGround() && mc.player.handSwingProgress > 0) {
+                mc.options.jumpKey.setPressed(false);
                 this.offGroundTicks = 0;
             } else {
                 ++this.offGroundTicks;
             }
-
-            if (this.offGroundTicks == 1) {
+            if (this.offGroundTicks == 1 && mc.player.handSwingProgress > 0) {
                 MoveHelper.motionY(-(0.01 - Math.random() / 500.0));
             }
-
-            if (mc.player.isOnGround()) {
+            if (mc.player.isOnGround() && mc.player.handSwingProgress > 0) {
+                mc.options.jumpKey.setPressed(false);
                 MoveHelper.motionY(0.1 + Math.random() / 500.0);
             }
         }
         if (mode.get() == Mode.Low2) {
             if (mc.player.isOnGround() && mc.player.handSwingProgress > 0) {
+                mc.options.jumpKey.setPressed(false);
                 mc.player.setPosition(mc.player.getPos().x, mc.player.getPos().y + (0.3 - Math.random() / 500.0), mc.player.getPos().z);
             }
         }
         if (mode.get() == Mode.Matrix) {
             if (mc.player.isOnGround() && mc.player.handSwingProgress > 0 && mc.player.handSwingProgress < 0.3 && mc.targetedEntity != null) {
+                mc.options.jumpKey.setPressed(false);
                 mc.player.jump();
                 Modules.get().get(Timer.class).setOverride(0.8);
             }

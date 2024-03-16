@@ -12,6 +12,7 @@ public class SpeedTest3 extends SpeedMode {
 
     @Override
     public boolean onTick() {
+        mc.options.jumpKey.setPressed(false);
         if (mc.player.isOnGround() == false) {
             mc.player.airStrafingSpeed = 0.1f;
         }

@@ -1,6 +1,7 @@
 package mathax.client.mixin;
 
 import mathax.client.systems.modules.Modules;
+import mathax.client.systems.modules.render.Animations;
 import mathax.client.utils.render.color.Color;
 import mathax.client.systems.modules.render.Chams;
 import mathax.client.systems.modules.render.HandView;
@@ -45,6 +46,7 @@ public class PlayerEntityRendererMixin {
         Chams chams = Modules.get().get(Chams.class);
 
         if (Modules.get().isActive(HandView.class)) return;
+        if (Modules.get().isActive(Animations.class)) return;
 
         if (chams.isActive() && chams.hand.get()) {
             Color color = chams.handColor.get();

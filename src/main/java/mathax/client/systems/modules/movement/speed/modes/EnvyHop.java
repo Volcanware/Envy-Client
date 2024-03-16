@@ -17,6 +17,7 @@ public class EnvyHop extends SpeedMode {
 
     @EventHandler
     public boolean onTick() {
+        mc.options.jumpKey.setPressed(false);
         if (mc.player.isOnGround() && PlayerUtils.isMoving()) {
             mc.player.jump();
         }

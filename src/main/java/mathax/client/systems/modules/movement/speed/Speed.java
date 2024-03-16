@@ -468,6 +468,7 @@ public class Speed extends Module {
             case ChonkyChineseSped -> currentMode = new ChonkyChineseSped();
             case Custom -> currentMode = new Custom();
             case Inn3rstellarSpeed -> currentMode = new Inn3rstellarSpeed();
+            case Negativity -> currentMode = new Negativity();
 
         }
     }

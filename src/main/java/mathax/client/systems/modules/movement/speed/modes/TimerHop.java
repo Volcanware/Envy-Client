@@ -18,7 +18,7 @@ public class TimerHop extends SpeedMode {
 
     @Override
     public boolean onMove(PlayerMoveEvent event) {
-
+        mc.options.jumpKey.setPressed(false);
         if (PlayerUtils.isMoving()) {
             (Modules.get().get(AutoJump.class)).toggle();
         }

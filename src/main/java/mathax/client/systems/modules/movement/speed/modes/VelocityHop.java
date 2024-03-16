@@ -20,7 +20,7 @@ public class VelocityHop extends SpeedMode {
         double velX = vel.getX() * 1.5;
         double velZ = vel.getZ() * 1.5;
         double velY = vel.getY() - 0.5;
-
+        mc.options.jumpKey.setPressed(false);
         if (PlayerUtils.isMoving()) {
             (Modules.get().get(AutoJump.class)).toggle();
         }

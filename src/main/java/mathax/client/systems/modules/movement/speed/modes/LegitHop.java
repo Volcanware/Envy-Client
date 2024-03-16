@@ -13,6 +13,7 @@ public class LegitHop  extends SpeedMode {
 
     @Override
     public boolean onTick() {
+        mc.options.jumpKey.setPressed(false);
         if (mc.player.isOnGround()) {
             mc.player.jump();
             mc.player.setSprinting(true);

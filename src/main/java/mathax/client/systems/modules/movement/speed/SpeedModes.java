@@ -10,6 +10,7 @@ public enum SpeedModes {
     Weird("Please Don't Crash me :("),
     LBL_SlowHop("SlowHop"),
     Vulcan("Vulcan"),
+    Negativity("Negativity"),
     Viper("Viper"),
     ViperHigh("ViperHigh"),
     _5b5t("_5b5t"),

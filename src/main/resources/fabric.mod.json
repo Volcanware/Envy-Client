@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "name": "Envy Client",
   "id": "envy",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "Envy Client is an advanced Minecraft utility client for Fabric",
   "authors": [
     "Volcan",
